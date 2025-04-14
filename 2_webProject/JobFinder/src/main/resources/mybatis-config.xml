@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!-- 없으면안됨 현재 패키지 네임 자체가 없으면 mybatis에서 풀네임으로 적어야함 -->
+    <typeAliases>
+<!--      예시  <package name="com.edu.member.domain"/>-->
+
+    </typeAliases>
+
+    <mappers>
+<!--    예시    <mapper resource="mappers/member/MemberMapper.xml"/>-->
+    </mappers>
+</configuration>
