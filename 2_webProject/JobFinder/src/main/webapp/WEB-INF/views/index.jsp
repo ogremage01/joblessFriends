@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <title>오류안내</title>
     <script
             src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+Cfch+3qOVUtJn3QNZOtciWLP4="
@@ -18,6 +18,6 @@
     </style>
 </head>
 <body>
-언제나 시작은 여기서 부터
+일단 여기서 시작
 </body>
 </html>
