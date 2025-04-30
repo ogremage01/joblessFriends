@@ -36,10 +36,9 @@ grant DBA TO edu;
 스프링부트 패키지 구분
 
 인증 관련 auth
-회원 관련member
+회원 관련 member
 이력서 관련resume
-구인 공고 관련recruitment
-게시판 관련community
+구인 공고 관련 recruitment
+게시판 관련 community
 태그 관련 tag
-직무/직군 관련 job
 채팅관련 chat
