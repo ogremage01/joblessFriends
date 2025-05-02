@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.joblessfriend.jobfinder.admin.domain.AdminVo;
-import com.joblessfriend.jobfinder.admin.service.AdminService;
+
 
 import jakarta.servlet.http.HttpSession;
 
@@ -33,24 +33,24 @@ public class AdminController {
 		return "/admin/auth/adminLogin";
 	}
 	
-	@PostMapping("/login")
-	public String getlogin(String account, String password, HttpSession session, Model model) {
-		logger.info(logTitleMsg);
-		logger.info("login!" + account + ", " + password);
-		
-		AdminVo adminVo = adminService.adminExist(account, password);
-		
-		if(adminVo != null) {
-			session.setAttribute("admin", adminVo);
-			
-			return "redirect:/admin/adminMain";
-		}else {
-			return "/admin/auth/adminLoginFall";
-		}
-		
-		
-	}
-	
+//	@PostMapping("/login")
+//	public String getlogin(String account, String password, HttpSession session, Model model) {
+//		logger.info(logTitleMsg);
+//		logger.info("login!" + account + ", " + password);
+//
+//		AdminVo adminVo = adminService.adminExist(account, password);
+//
+//		if(adminVo != null) {
+//			session.setAttribute("admin", adminVo);
+//
+//			return "redirect:/admin/adminMain";
+//		}else {
+//			return "/admin/auth/adminLoginFall";
+//		}
+//
+//
+//	}
+//
 	
 	
 	@GetMapping("/logout")
