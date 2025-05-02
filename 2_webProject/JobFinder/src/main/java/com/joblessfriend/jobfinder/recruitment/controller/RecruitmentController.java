@@ -12,6 +12,6 @@ public class RecruitmentController {
 
     @GetMapping("/list")
     public String list() {
-        return "recruitment/recruitmentList";
+        return "recruitment/recruitmentView";
     }
 }
