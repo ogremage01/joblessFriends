@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+.boxStyle{
+		border: 2px solid #D1D5E3;
+		border-radius: 5px;	
+	}
+.inputBtn{
+	background-color: #F69800;
+	border-radius: 5px;
+  	border: 0;	
+  	color: white;
+}
+
+.wrap{
+		width: 1210px;
+		margin: auto;
+}
+	
+#infoContent{
+	margin-bottom: 0px;
+	display: flex;
+
+}
+
+a{
+	cursor: pointer;
+	color: #6D707B;
+}
