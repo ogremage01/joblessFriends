@@ -17,6 +17,7 @@
             crossorigin="anonymous">
     </script>
     <link rel="stylesheet" href="/css/common/index.css">
+    <link rel="stylesheet" href="/css/common/common.css">
 </head>
 <body>
 	<jsp:include page="common/header.jsp"/>

@@ -1,18 +1,6 @@
-   	body {
-		margin: 0
-	}
-   
-    #container {
-		min-width: 1280px;
-		width: 100%;
-	}
-	#containerWrap {
-		width: 1210px;
-		margin: auto;
-	}
-	
+
 	.section {
-		margin-top: 40px;
+ 		margin-top: 30px;
 	}
 	
 	.jobInfoContent {
