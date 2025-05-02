@@ -1,10 +1,12 @@
 package com.joblessfriend.jobfinder.admin.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.joblessfriend.jobfinder.admin.dao.AdminDao;
 import com.joblessfriend.jobfinder.admin.domain.AdminVo;
 
+@Service
 public class AdminServiceImpl implements AdminService{
 	
 	@Autowired

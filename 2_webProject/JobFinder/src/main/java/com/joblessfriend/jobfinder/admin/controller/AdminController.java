@@ -22,34 +22,34 @@ public class AdminController {
 	private Logger logger = LoggerFactory.getLogger(AdminController.class);
 	private final String logTitleMsg = "==Admin control==";
 	
-//	@Autowired
-//	private AdminService adminService;
+	@Autowired
+	private AdminService adminService;
 	
 	@GetMapping("/login")
 	public String login(Model model) {
 		logger.info(logTitleMsg);
 		logger.info("login");
 		
-		return "/admin/auth/adminLoginForm";
+		return "/admin/auth/adminLoginFormView";
 	}
 	
-//	@PostMapping("/login")
-//	public String getlogin(String account, String password, HttpSession session, Model model) {
-//		logger.info(logTitleMsg);
-//		logger.info("login!" + account + ", " + password);
-//
-//		AdminVo adminVo = adminService.adminExist(account, password);
-//
-//		if(adminVo != null) {
-//			session.setAttribute("admin", adminVo);
-//
-//			return "redirect:/admin/adminMain";
-//		}else {
-//			return "/admin/auth/adminLoginFallView";
-//		}
-//
-//
-//	}
+	@PostMapping("/login")
+	public String getlogin(String account, String password, HttpSession session, Model model) {
+		logger.info(logTitleMsg);
+		logger.info("login!" + account + ", " + password);
+
+		AdminVo adminVo = adminService.adminExist(account, password);
+
+		if(adminVo != null) {
+			session.setAttribute("admin", adminVo);
+
+			return "redirect:/admin/adminMain";
+		}else {
+			return "/admin/auth/adminLoginFallView";
+		}
+
+
+	}
 
 	
 	
@@ -76,7 +76,16 @@ public class AdminController {
 		logger.info(logTitleMsg);
 		logger.info("login");
 		
-		return "/admin/memberView";
+		return "/admin/member/memberView";
+	}
+	
+	
+	@GetMapping("/member/company")
+	public String memberCompany(Model model) {
+		logger.info(logTitleMsg);
+		logger.info("login");
+		
+		return "/admin/member/memberCompany";
 	}
 	
 
