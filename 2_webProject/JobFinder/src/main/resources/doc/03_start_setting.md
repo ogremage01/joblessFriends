@@ -17,11 +17,11 @@ sts 세팅
 1.어드민 계정으로 접속
 
 2. 아래 구문 입력 -유저 생성
-CREATE USER edu IDENTIFIED BY edu12 account unlock
+CREATE USER EODIBOJOB IDENTIFIED BY nojob6 account unlock
 default tablespace users
 
 3. admin 계정 권한 부여
-grant DBA TO edu;
+grant DBA TO EODIBOJOB;
 
 -----
 
