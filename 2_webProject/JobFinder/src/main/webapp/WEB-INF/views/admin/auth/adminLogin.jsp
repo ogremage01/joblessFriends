@@ -155,7 +155,7 @@ label {
                 <div class="col-lg-12 login-key">
                     <i class="fa fa-key" aria-hidden="true"></i>
                 </div>
-                <img src='static/img/logo.svg' alt="로고">
+                <img src='/img/logo.svg' alt="로고">
                 <div class="col-lg-12 login-title">
                     관리자 로그인
                 </div>
