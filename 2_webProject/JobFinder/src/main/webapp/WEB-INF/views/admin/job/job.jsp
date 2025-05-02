@@ -17,9 +17,13 @@
 
     <style>
         /*기본값(default)이 이미 "text/css"로 되어 있어서 자동인식한다하여 뺐음 */
+        #container{
+        	margin: auto;
+        }
     </style>
 </head>
 <body>
+<jsp:include page="../common/header.jsp"></jsp:include>
 <main class="d-flex flex-nowrap">
 
   <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px; height: 100vh">
@@ -35,7 +39,7 @@
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link active">
+        <a href="#" class="nav-link text-white">
           회원관리
         </a>
       </li>
@@ -65,7 +69,7 @@
         </a>
       </li>
        <li>
-        <a href="#" class="nav-link text-white">
+        <a href="#" class="nav-link active">
           직무/직군관리
         </a>
       </li>
@@ -77,8 +81,72 @@
 
 
     </div>
+  </div>  
+  
+    <div>
+	  	<button class="btn rounded-pill px-3" id="individual" disabled>개인회원</button>
+	  	<button class="btn rounded-pill px-3" id="company">기업회원</button>
   </div>
+  <div id="container">
+  	<table class="table table-striped">
+	<thead>
+		<tr>
+		<td>가입일</td>
+		<td>회원명(게시판 프로필)</td>
+		<td>Email</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>1</td>
+			<td>1</td>
+			<td>1</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>2</td>
+			<td>2</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>3</td>
+			<td>3</td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td>4</td>
+			<td>4</td>
+		</tr>
+	</tbody>
+</table>
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
+  </div>
+  
 </main>
 
 </body>
+
+<script type="text/javascript">
+
+	indivBtn = document.getElementById('individual');
+	compBtn = document.getElementById('company');
+	
+	containerObj = document.getElementById('container');
+	
+	function change() {
+		
+	}
+
+	
+
+
+</script>
 </html>

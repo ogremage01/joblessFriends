@@ -1,8 +1,11 @@
 package com.joblessfriend.jobfinder.admin.service;
 
+import org.springframework.stereotype.Service;
+
 import com.joblessfriend.jobfinder.admin.domain.AdminVo;
 
-public interface AdminSevice {
+@Service
+public interface AdminService {
 
 	
 	public AdminVo adminExist(String adminId, String password);
