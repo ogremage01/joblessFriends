@@ -1,0 +1,110 @@
+   	body {
+		margin: 0
+	}
+   
+    #container {
+		min-width: 1280px;
+		width: 100%;
+	}
+	#containerWrap {
+		width: 1210px;
+		margin: auto;
+	}
+	
+	.section {
+		margin-top: 40px;
+	}
+	
+	.jobInfoContent {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		row-gap: 50px;
+	}
+	
+	.jobInfoItem {
+		display: flex;
+		flex-direction: column;
+		cursor: pointer;
+	}
+	
+	.jobImg {
+		position: relative;
+		z-index: 1;
+		width: 280px;
+		height: 180px;
+		
+	}
+	
+	.jobImg img {
+		width: inherit;
+		height: inherit;
+		border-radius: 10px;
+	}
+	
+	.jobOverImage {
+		position: absolute;
+		z-index: 2;
+		top: 0;
+		left: 0;
+		
+		width: 100%;
+		height: 100%;
+		
+		pointer-events: none;
+	}
+	
+	.jobDeadline {
+		position: absolute;
+		top: 8px;
+		right: 8px;
+		
+		min-width: 60px;
+		height: 20px;
+		font-size: 13px;
+		padding: 5px;
+		
+		color: white;
+		background-color: rgba(0, 0, 0, 0.5);
+		border-radius: 5px;
+	}
+	
+	.skillTagsWrap {
+		position: absolute;
+		bottom: 8px;
+		left: 8px;
+		
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px;
+	}
+	
+	.jobSkillTag {
+		font-size: 12px;
+		padding: 3px 8px;
+		color: white;
+		background-color: rgb(0, 0, 0, 0.5);
+		border-radius: 15px;
+	}
+	
+	.jobSkillTag span{
+		display: inline-block;
+		max-width:70px;
+		overflow:hidden;
+		text-overflow:ellipsis
+	}
+
+	
+	.jobInfoItem .jobTitle {
+		font-size: 18px;
+		font-weight: bold;
+		margin-top: 10px;
+		line-height: 35px;
+	}
+
+	.jobInfoItem span{
+		font-size: 14px;
+		line-height: 22px;
+	}
+	
+       
