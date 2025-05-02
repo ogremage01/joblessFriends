@@ -249,7 +249,7 @@
 			<div id="headNavBar">
 				<ul id="serviceNav" class="headBlankLeft">
 					<li class="serviceNavItem jobInfoNav">
-						<a href="">채용정보</a>
+						<a href="/Recruitment/list">채용정보</a>
 					</li>
 					<li class="serviceNavItem partitionNav">
 						|
