@@ -18,8 +18,16 @@
     <style>
         /*기본값(default)이 이미 "text/css"로 되어 있어서 자동인식한다하여 뺐음 */
     </style>
+    
+    <script type="text/javascript">
+    
+    
+    
+    
+    </script>
 </head>
 <body>
+<jsp:include page="./common/header.jsp"></jsp:include>
 <main class="d-flex flex-nowrap">
 
   <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px; height: 100vh">
@@ -30,12 +38,12 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a href="#" class="nav-link active" aria-current="page">
+        <a href="/admin/main" class="nav-link active" aria-current="page">
           메인
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
+        <a href="/admin/member" class="nav-link text-white">
           회원관리
         </a>
       </li>
@@ -78,6 +86,8 @@
 
     </div>
   </div>
+  
+  일단 여기가 메인임
 </main>
 
 </body>

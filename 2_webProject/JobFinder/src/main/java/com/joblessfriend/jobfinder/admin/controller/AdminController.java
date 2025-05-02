@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.joblessfriend.jobfinder.admin.domain.AdminVo;
-
+import com.joblessfriend.jobfinder.admin.service.AdminService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -30,7 +30,7 @@ public class AdminController {
 		logger.info(logTitleMsg);
 		logger.info("login");
 		
-		return "/admin/auth/adminLogin";
+		return "/admin/auth/adminLoginForm";
 	}
 	
 //	@PostMapping("/login")
@@ -45,12 +45,12 @@ public class AdminController {
 //
 //			return "redirect:/admin/adminMain";
 //		}else {
-//			return "/admin/auth/adminLoginFall";
+//			return "/admin/auth/adminLoginFallView";
 //		}
 //
 //
 //	}
-//
+
 	
 	
 	@GetMapping("/logout")
@@ -68,7 +68,15 @@ public class AdminController {
 		logger.info(logTitleMsg);
 		logger.info("login");
 		
-		return "/admin/adminMain";
+		return "/admin/adminMainView";
+	}
+	
+	@GetMapping("/member")
+	public String member(Model model) {
+		logger.info(logTitleMsg);
+		logger.info("login");
+		
+		return "/admin/memberView";
 	}
 	
 
