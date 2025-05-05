@@ -12,5 +12,7 @@
 
     <mappers>
 <!--    예시    <mapper resource="mappers/member/MemberMapper.xml"/>-->
+
+
     </mappers>
 </configuration>

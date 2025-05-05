@@ -5,7 +5,9 @@
 <mapper namespace="com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao">
 
     <select id="jobGroupList" resultType="com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo">
-        SELECT JOB_GROUP_ID, JOB_GROUP_NAME
+        SELECT
+            JOB_GROUP_ID AS jobGroupId,
+            JOB_GROUP_NAME AS jobGroupName
         FROM JOB_GROUP
     </select>
 

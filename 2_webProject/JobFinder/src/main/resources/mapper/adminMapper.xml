@@ -6,11 +6,11 @@
 
 
 
-	<resultMap type="adminVo" id="adminMap">
-		<id column="ADMIN_ID" property="adminId" />
-		<result column="PASSWORD" property="password" />
+<!--	<resultMap type="adminVo" id="adminMap">-->
+<!--		<id column="ADMIN_ID" property="adminId" />-->
+<!--		<result column="PASSWORD" property="password" />-->
 
-	</resultMap>
+<!--	</resultMap>-->
 
 
 

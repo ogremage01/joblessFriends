@@ -33,33 +33,14 @@
                     <div class="dropdown-content">
                         <!-- 왼쪽: 직군 리스트 -->
                         <div id="jobGroupList" class="job-group-list">
-                            <div class="job-group">기획·전략</div>
-                            <div class="job-group">개발</div>
-                            <div class="job-group">디자인</div>
-                            <div class="job-group">기획·전략</div>
-                            <div class="job-group">개발</div>
-                            <div class="job-group">디자인</div>
-                            <div class="job-group">기획·전략</div>
-                            <div class="job-group">개발</div>
-                            <div class="job-group">디자인</div>
-                            <div class="job-group">기획·전략</div>
-                            <div class="job-group">개발</div>
-                            <div class="job-group">디자인</div>
-                            <div class="job-group">기획·전략</div>
-                            <div class="job-group">개발</div>
-                            <div class="job-group">디자인</div>
-                            <div class="job-group">기획·전략</div>
-                            <div class="job-group">개발</div>
-                            <div class="job-group">디자인</div>
-                            <div class="job-group">기획·전략</div>
-                            <div class="job-group">개발</div>
-                            <div class="job-group">디자인</div>
-                            <div class="job-group">기획·전략</div>
-                            <div class="job-group">개발</div>
-                            <div class="job-group">디자인</div>
-
-
+                            <c:forEach var="item" items="${jobGroupList}">
+                                <div class="job-group" data-code="${item.jobGroupId}">
+                                        ${item.jobGroupName}
+                                </div>
+                            </c:forEach>
+                            
                         </div>
+
 
                         <!-- 오른쪽: 직무 리스트 -->
                         <div id="jobList" class="job-list">
