@@ -1,5 +1,9 @@
 package com.joblessfriend.jobfinder.recruitment.service;
 
-public interface RecruitmentService {
+import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
 
+import java.util.List;
+
+public interface RecruitmentService {
+    public List<JobGroupVo> jobGroupList();
 }

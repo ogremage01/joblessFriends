@@ -1,17 +1,33 @@
 package com.joblessfriend.jobfinder.recruitment.controller;
 
-
+//
+//import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
+//import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
+import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
+import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
+@RequiredArgsConstructor
 @RequestMapping("/Recruitment")
 @Controller
 public class RecruitmentController {
 
+    private final RecruitmentService recruitmentService;
+
 
     @GetMapping("/list")
-    public String list() {
+    public String getAlllist(Model model) {
+        List<JobGroupVo> jobGroupList = recruitmentService.jobGroupList();
+
+        model.addAttribute("jobGroupList", jobGroupList);
+//        //추가 채용공고완성시 추가진행예정//
+
         return "recruitment/recruitmentView";
     }
 }
