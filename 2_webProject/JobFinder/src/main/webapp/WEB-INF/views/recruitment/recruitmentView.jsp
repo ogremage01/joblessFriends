@@ -15,6 +15,8 @@
 
 
 
+
+
 <body>
 <jsp:include page="../common/header.jsp"/>
 
@@ -100,12 +102,15 @@
                     </div>
                 </div>
 
-                <div class="dropdown">
+                <div class="dropdown education-dropdown">
                     <button type="button" class="dropdown-toggle">학력 ▼</button>
-                    <div class="dropdown-content">
-                        <label><input type="checkbox" name="education" value="고졸"> 고졸</label>
-                        <label><input type="checkbox" name="education" value="대졸"> 대졸</label>
-                        <label><input type="checkbox" name="education" value="석사"> 석사</label>
+                    <div class="dropdown-content education-dropdown-content">
+                        <label><input type="checkbox" name="education" value="학력무관"> 학력무관</label>
+                        <label><input type="checkbox" name="education" value="대학 졸업(4년)"> 대학교 졸업(4년)</label>
+                        <label><input type="checkbox" name="education" value="대학 졸업(2,3년)"> 대학 졸업(2,3년)</label>
+                        <label><input type="checkbox" name="education" value="대학원 석사졸업"> 대학원 석사졸업</label>
+                        <label><input type="checkbox" name="education" value="대학원 박사졸업"> 대학원 박사졸업</label>
+                        <label><input type="checkbox" name="education" value="고등학교 졸업"> 고등학교 졸업</label>
                     </div>
                 </div>
 
@@ -139,6 +144,24 @@
                 <button>지원하기</button>
             </div>
 
+            <div class="job">
+                <div class="job-info">
+                    <h3>회사명</h3>
+                    <p>직무: 디자이너</p>
+                    <p>부서: 디자인팀</p>
+                    <p>마감일: 04/24(화)</p>
+                </div>
+                <button>지원하기</button>
+            </div>
+            <div class="job">
+                <div class="job-info">
+                    <h3>회사명</h3>
+                    <p>직무: 디자이너</p>
+                    <p>부서: 디자인팀</p>
+                    <p>마감일: 04/24(화)</p>
+                </div>
+                <button>지원하기</button>
+            </div>
             <div class="job">
                 <div class="job-info">
                     <h3>회사명</h3>

@@ -6,16 +6,16 @@
 
 
 
-	<resultMap type="Vo" id="">
-		<id column="" property="" />
-		<result column="" property="" />
-		<result column="_DATE" property=""
-			javaType="java.util.Date" />
+<!--	<resultMap type="Vo" id="">-->
+<!--		<id column="" property="" />-->
+<!--		<result column="" property="" />-->
+<!--		<result column="_DATE" property=""-->
+<!--			javaType="java.util.Date" />-->
 
-	</resultMap>
+<!--	</resultMap>-->
 
 
-	
+
 
 
 </mapper>
