@@ -1,6 +1,5 @@
 package com.joblessfriend.jobfinder.admin.controller;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +17,21 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/admin")
 @Controller
 public class AdminController {
-	
+
 	private Logger logger = LoggerFactory.getLogger(AdminController.class);
 	private final String logTitleMsg = "==Admin control==";
-	
+
 	@Autowired
 	private AdminService adminService;
-	
+
 	@GetMapping("/login")
 	public String login(Model model) {
 		logger.info(logTitleMsg);
 		logger.info("login");
-		
+
 		return "/admin/auth/adminLoginFormView";
 	}
-	
+
 	@PostMapping("/login")
 	public String getlogin(String account, String password, HttpSession session, Model model) {
 		logger.info(logTitleMsg);
@@ -40,53 +39,48 @@ public class AdminController {
 
 		AdminVo adminVo = adminService.adminExist(account, password);
 
-		if(adminVo != null) {
+		if (adminVo != null) {
 			session.setAttribute("admin", adminVo);
 
-			return "redirect:/admin/adminMain";
-		}else {
+			return "redirect:/admin/main";
+		} else {
 			return "/admin/auth/adminLoginFallView";
 		}
 
-
 	}
 
-	
-	
 	@GetMapping("/logout")
 	public String logout(HttpSession session, Model model) {
 		logger.info(logTitleMsg);
 		logger.info("login");
-		
+
 		session.invalidate();
-		
+
 		return "redirect:/admin/login";
 	}
-	
+
 	@GetMapping("/main")
 	public String main(Model model) {
 		logger.info(logTitleMsg);
 		logger.info("login");
-		
+
 		return "/admin/adminMainView";
 	}
-	
-	@GetMapping("/member")
+
+	@GetMapping("/member/individual")
 	public String member(Model model) {
 		logger.info(logTitleMsg);
 		logger.info("login");
-		
-		return "/admin/member/memberView";
+
+		return "/admin/member/memberIndividualView";
 	}
-	
-	
+
 	@GetMapping("/member/company")
 	public String memberCompany(Model model) {
 		logger.info(logTitleMsg);
 		logger.info("login");
-		
-		return "/admin/member/memberCompany";
+
+		return "/admin/member/memberCompanyView";
 	}
-	
 
 }

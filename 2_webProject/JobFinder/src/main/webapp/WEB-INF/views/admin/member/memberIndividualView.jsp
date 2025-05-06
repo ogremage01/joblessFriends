@@ -25,9 +25,10 @@
 </head>
 <body>
 <main class="d-flex flex-nowrap">
-	<!-- 사이드바 영역 -->
+<!-- 사이드바 영역 -->
   <div class="flex-shrink-0 p-3" style="width: 280px; height:100vh; border-right: 1px solid black;">
     <a href="#" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+      <svg class="bi pe-none me-2" width="30" height="24" aria-hidden="true"><use xlink:href="#bootstrap"/></svg>
       <span class="fs-5 fw-semibold">관리자 화면</span>
     </a>
     <ul class="list-unstyled ps-0">
@@ -90,10 +91,12 @@
     <a href="/admin/logout" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">로그아웃</a>
   </div>
   <!-- 사이드바 영역 -->
-	  <!-- 본문영역  -->
-  		  <div>본문 영역 표시-직무</div> 	
-      <!-- 본문영역  -->
-</main>
+  <!-- 본문영역 -->
+  
+    <div>본문 영역 표시-개인 회원 영역</div>
+  
+  <!-- 본문영역 -->
+
 
 </body>
 </html>

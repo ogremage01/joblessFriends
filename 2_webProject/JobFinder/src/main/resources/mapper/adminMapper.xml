@@ -2,25 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.joblessfriend.jobfinder.admin">
+	<mapper namespace="com.joblessfriend.jobfinder.admin">
 
 
 
-	<resultMap type="adminVo" id="adminMap">
-		<id column="ADMIN_ID" property="adminId" />
-		<result column="PASSWORD" property="password" />
-
-	</resultMap>
-
-
-	<select id="adminExist" parameterType="map"
-		resultMap="adminMap">
-		SELECT ADMIN_ID,PASSWORD
-		FROM ADMIN
-		WHERE EMAIL = #{adminId} AND PWD = #{password}
-
-	</select>
-
+		<resultMap type="adminVo" id="adminMap">
+			<id column="ADMIN_ID" property="adminId" />
+			<result column="PASSWORD" property="password" />
+	
+		</resultMap>
+	
+	
+		<select id="adminExist" parameterType="map"
+			resultMap="adminMap">
+			SELECT ADMIN_ID,PASSWORD
+			FROM ADMIN
+			WHERE ADMIN_ID = #{adminId} AND PASSWORD = #{password}
+		</select>
 
 
-</mapper>
+
+	</mapper>

@@ -21,73 +21,78 @@
     
     <script type="text/javascript">
     
-    
-    
-    
     </script>
 </head>
 <body>
-<jsp:include page="./common/header.jsp"></jsp:include>
 <main class="d-flex flex-nowrap">
-
-  <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px; height: 100vh">
-    <a href="/admin/logout" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-      <i class="bi pe-none me-2" width="40" height="32" aria-hidden="true"></i>
-      <span class="fs-4">로그아웃</span>
+	<!-- 사이드바 영역 -->
+  <div class="flex-shrink-0 p-3" style="width: 280px; height:100vh; border-right: 1px solid black;">
+    <a href="#" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+      <span class="fs-5 fw-semibold">관리자 화면</span>
     </a>
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
-        <a href="/admin/main" class="nav-link active" aria-current="page">
-          메인
+    <ul class="list-unstyled ps-0">
+      <li class="mb-1">
+        <a class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" href="/admin/main">
+          Home
         </a>
+      
       </li>
-      <li>
-        <a href="/admin/member" class="nav-link text-white">
+      <li class="mb-1">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#member-collapse" aria-expanded="false">
           회원관리
-        </a>
+        </button>
+        <div class="collapse" id="member-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="/admin/member/individual" class="link-body-emphasis d-inline-flex text-decoration-none rounded">일반회원</a></li>
+            <li><a href="/admin/member/company" class="link-body-emphasis d-inline-flex text-decoration-none rounded">기업회원</a></li>
+            <!-- <li><a href="/admin/admin" class="link-body-emphasis d-inline-flex text-decoration-none rounded">관리자</a></li> -->
+          </ul>
+        </div>
       </li>
-      <li>
-        <a href="#" class="nav-link text-white">
+      <li class="mb-1">
+        <a href="/admin/recruitment" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
           공고관리
         </a>
       </li>
-      <li>
-        <a href="#" class="nav-link text-white">
-          게시판관리
-        </a>
+            <li class="mb-1">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#community-collapse" aria-expanded="false">
+          커뮤니티관리
+        </button>
+        <div class="collapse" id="community-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="/admin/community" class="link-body-emphasis d-inline-flex text-decoration-none rounded">게시판 관리</a></li>
+          </ul>
+        </div>
       </li>
-      <li>
-        <a href="#" class="nav-link text-white">
+      <li class="mb-1">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#job-collapse" aria-expanded="false">
+          직군/직무관리
+        </button>
+        <div class="collapse" id="job-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="/admin/job/jobGroup" class="link-body-emphasis d-inline-flex text-decoration-none rounded">직군관리</a></li>
+            <li><a href="/admin/job/job" class="link-body-emphasis d-inline-flex text-decoration-none rounded">직무관리</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <a href="/admin/skill" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
           스킬관리
         </a>
       </li>
-       <li>
-        <a href="#" class="nav-link text-white">
+      <li class="mb-1">
+        <a href="/admin/chat" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
           채팅관리
         </a>
       </li>
-       <li>
-        <a href="#" class="nav-link text-white">
-          관리자관리
-        </a>
-      </li>
-       <li>
-        <a href="#" class="nav-link text-white">
-          직무/직군관리
-        </a>
-      </li>
+      <li class="border-top my-3"></li>
     </ul>
-    <hr>
-    <div class="adminName">
-
-        <strong>관리자명이 들어갈 부분</strong>
-
-
-    </div>
+    <a href="/admin/logout" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">로그아웃</a>
   </div>
-  
-  일단 여기가 메인임
+  <!-- 사이드바 영역 -->
+	  <!-- 본문영역  -->
+  		  <div>본문 영역 표시-메인 영역</div> 	
+      <!-- 본문영역  -->
 </main>
 
 </body>
