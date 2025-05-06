@@ -1,3 +1,4 @@
+<!-- 관리자 로그인 여부를 묻는 자바구문이 들어가야 할 부분 -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -17,6 +18,9 @@
 
     <style>
         /*기본값(default)이 이미 "text/css"로 되어 있어서 자동인식한다하여 뺐음 */
+        #container{
+        	margin: auto;
+        }
     </style>
     
     <script type="text/javascript">
@@ -91,7 +95,7 @@
   </div>
   <!-- 사이드바 영역 -->
 	  <!-- 본문영역  -->
-  		  <div>본문 영역 표시-메인 영역</div> 	
+  		  <div id="container">본문 영역 표시-메인 영역</div>
       <!-- 본문영역  -->
 </main>
 

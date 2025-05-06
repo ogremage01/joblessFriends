@@ -1,3 +1,4 @@
+<!-- 관리자 로그인 여부를 묻는 자바구문이 들어가야 할 부분 -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -101,10 +102,28 @@
 	  	<thead class="table-dark" style="margin: auto;">
 	  		<tr>
 	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
 	  		</tr>
 	  	</thead>
 	  	<tbody class="table-group-divider"></tbody>
-	    		<tr>
+	    	<tr>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  		</tr>
+	  		<tr>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  		</tr>
+	  		<tr>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
 	  			<td>예시</td>
 	  		</tr>
 	  </table>

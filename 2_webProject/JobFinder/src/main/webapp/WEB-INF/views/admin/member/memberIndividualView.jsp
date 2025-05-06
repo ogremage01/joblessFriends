@@ -1,3 +1,4 @@
+<!-- 관리자 로그인 여부를 묻는 자바구문이 들어가야 할 부분 -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -17,6 +18,9 @@
 
     <style>
         /*기본값(default)이 이미 "text/css"로 되어 있어서 자동인식한다하여 뺐음 */
+        #container{
+        	margin: auto;
+        }
     </style>
     
     <script type="text/javascript">
@@ -93,7 +97,37 @@
   <!-- 사이드바 영역 -->
   <!-- 본문영역 -->
   
-    <div>본문 영역 표시-개인 회원 영역</div>
+    <div id="container">
+	  <table class="table table-striped">
+	  	<thead class="table-dark" style="margin: auto;">
+	  		<tr>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  		</tr>
+	  	</thead>
+	  	<tbody class="table-group-divider"></tbody>
+	    	<tr>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  		</tr>
+	  		<tr>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  		</tr>
+	  		<tr>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  		</tr>
+	  </table>
+  </div>
   
   <!-- 본문영역 -->
 
