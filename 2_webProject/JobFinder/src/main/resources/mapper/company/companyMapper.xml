@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 	<mapper namespace="com.joblessfriend.jobfinder.company">
 
 
 
-		<resultMap type="companyVo" id="companyResultMap">
+		<resultMap type="com.joblessfriend.jobfinder.company.domain.CompanyVo" id="companyResultMap">
 			<id column="COMPANY_ID" property="companyId" />
 			<result column="EMAIL" property="email" />
 			<result column="PASSWORD" property="password" />
@@ -17,10 +17,10 @@
 			<result column="POSTAL_CODE_ID" property="postalCodeId"/>
 			<result column="ARENA_NAME" property="arenaName"/>
 			<result column="ADDRESS" property="address"/>
-	
+
 		</resultMap>
-	
-		<select id="companySelectList" resultType="companyResultMap">
+
+		<select id="companySelectList" resultType="com.joblessfriend.jobfinder.company.domain.CompanyVo">
 			SELECT COMPANY_ID,EMAIL,COMPANY_NAME,TEL
 			FROM COMPANY
 			ORDER BY COMPANY_ID DESC

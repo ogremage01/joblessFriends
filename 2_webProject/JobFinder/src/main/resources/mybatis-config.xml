@@ -6,10 +6,10 @@
 <configuration>
     <!-- 없으면안됨 현재 패키지 네임 자체가 없으면 mybatis에서 풀네임으로 적어야함 -->
     <typeAliases>
-<!--      예시  <package name="com.edu.member.domain"/>-->
-<!-- 		 <package name="com.joblessfriend.jobfinder.admin.domain"/> -->
-<!--		 <package name="com.joblessfriend.jobfinder.company.domain"/>  -->
-
+<!--&lt;!&ndash;      예시  <package name="com.edu.member.domain"/>&ndash;&gt;-->
+ 		 <package name="com.joblessfriend.jobfinder.admin.domain"/>
+<!--		 <package name="com.joblessfriend.jobfinder.company.domain"/>-->
+<!--        -->
     </typeAliases>
 
     <mappers>
