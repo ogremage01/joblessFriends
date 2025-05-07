@@ -6,6 +6,7 @@ package com.joblessfriend.jobfinder.recruitment.controller;
 import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
 import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +20,9 @@ import java.util.List;
 @RequestMapping("/Recruitment")
 @Controller
 public class RecruitmentController {
-
-    private final RecruitmentService recruitmentService;
+    
+    @Autowired
+    private RecruitmentService recruitmentService;
 
 
     @GetMapping("/list")
