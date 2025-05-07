@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 public class RecruitmentServiceImpl implements RecruitmentService {
 
+    @Autowired
     private final RecruitmentDao recruitmentDao;
 
     public RecruitmentServiceImpl(RecruitmentDao recruitmentDao) {
