@@ -14,7 +14,7 @@ public class CompanyDaoImpl implements CompanyDao{
 	@Autowired
 	private SqlSession sqlSession;
 	
-	private String namespace = "com.joblessfriend.jobfinder.company.domain";
+	private String namespace = "com.joblessfriend.jobfinder.company.";
 	
 
 	@Override

@@ -40,11 +40,11 @@ public class AdminController {
 	}
 
 	@PostMapping("/login")
-	public String getlogin(String account, String password, HttpSession session, Model model) {
+	public String getlogin(String adminId, String password, HttpSession session, Model model) {
 		logger.info(logTitleMsg);
-		logger.info("login!" + account + ", " + password);
+		logger.info("login!" + adminId + ", " + password);
 
-		AdminVo adminVo = adminService.adminExist(account, password);
+		AdminVo adminVo = adminService.adminExist(adminId, password);
 
 		if (adminVo != null) {
 			session.setAttribute("admin", adminVo);
@@ -88,7 +88,7 @@ public class AdminController {
 		logger.info("login");
 		
 		List<CompanyVo> companyList = companyService.companySelectList();
-		model.addAttribute(companyList);
+		model.addAttribute("companyList", companyList);
 
 
 		return "/admin/member/memberCompanyView";

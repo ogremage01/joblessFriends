@@ -162,14 +162,14 @@ label {
 
                 <div class="col-lg-12 login-form">
                     <div class="col-lg-12 login-form">
-                        <form>
+                        <form action="./login" method="post">
                             <div class="form-group">
                                 <label class="form-control-label">ACCOUNT</label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" name="adminId">
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label">PASSWORD</label>
-                                <input type="password" class="form-control" i>
+                                <input type="password" class="form-control" name="password">
                             </div>
 
                             <div class="col-lg-12 loginbttm">
