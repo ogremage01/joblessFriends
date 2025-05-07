@@ -11,7 +11,13 @@ public class AuthController {
 	@GetMapping("/signup")
 	public String signup() {
 		
-	  return "auth/signUpFormView";
+	  return "auth/signUpForm";
+	}
+	
+	@GetMapping("/login")
+	public String login() {
+		
+	  return "auth/loginForm";
 	}
 
 }

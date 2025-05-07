@@ -49,12 +49,12 @@
 	
 	/* 가입 폼 */
 	
-	#signUpForm {
+	#loginForm {
 		width: 300px;
 		margin: auto;
 	}
 	
-	#signUpForm fieldset {
+	#loginForm fieldset {
 		border: 0px;
 		padding: 0;
 		margin: 0;
@@ -63,11 +63,11 @@
 		flex-direction: column;
 	}
 	
-	#signUpForm legend {
+	#loginForm legend {
 		display: none;
 	}
 	
-	#signUpForm input {
+	#loginForm input {
 		height: 38px;
 		padding: 5px 15px;
 		border: 1px solid #E0E0E0;
@@ -76,11 +76,11 @@
 		font-size: 16px;
 	}
 	
-	#signUpForm input:hover{
+	#loginForm input:hover{
 	border:1px solid #C9C9C9;
 	}
 	
-	#signUpForm input:focus {
+	#loginForm input:focus {
 		border: 1px solid #F69800;
 
 	}
@@ -94,7 +94,7 @@
 		color: white;
 	}
 	
-	#signUpBtn {
+	#loginBtn {
 		height: 50px;
 		border-radius: 8px;
 		font-size: 18px;
@@ -102,7 +102,7 @@
 		cursor: pointer;
 	}
 	
-	#signUpBtn:hover {
+	#loginBtn:hover {
 		background-color: #DE8100;
 	}
 	
@@ -163,31 +163,20 @@
 			
 			<div id="content">
 			
-				<div id="signUpFormWrap">
-					<form id="signUpForm" name="signUpForm" method="" action="">
+				<div id="loginFormWrap">
+					<form id="loginForm" name="loginForm" method="" action="">
 						<fieldset>
-							<legend>회원가입</legend>
+							<legend>로그인</legend>
 							<input id="email" name="email" type="text" value="" placeholder="이메일">
 							<input id="password" name="password" type="password" value="" placeholder="비밀번호">
-							<input id="passwordCheck" name="passwordCheck" type="password" value="" placeholder="비밀번호 확인">
 							
-<!-- 							<input id="email" name="email" type="text" value="" placeholder="기업명"> -->
-<!-- 							<input id="email" name="email" type="text" value="" placeholder="사업자 등록번호"> -->
-							
-<!-- 							<input id="email" name="" type="text" value="" placeholder="담당자 명"> -->
-<!-- 							<input id="email" name="email" type="text" value="" placeholder="연락처"> -->
-							
-							<button type="submit" id="signUpBtn" class="btnStyle">가입하기</button>
+							<button type="submit" id="loginBtn" class="btnStyle">로그인</button>
 						</fieldset>
 					</form>
 				</div>
 				
 				<div id="goLogin">
-					<div id="loginSuggestion">
-						<span>
-							이미 회원이신가요?
-							<a href="#">로그인</a>
-						</span>
+					<div id="">
 					</div>
 					
 					<div id="socialLogin">
