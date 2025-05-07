@@ -18,4 +18,9 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
         return sqlSession.selectList("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.jobGroupList");
 
     }
+
+    @Override
+    public List<JobGroupVo> jobList(int jobGroupId) {
+        return sqlSession.selectList("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.jobList",jobGroupId);
+    }
 }
