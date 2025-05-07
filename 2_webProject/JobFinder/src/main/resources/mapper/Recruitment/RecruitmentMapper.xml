@@ -11,4 +11,13 @@
         FROM JOB_GROUP
     </select>
 
+
+    <select id="jobList" parameterType="int" resultType="com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo">
+        SELECT
+            JOB_NAME AS jobName
+        FROM JOB
+        WHERE JOB_GROUP_ID = #{jobGroupId}
+    </select>
+
+
 </mapper>

@@ -20,4 +20,9 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public List<JobGroupVo> jobGroupList() {
         return recruitmentDao.jobGroupList();
     }
+
+    @Override
+    public List<JobGroupVo> jobList(int jobGroupId) {
+        return recruitmentDao.jobList(jobGroupId);
+    }
 }

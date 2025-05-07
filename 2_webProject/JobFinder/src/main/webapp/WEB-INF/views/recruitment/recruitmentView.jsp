@@ -45,30 +45,7 @@
                         <!-- 오른쪽: 직무 리스트 -->
                         <div id="jobList" class="job-list">
                             <!-- 클릭 후 동적 생성 -->
-                            <label><input type="checkbox" name="job" value="게임기획"> 게임기획</label>
-                            <label><input type="checkbox" name="job" value="경영기획"> 경영기획</label>
-                            <label><input type="checkbox" name="job" value="게임기획"> 게임기획</label>
-                            <label><input type="checkbox" name="job" value="경영기획"> 경영기획</label>
-                            <label><input type="checkbox" name="job" value="게임기획"> 게임기획</label>
-                            <label><input type="checkbox" name="job" value="경영기획"> 경영기획</label>
-                            <label><input type="checkbox" name="job" value="게임기획"> 게임기획</label>
-                            <label><input type="checkbox" name="job" value="경영기획"> 경영기획</label>
-                            <label><input type="checkbox" name="job" value="게임기획"> 게임기획</label>
-                            <label><input type="checkbox" name="job" value="경영기획"> 경영기획</label>
-                            <label><input type="checkbox" name="job" value="게임기획"> 게임기획</label>
-                            <label><input type="checkbox" name="job" value="경영기획"> 경영기획</label>
-                            <label><input type="checkbox" name="job" value="게임기획"> 게임기획</label>
-                            <label><input type="checkbox" name="job" value="경영기획"> 경영기획</label>
-                            <label><input type="checkbox" name="job" value="게임기획"> 게임기획</label>
-                            <label><input type="checkbox" name="job" value="경영기획"> 경영기획</label>
-                            <label><input type="checkbox" name="job" value="게임기획"> 게임기획</label>
-                            <label><input type="checkbox" name="job" value="경영기획"> 경영기획</label>
-                            <label><input type="checkbox" name="job" value="게임기획"> 게임기획</label>
-                            <label><input type="checkbox" name="job" value="경영기획"> 경영기획</label>
-                            <label><input type="checkbox" name="job" value="게임기획"> 게임기획</label>
-                            <label><input type="checkbox" name="job" value="경영기획"> 경영기획</label>
-                            <label><input type="checkbox" name="job" value="게임기획"> 게임기획</label>
-                            <label><input type="checkbox" name="job" value="경영기획"> 경영기획</label>
+
 
                         </div>
                     </div>

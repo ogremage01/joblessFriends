@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class JobGroupVo {
-    private Integer jobGroupId;
+    private int jobGroupId;
     private String jobGroupName;
+    private String jobName;
 }
