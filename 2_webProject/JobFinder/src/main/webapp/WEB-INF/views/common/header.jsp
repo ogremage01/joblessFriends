@@ -255,7 +255,7 @@
 						|
 					</li>
 					<li class="serviceNavItem communityNav">
-						<a href="">커뮤니티</a>
+						<a href="/community">커뮤니티</a>
 					</li>
 				</ul>
 			</div>
