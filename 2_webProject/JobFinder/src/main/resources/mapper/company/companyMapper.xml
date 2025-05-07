@@ -6,7 +6,7 @@
 
 
 
-		<resultMap type="companyVo" id="companyMap">
+		<resultMap type="companyVo" id="companyResultMap">
 			<id column="COMPANY_ID" property="companyId" />
 			<result column="EMAIL" property="email" />
 			<result column="PASSWORD" property="password" />
@@ -20,8 +20,11 @@
 	
 		</resultMap>
 	
-	
-
+		<select id="companySelectList" resultType="companyResultMap">
+			SELECT COMPANY_ID,EMAIL,COMPANY_NAME,TEL
+			FROM COMPANY
+			ORDER BY COMPANY_ID DESC
+		</select>
 
 
 

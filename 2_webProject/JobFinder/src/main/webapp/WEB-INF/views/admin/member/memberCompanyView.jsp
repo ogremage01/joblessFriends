@@ -107,7 +107,7 @@
 	  			<td>예시</td>
 	  		</tr>
 	  	</thead>
-	  	<tbody class="table-group-divider"></tbody>
+	  	<tbody class="table-group-divider">
 	    	<tr>
 	  			<td>예시</td>
 	  			<td>예시</td>
@@ -126,6 +126,37 @@
 	  			<td>예시</td>
 	  			<td>예시</td>
 	  		</tr>
+	  	</tbody>
+	  </table>
+	  	  <table class="table table-striped">
+	  	<thead class="table-dark" style="margin: auto;">
+	  		<tr>
+	  			
+	  		</tr>
+	  	</thead>
+	  	<tbody class="table-group-divider">
+	  	<c:forEach var="companyVo" items="${companyList}">
+	  		<tr>
+	  			<td>${companyVo.companyId}</td>
+	  			<td>${companyVo.email}</td>
+	  			<td>${companyVo.companyName}</td>
+	  			<td>${companyVo.tel}</td>
+	  		</tr>
+	  	</c:forEach>
+	    
+	  		<tr>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  		</tr>
+	  		<tr>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  			<td>예시</td>
+	  		</tr>
+	  	</tbody>
 	  </table>
   </div>
   <!-- 본문영역 -->

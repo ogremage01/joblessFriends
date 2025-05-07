@@ -1,5 +1,7 @@
 package com.joblessfriend.jobfinder.admin.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.joblessfriend.jobfinder.admin.domain.AdminVo;
 import com.joblessfriend.jobfinder.admin.service.AdminService;
+import com.joblessfriend.jobfinder.company.domain.CompanyVo;
+import com.joblessfriend.jobfinder.company.service.CompanyService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -23,6 +27,9 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private CompanyService companyService;
 
 	@GetMapping("/login")
 	public String login(Model model) {
@@ -79,6 +86,10 @@ public class AdminController {
 	public String memberCompany(Model model) {
 		logger.info(logTitleMsg);
 		logger.info("login");
+		
+		List<CompanyVo> companyList = companyService.companySelectList();
+		model.addAttribute(companyList);
+
 
 		return "/admin/member/memberCompanyView";
 	}
