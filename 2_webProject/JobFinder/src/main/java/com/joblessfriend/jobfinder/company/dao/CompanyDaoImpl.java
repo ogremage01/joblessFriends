@@ -14,13 +14,20 @@ public class CompanyDaoImpl implements CompanyDao{
 	@Autowired
 	private SqlSession sqlSession;
 	
-	private String namespace = "com.joblessfriend.jobfinder.company.domain";
+	private String namespace = "com.joblessfriend.jobfinder.company.";
 	
 
 	@Override
-	public List<CompanyVo> companySelectList() {
+	public List<CompanyVo> companySelectList(int page) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace + "companySelectList");
+		return sqlSession.selectList(namespace + "companySelectList",page);
+	}
+
+
+	@Override
+	public int companyCount() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + "companyCount");
 	}
 
 }

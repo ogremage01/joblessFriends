@@ -15,7 +15,7 @@ public class AdminDaoImpl implements AdminDao{
 	@Autowired
 	private SqlSession sqlSession;
 	
-	private String namespace = "com.joblessfriend.jobfinder.admin.domain";
+	private String namespace = "com.joblessfriend.jobfinder.admin.";
 
 
 	@Override
