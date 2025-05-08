@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CompanyDao {
 
-	public List<CompanyVo> companySelectList();
+	public List<CompanyVo> companySelectList(int page);
+
+	public int companyCount();
 
 }

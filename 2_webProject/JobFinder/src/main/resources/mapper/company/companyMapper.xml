@@ -21,9 +21,18 @@
 		</resultMap>
 
 		<select id="companySelectList" resultMap="companyResultMap">
-			SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
+		  SELECT * 
+		  FROM (SELECT ROWNUM AS RN, INNERTABLE.*
+		    FROM (SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
+		      FROM COMPANY
+		      ORDER BY COMPANY_ID DESC) INNERTABLE
+		    WHERE ROWNUM &lt;= (#{page} + 1) * 10)
+		  WHERE RN &gt; #{page} * 10
+		</select>
+		
+		<select id="companyCount" resultType="int">
+			SELECT COUNT(COMPANY_ID)
 			FROM COMPANY
-			ORDER BY COMPANY_ID DESC
 		</select>
 
 

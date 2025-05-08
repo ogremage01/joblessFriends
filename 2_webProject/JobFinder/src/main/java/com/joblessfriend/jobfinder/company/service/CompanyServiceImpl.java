@@ -15,10 +15,16 @@ public class CompanyServiceImpl implements CompanyService {
 	CompanyDao companyDao;
 
 	@Override
-	public List<CompanyVo> companySelectList() {
+	public List<CompanyVo> companySelectList(int page) {
 		// TODO Auto-generated method stub
 		
-		return companyDao.companySelectList();
+		return companyDao.companySelectList(page);
+	}
+
+	@Override
+	public int companyCount() {
+		// TODO Auto-generated method stub
+		return companyDao.companyCount();
 	}
 
 }

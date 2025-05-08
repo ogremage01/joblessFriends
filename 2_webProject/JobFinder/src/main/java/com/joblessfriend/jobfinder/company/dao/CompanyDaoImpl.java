@@ -18,9 +18,16 @@ public class CompanyDaoImpl implements CompanyDao{
 	
 
 	@Override
-	public List<CompanyVo> companySelectList() {
+	public List<CompanyVo> companySelectList(int page) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace + "companySelectList");
+		return sqlSession.selectList(namespace + "companySelectList",page);
+	}
+
+
+	@Override
+	public int companyCount() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + "companyCount");
 	}
 
 }
