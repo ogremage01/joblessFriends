@@ -8,7 +8,7 @@
 	
 </script>
 <head>
-<link rel="stylesheet" href="/css/community/commueCommonStyle.css">
+<link rel="stylesheet" href="/css/community/communityCommonStyle.css">
 </head>
 
 <style type="text/css">

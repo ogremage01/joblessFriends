@@ -3,7 +3,7 @@
 
 <head>
 
-<link rel="stylesheet" href="/css/community/commueCommonStyle.css"> 
+<link rel="stylesheet" href="/css/community/communityCommonStyle.css"> 
 <style type="text/css">
 #replyWrap {
 	margin-top: 50px;

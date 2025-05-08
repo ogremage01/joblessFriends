@@ -6,8 +6,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link rel="stylesheet" href="/css/community/commueCommonStyle.css">
-
+<link rel="stylesheet" href="/css/community/communityCommonStyle.css">
+<link rel="stylesheet" href="/css/common/common.css">
 <style type="text/css">
 .wrap {
 	display: flex;
@@ -55,10 +55,10 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-<div>
+<div id='containerWrap'>
 	<div class='wrap'>
 		<div>
-			<jsp:include page="/WEB-INF/views/commue/list/commueSideBar.jsp" />
+			<jsp:include page="/WEB-INF/views/community/list/communitySideBar.jsp" />
 		</div>
 		<div>
 			<div class='boxStyle contentBox'>
@@ -66,7 +66,7 @@
 				<div id='infoContent'>
 					<div>
 						<svg xmlns="http://www.w3.org/2000/svg" width="80" height="24"
-							fill="#BABECA" class="bi bi-eye" viewBox="0 0 75 16">
+							fill="#a2a6b1" class="bi bi-eye" viewBox="0 0 75 16">
 				  	<path
 								d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
 				  	<path
@@ -77,7 +77,7 @@
 					</div>
 					<div>
 						<svg xmlns="http://www.w3.org/2000/svg" width="110" height="24"
-							fill="#BABECA" class="bi bi-chat-left" viewBox="0 -2 100 16">
+							fill="#a2a6b1" class="bi bi-chat-left" viewBox="0 -2 100 16">
 				  	<text x="0" y="12" font-size="12">(날짜) 작성</text>
 				</svg>
 					</div>
@@ -102,7 +102,7 @@
 				</div>
 			</div>
 			<div>
-				<jsp:include page="/WEB-INF/views/commue/detail/commueReply.jsp" />
+				<jsp:include page="/WEB-INF/views/community/detail/communityReply.jsp" />
 			</div>
 
 		</div>
