@@ -7,24 +7,27 @@
 <meta charset="UTF-8">
 <title>게시물 목록</title>
 
+<link rel="stylesheet" href="/css/common/common.css">
 <style type="text/css">	
 	.wrap{
 
 		display: flex;
 		justify-content: space-between;
-		
-		
-		
+	}
+
+	#communityList{
+		margin-bottom: 15px;
 	}
 </style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-<div class="wrap">
-	<div>
-		<jsp:include page="/WEB-INF/views/commue/list/commueSideBar.jsp"/>
+
+<div id='containerWrap' class="wrap">
+	<div id='communityList'>
+		<jsp:include page="/WEB-INF/views/community/list/communitySideBar.jsp"/>
 	</div>	
-	<jsp:include page="/WEB-INF/views/commue/list/commueListOne.jsp"/>
+	<jsp:include page="/WEB-INF/views/community/list/communityListOne.jsp"/>
 
 </div>
 </body>

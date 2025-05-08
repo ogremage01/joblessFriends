@@ -13,21 +13,21 @@ public class CommunityController {
 	public String test(Model model) {
 		
 		//리스트 화면
-		return "commue/list/commueList";
+		return "community/list/communityList";
 	}
 	
 	@GetMapping("/a")
 	public String test2(Model model) {
 		
 		//업로드 화면
-		return "commue/add/commueUpload";
+		return "community/add/communityUpload";
 	}
 	
 	@GetMapping("/d")
 	public String test3(Model model) {
 		
 		//글 상세 화면
-		return "commue/detail/commueDetail";
+		return "community/detail/communityDetail";
 	}
 
 }
