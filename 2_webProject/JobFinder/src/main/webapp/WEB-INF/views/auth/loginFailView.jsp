@@ -147,44 +147,7 @@
 				<a href="/"><img alt="어디보잡 로고" src="/img/logo.svg" /></a>
 			</div>
 			
-			<div id="authNavWrap">
-				<ul class="authNav">
-					<li class="authNavNavItem user">
-						<a href="#" onclick="">개인회원</a>
-					</li>
-					<li class="authNavNavItem partitionNav">
-						|
-					</li>
-					<li class="authNavNavItem company">
-						<a href="#" onclick="">기업회원</a>
-					</li>
-				</ul>
-			</div>
-			
-			<div id="content">
-			
-				<div id="loginFormWrap">
-					<form id="loginForm" name="loginForm" method="post" action="/auth/login">
-						<fieldset>
-							<legend>로그인</legend>
-							<input id="email" name="email" type="text" value="" placeholder="이메일">
-							<input id="password" name="password" type="password" value="" placeholder="비밀번호">
-							
-							<button type="submit" id="loginBtn" class="btnStyle">로그인</button>
-						</fieldset>
-					</form>
-				</div>
-				
-				<div id="goLogin">
-					<div id="">
-					</div>
-					
-					<div id="socialLogin">
-						<span>소셜계정으로 간편 로그인</span>
-					</div>
-				</div>
-				
-			</div>
+			로그인 실패
 			
 		</div>
 	</div>
