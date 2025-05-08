@@ -1,11 +1,13 @@
    	
    	body {
-		margin: 0
+		margin: 0;
+		background-color: #f9f9f9;
 	}
    
     #container {
 		min-width: 1280px;
 		width: 100%;
+
 	}
 	
 	#containerWrap {

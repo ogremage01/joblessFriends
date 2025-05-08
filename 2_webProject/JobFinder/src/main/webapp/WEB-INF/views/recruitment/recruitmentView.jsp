@@ -34,12 +34,15 @@
                         <!-- 왼쪽: 직군 리스트 -->
                         <div id="jobGroupList" class="job-group-list">
                             <c:forEach var="item" items="${jobGroupList}">
-                                <div class="job-group" data-code="${item.jobGroupId}">
+                                <div
+                                        class="job-group"
+                                        data-code="${item.jobGroupId}"
+                                        data-name="${item.jobGroupName}">
                                         ${item.jobGroupName}
                                 </div>
                             </c:forEach>
-                            
                         </div>
+
 
 
                         <!-- 오른쪽: 직무 리스트 -->
@@ -87,6 +90,13 @@
                     <button type="button">초기화</button>
                 </div>
             </div>
+
+            <div id="searchJobGroup">
+
+            </div>
+
+
+
         </div>
 
         <!-- 채용공고 리스트 -->
