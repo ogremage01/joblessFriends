@@ -206,10 +206,10 @@
 				<div id="userDiv">
 					<ul id="userNav">
 						<li class="userNavItem login">
-							<a href="">로그인</a>
+							<a href="/auth/login">로그인</a>
 						</li>
 						<li class="userNavItem join">
-							<a href="">회원가입</a>
+							<a href="/auth/signup">회원가입</a>
 						</li>
 						<li class="userNavItem corpNav">
 							<a href="">
