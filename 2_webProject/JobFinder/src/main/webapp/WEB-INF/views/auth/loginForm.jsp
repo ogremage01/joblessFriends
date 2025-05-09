@@ -164,7 +164,7 @@
 			<div id="content">
 			
 				<div id="loginFormWrap">
-					<form id="loginForm" name="loginForm" method="post" action="/auth/login">
+					<form id="loginForm" name="loginForm" method="post" action="/auth/login/member">
 						<fieldset>
 							<legend>로그인</legend>
 							<input id="email" name="email" type="text" value="" placeholder="이메일">

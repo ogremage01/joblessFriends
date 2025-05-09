@@ -13,7 +13,7 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Autowired
 	private SqlSession sqlSession;
-	private String namespace = "com.joblessfriend.jobfinder.member.domain";
+	private String namespace = "com.joblessfriend.jobfinder.member.domain.";
 	
 	@Override
 	public MemberVo memberExist(String email, String password) {
@@ -22,7 +22,7 @@ public class MemberDaoImpl implements MemberDao{
 		HashMap<String, String> paramMap = new HashMap<>();
 		
 		paramMap.put("email", email);
-		paramMap.put("pwd", password);
+		paramMap.put("password", password);
 		
 		return sqlSession.selectOne(namespace + "memberExist", paramMap);
 		

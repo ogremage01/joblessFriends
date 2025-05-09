@@ -42,20 +42,32 @@ public class AuthController {
 		return "auth/loginForm";
 	}
 	
-	@PostMapping("/login")
+	@PostMapping("/login/member")
 	public String getLogin(String email, String password, HttpSession session, Model model) {
 		logger.info(logTitleMsg);
-		logger.info("login! " + email + ", " + password);
+		logger.info("login Member! " + email + ", " + password);
 		
 		MemberVo memberVo = memberService.memberExist(email, password);
+		logger.info("memberVo: {}", memberVo);
 		
 		if(memberVo != null) {
-			session.setAttribute("member", memberVo);
+			session.setAttribute("userLogin", memberVo);
+			session.setAttribute("userType", "member");
 			
-			return "redirect:/admin/login";
+			return "redirect:/";
 		}else {
 			return "auth/loginFailView";
 		}
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session, Model model) {
+		logger.info(logTitleMsg);
+		logger.info("logout");
+		
+		session.invalidate();
+		
+		return "redirect:/";
 	}
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-	<mapper namespace="com.joblessfriend.jobfinder.member.">
+	<mapper namespace="com.joblessfriend.jobfinder.member.domain">
 	
 		<resultMap type="memberVo" id="memberResultMap">
 			<id column="MEMBER_ID" property="memberId"/>
@@ -15,7 +15,8 @@
 		resultMap="memberResultMap">
 			SELECT MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX
 			FROM MEMBER
-			WHERE EMAIL = #{email} AND PASSWORD = #{password}
+			WHERE EMAIL = #{email, jdbcType=VARCHAR}
+			AND PASSWORD = #{password, jdbcType=VARCHAR}
 		</select>
 	
 	</mapper>

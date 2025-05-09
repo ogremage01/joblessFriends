@@ -15,6 +15,7 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public MemberVo memberExist(String email, String password) {
 		// TODO Auto-generated method stub
+
 		MemberVo memberVo = memberDao.memberExist(email, password);
 		
 		return memberVo;
