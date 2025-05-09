@@ -11,12 +11,13 @@
 <!--		 <package name="com.joblessfriend.jobfinder.company.domain"/>-->
 <!--        -->
 		<package name="com.joblessfriend.jobfinder.member.domain"/>
+		<package name="com.joblessfriend.jobfinder.community.domain"/>
     </typeAliases>
 
     <mappers>
 <!--    예시    <mapper resource="mappers/member/MemberMapper.xml"/>-->
 <!--		 <mapper resource="mapper/admin/adminMapper"/>-->
 <!--		 <mapper resource="mapper/company/companyMapper"/>  -->
-
+		<mapper resource="mapper/community/communityMapper.xml"/>
     </mappers>
 </configuration>
