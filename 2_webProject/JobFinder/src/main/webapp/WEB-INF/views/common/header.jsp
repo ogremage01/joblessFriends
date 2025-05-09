@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 
@@ -205,44 +206,49 @@
 				</div>
 				<div id="userDiv">
 					<ul id="userNav">
-						<li class="userNavItem login">
-							<a href="/auth/login">로그인</a>
-						</li>
-						<li class="userNavItem join">
-							<a href="/auth/signup">회원가입</a>
-						</li>
-						<li class="userNavItem corpNav">
-							<a href="">
-								기업서비스<span class="material-symbols-outlined keyboard_arrow_down">keyboard_arrow_down</span>
-							</a>
-						</li>
-
-
-
-<!-- 						<li class="userNavItem myPage"> -->
-<!-- 							<a href=""> -->
-<!-- 								<span class="material-symbols-rounded account_circle">account_circle</span> -->
-<!-- 								마이페이지 -->
-<!-- 							</a> -->
-<!-- 						</li> -->
-<!-- 						<li class="userNavItem logout"> -->
-<!-- 							<a href="">로그아웃</a> -->
-<!-- 						</li> -->
-
-
-
-<!-- 						<li class="userNavItem corpMgr"> -->
-<!-- 							<a href="">기업이름 담당자님</a> -->
-<!-- 						</li> -->
-<!-- 						<li class="userNavItem logout"> -->
-<!-- 							<a href="">로그아웃</a> -->
-<!-- 						</li> -->
-<!-- 						<li class="userNavItem corpNav"> -->
-<!-- 							<a href=""> -->
-<!-- 								기업서비스<span class="material-symbols-outlined keyboard_arrow_down">keyboard_arrow_down</span> -->
-<!-- 							</a> -->
-<!-- 						</li> -->
-						
+					    <c:choose>
+					        <c:when test="${sessionScope.userLogin ne null}">
+					            <c:choose>
+					                <c:when test="${sessionScope.userType eq 'member'}">
+					                    <li class="userNavItem myPage">
+					                        <a href="/member/mypage">
+					                            <span class="material-symbols-rounded account_circle">account_circle</span>
+					                            마이페이지
+					                        </a>
+					                    </li>
+					                    <li class="userNavItem logout">
+					                        <a href="/auth/logout">로그아웃</a>
+					                    </li>
+					                </c:when>
+					                <c:when test="${sessionScope.userType eq 'company'}">
+					                    <li class="userNavItem corpMgr">
+					                        <a href="">기업이름 담당자님</a>
+					                    </li>
+					                    <li class="userNavItem logout">
+					                        <a href="/auth/logout">로그아웃</a>
+					                    </li>
+					                    <li class="userNavItem corpNav">
+					                        <a href="">
+					                            기업서비스<span class="material-symbols-outlined keyboard_arrow_down">keyboard_arrow_down</span>
+					                        </a>
+					                    </li>
+					                </c:when>
+					            </c:choose>
+					        </c:when>
+					        <c:otherwise>
+					            <li class="userNavItem login">
+					                <a href="/auth/login">로그인</a>
+					            </li>
+					            <li class="userNavItem join">
+					                <a href="/auth/signup">회원가입</a>
+					            </li>
+					            <li class="userNavItem corpNav">
+					                <a href="">
+					                    기업서비스<span class="material-symbols-outlined keyboard_arrow_down">keyboard_arrow_down</span>
+					                </a>
+					            </li>
+					        </c:otherwise>
+					    </c:choose>
 					</ul>
 				</div>
 			</div>

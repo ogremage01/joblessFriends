@@ -75,3 +75,74 @@ VALUES (REPLY_ID_SEQ.nextval, 1, 2, '그러게요!', sysdate, sysdate);
 
 --우편번호,  채용공고 태그, 북마크(아마 채용공고), 커뮤니티(게시판) 파일
 
+
+
+--채용공고
+
+INSERT INTO JOB_POST (
+    Job_Post_ID,
+    COMPANY_ID,
+    Title,
+    Content,
+    job_group_ID,
+    job_ID,
+    Views,
+    Job_Img,
+    Career_Type,
+    Education,
+    start_Date,
+    End_Date
+) VALUES (
+             1,                         -- 채용공고 번호
+             50,                     -- 기업 번호 (COMPANY 테이블에 존재해야 함)
+             '백엔드 개발자 채용',      -- 제목
+             '당사 백엔드 개발팀에서 새로운 인재를 찾습니다. Java, Spring 경험 필수.', -- 내용
+             6,                        -- 직군 번호 (예: IT개발·데이터)
+             85,                       -- 직무 번호 (예: 백엔드 개발자)
+             0,                         -- 조회수
+             '/img/Amorepacific.jpg', -- 채용 이미지 URL
+             '신입',                  -- 경력 (ex. 신입, 1~3년,3~5년,5년 이상)
+             '대학교 졸업(4년)',        -- 학력
+             TO_DATE('2025-05-10', 'YYYY-MM-DD'), -- 접수 시작일
+             TO_DATE('2025-05-31', 'YYYY-MM-DD')  -- 접수 마감일
+         );
+
+
+INSERT INTO JOB_POST (
+    Job_Post_ID, COMPANY_ID, Title, Content, job_group_ID, job_ID, Views, Job_Img,
+    Career_Type, Education, start_Date, End_Date
+) VALUES (
+             7, 2, '경영기획 경력직 채용', 'SK하이닉스 경영기획팀에서 3~5년 경력직을 찾습니다.',
+             1, 2, 0, '/img/SK.jpg', '3~5년', '대학교 졸업(4년)',
+             TO_DATE('2025-05-15', 'YYYY-MM-DD'), TO_DATE('2025-06-10', 'YYYY-MM-DD')
+         );
+
+INSERT INTO JOB_POST (
+    Job_Post_ID, COMPANY_ID, Title, Content, job_group_ID, job_ID, Views, Job_Img,
+    Career_Type, Education, start_Date, End_Date
+) VALUES (
+             8, 9, '법무팀 변호사 채용', 'LG화학 법무팀에서 변호사 경력직 채용 중입니다. 변호사 자격 필수.',
+             5, 9, 0, '/img/LG_Chemical.jpg', '5년 이상', '대학원 박사졸업',
+             TO_DATE('2025-05-20', 'YYYY-MM-DD'), TO_DATE('2025-06-20', 'YYYY-MM-DD')
+         );
+
+INSERT INTO JOB_POST (
+    Job_Post_ID, COMPANY_ID, Title, Content, job_group_ID, job_ID, Views, Job_Img,
+    Career_Type, Education, start_Date, End_Date
+) VALUES (
+             9, 10, 'POSCO AI 연구원 모집', '포스코 AI 연구소에서 연구원을 찾습니다. AI, 머신러닝 경험자 우대.',
+             17, 17, 0, '/img/POSCO_INTERNATIONAL.jpg', '3~5년', '대학원 석사졸업',
+             TO_DATE('2025-05-18', 'YYYY-MM-DD'), TO_DATE('2025-06-15', 'YYYY-MM-DD')
+         );
+
+INSERT INTO JOB_POST (
+    Job_Post_ID, COMPANY_ID, Title, Content, job_group_ID, job_ID, Views, Job_Img,
+    Career_Type, Education, start_Date, End_Date
+) VALUES (
+             10, 50, '아모레퍼시픽 글로벌 마케팅 채용', '아모레퍼시픽 글로벌 마케팅팀에서 인재를 모집합니다.',
+             2, 19, 0, '/img/Amorepacific.jpg', '1~3년', '대학교 졸업(4년)',
+             TO_DATE('2025-05-12', 'YYYY-MM-DD'), TO_DATE('2025-06-05', 'YYYY-MM-DD')
+         );
+
+
+commit;

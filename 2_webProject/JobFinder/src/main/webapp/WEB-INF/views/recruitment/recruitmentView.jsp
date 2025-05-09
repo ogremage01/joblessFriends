@@ -92,7 +92,9 @@
             </div>
 
             <div id="searchJobGroup">
+                <ul id="divSelectedCon">
 
+                </ul>
             </div>
 
 
@@ -101,45 +103,20 @@
 
         <!-- 채용공고 리스트 -->
         <div id="jobListings">
-
             <div class="job">
+            <c:forEach var="item" items="${recruitmentList}">
                 <div class="job-info">
-                    <h3>회사명</h3>
-                    <p>직무: 개발자</p>
-                    <p>부서: IT팀</p>
-                    <p>마감일: 04/24(화)</p>
+                   <h3>${item.companyName}</h3>
+                   <p>${item.title}</p>
+                   <p>${item.jobGroupName}</p>
+                   <p>${item.jobName}</p>
+                   <p>${item.careerType}</p>
+                   <p>${item.education}</p>
+                   <p>${item.endDate}</p>
                 </div>
                 <button>지원하기</button>
+            </c:forEach>
             </div>
-
-            <div class="job">
-                <div class="job-info">
-                    <h3>회사명</h3>
-                    <p>직무: 디자이너</p>
-                    <p>부서: 디자인팀</p>
-                    <p>마감일: 04/24(화)</p>
-                </div>
-                <button>지원하기</button>
-            </div>
-            <div class="job">
-                <div class="job-info">
-                    <h3>회사명</h3>
-                    <p>직무: 디자이너</p>
-                    <p>부서: 디자인팀</p>
-                    <p>마감일: 04/24(화)</p>
-                </div>
-                <button>지원하기</button>
-            </div>
-            <div class="job">
-                <div class="job-info">
-                    <h3>회사명</h3>
-                    <p>직무: 디자이너</p>
-                    <p>부서: 디자인팀</p>
-                    <p>마감일: 04/24(화)</p>
-                </div>
-                <button>지원하기</button>
-            </div>
-
         </div>
 
     </div>

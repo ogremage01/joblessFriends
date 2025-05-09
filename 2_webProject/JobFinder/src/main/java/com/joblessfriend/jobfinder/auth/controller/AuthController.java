@@ -1,23 +1,90 @@
 package com.joblessfriend.jobfinder.auth.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.joblessfriend.jobfinder.admin.controller.AdminController;
+import com.joblessfriend.jobfinder.admin.service.AdminService;
+import com.joblessfriend.jobfinder.member.domain.MemberVo;
+import com.joblessfriend.jobfinder.member.service.MemberService;
+
+import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/auth")
 @Controller
 public class AuthController {
 	
+	private Logger logger = LoggerFactory.getLogger(AuthController.class);
+	private final String logTitleMsg = "==Auth control==";
+	
+	@Autowired
+	private MemberService memberService;
+	
+	// 회원가입 뷰
 	@GetMapping("/signup")
 	public String signup() {
+		logger.info(logTitleMsg);
+		logger.info("==signup==");
 		
-	  return "auth/signUpForm";
+		return "auth/signUpForm";
 	}
 	
+	// 회원가입 개인회원
+	// 추후 비밀번호 암호화 체크 필요
+	@PostMapping("/signup/member")
+	public String signupMember(String email, String password, Model model) {
+		logger.info(logTitleMsg);
+		logger.info("signup Member! " + email + ", " + password);
+		
+		memberService.memberInsertOne(email, password);
+		
+		return "auth/signUpSuccessView";
+	}
+	
+	// 로그인 뷰
 	@GetMapping("/login")
 	public String login() {
+		logger.info(logTitleMsg);
+		logger.info("==login==");
 		
-	  return "auth/loginForm";
+		return "auth/loginForm";
+	}
+	
+	// 로그인 개인회원
+	// 추후 비밀번호 암호화 체크 필요
+	@PostMapping("/login/member")
+	public String getLogin(String email, String password, HttpSession session, Model model) {
+		logger.info(logTitleMsg);
+		logger.info("login Member! " + email + ", " + password);
+		
+		MemberVo memberVo = memberService.memberExist(email, password);
+		logger.info("memberVo: {}", memberVo);
+		
+		if(memberVo != null) {
+			session.setAttribute("userLogin", memberVo);
+			session.setAttribute("userType", "member");
+			
+			return "redirect:/";
+		}else {
+			return "auth/loginFailView";
+		}
+	}
+	
+	// 로그아웃
+	@GetMapping("/logout")
+	public String logout(HttpSession session, Model model) {
+		logger.info(logTitleMsg);
+		logger.info("logout");
+		
+		session.invalidate();
+		
+		return "redirect:/";
 	}
 
 }

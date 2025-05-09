@@ -12,4 +12,8 @@ public interface CompanyDao {
 
 	public int companyCount();
 
+	public CompanyVo companySelectOne(int companyId);
+
+	public int companyUpdateOne(CompanyVo existCompanyVo);
+
 }

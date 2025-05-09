@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script>
+
 <link rel="stylesheet" href="/css/common/common.css">
 <style type="text/css">
 
@@ -27,7 +29,7 @@
 	    margin: 20px auto;
 	}
 	
-	.authNavNavItem a {
+	.authNavItem a {
 		text-decoration: none;
 		color: #D4D4D4;
 		font-size: 20px;
@@ -39,12 +41,6 @@
 		user-select: none;
 	}
 
-	/* 	선택 시 스타일 변경 */
-	.user a{
-		color: black;
-		font-weight: bold;
-	}
-	
 	
 	
 	/* 가입 폼 */
@@ -113,12 +109,17 @@
 		align-items: center;
 	}
 	
-	/* 이미 회원이신가요? */
 	#goLogin span {
 		color:#898989;
 		font-size: 12px;
 	}
-
+	
+	#loginSuggestion a{
+		text-decoration: none;
+		font-weight: bold;
+		color: #898989;
+	}
+	
 
 
 	/* 공통단 css 수정 */
@@ -133,6 +134,53 @@
 
 <script type="text/javascript">
 
+	$(document).ready(function() {
+		
+
+		$("#navUser").css(
+			{
+				"color": "black", 
+			} 
+		);
+		
+		$("#navCompany").click(function(event) {
+			console.log("클릭실행");
+			event.preventDefault();
+			$("#navUser").css(
+					{
+						"color": "#D4D4D4", 
+					} 
+				);
+			$("#navCompany").css(
+					{
+						"color": "black", 
+					} 
+				);
+			
+			let htmlStr = `
+			<form id="signUpForm" name="signUpForm" method="post" action="/auth/signup/company">
+				<fieldset>
+					<legend>회원가입</legend>
+					<input id="email" name="email" type="email" value="" placeholder="이메일">
+					<input id="password" name="password" type="password" value="" placeholder="비밀번호">
+					<input id="passwordCheck" type="password" value="" placeholder="비밀번호 확인">
+					
+					<input id="companyName" name="companyName" type="text" value="" placeholder="기업명">
+					<input id="brn" name="brn" type="text" value="" placeholder="사업자 등록번호">
+					
+					<input id="representative" name="representative" type="text" value="" placeholder="담당자 명">
+					<input id="tel" name="tel" type="text" value="" placeholder="연락처">
+					
+					<button type="submit" id="signUpBtn" class="btnStyle">가입하기</button>
+				</fieldset>
+			</form>
+			`;
+			
+			$('#signUpFormWrap').html(htmlStr);
+			
+		}); // navCompany end
+		
+	});
 
 </script>
 
@@ -149,14 +197,14 @@
 			
 			<div id="authNavWrap">
 				<ul class="authNav">
-					<li class="authNavNavItem user">
-						<a href="#" onclick="">개인회원</a>
+					<li class="authNavItem user">
+						<a id="navUser" href="./signup">개인회원</a>
 					</li>
-					<li class="authNavNavItem partitionNav">
+					<li class="authNavItem partitionNav">
 						|
 					</li>
-					<li class="authNavNavItem company">
-						<a href="#" onclick="">기업회원</a>
+					<li class="authNavItem company">
+						<a id="navCompany" href="#">기업회원</a>
 					</li>
 				</ul>
 			</div>
@@ -164,18 +212,12 @@
 			<div id="content">
 			
 				<div id="signUpFormWrap">
-					<form id="signUpForm" name="signUpForm" method="" action="">
+					<form id="signUpForm" name="signUpForm" method="post" action="/auth/signup/member">
 						<fieldset>
 							<legend>회원가입</legend>
-							<input id="email" name="email" type="text" value="" placeholder="이메일">
+							<input id="email" name="email" type="email" value="" placeholder="이메일">
 							<input id="password" name="password" type="password" value="" placeholder="비밀번호">
-							<input id="passwordCheck" name="passwordCheck" type="password" value="" placeholder="비밀번호 확인">
-							
-<!-- 							<input id="email" name="email" type="text" value="" placeholder="기업명"> -->
-<!-- 							<input id="email" name="email" type="text" value="" placeholder="사업자 등록번호"> -->
-							
-<!-- 							<input id="email" name="" type="text" value="" placeholder="담당자 명"> -->
-<!-- 							<input id="email" name="email" type="text" value="" placeholder="연락처"> -->
+							<input id="passwordCheck" type="password" value="" placeholder="비밀번호 확인">
 							
 							<button type="submit" id="signUpBtn" class="btnStyle">가입하기</button>
 						</fieldset>
@@ -186,7 +228,7 @@
 					<div id="loginSuggestion">
 						<span>
 							이미 회원이신가요?
-							<a href="#">로그인</a>
+							<a href="/auth/login">로그인</a>
 						</span>
 					</div>
 					

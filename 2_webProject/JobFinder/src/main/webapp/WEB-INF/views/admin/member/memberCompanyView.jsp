@@ -114,7 +114,12 @@
 		</div>
 		<!-- 사이드바 영역 -->
 		<!-- 본문영역 -->
+		
+		
+		
 		<div id="container">
+		
+			<h1 style="text-align: center;">기업 회원 목록</h1>
 
 			<table class="table table-striped">
 				<thead class="table-dark" style="margin: auto;">
@@ -129,7 +134,7 @@
 					<c:forEach var="companyVo" items="${companyList}">
 						<tr>
 							<td>${companyVo.companyId}</td>
-							<td>${companyVo.companyName}</td>
+							<td><a href="./company/detail?companyId=${companyVo.companyId}">${companyVo.companyName}</a></td>
 							<td>${companyVo.email}</td>
 							<td>${companyVo.tel}</td>
 						</tr>
@@ -141,17 +146,18 @@
 
 				<nav aria-label="...">
 					<ul class="pagination justify-content-center">
-						<li class="page-item ${curPage+1==1?'disabled':''}"><a class="page-link" href="./company?page=${curPage}">Previous</a>
+						<li class="page-item ${curPage==0?'disabled':''}">
+							<a class="page-link" href="./company?page=${curPage-1}">Previous</a>
 						</li>
 						<c:forEach begin="0" var="i" end="${totalPage-1}">
-							<li class="page-item"><a class="page-link"
-								href="./company?page=${i}">${i+1}</a></li>
+							<li class="page-item ${curPage==i?'active':''}">
+							<a class="page-link" href="./company?page=${i}">${i+1}</a></li>
 						</c:forEach>
 
 						<!-- <li class="page-item active" aria-current="page"><a
 						class="page-link" href="#">2</a></li> -->
 						<li class="page-item"><a
-							class="page-link ${totalPage < 50? 'disabled':''}" href="./company?page=${i+1}">Next</a></li>
+							class="page-link ${curPage==totalPage-1? 'disabled':''}" href="./company?page=${curPage+1}">Next</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -160,5 +166,9 @@
 
 		</div>
 		<!-- 본문영역 -->
+	</main>
 </body>
+
+<script type="text/javascript"></script>
+
 </html>

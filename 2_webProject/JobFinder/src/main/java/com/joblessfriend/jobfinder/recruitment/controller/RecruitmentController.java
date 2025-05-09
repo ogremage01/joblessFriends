@@ -4,6 +4,7 @@ package com.joblessfriend.jobfinder.recruitment.controller;
 //import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
 //import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
 import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
+import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
 import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,15 @@ public class RecruitmentController {
 
 
     @GetMapping("/list")
-    public String getAlllist(Model model) {
+    public String getAllList(Model model) {
         List<JobGroupVo> jobGroupList = recruitmentService.jobGroupList();
-
+        List<RecruitmentVo> recruitmentList = recruitmentService.recruitmentList();
+        System.out.println(recruitmentList);
         model.addAttribute("jobGroupList", jobGroupList);
-//        //추가 채용공고완성시 추가진행예정//
+        //        //추가적인페이지네이션 5개단위  //
+        model.addAttribute("recruitmentList", recruitmentList);
+
+
 
         return "recruitment/recruitmentView";
     }
@@ -41,6 +46,7 @@ public class RecruitmentController {
         System.out.println("Job Group ID: " + jobGroupId);
 
         List<JobGroupVo> jobList = recruitmentService.jobList(jobGroupId);
+
         System.out.println("잡리스트" + jobList);
         return jobList;
     }
