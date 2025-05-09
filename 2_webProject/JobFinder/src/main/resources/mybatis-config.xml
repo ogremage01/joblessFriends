@@ -10,6 +10,7 @@
  		 <package name="com.joblessfriend.jobfinder.admin.domain"/>
 <!--		 <package name="com.joblessfriend.jobfinder.company.domain"/>-->
 <!--        -->
+		<package name="com.joblessfriend.jobfinder.member.domain"/>
     </typeAliases>
 
     <mappers>
