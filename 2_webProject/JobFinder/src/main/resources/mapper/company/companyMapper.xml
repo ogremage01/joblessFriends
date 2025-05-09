@@ -57,6 +57,20 @@
 		    </set>
 		    WHERE COMPANY_ID = #{companyId}
 		</update>
+		
+		<insert id="companyInsertOne" parameterType="com.joblessfriend.jobfinder.company.domain.CompanyVo">
+			INSERT INTO COMPANY
+			(COMPANY_ID, EMAIL, PASSWORD, COMPANY_NAME, BRN, REPRESENTATIVE, TEL)
+			VALUES(COMPANY_ID_SEQ.NEXTVAL, #{email}, #{password}, #{companyName}, #{brn}, #{representative}, #{tel})
+		</insert>
+		
+		<select id="companyExist" parameterType="map"
+		resultMap="companyResultMap">
+			SELECT COMPANY_ID, EMAIL, PASSWORD, COMPANY_NAME, BRN, REPRESENTATIVE, TEL, POSTAL_CODE_ID, ADDRESS
+			FROM COMPANY
+			WHERE EMAIL = #{email, jdbcType=VARCHAR}
+			AND PASSWORD = #{password, jdbcType=VARCHAR}
+		</select>
 
 
 	</mapper>

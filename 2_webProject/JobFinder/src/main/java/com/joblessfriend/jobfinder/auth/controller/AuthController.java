@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.joblessfriend.jobfinder.admin.controller.AdminController;
 import com.joblessfriend.jobfinder.admin.service.AdminService;
+import com.joblessfriend.jobfinder.company.domain.CompanyVo;
+import com.joblessfriend.jobfinder.company.service.CompanyService;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import com.joblessfriend.jobfinder.member.service.MemberService;
 
@@ -25,6 +27,8 @@ public class AuthController {
 	
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private CompanyService companyService;
 	
 	// 회원가입 뷰
 	@GetMapping("/signup")
@@ -47,6 +51,18 @@ public class AuthController {
 		return "auth/signUpSuccessView";
 	}
 	
+	// 회원가입 기업회원
+	// 추후 비밀번호 암호화 체크 필요
+	@PostMapping("/signup/company")
+	public String signupCompany(CompanyVo companyVo, Model model) {
+		logger.info(logTitleMsg);
+		logger.info("signup Member! companyVo: {}" + companyVo);
+		
+		companyService.companyInsertOne(companyVo);
+		
+		return "auth/signUpSuccessView";
+	}
+	
 	// 로그인 뷰
 	@GetMapping("/login")
 	public String login() {
@@ -59,7 +75,7 @@ public class AuthController {
 	// 로그인 개인회원
 	// 추후 비밀번호 암호화 체크 필요
 	@PostMapping("/login/member")
-	public String getLogin(String email, String password, HttpSession session, Model model) {
+	public String loginMember(String email, String password, HttpSession session, Model model) {
 		logger.info(logTitleMsg);
 		logger.info("login Member! " + email + ", " + password);
 		
@@ -75,6 +91,26 @@ public class AuthController {
 			return "auth/loginFailView";
 		}
 	}
+	
+	// 로그인 기업회원
+		// 추후 비밀번호 암호화 체크 필요
+		@PostMapping("/login/company")
+		public String loginCompany(String email, String password, HttpSession session, Model model) {
+			logger.info(logTitleMsg);
+			logger.info("login company! " + email + ", " + password);
+			
+			CompanyVo companyVo = companyService.companyExist(email, password);
+			logger.info("companyVo: {}", companyVo);
+			
+			if(companyVo != null) {
+				session.setAttribute("userLogin", companyVo);
+				session.setAttribute("userType", "company");
+				
+				return "redirect:/";
+			}else {
+				return "auth/loginFailView";
+			}
+		}
 	
 	// 로그아웃
 	@GetMapping("/logout")

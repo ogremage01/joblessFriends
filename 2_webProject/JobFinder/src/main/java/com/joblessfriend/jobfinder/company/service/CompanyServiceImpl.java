@@ -40,4 +40,18 @@ public class CompanyServiceImpl implements CompanyService {
 		
 	}
 
+	// 기업회원가입
+	@Override
+	public int companyInsertOne(CompanyVo companyVo) {
+		// TODO Auto-generated method stub
+		return companyDao.companyInsertOne(companyVo);
+	}
+
+	// 기업로그인
+	@Override
+	public CompanyVo companyExist(String email, String password) {
+		// TODO Auto-generated method stub
+		return companyDao.companyExist(email, password);
+	}
+
 }

@@ -14,4 +14,8 @@ public interface CompanyService {
 
 	int companyUpdateOne(CompanyVo existCompanyVo);
 
+	int companyInsertOne(CompanyVo companyVo);
+
+	CompanyVo companyExist(String email, String password);
+
 }

@@ -16,4 +16,8 @@ public interface CompanyDao {
 
 	public int companyUpdateOne(CompanyVo existCompanyVo);
 
+	public int companyInsertOne(CompanyVo companyVo);
+
+	public CompanyVo companyExist(String email, String password);
+
 }

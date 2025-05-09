@@ -1,5 +1,6 @@
 package com.joblessfriend.jobfinder.company.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -43,6 +44,25 @@ public class CompanyDaoImpl implements CompanyDao{
 		// TODO Auto-generated method stub
 		return sqlSession.update(namespace + "companyUpdateOne",existCompanyVo);
 		
+	}
+
+	// 기업회원가입
+	@Override
+	public int companyInsertOne(CompanyVo companyVo) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(namespace + "companyInsertOne", companyVo);
+	}
+
+	// 기업로그인
+	@Override
+	public CompanyVo companyExist(String email, String password) {
+		// TODO Auto-generated method stub
+		HashMap<String, String> paramMap = new HashMap<>();
+		
+		paramMap.put("email", email);
+		paramMap.put("password", password);
+		
+		return sqlSession.selectOne(namespace + "companyExist", paramMap);
 	}
 
 }
