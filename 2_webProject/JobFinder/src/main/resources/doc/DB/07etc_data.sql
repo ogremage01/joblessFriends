@@ -75,3 +75,4 @@ VALUES (REPLY_ID_SEQ.nextval, 1, 2, '그러게요!', sysdate, sysdate);
 
 --우편번호,  채용공고 태그, 북마크(아마 채용공고), 커뮤니티(게시판) 파일
 
+commit;

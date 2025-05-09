@@ -147,3 +147,5 @@ VALUES (COMPANY_ID_SEQ.nextval, 'hyundai-steel@email.com', 'Passw0rd!49', '현�
 
 INSERT INTO COMPANY (COMPANY_ID, Email, Password, Company_name, BRN, Representative, tel, address) 
 VALUES (COMPANY_ID_SEQ.nextval, 'amorepacific@email.com', 'Passw0rd!50', '아모레퍼시픽', '201-81-65432', '오지민', '02-9876-0050', '서울 용산구 이태원로 555');
+
+commit;
