@@ -127,13 +127,13 @@
 		<div id="container">
 			<h1>기업 상세 정보</h1>
 
-			<form action="/admin/member/company/detail?companyId=${companyVo.companyId}" method="post" class="container mt-4" id="companyInforSubmitForm">
+			<form class="container mt-4" id="companyInforSubmitForm">
 
 			
 			    <div class="row mb-3">
 			        <label for="companyId" class="col-sm-2 col-form-label text-end">ID</label>
 			        <div class="col-sm-10">
-			            <input id="companyId" class="form-control-plaintext" value="${companyVo.companyId}" readonly>
+			            <input id="companyId" name="companyId" class="form-control-plaintext" value="${companyVo.companyId}" readonly>
 			        </div>
 			    </div>
 			
@@ -205,7 +205,7 @@
 			        <div class="offset-sm-2 col-sm-10 d-flex gap-2">
 			            <input type="submit" id="submitBtn" class="btn btn-primary" value="수정">
 			            <input type="reset" class="btn btn-secondary" value="초기화">
-			            <a href="javascript:history.back()" class="btn btn-light">목록보기</a>
+			            <a href="/admin/member/company" class="btn btn-light">목록보기</a>
 			            
 			        </div>
 			    </div>
@@ -221,43 +221,47 @@
 </body>
 
 <script type="text/javascript">
-	let submitBtnObj = document.getElementById("submitBtn");
-	let companyInforSubmitFormObj = document.getElementById("companyInforSubmitForm");
-	
-	submitBtnObj.addEventListener("click", function(e) {
-		let formData = new formData(companyInforSubmitFormObj);
-		let jsonData ={};
-		
-		formData.forEach(function(value, key) {
+let companyInforSubmitFormObj = document.getElementById("companyInforSubmitForm");
 
-	        if (value.trim() !== "") { // 빈 값은 제외
-	            jsonData[key] = value;
-	        }
-			
-		});
-		
-		
-		// JSON 형태로 데이터를 서버로 전송 (Ajax 요청)
-	    fetch('/admin/member/company/detail', {
-	        method: 'POST',
-	        headers: {
-	            'Content-Type': 'application/json'
-	        },
-	        body: JSON.stringify(jsonData) // JSON 객체를 문자열로 변환해서 전송
-	    })
-	    .then(response => response.json()) // 서버로부터 응답을 받음
-	    .then(data => {
-	        // 서버 응답 후 처리
-	        console.log(data);
-	        alert('수정이 완료되었습니다.');
-	        // 필요한 경우 리다이렉트 또는 다른 후속 작업을 수행
-	    })
-	    .catch(error => {
-	        console.error('Error:', error);
-	        alert('수정 중 오류가 발생했습니다.');
-	    });
-		
-	});
+companyInforSubmitFormObj.addEventListener("submit", function(e) {
+    e.preventDefault(); // 폼 제출 막기
+
+    const formData = new FormData(companyInforSubmitFormObj);
+    const jsonData = {};
+
+    formData.forEach((value, key) => {
+        if (value.trim() !== "") {
+            jsonData[key] = value;
+        }
+    });
+    
+    	console.log(jsonData);
+
+    	fetch('/admin/member/company/detail', {
+    	    method: 'POST',
+    	    headers: {
+    	        'Content-Type': 'application/json'
+    	    },
+    	    body: JSON.stringify(jsonData)
+    	})
+    	.then(response => {
+    	    if (!response.ok) {
+    	        throw new Error("서버 오류: " + response.status);
+    	    }
+    	    return response.text(); // 또는 .json() - 컨트롤러 응답에 따라
+    	})
+    	.then(data => {
+    	    if(data === "1"){
+				alert("수정성공");
+				history.back();
+    	    }else{
+				alert("수정실패");
+    	    }
+    	})
+    	.catch(error => {
+    	    console.error("에러 발생:", error);
+    	});
+});
 
 
 </script>

@@ -99,7 +99,7 @@ public class CompanyVo {
 	}
 	@Override
 	public String toString() {
-		return "CompanyVo [companyId=" + companyId + ", Email=" + email + ", Password=" + password + ", companyName="
+		return "CompanyVo [companyId=" + companyId + ", Email=" + email + ", password=" + password + ", companyName="
 				+ companyName + ", brn=" + brn + ", representative=" + representative + ", tel=" + tel
 				+ ", postalCodeId=" + postalCodeId + ", arenaName=" + arenaName + ", address=" + address + "]";
 	}

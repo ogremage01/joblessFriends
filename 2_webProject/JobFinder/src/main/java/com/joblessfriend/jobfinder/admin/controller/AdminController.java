@@ -134,12 +134,14 @@ public class AdminController {
 	
 	
 	@PostMapping("/member/company/detail")
-	public String memberCompanyDetailUpdate(CompanyVo companyVo, RedirectAttributes redirectAttributes) {
+	public ResponseEntity<Integer> memberCompanyDetailUpdate(@RequestBody CompanyVo companyVo) {
 	    logger.info("기업회원 정보 수정-어드민");
+	    
+	    System.out.println("입력정보확인"+companyVo.toString());
 
 	    CompanyVo existCompanyVo = companyService.companySelectOne(companyVo.getCompanyId());
 
-	    System.out.println(companyVo.toString());
+	    //System.out.println("바꾸기 전 정보" + existCompanyVo.toString());
 	    
 	    
 	    if (companyVo.getCompanyName() != null) {
@@ -181,16 +183,11 @@ public class AdminController {
 //	        existCompanyVo.setAddress(companyVo.getAddress());
 //	    }
 
+	    System.out.println("바꾼 후 정보" + existCompanyVo.toString());
 	    int result = companyService.companyUpdateOne(existCompanyVo);
 
-	    if (result == 1) {
-	        return "redirect:/admin/member/company";
-	    } else {
-	        redirectAttributes.addFlashAttribute("errorMessage", "기업회원 정보 수정에 실패했습니다.");
-	        return "redirect:/admin/member/company/detail?companyId=" + companyVo.getCompanyId();
-	    }
-	}
+	    return ResponseEntity.ok(result);
 
-	
+	}
 
 }
