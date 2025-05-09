@@ -30,4 +30,19 @@ public class CompanyDaoImpl implements CompanyDao{
 		return sqlSession.selectOne(namespace + "companyCount");
 	}
 
+
+	@Override
+	public CompanyVo companySelectOne(int companyId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + "companySelectOne",companyId);
+	}
+
+
+	@Override
+	public int companyUpdateOne(CompanyVo existCompanyVo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(namespace + "companyUpdateOne",existCompanyVo);
+		
+	}
+
 }

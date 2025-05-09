@@ -18,12 +18,17 @@
 			WHERE EMAIL = #{email, jdbcType=VARCHAR}
 			AND PASSWORD = #{password, jdbcType=VARCHAR}
 		</select>
-	
+		
+		<insert id="memberInsertOne" parameterType="memberVo">
+			INSERT INTO MEMBER
+			(MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX)
+			VALUES(MEMBER_ID_SEQ.NEXTVAL, #{email}, #{password},#{nickname},5)
+		</insert>
+		
+		<select id="isNicknameExists" resultType="String" parameterType="String">
+			SELECT NICKNAME FROM MEMBER WHERE NICKNAME = #{nickname}
+		</select>
+		
 	</mapper>
-	
-	
-
-
-
 	
 	

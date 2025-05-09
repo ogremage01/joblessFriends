@@ -27,4 +27,17 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyDao.companyCount();
 	}
 
+	@Override
+	public CompanyVo companySelectOne(int companyId) {
+		// TODO Auto-generated method stub
+		return companyDao.companySelectOne(companyId);
+	}
+
+	@Override
+	public int companyUpdateOne(CompanyVo existCompanyVo) {
+		// TODO Auto-generated method stub
+		return companyDao.companyUpdateOne(existCompanyVo);
+		
+	}
+
 }

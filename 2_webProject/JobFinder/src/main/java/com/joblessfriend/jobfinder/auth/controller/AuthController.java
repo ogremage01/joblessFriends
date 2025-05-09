@@ -26,6 +26,7 @@ public class AuthController {
 	@Autowired
 	private MemberService memberService;
 	
+	// 회원가입 뷰
 	@GetMapping("/signup")
 	public String signup() {
 		logger.info(logTitleMsg);
@@ -34,6 +35,19 @@ public class AuthController {
 		return "auth/signUpForm";
 	}
 	
+	// 회원가입 개인회원
+	// 추후 비밀번호 암호화 체크 필요
+	@PostMapping("/signup/member")
+	public String signupMember(String email, String password, Model model) {
+		logger.info(logTitleMsg);
+		logger.info("signup Member! " + email + ", " + password);
+		
+		memberService.memberInsertOne(email, password);
+		
+		return "auth/signUpSuccessView";
+	}
+	
+	// 로그인 뷰
 	@GetMapping("/login")
 	public String login() {
 		logger.info(logTitleMsg);
@@ -42,6 +56,8 @@ public class AuthController {
 		return "auth/loginForm";
 	}
 	
+	// 로그인 개인회원
+	// 추후 비밀번호 암호화 체크 필요
 	@PostMapping("/login/member")
 	public String getLogin(String email, String password, HttpSession session, Model model) {
 		logger.info(logTitleMsg);
@@ -60,6 +76,7 @@ public class AuthController {
 		}
 	}
 	
+	// 로그아웃
 	@GetMapping("/logout")
 	public String logout(HttpSession session, Model model) {
 		logger.info(logTitleMsg);

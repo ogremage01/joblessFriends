@@ -92,7 +92,9 @@
             </div>
 
             <div id="searchJobGroup">
+                <ul id="divSelectedCon">
 
+                </ul>
             </div>
 
 
