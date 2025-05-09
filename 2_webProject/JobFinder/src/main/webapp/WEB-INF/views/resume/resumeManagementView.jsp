@@ -12,7 +12,9 @@
 
     <div class="container">
     <div class="sidebar">
-      <h2>마이페이지</h2>
+      <h2>
+      	<a href="/member/mypage" style="text-decoration: none; color: inherit;">마이페이지</a>
+      </h2>
       <ul>
         <li class="active">이력서 관리</li>
         <li>구직활동 내역</li>
