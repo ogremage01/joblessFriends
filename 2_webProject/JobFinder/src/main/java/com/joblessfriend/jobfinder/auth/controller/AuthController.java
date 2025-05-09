@@ -122,5 +122,14 @@ public class AuthController {
 		
 		return "redirect:/";
 	}
+	
+	// 계정찾기 뷰
+		@GetMapping("/find")
+		public String find() {
+			logger.info(logTitleMsg);
+			logger.info("==find==");
+			
+			return "auth/findAccountForm";
+		}
 
 }

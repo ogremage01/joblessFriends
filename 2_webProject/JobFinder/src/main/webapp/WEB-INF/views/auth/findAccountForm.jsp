@@ -44,12 +44,12 @@
 	
 	/* 가입 폼 */
 	
-	#loginForm {
+	#findForm {
 		width: 300px;
 		margin: auto;
 	}
 	
-	#loginForm fieldset {
+	#findForm fieldset {
 		border: 0px;
 		padding: 0;
 		margin: 0;
@@ -58,11 +58,11 @@
 		flex-direction: column;
 	}
 	
-	#loginForm legend {
+	#findForm legend {
 		display: none;
 	}
 	
-	#loginForm input {
+	#findForm input {
 		height: 38px;
 		padding: 5px 15px;
 		border: 1px solid #E0E0E0;
@@ -71,11 +71,11 @@
 		font-size: 16px;
 	}
 	
-	#loginForm input:hover{
+	#findForm input:hover{
 	border:1px solid #C9C9C9;
 	}
 	
-	#loginForm input:focus {
+	#findForm input:focus {
 		border: 1px solid #F69800;
 
 	}
@@ -87,14 +87,17 @@
 		border: none;
 		background-color: #F69800;
 		color: white;
-	}
-	
-	#loginBtn {
+		
 		height: 50px;
 		border-radius: 8px;
 		font-size: 18px;
 		font-weight: bold;
 		cursor: pointer;
+	}
+	
+	.companyBtn {
+		width: 145px;
+		font-size: 16px;
 	}
 	
 	#loginBtn:hover {
@@ -108,32 +111,12 @@
 		align-items: center;
 	}
 	
-	#goLogin span {
+	#goLogin a {
 		color:#898989;
 		font-size: 12px;
-	}
-	
-	.accountNav {
-		list-style:none;
-		display: flex;
-	    align-items: center;
-	    justify-content: center;
-	    column-gap: 15px;
-	    padding: 0px;
-	    margin: 0;
-	}
-	
-	.accountNav .partitionNav{
-		font-size: 12px;
-	}
-	
-	.accountItem a {
 		text-decoration: none;
-		color: #898989;
-		font-size: 12px;
 	}
-
-
+	
 
 	/* 공통단 css 수정 */
 	#container #containerWrap{
@@ -170,16 +153,21 @@
 				);
 			
 			let formHtmlStr = `
-			<form id="loginForm" name="loginForm" method="post" action="/auth/login/company">
-				<fieldset>
-				<legend>로그인</legend>
-				<input id="email" name="email" type="email" value="" placeholder="이메일">
-				<input id="password" name="password" type="password" value="" placeholder="비밀번호">
-				
-				<button type="submit" id="loginBtn" class="btnStyle">로그인</button>
-			</fieldset>
-			</form>
+				<form id="findForm" name="findForm" method="post" action="/auth/">
+					<fieldset>
+						<legend>기업회원 계정찾기</legend>
+						<input id="representative" name="representative" type="text" value="" placeholder="담당자 명">
+						<input id="brn" name="brn" type="text" value="" placeholder="사업자 등록번호">
+						
+						<div style="display: flex; gap: 10px;">
+							<button type="button" id="findIdBtn" class="btnStyle companyBtn" onclick="findCompanyId();">아이디 찾기</button>
+							<button type="submit" id="findPwdBtn" class="btnStyle companyBtn">비밀번호 찾기</button>
+						</div>	
+					</fieldset>
+				</form>
 			`;
+			
+			$('#findFormWrap').html(formHtmlStr);
 			
 		}); // navCompany end
 		
@@ -202,7 +190,7 @@
 			<div id="authNavWrap">
 				<ul class="authNav">
 					<li class="authNavItem user">
-						<a id="navUser" href="./login">개인회원</a>
+						<a id="navUser" href="./find">개인회원</a>
 					</li>
 					<li class="authNavItem partitionNav">
 						|
@@ -215,36 +203,19 @@
 			
 			<div id="content">
 			
-				<div id="loginFormWrap">
-					<form id="loginForm" name="loginForm" method="post" action="/auth/login/member">
+				<div id="findFormWrap">
+					<form id="findForm" name="findForm" method="post" action="/auth/login/member">
 						<fieldset>
-							<legend>로그인</legend>
+							<legend>개인회원 계정찾기</legend>
 							<input id="email" name="email" type="email" value="" placeholder="이메일">
-							<input id="password" name="password" type="password" value="" placeholder="비밀번호">
 							
-							<button type="submit" id="loginBtn" class="btnStyle">로그인</button>
+							<button type="submit" id="findPwdBtn" class="btnStyle">비밀번호 찾기</button>
 						</fieldset>
 					</form>
 				</div>
 				
 				<div id="goLogin">
-					<div id="account">
-						<ul class="accountNav">
-							<li class="accountItem findAccount">
-								<a id="findAccount" href="./find">아이디/비밀번호 찾기</a>
-							</li>
-							<li class="accountItem partitionNav">
-								|
-							</li>
-							<li class="accountItem signup">
-								<a id="goSignUp" href="/auth/signup">회원가입</a>
-							</li>
-						</ul>
-					</div>
-					
-					<div id="socialLogin">
-						<span>소셜계정으로 간편 로그인</span>
-					</div>
+					<a href="./login"><b>로그인</b>으로 돌아가기</a>
 				</div>
 				
 			</div>
