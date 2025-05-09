@@ -211,7 +211,7 @@
 					            <c:choose>
 					                <c:when test="${sessionScope.userType eq 'member'}">
 					                    <li class="userNavItem myPage">
-					                        <a href="">
+					                        <a href="/member/mypage">
 					                            <span class="material-symbols-rounded account_circle">account_circle</span>
 					                            마이페이지
 					                        </a>
