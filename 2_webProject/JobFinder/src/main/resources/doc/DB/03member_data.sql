@@ -18,3 +18,4 @@ INSERT INTO member (member_ID, Email, Password, NICKNAME, Resume_Max) VALUES (me
 INSERT INTO member (member_ID, Email, Password, NICKNAME, Resume_Max) VALUES (member_ID_SEQ.nextval, 'data18@fakedemo.com', '1111', '닉네임18', 5);
 INSERT INTO member (member_ID, Email, Password, NICKNAME, Resume_Max) VALUES (member_ID_SEQ.nextval, 'dummy19@examplemail.org', '1111', '닉네임19', 5);
 INSERT INTO member (member_ID, Email, Password, NICKNAME, Resume_Max) VALUES (member_ID_SEQ.nextval, 'user20@mockexample.net', '1111', '닉네임20', 5);
+commit;
