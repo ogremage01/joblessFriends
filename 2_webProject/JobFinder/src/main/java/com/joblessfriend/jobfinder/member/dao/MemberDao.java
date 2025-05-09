@@ -6,4 +6,8 @@ public interface MemberDao {
 
 	MemberVo memberExist(String email, String password);
 
+	int memberInsertOne(MemberVo memberVo);
+
+	boolean isNicknameExists(String nickname);
+
 }
