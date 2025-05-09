@@ -14,7 +14,9 @@
     <div class="sidebar">
       <h2>마이페이지</h2>
       <ul>
-        <li class="active">이력서 관리</li>
+        <li class="active">
+        	<a href="/resume/management">이력서 관리</a>
+        </li>
         <li>구직활동 내역</li>
         <li>개인정보 관리</li>
         <li>내가 찜한 공고</li>

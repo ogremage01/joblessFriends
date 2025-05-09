@@ -2,8 +2,10 @@ package com.joblessfriend.jobfinder.resume.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/resume")
 public class ResumeController {
 	
 	@GetMapping("/home")
@@ -11,8 +13,8 @@ public class ResumeController {
 		return "resume/resumeView";
 	}
 	
-	@GetMapping("/inventory")
-	public String inventory() {
+	@GetMapping("/management")
+	public String resumeManagement() {
 		return "resume/resumeManagementView";
 	}
 }
