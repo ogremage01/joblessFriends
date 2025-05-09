@@ -7,12 +7,12 @@
 
 
 		<resultMap type="com.joblessfriend.jobfinder.company.domain.CompanyVo" id="companyResultMap">
-			<id column="COMPANY_ID" property="companyId" />
-			<result column="EMAIL" property="email" />
-			<result column="PASSWORD" property="password" />
-			<result column="COMPANY_NAME" property="companyName" />
-			<result column="BRN" property="brn" />
-			<result column="REPRESENTATIVE" property="representative" />
+			<id column="COMPANY_ID" property="companyId"/>
+			<result column="EMAIL" property="email"/>
+			<result column="PASSWORD" property="password"/>
+			<result column="COMPANY_NAME" property="companyName"/>
+			<result column="BRN" property="brn"/>
+			<result column="REPRESENTATIVE" property="representative"/>
 			<result column="TEL" property="tel"/>
 			<result column="POSTAL_CODE_ID" property="postalCodeId"/>
 			<result column="ARENA_NAME" property="arenaName"/>
@@ -20,10 +20,19 @@
 
 		</resultMap>
 
-		<select id="companySelectList" resultType="com.joblessfriend.jobfinder.company.domain.CompanyVo">
-			SELECT COMPANY_ID,EMAIL,COMPANY_NAME,TEL
+		<select id="companySelectList" resultMap="companyResultMap">
+		  SELECT * 
+		  FROM (SELECT ROWNUM AS RN, INNERTABLE.*
+		    FROM (SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
+		      FROM COMPANY
+		      ORDER BY COMPANY_ID DESC) INNERTABLE
+		    WHERE ROWNUM &lt;= (#{page} + 1) * 10)
+		  WHERE RN &gt; #{page} * 10
+		</select>
+		
+		<select id="companyCount" resultType="int">
+			SELECT COUNT(COMPANY_ID)
 			FROM COMPANY
-			ORDER BY COMPANY_ID DESC
 		</select>
 
 

@@ -6,6 +6,8 @@ import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 
 public interface CompanyService {
 
-	List<CompanyVo> companySelectList();
+	List<CompanyVo> companySelectList(int page);
+
+	int companyCount();
 
 }

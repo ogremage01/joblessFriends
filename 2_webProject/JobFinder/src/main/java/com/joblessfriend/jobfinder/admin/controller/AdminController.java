@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.joblessfriend.jobfinder.admin.domain.AdminVo;
 import com.joblessfriend.jobfinder.admin.service.AdminService;
@@ -40,11 +41,11 @@ public class AdminController {
 	}
 
 	@PostMapping("/login")
-	public String getlogin(String account, String password, HttpSession session, Model model) {
+	public String getlogin(String adminId, String password, HttpSession session, Model model) {
 		logger.info(logTitleMsg);
-		logger.info("login!" + account + ", " + password);
+		logger.info("login!" + adminId + ", " + password);
 
-		AdminVo adminVo = adminService.adminExist(account, password);
+		AdminVo adminVo = adminService.adminExist(adminId, password);
 
 		if (adminVo != null) {
 			session.setAttribute("admin", adminVo);
@@ -83,12 +84,17 @@ public class AdminController {
 	}
 
 	@GetMapping("/member/company")
-	public String memberCompany(Model model) {
+	public String memberCompany(Model model, @RequestParam(defaultValue = "0") int page) {
 		logger.info(logTitleMsg);
 		logger.info("login");
 		
-		List<CompanyVo> companyList = companyService.companySelectList();
-		model.addAttribute(companyList);
+		List<CompanyVo> companyList = companyService.companySelectList(page);
+		int companyCount = companyService.companyCount();
+		int totalPage = companyCount/10 + companyCount%10;
+		int curPage = page;
+		model.addAttribute("companyList", companyList);
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("curPage",curPage);
 
 
 		return "/admin/member/memberCompanyView";

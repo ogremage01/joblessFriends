@@ -5,7 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>게시글 작성</title>
-<link rel="stylesheet" href="/css/community/commueCommonStyle.css"> 
+<link rel="stylesheet" href="/css/community/communityCommonStyle.css"> 
+<link rel="stylesheet" href="/css/common/common.css">
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 
 <style type="text/css">
@@ -49,7 +50,7 @@
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
-<div class="wrap">
+<div id='containerWrap' class="wrap">
 	<h2>글쓰기</h2>
 	<div>
 		<p>제목</p>
