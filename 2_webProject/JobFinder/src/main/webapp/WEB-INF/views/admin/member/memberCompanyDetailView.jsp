@@ -205,6 +205,7 @@
 			        <div class="offset-sm-2 col-sm-10 d-flex gap-2">
 			            <input type="submit" id="submitBtn" class="btn btn-primary" value="수정">
 			            <input type="reset" class="btn btn-secondary" value="초기화">
+			            <button type="button" class="btn btn-danger" id="delete">탈퇴</button>
 			            <a href="/admin/member/company" class="btn btn-light">목록보기</a>
 			            
 			        </div>
@@ -262,6 +263,44 @@ companyInforSubmitFormObj.addEventListener("submit", function(e) {
     	    console.error("에러 발생:", error);
     	});
 });
+
+
+	deleteBtn = document.getElementById("delete");
+	
+	deleteBtn.addEventListener("click", function(e) {
+		
+		const confirmed = confirm("강제탈퇴를 진행합니까?");
+		if(confirmed){
+
+	    	fetch('/admin/member/company/detail/delete', {
+	    	    method: 'POST',
+	    	    headers: {
+	    	        'Content-Type': 'application/json'
+	    	    },
+	    	    body: JSON.stringify(jsonData)
+	    	})
+	    	.then(response => {
+	    	    if (!response.ok) {
+	    	        throw new Error("서버 오류: " + response.status);
+	    	    }
+	    	    return response.text(); // 또는 .json() - 컨트롤러 응답에 따라
+	    	})
+	    	.then(data => {
+	    	    if(data === "1"){
+					alert("수정성공");
+					history.back();
+	    	    }else{
+					alert("수정실패");
+	    	    }
+	    	})
+	    	.catch(error => {
+	    	    console.error("에러 발생:", error);
+	    	});
+		
+		
+		}
+		
+	});
 
 
 </script>

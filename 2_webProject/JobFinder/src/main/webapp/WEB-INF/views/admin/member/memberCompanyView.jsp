@@ -120,10 +120,10 @@
 		<div id="container">
 		
 			<h1 style="text-align: center;">기업 회원 목록</h1>
-
 			<table class="table table-striped">
 				<thead class="table-dark" style="margin: auto;">
 					<tr>
+						<td><button>탈퇴</button></td>
 						<td>ID</td>
 						<td>회사명</td>
 						<td>Email</td>
@@ -133,6 +133,7 @@
 				<tbody class="table-group-divider">
 					<c:forEach var="companyVo" items="${companyList}">
 						<tr>
+							<td style="text-align: center;"><input type="checkbox" name="delete" value="${companyVo.companyId}"></td>
 							<td>${companyVo.companyId}</td>
 							<td><a href="./company/detail?companyId=${companyVo.companyId}">${companyVo.companyName}</a></td>
 							<td>${companyVo.email}</td>
@@ -142,7 +143,7 @@
 				</tbody>
 			</table>
 
-			<div  id='pageNation'>
+			<div id='pageNation'>
 
 				<nav aria-label="...">
 					<ul class="pagination justify-content-center">
@@ -169,6 +170,14 @@
 	</main>
 </body>
 
-<script type="text/javascript"></script>
+<script type="text/javascript">
+
+	document.querySelectorAll(selectors)
+
+
+</script>
+
+	
+
 
 </html>
