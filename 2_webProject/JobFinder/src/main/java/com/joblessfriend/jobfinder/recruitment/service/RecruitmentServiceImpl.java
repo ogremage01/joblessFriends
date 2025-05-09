@@ -2,6 +2,7 @@ package com.joblessfriend.jobfinder.recruitment.service;
 
 import com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao;
 import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
+import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +26,10 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     @Override
     public List<JobGroupVo> jobList(int jobGroupId) {
         return recruitmentDao.jobList(jobGroupId);
+    }
+
+    @Override
+    public List<RecruitmentVo> recruitmentList() {
+        return recruitmentDao.recruitmentList();
     }
 }

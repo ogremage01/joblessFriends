@@ -19,5 +19,21 @@
         WHERE JOB_GROUP_ID = #{jobGroupId}
     </select>
 
+<!--    채용공고리스트 , 기업join, 직군 , 직무만 join상태 채용공고 main페이지전용 -->
+    <select id="RecruitmentList" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">-->
+    SELECT
+        c.company_name AS companyName,
+        jp.title AS title,
+        jp.career_type AS careerType,
+        jp.education AS education,
+        jg.job_group_name AS jobGroupName,
+        j.job_name AS jobName,
+        jp.end_date AS endDate
+    FROM JOB_POST jp
+             JOIN COMPANY c ON jp.company_id = c.company_id
+             JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
+             JOIN JOB j ON jp.job_id = j.job_id
+    ORDER BY jp.end_date ASC
 
+    </select>
 </mapper>
