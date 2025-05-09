@@ -41,6 +41,7 @@ public class RecruitmentController {
         System.out.println("Job Group ID: " + jobGroupId);
 
         List<JobGroupVo> jobList = recruitmentService.jobList(jobGroupId);
+
         System.out.println("잡리스트" + jobList);
         return jobList;
     }
