@@ -10,4 +10,8 @@ public interface CompanyService {
 
 	int companyCount();
 
+	CompanyVo companySelectOne(int companyId);
+
+	int companyUpdateOne(CompanyVo existCompanyVo);
+
 }
