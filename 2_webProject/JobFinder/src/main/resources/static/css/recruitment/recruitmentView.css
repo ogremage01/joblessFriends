@@ -21,6 +21,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: #ffffff;
+    border: 1px solid lightgray;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
@@ -87,42 +88,84 @@ body {
 }
 
 .job {
-    background-color: #FFFFFF;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: flex-start;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+.job:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+}
+.company-name {
+    width: 100px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+    flex-shrink: 0;
 }
 
 .job-info {
+    flex: 1;
+    padding: 0 20px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
 }
 
-.job h3 {
-    margin: 0;
+.job-title {
     font-size: 16px;
-    color: #333333;
+    font-weight: bold;
+    color: #222;
 }
 
-.job p {
-    margin: 0;
+.job-title .star {
+    color: #f4b400;
+    margin-left: 5px;
+}
+
+.job-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
     font-size: 14px;
-    color: #666666;
+    color: #555;
 }
 
-.job button {
+.job-meta-skill {
+    flex-basis: 100%;
+    margin-top: 6px;
+    font-size: 14px;
+    color: #555;
+}
+
+.job-action {
+    text-align: right;
+    min-width: 120px;
+    flex-shrink: 0;
+}
+
+.job-action button {
     background-color: #ff8200;
+    color: #fff;
     border: none;
-    color: #ffffff;
-    padding: 8px 15px;
+    padding: 8px 14px;
     border-radius: 6px;
+    font-weight: bold;
     cursor: pointer;
-    font-size: 14px;
+    margin-bottom: 6px;
 }
+
+.job-action .deadline {
+    font-size: 13px;
+    color: #666;
+}
+
 .job-group-list {
     flex: 1;
     width: 300px;

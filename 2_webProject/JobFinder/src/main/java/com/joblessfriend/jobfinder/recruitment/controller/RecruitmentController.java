@@ -51,4 +51,9 @@ public class RecruitmentController {
         return jobList;
     }
 
+    @GetMapping("detail")
+    public String getDetail(Model model) {
+        return "recruitment/recruitmentDetail";
+    }
+
 }

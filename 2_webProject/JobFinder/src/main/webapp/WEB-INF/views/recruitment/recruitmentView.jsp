@@ -103,21 +103,39 @@
 
         <!-- 채용공고 리스트 -->
         <div id="jobListings">
-            <div class="job">
             <c:forEach var="item" items="${recruitmentList}">
-                <div class="job-info">
-                   <h3>${item.companyName}</h3>
-                   <p>${item.title}</p>
-                   <p>${item.jobGroupName}</p>
-                   <p>${item.jobName}</p>
-                   <p>${item.careerType}</p>
-                   <p>${item.education}</p>
-                   <p>${item.endDate}</p>
+                <div class="job" data-code="${item.jobPostId}">
+
+                    <!-- 왼쪽: 회사명 -->
+                    <div class="company-name">
+                            ${item.companyName}
+                    </div>
+
+                    <!-- 가운데: 공고 정보 -->
+                    <div class="job-info">
+                        <div class="job-title">
+                                ${item.title} <span class="star">★</span>
+                        </div>
+                        <div class="job-meta">
+
+                            <span>🧑‍💻 지원자격:${item.education} </span> <span>🎓 경력: ${item.careerType}</span>
+                            <span>💼 채용직: ${item.jobName}</span>
+
+                        </div>
+                        <div class="job-meta-skill">
+                            🧩 스킬: 처리예정
+                        </div>
+                    </div>
+
+                    <!-- 오른쪽: 버튼 및 마감일 -->
+                    <div class="job-action">
+                        <button type="button" onclick="">지원하기</button>
+                        <div class="deadline">~<fmt:formatDate value="${item.endDate}" pattern="MM/dd(E)" /></div>
+                    </div>
                 </div>
-                <button>지원하기</button>
             </c:forEach>
-            </div>
         </div>
+
 
     </div>
 </div>
