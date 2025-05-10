@@ -11,7 +11,9 @@
 
 <style type="text/css">
 	
-
+	#containerWrap{
+		margin-bottom: 100px;
+	}
 	.boxStyle{
 		width: 1190px;
 		height: 45px;
@@ -46,39 +48,56 @@
 	}
 	
 </style>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script type="text/javascript">
+
+	
+</script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <div id='containerWrap' class="wrap">
-	<h2>글쓰기</h2>
-	<div>
-		<p>제목</p>
-		<input type="text" class='boxStyle' placeholder="제목을 입력해주세요." />
-	</div>
-	<div>
-		<p>내용</p>
-		<div id="content" class="contentBox"></div>
+		<h2>글쓰기</h2>
+		<form action="/community/upload" method="post">
+			<div>
+				<p>제목</p>
+				<input name='title' type="text" class='boxStyle'
+					placeholder="제목을 입력해주세요." />
+			</div>
+			<div>
+				<p>내용</p>
+				<div id="content" class="contentBox"></div>
+				<!-- 에디터 내용을 담을 숨겨진 textarea -->
+				<textarea name="content" id="hiddenContent" style="display: none;"></textarea>
+			</div>
+			<div id="btnWrap">
+				<button id='cancleBtn' class='inputBtn'>취소</button>
+				<button type="submit" id='uploadBtn' class='inputBtn' onclick="submitEditor()">등록</button>
+			</div>
+		</form>
 		<!-- TUI 에디터 JS CDN -->
-		<script
-			src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
 		<script>
-	        const editor = new toastui.Editor({
+			 const editor = new toastui.Editor({
 	            el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
-	            height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
-	            initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
-	            initialValue: '내용을 입력해 주세요.',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
-	            previewStyle: 'vertical' 
+	            height: '500px',                        // 에디터 영역의 높이 값 (500px로 지정)
+	            initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg 중에 markdown버전으로 처음 보여짐)
+	            initialValue: '',                       // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함(아무내용 없음)
+	            previewStyle: 'vertical',               // 마크다운 프리뷰 스타일 (tab || vertical)
+	            placeholder: '내용을 입력해 주세요.',
 	        });
+	        
+	        function submitEditor() {
+	            const markdown = editor.getMarkdown(); // 또는 getHTML()
+	            document.getElementById('hiddenContent').value = markdown;
+	            return true; // 폼 제출 계속 진행
+	        }
     	</script>
-	</div>
+		
 
-	<div id="btnWrap">
-		<button id='cancleBtn' class='inputBtn'>취소</button>
-		<button id='uploadBtn' class='inputBtn'>등록</button>
-	</div>
 
-	</div>
+</div>
 </body>
 
 

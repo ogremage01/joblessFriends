@@ -57,7 +57,7 @@
 #writeBtn:hover {
 	color: #F69800;
 	background-color: white;
-	border: 1px solid #6D707B;
+	border: 1px solid #F69800;
 }
 
 .searchBox {
@@ -96,6 +96,12 @@
 }
 </style>
 
+<script type="text/javascript">
+	function moveUpload(){
+		location.href = "/community/upload";
+	}
+</script>
+
 <div id='boxWrap' class="boxStyle">
 	<div id='boxTextWrap'>
 		<div>
@@ -106,7 +112,7 @@
 		<a>프로필 변경</a>
 	</div>
 
-	<button id='writeBtn'>
+	<button id='writeBtn' onclick="moveUpload()">
 		<svg xmlns="http://www.w3.org/2000/svg" width="100" height="50"
 			fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 70 16">
 		  <path
