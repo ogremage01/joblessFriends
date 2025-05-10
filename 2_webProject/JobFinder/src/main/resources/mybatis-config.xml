@@ -18,6 +18,6 @@
 <!--    예시    <mapper resource="mappers/member/MemberMapper.xml"/>-->
 <!--		 <mapper resource="mapper/admin/adminMapper"/>-->
 <!--		 <mapper resource="mapper/company/companyMapper"/>  -->
-		<mapper resource="mapper/community/communityMapper.xml"/>
+<!--		<mapper resource="mapper/community/communityMapper.xml"/>-->
     </mappers>
 </configuration>
