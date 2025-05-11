@@ -32,4 +32,9 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public List<RecruitmentVo> recruitmentList() {
         return recruitmentDao.recruitmentList();
     }
+
+    @Override
+    public RecruitmentVo getRecruitmentId(int id) {
+        return recruitmentDao.getRecruitmentId(id);
+    }
 }

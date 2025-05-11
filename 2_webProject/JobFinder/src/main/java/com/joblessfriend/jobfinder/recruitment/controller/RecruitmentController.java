@@ -3,7 +3,13 @@ package com.joblessfriend.jobfinder.recruitment.controller;
 //
 //import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
 //import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
+import com.joblessfriend.jobfinder.company.domain.CompanyVo;
+import com.joblessfriend.jobfinder.company.service.CompanyService;
+import com.joblessfriend.jobfinder.job.domain.JobVo;
+import com.joblessfriend.jobfinder.job.service.JobService;
+import com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao;
 import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
+import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentDetailVo;
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
 import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +31,14 @@ public class RecruitmentController {
     @Autowired
     private RecruitmentService recruitmentService;
 
+    @Autowired
+    private JobService jobService;
+
+    @Autowired
+    private CompanyService companyService;
+
+
+    private final RecruitmentDao recruitmentDao;
 
     @GetMapping("/list")
     public String getAllList(Model model) {
@@ -53,6 +67,18 @@ public class RecruitmentController {
 
     @GetMapping("detail")
     public String getDetail(Model model) {
+        JobVo jobVo = jobService.getJobById(1);
+        CompanyVo companyVo = companyService.companySelectOne(1);
+        RecruitmentVo recruitmentVo = recruitmentService.getRecruitmentId(1);
+
+        RecruitmentDetailVo recruitmentDetailVo = new RecruitmentDetailVo();
+
+        recruitmentDetailVo.setJob(jobVo);
+        recruitmentDetailVo.setCompany(companyVo);
+        recruitmentDetailVo.setRecruitment(recruitmentVo);
+
+
+
         return "recruitment/recruitmentDetail";
     }
 
