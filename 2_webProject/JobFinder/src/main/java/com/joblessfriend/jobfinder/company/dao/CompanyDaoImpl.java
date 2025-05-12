@@ -65,7 +65,7 @@ public class CompanyDaoImpl implements CompanyDao{
 		return sqlSession.selectOne(namespace + "companyExist", paramMap);
 	}
 
-
+	// 아이디 찾기
 	@Override
 	public CompanyVo companyFindId(String representative, String brn) {
 		// TODO Auto-generated method stub
@@ -75,6 +75,13 @@ public class CompanyDaoImpl implements CompanyDao{
 		paramMap.put("brn", brn);
 		
 		return sqlSession.selectOne(namespace + "companyFindId", paramMap);
+	}
+
+	// 이메일 중복확인
+	@Override
+	public CompanyVo companyEmailExist(String email) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + "companyEmailExist", email);
 	}
 
 }

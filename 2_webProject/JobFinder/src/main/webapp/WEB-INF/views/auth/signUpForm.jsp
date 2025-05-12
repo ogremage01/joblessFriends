@@ -51,12 +51,23 @@
 			<div id="content">
 			
 				<div id="signUpFormWrap">
-					<form id="signUpForm" name="signUpForm" method="post" action="/auth/signup/member">
+					<form id="signUpForm" name="signUpForm" method="post" action="/auth/signup/member" onsubmit="return submitCheck();">
 						<fieldset>
 							<legend>회원가입</legend>
-							<input id="email" name="email" type="email" value="" placeholder="이메일">
-							<input id="password" name="password" type="password" onblur="valiCheckPwd();" value="" placeholder="비밀번호 (8자 이상/영문, 숫자 포함)">
-							<input id="passwordCheck" type="password" value="" placeholder="비밀번호 확인">
+							<div class="inputGroup">
+								<input id="email" name="email" type="email" onblur="valiCheckEmail();" value="" placeholder="이메일" >
+								<div id="emailStatus" class="valiCheckText"></div> <!-- 이메일 중복 여부 메시지가 표시될 곳 -->
+							</div>
+							
+							<div class="inputGroup">
+								<input id="password" name="password" type="password" onblur="valiCheckPwd();" onkeyup="sameCheckPwd();" value="" placeholder="비밀번호 (8자 이상/영문, 숫자 포함)" >
+								<div id="pwdStatus" class="valiCheckText"></div> <!-- 비밀번호 확인 메시지가 표시될 곳 -->
+							</div>
+							
+							<div class="inputGroup">
+								<input id="passwordCheck" type="password" onblur="sameCheckPwd();" value="" placeholder="비밀번호 확인" >
+								<div id="pwdStatus2" class="valiCheckText"></div> <!-- 비밀번호 확인 메시지가 표시될 곳 -->
+							</div>
 							
 							<button type="submit" id="signUpBtn" class="btnStyle">가입하기</button>
 						</fieldset>

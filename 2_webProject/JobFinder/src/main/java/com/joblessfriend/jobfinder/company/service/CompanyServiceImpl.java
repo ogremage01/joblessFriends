@@ -61,4 +61,11 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyDao.companyFindId(representative, brn);
 	}
 
+	// 이메일 중복확인
+	@Override
+	public CompanyVo companyEmailExist(String email) {
+		// TODO Auto-generated method stub
+		return companyDao.companyEmailExist(email);
+	}
+
 }

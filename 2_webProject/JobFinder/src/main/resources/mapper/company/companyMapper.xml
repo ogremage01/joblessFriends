@@ -79,6 +79,9 @@
 			WHERE REPRESENTATIVE = #{representative}
 			AND BRN = #{brn}
 		</select>
-
+		
+		<select id="companyEmailExist" parameterType="String" resultMap="companyResultMap">
+			SELECT EMAIL FROM COMPANY WHERE EMAIL = #{email}
+		</select>
 
 	</mapper>

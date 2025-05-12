@@ -8,4 +8,6 @@ public interface MemberService {
 
 	int memberInsertOne(String email, String password);
 
+	MemberVo memberEmailExist(String email);
+
 }

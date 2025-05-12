@@ -22,4 +22,6 @@ public interface CompanyDao {
 
 	public CompanyVo companyFindId(String representative, String brn);
 
+	public CompanyVo companyEmailExist(String email);
+
 }

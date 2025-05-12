@@ -10,4 +10,6 @@ public interface MemberDao {
 
 	boolean isNicknameExists(String nickname);
 
+	MemberVo memberEmailExist(String email);
+
 }

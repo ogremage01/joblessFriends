@@ -20,4 +20,6 @@ public interface CompanyService {
 
 	CompanyVo companyFindId(String representative, String brn);
 
+	CompanyVo companyEmailExist(String email);
+
 }

@@ -69,9 +69,16 @@
 	
 	#signUpForm input:focus {
 		border: 1px solid #F69800;
-
 	}
 	
+	.inputGroup {
+		display: flex;
+		flex-direction: column;
+	}
+	.valiCheckText {
+		color: red;
+		font-size: 14px;
+	}
 	
 	
 	/* 	버튼  */

@@ -41,6 +41,40 @@ public class AuthController {
 		return "auth/signUpForm";
 	}
 	
+	// 이메일 중복확인 개인회원
+	@PostMapping("/check/member/email")
+	public ResponseEntity<String> valiCheckEmailMember(@RequestParam String email) {
+		logger.info(logTitleMsg);
+		logger.info("==valiCheckEmail Member== email: {}", email);
+		
+		MemberVo memberVo = memberService.memberEmailExist(email);
+		String checkStr = "";
+		if (memberVo == null) {
+			checkStr = "사용가능";
+		}else {
+			checkStr = "중복";
+		}
+		
+		return ResponseEntity.ok(checkStr);
+	}
+	
+	// 이메일 중복확인 기업회원
+		@PostMapping("/check/company/email")
+		public ResponseEntity<String> valiCheckEmailCompany(@RequestParam String email) {
+			logger.info(logTitleMsg);
+			logger.info("==valiCheckEmail Company== email: {}", email);
+			
+			CompanyVo companyVo = companyService.companyEmailExist(email);
+			String checkStr = "";
+			if (companyVo == null) {
+				checkStr = "사용가능";
+			}else {
+				checkStr = "중복";
+			}
+			
+			return ResponseEntity.ok(checkStr);
+		}
+	
 	// 회원가입 개인회원
 	// 추후 비밀번호 암호화 체크 필요
 	@PostMapping("/signup/member")
@@ -142,8 +176,6 @@ public class AuthController {
 		
 		return "redirect:auth/login";
 	}
-	
-	
 	
 	// 기업회원 비밀번호 찾기
 	@PostMapping("/find/companyPwd")
