@@ -18,6 +18,21 @@
 	#communityList{
 		margin-bottom: 15px;
 	}
+	
+	#topBtn{
+		position: fixed;
+		bottom: 100px;
+		right: 100px;
+		
+		width: 50px;
+		height: 50px;
+		
+	}
+	
+	#topBtn a{
+		text-decoration-line: none;
+		margin: auto;
+	}
 </style>
 <script type="text/javascript">
 
@@ -28,11 +43,17 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <div id='containerWrap' class="wrap">
+
 	<div id='communityList'>
 		<jsp:include page="/WEB-INF/views/community/list/communitySideBar.jsp"/>
 	</div>	
+
 	<div>
 		<jsp:include page="/WEB-INF/views/community/list/communityListOne.jsp"/>
+	</div>
+	
+	<div id='topBtn' class='boxStyle'>
+		<a href="#">맨 위로</a>
 	</div>
 </div>
 </body>

@@ -5,6 +5,7 @@
 	<resultMap type="CommunityVo" id="communityResultVo">
 		<id column="COMMUNITY_ID" property="communityId" />
 		<result column="MEMBER_ID" property="memberId" />
+		<result column="NICKNAME" property="nickname" />
 		<result column="TITLE" property="title" />
 		<result column="CONTENT" property="content" />
 		<result column="CREATE_AT" property="createAt"
@@ -17,8 +18,22 @@
 	
 	<insert id="communityInsertOne" parameterType="com.joblessfriend.jobfinder.community.domain.CommunityVo" keyProperty="communityId">
 		INSERT INTO COMMUNITY (COMMUNITY_ID, MEMBER_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, VIEWS)
-		VALUES(COMMUNITY_ID_SEQ.NEXTVAL, 1, '${title}', '${content}', SYSDATE, SYSDATE, 0)
+		VALUES(COMMUNITY_ID_SEQ.NEXTVAL, #{memberId}, #{title}, #{content}, SYSDATE, SYSDATE, 0)
 	</insert>
+	
+	<select id="communitySelectList" parameterType="com.joblessfriend.jobfinder.community.domain.CommunityVo" resultMap="communityResultVo">
+		<![CDATA[
+			SELECT COMMUNITY_ID, MEMBER_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, VIEWS
+			FROM COMMUNITY
+		]]>
+	</select>
+	
+	<select id="communitySelectOne" parameterType="com.joblessfriend.jobfinder.community.domain.CommunityVo" resultMap="communityResultVo">
+			SELECT COMM.COMMUNITY_ID, COMM.MEMBER_ID, COMM.TITLE, COMM.CONTENT, COMM.CREATE_AT, COMM.MODIFIED_AT, COMM.VIEWS, MEM.NICKNAME
+			FROM COMMUNITY COMM INNER JOIN MEMBER MEM
+			ON COMM.MEMBER_ID = MEM.MEMBER_ID
+			WHERE COMM.COMMUNITY_ID = #{communityId}
+	</select>
 	
 
 </mapper>

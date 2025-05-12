@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="/css/community/communityCommonStyle.css"> 
 <link rel="stylesheet" href="/css/common/common.css">
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
 
 <style type="text/css">
 	
@@ -47,19 +48,26 @@
 		width: 1200px;
 	}
 	
+	
+	
 </style>
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script
+>
 <script type="text/javascript">
 
 	
 </script>
 </head>
+
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <div id='containerWrap' class="wrap">
+<div class="markdown-body">		
+		
 		<h2>글쓰기</h2>
 		<form action="/community/upload" method="post">
+		<input type="hidden" name="writer" value="${sessionScope.loginUser.memberId}" />
 			<div>
 				<p>제목</p>
 				<input name='title' type="text" class='boxStyle'
@@ -96,7 +104,7 @@
     	</script>
 		
 
-
+</div>
 </div>
 </body>
 
