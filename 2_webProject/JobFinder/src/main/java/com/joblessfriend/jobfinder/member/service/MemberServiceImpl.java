@@ -58,4 +58,11 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.memberInsertOne(memberVo);
 	}
 
+	// 이메일 중복확인
+	@Override
+	public MemberVo memberEmailExist(String email) {
+		// TODO Auto-generated method stub
+		return memberDao.memberEmailExist(email);
+	}
+
 }

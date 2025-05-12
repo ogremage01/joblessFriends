@@ -16,8 +16,17 @@ public interface CompanyDao {
 
 	public int companyUpdateOne(CompanyVo existCompanyVo);
 
+
 	public int companyDeleteOne(int companyId);
 
 	public int companyDeleteList(List<Integer> companyIdList);
+
+	public int companyInsertOne(CompanyVo companyVo);
+
+	public CompanyVo companyExist(String email, String password);
+
+	public CompanyVo companyFindId(String representative, String brn);
+
+	public CompanyVo companyEmailExist(String email);
 
 }

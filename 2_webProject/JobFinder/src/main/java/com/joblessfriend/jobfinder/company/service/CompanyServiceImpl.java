@@ -40,6 +40,7 @@ public class CompanyServiceImpl implements CompanyService {
 		
 	}
 
+
 	@Override
 	public int companyDeleteOne(int companyId) {
 		// TODO Auto-generated method stub
@@ -50,6 +51,34 @@ public class CompanyServiceImpl implements CompanyService {
 	public int companyDeleteList(List<Integer> companyIdList) {
 		// TODO Auto-generated method stub
 		return companyDao.companyDeleteList(companyIdList);
+
+	// 기업회원가입
+	@Override
+	public int companyInsertOne(CompanyVo companyVo) {
+		// TODO Auto-generated method stub
+		return companyDao.companyInsertOne(companyVo);
+	}
+
+	// 기업로그인
+	@Override
+	public CompanyVo companyExist(String email, String password) {
+		// TODO Auto-generated method stub
+		return companyDao.companyExist(email, password);
+	}
+	
+	// Id 찾기
+	@Override
+	public CompanyVo companyFindId(String representative, String brn) {
+		// TODO Auto-generated method stub
+		return companyDao.companyFindId(representative, brn);
+	}
+
+	// 이메일 중복확인
+	@Override
+	public CompanyVo companyEmailExist(String email) {
+		// TODO Auto-generated method stub
+		return companyDao.companyEmailExist(email);
+
 	}
 
 }

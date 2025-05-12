@@ -14,8 +14,18 @@ public interface CompanyService {
 
 	int companyUpdateOne(CompanyVo existCompanyVo);
 
+
 	int companyDeleteOne(int companyId);
 
 	int companyDeleteList(List<Integer> companyIdList);
+
+	int companyInsertOne(CompanyVo companyVo);
+
+	CompanyVo companyExist(String email, String password);
+
+	CompanyVo companyFindId(String representative, String brn);
+
+	CompanyVo companyEmailExist(String email);
+
 
 }

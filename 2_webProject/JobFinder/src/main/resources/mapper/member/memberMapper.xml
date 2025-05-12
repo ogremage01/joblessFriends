@@ -25,8 +25,12 @@
 			VALUES(MEMBER_ID_SEQ.NEXTVAL, #{email}, #{password},#{nickname},5)
 		</insert>
 		
-		<select id="isNicknameExists" resultType="String" parameterType="String">
+		<select id="isNicknameExists"  parameterType="String" resultType="String">
 			SELECT NICKNAME FROM MEMBER WHERE NICKNAME = #{nickname}
+		</select>
+		
+		<select id="memberEmailExist" parameterType="String" resultType="memberVo">
+			SELECT EMAIL FROM MEMBER WHERE EMAIL = #{email}
 		</select>
 		
 	</mapper>

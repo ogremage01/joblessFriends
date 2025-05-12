@@ -222,7 +222,7 @@
 					                </c:when>
 					                <c:when test="${sessionScope.userType eq 'company'}">
 					                    <li class="userNavItem corpMgr">
-					                        <a href="">기업이름 담당자님</a>
+					                        <a href="">${sessionScope.userLogin.companyName} 담당자님</a>
 					                    </li>
 					                    <li class="userNavItem logout">
 					                        <a href="/auth/logout">로그아웃</a>

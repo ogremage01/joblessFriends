@@ -45,4 +45,11 @@ public class MemberDaoImpl implements MemberDao{
 		// TODO Auto-generated method stub
 		return sqlSession.insert(namespace + "memberInsertOne", memberVo);
 	}
+
+	// 이메일 중복체크
+	@Override
+	public MemberVo memberEmailExist(String email) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + "memberEmailExist", email);
+	}
 }
