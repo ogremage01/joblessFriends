@@ -19,7 +19,11 @@
 		margin-bottom: 15px;
 	}
 </style>
+<script type="text/javascript">
+
+</script>
 </head>
+
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
@@ -27,8 +31,9 @@
 	<div id='communityList'>
 		<jsp:include page="/WEB-INF/views/community/list/communitySideBar.jsp"/>
 	</div>	
-	<jsp:include page="/WEB-INF/views/community/list/communityListOne.jsp"/>
-
+	<div>
+		<jsp:include page="/WEB-INF/views/community/list/communityListOne.jsp"/>
+	</div>
 </div>
 </body>
 </html>
