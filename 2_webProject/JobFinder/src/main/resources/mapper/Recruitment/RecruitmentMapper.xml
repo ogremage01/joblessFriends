@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao">
+
+    <select id="jobGroupList" resultType="com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo">
+        SELECT
+            JOB_GROUP_ID AS jobGroupId,
+            JOB_GROUP_NAME AS jobGroupName
+        FROM JOB_GROUP
+    </select>
+
+
+    <select id="jobList" parameterType="int" resultType="com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo">
+        SELECT
+            JOB_NAME AS jobName
+        FROM JOB
+        WHERE JOB_GROUP_ID = #{jobGroupId}
+    </select>
+
+<!--    채용공고리스트 , 기업join, 직군 , 직무만 join상태 채용공고 main페이지전용 -->
+    <select id="RecruitmentList" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">-->
+    SELECT
+        c.company_name AS companyName,
+        jp.title AS title,
+        jp.career_type AS careerType,
+        jp.education AS education,
+        jg.job_group_name AS jobGroupName,
+        j.job_name AS jobName,
+        jp.end_date AS endDate
+    FROM JOB_POST jp
+             JOIN COMPANY c ON jp.company_id = c.company_id
+             JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
+             JOIN JOB j ON jp.job_id = j.job_id
+    ORDER BY jp.end_date ASC
+
+    </select>
+
+    <select id="getRecruitmentId" parameterType="int" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
+        SELECT
+            jp.job_post_id AS jobPostId,
+            jp.title, jp.content,
+            jp.career_type AS careerType,
+            jp.education,
+            jp.start_date AS startDate,
+            jp.end_date AS endDate,
+            jg.job_group_name AS jobGroupName,
+            jp.company_id AS companyId,
+            jp.job_id AS jobId,
+            jp.salary AS salary,
+            jp.work_hours AS workHours
+        FROM JOB_POST jp
+                 JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
+        WHERE jp.job_post_id = #{id}
+    </select>
+
+</mapper>

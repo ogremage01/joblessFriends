@@ -1,0 +1,253 @@
+@charset "UTF-8";
+
+body {
+  margin: 0;
+  font-family: 'NanumGothic', sans-serif;
+  background: white;
+}
+
+.container {
+  width: 1920px;
+  margin: 0 auto;
+  background: white;
+  overflow: hidden;
+}
+
+.global-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 54px;
+  border-bottom: 1px solid #E0E0E0;
+  padding: 0 40px;
+}
+
+.logo {
+  font-family: 'Anton SC';
+  font-size: 28px;
+  color: #F69800;
+}
+
+.nav-links span {
+  margin-left: 20px;
+  font-weight: 700;
+  font-size: 15px;
+  color: #373F57;
+}
+
+/* 인적사항 */
+.resume-wrapper {
+  width: 930px;
+  margin: 50px auto;
+}
+
+.resume-title {
+  font-size: 24px;
+  color: #B7B9C0;
+  margin-bottom: 40px;
+  border: 1px solid #D1D5E3;
+}
+
+.section-block {
+  margin-bottom: 60px;
+  padding: 24px;
+  border: 1px solid #D1D5E3; /* 경계선 색상 */
+  border-radius: 5px;         /* 모서리 둥글게 */
+  background-color: #fff;     /* 섹션 배경색 명시적으로 흰색 지정 */
+}
+
+.section-block h2 {
+  font-size: 24px;
+  color: #36383F;
+  margin-bottom: 20px;
+}
+
+.grid-2, .grid-3, .grid-4 {
+  display: grid;
+  gap: 20px;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) 160px; /* 앞 3칸 + 사진칸 고정 */
+  gap: 20px;
+  align-items: end;
+}
+
+.field-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.field-block label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #6D707B;
+  margin-bottom: 5px;
+}
+
+.field-block input {
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid #D1D5E3;
+  padding-left: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #BABECA;
+}
+
+.photo-wrapper {
+  grid-column: 4 / 5; /* 오른쪽에 딱 고정 */
+  grid-row: 1 / span 2; /* 두 줄 높이로 내려오게 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.photo-box {
+  width: 70%;
+  height: 140px;
+  background: #F2F3F8;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: #AFB2BD;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.photo-box span {
+  font-size: 24px;
+  color: #AFB2BD;
+}
+
+.email-field {
+  grid-column: 3 / 4;
+}
+
+
+
+/* 스킬 */
+.skill-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 40px;
+  gap: 15px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #36383F;
+}
+
+.tag-input {
+  padding: 10px 15px;
+  width: 220px;
+  border: 1px solid black;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.tag-list {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  padding: 10px 20px;
+  border: 1px solid #F69800;
+  border-radius: 15px;
+  color: #F69800;
+  font-weight: bold;
+  font-family: NanumGothic;
+  font-size: 14px;
+  background-color: white;
+}
+
+/* 학력 */
+.education-entry {
+  position: relative;
+  padding: 20px 0;
+  border-bottom: 1px solid #E0E0E0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto;
+  gap: 20px;
+  align-items: end;
+}
+
+.education-entry .field-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.education-entry .field-block label {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: #6D707B;
+}
+
+.education-entry .field-block input,
+.education-entry .field-block select {
+  height: 40px;
+  padding-left: 10px;
+  border-radius: 5px;
+  border: 1px solid #D1D5E3;
+  font-size: 14px;
+  font-weight: 700;
+  color: #36383F;
+}
+
+.education-entry .delete-btn {
+  align-self: center;
+  margin-top: 25px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #999;
+  cursor: pointer;
+}
+
+.add-btn {
+  margin-top: 20px;
+  background: none;
+  border: none;
+  color: #6D707B;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.add-btn::before {
+  content: '＋';
+  margin-right: 6px;
+  font-size: 18px;
+}
+.add-education-btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.add-education-btn button {
+  background: none;
+  border: none;
+  color: #6D707B;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}

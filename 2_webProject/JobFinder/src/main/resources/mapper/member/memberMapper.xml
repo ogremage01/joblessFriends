@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<mapper namespace="com.joblessfriend.jobfinder.member.domain">
+	
+		<resultMap type="memberVo" id="memberResultMap">
+			<id column="MEMBER_ID" property="memberId"/>
+			<result column="EMAIL" property="email" />
+			<result column="PASSWORD" property="password" />
+			<result column="NICKNAME" property="nickname" />
+			<result column="RESUME_MAX" property="resumeMax" />
+		</resultMap>
+		
+		<select id="memberExist" parameterType="map"
+		resultMap="memberResultMap">
+			SELECT MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX
+			FROM MEMBER
+			WHERE EMAIL = #{email, jdbcType=VARCHAR}
+			AND PASSWORD = #{password, jdbcType=VARCHAR}
+		</select>
+		
+		<insert id="memberInsertOne" parameterType="memberVo">
+			INSERT INTO MEMBER
+			(MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX)
+			VALUES(MEMBER_ID_SEQ.NEXTVAL, #{email}, #{password},#{nickname},5)
+		</insert>
+		
+		<select id="isNicknameExists"  parameterType="String" resultType="String">
+			SELECT NICKNAME FROM MEMBER WHERE NICKNAME = #{nickname}
+		</select>
+		
+		<select id="memberEmailExist" parameterType="String" resultType="memberVo">
+			SELECT EMAIL FROM MEMBER WHERE EMAIL = #{email}
+		</select>
+		
+	</mapper>
+	
+	

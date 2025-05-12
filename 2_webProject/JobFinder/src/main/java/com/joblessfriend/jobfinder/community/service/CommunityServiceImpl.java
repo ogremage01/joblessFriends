@@ -1,5 +1,41 @@
 package com.joblessfriend.jobfinder.community.service;
 
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.joblessfriend.jobfinder.community.dao.CommunityDao;
+import com.joblessfriend.jobfinder.community.domain.CommunityVo;
+
+@Service
 public class CommunityServiceImpl implements CommunityService{
+	private Logger logger = LoggerFactory.getLogger(CommunityService.class);
+	private final String logTitleMsg = "===================게시판 서비스 시작======================";
+	
+	@Autowired
+	private CommunityDao communityDao;
+	
+	@Override
+	public void communityInsertOne(CommunityVo communityVo){
+		communityDao.communityInsertOne(communityVo);
+		
+	}
+
+	@Override
+	public List<CommunityVo> communitySelectList() {
+		// TODO Auto-generated method stub
+		return communityDao.communitySelectList();
+	}
+
+	@Override
+	public CommunityVo communityDetail(int communityId) {
+		// TODO Auto-generated method stub
+		 CommunityVo community = communityDao.communityDetail(communityId);
+
+		return community;
+	}
 
 }

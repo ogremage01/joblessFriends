@@ -1,11 +1,12 @@
    	
    	body {
-		margin: 0
+		margin: 0;
 	}
    
     #container {
 		min-width: 1280px;
 		width: 100%;
+
 	}
 	
 	#containerWrap {

@@ -6,152 +6,144 @@
 <html>
 <head>
     <title>채용정보 메인</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-3fp9tS8p9A2Mq7Qz+S8jfwD+xdgu9T+O+NRZz8N5eA8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <link rel="stylesheet" href="/css/common/common.css">
+    <link rel="stylesheet" href="/css/recruitment/recruitmentView.css">
+
 </head>
-<link rel="stylesheet" href="/css/common/common.css">
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f9f9f9;
-    }
 
-    #container {
-        width: 80%;
-        margin: auto;
-    }
 
-    #containerWrap {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
 
-    /* Search Section */
-    #searchSection {
-        display: flex;
-        justify-content: left;
-        gap: 10px;
-        padding: 10px;
-        background-color: white;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
 
-    input[type="text"] {
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
 
-    button {
-        padding: 8px 15px;
-        background-color: #0073e6;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #005bb5;
-    }
-
-    /* Filters */
-    #filters {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    select {
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    /* Job Listings */
-    #jobListings {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 20px;
-    }
-
-    .job {
-        background-color: white;
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .job h3 {
-        margin-bottom: 5px;
-        color: #333;
-    }
-
-    .job p {
-        font-size: 14px;
-        color: #555;
-    }
-
-</style>
 <body>
-
 <jsp:include page="../common/header.jsp"/>
+
 <div id="container">
     <div id="containerWrap">
 
+        <!-- 검색 필터 영역 -->
         <div id="searchSection">
+            <h2>검색조건</h2>
             <div id="filters">
-                <select>
-                    <option>직무</option>
-                    <option>개발</option>
-                    <option>디자인</option>
-                </select>
-                <select>
-                    <option>경력</option>
-                    <option>신입</option>
-                    <option>경력직</option>
-                </select>
-                <select>
-                    <option>학력</option>
-                    <option>신입</option>
-                    <option>경력직</option>
-                </select>
-                <select>
-                    <option>스킬</option>
-                    <option>신입</option>
-                    <option>경력직</option>
-                </select>
+                <!-- 드롭다운 버튼  -->
+                <div class="dropdown">
+                    <button type="button" class="dropdown-toggle">직군·직무 ▼</button>
+                    <div class="dropdown-content">
+                        <!-- 왼쪽: 직군 리스트 -->
+                        <div id="jobGroupList" class="job-group-list">
+                            <c:forEach var="item" items="${jobGroupList}">
+                                <div
+                                        class="job-group"
+                                        data-code="${item.jobGroupId}"
+                                        data-name="${item.jobGroupName}">
+                                        ${item.jobGroupName}
+                                </div>
+                            </c:forEach>
+                        </div>
 
 
+
+                        <!-- 오른쪽: 직무 리스트 -->
+                        <div id="jobList" class="job-list">
+                            <!-- 클릭 후 동적 생성 -->
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="dropdown">
+                    <button type="button" class="dropdown-toggle">경력 ▼</button>
+                    <div class="dropdown-content">
+                        <label><input type="checkbox" name="career" value="신입"> 신입</label>
+                        <label><input type="checkbox" name="career" value="경력직"> 경력직</label>
+                    </div>
+                </div>
+
+                <div class="dropdown education-dropdown">
+                    <button type="button" class="dropdown-toggle">학력 ▼</button>
+                    <div class="dropdown-content education-dropdown-content">
+                        <label><input type="checkbox" name="education" value="학력무관"> 학력무관</label>
+                        <label><input type="checkbox" name="education" value="대학 졸업(4년)"> 대학교 졸업(4년)</label>
+                        <label><input type="checkbox" name="education" value="대학 졸업(2,3년)"> 대학 졸업(2,3년)</label>
+                        <label><input type="checkbox" name="education" value="대학원 석사졸업"> 대학원 석사졸업</label>
+                        <label><input type="checkbox" name="education" value="대학원 박사졸업"> 대학원 박사졸업</label>
+                        <label><input type="checkbox" name="education" value="고등학교 졸업"> 고등학교 졸업</label>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button type="button" class="dropdown-toggle">스킬 ▼</button>
+                    <div class="dropdown-content">
+                        <label><input type="checkbox" name="skill" value="Java"> Java</label>
+                        <label><input type="checkbox" name="skill" value="Python"> Python</label>
+                        <label><input type="checkbox" name="skill" value="React"> React</label>
+                    </div>
+                </div>
+
+                <!-- 적용, 초기화 버튼 -->
+                <div id="filterActions">
+                    <button type="button">적용</button>
+                    <button type="button">초기화</button>
+                </div>
             </div>
-            <button>적용</button>
+
+            <div id="searchJobGroup">
+                <ul id="divSelectedCon">
+
+                </ul>
+            </div>
+
+
+
         </div>
 
-
-
+        <!-- 채용공고 리스트 -->
         <div id="jobListings">
-            <div class="job">
-                <h3>회사명</h3>
-                <p>직무: 개발자</p>
-                <p>부서: IT팀</p>
-                <p>마감일: 04/24(화)</p>
-                <button>지원하기</button>
-            </div>
-            <div class="job">
-                <h3>회사명</h3>
-                <p>직무: 디자이너</p>
-                <p>부서: 디자인팀</p>
-                <p>마감일: 04/24(화)</p>
-                <button>지원하기</button>
-            </div>
+            <c:forEach var="item" items="${recruitmentList}">
+                <div class="job" data-code="${item.jobPostId}">
+
+                    <!-- 왼쪽: 회사명 -->
+                    <div class="company-name">
+                            ${item.companyName}
+                    </div>
+
+                    <!-- 가운데: 공고 정보 -->
+                    <div class="job-info">
+                        <div class="job-title">
+                                ${item.title} <span class="star">★</span>
+                        </div>
+                        <div class="job-meta">
+
+                            <span>🧑‍💻 지원자격:${item.education} </span> <span>🎓 경력: ${item.careerType}</span>
+                            <span>💼 채용직: ${item.jobName}</span>
+
+                        </div>
+                        <div class="job-meta-skill">
+                            🧩 스킬: 처리예정
+                        </div>
+                    </div>
+
+                    <!-- 오른쪽: 버튼 및 마감일 -->
+                    <div class="job-action">
+                        <button type="button" onclick="">지원하기</button>
+                        <div class="deadline">~<fmt:formatDate value="${item.endDate}" pattern="MM/dd(E)" /></div>
+                    </div>
+                </div>
+            </c:forEach>
         </div>
+
 
     </div>
 </div>
 
 <jsp:include page="../common/footer.jsp"/>
 
+<script src="/js/recruitment/recruitmentView.js"></script>
+
 </body>
+
 </html>

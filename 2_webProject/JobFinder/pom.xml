@@ -122,6 +122,22 @@
     	<groupId>org.springframework.boot</groupId>
     	<artifactId>spring-boot-devtools</artifactId>
     </dependency>
+        <!-- JSTL add-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+		    <groupId>org.commonmark</groupId>
+		    <artifactId>commonmark</artifactId>
+		    <version>0.19.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.commonmark</groupId>
+		    <artifactId>commonmark-ext-gfm-strikethrough</artifactId>
+		    <version>0.19.0</version> <!-- 최신 버전으로 설정하세요 -->
+		</dependency>
     </dependencies>
     <build>
         <plugins>
@@ -133,10 +149,13 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
+                            <version>1.18.34</version>
                         </path>
+
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -151,5 +170,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>

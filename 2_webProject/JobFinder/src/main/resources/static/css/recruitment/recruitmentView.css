@@ -1,0 +1,244 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+
+}
+
+#container {
+    width: 80%;
+    margin: auto;
+}
+
+#containerWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* (1) Search Section 상단 검색조건 박스 */
+#searchSection {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid lightgray;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+    gap: 20px;
+}
+
+#filters {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    min-width: 120px;
+    text-align: left;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 5px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 100;
+    min-width: 200px;
+}
+
+/* (2) 적용, 초기화 버튼 */
+#filterActions {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+}
+
+#filterActions button {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* (3) 공고 리스트 부분 */
+#jobListings {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.job {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+.job:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+}
+.company-name {
+    width: 100px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+    flex-shrink: 0;
+}
+
+.job-info {
+    flex: 1;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.job-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #222;
+}
+
+.job-title .star {
+    color: #f4b400;
+    margin-left: 5px;
+}
+
+.job-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 14px;
+    color: #555;
+}
+
+.job-meta-skill {
+    flex-basis: 100%;
+    margin-top: 6px;
+    font-size: 14px;
+    color: #555;
+}
+
+.job-action {
+    text-align: right;
+    min-width: 120px;
+    flex-shrink: 0;
+}
+
+.job-action button {
+    background-color: #ff8200;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 6px;
+}
+
+.job-action .deadline {
+    font-size: 13px;
+    color: #666;
+}
+
+.job-group-list {
+    flex: 1;
+    width: 300px;
+    max-height: 300px;
+    overflow-y: auto;
+    border-right: 1px solid #e0e0e0;
+    padding-right: 30px;
+}
+
+/* 오른쪽 리스트 */
+.job-list {
+    flex: 2;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-left: 10px;
+}
+.job-group {
+
+    padding: 5px;
+    cursor: pointer;
+}
+
+.job-group:hover {
+    background-color: #FFF3D6; /* 밝은 회색 배경 */
+    color: #FF6600 ; /* 글자색 살짝 진하게 */
+}
+
+.job-group.selected {
+    background-color: #FFF3D6; /* 연한 주황색 추천 */
+    color: #FF6600 ;
+}
+
+#jobList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* 체크박스 간격 */
+    margin-top: 10px;
+}
+
+#jobList label {
+    width: 45%; /* 한 줄에 2개 꽉 차게 */
+    display: flex;
+    align-items: center;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
+h2 {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+/*경력관련css */
+.education-dropdown-content {
+    display: none;
+    flex-direction: column;
+    padding: 8px;
+    gap: 8px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.education-dropdown-content label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/*체크박스 모든css */
+.dropdown-content,.job-list ,.education-dropdown-content input[type="checkbox"]:checked {
+    accent-color: #f8a325;
+}
+
+
