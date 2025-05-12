@@ -1,6 +1,10 @@
 package com.joblessfriend.jobfinder.community.dao;
 
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,5 +26,20 @@ public class CommunityDaoImpl implements CommunityDao {
 		sqlSession.insert(namespace+"communityInsertOne",communityVo);
 		
 	}
+
+	@Override
+	public List<CommunityVo> communitySelectList() {
+		// TODO Auto-generated method stub
+
+		return sqlSession.selectList(namespace+"communitySelectList");
+	}
+
+	@Override
+	public CommunityVo communityDetail(int communityId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace+"communitySelectOne",communityId);//(이동할 매퍼, 전달할 값)>>값 전달이 없을 경우, (이동할 매퍼)
+	}
+	
+	
 
 }

@@ -1,5 +1,7 @@
 package com.joblessfriend.jobfinder.community.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,20 @@ public class CommunityServiceImpl implements CommunityService{
 	public void communityInsertOne(CommunityVo communityVo){
 		communityDao.communityInsertOne(communityVo);
 		
+	}
+
+	@Override
+	public List<CommunityVo> communitySelectList() {
+		// TODO Auto-generated method stub
+		return communityDao.communitySelectList();
+	}
+
+	@Override
+	public CommunityVo communityDetail(int communityId) {
+		// TODO Auto-generated method stub
+		 CommunityVo community = communityDao.communityDetail(communityId);
+
+		return community;
 	}
 
 }

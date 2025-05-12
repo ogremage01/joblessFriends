@@ -1,7 +1,12 @@
 package com.joblessfriend.jobfinder.community.domain;
 
-import java.sql.Date;
 
+
+import java.util.Date;
+
+import com.joblessfriend.jobfinder.member.domain.MemberVo;
+
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -12,7 +17,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommunityVo {
+public class CommunityVo extends MemberVo{
+	
+	@Id
 	private int communityId;
 	private int memberId;
 	private String title;
