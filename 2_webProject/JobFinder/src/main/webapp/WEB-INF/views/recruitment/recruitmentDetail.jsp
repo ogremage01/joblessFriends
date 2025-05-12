@@ -27,17 +27,18 @@
             <!-- 왼쪽 본문 -->
             <div class="detail-main">
                 <div class="detail-header">
-                    <h2>공고제목 공고제목</h2>
-                    <div class="company-name">기업명</div>
+                    <h2>${recruitmentDetailVo.recruitment.title}</h2>
+                    <div class="company-name">${recruitmentDetailVo.recruitment.companyName}</div>
                 </div>
 
                 <div class="detail-info-grid">
-                    <div><span class="detail-info-label">경력</span>신입·경력</div>
-                    <div><span class="detail-info-label">근무시간</span>주5일(월~금)</div>
-                    <div><span class="detail-info-label">접수 시작일</span>2025.04.23 (수) 17:00</div>
-                    <div><span class="detail-info-label">접수 마감일</span>2025.05.03 (토) 23:00</div>
-                    <div><span class="detail-info-label">학력</span>학력무관</div>
-                    <div><span class="detail-info-label">급여</span>연봉 4,500 만원</div>
+                    <div><span class="detail-info-label">경력</span>${recruitmentDetailVo.recruitment.careerType}
+                    </div>
+                    <div><span class="detail-info-label">근무시간</span>${recruitmentDetailVo.recruitment.workHours}</div>
+                    <div><span class="detail-info-label">접수 시작일</span><fmt:formatDate value="${recruitmentDetailVo.recruitment.startDate}" pattern="YY/MM/dd(E)" /></div>
+                    <div><span class="detail-info-label">접수 마감일</span><fmt:formatDate value="${recruitmentDetailVo.recruitment.endDate}" pattern="YY/MM/dd(E)" /></div>
+                    <div><span class="detail-info-label">학력</span>${recruitmentDetailVo.recruitment.education}</div>
+                    <div><span class="detail-info-label">급여</span>연봉 ${recruitmentDetailVo.recruitment.salary}만원</div>
                 </div>
             </div>
 
@@ -69,14 +70,12 @@
                 <section class="detail-section">
                     <h3>상세 내용</h3>
                     <p>
-                        본 공고는 아모레퍼시픽 백엔드 개발팀의 인재 채용 공고입니다.<br>
-                        Java 및 Spring 기반 웹 시스템의 유지보수와 신규 개발을 수행하며,<br>
-                        팀 내 협업과 기술 공유가 활발하게 이루어집니다.
+                        ${recruitmentDetailVo.recruitment.content}
                     </p>
                     <ul>
                         <li>정규직 / 주 5일 근무 / 유연 출퇴근제</li>
                         <li>우대사항: JPA 실무 경험, 대용량 트래픽 서비스 운영 경험</li>
-                        <li>복지: 사내 피트니스, 카페, 연 100만원 포인트 제공</li>
+                        <li>복지: 사내 피트니스, 카페, 연 100만원 포인트 제공   수정예정</li>
                     </ul>
                 </section>
 
@@ -104,10 +103,10 @@
                 <section class="detail-section">
                     <h3>기업 정보</h3>
                     <ul>
-                        <li><strong>기업명:</strong> 아모레퍼시픽</li>
-                        <li><strong>담당자명:</strong> 김하윤</li>
-                        <li><strong>연락처:</strong> 02-1234-5678</li>
-                        <li><strong>주소:</strong> 서울특별시 용산구 이태원로 123</li>
+                        <li><strong>기업명:</strong>  ${recruitmentDetailVo.company.companyName}</li>
+                        <li><strong>담당자명:</strong> ${recruitmentDetailVo.company.representative}</li>
+                        <li><strong>연락처:</strong> ${recruitmentDetailVo.company.tel}</li>
+                        <li><strong>주소:</strong> ${recruitmentDetailVo.company.address}</li>
                     </ul>
                 </section>
 
