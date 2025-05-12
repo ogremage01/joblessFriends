@@ -174,6 +174,8 @@ CREATE TABLE JOB_POST (
         COMPANY_ID NUMBER(5) NOT NULL,
         Title VARCHAR2(3000) NOT NULL,
         Content VARCHAR2(3000) NOT NULL,
+        Salary VARCHAR2(4000),
+        Work_Hours VARCHAR2(200),      --근무시간 ex:월~금
         Job_ID NUMBER(3),
         Job_Group_ID NUMBER(3),
         Views NUMBER(5),
@@ -182,6 +184,9 @@ CREATE TABLE JOB_POST (
         Education VARCHAR2(200),
         Start_Date DATE,
         End_Date DATE,
+        Is_Continuous NUMBER(1) DEFAULT 0,         -- 상시채용 여부
+        Max_Applicants NUMBER(5),                  -- 최대 지원자 수
+        Current_Applicants NUMBER(5) DEFAULT 0,    -- 현재 지원자 수
         CONSTRAINT PK_JOB_POST PRIMARY KEY (Job_Post_ID),
         CONSTRAINT FK_COMPANY_TO_JOB_POST FOREIGN KEY (COMPANY_ID) REFERENCES COMPANY(COMPANY_ID),
         CONSTRAINT FK_JOB_GROUP_TO_JOB_POST FOREIGN KEY (Job_Group_ID) REFERENCES JOB_GROUP(Job_Group_ID),

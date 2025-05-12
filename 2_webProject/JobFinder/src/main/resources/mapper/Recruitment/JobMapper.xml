@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.joblessfriend.jobfinder.job.dao.JobDao">
+
+    <select id="getJobById" parameterType="int" resultType="com.joblessfriend.jobfinder.job.domain.JobVo">
+        SELECT job_id AS jobId, job_name AS jobName
+        FROM Job
+        WHERE job_id = #{id}
+    </select>
+
+</mapper>

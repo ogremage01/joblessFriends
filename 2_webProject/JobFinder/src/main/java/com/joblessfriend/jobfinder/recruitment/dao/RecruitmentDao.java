@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+
 public interface RecruitmentDao {
     List<JobGroupVo> jobGroupList();
     List<JobGroupVo> jobList(int jobGroupId);
     public List<RecruitmentVo> recruitmentList();
+    RecruitmentVo getRecruitmentId(int id);
 }
