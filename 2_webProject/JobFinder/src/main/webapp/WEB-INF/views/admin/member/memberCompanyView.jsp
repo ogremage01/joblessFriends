@@ -120,10 +120,10 @@
 		<div id="container">
 		
 			<h1 style="text-align: center;">기업 회원 목록</h1>
-
 			<table class="table table-striped">
 				<thead class="table-dark" style="margin: auto;">
 					<tr>
+						<td><button id="massDelCom">탈퇴</button></td>
 						<td>ID</td>
 						<td>회사명</td>
 						<td>Email</td>
@@ -133,6 +133,7 @@
 				<tbody class="table-group-divider">
 					<c:forEach var="companyVo" items="${companyList}">
 						<tr>
+							<td style="text-align: center;"><input type="checkbox" class="delCompany" name="delete" value="${companyVo.companyId}"></td>
 							<td>${companyVo.companyId}</td>
 							<td><a href="./company/detail?companyId=${companyVo.companyId}">${companyVo.companyName}</a></td>
 							<td>${companyVo.email}</td>
@@ -142,7 +143,7 @@
 				</tbody>
 			</table>
 
-			<div  id='pageNation'>
+			<div id='pageNation'>
 
 				<nav aria-label="...">
 					<ul class="pagination justify-content-center">
@@ -169,6 +170,66 @@
 	</main>
 </body>
 
-<script type="text/javascript"></script>
+<script type="text/javascript">
+
+	
+	const massDelComBtn = document.getElementById("massDelCom");
+	
+	massDelComBtn.addEventListener("click", function(e) {
+		const delCompanyArr = document.querySelectorAll(".delCompany:checked");
+		const confirmed = confirm("삭제하시겠습니까?");
+		
+		if(confirmed&&delCompanyArr.length>0){
+			
+			const jsonData = [];
+			
+			delCompanyArr.forEach(cb=>{
+	
+				jsonData.push(cb.value);
+			});
+		
+			console.log(jsonData);
+			
+			fetch('/admin/member/company/massDelete',{
+	
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json'
+				
+				},
+				body: JSON.stringify(jsonData)
+		
+			})
+			.then(response => response.json())
+			.then(data => {
+
+				if(data===delCompanyArr.length){
+				    console.log('Success:', data);
+				    alert("삭제 완료");
+				    location.reload();
+				}else{
+
+					alert("삭제 실패");
+				    location.reload();
+				
+				}
+			})
+			.catch(error => {
+			    console.error('Error:', error);
+			    alert("삭제 실패");
+			});
+		
+		}else{
+
+			alert("선택된 기업이 없습니다.");
+		}
+	});
+	
+
+
+</script>
+
+	
+
 
 </html>
