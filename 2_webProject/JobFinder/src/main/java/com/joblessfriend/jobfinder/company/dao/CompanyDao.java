@@ -16,4 +16,8 @@ public interface CompanyDao {
 
 	public int companyUpdateOne(CompanyVo existCompanyVo);
 
+	public int companyDeleteOne(int companyId);
+
+	public int companyDeleteList(List<Integer> companyIdList);
+
 }

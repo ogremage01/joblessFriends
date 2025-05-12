@@ -57,6 +57,23 @@
 		    </set>
 		    WHERE COMPANY_ID = #{companyId}
 		</update>
+		
+		<delete id="companyDeleteOne">
+			DELETE COMPANY
+			WHERE COMPANY_ID = #{companyId}
+		
+		</delete>
+
+		<delete id="companyDeleteList" parameterType="java.util.List">
+		    DELETE FROM COMPANY
+		    WHERE COMPANY_ID IN
+		    <foreach item="companyId" collection="list" open="(" separator="," close=")">
+		        #{companyId}
+		    </foreach>
+		    
+		</delete>
+
+
 
 
 	</mapper>

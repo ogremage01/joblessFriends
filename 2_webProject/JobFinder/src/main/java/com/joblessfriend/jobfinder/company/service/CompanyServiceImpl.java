@@ -40,4 +40,16 @@ public class CompanyServiceImpl implements CompanyService {
 		
 	}
 
+	@Override
+	public int companyDeleteOne(int companyId) {
+		// TODO Auto-generated method stub
+		return companyDao.companyDeleteOne(companyId);
+	}
+
+	@Override
+	public int companyDeleteList(List<Integer> companyIdList) {
+		// TODO Auto-generated method stub
+		return companyDao.companyDeleteList(companyIdList);
+	}
+
 }

@@ -45,4 +45,21 @@ public class CompanyDaoImpl implements CompanyDao{
 		
 	}
 
+
+	@Override
+	public int companyDeleteOne(int companyId) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(namespace + "companyDeleteOne", companyId);
+	}
+
+
+	@Override
+	public int companyDeleteList(List<Integer> companyIdList) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(namespace + "companyDeleteList", companyIdList);
+	}
+	
+	
+	
+
 }

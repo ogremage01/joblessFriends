@@ -23,12 +23,14 @@ import com.joblessfriend.jobfinder.admin.service.AdminService;
 import com.joblessfriend.jobfinder.community.controller.CommunityController;
 import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 import com.joblessfriend.jobfinder.company.service.CompanyService;
-
+import com.joblessfriend.jobfinder.company.service.CompanyServiceImpl;
 import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/admin")
 @Controller
 public class AdminController {
+
+    private final CompanyServiceImpl companyServiceImpl;
 
     private final CommunityController communityController;
 
@@ -42,8 +44,9 @@ public class AdminController {
 	private CompanyService companyService;
 
 
-    AdminController(CommunityController communityController) {
+    AdminController(CommunityController communityController, CompanyServiceImpl companyServiceImpl) {
         this.communityController = communityController;
+        this.companyServiceImpl = companyServiceImpl;
     }
 	
 	
@@ -110,7 +113,9 @@ public class AdminController {
 		
 		List<CompanyVo> companyList = companyService.companySelectList(page);
 		int companyCount = companyService.companyCount();
-		int totalPage = companyCount/10 + companyCount%10;
+		System.out.println(companyCount);
+		int totalPage = companyCount/10 + (companyCount%10==0?0:1);
+		System.out.println(totalPage);
 		int curPage = page;
 		model.addAttribute("companyList", companyList);
 		model.addAttribute("totalPage", totalPage);
@@ -189,5 +194,37 @@ public class AdminController {
 	    return ResponseEntity.ok(result);
 
 	}
+	
+	
+	@PostMapping("/member/company/detail/delete")
+	public ResponseEntity<Integer> memberCompanyDeleteOne(@RequestBody CompanyVo companyVo){
+		logger.info("기업회원 탈퇴프로세스 진행-어드민");
+		
+		int companyId = companyVo.getCompanyId();
+		
+		System.out.println(companyId);
+		
+		int result = companyService.companyDeleteOne(companyId);
+		
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@PostMapping("/member/company/massDelete")
+	public ResponseEntity<Integer> memberCompanyDeleteList(@RequestBody List<Integer> companyIdList){
+		logger.info("기업회원 대량 탈퇴프로세스 진행-어드민");
+		
+		
+		for (Integer i : companyIdList) {
+			System.out.println("삭제할 기업 아이디:" + i);
+		}
+		
+		int result = companyService.companyDeleteList(companyIdList);
+		
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	
 
 }

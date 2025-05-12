@@ -14,4 +14,8 @@ public interface CompanyService {
 
 	int companyUpdateOne(CompanyVo existCompanyVo);
 
+	int companyDeleteOne(int companyId);
+
+	int companyDeleteList(List<Integer> companyIdList);
+
 }
