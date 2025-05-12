@@ -16,6 +16,6 @@ public interface RecruitmentService {
 
     public List<RecruitmentVo> recruitmentList();
     //채용공고 상세뷰
-    RecruitmentVo getRecruitmentId(int id);
+    RecruitmentVo getRecruitmentId(int jobPostId);
 
 }

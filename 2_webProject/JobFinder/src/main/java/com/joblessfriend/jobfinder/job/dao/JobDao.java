@@ -6,5 +6,5 @@ import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
 public interface JobDao {
 
 
-    JobVo getJobById(int id);
+    JobVo getJobById(int jobPostId);
 }

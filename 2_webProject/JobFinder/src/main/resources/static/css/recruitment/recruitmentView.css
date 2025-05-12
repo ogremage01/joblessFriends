@@ -240,5 +240,10 @@ h2 {
 .dropdown-content,.job-list ,.education-dropdown-content input[type="checkbox"]:checked {
     accent-color: #f8a325;
 }
+.apply-btn:hover {
+    background-color: #fbd28a;
+    color: #000000;
 
+/*    찬정님이 보시면 수정좀ㅋㅋ*/
+}
 

@@ -31,7 +31,7 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
     }
 
     @Override
-    public RecruitmentVo getRecruitmentId(int id) {
-        return sqlSession.selectOne("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.getRecruitmentId",id);
+    public RecruitmentVo getRecruitmentId(int jobPostId) {
+        return sqlSession.selectOne("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.getRecruitmentId",jobPostId);
     }
 }
