@@ -18,4 +18,6 @@ public interface CompanyService {
 
 	CompanyVo companyExist(String email, String password);
 
+	CompanyVo companyFindId(String representative, String brn);
+
 }

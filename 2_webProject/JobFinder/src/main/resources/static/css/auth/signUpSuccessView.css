@@ -1,0 +1,48 @@
+
+	/*		로고		*/
+	#logoDiv {
+		text-align: center;
+		margin-bottom: 50px;
+	}
+	
+	/* 	버튼  */
+	.goLoginBtn {
+		width: 160px;
+		height: 45px;
+
+		border: 1px solid #D1D5E3;
+		border-radius: 5px;
+
+		background-color: white;
+		color: #6D707B;
+		font-size: 16px;
+		cursor: pointer;
+	}
+
+	/* 공통단 css 수정 */
+	#container #containerWrap{
+   		width: 300px;
+   		margin-top: 0px;
+   		padding-top: 200px;
+   		
+   		text-align: center;
+   		font-size: 24px;
+    }
+    
+    /*	구글아이콘		*/
+	.material-symbols-rounded {
+		font-variation-settings:
+			'FILL' 0,
+			'wght' 50,
+			'GRAD' 200,
+			'opsz' 48;
+			font-size: 100px;
+		color: #F69800;
+		user-select: none;
+	}
+	
+	.successinfo {
+		margin-top: 10px;
+		margin-bottom: 30px;
+	}
+	

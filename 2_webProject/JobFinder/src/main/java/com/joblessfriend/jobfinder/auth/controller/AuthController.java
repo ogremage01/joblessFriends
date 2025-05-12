@@ -3,11 +3,13 @@ package com.joblessfriend.jobfinder.auth.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.joblessfriend.jobfinder.admin.controller.AdminController;
 import com.joblessfriend.jobfinder.admin.service.AdminService;
@@ -116,7 +118,7 @@ public class AuthController {
 	@GetMapping("/logout")
 	public String logout(HttpSession session, Model model) {
 		logger.info(logTitleMsg);
-		logger.info("logout");
+		logger.info("==logout==");
 		
 		session.invalidate();
 		
@@ -124,12 +126,45 @@ public class AuthController {
 	}
 	
 	// 계정찾기 뷰
-		@GetMapping("/find")
-		public String find() {
-			logger.info(logTitleMsg);
-			logger.info("==find==");
-			
-			return "auth/findAccountForm";
-		}
+	@GetMapping("/find")
+	public String find() {
+		logger.info(logTitleMsg);
+		logger.info("==find==");
+		
+		return "auth/findAccountForm";
+	}
+	
+	// 개인회원 비밀번호 찾기
+	@PostMapping("/find/memberPwd")
+	public String findMemberPwd() {
+		logger.info(logTitleMsg);
+		logger.info("findMemberPwd! ");
+		
+		return "redirect:auth/login";
+	}
+	
+	
+	
+	// 기업회원 비밀번호 찾기
+	@PostMapping("/find/companyPwd")
+	public String findCompanyPwd() {
+		logger.info(logTitleMsg);
+		logger.info("findCompanyPwd! ");
+		
+		return "redirect:auth/login";
+	}
+	
+	// 기업회원 아이디 찾기
+	@PostMapping("/find/companyId")
+	public ResponseEntity<String> findCompanyId(@RequestParam String representative, @RequestParam String brn) {
+		logger.info(logTitleMsg);
+		logger.info("findCompanyId! representative: {}, brn: {}", representative, brn);
+		
+		CompanyVo companyVo = companyService.companyFindId(representative, brn);
+		String email = companyVo.getEmail();
+		
+		return ResponseEntity.ok(email);
+	}
+	
 
 }

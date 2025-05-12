@@ -20,4 +20,6 @@ public interface CompanyDao {
 
 	public CompanyVo companyExist(String email, String password);
 
+	public CompanyVo companyFindId(String representative, String brn);
+
 }

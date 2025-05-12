@@ -71,6 +71,14 @@
 			WHERE EMAIL = #{email, jdbcType=VARCHAR}
 			AND PASSWORD = #{password, jdbcType=VARCHAR}
 		</select>
+		
+		<select id="companyFindId" parameterType="map"
+		resultMap="companyResultMap">
+			SELECT EMAIL
+			FROM COMPANY
+			WHERE REPRESENTATIVE = #{representative}
+			AND BRN = #{brn}
+		</select>
 
 
 	</mapper>

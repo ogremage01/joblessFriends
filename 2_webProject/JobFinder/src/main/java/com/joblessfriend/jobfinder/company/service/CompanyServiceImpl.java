@@ -53,5 +53,12 @@ public class CompanyServiceImpl implements CompanyService {
 		// TODO Auto-generated method stub
 		return companyDao.companyExist(email, password);
 	}
+	
+	// Id 찾기
+	@Override
+	public CompanyVo companyFindId(String representative, String brn) {
+		// TODO Auto-generated method stub
+		return companyDao.companyFindId(representative, brn);
+	}
 
 }

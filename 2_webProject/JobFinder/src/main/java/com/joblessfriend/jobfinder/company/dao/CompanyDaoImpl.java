@@ -65,4 +65,16 @@ public class CompanyDaoImpl implements CompanyDao{
 		return sqlSession.selectOne(namespace + "companyExist", paramMap);
 	}
 
+
+	@Override
+	public CompanyVo companyFindId(String representative, String brn) {
+		// TODO Auto-generated method stub
+		HashMap<String, String> paramMap = new HashMap<>();
+		
+		paramMap.put("representative", representative);
+		paramMap.put("brn", brn);
+		
+		return sqlSession.selectOne(namespace + "companyFindId", paramMap);
+	}
+
 }
