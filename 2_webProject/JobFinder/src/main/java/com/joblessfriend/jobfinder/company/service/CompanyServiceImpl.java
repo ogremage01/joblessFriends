@@ -51,7 +51,7 @@ public class CompanyServiceImpl implements CompanyService {
 	public int companyDeleteList(List<Integer> companyIdList) {
 		// TODO Auto-generated method stub
 		return companyDao.companyDeleteList(companyIdList);
-
+	}
 	// 기업회원가입
 	@Override
 	public int companyInsertOne(CompanyVo companyVo) {
