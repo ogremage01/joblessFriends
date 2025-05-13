@@ -126,7 +126,7 @@
 
 		<div id="container">
 			<h1>기업 상세 정보</h1>
-
+			<div id="companyData" data-company-id="${companyVo.companyId}"></div>
 			<form class="container mt-4" id="companyInforSubmitForm">
 
 			
@@ -221,6 +221,10 @@
 	</main>
 </body>
 
-<script src="/js/admin/member/company.js"></script>
+<script src="/js/admin/member/companyDetail.js"></script>
+
+
+
+
 
 </html>

@@ -127,7 +127,7 @@
 						<tr>
 							<td style="text-align: center;"><input type="checkbox" class="delCompany" name="delete" value="${companyVo.companyId}"></td>
 							<td>${companyVo.companyId}</td>
-							<td><a href="./company/detail?companyId=${companyVo.companyId}">${companyVo.companyName}</a></td>
+							<td><a href="./company/${companyVo.companyId}">${companyVo.companyName}</a></td>
 							<td>${companyVo.email}</td>
 							<td>${companyVo.tel}</td>
 						</tr>
