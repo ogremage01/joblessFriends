@@ -25,7 +25,7 @@ public class AdminAuthController {
 	private AdminAuthService adminService;	
 
 	
-	@GetMapping({"/",""})
+	@GetMapping("")
 	public String base(Model model, HttpSession session) {
 		if(session.getAttribute("admin") != null) {
 			return "redirect:/admin/main";
@@ -39,7 +39,7 @@ public class AdminAuthController {
 	public String login(Model model) {
 		logger.info("어드민login페이지로 이동");
 
-		return "/admin/auth/adminLoginFormView";
+		return "admin/auth/adminLoginFormView";
 	}
 
 	@PostMapping("/login")
@@ -54,7 +54,7 @@ public class AdminAuthController {
 
 			return "redirect:/admin/main";
 		} else {
-			return "/admin/auth/adminLoginFallView";
+			return "admin/auth/adminLoginFallView";
 		}
 
 	}
@@ -71,8 +71,8 @@ public class AdminAuthController {
 	@GetMapping("/main")
 	public String main(Model model) {
 		logger.info("go to admin main");
-
-		return "/admin/adminMainView";
+ 
+		return "admin/adminMainView";
 	}
 	
 

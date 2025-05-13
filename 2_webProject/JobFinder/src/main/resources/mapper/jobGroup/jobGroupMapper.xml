@@ -17,6 +17,13 @@
 		    WHERE ROWNUM &lt;= (#{page} + 1) * 10)
 		  WHERE RN &gt; #{page} * 10
 		</select>
+		
+		<select id="jobGroupCount" resultType="int">
+			SELECT COUNT(*)
+			FROM JOB_GROUP
+		
+		
+		</select>
 
 	</mapper>
 	

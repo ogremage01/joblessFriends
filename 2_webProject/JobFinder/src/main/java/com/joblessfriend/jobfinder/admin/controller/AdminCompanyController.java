@@ -55,7 +55,7 @@ public class AdminCompanyController {
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("curPage", curPage);
 
-		return "/admin/member/memberCompanyView";
+		return "admin/member/memberCompanyView";
 	}
 
 	@GetMapping("/{companyId}")
@@ -66,7 +66,7 @@ public class AdminCompanyController {
 
 		model.addAttribute("companyVo", companyVo);
 
-		return "/admin/member/memberCompanyDetailView";
+		return "admin/member/memberCompanyDetailView";
 	}
 
 	@PutMapping("/{companyId}")
