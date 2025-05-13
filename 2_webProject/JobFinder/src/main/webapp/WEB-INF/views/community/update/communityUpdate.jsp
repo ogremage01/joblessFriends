@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,6 +49,15 @@
 		width: 1200px;
 	}
 	
+	.marginPart{
+		margin-top: 50px;
+	}
+	
+	.marginPart>p{
+		font-size: 20px;
+		color: #6D707B;
+	}
+	
 	
 	
 </style>
@@ -66,15 +76,15 @@
 	<div class="markdown-body">		
 			
 			<h2>글쓰기</h2>
-			<form action="/community/upload" method="post">
-			<input type="hidden" name="writer" value="${sessionScope.loginUser.memberId}" />
-				<div>
+			<form action="/community/update" method="post">
+				<input type="hidden" name="communityId" value="${community.communityId}">
+				<div class='marginPart'>
 					<p>제목</p>
 					<input name='title' type="text" class='boxStyle'
-						placeholder="제목을 입력해주세요." />
+						value="${community.title}" />
 				</div>
-				<div>
-					<p>내용</p>
+				<div class='marginPart'>
+					<p >내용</p>
 					<div id="content" class="contentBox"></div>
 					<!-- 에디터 내용을 담을 숨겨진 textarea -->
 					<textarea name="content" id="hiddenContent" style="display: none;"></textarea>
@@ -87,13 +97,14 @@
 			<!-- TUI 에디터 JS CDN -->
 	
 			<script>
+			const rawContent = `${community.content}`;
+		    const formattedContent = rawContent.replace(/\n/g, '\n');
 				 const editor = new toastui.Editor({
 		            el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
 		            height: '500px',                        // 에디터 영역의 높이 값 (500px로 지정)
 		            initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg 중에 markdown버전으로 처음 보여짐)
-		            initialValue: '',                       // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함(아무내용 없음)
+		            initialValue: formattedContent,                       // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함(아무내용 없음)
 		            previewStyle: 'vertical',               // 마크다운 프리뷰 스타일 (tab || vertical)
-		            placeholder: '내용을 입력해 주세요.',
 		        });
 		        
 		        function submitEditor() {

@@ -31,11 +31,23 @@ public class CommunityServiceImpl implements CommunityService{
 	}
 
 	@Override
-	public CommunityVo communityDetail(int communityId) {
+	public CommunityVo communityDetail(int no) {
 		// TODO Auto-generated method stub
-		 CommunityVo community = communityDao.communityDetail(communityId);
+		 CommunityVo community = communityDao.communityDetail(no);
 
 		return community;
+	}
+
+	@Override
+	public void communityUpdate(CommunityVo communityVo) {
+		// TODO Auto-generated method stub
+		communityDao.communityUpdate(communityVo);
+	}
+
+	@Override
+	public void communityDelete(int communityId) {
+		// TODO Auto-generated method stub
+		communityDao.communityDelete(communityId);
 	}
 
 }
