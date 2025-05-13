@@ -198,14 +198,14 @@ body {
     color: #FF6600 ;
 }
 
-#jobList {
+#jobList ,.skillList{
     display: flex;
     flex-wrap: wrap;
     gap: 10px; /* 체크박스 간격 */
     margin-top: 10px;
 }
 
-#jobList label {
+#jobList label ,.skillList{
     width: 45%; /* 한 줄에 2개 꽉 차게 */
     display: flex;
     align-items: center;

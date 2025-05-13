@@ -78,12 +78,12 @@
                 </div>
 
                 <div class="dropdown">
-                    <button type="button" class="dropdown-toggle">스킬 ▼</button>
-                    <div class="dropdown-content">
-                        <label><input type="checkbox" name="skill" value="Java"> Java</label>
-                        <label><input type="checkbox" name="skill" value="Python"> Python</label>
-                        <label><input type="checkbox" name="skill" value="React"> React</label>
-                    </div>
+                    <button type="button" class="dropdown-toggle">전문분야 ▼</button>
+                        <div class="dropdown-content">
+                            <div class="skillList">
+
+                            </div>
+                        </div>
                 </div>
 
                 <!-- 적용, 초기화 버튼 -->

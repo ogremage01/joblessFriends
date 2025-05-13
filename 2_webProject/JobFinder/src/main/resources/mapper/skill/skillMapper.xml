@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joblessfriend.jobfinder.skill.dao.SkillDao">
+
+    <select id="tagList" parameterType="int" resultType="com.joblessfriend.jobfinder.skill.domain.SkillVo">
+        select
+            jp.job_group_id AS jobGroupId,
+            t.tag_id AS tagId,
+            t.tag_name AS tagName,
+            t.create_at AS createDate,
+            t.modified_at AS modifiedDate
+
+        from job_group jp join tag t
+                               on jp.job_group_id = t.job_group_id
+        where jp.job_group_id = #{jobGroupId}
+
+    </select>
+
+</mapper>
