@@ -15,7 +15,7 @@ public class JobServiceImpl implements JobService{
     private JobDao jobDao;
 
     @Override
-    public JobVo getJobById(int id) {
-        return jobDao.getJobById(id);
+    public JobVo getJobById(int jobPostId) {
+        return jobDao.getJobById(jobPostId);
     }
 }
