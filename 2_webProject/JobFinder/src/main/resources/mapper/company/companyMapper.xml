@@ -100,7 +100,8 @@
 		</select>
 		
 		<select id="companyEmailExist" parameterType="String" resultMap="companyResultMap">
-			SELECT EMAIL FROM COMPANY WHERE EMAIL = #{email}
+			SELECT COMPANY_ID, EMAIL, PASSWORD, COMPANY_NAME, BRN, REPRESENTATIVE, TEL, POSTAL_CODE_ID, ADDRESS
+			FROM COMPANY WHERE EMAIL = #{email}
 		</select>
 
 

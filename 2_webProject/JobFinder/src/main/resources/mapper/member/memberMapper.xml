@@ -30,7 +30,8 @@
 		</select>
 		
 		<select id="memberEmailExist" parameterType="String" resultType="memberVo">
-			SELECT EMAIL FROM MEMBER WHERE EMAIL = #{email}
+			SELECT MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX
+			FROM MEMBER WHERE EMAIL = #{email}
 		</select>
 		
 	</mapper>

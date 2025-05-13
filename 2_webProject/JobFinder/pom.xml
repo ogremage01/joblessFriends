@@ -138,6 +138,12 @@
 		    <artifactId>commonmark-ext-gfm-strikethrough</artifactId>
 		    <version>0.19.0</version> <!-- 최신 버전으로 설정하세요 -->
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		
     </dependencies>
     <build>
         <plugins>

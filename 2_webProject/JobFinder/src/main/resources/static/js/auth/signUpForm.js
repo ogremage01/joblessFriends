@@ -97,6 +97,7 @@ function valiCheckEmail(){
 		noBlank = "이메일을 입력해주세요.";
 		$("#emailStatus").html(noBlank);
 		$("#email").css("border", "1px solid red");
+		askConfirm("이메일을");
 		return;
 	}
 
@@ -105,6 +106,7 @@ function valiCheckEmail(){
 		emailStatus = "이메일 형식을 다시 확인해주세요. <br>(예시: test@email.com)"
 		$("#emailStatus").html(emailStatus);
 		$("#email").css("border", "1px solid red");
+		askConfirm("이메일을");
 		return;
 	}
 	
@@ -134,6 +136,7 @@ function valiCheckEmail(){
 				emailStatusStr = "이미 가입된 이메일입니다.";
 				$("#emailStatus").html(emailStatusStr);
 				$("#email").css("border", "1px solid red");
+				askConfirm("이메일을");
 			}else{
 				$("#emailStatus").html("");
 				$("#email").removeAttr("style");
@@ -160,6 +163,7 @@ function valiCheckPwd(){
 		noBlank = "비밀번호를 입력해주세요.";
 		$("#pwdStatus").html(noBlank);
 		$("#password").css("border", "1px solid red");
+		askConfirm("비밀번호를");
 		return;
 	}
 	
@@ -168,6 +172,7 @@ function valiCheckPwd(){
 	if(!(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(pwd))){
 		$("#pwdStatus").html(pwdStatusStr);
 		$("#password").css("border", "1px solid red");
+		askConfirm("비밀번호를");
 	} else{
 		$("#pwdStatus").html("");
 		$("#password").removeAttr("style");
@@ -197,6 +202,7 @@ function sameCheckPwd(){
 	if(pwdCheck != pwd){
 		$("#pwdStatus2").html(pwdStatus2Str);
 		$("#passwordCheck").css("border", "1px solid red");
+		askConfirm("비밀번호 확인을");
 	}else{
 		$("#pwdStatus2").html("");
 		$("#passwordCheck").removeAttr("style");
@@ -215,6 +221,7 @@ function noBlankNameFnc() {
 		var noBlank = "기업명을 입력해주세요.";
 		$("#nameStatus").html(noBlank);
 		$("#companyName").css("border", "1px solid red");
+		askConfirm("기업명을");
 		return;
 	}else{
 		$("#nameStatus").html("");
@@ -231,6 +238,7 @@ function noBlankBrnFnc() {
 		var noBlank = "사업자 등록번호를 입력해주세요.";
 		$("#brnStatus").html(noBlank);
 		$("#brn").css("border", "1px solid red");
+		askConfirm("사업자 등록번호를");
 		return;
 	}else{
 		$("#brnStatus").html("");
@@ -247,6 +255,7 @@ function noBlankRepFnc() {
 		var noBlank = "담당자명을 입력해주세요.";
 		$("#repStatus").html(noBlank);
 		$("#representative").css("border", "1px solid red");
+		askConfirm("담당자명을");
 		return;
 	}else{
 		$("#repStatus").html("");
@@ -263,6 +272,7 @@ function noBlankTelFnc() {
 		var noBlank = "연락처를 입력해주세요.";
 		$("#telStatus").html(noBlank);
 		$("#tel").css("border", "1px solid red");
+		askConfirm("연락처를");
 		return;
 	}else{
 		$("#telStatus").html("");
@@ -273,30 +283,59 @@ function noBlankTelFnc() {
 
 // ----------------------
 
+// 유효성 검사 토스트 팝업 함수
+function askConfirm(check){
+	var Str = check + " 다시 확인해주세요."
+	$('#askConfirm').html(Str)
+	$('#askConfirm').attr('class','active');
+	setTimeout(function(){
+		$('#askConfirm').removeClass("active");
+    },1500);
+}
+
+
 // 유효한 폼만 submit 가능
 function submitCheck(){
 	
-	valiCheckEmail();
-	valiCheckPwd();
-	sameCheckPwd();
 	
-	noBlankNameFnc();
-	noBlankBrnFnc();
-	noBlankRepFnc();
 	noBlankTelFnc();
+	noBlankRepFnc();
+	noBlankBrnFnc();
+	noBlankNameFnc();
+
+	sameCheckPwd();
+	valiCheckPwd();
+	valiCheckEmail();
 	
-	if(!emailPass) return false;
-	if(!pwdPass) return false;
-	if(!pwdCheckPass) return false;
+	if(!pwdPass) {
+		return false;
+	};
+	
+	if(!pwdCheckPass) {
+		askConfirm("비밀번호 확인을");
+		return false;
+	};
 	
 	//기업회원 인풋 체크
 	var formAction = $("#signUpForm").attr("action");
 	var actionCompany = '/auth/signup/company';
 	if(formAction == actionCompany){
-		if(!companyNamePass) return false;
-		if(!brnPass) return false;
-		if(!repPass) return false;
-		if(!telPass) return false;
+		
+		if(!companyNamePass) {
+			return false;
+		};
+		
+		if(!brnPass) {
+			return false;
+		};
+		
+		if(!repPass) {
+			return false;
+		};
+		
+		if(!telPass) {
+			return false;
+		};
 	}
 	
 	return true;
