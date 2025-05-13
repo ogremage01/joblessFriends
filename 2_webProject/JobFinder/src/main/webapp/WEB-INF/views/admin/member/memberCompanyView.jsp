@@ -24,17 +24,9 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
 	rel="stylesheet">
 
-
-<style>
-/*기본값(default)이 이미 "text/css"로 되어 있어서 자동인식한다하여 뺐음 */
-#container {
-	margin: auto;
-}
-
-#pageNation {
-	margin: auto;
-}
-</style>
+<link
+	href="/css/admin/common.css"
+	rel="stylesheet">
 
 <script type="text/javascript">
 	
@@ -142,6 +134,11 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			
+			<div id="searchContainer">
+				<span>검색창이 들어갈 장소</span>
+			
+			</div>
 
 			<div id='pageNation'>
 
@@ -170,64 +167,7 @@
 	</main>
 </body>
 
-<script type="text/javascript">
-
-	
-	const massDelComBtn = document.getElementById("massDelCom");
-	
-	massDelComBtn.addEventListener("click", function(e) {
-		const delCompanyArr = document.querySelectorAll(".delCompany:checked");
-		const confirmed = confirm("삭제하시겠습니까?");
-		
-		if(confirmed&&delCompanyArr.length>0){
-			
-			const jsonData = [];
-			
-			delCompanyArr.forEach(cb=>{
-	
-				jsonData.push(cb.value);
-			});
-		
-			console.log(jsonData);
-			
-			fetch('/admin/member/company/massDelete',{
-	
-				method: 'POST',
-				headers: {
-					'content-type': 'application/json'
-				
-				},
-				body: JSON.stringify(jsonData)
-		
-			})
-			.then(response => response.json())
-			.then(data => {
-
-				if(data===delCompanyArr.length){
-				    console.log('Success:', data);
-				    alert("삭제 완료");
-				    location.reload();
-				}else{
-
-					alert("삭제 실패");
-				    location.reload();
-				
-				}
-			})
-			.catch(error => {
-			    console.error('Error:', error);
-			    alert("삭제 실패");
-			});
-		
-		}else{
-
-			alert("선택된 기업이 없습니다.");
-		}
-	});
-	
-
-
-</script>
+<script src="/js/admin/member/company.js"></script>
 
 	
 

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,15 +25,16 @@ import com.joblessfriend.jobfinder.community.controller.CommunityController;
 import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 import com.joblessfriend.jobfinder.company.service.CompanyService;
 import com.joblessfriend.jobfinder.company.service.CompanyServiceImpl;
+import com.joblessfriend.jobfinder.jobGroup.service.JobGroupService;
+import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
+
 import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/admin")
 @Controller
 public class AdminController {
 
-    private final CompanyServiceImpl companyServiceImpl;
 
-    private final CommunityController communityController;
 
 	private Logger logger = LoggerFactory.getLogger(AdminController.class);
 	private final String logTitleMsg = "==Admin control==";
@@ -42,13 +44,12 @@ public class AdminController {
 	
 	@Autowired
 	private CompanyService companyService;
-
-
-    AdminController(CommunityController communityController, CompanyServiceImpl companyServiceImpl) {
-        this.communityController = communityController;
-        this.companyServiceImpl = companyServiceImpl;
-    }
 	
+//	@Autowired
+//	private JobGroupService jobGroupService;
+
+
+
 	
 	@GetMapping({"/",""})
 	public String base(Model model, HttpSession session) {
@@ -126,8 +127,8 @@ public class AdminController {
 	}
 	
 	
-	@GetMapping("/member/company/detail")
-	public String memberCompanyDetail(Model model, @RequestParam int companyId) {
+	@GetMapping("/member/company/{companyId}")
+	public String memberCompanyDetail(Model model, @PathVariable int companyId) {
 		logger.info("기업회원 세부정보로 이동");
 		
 		CompanyVo companyVo = companyService.companySelectOne(companyId);
@@ -160,6 +161,9 @@ public class AdminController {
 
 	    // TODO: 비밀번호 해싱 처리 필요
 	    if (companyVo.getPassword() != null) {
+	    	
+	    	   	
+	    	
 	        existCompanyVo.setPassword(companyVo.getPassword()); // 해싱 추가 필요
 	    }
 
@@ -224,6 +228,25 @@ public class AdminController {
 		
 		return ResponseEntity.ok(result);
 	}
+	
+	
+//	@GetMapping("/job/jobGroup")
+//	public String jobGroup(Model model, @RequestParam(defaultValue = "0") int page) {
+//		logger.info("직군");
+//		
+//		List<JobGroupVo> jobGroupList = jobGroupService.jobGroupSelectList(page);
+////		int companyCount = jobGroupService.Count();
+////		System.out.println(companyCount);
+////		int totalPage = companyCount/10 + (companyCount%10==0?0:1);
+////		System.out.println(totalPage);
+////		int curPage = page;
+//		model.addAttribute("jobGroupList", jobGroupList);
+////		model.addAttribute("totalPage", totalPage);
+////		model.addAttribute("curPage",curPage);
+////		
+//
+//		return "/admin/job/jobGroupView";
+//	}
 	
 	
 

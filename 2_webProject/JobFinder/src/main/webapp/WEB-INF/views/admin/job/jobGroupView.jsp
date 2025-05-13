@@ -14,6 +14,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js" 
 	integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+	<link
+		href="/css/admin/common.css"
+		rel="stylesheet">
+
 
     <style>
         /*기본값(default)이 이미 "text/css"로 되어 있어서 자동인식한다하여 뺐음 */
@@ -91,8 +95,59 @@
   </div>
   <!-- 사이드바 영역 -->
 	  <!-- 본문영역  -->
-  		  <div>본문 영역 표시-직군</div> 	
-      <!-- 본문영역  -->
+		<div id="container">
+		
+			<h1 style="text-align: center;">기업 회원 목록</h1>
+			<table class="table table-striped">
+				<thead class="table-dark" style="margin: auto;">
+					<tr>
+						<td><button id="">삭제</button></td>
+						<td>ID</td>
+						<td>직군명</td>
+					</tr>
+				</thead>
+				<tbody class="table-group-divider">
+					<c:forEach var="companyVo" items="">
+						<tr>
+							<td style="text-align: center;"><input type="checkbox" class="delCompany" name="delete" value=""></td>
+							<td></td>
+							<td><a></a></td>
+
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			
+			<div id="searchContainer">
+				<span>검색창이 들어갈 장소</span>
+			
+			</div>
+
+			<div id='pageNation'>
+
+				<nav aria-label="...">
+					<ul class="pagination justify-content-center">
+						<li class="page-item }">
+							<a class="page-link" href="">Previous</a>
+						</li>
+						<c:forEach begin="0" var="i" end="">
+							<li class="page-item ">
+							<a class="page-link" href=""></a></li>
+						</c:forEach>
+
+						<!-- <li class="page-item active" aria-current="page"><a
+						class="page-link" href="#">2</a></li> -->
+						<li class="page-item"><a
+							class="page-link " href="">Next</a></li>
+					</ul>
+				</nav>
+			</div>
+
+
+
+		</div>
+		<!-- 본문영역 -->
+	</main>
 </main>
 
 </body>
