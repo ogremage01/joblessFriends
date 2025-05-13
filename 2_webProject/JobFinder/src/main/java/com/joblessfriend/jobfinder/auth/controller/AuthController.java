@@ -77,7 +77,6 @@ public class AuthController {
 		}
 	
 	// 회원가입 개인회원
-	// 추후 비밀번호 암호화 체크 필요
 	@PostMapping("/signup/member")
 	public String signupMember(String email, String password, Model model) {
 		logger.info(logTitleMsg);
@@ -89,7 +88,6 @@ public class AuthController {
 	}
 	
 	// 회원가입 기업회원
-	// 추후 비밀번호 암호화 체크 필요
 	@PostMapping("/signup/company")
 	public String signupCompany(CompanyVo companyVo, Model model) {
 		logger.info(logTitleMsg);
@@ -110,7 +108,6 @@ public class AuthController {
 	}
 	
 	// 로그인 개인회원
-	// 추후 비밀번호 암호화 체크 필요
 	@PostMapping("/login/member")
 	public String loginMember(String email, String password, HttpSession session, Model model) {
 		logger.info(logTitleMsg);
@@ -130,24 +127,23 @@ public class AuthController {
 	}
 	
 	// 로그인 기업회원
-		// 추후 비밀번호 암호화 체크 필요
-		@PostMapping("/login/company")
-		public String loginCompany(String email, String password, HttpSession session, Model model) {
-			logger.info(logTitleMsg);
-			logger.info("login company! " + email + ", " + password);
+	@PostMapping("/login/company")
+	public String loginCompany(String email, String password, HttpSession session, Model model) {
+		logger.info(logTitleMsg);
+		logger.info("login company! " + email + ", " + password);
+		
+		CompanyVo companyVo = companyService.companyExist(email, password);
+		logger.info("companyVo: {}", companyVo);
+		
+		if(companyVo != null) {
+			session.setAttribute("userLogin", companyVo);
+			session.setAttribute("userType", "company");
 			
-			CompanyVo companyVo = companyService.companyExist(email, password);
-			logger.info("companyVo: {}", companyVo);
-			
-			if(companyVo != null) {
-				session.setAttribute("userLogin", companyVo);
-				session.setAttribute("userType", "company");
-				
-				return "redirect:/";
-			}else {
-				return "auth/loginFailView";
-			}
+			return "redirect:/";
+		}else {
+			return "auth/loginFailView";
 		}
+	}
 	
 	// 로그아웃
 	@GetMapping("/logout")

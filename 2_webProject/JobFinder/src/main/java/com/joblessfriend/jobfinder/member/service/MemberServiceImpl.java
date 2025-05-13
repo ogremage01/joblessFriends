@@ -5,6 +5,7 @@ import java.security.SecureRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.joblessfriend.jobfinder.auth.controller.AuthController;
@@ -19,14 +20,29 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDao memberDao;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	// 로그인
 	@Override
 	public MemberVo memberExist(String email, String password) {
 		// TODO Auto-generated method stub
 
-		MemberVo memberVo = memberDao.memberExist(email, password);
+		MemberVo memberVo = memberDao.memberEmailExist(email);
 		
-		return memberVo;
+		if(memberVo != null) {
+			// 암호 비교: 비밀번호가 평문인 경우
+			if(password.equals(memberVo.getPassword())) {
+				return memberVo;
+			}
+			// 암호가 암호화된 경우, passwordEncoder 사용
+			else if(passwordEncoder.matches(password, memberVo.getPassword())) {
+				return memberVo;
+			}
+		}
+		
+		// 회원이 존재하지 않거나 비밀번호가 틀린 경우 null 반환
+		return null;
 	}
 	
 	// 닉네임 생성 메소드
@@ -51,10 +67,17 @@ public class MemberServiceImpl implements MemberService{
 	// 회원가입
 	@Override
 	public int memberInsertOne(String email, String password) {
+		
 		MemberVo memberVo = new MemberVo();
+		
 		memberVo.setEmail(email);
-		memberVo.setPassword(password);
 		memberVo.setNickname(generateUniqueNickname());
+		
+		//비밀번호 암호화
+		String pwdEncoder = passwordEncoder.encode(password);
+		System.out.println("비번 확인: " + password + " / " + pwdEncoder);
+		memberVo.setPassword(pwdEncoder);
+		
 		return memberDao.memberInsertOne(memberVo);
 	}
 

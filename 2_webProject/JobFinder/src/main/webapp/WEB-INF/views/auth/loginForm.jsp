@@ -51,11 +51,11 @@
 			<div id="content">
 			
 				<div id="loginFormWrap">
-					<form id="loginForm" name="loginForm" method="post" action="/auth/login/member">
+					<form id="loginForm" name="loginForm" method="post" action="/auth/login/member" onsubmit="return submitCheck();">
 						<fieldset>
 							<legend>로그인</legend>
-							<input id="email" name="email" type="email" value="" placeholder="이메일">
-							<input id="password" name="password" type="password" value="" placeholder="비밀번호">
+							<input id="email" name="email" type="email" value="" placeholder="이메일" >
+							<input id="password" name="password" type="password" value="" placeholder="비밀번호" >
 							
 							<button type="submit" id="loginBtn" class="btnStyle">로그인</button>
 						</fieldset>
@@ -85,6 +85,9 @@
 			</div>
 			
 		</div>
+	</div>
+	
+	<div id="askConfirm">
 	</div>
 
 </body>

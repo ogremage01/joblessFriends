@@ -13,11 +13,11 @@ $("#navCompany").click(function(event) {
 	);
 
 	let formHtmlStr = `
-			<form id="loginForm" name="loginForm" method="post" action="/auth/login/company">
+			<form id="loginForm" name="loginForm" method="post" action="/auth/login/company"  onsubmit="return submitCheck();">
 				<fieldset>
 				<legend>로그인</legend>
-				<input id="email" name="email" type="email" value="" placeholder="이메일">
-				<input id="password" name="password" type="password" value="" placeholder="비밀번호">
+				<input id="email" name="email" type="email" value="" placeholder="이메일" >
+				<input id="password" name="password" type="password" value="" placeholder="비밀번호" >
 				
 				<button type="submit" id="loginBtn" class="btnStyle">로그인</button>
 			</fieldset>
@@ -45,3 +45,29 @@ $("#navCompany").click(function(event) {
 	$('#goLogin').html(deleteSocialLogin);
 
 }); // navCompany end
+
+
+// 유효성 검사 토스트 팝업 함수
+function askConfirm(check){
+	var Str = check + " 입력하세요."
+	$('#askConfirm').html(Str)
+	$('#askConfirm').attr('class','active');
+	setTimeout(function(){
+		$('#askConfirm').removeClass("active");
+    },1500);
+}
+
+function submitCheck(){
+
+	if($("#email").val()==""){
+		askConfirm("이메일을");
+		return false;
+	}
+	if($("#password").val()==""){
+		askConfirm("비밀번호를");
+		return false;
+	}
+	return true;
+}
+
+
