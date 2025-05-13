@@ -9,6 +9,33 @@
 </head>
 <body>
 	<jsp:include page="../common/header.jsp"/>
+	
+<div class="sidebar">
+
+	<!-- 사이드바 메뉴 -->
+	<div class="sidebar-menu">
+	  <div class="sidebar-title">▲ TOP</div>
+	  <ul class="sidebar-links">
+	    <li><a href="#section-personal">인적사항</a></li>
+	    <li><a href="#section-job">희망직무</a></li>
+	    <li><a href="#section-skill">스킬</a></li>
+	    <li><a href="#section-edu">학력</a></li>
+	    <li><a href="#section-career">경력</a></li>
+	    <li><a href="#section-training">교육</a></li>
+	    <li><a href="#section-intro">자기소개서</a></li>
+	    <li><a href="#section-license">자격증</a></li>
+	    <li><a href="#section-portfolio">포트폴리오</a></li>
+	  </ul>
+	</div>
+	
+	<!-- 사이드바 버튼 -->
+	<div class="sidebar-buttons">
+	  <button class="btn-finish">작성완료</button>
+	  <button class="btn-preview">미리보기</button>
+	  <button class="btn-cancel">작성취소</button>
+	</div>
+	
+</div>
 
     <section class="resume-wrapper">
 	<h1 class="resume-title">이력서 제목을 입력하세요</h1>
@@ -113,12 +140,187 @@
 			<button type="button">＋ 추가</button>
 		</div>
 	</section>
+	
+	<section class="section-block">
+	<h2>경력</h2>
+	<div class="career-entry">
+		<button class="delete-btn">×</button>
+		
+		<div class="grid-3">
+			<div class="field-block">
+				<label>회사명</label>
+				<input type="text" placeholder="회사명을 입력해주세요" />
+			</div>
+			<div class="field-block">
+				<label>부서명</label>
+				<input type="text" placeholder="부서명을 입력해주세요" />
+			</div>
+			<div class="field-block">
+				<label>입사년월</label>
+				<input type="text" placeholder="예시) 2025.04" />
+			</div>
+		</div>
+		
+		<div class="grid-3">
+			<div class="field-block">
+				<label>퇴사년월</label>
+				<input type="text" placeholder="예시) 2025.04" />
+			</div>
+			<div class="field-block">
+				<label>직급/직책</label>
+				<input type="text" placeholder="직급/직책을 입력해주세요" />
+			</div>
+			<div class="field-block">
+				<label>담당직무</label>
+				<input type="text" placeholder="담당직무를 입력해주세요" />
+			</div>
+		</div>
+		
+			<div class="field-block">
+				<label>연봉 (만원)</label>
+				<input type="text" placeholder="예시) 2400" />
+			</div>
+		
+		<div class="field-block">
+			<label>담당업무</label>
+			<textarea rows="4" placeholder="담당하신 업무와 성과에 대해 간단명료하게 적어주세요"></textarea>
+		</div>
+				
+	</div>
+	
+	<div class="add-career-btn">
+		<button type="button">＋ 추가</button>
+	</div>
+	</section>
+	
+	<section class="section-block">
+		<h2>교육</h2>
+	
+		<div class="training-entry">
+			<button class="delete-btn">×</button>
+		
+		<div class="grid-4">
+			<div class="field-block">
+				<label>교육명</label>
+				<input type="text" placeholder="교육명을 입력해주세요" />
+			</div>
+			<div class="field-block">
+				<label>교육기관</label>
+				<input type="text" placeholder="교육기관을 입력해주세요" />
+			</div>
+			<div class="field-block">
+				<label>시작년월</label>
+				<input type="text" placeholder="예시) 2025.04" />
+			</div>
+			<div class="field-block">
+				<label>종료년월</label>
+				<input type="text" placeholder="예시) 2025.04" />
+			</div>
+		</div>
+		
+			<div class="field-block">
+			<label>내용</label>
+				<textarea rows="3" placeholder="이수하신 교육과정에 대해 적어주세요"></textarea>
+			</div>
+		</div>
+		
+		<div class="add-education-btn">
+			<button type="button">＋ 추가</button>
+		</div>
+	</section>
+	
+	<section class="section-block">
+		<h2>자기소개서</h2>
+		<div class="field-block">
+			<textarea rows="10" placeholder="자기소개서 내용을 입력하세요"></textarea>
+		</div>
+	</section>
+	
+	<section class="section-block">
+		<h2>자격증</h2>
+		
+		<div class="license-entry">
+			<button class="delete-btn">×</button>
+		
+			<div class="grid-3">
+				<div class="field-block">
+					<label>자격증명</label>
+					<input type="text" placeholder="자격증명을 입력해주세요" />
+				</div>
+				<div class="field-block">
+					<label>발행처</label>
+					<input type="text" placeholder="발행처를 입력해주세요" />
+				</div>
+				<div class="field-block">
+					<label>취득날짜</label>
+					<input type="text" placeholder="예시) 2025.04" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="add-license-btn">
+			<button type="button">＋ 추가</button>
+		</div>
+	</section>
+		
+	<section class="section-block">
+		<h2>포트폴리오</h2>
+		
+		<div class="portfolio-upload-box">
+			<label for="portfolioFile">
+				<span class="plus-icon">＋</span>
+					파일추가(최대20MB)
+			</label>
+			<input type="file" id="portfolioFile" style="display: none;" />
+		</div>
+	</section>
+		
 		
       <!-- 이후 다른 섹션들(스킬, 학력, 경력, 교육 등)은 동일한 패턴으로 복붙해서 확장하면 됩니다 -->
 
     </section>
-	</div>
 	
 	<jsp:include page="../common/footer.jsp" />
+	<!-- 사이드바 헤더 침범 방지 -->
+<script>
+window.addEventListener('scroll', function () {
+    const headerHeight = 170; // 헤더 높이 (px)
+    const scrollY = window.scrollY;
+
+    const sidebarMenu = document.querySelector('.sidebar-menu');
+    const sidebarButtons = document.querySelector('.sidebar-buttons');
+    const footer = document.querySelector('footer') || document.querySelector('#footer');
+
+    // 헤더를 침범하지 않도록 top 조정
+    const offset = Math.max(headerHeight - scrollY, 0);
+
+    if (sidebarMenu) {
+      sidebarMenu.style.top = offset + 'px';
+    }
+
+    if (sidebarButtons) {
+        const sidebarMenuRect = sidebarMenu.getBoundingClientRect();
+        const menuTop = sidebarMenuRect.top + window.scrollY;
+        const menuHeight = sidebarMenu.offsetHeight;
+        const buttonsHeight = sidebarButtons.offsetHeight;
+        const gap = 0;
+
+        let newTop = offset + menuHeight + gap;
+
+        if (footer) {
+          const footerTop = footer.getBoundingClientRect().top + window.scrollY;
+          const maxTop = footerTop - buttonsHeight - 20;
+
+          // 버튼이 푸터를 넘지 않도록 제한
+          const candidateTop = menuTop + menuHeight + gap;
+          if (candidateTop + buttonsHeight >= footerTop) {
+            newTop = maxTop - scrollY;
+          }
+        }
+
+        sidebarButtons.style.top = newTop + 'px';
+      }
+  });
+</script>
 </body>
 </html>

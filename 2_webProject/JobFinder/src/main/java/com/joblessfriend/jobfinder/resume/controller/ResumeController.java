@@ -23,8 +23,8 @@ public class ResumeController {
 	@Autowired
 	private ResumeService resumeService;
 	
-	@GetMapping("/home")
-	public String home() {
+	@GetMapping("/write")
+	public String resumeWritePage() {
 		return "resume/resumeView";
 	}
 	
