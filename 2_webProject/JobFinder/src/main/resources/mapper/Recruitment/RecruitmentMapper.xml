@@ -38,7 +38,7 @@
     ORDER BY jp.end_date ASC
 
     </select>
-
+<!-- 스킬리스트  -->
     <select id="getRecruitmentId" parameterType="int" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
         SELECT
             jp.job_post_id AS jobPostId,
@@ -56,5 +56,6 @@
                  JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
         WHERE jp.job_post_id = #{jobPostId}
     </select>
+
 
 </mapper>

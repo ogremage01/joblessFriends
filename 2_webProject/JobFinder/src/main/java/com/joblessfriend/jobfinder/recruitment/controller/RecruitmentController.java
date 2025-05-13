@@ -12,13 +12,17 @@ import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentDetailVo;
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
 import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
+import com.joblessfriend.jobfinder.skill.domain.SkillVo;
+import com.joblessfriend.jobfinder.skill.service.SkillService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RequestMapping("/Recruitment")
@@ -34,7 +38,8 @@ public class RecruitmentController {
     @Autowired
     private CompanyService companyService;
 
-
+    @Autowired
+    private SkillService skillService;
 
     @GetMapping("/list")
     public String getAllList(Model model) {
@@ -52,14 +57,23 @@ public class RecruitmentController {
 
     @GetMapping("/searchJob")
     @ResponseBody
-    public List<JobGroupVo> searchJob(@RequestParam int jobGroupId) {
-        System.out.println("Job Group ID: " + jobGroupId);
+    public Map<String,Object> searchJob(@RequestParam int jobGroupId) {
+        Map<String,Object> result = new HashMap<>();
+        try {
+            List<JobGroupVo> jobList = recruitmentService.jobList(jobGroupId);
+            List<SkillVo> skillVos = skillService.tagList(jobGroupId);
 
-        List<JobGroupVo> jobList = recruitmentService.jobList(jobGroupId);
+            System.out.println("확인용"+skillVos);
 
-        System.out.println("잡리스트" + jobList);
-        return jobList;
+            result.put("jobList", jobList);
+            result.put("skillList", skillVos);
+        } catch (Exception e) {
+            e.printStackTrace(); // ⛳ 콘솔에 찍힘
+            result.put("error", "서버 에러 발생: " + e.getMessage());
+        }
+        return result;
     }
+
 
     @GetMapping("detail")
     public String getDetail(@RequestParam int companyId,@RequestParam int jobPostId, Model model) {

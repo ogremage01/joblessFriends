@@ -37,20 +37,44 @@ $(document).on('click', '.job-group', function (e) {
         method: 'GET',
         data: { jobGroupId: jobGroupId },
         success: function (response) {
+            console.log("응답:", response);
             $('#jobList').empty();
-            response.forEach(function (item) {
-                const html = `
-                    <label>
-                        <input class="chk" type="checkbox"
-                               name="job"
-                               value="${item.jobName}"
-                               data-id="${item.jobId}"
-                               data-group="${jobGroupName}">
-                        ${item.jobName}
-                    </label>
-                `;
-                $('#jobList').append(html);
-            });
+            if (Array.isArray(response.jobList)) {
+                response.jobList.forEach(function (item) {
+                    const html = `
+                        <label>
+                            <input class="chk" type="checkbox"
+                                   name="job"
+                                   value="${item.jobName}"
+                                   data-id="${item.jobId}"
+                                   data-group="${jobGroupName}">
+                            ${item.jobName}
+                        </label>
+                    `;
+                    $('#jobList').append(html);
+                });
+            } else {
+                console.warn("jobList가 배열이 아닙니다.");
+            }
+            $('.skillList').empty();
+            if (Array.isArray(response.skillList)) {
+                response.skillList.forEach(function (item) {
+                    const skillArr = `
+                        <label>
+                            <input class="chk" type="checkbox"
+                                   name="skill"
+                                   value="${item.tagName}"
+                                   data-id="${item.tagName}"
+                                   data-group="${item.jobGroupId}">
+                            ${item.tagName}
+                        </label>
+                    `;
+                    $('.skillList').append(skillArr);
+                });
+
+
+            }
+
         },
         error: function (error) {
             console.error('에러 발생:', error);
