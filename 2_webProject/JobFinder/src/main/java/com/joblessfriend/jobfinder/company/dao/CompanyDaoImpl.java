@@ -2,6 +2,7 @@ package com.joblessfriend.jobfinder.company.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,6 +101,25 @@ public class CompanyDaoImpl implements CompanyDao{
 	public CompanyVo companyEmailExist(String email) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(namespace + "companyEmailExist", email);
+	}
+
+	//검색기업 목록
+	@Override
+	public List<CompanyVo> companySelectList(int page, String keyword) {
+		// TODO Auto-generated method stub
+				
+		Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("page", page);
+	    paramMap.put("keyword", keyword);
+		
+		return sqlSession.selectList(namespace + "companySelectListByKeyword",paramMap);
+	}
+
+	//검색 기업 숫자
+	@Override
+	public int companyCount(String keyword) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + "companyCountByKeyword",keyword);
 	}
 
 

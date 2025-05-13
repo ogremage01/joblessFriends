@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.joblessfriend.jobfinder.admin.controller.AdminController;
-import com.joblessfriend.jobfinder.admin.service.AdminService;
+import com.joblessfriend.jobfinder.admin.service.AdminAuthService;
 import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 import com.joblessfriend.jobfinder.company.service.CompanyService;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;

@@ -27,5 +27,9 @@ public interface CompanyService {
 
 	CompanyVo companyEmailExist(String email);
 
+	List<CompanyVo> companySelectList(int page, String keyword);
+
+	int companyCount(String keyword);
+
 
 }

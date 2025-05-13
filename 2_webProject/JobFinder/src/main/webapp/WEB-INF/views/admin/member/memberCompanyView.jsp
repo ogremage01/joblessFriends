@@ -24,17 +24,9 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
 	rel="stylesheet">
 
-
-<style>
-/*기본값(default)이 이미 "text/css"로 되어 있어서 자동인식한다하여 뺐음 */
-#container {
-	margin: auto;
-}
-
-#pageNation {
-	margin: auto;
-}
-</style>
+<link
+	href="/css/admin/common.css"
+	rel="stylesheet">
 
 <script type="text/javascript">
 	
@@ -135,17 +127,20 @@
 						<tr>
 							<td style="text-align: center;"><input type="checkbox" class="delCompany" name="delete" value="${companyVo.companyId}"></td>
 							<td>${companyVo.companyId}</td>
-							<td><a href="./company/detail?companyId=${companyVo.companyId}">${companyVo.companyName}</a></td>
+							<td><a href="./company/${companyVo.companyId}">${companyVo.companyName}</a></td>
 							<td>${companyVo.email}</td>
 							<td>${companyVo.tel}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+			
+
 
 			<div id='pageNation'>
-
+				<c:if test="${totalPage > 0}">
 				<nav aria-label="...">
+				
 					<ul class="pagination justify-content-center">
 						<li class="page-item ${curPage==0?'disabled':''}">
 							<a class="page-link" href="./company?page=${curPage-1}">Previous</a>
@@ -160,74 +155,23 @@
 						<li class="page-item"><a
 							class="page-link ${curPage==totalPage-1? 'disabled':''}" href="./company?page=${curPage+1}">Next</a></li>
 					</ul>
+				
 				</nav>
+				</c:if>
 			</div>
 
-
+			<div id="searchContainer">
+				<input id="companyKeyword" type="text" placeholder="기업명">
+				<button id="companySearchBtn" class="btn btn-light">검색</button>
+			
+			</div>
 
 		</div>
 		<!-- 본문영역 -->
 	</main>
 </body>
 
-<script type="text/javascript">
-
-	
-	const massDelComBtn = document.getElementById("massDelCom");
-	
-	massDelComBtn.addEventListener("click", function(e) {
-		const delCompanyArr = document.querySelectorAll(".delCompany:checked");
-		const confirmed = confirm("삭제하시겠습니까?");
-		
-		if(confirmed&&delCompanyArr.length>0){
-			
-			const jsonData = [];
-			
-			delCompanyArr.forEach(cb=>{
-	
-				jsonData.push(cb.value);
-			});
-		
-			console.log(jsonData);
-			
-			fetch('/admin/member/company/massDelete',{
-	
-				method: 'POST',
-				headers: {
-					'content-type': 'application/json'
-				
-				},
-				body: JSON.stringify(jsonData)
-		
-			})
-			.then(response => response.json())
-			.then(data => {
-
-				if(data===delCompanyArr.length){
-				    console.log('Success:', data);
-				    alert("삭제 완료");
-				    location.reload();
-				}else{
-
-					alert("삭제 실패");
-				    location.reload();
-				
-				}
-			})
-			.catch(error => {
-			    console.error('Error:', error);
-			    alert("삭제 실패");
-			});
-		
-		}else{
-
-			alert("선택된 기업이 없습니다.");
-		}
-	});
-	
-
-
-</script>
+<script src="/js/admin/member/company.js"></script>
 
 	
 

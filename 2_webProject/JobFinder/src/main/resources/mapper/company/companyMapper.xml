@@ -102,6 +102,23 @@
 		<select id="companyEmailExist" parameterType="String" resultMap="companyResultMap">
 			SELECT EMAIL FROM COMPANY WHERE EMAIL = #{email}
 		</select>
+		
+		
+		<select id="companySelectListByKeyword" resultMap="companyResultMap">
+		  SELECT * 
+		  FROM (SELECT ROWNUM AS RN, INNERTABLE.*
+		    FROM (SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
+		      FROM COMPANY
+		      WHERE UPPER(COMPANY_NAME) LIKE UPPER('%' || #{keyword} || '%')
+		      ORDER BY COMPANY_ID DESC) INNERTABLE
+		    WHERE ROWNUM &lt;= (#{page} + 1) * 10)
+		  WHERE RN &gt; #{page} * 10
+		</select>
 
+		<select id="companyCountByKeyword" resultType="int">
+			SELECT COUNT(COMPANY_NAME)
+			FROM COMPANY
+			WHERE UPPER(COMPANY_NAME) LIKE UPPER('%' || #{keyword} || '%')
+		</select>
 
 	</mapper>

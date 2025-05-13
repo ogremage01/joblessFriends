@@ -126,7 +126,7 @@
 
 		<div id="container">
 			<h1>기업 상세 정보</h1>
-
+			<div id="companyData" data-company-id="${companyVo.companyId}"></div>
 			<form class="container mt-4" id="companyInforSubmitForm">
 
 			
@@ -221,96 +221,10 @@
 	</main>
 </body>
 
-<script type="text/javascript">
-	let companyInforSubmitFormObj = document.getElementById("companyInforSubmitForm");
-	
-	companyInforSubmitFormObj.addEventListener("submit", function(e) {
-	    e.preventDefault(); // 폼 제출 막기
-	
-	    const formData = new FormData(companyInforSubmitFormObj);
-	    const jsonData = {};
-	
-	    formData.forEach((value, key) => {
-	        if (value.trim() !== "") {
-	            jsonData[key] = value;
-	        }
-	    });
-	    
-	    	console.log(jsonData);
-	
-	    	fetch('/admin/member/company/detail', {
-	    	    method: 'POST',
-	    	    headers: {
-	    	        'Content-Type': 'application/json'
-	    	    },
-	    	    body: JSON.stringify(jsonData)
-	    	})
-	    	.then(response => {
-	    	    if (!response.ok) {
-	    	        throw new Error("서버 오류: " + response.status);
-	    	    }
-	    	    return response.text();
-	    	})
-	    	.then(data => {
-	    	    if(data === "1"){
-					alert("수정성공");
-					history.back();
-	    	    }else{
-					alert("수정실패");
-	    	    }
-	    	})
-	    	.catch(error => {
-	    	    console.error("에러 발생:", error);
-	    	});
-	});
+<script src="/js/admin/member/companyDetail.js"></script>
 
 
-	deleteBtn = document.getElementById("delete");
-	
-	deleteBtn.addEventListener("click", function(e) {
-		
-		
-		companyIdVal = document.getElementById("companyId").value;
-		
-		console.log(companyIdVal);
-		const jsonData = {
-			"companyId":companyIdVal				
-		};
-		
-		const confirmed = confirm("강제탈퇴를 진행합니까?");
-		if(confirmed){
-
-	    	fetch('/admin/member/company/detail/delete', {
-	    	    method: 'POST',
-	    	    headers: {
-	    	        'Content-Type': 'application/json'
-	    	    },
-	    	    body: JSON.stringify(jsonData)
-	    	})
-	    	.then(response => {
-	    	    if (!response.ok) {
-	    	        throw new Error("서버 오류: " + response.status);
-	    	    }
-	    	    return response.text();
-	    	})
-	    	.then(data => {
-	    	    if(data === "1"){
-					alert("수정성공");
-					history.back();
-	    	    }else{
-					alert("수정실패");
-	    	    }
-	    	})
-	    	.catch(error => {
-	    	    console.error("에러 발생:", error);
-	    	});
-		
-		
-		}
-		
-	});
 
 
-</script>
 
 </html>
