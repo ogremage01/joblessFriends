@@ -57,9 +57,11 @@
 
                 <div class="dropdown">
                     <button type="button" class="dropdown-toggle">경력 ▼</button>
-                    <div class="dropdown-content">
+                    <div class="dropdown-content education-dropdown-content">
                         <label><input type="checkbox" name="career" value="신입"> 신입</label>
-                        <label><input type="checkbox" name="career" value="경력직"> 경력직</label>
+                        <label><input type="checkbox" name="career" value="경력직"> 1~3년</label>
+                        <label><input type="checkbox" name="career" value="경력직"> 3~5년</label>
+                        <label><input type="checkbox" name="career" value="경력직"> 5년이상</label>
                     </div>
                 </div>
 
@@ -104,7 +106,8 @@
         <!-- 채용공고 리스트 -->
         <div id="jobListings">
             <c:forEach var="item" items="${recruitmentList}">
-                <div class="job" data-code="${item.jobPostId}">
+                <div class="job" data-jobpostid="${item.jobPostId}"
+                                data-companyid="${item.companyId}">
 
                     <!-- 왼쪽: 회사명 -->
                     <div class="company-name">
@@ -129,7 +132,7 @@
 
                     <!-- 오른쪽: 버튼 및 마감일 -->
                     <div class="job-action">
-                        <button type="button" onclick="">지원하기</button>
+                        <button class="apply-btn" type="button" onclick="">지원하기</button>
                         <div class="deadline">~<fmt:formatDate value="${item.endDate}" pattern="MM/dd(E)" /></div>
                     </div>
                 </div>

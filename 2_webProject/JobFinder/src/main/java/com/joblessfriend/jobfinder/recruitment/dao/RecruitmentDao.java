@@ -13,5 +13,5 @@ public interface RecruitmentDao {
     List<JobGroupVo> jobGroupList();
     List<JobGroupVo> jobList(int jobGroupId);
     public List<RecruitmentVo> recruitmentList();
-    RecruitmentVo getRecruitmentId(int id);
+    RecruitmentVo getRecruitmentId(int jobPostId);
 }

@@ -90,3 +90,26 @@ function removeDetail(button) {
     $li.remove();
     $(`.chk[data-id='${jobId}']`).prop('checked', false);
 }
+
+
+$(document).ready(function () {
+
+    $('.job').on('click', function (e) {
+        // 만약 클릭한 요소가 '지원하기 버튼'이면 return
+        if ($(e.target).hasClass('apply-btn')) {
+            return;
+        }
+
+        const jobPostId = $(this).data('jobpostid');
+        const companyId = $(this).data('companyid');
+
+        // 상세페이지 이동
+        window.location.href = `detail?companyId=${companyId}&jobPostId=${jobPostId}`;
+    });
+
+    // 지원하기 버튼 클릭처리예정
+    $('.apply-btn').on('click', function () {
+        alert('처리예정입니다');
+    });
+});
+
