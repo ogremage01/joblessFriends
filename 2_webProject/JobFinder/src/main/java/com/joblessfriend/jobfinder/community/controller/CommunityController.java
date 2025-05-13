@@ -32,26 +32,41 @@ public class CommunityController {
 	@Autowired
 	private CommunityService communityService;
 
-	
+	//커뮤니티 메인
 //	@RequestMapping(value="", method = {RequestMethod.GET, RequestMethod.POST})
 	@GetMapping("")
-	public ModelAndView communityList() {
-		
-		List<CommunityVo> communityList=communityService.communitySelectList();
-		
-		ModelAndView modelList = new ModelAndView("community/list/communityList");
-		modelList.addObject("communityList", communityList);
-		
-		//리스트 화면
-		return modelList;
+	public String communityList(Model model) {
+	    // 커뮤니티 리스트 조회
+	    List<CommunityVo> communityList = communityService.communitySelectList();  // DB에서 리스트 가져오기
+
+	    // communityList를 순회하면서 각 커뮤니티의 content를 마크다운 -> HTML로 변환 후, 태그 제거
+	    for (CommunityVo communityVo : communityList) {
+	        // 마크다운을 HTML로 변환
+	        String htmlContent = Markdown.markdownToHtml(communityVo.getContent());
+
+	        // HTML 태그를 제거하고 텍스트만 남기기
+	        String textContent = htmlContent.replaceAll("<[^>]*>", "");  // HTML 태그 제거
+
+	        // 변환된 텍스트를 커뮤니티 객체에 다시 저장
+	        communityVo.setContent(textContent);  // 태그 제거된 텍스트만 저장
+	    }
+
+	    // 변환된 커뮤니티 리스트를 모델에 추가
+	    model.addAttribute("communityList", communityList);
+
+	    // 리스트 화면 반환
+	    return "community/list/communityList";
 	}
 	
+	//커뮤니티 생성(화면)
 	@GetMapping("/upload")
 	public String communityUpload(Model model) {
 		
 		//업로드 화면
 		return "community/add/communityUpload";
 	}
+	
+	//커뮤니티 메인(저장)
 	@PostMapping("/upload")
 	public String communityUpload(@ModelAttribute CommunityVo communityVo, Model model, 
 			 @SessionAttribute(name = "userLogin", required = false) MemberVo loginUser) {
@@ -70,11 +85,12 @@ public class CommunityController {
 	    return "redirect:/community";
 	}
 	
+	//커뮤니티 세부
 	@GetMapping("/detail")
-	public String test3(@RequestParam int communityId, Model model) {
+	public String communityDetail(@RequestParam int no, Model model) {
 		System.out.println("게시판 세부 시작");
 		
-		CommunityVo communityVo = communityService.communityDetail(communityId);
+		CommunityVo communityVo = communityService.communityDetail(no);
 	    String htmlContent = Markdown.markdownToHtml(communityVo.getContent());
 
 	    model.addAttribute("community", communityVo);
@@ -86,5 +102,28 @@ public class CommunityController {
 		//글 상세 화면
 		return "community/detail/communityDetail";
 	}
+	
+	@GetMapping("/update")
+	public String communityUpdate(@RequestParam int no, Model model) {
+		System.out.println("게시판 수정 시작");
+		
+		CommunityVo communityVo = communityService.communityDetail(no);
+		
+		model.addAttribute("community", communityVo);
+		//글 상세 화면
+		return "community/update/communityUpdate";
+	}
+	@PostMapping("/update")
+	public String communityUpdate(@ModelAttribute CommunityVo communityVo, Model model) {
+		System.out.println("게시판 수정 시작");
+		
+		communityService.communityUpdate(communityVo);
+		
+		model.addAttribute("community", communityVo);
+		    
+		//글 상세 화면
+		return "redirect:/community/detail?no="+communityVo.getCommunityId();
+	}
+	
 
 }

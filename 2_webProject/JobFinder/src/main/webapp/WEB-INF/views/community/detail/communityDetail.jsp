@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시글 상세</title>
+<title>게시물 | ${community.title}</title>
 
 <link rel="stylesheet" href="/css/community/communityCommonStyle.css">
 <link rel="stylesheet" href="/css/common/common.css">
@@ -58,10 +59,14 @@
     blockquote {
         background-color: #f0f0f0; /* 배경색 지정 */
         border-left: 5px solid #ccc; /* 왼쪽에 회색 띠 추가 */
-        padding: 10px 20px; /* 여백 추가 */
-        margin-left: 20px; /* 왼쪽 여백 추가 */
+        padding: 0px 10px; /* 여백 추가 */
+        margin-left: 10px; /* 왼쪽 여백 추가 */
         font-style: italic; /* 기울임체 적용 */
         color: #555; /* 텍스트 색상 */
+        
+    }
+    blockquote p{
+    	margin: 10px;
     }
     
 
@@ -78,7 +83,7 @@
 		</div>
 
 		<div>
-			<input type="hidden" name="communityId" value="${community.communityId}">
+			<input type="hidden" name="no" value="${community.communityId}">
 
 			<div class="boxStyle contentBox">
 				<h2>${community.title}</h2>
@@ -95,23 +100,25 @@
 					<text x="67" y="12" font-size="12">|</text>
 				</svg>
 					</div>
-					<div>
-						<svg xmlns="http://www.w3.org/2000/svg" width="110" height="24"
-							fill="#a2a6b1" class="bi bi-chat-left" viewBox="0 -2 100 16">
-				  	<text x="0" y="12" font-size="12" >${community.createAt} 작성</text>
-				</svg>
+					<div style="width: 400px">
+						<svg xmlns="http://www.w3.org/2000/svg" width="400" height="24"
+							fill="#a2a6b1" class="bi bi-chat-left" viewBox="0 0 340 16">
+						  	<text x="0" y="12" font-size="12" ><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${community.createAt}"/> 작성</text>
+						  	<c:if test="${community.modifiedAt ne null}">
+							  	<text x="143" y="12" font-size="12">|</text>
+							  	<text x="150" y="12" font-size="12" ><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${community.modifiedAt}"/> 수정</text>
+						  	</c:if>
+						</svg>
 					</div>
 				</div>
 
-				<div id="contentText">
-				<del>취소선</del>
-				    <c:out value="${contentHtml}" escapeXml="false"/>
+				<div id="contentText"><c:out value="${contentHtml}" escapeXml="false"/>
 				</div>
 
 				<div id="bottomSide">
 					<p style="margin: 0px;">작성자 ${community.nickname}</p>
 					<div id="aTags">
-						<a href="#">수정</a>
+						<a href="./update?no=${community.communityId}">수정</a>
 						<a href="#">삭제</a>
 					</div>
 				</div>
@@ -123,6 +130,7 @@
 		</div>
 	</div>
 </div>
-
+	<jsp:include page="/WEB-INF/views/community/topBar.jsp"/>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>

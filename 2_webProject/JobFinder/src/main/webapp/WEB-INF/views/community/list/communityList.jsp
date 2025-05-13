@@ -19,20 +19,8 @@
 		margin-bottom: 15px;
 	}
 	
-	#topBtn{
-		position: fixed;
-		bottom: 100px;
-		right: 100px;
-		
-		width: 50px;
-		height: 50px;
-		
-	}
+
 	
-	#topBtn a{
-		text-decoration-line: none;
-		margin: auto;
-	}
 </style>
 <script type="text/javascript">
 
@@ -52,9 +40,9 @@
 		<jsp:include page="/WEB-INF/views/community/list/communityListOne.jsp"/>
 	</div>
 	
-	<div id='topBtn' class='boxStyle'>
-		<a href="#">맨 위로</a>
-	</div>
+	<jsp:include page="/WEB-INF/views/community/topBar.jsp"/>
 </div>
+
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>

@@ -14,5 +14,7 @@ public interface CommunityService{
 
 	List<CommunityVo> communitySelectList();
 
-	CommunityVo communityDetail(int communityId);
+	CommunityVo communityDetail(int no);
+
+	void communityUpdate(CommunityVo communityVo);
 }

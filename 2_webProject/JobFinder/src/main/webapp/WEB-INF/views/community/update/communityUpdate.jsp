@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,12 +67,14 @@
 	<div class="markdown-body">		
 			
 			<h2>글쓰기</h2>
-			<form action="/community/upload" method="post">
-			<input type="hidden" name="writer" value="${sessionScope.loginUser.memberId}" />
+			<form action="/community/update" method="post">
+			<input type="hidden" name="communityId" value="${community.communityId}">
 				<div>
 					<p>제목</p>
 					<input name='title' type="text" class='boxStyle'
-						placeholder="제목을 입력해주세요." />
+						value="${community.title}" />
+						
+					${community.content}
 				</div>
 				<div>
 					<p>내용</p>
@@ -87,13 +90,14 @@
 			<!-- TUI 에디터 JS CDN -->
 	
 			<script>
+			const rawContent = `${community.content}`;
+		    const formattedContent = rawContent.replace(/\n/g, '\n');
 				 const editor = new toastui.Editor({
 		            el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
 		            height: '500px',                        // 에디터 영역의 높이 값 (500px로 지정)
 		            initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg 중에 markdown버전으로 처음 보여짐)
-		            initialValue: '',                       // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함(아무내용 없음)
+		            initialValue: formattedContent,                       // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함(아무내용 없음)
 		            previewStyle: 'vertical',               // 마크다운 프리뷰 스타일 (tab || vertical)
-		            placeholder: '내용을 입력해 주세요.',
 		        });
 		        
 		        function submitEditor() {

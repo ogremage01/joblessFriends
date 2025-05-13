@@ -35,9 +35,15 @@ public class CommunityDaoImpl implements CommunityDao {
 	}
 
 	@Override
-	public CommunityVo communityDetail(int communityId) {
+	public CommunityVo communityDetail(int no) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace+"communitySelectOne",communityId);//(이동할 매퍼, 전달할 값)>>값 전달이 없을 경우, (이동할 매퍼)
+		return sqlSession.selectOne(namespace+"communitySelectOne",no);//(이동할 매퍼, 전달할 값)>>값 전달이 없을 경우, (이동할 매퍼)
+	}
+
+	@Override
+	public void communityUpdate(CommunityVo communityVo) {
+		// TODO Auto-generated method stub
+		sqlSession.update(namespace+"communityUpdate", communityVo);
 	}
 	
 	
