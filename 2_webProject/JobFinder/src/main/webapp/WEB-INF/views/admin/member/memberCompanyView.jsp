@@ -135,14 +135,12 @@
 				</tbody>
 			</table>
 			
-			<div id="searchContainer">
-				<span>검색창이 들어갈 장소</span>
-			
-			</div>
+
 
 			<div id='pageNation'>
-
+				<c:if test="${totalPage > 0}">
 				<nav aria-label="...">
+				
 					<ul class="pagination justify-content-center">
 						<li class="page-item ${curPage==0?'disabled':''}">
 							<a class="page-link" href="./company?page=${curPage-1}">Previous</a>
@@ -157,10 +155,16 @@
 						<li class="page-item"><a
 							class="page-link ${curPage==totalPage-1? 'disabled':''}" href="./company?page=${curPage+1}">Next</a></li>
 					</ul>
+				
 				</nav>
+				</c:if>
 			</div>
 
-
+			<div id="searchContainer">
+				<input id="companyKeyword" type="text" placeholder="기업명">
+				<button id="companySearchBtn" class="btn btn-light">검색</button>
+			
+			</div>
 
 		</div>
 		<!-- 본문영역 -->

@@ -7,7 +7,7 @@ import com.joblessfriend.jobfinder.admin.dao.AdminDao;
 import com.joblessfriend.jobfinder.admin.domain.AdminVo;
 
 @Service
-public class AdminServiceImpl implements AdminService{
+public class AdminAuthServiceImpl implements AdminAuthService{
 	
 	@Autowired
 	public AdminDao adminDao;

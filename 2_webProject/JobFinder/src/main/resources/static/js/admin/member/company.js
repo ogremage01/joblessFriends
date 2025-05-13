@@ -5,6 +5,26 @@
 
 //------------------------------------기업 목록 JS
 
+//기업 검색
+
+const searchComBtn = document.getElementById("companySearchBtn");
+
+searchComBtn.addEventListener("click", function(e){
+	const companyKeywordVal = document.getElementById("companyKeyword").value;
+	
+	if(companyKeywordVal!=null||companyKeywordVal!=""){
+		
+		location.href=`/admin/member/company?keyword=${companyKeywordVal}`
+		
+	}
+	
+	
+	
+	
+});
+
+
+
 //기업 대량 탈퇴
 const massDelComBtn = document.getElementById("massDelCom");
 
@@ -23,9 +43,9 @@ massDelComBtn.addEventListener("click", function(e) {
 	
 		console.log(jsonData);
 		
-		fetch('/admin/member/company/massDelete',{
+		fetch('/admin/member/company/',{
 
-			method: 'POST',
+			method: 'DELETE',
 			headers: {
 				'content-type': 'application/json'
 			

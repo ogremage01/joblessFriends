@@ -8,4 +8,10 @@ public interface JobGroupDao {
 
 	List<JobGroupVo> jobGroupSelectList(int page);
 
+	List<JobGroupVo> jobGroupSelectList(int page, String keyword);
+
+	int jobGroupCount(String keyword);
+
+	int jobGroupCount();
+
 }

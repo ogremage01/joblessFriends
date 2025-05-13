@@ -81,4 +81,16 @@ public class CompanyServiceImpl implements CompanyService {
 
 	}
 
+	@Override
+	public List<CompanyVo> companySelectList(int page, String keyword) {
+		// TODO Auto-generated method stub
+		return companyDao.companySelectList(page,keyword);
+	}
+
+	@Override
+	public int companyCount(String keyword) {
+		// TODO Auto-generated method stub
+		return companyDao.companyCount(keyword);
+	}
+
 }

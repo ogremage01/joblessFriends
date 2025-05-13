@@ -29,4 +29,8 @@ public interface CompanyDao {
 
 	public CompanyVo companyEmailExist(String email);
 
+	public List<CompanyVo> companySelectList(int page, String keyword);
+
+	public int companyCount(String keyword);
+
 }

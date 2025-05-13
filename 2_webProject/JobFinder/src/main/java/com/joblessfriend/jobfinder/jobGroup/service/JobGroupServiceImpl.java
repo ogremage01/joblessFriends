@@ -9,7 +9,34 @@ import com.joblessfriend.jobfinder.jobGroup.dao.JobGroupDao;
 import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
 
 @Service
-public class JobGroupServiceImpl{
+public class JobGroupServiceImpl implements JobGroupService{
+	
+	@Autowired
+	JobGroupDao jobGroupDao;
+
+	@Override
+	public List<JobGroupVo> jobGroupSelectList(int page) {
+		// TODO Auto-generated method stub
+		return jobGroupDao.jobGroupSelectList(page);
+	}
+
+	@Override
+	public List<JobGroupVo> jobGroupSelectList(int page, String keyword) {
+		// TODO Auto-generated method stub
+		return jobGroupDao.jobGroupSelectList(page,keyword);
+	}
+
+	@Override
+	public int jobGroupCount(String keyword) {
+		// TODO Auto-generated method stub
+		return jobGroupDao.jobGroupCount(keyword);
+	}
+
+	@Override
+	public int jobGroupCount() {
+		// TODO Auto-generated method stub
+		return jobGroupDao.jobGroupCount();
+	}
 	
 
 
