@@ -87,9 +87,10 @@ body {
 
 /* 이력서 카드 */
 .resume-card {
-  border-bottom: 1px solid #d3d5d9;
-  padding: 20px 0;
   position: relative;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 
 .resume-content {
@@ -129,6 +130,16 @@ body {
   transform: translateY(-50%);
 }
 
+.button-wrapper {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 30px; /* 위아래 간격 */
+}
+
 .edit-btn {
   border: 1px solid #afb2bd;
   background: white;
@@ -140,24 +151,40 @@ body {
   cursor: pointer;
 }
 
-/* 삭제 버튼 (동그란 X 아이콘) */
-.delete-btn {
+/* 삭제 버튼 폼 위치 조정 */
+.delete-form {
   position: absolute;
-  top: 20px;
-  right: 10px;
-  width: 14px;
-  height: 14px;
-  background: #afb2bd;
-  border-radius: 50%;
-  border: 1px solid white;
-  cursor: pointer;
+  right: 20px;         /* 수정 버튼과 수평 정렬 */
+  top: calc(40% - 48px);  /* 수정 버튼보다 위로 띄우기 (40~48px 조정) */
 }
 
-.delete-btn::before {
-  content: '✕';
-  color: white;
-  font-size: 10px;
-  position: absolute;
-  top: -1px;
-  left: 2px;
+/* 삭제 버튼 스타일 */
+.delete-btn {
+  background: none;
+  border: none;
+  color: #4e5366;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* 호버 시 약간 강조 */
+.delete-btn:hover {
+  color: #2d2d41;
+}
+
+.resume-empty {
+  text-align: center;
+  padding: 100px 0;
+  color: #999;
+  font-size: 16px;
+}
+
+.resume-write-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #f79000;
+  font-weight: bold;
+  text-decoration: none;
 }
