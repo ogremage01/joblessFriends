@@ -96,13 +96,14 @@ public class RecruitmentController {
 
         System.out.println(recruitmentDetailVo.getRecruitment());
 
-
         model.addAttribute("recruitmentDetailVo", recruitmentDetailVo);
 
 
-
-
         return "recruitment/recruitmentDetail";
+    }
+    @GetMapping("/insert")
+    public String insert() {
+        return "recruitment/recruitmentInsert";
     }
 
 }

@@ -17,7 +17,7 @@ public class RecruitmentVo {
     private int jobId;              // 직무 번호
     private int views;              // 조회수
     private int salary;             //급여
-    private String workHours;
+    private String workHours;       //근무 시간
     private String jobImg;          // 채용공고 이미지
     private String careerType;      // 경력
     private String education;       // 학력
