@@ -6,7 +6,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
+import com.joblessfriend.jobfinder.jobGroup.domain.JobGroupVo;
+
+
 
 @Repository
 public class JobGroupDaoImpl implements JobGroupDao {
@@ -15,14 +17,15 @@ public class JobGroupDaoImpl implements JobGroupDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	private String namespace = "com.joblessfriend.jobfinder.jobGroup.";
+	private String namespace = "com.joblessfriend.jobfinder.jobGroup.dao.JobGroupDao.";
 	
 	
 	
 	@Override
 	public List<JobGroupVo> jobGroupSelectList(int page) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace + "jobGroupSelectList", page);
+		return null;
+		//return sqlSession.selectList(namespace + "jobGroupSelectList", page);
 	}
 
 	@Override

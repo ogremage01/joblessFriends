@@ -2,7 +2,9 @@ package com.joblessfriend.jobfinder.jobGroup.service;
 
 import java.util.List;
 
-import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
+import com.joblessfriend.jobfinder.jobGroup.domain.JobGroupVo;
+
+
 
 public interface JobGroupService {
 

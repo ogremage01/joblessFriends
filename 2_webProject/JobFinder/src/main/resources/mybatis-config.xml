@@ -12,6 +12,7 @@
 <!--        -->
 		<package name="com.joblessfriend.jobfinder.member.domain"/>
 		<package name="com.joblessfriend.jobfinder.community.domain"/>
+		<!-- <package name="com.joblessfriend.jobfinder.jobGroup.domain"/> -->
     </typeAliases>
 
     <mappers>
