@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.joblessfriend.jobfinder.admin.controller.AdminController;
 import com.joblessfriend.jobfinder.admin.service.AdminAuthService;
 import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 import com.joblessfriend.jobfinder.company.service.CompanyService;

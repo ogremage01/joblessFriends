@@ -1,4 +1,4 @@
-package com.joblessfriend.jobfinder.job.domain;
+package com.joblessfriend.jobfinder.jobGroup.domain;
 
 import lombok.Getter;
 import lombok.Setter;

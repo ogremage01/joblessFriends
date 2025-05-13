@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-	<mapper namespace="com.joblessfriend.jobfinder.recruitment.domain">
+	<mapper namespace="com.joblessfriend.jobfinder.jobGroup.dao.JobGroupDao">
 	
+	<resultMap type="com.joblessfriend.jobfinder.jobGroup.domain.JobGroupVo" id="jobGroupResultMap">
+		<id column="JOB_GROUP_ID" property="jobGroupId"/>
+		<result column="JOB_GROUP_NAME" property="jobGroupName"/>
+	</resultMap>
+	
+		<select id="jobGroupSelectList" resultMap="jobGroupResultMap">
+		  SELECT * 
+		  FROM (SELECT ROWNUM AS RN, INNERTABLE.*
+		    FROM (SELECT *
+		      FROM JOB_GROUP
+		      ORDER BY JOB_GROUP_ID DESC) INNERTABLE
+		    WHERE ROWNUM &lt;= (#{page} + 1) * 10)
+		  WHERE RN &gt; #{page} * 10
+		</select>
 
 	</mapper>
 	
