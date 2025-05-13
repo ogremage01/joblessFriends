@@ -35,7 +35,6 @@ public class RecruitmentController {
     private CompanyService companyService;
 
 
-    private final RecruitmentDao recruitmentDao;
 
     @GetMapping("/list")
     public String getAllList(Model model) {
