@@ -144,3 +144,61 @@ INSERT INTO JOB_POST (
          );
 
 COMMIT;
+
+
+commit;
+
+
+
+--이력서 test더미데이터
+
+INSERT INTO RESUME (
+    RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS,
+    SELF_INTRODUCTION, MEMBER_ID, PROFILE, CERTIFICATE_ID, CAREER_ID,
+    EDU_ID, PORTFOLIO_ID, SCHOOL_ID
+) VALUES (
+    1, '프론트엔드 개발자 이력서', TO_DATE('1998-03-15', 'YYYY-MM-DD'),
+    '010-5555-1234', 'frontend@example.com', NULL, '서울시 마포구 상암동',
+    'UI/UX에 강한 프론트엔드 개발자입니다.', 1, 'HTML, CSS, JavaScript, React',
+    NULL, NULL, NULL, NULL, NULL
+);
+
+INSERT INTO RESUME (
+  RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS,
+  SELF_INTRODUCTION, MEMBER_ID, PROFILE, CERTIFICATE_ID, CAREER_ID,
+  EDU_ID, PORTFOLIO_ID, SCHOOL_ID
+) VALUES (
+  2, '백엔드 개발자 이력서', TO_DATE('1995-07-20', 'YYYY-MM-DD'),
+  '010-1234-5678', 'backend@example.com', NULL, '서울시 강남구 논현동',
+  '안정적인 시스템 설계에 강한 백엔드 개발자입니다.', 1, 'Java, Spring Boot, MySQL',
+  NULL, NULL, NULL, NULL, NULL
+);
+
+INSERT INTO RESUME (
+  RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS,
+  SELF_INTRODUCTION, MEMBER_ID, PROFILE, CERTIFICATE_ID, CAREER_ID,
+  EDU_ID, PORTFOLIO_ID, SCHOOL_ID
+) VALUES (
+  3, '풀스택 개발자 이력서', TO_DATE('1993-11-02', 'YYYY-MM-DD'),
+  '010-8765-4321', 'fullstack@example.com', NULL, '서울시 종로구 혜화동',
+  '프론트와 백엔드를 모두 아우르는 풀스택 개발자입니다.', 1, 'Vue, Node.js, MongoDB',
+  NULL, NULL, NULL, NULL, NULL
+);
+
+INSERT INTO RESUME (
+  RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS,
+  SELF_INTRODUCTION, MEMBER_ID, PROFILE, CERTIFICATE_ID, CAREER_ID,
+  EDU_ID, PORTFOLIO_ID, SCHOOL_ID
+) VALUES (
+  4, '데이터 분석가 이력서', TO_DATE('1990-05-10', 'YYYY-MM-DD'),
+  '010-5555-1111', 'data@example.com', NULL, '서울시 서초구 반포동',
+  '데이터 기반 인사이트를 추출하는 데이터 분석가입니다.', 1, 'Python, SQL, Tableau',
+  NULL, NULL, NULL, NULL, NULL
+);
+
+COMMIT;
+
+SELECT *
+FROM RESUME 
+WHERE MEMBER_ID = 1;
+

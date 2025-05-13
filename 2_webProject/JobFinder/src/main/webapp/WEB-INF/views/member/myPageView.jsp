@@ -17,7 +17,7 @@
       </h2>
       <ul>
         <li class="active">
-        	<a href="/resume/management">이력서 관리</a>
+        	<a href="/resume/management" style="text-decoration: none;">이력서 관리</a>
         </li>
         <li>구직활동 내역</li>
         <li>개인정보 관리</li>
