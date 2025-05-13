@@ -24,8 +24,8 @@ public class JobGroupDaoImpl implements JobGroupDao {
 	@Override
 	public List<JobGroupVo> jobGroupSelectList(int page) {
 		// TODO Auto-generated method stub
-		return null;
-		//return sqlSession.selectList(namespace + "jobGroupSelectList", page);
+		
+		return sqlSession.selectList(namespace + "jobGroupSelectList", page);
 	}
 
 	@Override
@@ -43,8 +43,8 @@ public class JobGroupDaoImpl implements JobGroupDao {
 	@Override
 	public int jobGroupCount() {
 		// TODO Auto-generated method stub
-		return 0;
-	}
+		return sqlSession.selectOne(namespace + "jobGroupCount");
+	} 
 	
 	
 	

@@ -114,11 +114,11 @@
 					</tr>
 				</thead>
 				<tbody class="table-group-divider">
-					<c:forEach var="companyVo" items="">
+					<c:forEach var="jobGroupVo" items="${jobGroupList}">
 						<tr>
 							<td style="text-align: center;"><input type="checkbox" class="delCompany" name="delete" value=""></td>
-							<td></td>
-							<td><a></a></td>
+							<td>${jobGroupVo.jobGroupId}</td>
+							<td><a>${jobGroupVo.jobGroupName}</a></td>
 
 						</tr>
 					</c:forEach>
@@ -131,23 +131,32 @@
 			</div>
 
 			<div id='pageNation'>
-
+				<c:if test="${totalPage > 0}">
 				<nav aria-label="...">
+				
 					<ul class="pagination justify-content-center">
-						<li class="page-item }">
-							<a class="page-link" href="">Previous</a>
+						<li class="page-item ${curPage==0?'disabled':''}">
+							<a class="page-link" href="./jobGroup?page=${curPage-1}">Previous</a>
 						</li>
-						<c:forEach begin="0" var="i" end="">
-							<li class="page-item ">
-							<a class="page-link" href=""></a></li>
+						<c:forEach begin="0" var="i" end="${totalPage-1}">
+							<li class="page-item ${curPage==i?'active':''}">
+							<a class="page-link" href="./jobGroup?page=${i}">${i+1}</a></li>
 						</c:forEach>
 
 						<!-- <li class="page-item active" aria-current="page"><a
 						class="page-link" href="#">2</a></li> -->
 						<li class="page-item"><a
-							class="page-link " href="">Next</a></li>
+							class="page-link ${curPage==totalPage-1? 'disabled':''}" href="./jobGroup?page=${curPage+1}">Next</a></li>
 					</ul>
+				
 				</nav>
+				</c:if>
+			</div>
+
+			<div id="searchContainer">
+				<input id="companyKeyword" type="text" placeholder="직군명">
+				<button id="companySearchBtn" class="btn btn-light">검색</button>
+			
 			</div>
 
 

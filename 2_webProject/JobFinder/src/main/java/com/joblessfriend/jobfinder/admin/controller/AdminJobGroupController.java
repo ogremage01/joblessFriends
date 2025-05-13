@@ -54,7 +54,7 @@ public class AdminJobGroupController {
 		model.addAttribute("curPage", curPage);
 
 		
-		return "/admin/job/jobGroupView";
+		return "admin/job/jobGroupView";
 	}
 
 }
