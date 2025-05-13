@@ -1,5 +1,88 @@
 @charset "UTF-8";
 
+/* 사이드바 메뉴 */
+
+/* 공통 너비 */
+.sidebar-menu,
+.sidebar-buttons {
+  width: 220px; /* 원하는 크기로 통일 */
+}
+.sidebar{
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	right: 40px;
+	top: 180px;
+	z-index: 100;
+}
+
+.sidebar-menu {
+
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  
+}
+
+.sidebar-title {
+  font-weight: bold;
+  font-size: 14px;
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.sidebar-links {
+  list-style: none;
+  padding: 0 16px 16px;
+  margin: 0;
+}
+
+.sidebar-links li {
+  margin: 8px 0;
+}
+
+.sidebar-links a {
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+.sidebar-links a:hover {
+  color: #f90;
+}
+
+/* 사이드바 버튼 */
+.sidebar-buttons {
+/*   position: fixed; */
+/*   right: 40px; */
+/*   top: 465px; 메뉴 아래에 이어붙이는 위치로 조정 필요 */
+/*   z-index: 100; */
+}
+
+.sidebar-buttons button {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px 0;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-finish {
+  background: #f90;
+  color: white;
+}
+
+.btn-preview,
+.btn-cancel {
+  background: #f5f5f5;
+  color: #333;
+}
+
+
 body {
   margin: 0;
   font-family: 'NanumGothic', sans-serif;
@@ -33,6 +116,13 @@ body {
   font-weight: 700;
   font-size: 15px;
   color: #373F57;
+}
+
+/* 예시문 글자색 */
+input::placeholder,
+textarea::placeholder {
+  color: #bbb; /* ← 연한 회색 */
+  font-style: italic; /* 선택사항 */
 }
 
 /* 인적사항 */
@@ -251,3 +341,221 @@ body {
   font-weight: 700;
   cursor: pointer;
 }
+
+/* 경력 */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.field-block textarea {
+  width: 100%;
+  resize: none;
+  font-family: inherit;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+}
+
+.career-entry {
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  position: relative; /* 삭제 버튼 절대 위치 기준 */
+  border-bottom: 1px solid #ddd;
+}
+
+.delete-btn {
+  position: absolute;
+  top: -50px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #999;
+}
+
+.add-career-btn {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.add-career-btn button {
+  border: none;
+  background: none;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+/* 교육 */
+.training-entry {
+  position: relative;
+  padding: 20px 0 30px 0;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 30px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.field-block {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.field-block textarea {
+  width: 100%;
+  resize: none;
+  font-family: inherit;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+
+.add-education-btn {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.add-education-btn button {
+  border: none;
+  background: none;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  position: absolute;
+  top: -30px; /* 좀 더 위로 올림 */
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #999;
+}
+
+/* 자기소개서 */
+.field-block textarea {
+  width: 100%;
+  resize: none;
+  font-family: inherit;
+  padding: 15px;
+  border-radius: 6px;
+  font-size: 14px;
+  border: 1px solid #D1D5E3;
+  box-sizing: border-box;
+}
+
+textarea::placeholder {
+  color: #bbb;
+  font-style: italic;
+}
+
+/* 자격증 */
+.license-entry {
+  position: relative;
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 30px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.field-block {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.field-block label {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: #6D707B;
+}
+
+.field-block input {
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid #D1D5E3;
+  padding-left: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #36383F;
+}
+
+.delete-btn {
+  position: absolute;
+  top: -5px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #999;
+}
+
+.add-license-btn {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.add-license-btn button {
+  border: none;
+  background: none;
+  color: #333;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* 포트폴리오 */
+.portfolio-upload-box {
+  background-color: #f5f6fa;
+  border-radius: 6px;
+  padding: 30px;
+  text-align: center;
+  color: #999;
+  font-size: 15px;
+  cursor: pointer;
+  border: 1px solid #E0E0E0;
+  margin-top: 20px;
+}
+
+.portfolio-upload-box label {
+  display: inline-flex;
+  align-items: center;        /* ← 수직 가운데 정렬 핵심 */
+  justify-content: center;    /* ← 수평 가운데 */
+  width: 100%;
+  height: 100%;
+}
+
+.portfolio-upload-box:hover {
+  background-color: #eef0f6;
+}
+
+.portfolio-upload-box .plus-icon {
+  font-size: 18px;
+  margin-right: 8px;
+  vertical-align: middle;
+  color: #999;
+  line-height: 1;
+}
+
+
