@@ -45,6 +45,12 @@ public class CommunityDaoImpl implements CommunityDao {
 		// TODO Auto-generated method stub
 		sqlSession.update(namespace+"communityUpdate", communityVo);
 	}
+
+	@Override
+	public void communityDelete(int communityId) {
+		// TODO Auto-generated method stub
+		sqlSession.delete(namespace+"communityDelete", communityId);
+	}
 	
 	
 

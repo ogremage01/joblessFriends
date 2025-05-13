@@ -16,6 +16,7 @@
 	width: 220px;
 	height: 180px;
 	padding: 15px;
+	margin-bottom: 15px;
 }
 
 #boxTextWrap {
@@ -69,7 +70,7 @@
 }
 
 #searchBoxPadding {
-	margin-top: 15px;
+	
 	display: flex;
 }
 

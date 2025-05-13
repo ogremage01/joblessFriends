@@ -14,4 +14,6 @@ public interface CommunityDao {
 
 	void communityUpdate(CommunityVo communityVo);
 
+	void communityDelete(int communityId);
+
 }

@@ -28,7 +28,7 @@
 		]]>
 	</select>
 	
-	<select id="communitySelectOne" parameterType="com.joblessfriend.jobfinder.community.domain.CommunityVo" resultMap="communityResultVo">
+	<select id="communitySelectOne" parameterType="int" resultMap="communityResultVo">
 			SELECT COMM.COMMUNITY_ID, COMM.MEMBER_ID, COMM.TITLE, COMM.CONTENT, COMM.CREATE_AT, COMM.MODIFIED_AT, COMM.VIEWS, MEM.NICKNAME
 			FROM COMMUNITY COMM INNER JOIN MEMBER MEM
 			ON COMM.MEMBER_ID = MEM.MEMBER_ID
@@ -39,6 +39,11 @@
 			UPDATE COMMUNITY SET TITLE = #{title}, CONTENT = #{content} , MODIFIED_AT = SYSDATE, VIEWS = 0
 			WHERE COMMUNITY_ID = #{communityId}
 	</update>
+	
+	<delete id="communityDelete" parameterType="int">
+		DELETE FROM COMMUNITY
+		WHERE COMMUNITY_ID = #{communityId}
+	</delete>
 	
 
 </mapper>

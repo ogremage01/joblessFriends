@@ -17,4 +17,6 @@ public interface CommunityService{
 	CommunityVo communityDetail(int no);
 
 	void communityUpdate(CommunityVo communityVo);
+
+	void communityDelete(int communityId);
 }

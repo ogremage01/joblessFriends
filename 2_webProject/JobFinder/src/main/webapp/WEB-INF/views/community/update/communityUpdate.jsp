@@ -49,6 +49,15 @@
 		width: 1200px;
 	}
 	
+	.marginPart{
+		margin-top: 50px;
+	}
+	
+	.marginPart>p{
+		font-size: 20px;
+		color: #6D707B;
+	}
+	
 	
 	
 </style>
@@ -68,16 +77,14 @@
 			
 			<h2>글쓰기</h2>
 			<form action="/community/update" method="post">
-			<input type="hidden" name="communityId" value="${community.communityId}">
-				<div>
+				<input type="hidden" name="communityId" value="${community.communityId}">
+				<div class='marginPart'>
 					<p>제목</p>
 					<input name='title' type="text" class='boxStyle'
 						value="${community.title}" />
-						
-					${community.content}
 				</div>
-				<div>
-					<p>내용</p>
+				<div class='marginPart'>
+					<p >내용</p>
 					<div id="content" class="contentBox"></div>
 					<!-- 에디터 내용을 담을 숨겨진 textarea -->
 					<textarea name="content" id="hiddenContent" style="display: none;"></textarea>
