@@ -1,0 +1,132 @@
+/* 전체 폼 영역 정렬 */
+.InsertMain {
+    max-width: 930px;
+    margin: 40px auto;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* 섹션 박스 */
+.box-section {
+    border: 1px solid #E0E0E0;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+/* 섹션 제목 스타일 */
+.section-title {
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 12px;
+    color: #2B2B2B;
+    display: block;
+}
+
+/* 접수기간 + 지원자격 가로 정렬 */
+.flex-wrap {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+/* 내부 요소들 가로 배치 */
+.flex-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* input/select 공통 스타일 */
+input[type="text"],
+input[type="date"],
+select,
+textarea {
+    font-size: 14px;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+/* input 기본 크기 */
+input[type="text"],
+select {
+    min-width: 160px;
+    height: 40px;
+}
+
+/* 상세내용 textarea */
+textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 160px;
+}
+
+/* 태그 입력창 */
+.tag-input {
+    border: 1.5px solid #f69800;
+    border-radius: 25px;
+    padding: 8px 14px;
+    margin-bottom: 12px;
+    width: 300px;
+}
+
+/* 태그 박스 */
+.tag-list {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.tag-list .tag {
+    border: 1px solid #f69800;
+    background-color: #fff3e0;
+    color: #f69800;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+/* 추가/삭제 버튼 */
+.add-job {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 14px;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.remove-job {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #888;
+    cursor: pointer;
+}
+
+/* 체크박스 라벨 */
+.inline-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* 작성완료 버튼 */
+.submit-btn {
+    background-color: #f69800;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
