@@ -7,7 +7,7 @@
     <select id="getJobById" parameterType="int" resultType="com.joblessfriend.jobfinder.job.domain.JobVo">
         SELECT job_id AS jobId, job_name AS jobName
         FROM Job
-        WHERE job_id = #{id}
+        WHERE job_id = #{jobPostId}
     </select>
 
 </mapper>

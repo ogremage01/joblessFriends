@@ -44,7 +44,11 @@
 
             <!-- 오른쪽 사이드 영역 -->
             <div class="detail-sidebar">
-                <div class="dday">D-10</div>
+                <fmt:formatDate value="${recruitmentDetailVo.recruitment.endDate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="formattedEndDate"/>
+                <span id="endDateRaw" data-deadline="${formattedEndDate}" style="display:none;"></span>
+
+            <%--               JS데이터수집용 // NONE처리 --%>
+                <div class="dday">접수 마감일까지 남은 시간<br><span id="deadlineCountdown">.</span></div>
                 <div class="btn-group">
                     <button class="btn-bookmark">★ 공고 찜하기</button>
                     <button class="btn-apply">지원하기</button>

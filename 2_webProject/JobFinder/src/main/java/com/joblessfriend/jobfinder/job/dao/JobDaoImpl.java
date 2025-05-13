@@ -13,8 +13,8 @@ public class JobDaoImpl implements JobDao {
     private SqlSession sqlSession;
 
     @Override
-    public JobVo getJobById(int id) {
-        return sqlSession.selectOne("com.joblessfriend.jobfinder.job.dao.JobDao.getJobById", id);
+    public JobVo getJobById(int jobPostId) {
+        return sqlSession.selectOne("com.joblessfriend.jobfinder.job.dao.JobDao.getJobById", jobPostId);
 
     }
 }

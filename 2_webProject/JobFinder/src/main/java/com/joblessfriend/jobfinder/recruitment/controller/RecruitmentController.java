@@ -35,7 +35,6 @@ public class RecruitmentController {
     private CompanyService companyService;
 
 
-    private final RecruitmentDao recruitmentDao;
 
     @GetMapping("/list")
     public String getAllList(Model model) {
@@ -63,10 +62,10 @@ public class RecruitmentController {
     }
 
     @GetMapping("detail")
-    public String getDetail(@RequestParam int companyId,@RequestParam int id, Model model) {
+    public String getDetail(@RequestParam int companyId,@RequestParam int jobPostId, Model model) {
 
-        JobVo jobVo = jobService.getJobById(id);
-        RecruitmentVo recruitmentVo = recruitmentService.getRecruitmentId(id);
+        JobVo jobVo = jobService.getJobById(jobPostId);
+        RecruitmentVo recruitmentVo = recruitmentService.getRecruitmentId(jobPostId);
         CompanyVo companyVo = companyService.companySelectOne(companyId);
         if (recruitmentVo.getCompanyId() != companyVo.getCompanyId()) {
             throw new IllegalArgumentException("회사 정보가 일치하지 않습니다.");
@@ -81,7 +80,9 @@ public class RecruitmentController {
         recruitmentDetailVo.setCompany(companyVo);
         recruitmentDetailVo.setRecruitment(recruitmentVo);
 
-        System.out.println(recruitmentDetailVo);
+        System.out.println(recruitmentDetailVo.getRecruitment());
+
+
         model.addAttribute("recruitmentDetailVo", recruitmentDetailVo);
 
 

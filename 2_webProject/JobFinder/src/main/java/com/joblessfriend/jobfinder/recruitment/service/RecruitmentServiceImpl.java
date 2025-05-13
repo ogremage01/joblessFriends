@@ -34,7 +34,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     }
 
     @Override
-    public RecruitmentVo getRecruitmentId(int id) {
-        return recruitmentDao.getRecruitmentId(id);
+    public RecruitmentVo getRecruitmentId(int jobPostId) {
+        return recruitmentDao.getRecruitmentId(jobPostId);
     }
 }
