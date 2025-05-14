@@ -102,8 +102,29 @@ public class RecruitmentController {
         return "recruitment/recruitmentDetail";
     }
     @GetMapping("/insert")
-    public String insert() {
+    public String recruitmentInsert(Model model) {
+//        HttpSession session;
+//        Object loginMember = session.getAttribute("userLogin");
+//
+//        if (loginMember == null) {
+//            // 로그인 안 된 경우 → 로그인 페이지로 리다이렉트
+//            return "redirect:/member/login";
+//        } 세션연결예정
+        List<JobGroupVo> jobGroupList = recruitmentService.jobGroupList();
+        model.addAttribute("jobGroupList", jobGroupList);
         return "recruitment/recruitmentInsert";
     }
+    //insert 처리예정 //
+    @PostMapping("/insert")
+    public RecruitmentVo insertRecruitment(@ModelAttribute RecruitmentVo recruitmentVo) {
+        //        HttpSession session;
+//        Object loginMember = session.getAttribute("userLogin");
+//
+//        if (loginMember == null) {
+//            // 로그인 안 된 경우 → 로그인 페이지로 리다이렉트
+//            return "redirect:/member/login";
+//        } 세션연결예정
 
+        return recruitmentVo;
+    }
 }

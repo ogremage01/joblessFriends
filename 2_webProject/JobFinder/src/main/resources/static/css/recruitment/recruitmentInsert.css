@@ -1,6 +1,6 @@
 /* 전체 폼 영역 정렬 */
 .InsertMain {
-    max-width: 930px;
+    max-width: 1200px;
     margin: 40px auto;
     font-family: 'Noto Sans KR', sans-serif;
 }
@@ -130,3 +130,38 @@ textarea {
     font-size: 16px;
     cursor: pointer;
 }
+.InsertTemplate {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #E0E0E0;
+    background-color: #FAFAFA;
+    border-radius: 8px;
+}
+
+.template-btn {
+    margin-top: 10px;
+    padding: 8px 14px;
+    background-color: #FFA500;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.template-btn.apply {
+    background-color: #28a745;
+    margin-left: 10px;
+}
+
+.template-preview-box {
+    margin-top: 10px;
+    padding: 12px;
+    border: 1px dashed #ccc;
+    min-height: 80px;
+    background-color: white;
+    font-size: 14px;
+    white-space: pre-line;
+}
+/*셀렉트박스*/
+
