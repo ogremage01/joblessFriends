@@ -50,7 +50,7 @@ massDelComBtn.addEventListener("click", function(e) {
 				'content-type': 'application/json'
 			
 			},
-			body: JSON.stringify(jsonData)
+			body: JSON.stringify(jsonData)  // JSON.stringify를 통해 body에 데이터 포함
 	
 		})
 		.then(response => response.json())

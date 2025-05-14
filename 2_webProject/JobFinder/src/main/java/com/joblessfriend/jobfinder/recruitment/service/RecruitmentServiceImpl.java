@@ -37,4 +37,10 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public RecruitmentVo getRecruitmentId(int jobPostId) {
         return recruitmentDao.getRecruitmentId(jobPostId);
     }
+
+	@Override
+	public int jobPostDelete(List<Integer> jobPostIdList) {
+		// TODO Auto-generated method stub
+		return recruitmentDao.jobPostDelete(jobPostIdList);
+	}
 }

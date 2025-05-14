@@ -34,4 +34,10 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
     public RecruitmentVo getRecruitmentId(int jobPostId) {
         return sqlSession.selectOne("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.getRecruitmentId",jobPostId);
     }
+
+	@Override
+	public int jobPostDelete(List<Integer> jobPostIdList) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.jobPostDelete", jobPostIdList);
+	}
 }
