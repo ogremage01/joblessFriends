@@ -65,8 +65,8 @@
         </button>
         <div class="collapse" id="community-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="/admin/community" class="link-body-emphasis d-inline-flex text-decoration-none rounded">게시판 관리</a></li>
-          </ul>
+            <li><a href="/admin/community/post" class="link-body-emphasis d-inline-flex text-decoration-none rounded">게시판 관리</a></li>
+            <li><a href="/admin/community/comment" class="link-body-emphasis d-inline-flex text-decoration-none rounded">댓글 관리</a></li></ul>
         </div>
       </li>
       <li class="mb-1">
@@ -120,10 +120,11 @@
 							<td style="text-align: center;"><input type="checkbox"
 								class="delPost" name="delete" value="${recruitmentVo.jobPostId}"></td>
 							<td>${recruitmentVo.jobPostId}</td>
-							<td>${recruitmentVo.companyName}</td>
+							<td><a href="/admin/member/company/${recruitmentVo.companyId}">${recruitmentVo.companyName}</a></td>
 							<td>${recruitmentVo.startDate}공고 마감일 데이터만 현재 있음</td>
 							<td><fmt:formatDate value="${recruitmentVo.endDate}" pattern="yyyy-MM-dd" /></td>
-							<td><a href="http://localhost:9090/Recruitment/detail?companyId=${recruitmentVo.companyId}&jobPostId=${recruitmentVo.jobPostId}">${recruitmentVo.title}</a></td>
+							<td><a href="/Recruitment/detail?companyId=${recruitmentVo.companyId}&jobPostId=${recruitmentVo.jobPostId}" 
+								target="_blank" rel="noopener noreferrer">${recruitmentVo.title}</a></td>
 							<td>${recruitmentVo.views}</td>
 							<td><button class="delBtn" value="${recruitmentVo.jobPostId}">삭제</button></td>
 						</tr>
