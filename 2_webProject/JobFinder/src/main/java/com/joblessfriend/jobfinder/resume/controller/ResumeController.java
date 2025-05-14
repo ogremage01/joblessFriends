@@ -33,7 +33,8 @@ public class ResumeController {
         MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
         if (memberVo == null) return "redirect:/auth/login";
         
-        Integer memberId = memberVo.getMemberId();
+        int memberId = memberVo.getMemberId();
+        System.out.println(">>> memberId = " + memberId);
 
         List<ResumeVo> resumes = resumeService.getResumesByMemberId(memberId);
         model.addAttribute("resumes", resumes);
