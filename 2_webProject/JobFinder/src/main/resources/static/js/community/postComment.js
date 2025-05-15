@@ -1,0 +1,4 @@
+function restRequestReply(communityId, commentId){
+	
+	
+}
