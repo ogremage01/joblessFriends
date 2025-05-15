@@ -19,4 +19,9 @@ public class SkillDaoImpl implements SkillDao{
         return sqlSession.selectList("com.joblessfriend.jobfinder.skill.dao.SkillDao.tagList", jobGroupId);
 
     }
+
+    @Override
+    public List<SkillVo> postTagList(int jobPostId) {
+        return sqlSession.selectList("com.joblessfriend.jobfinder.skill.dao.SkillDao.postTagList", jobPostId);
+    }
 }

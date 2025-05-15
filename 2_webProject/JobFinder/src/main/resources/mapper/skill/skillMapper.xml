@@ -18,4 +18,15 @@
 
     </select>
 
+    <select id="postTagList" parameterType="int" resultType="com.joblessfriend.jobfinder.skill.domain.SkillVo">
+        SELECT
+            t.TAG_ID AS tagId,
+            t.TAG_NAME AS tagName
+        FROM JOB_POST_TAG jpt
+                 JOIN TAG t ON jpt.TAG_ID = t.TAG_ID
+        WHERE jpt.JOB_POST = #{jobPostId}
+
+
+    </select>
+
 </mapper>

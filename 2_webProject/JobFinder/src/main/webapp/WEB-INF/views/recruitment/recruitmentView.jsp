@@ -126,7 +126,10 @@
 
                         </div>
                         <div class="job-meta-skill">
-                            🧩 스킬: 처리예정
+                            🧩 스킬:
+                            <c:forEach var="skill" items="${skillMap[item.jobPostId]}">
+                                <span class="tag">${skill.tagName}</span>
+                            </c:forEach>
                         </div>
                     </div>
 
