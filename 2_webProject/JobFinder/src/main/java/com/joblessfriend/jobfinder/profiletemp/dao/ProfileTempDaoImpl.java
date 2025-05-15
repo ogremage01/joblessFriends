@@ -6,7 +6,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.joblessfriend.jobfinder.profiletemp.domain.ProfileTempVo;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ProfileTempDaoImpl implements ProfileTempDao{
 	
 	private final String namespace = "com.joblessfriend.jobfinder.profiletemp.mapper.ProfileTempMapper.";

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.joblessfriend.jobfinder.profiletemp.dao.ProfileTempDao;
 import com.joblessfriend.jobfinder.profiletemp.domain.ProfileTempVo;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProfileTempServiceImpl implements ProfileTempService{
 	
 	@Autowired

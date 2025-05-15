@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.joblessfriend.jobfinder.resume.dao.ResumeDao">
 
-	<resultMap type="ResumeVo" id="ResumeResultMap">
-		
+	<resultMap type="com.joblessfriend.jobfinder.resume.domain.ResumeVo" id="ResumeResultMap">
+
 		<id column="RESUME_ID" property="freeBoardId" />
 		<result column="MEMBER_NAME" property="memberName" />
 		<result column="BIRTHDATE" property="birtDate" />
@@ -14,14 +14,14 @@
 		<result column="SELF_INTRODUCTION" property="selfIntroduction" />
 		<result column="MEMBER_ID" property="memberId" />
 		<result column="PROFILE" property="profile" />
-		<result column="CREATE_AT" property="createDate" 
+		<result column="CREATE_AT" property="createDate"
 			javaType="java.util.Date"/>
-		<result column="MODIFIED_AT" property="modifyDate" 
+		<result column="MODIFIED_AT" property="modifyDate"
 			javaType="java.util.Date"/>
-			
+
 	</resultMap>
 
-	<select id="findResumesByMemberId" resultType="com.joblessfriend.jobfinder.resume.domain.ResumeVo">
+	<select id="findResumesByMemberId" resultMap="ResumeResultMap">
         SELECT RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, ADDRESS, SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT	
         FROM RESUME
         WHERE MEMBER_ID = #{memberId}
