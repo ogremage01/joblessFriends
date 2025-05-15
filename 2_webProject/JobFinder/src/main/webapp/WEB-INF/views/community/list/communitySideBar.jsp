@@ -9,6 +9,7 @@
 </script>
 <head>
 <link rel="stylesheet" href="/css/community/communityCommonStyle.css">
+<link rel="stylesheet" href="/css/community/communitySideStyle.css">
 </head>
 
 <style type="text/css">
@@ -61,6 +62,7 @@
 	border: 1px solid #F69800;
 }
 
+
 .searchBox {
 	height: 35px;
 	padding-left: 8px;
@@ -70,7 +72,6 @@
 }
 
 #searchBoxPadding {
-	
 	display: flex;
 }
 

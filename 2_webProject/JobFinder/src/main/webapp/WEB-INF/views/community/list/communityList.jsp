@@ -18,9 +18,7 @@
 	#communityList{
 		margin-bottom: 15px;
 	}
-	
-
-	
+		
 </style>
 <script type="text/javascript">
 

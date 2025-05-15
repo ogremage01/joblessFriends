@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.joblessfriend.jobfinder.community.domain.CommunityVo;
+import com.joblessfriend.jobfinder.community.domain.PostCommentVo;
 import com.joblessfriend.jobfinder.community.service.CommunityService;
+import com.joblessfriend.jobfinder.community.service.PostCommentService;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +33,8 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/community")//기본 시작 루트. 하단 모든 경로 앞에 붙는다 생각하기
 @Controller
 public class CommunityController {
-	
+	@Autowired
+	private PostCommentService postCommentService;
 	@Autowired
 	private CommunityService communityService;
 
@@ -72,14 +75,14 @@ public class CommunityController {
 	//커뮤니티 메인(저장)
 	@PostMapping("/upload")
 	public String communityUpload(@ModelAttribute CommunityVo communityVo, Model model, 
-			 @SessionAttribute(name = "userLogin", required = false) MemberVo loginUser) {
+			 @SessionAttribute(name = "userLogin", required = false) MemberVo userLogin) {
 		
 	    System.out.println("글쓰기 연습 시작");
 	    System.out.println("내용: " + communityVo.getContent());
-	    System.out.println("세션정보: "+loginUser.getMemberId());
+	    System.out.println("세션정보: "+userLogin.getMemberId());
 	    
 	    
-	    communityVo.setMemberId(loginUser.getMemberId());
+	    communityVo.setMemberId(userLogin.getMemberId());
 	    
 
 	    communityService.communityInsertOne(communityVo);
@@ -93,9 +96,17 @@ public class CommunityController {
 	public String communityDetail(@RequestParam int no, Model model) {
 		System.out.println("게시판 세부 시작");
 		
+		// 커뮤니티 상세 정보 가져오기
 		CommunityVo communityVo = communityService.communityDetail(no);
-	    String htmlContent = Markdown.markdownToHtml(communityVo.getContent());
-
+		// 마크다운 -> HTML 변환
+		String htmlContent = Markdown.markdownToHtml(communityVo.getContent());
+	    
+		/* 페이지 처음 생성시 보여지는 댓글리스트 로직 */
+		List<PostCommentVo> commentsList = postCommentService.postCommentSelectList(no);
+		System.out.println("댓글 수: " + commentsList.size());		
+		
+		model.addAttribute("commentsList", commentsList);
+		
 	    model.addAttribute("community", communityVo);
 	    model.addAttribute("contentHtml", htmlContent); // 변환된 HTML
 		
@@ -128,7 +139,7 @@ public class CommunityController {
 		return "redirect:/community/detail?no="+communityVo.getCommunityId();
 	}
 	@DeleteMapping("/delete/{communityId}")
-	public ResponseEntity<String> memberDelete(@PathVariable("communityId") int communityId){
+	public ResponseEntity<String> communityDelete(@PathVariable("communityId") int communityId){
 		communityService.communityDelete(communityId);
 		
 		return ResponseEntity.ok("게시물이 삭제되었습니다.");
