@@ -103,7 +103,7 @@
                 <div class="InsertTag box-section">
                     <label class="section-title">스킬 (3/20)</label>
                     <input type="text" class="tag-input" placeholder="스킬을 입력해주세요" />
-                    <div class="tag-list">
+                    <div id="tag-list">
                         <!-- 자동 생성될 태그들 -->
                     </div>
                     <input type="hidden" name="skills" />
@@ -179,6 +179,8 @@
 <jsp:include page="../common/footer.jsp"/>
 
 <script src="/js/recruitment/recruitmentInsert.js"></script>
+<div id="askConfirm">
+</div>
 
 </body>
 

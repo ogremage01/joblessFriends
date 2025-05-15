@@ -81,6 +81,7 @@ public class RecruitmentController {
         JobVo jobVo = jobService.getJobById(jobPostId);
         RecruitmentVo recruitmentVo = recruitmentService.getRecruitmentId(jobPostId);
         CompanyVo companyVo = companyService.companySelectOne(companyId);
+        List<SkillVo> skillList = skillService.tagList(jobPostId);
         if (recruitmentVo.getCompanyId() != companyVo.getCompanyId()) {
             throw new IllegalArgumentException("회사 정보가 일치하지 않습니다.");
         }
@@ -93,7 +94,7 @@ public class RecruitmentController {
         recruitmentDetailVo.setJob(jobVo);
         recruitmentDetailVo.setCompany(companyVo);
         recruitmentDetailVo.setRecruitment(recruitmentVo);
-
+        recruitmentDetailVo.setSkill(skillList);
         System.out.println(recruitmentDetailVo.getRecruitment());
 
         model.addAttribute("recruitmentDetailVo", recruitmentDetailVo);

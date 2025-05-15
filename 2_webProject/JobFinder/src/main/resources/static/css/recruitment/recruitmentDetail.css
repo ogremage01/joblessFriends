@@ -121,3 +121,19 @@
     border-top: 1px solid #ddd;
     margin: 40px 0;
 }
+.tag-list {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.tag-list .tag {
+    border: 1px solid #f69800;
+    background-color: #fff3e0;
+    color: #f69800;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
