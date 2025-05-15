@@ -19,6 +19,12 @@ public class PostCommentDaoImpl implements PostCommentDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(namespace+"postCommentSelectList",communityId);
 	}
+
+	@Override
+	public void postCommentInsert(PostCommentVo postCommentVo) {
+		// TODO Auto-generated method stub
+		sqlSession.insert(namespace+"postCommentInsert", postCommentVo);
+	}
 	
 	
 }

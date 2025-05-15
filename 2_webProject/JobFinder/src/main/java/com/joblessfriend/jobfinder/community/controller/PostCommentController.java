@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,7 +31,8 @@ public class PostCommentController {
 	/* 댓글 등록 후 댓글리스트가 갱신되는 로직 */
 	@GetMapping("/community/detail/comments/{communityId}")
 	@ResponseBody
-	public List<PostCommentVo> getCommentsJson(@PathVariable("communityId") int communityId){
+	public List<PostCommentVo> commentList(@PathVariable("communityId") int communityId){
+		
 		
 	    return postCommentService.postCommentSelectList(communityId);
 	}
@@ -44,4 +47,18 @@ public class PostCommentController {
 //		
 //		return "community/detail/postComment/commentList";
 //	}
+	
+	
+	@PostMapping("/community/detail/commentUpload/{communityId}")
+	@ResponseBody
+	public ResponseEntity<?> commentUpload(@PathVariable int communityId,
+			 @RequestBody PostCommentVo postCommentVo) {
+		System.out.println("~~~~~~~~~~~~~~~~댓글쓰기 시작~~~~~~~~~~~~~~");
+		postCommentVo.setCommunityId(communityId);
+		
+		System.out.println(postCommentVo);
+		postCommentService.postCommentInsert(postCommentVo);
+		
+		return ResponseEntity.ok().build();
+	}
 }

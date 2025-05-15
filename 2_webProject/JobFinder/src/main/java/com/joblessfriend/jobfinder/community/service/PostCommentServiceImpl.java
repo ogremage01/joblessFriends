@@ -23,4 +23,10 @@ public class PostCommentServiceImpl implements PostCommentService{
 		// TODO Auto-generated method stub
 		return postCommentDao.postCommentSelectList(communityId);
 	}
+
+	@Override
+	public void postCommentInsert(PostCommentVo postCommentVo) {
+		// TODO Auto-generated method stub
+		postCommentDao.postCommentInsert(postCommentVo);
+	}
 }

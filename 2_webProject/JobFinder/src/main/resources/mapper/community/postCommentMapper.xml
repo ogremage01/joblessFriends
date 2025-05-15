@@ -24,7 +24,7 @@
 	</select>
 	
 	<insert id="postCommentInsert" parameterType="com.joblessfriend.jobfinder.community.domain.PostCommentVo" keyProperty="communityId">
-		INSERT INTO COMMUNITY (POST_COMMENT_ID, COMMUNITY_ID, MEMBER_ID, CONTENT, CREATE_AT, MODIFIED_AT)
+		INSERT INTO POST_COMMENT (POST_COMMENT_ID, COMMUNITY_ID, MEMBER_ID, CONTENT, CREATE_AT, MODIFIED_AT)
 		VALUES(POST_COMMENT_ID_SEQ.NEXTVAL, #{communityId}, #{memberId}, #{content}, SYSDATE, NULL)
 	</insert>
 	
