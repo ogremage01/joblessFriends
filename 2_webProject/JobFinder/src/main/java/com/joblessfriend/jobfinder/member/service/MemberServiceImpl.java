@@ -1,6 +1,7 @@
 package com.joblessfriend.jobfinder.member.service;
 
 import java.security.SecureRandom;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.joblessfriend.jobfinder.auth.controller.AuthController;
+import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 import com.joblessfriend.jobfinder.member.dao.MemberDao;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 
@@ -87,5 +89,54 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return memberDao.memberEmailExist(email);
 	}
+	
+	@Override
+	public List<MemberVo> memberSelectList(int page) {
+		// TODO Auto-generated method stub
+		return memberDao.memberSelectList(page);
+	}
+	
+	@Override
+	public int memberCount() {
+		// TODO Auto-generated method stub
+		return memberDao.memberCount();
+	}
+
+	@Override
+	public List<MemberVo> memberSelectList(int page, String keyword) {
+		// TODO Auto-generated method stub
+		return memberDao.memberSelectList(page, keyword);
+	}
+
+	@Override
+	public int memberCount(String keyword) {
+		// TODO Auto-generated method stub
+		return memberDao.memberCount(keyword);
+	}
+
+	@Override
+	public MemberVo memberSelectOne(int memberId) {
+		// TODO Auto-generated method stub
+		return memberDao.memberSelectOne(memberId);
+	}
+
+	@Override
+	public int memberUpdateOne(MemberVo existMemberVo) {
+		// TODO Auto-generated method stub
+		return memberDao.memberUpdateOne(existMemberVo);
+	}
+
+	@Override
+	public int memberDeleteOne(int memberId) {
+		// TODO Auto-generated method stub
+		return memberDao.memberDeleteOne(memberId);
+	}
+
+	@Override
+	public int memberDeleteList(List<Integer> memberIdList) {
+		// TODO Auto-generated method stub
+		return memberDao.memberDeleteList(memberIdList);
+	}
+
 
 }
