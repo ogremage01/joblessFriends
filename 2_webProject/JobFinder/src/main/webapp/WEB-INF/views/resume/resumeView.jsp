@@ -9,9 +9,9 @@
 </head>
 <body>
 	<jsp:include page="../common/header.jsp"/>
-	
-<div class="sidebar">
 
+<div class="wrapper-container">	
+	<div class="sidebar">
 	<!-- 사이드바 메뉴 -->
 	<div class="sidebar-menu">
 	  <div class="sidebar-title">▲ TOP</div>
@@ -73,7 +73,13 @@
 			</div>
 			<div class="photo-wrapper">
 				<label>사진추가</label>
-				<div class="photo-box">+</div>
+				<div class="photo-box" id="photoBox">
+					<img id="profilePreview" src="/img/default-profile.png" alt="미리보기"
+						style="max-width:100%; max-height:100%; display: none;" />
+					<span id="photoPlaceholder">+</span>
+					<input type="file" id="profileImageInput" style="display: none;" accept="image/*"  />
+				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -279,27 +285,47 @@
       <!-- 이후 다른 섹션들(스킬, 학력, 경력, 교육 등)은 동일한 패턴으로 복붙해서 확장하면 됩니다 -->
 
     </section>
-	
+</div>
 	<jsp:include page="../common/footer.jsp" />
-	<!-- 사이드바 헤더 침범 방지 -->
+	
 <script>
-function adjustSidebarPosition() {
-	  const wrapper = document.querySelector('.resume-wrapper');
-	  const sidebar = document.querySelector('.sidebar');
 
-	  if (!wrapper || !sidebar) return;
+document.getElementById("photoBox").addEventListener("click", function () {
+    document.getElementById("profileImageInput").click();
+});
 
-	  // wrapper의 전체 페이지 좌측 기준 위치 + 너비 계산
-	  const wrapperRight = wrapper.offsetLeft + wrapper.offsetWidth;
-	  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+document.getElementById("profileImageInput").addEventListener("change", function () {
+    const fileInput = this;
+    const file = fileInput.files[0];
+    if (!file) return;
 
-	  const offset = 30; // 본문에서 얼마나 떨어질지
-	  sidebar.style.left = `${wrapperRight + offset - scrollLeft}px`;
-	}
+    const formData = new FormData();
+    formData.append("profileImage", file);
+    formData.append("resumeId", 1); // ✔️ 실제 resumeId 값으로 교체 필요
 
-	window.addEventListener('load', adjustSidebarPosition);
-	window.addEventListener('resize', adjustSidebarPosition);
-	window.addEventListener('scroll', adjustSidebarPosition);
+    fetch("/resume/uploadProfileImage", {
+        method: "POST",
+        body: formData
+    })
+    .then(resp => resp.text())
+    .then(fileName => {
+        if (fileName !== "error") {
+            // 미리보기 업데이트
+            const imgPreview = document.getElementById("profilePreview");
+            imgPreview.src = "/upload/profile/" + fileName;
+            imgPreview.style.display = "block";
+            document.getElementById("photoPlaceholder").style.display = "none";
+        } else {
+            alert("업로드 실패");
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert("에러 발생");
+    });
+});
+
+
 </script>
 </body>
 </html>

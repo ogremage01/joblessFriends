@@ -23,5 +23,12 @@
         WHERE RESUME_ID = #{resumeId}
         AND MEMBER_ID = #{memberId}
     </delete>
+    
+    <update id="updateProfileImage">
+        UPDATE RESUME
+        SET PROFILE = #{imageUrl}
+        WHERE RESUME_ID = #{resumeId}
+          AND MEMBER_ID = #{memberId}
+    </update>
 
 </mapper>

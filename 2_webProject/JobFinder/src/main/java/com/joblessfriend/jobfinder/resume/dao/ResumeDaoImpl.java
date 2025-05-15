@@ -1,6 +1,8 @@
 package com.joblessfriend.jobfinder.resume.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,4 +32,15 @@ public class ResumeDaoImpl implements ResumeDao{
             }}
         );
     }
+
+	@Override
+	public void updateProfileImage(int resumeId, int memberId, String imageUrl) {
+		// TODO Auto-generated method stub
+		Map<String, Object> param = new HashMap<>();
+        param.put("resumeId", resumeId);
+        param.put("memberId", memberId);
+        param.put("imageUrl", imageUrl);
+        sqlSession.update(namespace + "updateProfileImage", param);
+		
+	}
 }
