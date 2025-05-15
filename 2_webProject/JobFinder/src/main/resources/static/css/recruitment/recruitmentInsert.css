@@ -138,6 +138,15 @@ textarea {
     border-radius: 8px;
 }
 
+#templatePreview {
+    max-height: 600px;   /* 고정 높이 설정 */
+    overflow-y: auto;    /* 세로 스크롤 생기도록 */
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #fff;
+}
+
+
 .template-btn {
     margin-top: 10px;
     padding: 8px 14px;

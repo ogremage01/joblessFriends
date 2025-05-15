@@ -32,15 +32,17 @@ $(document).ready(function () {
 
 $("#generateTemplate").on('click',function () {
     let titleValue = $(".InsertTitle > input").val();
-    let startDate = $('.InsertDate > input[name="startDate"]').val();
-    let endDate = $('.InsertDate > input[name="endDate"]').val();
+
     let openEnded = $('.InsertDate > input[name="openEnded"]').is(':checked');
     let careerTypeValue = $("select[name='careerType']").val();
     let educationValue = $("select[name='education']").val();
     let jobGroupIdValue = $("select[name='jobGroupId']").val();
     let workHoursValue = $("select[name='workHours']").val();
-    let salaryValue = $(".InsertJob > input[name='salary']").val();
-    let contentValue = editor.getHTML(); // ← 이건 문제 없음
+    let salaryValue = $(".InsertJob  input[name='salary']").val();
+    let contentValue = editor.getHTML();
+
+    let startDate = $('.InsertDate input[name="startDate"]').val();
+    let endDate = $('.InsertDate input[name="endDate"]').val();
 
     console.log({ startDate, endDate, salaryValue }); // 디버깅
     const html = `
