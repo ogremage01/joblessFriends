@@ -23,4 +23,10 @@ public class ResumeServiceImpl implements ResumeService{
 	public void deleteResume(int memberId, int resumeId) {
 	    resumeDao.deleteResumeById(memberId, resumeId);
 	}
+
+	@Override
+	public void updateProfileImage(int resumeId, int memberId, String imageUrl) {
+		// TODO Auto-generated method stub
+		resumeDao.updateProfileImage(resumeId, memberId, imageUrl);
+	}
 }
