@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+.boxListOne {
+	width: 860px;
+	height: 150px;
+	padding: 30px;
+	margin-bottom: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	cursor: pointer;
+}
+
+.boxListOne:hover {
+	background-color: #D1D5E3;
+}
+
+.boxListOne div {
+	width: 870px;
+	margin-bottom: 18px;
+}
+
+h2 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.previewText {
+	margin: 0px;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+	white-space: normal;
+	word-break: break-all;
+	line-height: 1.5em;
+	height: calc(1.5em * 2);
+}
+
+#infoContent div {
+	width: 50px;
+	margin: 0px;
+	font-size: 10pt;
+}

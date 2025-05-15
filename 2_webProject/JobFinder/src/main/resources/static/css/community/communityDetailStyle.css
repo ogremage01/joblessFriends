@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+.wrap {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 100px;
+}
+
+.contentBox {
+	width: 860px;
+	padding: 30px;
+	min-height: 200px;
+	margin-bottom: 20px;
+}
+
+.contentBox h2 {
+	max-width: 870px;
+	margin: 0px;
+	margin-bottom: 13px;
+}
+
+#contentText {
+	margin-top: 20px;
+	white-space: pre-line;
+	overflow-wrap: break-word;
+}
+
+#bottomSide {
+	display: flex;
+	margin-top: 50px;
+	color: #6D707B;
+}
+
+#aTags {
+	margin-left: auto;
+}
+
+#aTags a {
+	margin-left: 20px;
+}

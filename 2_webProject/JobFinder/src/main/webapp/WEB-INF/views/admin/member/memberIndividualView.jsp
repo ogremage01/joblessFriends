@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>adminMain</title>
+    <title>개인회원관리</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" 
       crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
@@ -65,8 +65,8 @@
         </button>
         <div class="collapse" id="community-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="/admin/community" class="link-body-emphasis d-inline-flex text-decoration-none rounded">게시판 관리</a></li>
-          </ul>
+            <li><a href="/admin/community/post" class="link-body-emphasis d-inline-flex text-decoration-none rounded">게시판 관리</a></li>
+            <li><a href="/admin/community/comment" class="link-body-emphasis d-inline-flex text-decoration-none rounded">댓글 관리</a></li></ul>
         </div>
       </li>
       <li class="mb-1">

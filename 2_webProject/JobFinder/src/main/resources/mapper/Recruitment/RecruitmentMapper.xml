@@ -56,6 +56,14 @@
                  JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
         WHERE jp.job_post_id = #{jobPostId}
     </select>
+    
+    <delete id="jobPostDelete" parameterType="list">
+    DELETE FROM JOB_POST
+    WHERE JOB_POST_ID IN
+    <foreach item="id" collection="list" open="(" separator="," close=")">
+        #{id}
+    </foreach>
+</delete>
 
 
 </mapper>

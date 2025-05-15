@@ -99,6 +99,9 @@
 		border-radius: 25px;
 		text-align: center;
 		line-height: 40px;
+		
+		cursor: pointer;
+		user-select: none;
 	}
 	
 	.corpNav a {

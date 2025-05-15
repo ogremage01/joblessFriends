@@ -1,5 +1,8 @@
 package com.joblessfriend.jobfinder.auth.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,21 +63,21 @@ public class AuthController {
 	}
 	
 	// 이메일 중복확인 기업회원
-		@PostMapping("/check/company/email")
-		public ResponseEntity<String> valiCheckEmailCompany(@RequestParam String email) {
-			logger.info(logTitleMsg);
-			logger.info("==valiCheckEmail Company== email: {}", email);
-			
-			CompanyVo companyVo = companyService.companyEmailExist(email);
-			String checkStr = "";
-			if (companyVo == null) {
-				checkStr = "사용가능";
-			}else {
-				checkStr = "중복";
-			}
-			
-			return ResponseEntity.ok(checkStr);
+	@PostMapping("/check/company/email")
+	public ResponseEntity<String> valiCheckEmailCompany(@RequestParam String email) {
+		logger.info(logTitleMsg);
+		logger.info("==valiCheckEmail Company== email: {}", email);
+		
+		CompanyVo companyVo = companyService.companyEmailExist(email);
+		String checkStr = "";
+		if (companyVo == null) {
+			checkStr = "사용가능";
+		}else {
+			checkStr = "중복";
 		}
+		
+		return ResponseEntity.ok(checkStr);
+	}
 	
 	// 회원가입 개인회원
 	@PostMapping("/signup/member")
@@ -109,40 +112,51 @@ public class AuthController {
 	
 	// 로그인 개인회원
 	@PostMapping("/login/member")
-	public String loginMember(String email, String password, HttpSession session, Model model) {
+	public ResponseEntity<Map<String, Object>> loginMember(@RequestParam String email, @RequestParam String password, HttpSession session) {
 		logger.info(logTitleMsg);
 		logger.info("login Member! " + email + ", " + password);
+		
+		String message = "이메일 혹은 비밀번호가 다릅니다.";
 		
 		MemberVo memberVo = memberService.memberExist(email, password);
 		logger.info("memberVo: {}", memberVo);
 		
+		Map<String, Object> result = new HashMap<>();
+		
 		if(memberVo != null) {
 			session.setAttribute("userLogin", memberVo);
 			session.setAttribute("userType", "member");
-			
-			return "redirect:/";
+			result.put("success", true);
 		}else {
-			return "auth/loginFailView";
+			result.put("success", false);
+	        result.put("message", message);
 		}
+		
+		return ResponseEntity.ok(result);
 	}
 	
 	// 로그인 기업회원
 	@PostMapping("/login/company")
-	public String loginCompany(String email, String password, HttpSession session, Model model) {
+	public ResponseEntity<Map<String, Object>> loginCompany(@RequestParam String email, @RequestParam String password, HttpSession session) {
 		logger.info(logTitleMsg);
 		logger.info("login company! " + email + ", " + password);
+		
+		String message = "이메일 혹은 비밀번호가 다릅니다.";
 		
 		CompanyVo companyVo = companyService.companyExist(email, password);
 		logger.info("companyVo: {}", companyVo);
 		
+		Map<String, Object> result = new HashMap<>();
+		
 		if(companyVo != null) {
 			session.setAttribute("userLogin", companyVo);
 			session.setAttribute("userType", "company");
-			
-			return "redirect:/";
+			result.put("success", true);
 		}else {
-			return "auth/loginFailView";
+			result.put("success", false);
+	        result.put("message", message);
 		}
+		return ResponseEntity.ok(result);
 	}
 	
 	// 로그아웃

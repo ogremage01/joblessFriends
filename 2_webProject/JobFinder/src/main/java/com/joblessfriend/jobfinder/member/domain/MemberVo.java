@@ -1,5 +1,7 @@
 package com.joblessfriend.jobfinder.member.domain;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,11 @@ public class MemberVo {
 	private String password;
 	private String nickname;
 	private int resumeMax;
+	private Date createAt;
+	private Date modifiedAt;
+	private String provider;
+	
+	
 	public int getMemberId() {
 		return memberId;
 	}

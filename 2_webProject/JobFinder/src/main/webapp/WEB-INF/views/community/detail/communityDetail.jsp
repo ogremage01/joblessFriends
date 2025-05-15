@@ -10,65 +10,25 @@
 <title>게시물 | ${community.title}</title>
 
 <link rel="stylesheet" href="/css/community/communityCommonStyle.css">
+<link rel="stylesheet" href="/css/community/communityDetailStyle.css">
 <link rel="stylesheet" href="/css/common/common.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
 
 <style type="text/css">
-.wrap {
-	display: flex;
-	justify-content: space-between;
-	margin-top: 100px;
+
+/* 블록 인용 스타일 */
+blockquote {
+	background-color: #f0f0f0; /* 배경색 지정 */
+	border-left: 5px solid #ccc; /* 왼쪽에 회색 띠 추가 */
+	padding: 0px 10px; /* 여백 추가 */
+	margin-left: 10px; /* 왼쪽 여백 추가 */
+	font-style: italic; /* 기울임체 적용 */
+	color: #555; /* 텍스트 색상 */
 }
 
-.contentBox {
-	width: 860px;
-	padding: 30px;
-	min-height: 200px;
-	margin-bottom: 20px;
+blockquote p {
+	margin: 10px;
 }
-
-.contentBox h2 {
-	max-width: 870px;
-	margin: 0px;
-	margin-bottom: 13px;
-}
-
-#contentText {
-	margin-top: 20px;
-	white-space: pre-line;
-	overflow-wrap: break-word;
-}
-
-#bottomSide {
-	display: flex;
-	margin-top: 50px;
-	color: #6D707B;
-}
-
-#aTags {
-	margin-left: auto;
-}
-
-#aTags a {
-	margin-left: 20px;
-}
-
- /* 취소선 스타일 */
-
-    /* 블록 인용 스타일 */
-    blockquote {
-        background-color: #f0f0f0; /* 배경색 지정 */
-        border-left: 5px solid #ccc; /* 왼쪽에 회색 띠 추가 */
-        padding: 0px 10px; /* 여백 추가 */
-        margin-left: 10px; /* 왼쪽 여백 추가 */
-        font-style: italic; /* 기울임체 적용 */
-        color: #555; /* 텍스트 색상 */
-        
-    }
-    blockquote p{
-    	margin: 10px;
-    }
-    
 
 </style>
 
@@ -122,13 +82,12 @@
 					<div id="aTags">
 						<a href="./update?no=${community.communityId}">수정</a>
 						<a onclick="deleteCommunity(${community.communityId})">삭제</a>
-						
 					</div>
 				</div>
 			</div>
 
 			<div>
-				<jsp:include page="/WEB-INF/views/community/detail/communityReply.jsp" />
+				<jsp:include page="/WEB-INF/views/community/detail/communityComment.jsp" />
 			</div>
 		</div>
 	</div>
