@@ -63,10 +63,9 @@
                 <section class="detail-section">
                     <h3>요구 스킬</h3>
                     <div class="tag-list">
-                        <span class="tag">Java</span>
-                        <span class="tag">Spring</span>
-                        <span class="tag">JPA</span>
-                        <span class="tag">Oracle</span>
+                        <c:forEach var="tag" items="${recruitmentDetailVo.skill}">
+                            <span class="tag">${tag.tagName}</span>
+                        </c:forEach>
                     </div>
                 </section>
 

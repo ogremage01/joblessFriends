@@ -88,6 +88,11 @@ $(document).on('change', '.chk', function () {
     const jobId = $(this).data('id');
     const jobGroupName = $(this).data('group');
 
+    // 스킬은 따로 제한 처리만, 아래는 job 전용 처리
+    if ($(this).attr('name') === 'skill') {
+        return; // 아래 로직은 스킬 태그에는 적용하지 않음
+    }
+
     if ($(this).is(':checked')) {
         if ($(`#occ_detail_list_${jobId}`).length > 0) return;
 
@@ -105,6 +110,18 @@ $(document).on('change', '.chk', function () {
     }
 });
 
+$(document).on('change', 'input[name="skill"]', function () {
+    const maxSkillCount = 3;
+    const currentChecked = $('input[name="skill"]:checked').length;
+
+    if (currentChecked > maxSkillCount) {
+        alert(`스킬은 최대 ${maxSkillCount}개까지만 선택할 수 있습니다.`);
+        $(this).prop('checked', false);
+        return;
+    }
+
+    $('#skill-count').text(currentChecked);
+});
 // 리스트 X버튼 누르면 삭제 및 체크 해제
 function removeDetail(button) {
     const $li = $(button).closest('li');

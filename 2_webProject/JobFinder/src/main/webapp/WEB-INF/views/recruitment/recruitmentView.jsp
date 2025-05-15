@@ -100,7 +100,7 @@
             </div>
 
 
-
+            <label>스킬 선택 (<span id="skill-count">0</span>/3)</label>
         </div>
 
         <!-- 채용공고 리스트 -->
