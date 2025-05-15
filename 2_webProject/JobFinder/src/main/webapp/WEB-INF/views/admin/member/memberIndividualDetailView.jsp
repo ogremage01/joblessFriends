@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>개인회원관리</title>
+<title>개인회원관리-세부</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
 	rel="stylesheet" crossorigin="anonymous">
@@ -23,14 +23,23 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
 	rel="stylesheet">
-	
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script>
+
 
 <style>
 /*기본값(default)이 이미 "text/css"로 되어 있어서 자동인식한다하여 뺐음 */
 #container {
 	margin: auto;
 }
+
+#pageNation {
+	margin: auto;
+}
+
+#memberInforSubmitForm{
+	width: 800px;
+
+}
+
 </style>
 
 <script type="text/javascript">
@@ -62,7 +71,7 @@
 						<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 							<li><a href="/admin/member/individual"
 								class="link-body-emphasis d-inline-flex text-decoration-none rounded">일반회원</a></li>
-							<li><a href="/admin/member/company"
+							<li><a href="/admin/member/individual"
 								class="link-body-emphasis d-inline-flex text-decoration-none rounded">기업회원</a></li>
 							<!-- <li><a href="/admin/admin" class="link-body-emphasis d-inline-flex text-decoration-none rounded">관리자</a></li> -->
 						</ul>
@@ -78,12 +87,8 @@
 						aria-expanded="false">커뮤니티관리</button>
 					<div class="collapse" id="community-collapse">
 						<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-							<li><a href="/admin/community/post"
-								class="link-body-emphasis d-inline-flex text-decoration-none rounded">게시판
-									관리</a></li>
-							<li><a href="/admin/community/comment"
-								class="link-body-emphasis d-inline-flex text-decoration-none rounded">댓글
-									관리</a></li>
+							<li><a href="/admin/community/post" class="link-body-emphasis d-inline-flex text-decoration-none rounded">게시판 관리</a></li>
+            <li><a href="/admin/community/comment" class="link-body-emphasis d-inline-flex text-decoration-none rounded">댓글 관리</a></li>
 						</ul>
 					</div>
 				</li>
@@ -112,65 +117,94 @@
 			<a href="/admin/logout"
 				class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">로그아웃</a>
 		</div>
+
 		<!-- 사이드바 영역 -->
 		<!-- 본문영역 -->
 
+
+
 		<div id="container">
-			<table class="table table-striped">
-				<thead class="table-dark" style="margin: auto;">
-					<tr>
-						<td><button id="massDelMem">탈퇴</button></td>
-						<td>ID</td>
-						<td>이메일</td>
-						<td>닉네임</td>
-						<td>이력서 한도</td>
-					</tr>
-				</thead>
-				<tbody class="table-group-divider">
-					<c:forEach var="memberVo" items="${memberList}">
-						<tr>
-							<td style="text-align: center;"><input type="checkbox"
-								class="delMember" name="delete" value="${memberVo.memberId}"></td>
-							<td>${memberVo.memberId}</td>
-							<td><a href="./individual/${memberVo.memberId}">${memberVo.email}</a></td>
-							<td>${memberVo.nickname}</td>
-							<td>${memberVo.resumeMax}</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+			<h1>회원 상세 정보</h1>
+			<div id="memberData" data-member-id="${memberVo.memberId}"></div>
+			<form class="container mt-4" id="memberInforSubmitForm">
+			
+			    <div class="row mb-3">
+			        <label for="memberId" class="col-sm-2 col-form-label text-end">ID</label>
+			        <div class="col-sm-10">
+			            <input id="memberId" name="memberId" class="form-control-plaintext" value="${memberVo.memberId}" readonly>
+			        </div>
+			    </div>
+			
+			    <div class="row mb-3">
+			        <label for="email" class="col-sm-2 col-form-label text-end">이메일</label>
+			        <div class="col-sm-10">
+			            <input id="email" name="email" class="form-control" value="${memberVo.email}">
+			        </div>
+			    </div>
+			
+				<div class="row mb-3">
+			        <label for="password" class="col-sm-2 col-form-label text-end">비밀번호</label>
+			        <div class="col-sm-10">
+			            <input id="password" name="password" class="form-control">
+			        </div>
+			    </div>
+			
+			
+			    <div class="row mb-3">
+			        <label for="nickname" class="col-sm-2 col-form-label text-end">닉네임</label>
+			        <div class="col-sm-10">
+			            <input id="nickname" name="nickname" class="form-control" value="${memberVo.nickname}">
+			        </div>
+			    </div>
+			
+			    <div class="row mb-3">
+			        <label for="resumeMax" class="col-sm-2 col-form-label text-end">이력서 한도</label>
+			        <div class="col-sm-10">
+			            <input id="resumeMax" name="resumeMax" class="form-control" value="${memberVo.resumeMax}">
+			        </div>
+			    </div>
 
-			<div id='pageNation'>
-				<c:if test="${totalPage > 0}">
-					<nav aria-label="...">
+			    <div class="row mb-3">
+			        <label for="createAt" class="col-sm-2 col-form-label text-end">생성일</label>
+			        <div class="col-sm-10">
+			            <input id="createAt" name="createAt" class="form-control" value="${memberVo.createAt}">
+			        </div>
+			    </div>
 
-						<ul class="pagination justify-content-center">
-							<li class="page-item ${curPage==0?'disabled':''}"><a
-								class="page-link" href="./individual?page=${curPage-1}">Previous</a>
-							</li>
-							<c:forEach begin="0" var="i" end="${totalPage-1}">
-								<li class="page-item ${curPage==i?'active':''}"><a
-									class="page-link" href="./individual?page=${i}">${i+1}</a></li>
-							</c:forEach>
+			    <div class="row mb-3">
+			        <label for="modifiedAt" class="col-sm-2 col-form-label text-end">수정일</label>
+			        <div class="col-sm-10">
+			            <input id="modifiedAt" name="modifiedAt" class="form-control" value="${memberVo.modifiedAt}">
+			        </div>
+			    </div>
 
-							<li class="page-item"><a
-								class="page-link ${curPage==totalPage-1? 'disabled':''}"
-								href="./individual?page=${curPage+1}">Next</a></li>
-						</ul>
+			    <div class="row mb-3">
+			        <label for="provider" class="col-sm-2 col-form-label text-end">provider</label>
+			        <div class="col-sm-10">
+			            <input id="provider" name="provider" class="form-control" value="${memberVo.provider}">
+			        </div>
+			    </div>
+			
+			    <div class="row">
+			        <div class="offset-sm-2 col-sm-10 d-flex gap-2">
+			            <input type="submit" id="submitBtn" class="btn btn-primary" value="수정">
+			            <input type="reset" class="btn btn-secondary" value="초기화">
+			            <button type="button" class="btn btn-danger" id="delete">탈퇴</button>
+			            <a href="/admin/member/individual" class="btn btn-light">목록보기</a>
+			            
+			        </div>
+			    </div>
+			</form>
 
-					</nav>
-				</c:if>
-			</div>
 
-			<div id="searchContainer">
-				<input id="memberKeyword" type="text" placeholder="이메일">
-				<button id="memberSearchBtn" class="btn btn-light">검색</button>
-			</div>
+
+
 		</div>
-
 		<!-- 본문영역 -->
 
 	</main>
 </body>
-<script src="/js/admin/member/individual.js"></script>
+
+<script src="/js/admin/member/individualDetail.js"></script>
+
 </html>
