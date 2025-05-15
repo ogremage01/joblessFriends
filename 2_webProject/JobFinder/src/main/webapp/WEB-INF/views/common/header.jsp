@@ -129,7 +129,7 @@
 						<a href="">지원자 관리</a>
 					</li>
 					<li>
-						<a href="">기업정보 관리</a>
+						<a href="/company/info">기업정보 관리</a>
 					</li>
 <%-- 				</c:if> --%>
 				

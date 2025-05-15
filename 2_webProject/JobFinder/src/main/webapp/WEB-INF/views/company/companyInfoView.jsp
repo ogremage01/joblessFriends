@@ -1,14 +1,14 @@
-<!-- 관리자 로그인 여부를 묻는 자바구문이 들어가야 할 부분 -->
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ page language="java" contentType="text/html;charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
 <head>
-<title>기업회원관리-세부</title>
+<meta charset="UTF-8">
+<title>기업 페이지</title>
+
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
 	rel="stylesheet" crossorigin="anonymous">
@@ -25,38 +25,19 @@
 	rel="stylesheet">
 
 
-<style>
-/*기본값(default)이 이미 "text/css"로 되어 있어서 자동인식한다하여 뺐음 */
-#container {
-	margin: auto;
-}
 
-#pageNation {
-	margin: auto;
-}
-
-#companyInforSubmitForm{
-	width: 800px;
-
-}
-
-</style>
-
-<script type="text/javascript">
-	
-</script>
 </head>
 <body>
-	<main class="d-flex flex-nowrap">
-		<!-- 사이드바 영역 -->
-		<jsp:include page="/WEB-INF/views/admin/sideBar.jsp"></jsp:include>
-
-		<!-- 사이드바 영역 -->
-		<!-- 본문영역 -->
+<jsp:include page="../common/header.jsp"/>
 
 
 
-		<div id="container">
+<div class="container">
+    
+	<!-- 메인 -->
+  <div class="main">
+    여기는 기업회원 정보 수정란
+    <div id="container">
 			<h1>기업 상세 정보</h1>
 			<div id="companyData" data-company-id="${companyVo.companyId}"></div>
 			<form class="container mt-4" id="companyInforSubmitForm">
@@ -86,10 +67,15 @@
 				<div class="row mb-3">
 			        <label for="password" class="col-sm-2 col-form-label text-end">비밀번호</label>
 			        <div class="col-sm-10">
-			            <input id="password" name="password" class="form-control">
+			            <input type="password" id="password" name="password" class="form-control">
 			        </div>
 			    </div>
-			
+				<div class="row mb-3">
+			        <label for="passwordCheck" class="col-sm-2 col-form-label text-end">비밀번호확인</label>
+			        <div class="col-sm-10">
+			            <input type="password" id="passwordCheck" name="passwordCheck" class="form-control">
+			        </div>
+			    </div>
 			
 			    <div class="row mb-3">
 			        <label for="brn" class="col-sm-2 col-form-label text-end">사업자번호</label>
@@ -138,7 +124,7 @@
 			            <input type="submit" id="submitBtn" class="btn btn-primary" value="수정">
 			            <input type="reset" class="btn btn-secondary" value="초기화">
 			            <button type="button" class="btn btn-danger" id="delete">탈퇴</button>
-			            <a href="/admin/member/company" class="btn btn-light">목록보기</a>
+			            
 			            
 			        </div>
 			    </div>
@@ -148,15 +134,10 @@
 
 
 		</div>
-		<!-- 본문영역 -->
-
-	</main>
+  </div>
+</div>
+	
+<jsp:include page="../common/footer.jsp" />
 </body>
-
-<script src="/js/admin/member/companyDetail.js"></script>
-
-
-
-
-
+<script src="/js/company/companyDetail.js"></script>
 </html>
