@@ -36,7 +36,7 @@
 	</select>
 	
 	<update id="communityUpdate" parameterType="com.joblessfriend.jobfinder.community.domain.CommunityVo" keyProperty="communityId">
-			UPDATE COMMUNITY SET TITLE = #{title}, CONTENT = #{content} , MODIFIED_AT = SYSDATE, VIEWS = 0
+			UPDATE COMMUNITY SET TITLE = #{title}, CONTENT = #{content} , MODIFIED_AT = SYSDATE
 			WHERE COMMUNITY_ID = #{communityId}
 	</update>
 	

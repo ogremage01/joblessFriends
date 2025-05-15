@@ -6,13 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.joblessfriend.jobfinder.community.domain.CommunityVo;
 import com.joblessfriend.jobfinder.community.domain.PostCommentVo;
 import com.joblessfriend.jobfinder.community.service.CommunityService;
 import com.joblessfriend.jobfinder.community.service.PostCommentService;
@@ -61,4 +64,27 @@ public class PostCommentController {
 		
 		return ResponseEntity.ok().build();
 	}
+	
+	@PostMapping("/community/detail/commentUpdate/{postCommentId}")
+	@ResponseBody
+	public ResponseEntity<?> communityUpdate(@PathVariable int postCommentId,
+			 @RequestBody PostCommentVo postCommentVo) {
+		System.out.println("~~~~~~게시판 수정 시작~~~~~~~~~~");
+		postCommentVo.setPostCommentId(postCommentId);
+		postCommentService.postCommentUpdate(postCommentVo);
+		    
+		return ResponseEntity.ok().build();
+	}
+	
+	@DeleteMapping("/community/detail/delete/{postCommentId}")
+	@ResponseBody
+	public ResponseEntity<String> commentUpload(@PathVariable("postCommentId") int postCommentId) {
+		System.out.println("~~~~~~~~~~~~~~~~댓글삭제 시작~~~~~~~~~~~~~~");
+		
+		postCommentService.postCommentDelete(postCommentId);
+		
+		return ResponseEntity.ok("댓글 삭제");
+	}
+	
+	
 }

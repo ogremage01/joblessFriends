@@ -28,4 +28,14 @@
 		VALUES(POST_COMMENT_ID_SEQ.NEXTVAL, #{communityId}, #{memberId}, #{content}, SYSDATE, NULL)
 	</insert>
 	
+	<delete id="postCommentDelete" parameterType="int">
+		DELETE FROM POST_COMMENT
+		WHERE POST_COMMENT_ID = #{postCommentId}
+	</delete>
+	
+	<update id="postCommentUpdate" parameterType="com.joblessfriend.jobfinder.community.domain.PostCommentVo" keyProperty="communityId">
+			UPDATE POST_COMMENT SET CONTENT = #{content} , MODIFIED_AT = SYSDATE
+			WHERE POST_COMMENT_ID = #{postCommentId}
+	</update>
+	
 </mapper>

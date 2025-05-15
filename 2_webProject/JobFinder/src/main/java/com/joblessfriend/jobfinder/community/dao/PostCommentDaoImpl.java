@@ -25,6 +25,18 @@ public class PostCommentDaoImpl implements PostCommentDao{
 		// TODO Auto-generated method stub
 		sqlSession.insert(namespace+"postCommentInsert", postCommentVo);
 	}
+
+	@Override
+	public void postCommentUpdate(PostCommentVo postCommentVo) {
+		// TODO Auto-generated method stub
+		sqlSession.update(namespace+"postCommentUpdate", postCommentVo);
+	}
+
+	@Override
+	public void postCommentDelete(int postCommentId) {
+		sqlSession.delete(namespace+"postCommentDelete", postCommentId);
+	}
+
 	
 	
 }

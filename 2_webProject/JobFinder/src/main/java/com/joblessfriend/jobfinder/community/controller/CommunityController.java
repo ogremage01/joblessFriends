@@ -127,6 +127,7 @@ public class CommunityController {
 		//글 상세 화면
 		return "community/update/communityUpdate";
 	}
+	
 	@PostMapping("/update")
 	public String communityUpdate(@ModelAttribute CommunityVo communityVo, Model model) {
 		System.out.println("게시판 수정 시작");
@@ -138,6 +139,7 @@ public class CommunityController {
 		//글 상세 화면
 		return "redirect:/community/detail?no="+communityVo.getCommunityId();
 	}
+	
 	@DeleteMapping("/delete/{communityId}")
 	public ResponseEntity<String> communityDelete(@PathVariable("communityId") int communityId){
 		communityService.communityDelete(communityId);
