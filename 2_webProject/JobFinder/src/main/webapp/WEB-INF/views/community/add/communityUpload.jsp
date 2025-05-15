@@ -64,6 +64,7 @@
 		            document.getElementById('hiddenContent').value = markdown;
 		            return true; // 폼 제출 계속 진행
 		        }
+
 	    	</script>
 			
 	

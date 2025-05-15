@@ -25,4 +25,5 @@ public class RecruitmentVo {
     private Date endDate;           // 접수 마감일
     private String jobName;         // 직업이름
     private String jobGroupName;    // 직군이름
+    //상시채용건 추가필요//
 }
