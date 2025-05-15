@@ -32,12 +32,12 @@
 	
 	/* 가입 폼 */
 	
-	#loginForm {
+	#memberLoginForm, #companyLoginForm {
 		width: 300px;
 		margin: auto;
 	}
 	
-	#loginForm fieldset {
+	#memberLoginForm fieldset, #companyLoginForm fieldset {
 		border: 0px;
 		padding: 0;
 		margin: 0;
@@ -46,11 +46,11 @@
 		flex-direction: column;
 	}
 	
-	#loginForm legend {
+	#memberLoginForm legend, #companyLoginForm legend {
 		display: none;
 	}
 	
-	#loginForm input {
+	#memberLoginForm input, #companyLoginForm input {
 		height: 38px;
 		padding: 5px 15px;
 		border: 1px solid #E0E0E0;
@@ -59,15 +59,15 @@
 		font-size: 16px;
 	}
 	
-	#loginForm input::placeholder {
+	#memberLoginForm input::placeholder, #companyLoginForm input::placeholder {
 		color: #ADADAD;
 	}	
 	
-	#loginForm input:hover{
+	#memberLoginForm input:hover, #companyLoginForm input:hover{
 	border:1px solid #C9C9C9;
 	}
 	
-	#loginForm input:focus {
+	#memberLoginForm input:focus, #companyLoginForm input:focus {
 		border: 1px solid #F69800;
 
 	}

@@ -51,7 +51,7 @@
 			<div id="content">
 			
 				<div id="loginFormWrap">
-					<form id="loginForm" name="loginForm" method="post" action="/auth/login/member" onsubmit="return submitCheck();">
+					<form id="memberLoginForm" name="loginForm" method="post" action="/auth/login/member">
 						<fieldset>
 							<legend>로그인</legend>
 							<input id="email" name="email" type="email" value="" placeholder="이메일" >
