@@ -283,44 +283,23 @@
 	<jsp:include page="../common/footer.jsp" />
 	<!-- 사이드바 헤더 침범 방지 -->
 <script>
-window.addEventListener('scroll', function () {
-    const headerHeight = 170; // 헤더 높이 (px)
-    const scrollY = window.scrollY;
+function adjustSidebarPosition() {
+	  const wrapper = document.querySelector('.resume-wrapper');
+	  const sidebar = document.querySelector('.sidebar');
 
-    const sidebarMenu = document.querySelector('.sidebar-menu');
-    const sidebarButtons = document.querySelector('.sidebar-buttons');
-    const footer = document.querySelector('footer') || document.querySelector('#footer');
+	  if (!wrapper || !sidebar) return;
 
-    // 헤더를 침범하지 않도록 top 조정
-    const offset = Math.max(headerHeight - scrollY, 0);
+	  // wrapper의 전체 페이지 좌측 기준 위치 + 너비 계산
+	  const wrapperRight = wrapper.offsetLeft + wrapper.offsetWidth;
+	  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
 
-    if (sidebarMenu) {
-      sidebarMenu.style.top = offset + 'px';
-    }
+	  const offset = 30; // 본문에서 얼마나 떨어질지
+	  sidebar.style.left = `${wrapperRight + offset - scrollLeft}px`;
+	}
 
-    if (sidebarButtons) {
-        const sidebarMenuRect = sidebarMenu.getBoundingClientRect();
-        const menuTop = sidebarMenuRect.top + window.scrollY;
-        const menuHeight = sidebarMenu.offsetHeight;
-        const buttonsHeight = sidebarButtons.offsetHeight;
-        const gap = 0;
-
-        let newTop = offset + menuHeight + gap;
-
-        if (footer) {
-          const footerTop = footer.getBoundingClientRect().top + window.scrollY;
-          const maxTop = footerTop - buttonsHeight - 20;
-
-          // 버튼이 푸터를 넘지 않도록 제한
-          const candidateTop = menuTop + menuHeight + gap;
-          if (candidateTop + buttonsHeight >= footerTop) {
-            newTop = maxTop - scrollY;
-          }
-        }
-
-        sidebarButtons.style.top = newTop + 'px';
-      }
-  });
+	window.addEventListener('load', adjustSidebarPosition);
+	window.addEventListener('resize', adjustSidebarPosition);
+	window.addEventListener('scroll', adjustSidebarPosition);
 </script>
 </body>
 </html>

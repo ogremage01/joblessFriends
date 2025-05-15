@@ -3,26 +3,29 @@
 /* 사이드바 메뉴 */
 
 /* 공통 너비 */
+.sidebar,
 .sidebar-menu,
 .sidebar-buttons {
-  width: 220px; /* 원하는 크기로 통일 */
+  width: 15vw; /* 원하는 크기로 통일 */
+  max-width: 220px;
+  min-width: 150px;
 }
 .sidebar{
-	display: flex;
-	flex-direction: column;
 	position: fixed;
-	right: 40px;
 	top: 180px;
 	z-index: 100;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 220px;
 }
 
 .sidebar-menu {
-
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  
+  width: 100%;
 }
 
 .sidebar-title {
@@ -54,10 +57,10 @@
 
 /* 사이드바 버튼 */
 .sidebar-buttons {
-/*   position: fixed; */
-/*   right: 40px; */
-/*   top: 465px; 메뉴 아래에 이어붙이는 위치로 조정 필요 */
-/*   z-index: 100; */
+  right: 40px;
+  top: 465px;
+  z-index: 100;
+  width: 100%;
 }
 
 .sidebar-buttons button {
