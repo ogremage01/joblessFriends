@@ -64,8 +64,8 @@
         </button>
         <div class="collapse" id="community-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="/admin/community" class="link-body-emphasis d-inline-flex text-decoration-none rounded">게시판 관리</a></li>
-          </ul>
+            <li><a href="/admin/community/post" class="link-body-emphasis d-inline-flex text-decoration-none rounded">게시판 관리</a></li>
+            <li><a href="/admin/community/comment" class="link-body-emphasis d-inline-flex text-decoration-none rounded">댓글 관리</a></li></ul>
         </div>
       </li>
       <li class="mb-1">

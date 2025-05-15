@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>개인회원관리</title>
+    <title>게시글 관리</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" 
       crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
@@ -29,10 +29,9 @@
 </head>
 <body>
 <main class="d-flex flex-nowrap">
-<!-- 사이드바 영역 -->
+	<!-- 사이드바 영역 -->
   <div class="flex-shrink-0 p-3" style="width: 280px; height:100vh; border-right: 1px solid black;">
     <a href="#" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
-      <svg class="bi pe-none me-2" width="30" height="24" aria-hidden="true"><use xlink:href="#bootstrap"/></svg>
       <span class="fs-5 fw-semibold">관리자 화면</span>
     </a>
     <ul class="list-unstyled ps-0">
@@ -66,7 +65,9 @@
         <div class="collapse" id="community-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
             <li><a href="/admin/community/post" class="link-body-emphasis d-inline-flex text-decoration-none rounded">게시판 관리</a></li>
-            <li><a href="/admin/community/comment" class="link-body-emphasis d-inline-flex text-decoration-none rounded">댓글 관리</a></li></ul>
+            <li><a href="/admin/community/comment" class="link-body-emphasis d-inline-flex text-decoration-none rounded">댓글 관리</a></li>
+            
+          </ul>
         </div>
       </li>
       <li class="mb-1">
@@ -95,42 +96,10 @@
     <a href="/admin/logout" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">로그아웃</a>
   </div>
   <!-- 사이드바 영역 -->
-  <!-- 본문영역 -->
-  
-    <div id="container">
-	  <table class="table table-striped">
-	  	<thead class="table-dark" style="margin: auto;">
-	  		<tr>
-	  			<td>예시</td>
-	  			<td>예시</td>
-	  			<td>예시</td>
-	  			<td>예시</td>
-	  		</tr>
-	  	</thead>
-	  	<tbody class="table-group-divider"></tbody>
-	    	<tr>
-	  			<td>예시</td>
-	  			<td>예시</td>
-	  			<td>예시</td>
-	  			<td>예시</td>
-	  		</tr>
-	  		<tr>
-	  			<td>예시</td>
-	  			<td>예시</td>
-	  			<td>예시</td>
-	  			<td>예시</td>
-	  		</tr>
-	  		<tr>
-	  			<td>예시</td>
-	  			<td>예시</td>
-	  			<td>예시</td>
-	  			<td>예시</td>
-	  		</tr>
-	  </table>
-  </div>
-  
-  <!-- 본문영역 -->
+	  <!-- 본문영역  -->
+  		  <div id="container">게시판 관리</div>
+      <!-- 본문영역  -->
+</main>
 
-	</main>
 </body>
 </html>
