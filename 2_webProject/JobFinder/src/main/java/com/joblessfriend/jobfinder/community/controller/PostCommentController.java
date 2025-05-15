@@ -30,18 +30,18 @@ public class PostCommentController {
 	@GetMapping("/community/detail/comments/{communityId}")
 	@ResponseBody
 	public List<PostCommentVo> getCommentsJson(@PathVariable("communityId") int communityId){
-		
+		 System.out.println(">>> 커뮤니티 ID: " + communityId);
 	    return postCommentService.postCommentSelectList(communityId);
 	}
 	
-//	@GetMapping("test/{communityId}")
-//	public String test(@PathVariable("communityId") int communityId, Model model){
-//		
-//		List<PostCommentVo> commentsList = postCommentService.postCommentSelectList(communityId);
-//		System.out.println("댓글 수: " + commentsList.size());		
-//		
-//		model.addAttribute("commentsList", commentsList);
-//		
-//		return "community/detail/postComment/commentList";
-//	}
+	@GetMapping("test/{communityId}")
+	public String test(@PathVariable("communityId") int communityId, Model model){
+		
+		List<PostCommentVo> commentsList = postCommentService.postCommentSelectList(communityId);
+		System.out.println("댓글 수: " + commentsList.size());		
+		
+		model.addAttribute("commentsList", commentsList);
+		
+		return "community/detail/postComment/commentList";
+	}
 }
