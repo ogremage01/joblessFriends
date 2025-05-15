@@ -30,7 +30,7 @@
 	        	<p id='memName' class="commentBoxStyle">${comment.nickname}</p>
 	            <p class="commentBoxStyle">${comment.content}</p>  
 	            <p class='commentBottom'>
-	            	<span><fmt:formatDate pattern="yyyy-MM-dd" value="${comment.createAt}"/> 작성</span>
+	            	<span>\${comment.createAt} 작성</span>
 	            	<a onclick=''>수정</a> 
 	            	<a onclick=''>삭제</a>
 	            </p>

@@ -7,4 +7,6 @@ import com.joblessfriend.jobfinder.community.domain.PostCommentVo;
 public interface PostCommentService {
 	
 	List<PostCommentVo> postCommentSelectList(int communityId);
+
+	void postCommentInsert(PostCommentVo postCommentVo);
 }
