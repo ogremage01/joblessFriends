@@ -1,6 +1,7 @@
 package com.joblessfriend.jobfinder.community.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,13 @@ public class CommunityServiceImpl implements CommunityService{
 	public void communityDelete(int communityId) {
 		// TODO Auto-generated method stub
 		communityDao.communityDelete(communityId);
+	}
+
+	@Override
+	public void communityFileInsertOne(Map<String, Object> fileMap) {
+		System.out.println("이미지 저장 로직 시작");
+		// TODO Auto-generated method stub
+		communityDao.communityFileInsertOne(fileMap);
 	}
 
 }

@@ -30,7 +30,6 @@ public class CommunityDaoImpl implements CommunityDao {
 	@Override
 	public List<CommunityVo> communitySelectList() {
 		// TODO Auto-generated method stub
-
 		return sqlSession.selectList(namespace+"communitySelectList");
 	}
 
@@ -50,6 +49,13 @@ public class CommunityDaoImpl implements CommunityDao {
 	public void communityDelete(int communityId) {
 		// TODO Auto-generated method stub
 		sqlSession.delete(namespace+"communityDelete", communityId);
+	}
+
+	@Override
+	public void communityFileInsertOne(Map<String, Object> fileMap) {
+		System.out.println("맵!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+fileMap);
+		// TODO Auto-generated method stub
+		sqlSession.insert(namespace+"communityFileInsert", fileMap);
 	}
 	
 	

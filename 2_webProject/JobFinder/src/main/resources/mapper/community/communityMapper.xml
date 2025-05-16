@@ -36,7 +36,7 @@
 	</select>
 	
 	<update id="communityUpdate" parameterType="com.joblessfriend.jobfinder.community.domain.CommunityVo" keyProperty="communityId">
-			UPDATE COMMUNITY SET TITLE = #{title}, CONTENT = #{content} , MODIFIED_AT = SYSDATE, VIEWS = 0
+			UPDATE COMMUNITY SET TITLE = #{title}, CONTENT = #{content} , MODIFIED_AT = SYSDATE
 			WHERE COMMUNITY_ID = #{communityId}
 	</update>
 	
@@ -44,6 +44,11 @@
 		DELETE FROM COMMUNITY
 		WHERE COMMUNITY_ID = #{communityId}
 	</delete>
+	
+	<insert id="communityFileInsert" parameterType="map">
+		INSERT INTO COMMUNITY_FILE (COMMUNITY_FILE_ID, COMMUNITY_ID, FILE_NAME, STORED_FILE_NAME, FILE_SIZE, CREATE_AT, MODIFIED_AT)
+		VALUES(COMMUNITY_FILE_ID_SEQ.NEXTVAL, #{parentId}, #{originalFileName}, #{storedFileName}, #{fileSize}, SYSDATE, NULL)
+	</insert>
 	
 
 </mapper>

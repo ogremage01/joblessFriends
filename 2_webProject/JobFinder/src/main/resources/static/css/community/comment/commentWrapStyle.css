@@ -10,11 +10,11 @@
         border-bottom: 1px solid #D1D5E3;
     }
 
-    #replyWrap {
+    #commentWrap {
         margin-top: 50px;
     }
 
-    #inputReplyBox {
+    #inputCommentBox {
         width: 830px;
         height: 80px;
         padding: 10px;
@@ -23,7 +23,7 @@
         font-family: noto-sans-kt;
     }
 
-    #inputReplyWrap {
+    #inputCommentWrap {
         padding-bottom: 13px;
         border-bottom: 1px solid #D1D5E3;
     }
@@ -33,7 +33,7 @@
         height: 30px;
     }
 
-    #replyBtnWrap {
+    #commentBtnWrap {
         width: 855px;
         margin-bottom: 10px;
         margin-top: 3px;
@@ -41,9 +41,23 @@
         gap: 20px;
     }
 
-    #replyBtnWrap p {
+    #commentBtnWrap p {
         margin: 2px;
         margin-left: auto;
         color: #6D707B;
         font-size: 13px;
+    }
+    
+    #modifiedWrap>.boxStyle{
+    	width: 820px;
+        height: 80px;
+        padding: 10px;
+        margin-bottom: 10px;
+        resize: none;
+        font-family: noto-sans-kt;
+    }
+    
+    #modifiedWrap>#commentBtnWrap{
+    	width: 840px;
+    	gap: 10px;
     }

@@ -29,4 +29,17 @@ public class PostCommentServiceImpl implements PostCommentService{
 		// TODO Auto-generated method stub
 		postCommentDao.postCommentInsert(postCommentVo);
 	}
+
+	@Override
+	public void postCommentUpdate( PostCommentVo postCommentVo) {
+		// TODO Auto-generated method stub
+		postCommentDao.postCommentUpdate(postCommentVo);
+	}
+	
+	@Override
+	public void postCommentDelete(int postCommentId) {
+		// TODO Auto-generated method stub
+		postCommentDao.postCommentDelete(postCommentId);
+	}
+
 }

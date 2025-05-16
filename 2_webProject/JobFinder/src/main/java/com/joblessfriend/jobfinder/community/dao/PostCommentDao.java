@@ -8,4 +8,9 @@ public interface PostCommentDao {
 	List<PostCommentVo> postCommentSelectList(int communityId);
 
 	void postCommentInsert(PostCommentVo postCommentVo);
+
+	void postCommentUpdate(PostCommentVo postCommentVo);
+
+	void postCommentDelete(int postCommentId);
+
 }
