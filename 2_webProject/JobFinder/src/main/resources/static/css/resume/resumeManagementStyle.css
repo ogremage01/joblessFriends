@@ -1,61 +1,41 @@
+
+/* 사이드바 카테고리 선택 색상 */
+.sidebar .management {
+	color: #F69800;
+	font-weight: bold;	
+}
+
 /* 전체 구조 */
+
 body {
-  margin: 0;
-  font-family: 'NanumGothic', sans-serif;
-  background: #fff;
+	overflow-y: scroll;
 }
 
-.container {
-  display: flex;
-  width: 930px;
-  margin: 50px auto;
-  align-items: flex-start;
+#containerWrap {
+	display: flex;
+	justify-content: center;
 }
 
-/* 사이드바 */
-.sidebar {
-  width: 130px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 10px 20px 10px 20px; /* 아래 여백 줄임 */
-  margin-right: 30px;
-  align-self: flex-start;
-}
-
-.sidebar h2 {
-  font-size: 16px;
-  margin-bottom: 16px;
-  font-weight: bold;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sidebar li {
-  margin-bottom: 12px;
-  font-size: 14px;
-  color: #4A4A4A;
-  cursor: pointer;
-}
-
-.sidebar li:last-child {
-  margin-bottom: 0 !important;  /* 강제 제거 */
-}
-
-/* 메인 */
 .main {
-  flex-grow: 1;
+  width: 920px;
 }
 
-.main h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
+.content {
+	width: 800px;
+	margin: auto;
 }
+
+/* 카테고리명 h1*/
+.mainTitle {
+	font-size: 32px;
+	margin: 0px;
+	margin-bottom: 30px;
+}
+
+
+
+
+
 
 /* 작성 버튼 */
 .write-btn {
