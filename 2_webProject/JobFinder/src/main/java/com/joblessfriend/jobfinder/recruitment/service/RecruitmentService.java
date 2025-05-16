@@ -19,5 +19,6 @@ public interface RecruitmentService {
     RecruitmentVo getRecruitmentId(int jobPostId);
 	public int jobPostDelete(List<Integer> jobPostIdList);
 	public List<RecruitmentVo> adminRecruitmentList();
+	public List<RecruitmentVo> companyRecruitmentSelectList(int companyId);
 
 }

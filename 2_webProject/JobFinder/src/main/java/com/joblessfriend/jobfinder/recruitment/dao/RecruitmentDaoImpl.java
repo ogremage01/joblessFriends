@@ -46,5 +46,11 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.adminRecruitmentList");
     }
+
+	@Override
+	public List<RecruitmentVo> companyRecruitmentSelectList(int companyId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.companyRecruitmentList",companyId);
+	}
 	
 }
