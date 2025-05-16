@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.joblessfriend.jobfinder.resume.portfolio">
+
+    <resultMap type="com.joblessfriend.jobfinder.resume.portfolio.domain.PortfolioVo" id="portfolioResultMap">
+        <id column="PORTFOLIO_ID" property="portfolioId" />
+        <result column="RESUME_ID" property="resumeID" />
+        <result column="FILE_NAME" property="fileName" />
+        <result column="STORED_FILE_NAME" property="storedFileName" />
+        <result column="FILE_EXTENSION" property="fileExtension" />
+        <result column="CREATE_AT" property="createAt" javaType="java.util.Date" />
+        <result column="MODIFIED_AT" property="modifiedAt" javaType="java.util.Date"/>
+    </resultMap>
+
+    <select id="portfolioAllList" resultMap="portfolioResultMap">
+        SELECT PORTFOLIO_ID, RESUME_ID, FILE_NAME, STORED_FILE_NAME, FILE_EXTENSION, CREATE_AT, MODIFIED_AT
+        FROM PORTFOLIO
+    </select>
+
+</mapper>
