@@ -44,10 +44,27 @@
 					                    <li class="userNavItem logout">
 					                        <a href="/auth/logout">로그아웃</a>
 					                    </li>
-					                    <li class="userNavItem corpNav" onclick="companyPopup();">
+					                    <li class="userNavItem corpNav">
 					                        <a href="javascript:void(0);">
 					                            기업서비스<span class="material-symbols-outlined keyboard_arrow_down">keyboard_arrow_down</span>
 					                        </a>
+					                        <div class="companyServiceNav">
+												<div>기업서비스</div>
+												<ul>
+														<li>
+															<a href="/Recruitment/insert">공고 등록</a>
+														</li>
+														<li>
+															<a href="">공고 관리</a>
+														</li>
+														<li>
+															<a href="">지원자 관리</a>
+														</li>
+														<li>
+															<a href="/company/info">기업정보 관리</a>
+														</li>
+												</ul>
+											</div>
 					                    </li>
 					                </c:when>
 					            </c:choose>
@@ -59,53 +76,33 @@
 					            <li class="userNavItem join">
 					                <a href="/auth/signup">회원가입</a>
 					            </li>
-					            <li class="userNavItem corpNav" onclick="companyPopup();">
+					            <li class="userNavItem corpNav">
 					                <a href="javascript:void(0);">
 					                    기업서비스<span class="material-symbols-outlined keyboard_arrow_down">keyboard_arrow_down</span>
 					                </a>
+					                <div class="companyServiceNav">
+										<div>기업서비스</div>
+										<ul>
+												<li>
+													<a href="/Recruitment/insert">공고 등록</a>
+												</li>
+												<li>
+													<a href="">공고 관리</a>
+												</li>
+												<li>
+													<a href="">지원자 관리</a>
+												</li>
+												<li>
+													<a href="/company/info">기업정보 관리</a>
+												</li>
+										</ul>
+									</div>
 					            </li>
 					        </c:otherwise>
 					    </c:choose>
 					</ul>
 				</div>
 			</div>
-		</div>
-	
-		<div id="companyServiceNav">
-			
-			<div>기업서비스</div>
-			
-			<ul>
-<%-- 				<c:if test="${sessionScope.userLogin eq null}"> --%>
-<!-- 					<li> -->
-<!-- 						<a href="/auth/login">공고 등록</a> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<a href="/auth/login">공고 관리</a> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<a href="/auth/login">지원자 관리</a> -->
-<!-- 					</li> -->
-<!-- 					<li> -->
-<!-- 						<a href="/auth/login">기업정보 관리</a> -->
-<!-- 					</li> -->
-<%-- 				</c:if> --%>
-<%-- 				<c:if test="${sessionScope.userLogin ne null}"> --%>
-					<li>
-						<a href="/Recruitment/insert">공고 등록</a>
-					</li>
-					<li>
-						<a href="">공고 관리</a>
-					</li>
-					<li>
-						<a href="">지원자 관리</a>
-					</li>
-					<li>
-						<a href="">기업정보 관리</a>
-					</li>
-<%-- 				</c:if> --%>
-				
-			</ul>
 		</div>
 	
 	</div>
