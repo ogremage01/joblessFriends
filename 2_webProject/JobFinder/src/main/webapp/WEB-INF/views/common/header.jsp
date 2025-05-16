@@ -73,9 +73,6 @@
 															<a href="">공고 관리</a>
 														</li>
 														<li>
-															<a href="">지원자 관리</a>
-														</li>
-														<li>
 															<a href="/company/info">기업정보 관리</a>
 														</li>
 												</ul>
@@ -103,9 +100,6 @@
 												</li>
 												<li>
 													<a href="">공고 관리</a>
-												</li>
-												<li>
-													<a href="">지원자 관리</a>
 												</li>
 												<li>
 													<a href="/company/info">기업정보 관리</a>
