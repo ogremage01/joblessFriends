@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.joblessfriend.jobfinder.resume.dao.ResumeDao">
 
-	<resultMap type="com.joblessfriend.jobfinder.resume.domain.ResumeVo" id="ResumeResultMap">
+ 	<resultMap type="com.joblessfriend.jobfinder.resume.domain.ResumeVo" id="ResumeResultMap">
 
-		<id column="RESUME_ID" property="freeBoardId" />
+		<id column="RESUME_ID" property="resumeId" />
 		<result column="MEMBER_NAME" property="memberName" />
-		<result column="BIRTHDATE" property="birtDate" />
+		<result column="BIRTHDATE" property="birthDate" />
 		<result column="PHONENUMBER" property="phoneNumber" />
 		<result column="EMAIL" property="email" />
 		<result column="POSTAL_CODE_ID" property="postalCode" />
@@ -14,10 +14,8 @@
 		<result column="SELF_INTRODUCTION" property="selfIntroduction" />
 		<result column="MEMBER_ID" property="memberId" />
 		<result column="PROFILE" property="profile" />
-		<result column="CREATE_AT" property="createDate"
-			javaType="java.util.Date"/>
-		<result column="MODIFIED_AT" property="modifyDate"
-			javaType="java.util.Date"/>
+		<result column="CREATE_AT" property="createDate" javaType="java.util.Date" />
+		<result column="MODIFIED_AT" property="modifyDate" javaType="java.util.Date" />
 
 	</resultMap>
 

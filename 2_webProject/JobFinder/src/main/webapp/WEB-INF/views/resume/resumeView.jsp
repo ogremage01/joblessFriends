@@ -72,15 +72,16 @@
 				<input type="text" placeholder="예시) test@mail.com" />
 			</div>
 			<div class="photo-wrapper">
-				<label>사진추가</label>
-				<div class="photo-box" id="photoBox">
-					<img id="profilePreview" src="/img/default-profile.png" alt="미리보기"
-						style="max-width:100%; max-height:100%; display: none;" />
-					<span id="photoPlaceholder">+</span>
-					<input type="file" id="profileImageInput" style="display: none;" accept="image/*"  />
-				</div>
-				
+				<label class="photo-box" id="photoBox">
+					<div class="photo-text">
+						사진추가
+						<span class="plus-icon">+</span>
+					</div>
+					<img id="previewImage" src="#" alt="미리보기" style="display: none;" />
+				</label>
+					<input type="file" id="profileImageInput" style="display: none;" onchange="previewImage(event)" />
 			</div>
+
 		</div>
 	</div>
 
@@ -281,9 +282,6 @@
 		</div>
 	</section>
 		
-		
-      <!-- 이후 다른 섹션들(스킬, 학력, 경력, 교육 등)은 동일한 패턴으로 복붙해서 확장하면 됩니다 -->
-
     </section>
 </div>
 	<jsp:include page="../common/footer.jsp" />
@@ -295,36 +293,38 @@ document.getElementById("photoBox").addEventListener("click", function () {
 });
 
 document.getElementById("profileImageInput").addEventListener("change", function () {
-    const fileInput = this;
-    const file = fileInput.files[0];
+    const file = this.files[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append("profileImage", file);
-    formData.append("resumeId", 1); // ✔️ 실제 resumeId 값으로 교체 필요
+    // 미리보기
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const preview = document.getElementById("previewImage");
+        preview.src = e.target.result;
+        preview.style.display = "block";
+        
+        //텍스트 숨기기
+        const photoText = document.querySelector(".photo-text");
+        if (photoText) photoText.style.display = "none";
+    };
+    reader.readAsDataURL(file);
 
-    fetch("/resume/uploadProfileImage", {
-        method: "POST",
+    // 서버로 비동기 전송
+    const formData = new FormData();
+    formData.append('profileImage', file);
+
+    fetch('/profile-temp/uploadImage', {
+        method: 'POST',
         body: formData
     })
-    .then(resp => resp.text())
-    .then(fileName => {
-        if (fileName !== "error") {
-            // 미리보기 업데이트
-            const imgPreview = document.getElementById("profilePreview");
-            imgPreview.src = "/upload/profile/" + fileName;
-            imgPreview.style.display = "block";
-            document.getElementById("photoPlaceholder").style.display = "none";
-        } else {
-            alert("업로드 실패");
-        }
+    .then(res => res.text())
+    .then(data => {
+        console.log("업로드 결과:", data);
     })
     .catch(err => {
-        console.error(err);
-        alert("에러 발생");
+        console.error("업로드 실패", err);
     });
 });
-
 
 </script>
 </body>
