@@ -20,19 +20,20 @@ import com.joblessfriend.jobfinder.community.domain.PostCommentVo;
 import com.joblessfriend.jobfinder.community.service.CommunityService;
 import com.joblessfriend.jobfinder.community.service.PostCommentService;
 
+@RequestMapping("/community/detail")
 @Controller
 public class PostCommentController {
 	@Autowired
 	private PostCommentService postCommentService;
 
 	/*
-	 * 기억할 것 
+	 * 기억할 것 (추가 예쩡)
 	 * 1. @PathVariable: URL 경로 안에 포함된 값을 자바 변수로 매핑해주는 어노테이션
-	 * 2. jsp include를 통해 detail에서 비동기로 움직이는 것들
+	 *
 	 */
 	
 	/* 댓글 등록 후 댓글리스트가 갱신되는 로직 */
-	@GetMapping("/community/detail/comments/{communityId}")
+	@GetMapping("/comments/{communityId}")
 	@ResponseBody
 	public List<PostCommentVo> commentList(@PathVariable("communityId") int communityId){
 		
@@ -52,7 +53,7 @@ public class PostCommentController {
 //	}
 	
 	
-	@PostMapping("/community/detail/commentUpload/{communityId}")
+	@PostMapping("/commentUpload/{communityId}")
 	@ResponseBody
 	public ResponseEntity<?> commentUpload(@PathVariable int communityId,
 			 @RequestBody PostCommentVo postCommentVo) {
@@ -65,7 +66,7 @@ public class PostCommentController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@PostMapping("/community/detail/commentUpdate/{postCommentId}")
+	@PostMapping("/commentUpdate/{postCommentId}")
 	@ResponseBody
 	public ResponseEntity<?> communityUpdate(@PathVariable int postCommentId,
 			 @RequestBody PostCommentVo postCommentVo) {
@@ -76,7 +77,7 @@ public class PostCommentController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@DeleteMapping("/community/detail/delete/{postCommentId}")
+	@DeleteMapping("/delete/{postCommentId}")
 	@ResponseBody
 	public ResponseEntity<String> commentUpload(@PathVariable("postCommentId") int postCommentId) {
 		System.out.println("~~~~~~~~~~~~~~~~댓글삭제 시작~~~~~~~~~~~~~~");

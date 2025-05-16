@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//실행이 안되는 마크다운 언어를 html 태그로 수동 변환하는 부분
+
 public class Markdown {
 
     public static String markdownToHtml(String markdown) {

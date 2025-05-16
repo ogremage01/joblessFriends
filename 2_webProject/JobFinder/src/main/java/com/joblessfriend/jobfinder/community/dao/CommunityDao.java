@@ -1,6 +1,7 @@
 package com.joblessfriend.jobfinder.community.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.joblessfriend.jobfinder.community.domain.CommunityVo;
 
@@ -15,5 +16,7 @@ public interface CommunityDao {
 	void communityUpdate(CommunityVo communityVo);
 
 	void communityDelete(int communityId);
+
+	void communityFileInsertOne(Map<String, Object> fileMap);
 
 }

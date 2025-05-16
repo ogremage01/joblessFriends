@@ -89,10 +89,11 @@ $(document).ready(function () {
 		                	        	<div id="commentlistNo_\${comment.postCommentId}">
 			                	            <p class="commentBoxStyle">\${comment.content}</p>  
 			                	            <p class='commentBottom'>
-			            	            	<span>\${year}/\${month}/\${day}  작성</span>
+			            	            		<span>\${year}-\${month}-\${day}  작성</span>
 			                	            	<a onclick='commentUpdateForm(\${comment.postCommentId}, "\${comment.content}")'>수정</a> 
 			                	            	<a onclick='commentDelete(\${comment.postCommentId})'>삭제</a>
 			                	            </p>
+			                	            <p><button>답글</button></p>
 		                	            </div>
 		                			</div>
 		                        </div>
