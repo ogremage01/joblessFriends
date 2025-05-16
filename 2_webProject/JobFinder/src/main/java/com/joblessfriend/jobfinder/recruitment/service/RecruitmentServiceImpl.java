@@ -48,6 +48,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 		return recruitmentDao.jobPostDelete(jobPostIdList);
 	}
 
+
     @Override
     @Transactional
     public void insertRecruitment(RecruitmentVo recruitmentVo, List<Integer> tagIdList) {
@@ -56,5 +57,18 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     }
 
 
+
+
+	@Override
+	public List<RecruitmentVo> adminRecruitmentList() {
+		// TODO Auto-generated method stub
+		return recruitmentDao.adminRecruitmentList();
+	}
+
+	@Override
+	public List<RecruitmentVo> companyRecruitmentSelectList(int companyId) {
+		// TODO Auto-generated method stub
+		return recruitmentDao.companyRecruitmentSelectList(companyId);
+	}
 
 }

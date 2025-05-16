@@ -79,7 +79,7 @@
 			    <div class="row mb-3">
 			        <label for="email" class="col-sm-2 col-form-label text-end">이메일</label>
 			        <div class="col-sm-10">
-			            <input id="email" name="email" class="form-control" value="${companyVo.email}">
+			            <input id="email" name="email" type="email" class="form-control" value="${companyVo.email}">
 			        </div>
 			    </div>
 			

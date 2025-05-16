@@ -16,6 +16,11 @@ public interface RecruitmentDao {
     RecruitmentVo getRecruitmentId(int jobPostId);
 	int jobPostDelete(List<Integer> jobPostIdList);
 
+
     void insertRecruitment(RecruitmentVo recruitmentVo);
     void insertJobPostTag(RecruitmentVo recruitmentVo, List<Integer> tagIdList);
+
+	List<RecruitmentVo> adminRecruitmentList();
+	List<RecruitmentVo> companyRecruitmentSelectList(int companyId);
+
 }

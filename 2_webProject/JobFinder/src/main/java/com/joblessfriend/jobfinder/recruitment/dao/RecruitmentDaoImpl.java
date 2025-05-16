@@ -43,6 +43,7 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
 	}
 
 
+
     @Override
     public void insertRecruitment(RecruitmentVo recruitmentVo) {
        sqlSession.insert("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.insertRecruitment", recruitmentVo);
@@ -59,5 +60,19 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
         sqlSession.insert("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.insertJobPostTag", paramMap);
     }
 
+
+
+	@Override
+	public List<RecruitmentVo> adminRecruitmentList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.adminRecruitmentList");
+    }
+
+	@Override
+	public List<RecruitmentVo> companyRecruitmentSelectList(int companyId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.companyRecruitmentList",companyId);
+	}
+	
 
 }

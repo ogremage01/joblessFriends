@@ -58,7 +58,7 @@
 								class="delPost" name="delete" value="${recruitmentVo.jobPostId}"></td>
 							<td>${recruitmentVo.jobPostId}</td>
 							<td><a href="/admin/member/company/${recruitmentVo.companyId}">${recruitmentVo.companyName}</a></td>
-							<td>${recruitmentVo.startDate}공고 마감일 데이터만 현재 있음</td>
+							<td><fmt:formatDate value="${recruitmentVo.startDate}" pattern="yyyy-MM-dd" /></td>
 							<td><fmt:formatDate value="${recruitmentVo.endDate}" pattern="yyyy-MM-dd" /></td>
 							<td><a href="/Recruitment/detail?companyId=${recruitmentVo.companyId}&jobPostId=${recruitmentVo.jobPostId}" 
 								target="_blank" rel="noopener noreferrer">${recruitmentVo.title}</a></td>

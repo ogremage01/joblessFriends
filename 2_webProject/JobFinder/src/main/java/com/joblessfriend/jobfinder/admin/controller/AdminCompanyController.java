@@ -109,7 +109,7 @@ public class AdminCompanyController {
 		}
 
 		// 주소 관련 정보는 향후 구현 시 활성화
-		/*
+		
 		if (companyVo.getPostalCodeId() != 0) {
 			existCompanyVo.setPostalCodeId(companyVo.getPostalCodeId());
 		}
@@ -119,7 +119,7 @@ public class AdminCompanyController {
 		if (companyVo.getAddress() != null) {
 			existCompanyVo.setAddress(companyVo.getAddress());
 		}
-		*/
+		
 
 		System.out.println("바꾼 후 정보: " + existCompanyVo.toString());
 
