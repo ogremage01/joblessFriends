@@ -17,4 +17,9 @@ public class SkillServiceImpl implements SkillService{
     public List<SkillVo> tagList(int jobGroupId) {
         return skillDao.tagList(jobGroupId);
     }
+
+    @Override
+    public List<SkillVo> postTagList(int jobPostId) {
+        return skillDao.postTagList(jobPostId);
+    }
 }

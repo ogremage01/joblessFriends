@@ -101,8 +101,8 @@
 
                 <!-- 스킬 태그 -->
                 <div class="InsertTag box-section">
-                    <label class="section-title">스킬 (3/20)</label>
-                    <input type="text" class="tag-input" placeholder="스킬을 입력해주세요" />
+                    <label class="section-title">스킬 (5개까지 선택가능)</label>
+
                     <div id="tag-list">
                         <!-- 자동 생성될 태그들 -->
                     </div>

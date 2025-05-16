@@ -46,10 +46,19 @@ public class RecruitmentController {
         List<JobGroupVo> jobGroupList = recruitmentService.jobGroupList();
         List<RecruitmentVo> recruitmentList = recruitmentService.recruitmentList();
         System.out.println(recruitmentList);
+
+        Map<Integer, List<SkillVo>> skillMap = new HashMap<>();
+
+        for (RecruitmentVo r : recruitmentList) {
+            int jobPostId = r.getJobPostId();
+            List<SkillVo> skillList = skillService.postTagList(jobPostId);//태그리스트들 put
+            skillMap.put(jobPostId, skillList);
+        }
+
         model.addAttribute("jobGroupList", jobGroupList);
         //        //추가적인페이지네이션 5개단위  //
         model.addAttribute("recruitmentList", recruitmentList);
-
+        model.addAttribute("skillMap", skillMap);
 
 
         return "recruitment/recruitmentView";
@@ -81,7 +90,7 @@ public class RecruitmentController {
         JobVo jobVo = jobService.getJobById(jobPostId);
         RecruitmentVo recruitmentVo = recruitmentService.getRecruitmentId(jobPostId);
         CompanyVo companyVo = companyService.companySelectOne(companyId);
-        List<SkillVo> skillList = skillService.tagList(jobPostId);
+        List<SkillVo> skillList = skillService.postTagList(jobPostId);
         if (recruitmentVo.getCompanyId() != companyVo.getCompanyId()) {
             throw new IllegalArgumentException("회사 정보가 일치하지 않습니다.");
         }
