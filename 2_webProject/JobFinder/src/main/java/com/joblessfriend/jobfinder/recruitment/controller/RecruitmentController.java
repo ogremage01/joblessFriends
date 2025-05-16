@@ -14,15 +14,15 @@ import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
 import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
 import com.joblessfriend.jobfinder.skill.domain.SkillVo;
 import com.joblessfriend.jobfinder.skill.service.SkillService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RequestMapping("/Recruitment")
@@ -112,29 +112,50 @@ public class RecruitmentController {
         return "recruitment/recruitmentDetail";
     }
     @GetMapping("/insert")
-    public String recruitmentInsert(Model model) {
-//        HttpSession session;
-//        Object loginMember = session.getAttribute("userLogin");
-//
-//        if (loginMember == null) {
-//            // 로그인 안 된 경우 → 로그인 페이지로 리다이렉트
-//            return "redirect:/member/login";
-//        } 세션연결예정
+    public String recruitmentInsert(Model model, HttpSession session) {
+        Object loginMember = session.getAttribute("userLogin");
+        Object userType = session.getAttribute("userType");
+
+        if (loginMember == null || !"company".equals(userType)) {
+            return "redirect:/auth/login";
+        }
+
         List<JobGroupVo> jobGroupList = recruitmentService.jobGroupList();
         model.addAttribute("jobGroupList", jobGroupList);
+
         return "recruitment/recruitmentInsert";
     }
-    //insert 처리예정 //
-    @PostMapping("/insert")
-    public RecruitmentVo insertRecruitment(@ModelAttribute RecruitmentVo recruitmentVo) {
-        //        HttpSession session;
-//        Object loginMember = session.getAttribute("userLogin");
-//
-//        if (loginMember == null) {
-//            // 로그인 안 된 경우 → 로그인 페이지로 리다이렉트
-//            return "redirect:/member/login";
-//        } 세션연결예정
 
-        return recruitmentVo;
+    //insert 처리예정 //
+
+    @PostMapping("/insert")
+    public String insertRecruitment(@ModelAttribute RecruitmentVo recruitmentVo,
+                                    @RequestParam("skills") String skills,
+                                    HttpSession session) {
+
+        // 1. 로그인 체크
+        Object loginMember = session.getAttribute("userLogin");
+        Object userType = session.getAttribute("userType");
+
+        if (loginMember == null || !"company".equals(userType)) {
+            return "redirect:/auth/login";
+        }
+
+        // 2. 회사 ID 세팅
+        CompanyVo company = (CompanyVo) loginMember;
+        recruitmentVo.setCompanyId(company.getCompanyId());
+
+
+        List<Integer> tagIdList = Arrays.stream(skills.split(","))
+                .filter(s -> !s.isBlank())
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+
+
+        recruitmentService.insertRecruitment(recruitmentVo, tagIdList);
+
+
+        return "redirect:/Recruitment/list";
     }
 }
+

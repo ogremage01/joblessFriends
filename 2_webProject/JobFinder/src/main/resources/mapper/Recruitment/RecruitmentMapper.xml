@@ -14,7 +14,8 @@
 
     <select id="jobList" parameterType="int" resultType="com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo">
         SELECT
-            JOB_NAME AS jobName
+            JOB_NAME AS jobName,
+            JOB_ID AS jobId
         FROM JOB
         WHERE JOB_GROUP_ID = #{jobGroupId}
     </select>
@@ -64,6 +65,66 @@
         #{id}
     </foreach>
 </delete>
+<!--채용공고 인서트 -->
+    <insert id="insertRecruitment" parameterType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
+        <selectKey keyProperty="jobPostId"
+                   resultType="java.lang.Integer"
+                   order="BEFORE">
+            SELECT JOB_POST_ID_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO JOB_POST (
+        JOB_POST_ID,
+        COMPANY_ID,
+        TITLE,
+        CONTENT,
+        SALARY,
+        WORK_HOURS,
+        JOB_ID,
+        JOB_GROUP_ID,
+        VIEWS,
+        JOB_IMG,
+        CAREER_TYPE,
+        EDUCATION,
+        START_DATE,
+        END_DATE,
+        IS_CONTINUOUS,
+        MAX_APPLICANTS,
+        CURRENT_APPLICANTS
+        ) VALUES (
+        #{jobPostId},
+        #{companyId},
+        #{title},
+        #{content},
+        #{salary},
+        #{workHours},
+        #{jobId},
+        #{jobGroupId},
+        0,
+        NULL,
+        #{careerType},
+        #{education},
+        #{startDate},
+        #{endDate},
+        0,
+        0,
+        0
+        )
+
+    </insert>
+
+
+    <!-- 2. 연관 스킬 등록 (job_post_tag 인서트) -->
+    <insert id="insertJobPostTag" parameterType="map">
+        INSERT ALL
+        <foreach collection="tagIdList" item="tagId">
+            INTO JOB_POST_TAG (JOB_POST, TAG_ID)
+            VALUES (#{jobPostId}, #{tagId})
+        </foreach>
+        SELECT * FROM dual
+    </insert>
+
+
+
 
 
 </mapper>

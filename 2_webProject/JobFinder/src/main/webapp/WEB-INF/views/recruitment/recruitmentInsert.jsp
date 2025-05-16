@@ -27,8 +27,8 @@
     <div id="containerWrap">
 
 
-        <form action="/recruitment/insert" method="post">
-            <div class="InsertMain">
+        <form id="insertForm" action="${pageContext.request.contextPath}/Recruitment/insert" method="post" onsubmit="return submitEditor();">
+        <div class="InsertMain">
 
                 <!-- 제목 -->
                 <div class="InsertTitle box-section">
@@ -136,7 +136,7 @@
 
 
 
-
+                    <input type="hidden" name="content" id="hiddenContent" />
                 </div>
                 <div class="InsertTemplate box-section">
                     <label class="section-title">🧩 템플릿 생성 도우미</label>
@@ -159,6 +159,13 @@
 
 
 
+
+
+<jsp:include page="../common/footer.jsp"/>
+
+<script src="/js/recruitment/recruitmentInsert.js"></script>
+<div id="askConfirm">
+</div>
 <script>
     const editor = new toastui.Editor({
         el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
@@ -169,19 +176,26 @@
         placeholder: '내용을 입력해 주세요.',
     });
 
-    function submitEditor() {
-        const markdown = editor.getMarkdown(); // 또는 getHTML()
-        document.getElementById('hiddenContent').value = markdown;
-        return true; // 폼 제출 계속 진행
-    }
+
+
+        $('#insertForm').on('submit', function () {
+            const markdown = editor.getHTML();
+            console.log("🔥 submitEditor called");
+            $('#hiddenContent').val(markdown);
+
+            const selectedSkillIds = $('input[name="tagId"]:checked')
+                .map(function () {
+                    return $(this).val();
+                }).get().slice(0, 5);
+            console.log("✅ selected skills:", selectedSkillIds);
+            $('input[name="skills"]').val(selectedSkillIds.join(','));
+
+            return true;
+        });
+
+
+
 </script>
-
-<jsp:include page="../common/footer.jsp"/>
-
-<script src="/js/recruitment/recruitmentInsert.js"></script>
-<div id="askConfirm">
-</div>
-
 </body>
 
 </html>
