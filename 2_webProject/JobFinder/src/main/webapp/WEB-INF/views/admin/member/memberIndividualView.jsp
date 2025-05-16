@@ -95,7 +95,7 @@
 			</div>
 
 			<div id="searchContainer">
-				<input id="memberKeyword" type="text" placeholder="이메일">
+				<input id="memberKeyword" type="text" placeholder="이메일, 닉네임">
 				<button id="memberSearchBtn" class="btn btn-light">검색</button>
 			</div>
 		</div>

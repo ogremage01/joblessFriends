@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,6 +29,9 @@ public class AdminMemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	//목록 view
 	@GetMapping("")
@@ -91,7 +95,12 @@ public class AdminMemberController {
 		}
 		if (memberVo.getPassword() != null) {
 			// TODO: 비밀번호 해싱 처리 필요
-			existMemberVo.setPassword(memberVo.getPassword());
+			String password = memberVo.getPassword();
+			//비밀번호 암호화
+			String pwdEncoder = passwordEncoder.encode(password);
+			System.out.println("비번 확인: " + password + " / " + pwdEncoder);
+			
+			existMemberVo.setPassword(pwdEncoder);
 		}
 		if (memberVo.getNickname() != null) {
 			existMemberVo.setNickname(memberVo.getNickname());
