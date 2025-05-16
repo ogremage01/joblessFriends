@@ -18,5 +18,7 @@ public interface RecruitmentService {
     //채용공고 상세뷰
     RecruitmentVo getRecruitmentId(int jobPostId);
 	public int jobPostDelete(List<Integer> jobPostIdList);
+	public List<RecruitmentVo> adminRecruitmentList();
+	public List<RecruitmentVo> companyRecruitmentSelectList(int companyId);
 
 }

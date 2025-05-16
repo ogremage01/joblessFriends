@@ -43,4 +43,16 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 		// TODO Auto-generated method stub
 		return recruitmentDao.jobPostDelete(jobPostIdList);
 	}
+
+	@Override
+	public List<RecruitmentVo> adminRecruitmentList() {
+		// TODO Auto-generated method stub
+		return recruitmentDao.adminRecruitmentList();
+	}
+
+	@Override
+	public List<RecruitmentVo> companyRecruitmentSelectList(int companyId) {
+		// TODO Auto-generated method stub
+		return recruitmentDao.companyRecruitmentSelectList(companyId);
+	}
 }

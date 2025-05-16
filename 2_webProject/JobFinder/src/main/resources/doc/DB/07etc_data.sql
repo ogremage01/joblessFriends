@@ -202,3 +202,38 @@ SELECT *
 FROM RESUME 
 WHERE MEMBER_ID = 1;
 
+
+
+BEGIN
+    FOR i IN 1..5 LOOP
+        INSERT INTO JOB_POST (
+            Job_Post_ID, COMPANY_ID, Title, Content, Salary, Work_Hours,
+            Job_Group_ID, Job_ID, Views, Job_Img,
+            Career_Type, Education, Start_Date, End_Date,
+            Is_Continuous, Max_Applicants, Current_Applicants
+        ) VALUES (
+            JOB_POST_ID_SEQ.NEXTVAL,
+            50,
+            '백엔드 개발자 채용 ' || i,
+            '당사 백엔드 개발팀에서 새로운 인재를 찾습니다. Java, Spring 경험 필수. [지원번호: ' || i || ']',
+            TO_CHAR(4000 + MOD(i, 10) * 100), -- 급여 4000~4900 랜덤 생성
+            '주5일(월~금)',
+            6,
+            85,
+            0,
+            '/img/Amorepacific.jpg',
+            '신입',
+            '대학교 졸업(4년)',
+            TO_DATE('2025-05-10', 'YYYY-MM-DD'),
+            TO_DATE('2025-05-31', 'YYYY-MM-DD'),
+            0,
+            100,
+            0
+        );
+    END LOOP;
+    COMMIT;
+END;
+/
+
+
+

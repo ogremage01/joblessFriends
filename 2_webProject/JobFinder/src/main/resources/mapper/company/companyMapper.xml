@@ -58,8 +58,8 @@
 		        <if test="brn != null">BRN = #{brn},</if>
 		        <if test="representative != null">REPRESENTATIVE = #{representative},</if>
 		        <if test="tel != null">TEL = #{tel},</if>
-		    <!--  테이블 구조를 수정해야 해서 막음   <if test="postalCodeId != null">POSTAL_CODE_ID = #{postalCodeId},</if> -->
-		    <!--     <if test="arenaName != null">ARENA_NAME = #{arenaName},</if> -->
+		   <if test="postalCodeId != null">POSTAL_CODE_ID = #{postalCodeId},</if>
+		    <if test="arenaName != null">ARENA_NAME = #{arenaName},</if>
 		        <if test="address != null">ADDRESS = #{address},</if>
 		        <if test="password != null">PASSWORD = #{password},</if>
 		    </set>
