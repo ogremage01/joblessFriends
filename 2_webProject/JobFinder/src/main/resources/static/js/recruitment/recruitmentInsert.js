@@ -174,44 +174,91 @@ $("#generateTemplate").on('click',function () {
 
 
 function validateFormInputs() {
-    let titleValue = $(".InsertTitle > input").val();
-    let openEnded = $('.InsertDate input[name="openEnded"]').is(':checked');
-    let careerTypeValue = $("select[name='careerType']").val();
-    let educationValue = $("select[name='education']").val();
-    let jobGroupIdValue = $("select[name='jobGroupId']").val();
-    let workHoursValue = $("select[name='workHours']").val();
-    let salaryValue = $(".InsertJob input[name='salary']").val();
-    let contentValue = editor.getHTML();
-    let startDate = $('.InsertDate input[name="startDate"]').val();
-    let endDate = $('.InsertDate input[name="endDate"]').val();
-    let skillValue = $('.InsertDate input[name="tagId"]').is(':checked');
-    if (!titleValue) {
-        $(".InsertTitle > input").focus();
-        loginFailPop("제목을 입력해주세요.");
+    const title = $('input[name="title"]').val().trim();
+    const startDate = $('input[name="startDate"]').val();
+    const endDate = $('input[name="endDate"]').val();
+    const careerType = $('select[name="careerType"]').val();
+    const education = $('select[name="education"]').val();
+    const jobGroupId = $('select[name="jobGroupId"]').val();
+    const jobId = $('select[name="jobId"]').val();
+    const salary = $('input[name="salary"]').val().trim();
+    const content = editor.getHTML().trim();
+    const selectedSkillIds = $('input[name="tagId"]:checked').map(function () {
+        return $(this).val();
+    }).get();
+
+    // 제목
+    if (!title) {
+        loginFailPop("공고 제목을 입력해주세요.");
+        $('input[name="title"]').focus();
         return false;
     }
 
+    // 접수기간
     if (!startDate || !endDate) {
-        $('.InsertDate input[name="startDate"]').focus();
-        loginFailPop("접수 기간을 입력해주세요.");
+        loginFailPop("접수 기간을 모두 입력해주세요.");
+        $('input[name="startDate"]').focus();
         return false;
     }
-
     if (new Date(startDate) > new Date(endDate)) {
-        $('.InsertDate input[name="startDate"]').focus();
         loginFailPop("접수 시작일은 마감일보다 앞서야 합니다.");
+        $('input[name="startDate"]').focus();
         return false;
     }
 
-    if (!salaryValue || isNaN(salaryValue)) {
-        $(".InsertJob input[name='salary']").focus();
-        loginFailPop("급여는 숫자로 입력해주세요.");
-
+    // 경력
+    if (!careerType) {
+        loginFailPop("경력 사항을 선택해주세요.");
+        $('select[name="careerType"]').focus();
         return false;
     }
 
-    if (!contentValue || contentValue === '<p><br></p>') {
-        $(".ProseMirror").focus();
+    // 학력
+    if (!education) {
+        loginFailPop("학력을 선택해주세요.");
+        $('select[name="education"]').focus();
+        return false;
+    }
+
+    // 직군
+    if (!jobGroupId) {
+        loginFailPop("직군을 선택해주세요.");
+        $('select[name="jobGroupId"]').focus();
+        return false;
+    }
+
+    // 직무
+    if (!jobId) {
+        loginFailPop("직무를 선택해주세요.");
+        $('select[name="jobId"]').focus();
+        return false;
+    }
+
+    // 스킬
+    if (selectedSkillIds.length === 0) {
+        loginFailPop("스킬 태그를 최소 1개 이상 선택해주세요.");
+        return false;
+    }
+
+    if (selectedSkillIds.length > 5) {
+        loginFailPop("스킬은 최대 5개까지만 선택할 수 있습니다.");
+        return false;
+    }
+
+    if (!salary) {
+        loginFailPop("급여를 입력해주세요.");
+        $('input[name="salary"]').focus();
+        return false;
+    }
+
+    if (!/^\d+$/.test(salary)) {
+        loginFailPop("급여는 숫자만 입력해주세요.");
+        $('input[name="salary"]').focus();
+        return false;
+    }
+
+    // 상세내용
+    if (!content || content === "<p><br></p>") {
         loginFailPop("상세 내용을 입력해주세요.");
         return false;
     }
