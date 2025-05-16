@@ -15,4 +15,5 @@ public interface RecruitmentDao {
     public List<RecruitmentVo> recruitmentList();
     RecruitmentVo getRecruitmentId(int jobPostId);
 	int jobPostDelete(List<Integer> jobPostIdList);
+	List<RecruitmentVo> adminRecruitmentList();
 }
