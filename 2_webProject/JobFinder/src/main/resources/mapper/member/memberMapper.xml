@@ -16,7 +16,7 @@
 		
 		<select id="memberExist" parameterType="map"
 		resultMap="memberResultMap">
-			SELECT MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX
+			SELECT MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER
 			FROM MEMBER
 			WHERE EMAIL = #{email, jdbcType=VARCHAR}
 			AND PASSWORD = #{password, jdbcType=VARCHAR}
@@ -24,8 +24,8 @@
 		
 		<insert id="memberInsertOne" parameterType="memberVo">
 			INSERT INTO MEMBER
-			(MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX)
-			VALUES(MEMBER_ID_SEQ.NEXTVAL, #{email}, #{password},#{nickname},5)
+			(MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER)
+			VALUES(MEMBER_ID_SEQ.NEXTVAL, #{email}, #{password},#{nickname},5, SYSDATE, SYSDATE, 'normal')
 		</insert>
 		
 		<select id="isNicknameExists"  parameterType="String" resultType="String">
@@ -33,14 +33,14 @@
 		</select>
 		
 		<select id="memberEmailExist" parameterType="String" resultMap="memberResultMap">
-			SELECT MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX
+			SELECT MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER
 			FROM MEMBER WHERE EMAIL = #{email}
 		</select>
 		
 		<select id="memberSelectList" resultMap="memberResultMap">
 			SELECT * 
 			    FROM (SELECT ROWNUM AS RN, INNERTABLE.*
-			        FROM (SELECT MEMBER_ID, EMAIL, NICKNAME, RESUME_MAX
+			        FROM (SELECT MEMBER_ID, EMAIL, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER
 			            FROM MEMBER
 			            ORDER BY MEMBER_ID DESC) INNERTABLE
 			    WHERE ROWNUM &lt;= (#{page} + 1) * 10)
@@ -55,18 +55,20 @@
 		<select id="memberSelectListByKeyword" resultMap="memberResultMap">
 			SELECT * 
 			    FROM (SELECT ROWNUM AS RN, INNERTABLE.*
-			        FROM (SELECT MEMBER_ID, EMAIL, NICKNAME, RESUME_MAX
+			        FROM (SELECT MEMBER_ID, EMAIL, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER
 			            FROM MEMBER
 			            WHERE UPPER(EMAIL) LIKE UPPER('%' || #{keyword} || '%')
+			            OR UPPER(NICKNAME) LIKE UPPER('%' || #{keyword} || '%')
 			            ORDER BY MEMBER_ID DESC) INNERTABLE
 			    WHERE ROWNUM &lt;= (#{page} + 1) * 10)
 			WHERE RN &gt; #{page} * 10
 		</select>
 		
 		<select id="memberCountByKeyword" resultType="int">
-			SELECT COUNT(EMAIL)
+			SELECT COUNT(*)
 			FROM MEMBER
 			WHERE UPPER(EMAIL) LIKE UPPER('%' || #{keyword} || '%')
+      		OR UPPER(NICKNAME) LIKE UPPER('%' || #{keyword} || '%')
 		</select>	
 		
 		<select id="memberSelectOne" resultMap="memberResultMap">
@@ -82,9 +84,8 @@
 		        <if test="password != null">PASSWORD = #{password},</if>
 		        <if test="nickname != null">NICKNAME = #{nickname},</if>
 		        <if test="resumeMax != null">RESUME_MAX = #{resumeMax},</if>
-		        <if test="createAt != null">CREATE_AT = #{createAt},</if>
-		        <if test="modifiedAt != null">MODIFIED_AT = #{modifiedAt},</if>
 		        <if test="provider != null">PROVIDER = #{provider},</if>
+		 		MODIFIED_AT = SYSDATE
 		    </set>
 		    WHERE MEMBER_ID = #{memberId}
 		</update>

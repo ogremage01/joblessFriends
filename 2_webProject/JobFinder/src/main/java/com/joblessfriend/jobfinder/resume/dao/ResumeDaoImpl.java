@@ -40,7 +40,7 @@ public class ResumeDaoImpl implements ResumeDao{
         param.put("resumeId", resumeId);
         param.put("memberId", memberId);
         param.put("imageUrl", imageUrl);
-        sqlSession.update(namespace + "updateProfileImage", param);
+        sqlSession.update(namespace + ".updateProfileImage", param);
 		
 	}
 }

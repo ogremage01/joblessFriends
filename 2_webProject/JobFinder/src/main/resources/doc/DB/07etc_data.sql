@@ -154,46 +154,52 @@ commit;
 
 INSERT INTO RESUME (
     RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS,
-    SELF_INTRODUCTION, MEMBER_ID, PROFILE, CERTIFICATE_ID, CAREER_ID,
-    EDU_ID, PORTFOLIO_ID, SCHOOL_ID
+    SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT
 ) VALUES (
     1, '프론트엔드 개발자 이력서', TO_DATE('1998-03-15', 'YYYY-MM-DD'),
-    '010-5555-1234', 'frontend@example.com', NULL, '서울시 마포구 상암동',
+    '010-5555-1234', 'frontend@example.com', 10123, '서울시 마포구 상암동',
     'UI/UX에 강한 프론트엔드 개발자입니다.', 1, 'HTML, CSS, JavaScript, React',
-    NULL, NULL, NULL, NULL, NULL
+    SYSDATE, SYSDATE
 );
 
 INSERT INTO RESUME (
-  RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS,
-  SELF_INTRODUCTION, MEMBER_ID, PROFILE, CERTIFICATE_ID, CAREER_ID,
-  EDU_ID, PORTFOLIO_ID, SCHOOL_ID
+    RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS,
+    SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT
 ) VALUES (
-  2, '백엔드 개발자 이력서', TO_DATE('1995-07-20', 'YYYY-MM-DD'),
-  '010-1234-5678', 'backend@example.com', NULL, '서울시 강남구 논현동',
-  '안정적인 시스템 설계에 강한 백엔드 개발자입니다.', 1, 'Java, Spring Boot, MySQL',
-  NULL, NULL, NULL, NULL, NULL
+    2, '백엔드 개발자 이력서', TO_DATE('1995-07-20', 'YYYY-MM-DD'),
+    '010-1234-5678', 'backend@example.com', 10234, '서울시 강남구 논현동',
+    '안정적인 시스템 설계에 강한 백엔드 개발자입니다.', 1, 'Java, Spring Boot, MySQL',
+    SYSDATE, SYSDATE
 );
 
 INSERT INTO RESUME (
-  RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS,
-  SELF_INTRODUCTION, MEMBER_ID, PROFILE, CERTIFICATE_ID, CAREER_ID,
-  EDU_ID, PORTFOLIO_ID, SCHOOL_ID
+    RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS,
+    SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT
 ) VALUES (
-  3, '풀스택 개발자 이력서', TO_DATE('1993-11-02', 'YYYY-MM-DD'),
-  '010-8765-4321', 'fullstack@example.com', NULL, '서울시 종로구 혜화동',
-  '프론트와 백엔드를 모두 아우르는 풀스택 개발자입니다.', 1, 'Vue, Node.js, MongoDB',
-  NULL, NULL, NULL, NULL, NULL
+    3, '풀스택 개발자 이력서', TO_DATE('1993-11-02', 'YYYY-MM-DD'),
+    '010-8765-4321', 'fullstack@example.com', 10345, '서울시 종로구 혜화동',
+    '프론트와 백엔드를 모두 아우르는 풀스택 개발자입니다.', 1, 'Vue, Node.js, MongoDB',
+    SYSDATE, SYSDATE
 );
 
 INSERT INTO RESUME (
-  RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS,
-  SELF_INTRODUCTION, MEMBER_ID, PROFILE, CERTIFICATE_ID, CAREER_ID,
-  EDU_ID, PORTFOLIO_ID, SCHOOL_ID
+    RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS,
+    SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT
 ) VALUES (
-  4, '데이터 분석가 이력서', TO_DATE('1990-05-10', 'YYYY-MM-DD'),
-  '010-5555-1111', 'data@example.com', NULL, '서울시 서초구 반포동',
-  '데이터 기반 인사이트를 추출하는 데이터 분석가입니다.', 1, 'Python, SQL, Tableau',
-  NULL, NULL, NULL, NULL, NULL
+    4, '데이터 분석가 이력서', TO_DATE('1990-05-10', 'YYYY-MM-DD'),
+    '010-5555-1111', 'data@example.com', 10456, '서울시 서초구 반포동',
+    '데이터 기반 인사이트를 추출하는 데이터 분석가입니다.', 1, 'Python, SQL, Tableau',
+    SYSDATE, SYSDATE
+);
+
+INSERT INTO RESUME (
+    RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS,
+    SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT
+) VALUES (
+    5, 'AI 엔지니어 이력서', TO_DATE('1992-08-30', 'YYYY-MM-DD'),
+    '010-8888-9999', 'ai@example.com', 10567, '서울시 관악구 봉천동',
+    '머신러닝과 딥러닝 기반 솔루션 개발을 주도한 경험.', 1, 'Python, TensorFlow, PyTorch',
+    SYSDATE, SYSDATE
 );
 
 COMMIT;

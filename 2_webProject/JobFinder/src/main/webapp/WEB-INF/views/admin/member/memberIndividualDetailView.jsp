@@ -48,80 +48,8 @@
 </head>
 <body>
 	<main class="d-flex flex-nowrap">
-		<!-- 사이드바 영역 -->
-		<div class="flex-shrink-0 p-3"
-			style="width: 280px; height: 100vh; border-right: 1px solid black;">
-			<a href="#"
-				class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
-				<svg class="bi pe-none me-2" width="30" height="24"
-					aria-hidden="true">
-					<use xlink:href="#bootstrap" /></svg> <span class="fs-5 fw-semibold">관리자
-					화면</span>
-			</a>
-			<ul class="list-unstyled ps-0">
-				<li class="mb-1"><a
-					class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-					href="/admin/main"> Home </a></li>
-				<li class="mb-1">
-					<button
-						class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-						data-bs-toggle="collapse" data-bs-target="#member-collapse"
-						aria-expanded="false">회원관리</button>
-					<div class="collapse" id="member-collapse">
-						<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-							<li><a href="/admin/member/individual"
-								class="link-body-emphasis d-inline-flex text-decoration-none rounded">일반회원</a></li>
-							<li><a href="/admin/member/individual"
-								class="link-body-emphasis d-inline-flex text-decoration-none rounded">기업회원</a></li>
-							<!-- <li><a href="/admin/admin" class="link-body-emphasis d-inline-flex text-decoration-none rounded">관리자</a></li> -->
-						</ul>
-					</div>
-				</li>
-				<li class="mb-1"><a href="/admin/recruitment"
-					class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
-						공고관리 </a></li>
-				<li class="mb-1">
-					<button
-						class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-						data-bs-toggle="collapse" data-bs-target="#community-collapse"
-						aria-expanded="false">커뮤니티관리</button>
-					<div class="collapse" id="community-collapse">
-						<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-							<li><a href="/admin/community/post" class="link-body-emphasis d-inline-flex text-decoration-none rounded">게시판 관리</a></li>
-            <li><a href="/admin/community/comment" class="link-body-emphasis d-inline-flex text-decoration-none rounded">댓글 관리</a></li>
-						</ul>
-					</div>
-				</li>
-				<li class="mb-1">
-					<button
-						class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-						data-bs-toggle="collapse" data-bs-target="#job-collapse"
-						aria-expanded="false">직군/직무관리</button>
-					<div class="collapse" id="job-collapse">
-						<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-							<li><a href="/admin/job/jobGroup"
-								class="link-body-emphasis d-inline-flex text-decoration-none rounded">직군관리</a></li>
-							<li><a href="/admin/job/job"
-								class="link-body-emphasis d-inline-flex text-decoration-none rounded">직무관리</a></li>
-						</ul>
-					</div>
-				</li>
-				<li class="mb-1"><a href="/admin/skill"
-					class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
-						스킬관리 </a></li>
-				<li class="mb-1"><a href="/admin/chat"
-					class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
-						채팅관리 </a></li>
-				<li class="border-top my-3"></li>
-			</ul>
-			<a href="/admin/logout"
-				class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">로그아웃</a>
-		</div>
-
-		<!-- 사이드바 영역 -->
+		<jsp:include page="/WEB-INF/views/admin/sideBar.jsp"></jsp:include>
 		<!-- 본문영역 -->
-
-
 
 		<div id="container">
 			<h1>회원 상세 정보</h1>
@@ -167,21 +95,23 @@
 			    <div class="row mb-3">
 			        <label for="createAt" class="col-sm-2 col-form-label text-end">생성일</label>
 			        <div class="col-sm-10">
-			            <input id="createAt" name="createAt" class="form-control" value="${memberVo.createAt}">
+			            <input id="createAt" name="createAt" class="form-control-plaintext"
+						value="<fmt:formatDate value="${memberVo.createAt}" pattern="yyyy-MM-dd HH:mm:ss" />" readonly>
 			        </div>
 			    </div>
 
 			    <div class="row mb-3">
 			        <label for="modifiedAt" class="col-sm-2 col-form-label text-end">수정일</label>
 			        <div class="col-sm-10">
-			            <input id="modifiedAt" name="modifiedAt" class="form-control" value="${memberVo.modifiedAt}">
+			            <input id="modifiedAt" name="modifiedAt" class="form-control-plaintext"
+						value="<fmt:formatDate value="${memberVo.modifiedAt}" pattern="yyyy-MM-dd HH:mm:ss" />" readonly>
 			        </div>
 			    </div>
 
 			    <div class="row mb-3">
 			        <label for="provider" class="col-sm-2 col-form-label text-end">provider</label>
 			        <div class="col-sm-10">
-			            <input id="provider" name="provider" class="form-control" value="${memberVo.provider}">
+			            <input id="provider" name="provider" class="form-control-plaintext" value="${memberVo.provider}" readonly>
 			        </div>
 			    </div>
 			

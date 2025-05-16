@@ -219,19 +219,38 @@ textarea::placeholder {
 }
 
 .photo-box {
-  width: 140px;
-  height: 140px;
-  border: 2px dashed #ccc;
+  width: 150px;
+  height: 150px;
+  border: 1px dashed #ccc;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
   cursor: pointer;
-  font-size: 30px;
-  color: #888;
-  transition: border-color 0.3s, background-color 0.3s;
+  overflow: hidden;
   border-radius: 8px;
-  background-color: #f9f9f9;
-  margin-top: 8px;
+}
+
+.photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.photo-text {
+  z-index: 1;
+  font-size: 14px;
+  text-align: center;
+}
+
+.plus-icon {
+  font-size: 24px;
+  display: block;
+  margin-top: 4px;
 }
 
 .photo-box span {

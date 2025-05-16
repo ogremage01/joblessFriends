@@ -41,6 +41,12 @@ public class ProfileTempController {
 
             // 2. 저장 경로 설정
             String uploadDir = "C:/upload/profile/";
+            
+            File dir = new File(uploadDir);
+            if (!dir.exists()) {
+                dir.mkdirs(); // 폴더가 없으면 생성
+            }
+            
             File dest = new File(uploadDir + savedFilename);
             file.transferTo(dest);
 

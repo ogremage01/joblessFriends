@@ -50,12 +50,12 @@ public class MemberServiceImpl implements MemberService{
 	// 닉네임 생성 메소드
 	public String generateUniqueNickname() {
 		final String CHAR_POOL = "abcdefghijklmnopqrstuvwxyz0123456789";
-		final int LENGTH = 6;
+		final int LENGTH = 5;
 		SecureRandom random = new SecureRandom();
 		String nickname;
 
 		do {
-			StringBuilder sb = new StringBuilder("user");
+			StringBuilder sb = new StringBuilder("user0");
 			for (int i = 0; i < LENGTH; i++) {
 				int index = random.nextInt(CHAR_POOL.length());
 				sb.append(CHAR_POOL.charAt(index));

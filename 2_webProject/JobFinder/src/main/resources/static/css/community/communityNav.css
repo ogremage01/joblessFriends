@@ -1,0 +1,7 @@
+
+/* 헤더 카테고리 [커뮤니티] 스타일 변경*/
+
+.serviceNavItem.communityNav a{
+	color: #F69800;
+	font-weight: bold;
+}

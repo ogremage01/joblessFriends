@@ -1,14 +1,14 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+/* body { */
+/*     font-family: Arial, sans-serif; */
+		/*	 폰트가 달라서 어긋났던 것	*/
+/*     margin: 0; */
+/*     padding: 0; */
+/* } */
 
-}
-
-#container {
-    width: 80%;
-    margin: auto;
-}
+/* #container { */
+/*     width: 80%; */
+/*     margin: auto; */
+/* } */
 
 #containerWrap {
     display: flex;
@@ -24,7 +24,7 @@ body {
     border: 1px solid lightgray;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+/*     box-shadow: 0 0 8px rgba(0, 0, 0, 0.05); */
     gap: 20px;
 }
 
@@ -88,6 +88,7 @@ body {
 }
 
 .job {
+	height: 120px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -95,15 +96,15 @@ body {
     padding: 20px;
     border: 1px solid lightgray;
     border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+/*     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); */
     cursor: pointer;
 }
 .job:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
 }
 .company-name {
-    width: 100px;
+    width: 130px;
     font-size: 15px;
     font-weight: bold;
     color: #333;
@@ -115,7 +116,7 @@ body {
     padding: 0 20px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 10px;
 }
 
 .job-title {
@@ -139,7 +140,7 @@ body {
 
 .job-meta-skill {
     flex-basis: 100%;
-    margin-top: 6px;
+/*     margin-top: 6px; */
     font-size: 14px;
     color: #555;
 }
@@ -151,7 +152,8 @@ body {
 }
 
 .job-action button {
-    background-color: #ff8200;
+	width: 100px;
+    background-color: #F69800;
     color: #fff;
     border: none;
     padding: 8px 14px;
@@ -241,9 +243,9 @@ h2 {
     accent-color: #f8a325;
 }
 .apply-btn:hover {
-    background-color: #fbd28a;
-    color: #000000;
-
+    background-color: white;
+    color: #FF6600;
+	outline: 1px solid #F69800;
 /*    찬정님이 보시면 수정좀ㅋㅋ*/
 }
 

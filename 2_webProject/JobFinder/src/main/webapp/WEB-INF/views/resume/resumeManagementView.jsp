@@ -54,7 +54,7 @@
         <c:forEach var="resume" items="${resumes}">
           <div class="resume-card">
             <div class="resume-content">
-              <div class="resume-title">${resume.name}</div>
+              <div class="resume-title">${resume.memberName}</div>
               <div class="resume-meta">
                 <span>경력</span>
                 <span>${resume.profile}</span>
@@ -62,7 +62,7 @@
               <div class="resume-meta resume-skill">
                 <span>스킬</span>
               </div>
-              <div class="resume-date">최종수정일 ${resume.birthdate}</div>
+              <div class="resume-date">최종수정일 ${resume.birthDate}</div>
             </div>
 
 			<div class="button-wrapper">

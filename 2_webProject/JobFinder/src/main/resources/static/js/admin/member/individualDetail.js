@@ -4,7 +4,7 @@ let memberInforSubmitFormObj = document.getElementById("memberInforSubmitForm");
 // data-member-id 속성에서 memberId 가져오기
 const memberId = document.getElementById("memberData").dataset.memberId;
 
-// 기업 정보 수정 폼이 제출될 때 실행
+// 개인회원 정보 수정 폼이 제출될 때 실행
 memberInforSubmitFormObj.addEventListener("submit", function(e) {
     e.preventDefault(); // 기본 폼 제출 동작 막기 (페이지 새로고침 방지)
 
@@ -14,7 +14,7 @@ memberInforSubmitFormObj.addEventListener("submit", function(e) {
 
     // 빈값이 아닌 항목만 jsonData 객체에 담기
     formData.forEach((value, key) => {
-        if (value.trim() !== "") {
+        if (value.trim() !== "" && key !== "createAt" && key !== "modifiedAt") {
             jsonData[key] = value;
         }
     });
