@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
@@ -9,10 +10,57 @@
 <meta charset="UTF-8">
 <title>기업 페이지-공고란</title>
 
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+	rel="stylesheet" crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+	integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js"
+	integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+"
+	crossorigin="anonymous"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+	rel="stylesheet">
+
+
 <style type="text/css">
-	table,tr,td{
+
 	
-		border: 1px solid black;
+	.main{
+		width: 800px;
+		margin: auto;
+	
+	}
+	
+	#recruitmentList{
+		margin: auto;
+	}
+	
+	.emptyList{
+	}
+	
+	.buttonPlace {
+    text-align: center;
+    vertical-align: middle;
+	}
+	
+	#recruitmentList>thead{
+	
+	background: gray;
+	text-align: center;
+	}
+	
+	.buttonPlace>button{
+		width: 130px;
+	
+	}
+	
+	.innerTable{
+		font-size: small;
+		color: gray;
 	
 	}
 
@@ -28,70 +76,58 @@
     
 	<!-- 메인 -->
   <div class="main">
-    여기는 기업회원의 공고확인 페이지<br>
-    <c:if test="${recruitmentList.size() eq 0}"><span>등록된 공고가 없습니다</span></c:if>
-   	<table id="recruitmentList">
-   		<thead>
+  <h1>공고 관리</h1>
+    
+   	<table id="recruitmentList" class="table table-border">
+   		<thead class="table-group-divider">
    			<tr>
-   				<td>공고</td>
-   				<td>관리</td>
+   				<th>공고</th>
+   				<th colspan="2">관리</th>
    			</tr>
    		</thead>
    		<tbody>
+   			   	
+   			   	<c:if test="${recruitmentList.size() eq 0}">
    			   	<tr>
-   					<td><h1>공고 제목</h1></td>
-   					<td rowspan="2">버튼</td>
-   				</tr>
-   				<tr>
-   					<td>
-   						<table>
-   							<tr>
-   								<td>지원자격</td>
-   								<td>지원자격내용</td>
-   								<td>채용부문</td>
-   								<td>채용부문내용</td>
-   								<td>공고마감</td>
-   								<td>공고마감일</td>
-   							</tr>
-   							<tr>
-   								<td>스킬</td>
-   								<td>스킬내용</td>
-   								<td>채용인원</td>
-   								<td>인원수</td>
-   								<td>지원자</td>
-   								<td>지원자수</td>
-   							</tr>
-   						</table>
-   					</td>
-   				</tr>
-   				
-   			
+   			   		<td colspan="3"><span id="emptyList">등록된 공고가 없습니다</span></td>
+   			   	</tr>
+   			   	</c:if>
+   
    			<c:forEach var="recruitment" items="${recruitmentList}">
 				<tr>
-   					<td><h1>${recruitment.title}</h1></td>
-   					<td rowspan="2">버튼</td>
+   					<td><h3>${recruitment.title}</h3></td>
+   					<td class="buttonPlace" rowspan="2">
+   						<button class="btn btn-light mb-2"><i class="bi bi-pencil-square"></i>수정 하기</button><br>
+   						<button class="btn btn-light mb-2"><i class="bi bi-file-person"></i>지원자 보기</button><br>
+   					</td>
+   					<td rowspan="2"><i class="bi bi-x"></i></td>
    				</tr>
    				<tr>
    					<td>
-   						<table>
+    					<table class="innerTable">
    							<tr>
    								<td>지원자격</td>
-   								<td>지원자격내용</td>
+   								<td>${recruitment.education}</td>
    								<td>채용부문</td>
-   								<td>채용부문내용</td>
+   								<td>${recruitment.jobName}</td>
    								<td>공고마감</td>
-   								<td>공고마감일</td>
+   								<td><fmt:formatDate value="${recruitment.endDate}"/></td>
    							</tr>
    							<tr>
    								<td>스킬</td>
-   								<td>스킬내용</td>
+   								<td>(정보없음(새로매퍼짜야함))</td>
    								<td>채용인원</td>
-   								<td>인원수</td>
+   								<td>정보없음</td>
    								<td>지원자</td>
-   								<td>지원자수</td>
+   								<td>정보없음</td>
+   							</tr>
+   							<tr>
+   								<td colspan="3">최종 수정일 (정보없음)</td>
    							</tr>
    						</table>
+   						
    					</td>
+   					<!-- <td></td> -->
    				</tr>
    			</c:forEach>
    		</tbody>
@@ -102,7 +138,7 @@
     
     
     
-  </div>
+
 </div>
 	
 <jsp:include page="../../common/footer.jsp" />

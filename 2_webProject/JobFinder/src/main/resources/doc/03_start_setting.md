@@ -23,6 +23,8 @@ default tablespace users
 3. admin 계정 권한 부여
 grant DBA TO EODIBOJOB;
 
+4. lombok 설치
+https://projectlombok.org/download
 -----
 
 기본 페이지 명명 규칙: 카멜케이스
