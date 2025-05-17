@@ -1,5 +1,6 @@
 package com.joblessfriend.jobfinder.recruitment.dao;
 
+import com.joblessfriend.jobfinder.recruitment.domain.CompanyRecruitmentVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
 import org.apache.ibatis.session.SqlSession;
@@ -69,7 +70,7 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
     }
 
 	@Override
-	public List<RecruitmentVo> companyRecruitmentSelectList(int companyId) {
+	public List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.companyRecruitmentList",companyId);
 	}

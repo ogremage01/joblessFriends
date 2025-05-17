@@ -149,7 +149,7 @@
     </select>
     
     
-    <select id="companyRecruitmentList" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
+    <select id="companyRecruitmentList" resultType="com.joblessfriend.jobfinder.recruitment.domain.CompanyRecruitmentVo">
     SELECT
         jp.job_post_id AS jobPostId,
         c.company_id AS companyId,
@@ -160,7 +160,8 @@
         jg.job_group_name AS jobGroupName,
         j.job_name AS jobName,
         jp.start_date AS startDate,
-        jp.end_date AS endDate
+        jp.end_date AS endDate,
+        jp.modified_date as modifiedDate
     FROM JOB_POST jp
              JOIN COMPANY c ON jp.company_id = c.company_id
              JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id

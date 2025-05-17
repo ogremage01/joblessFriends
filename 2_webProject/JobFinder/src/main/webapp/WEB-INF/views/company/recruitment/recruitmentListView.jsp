@@ -60,8 +60,16 @@
 	
 	.innerTable{
 		font-size: small;
-		color: gray;
+		width: 600px;
 	
+	}
+	
+	.info{
+		text-align: justify;
+		color: gray;
+	}
+	.name{
+		text-align: left;
 	}
 
 </style>
@@ -106,23 +114,24 @@
    					<td>
     					<table class="innerTable">
    							<tr>
-   								<td>지원자격</td>
-   								<td>${recruitment.education}</td>
-   								<td>채용부문</td>
-   								<td>${recruitment.jobName}</td>
-   								<td>공고마감</td>
-   								<td><fmt:formatDate value="${recruitment.endDate}"/></td>
+   								<td class="name">지원자격</td>
+   								<td class="info">${recruitment.education}</td>
+   								<td class="name">채용부문</td>
+   								<td class="info">${recruitment.jobName}</td>
+   								<td class="name">공고마감</td>
+   								<td class="info"><fmt:formatDate value="${recruitment.endDate}"/></td>
    							</tr>
    							<tr>
-   								<td>스킬</td>
-   								<td>(정보없음(새로매퍼짜야함))</td>
-   								<td>채용인원</td>
-   								<td>정보없음</td>
-   								<td>지원자</td>
-   								<td>정보없음</td>
+   								<td class="name">스킬</td>
+   								<td class="info">${recruitment.skillList.size()>0?recruitment.skillList.get(0).getTagName():""}</td>
+   								<td class="name">채용인원</td>
+   								<td class="info">정보없음</td>
+   								<td class="name">지원자</td>
+   								<td class="info">정보없음</td>
    							</tr>
    							<tr>
-   								<td colspan="3">최종 수정일 (정보없음)</td>
+   								<td colspan="3">최종 수정일 
+   								<fmt:formatDate value="${recruitment.modifiedDate eq null?recruitment.endDate:recruitment.modifiedDate}"/></td>
    							</tr>
    						</table>
    						

@@ -1,6 +1,7 @@
 package com.joblessfriend.jobfinder.recruitment.service;
 
 import com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao;
+import com.joblessfriend.jobfinder.recruitment.domain.CompanyRecruitmentVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
 import com.joblessfriend.jobfinder.skill.dao.SkillDao;
@@ -66,7 +67,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 	}
 
 	@Override
-	public List<RecruitmentVo> companyRecruitmentSelectList(int companyId) {
+	public List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId) {
 		// TODO Auto-generated method stub
 		return recruitmentDao.companyRecruitmentSelectList(companyId);
 	}

@@ -1,6 +1,7 @@
 package com.joblessfriend.jobfinder.recruitment.service;
 
 import com.joblessfriend.jobfinder.job.domain.JobVo;
+import com.joblessfriend.jobfinder.recruitment.domain.CompanyRecruitmentVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
 
@@ -22,7 +23,7 @@ public interface RecruitmentService {
     public void insertRecruitment(RecruitmentVo recruitmentVo, List<Integer> tagIdList);
 
 	public List<RecruitmentVo> adminRecruitmentList();
-	public List<RecruitmentVo> companyRecruitmentSelectList(int companyId);
+	public List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId);
 
 
 }

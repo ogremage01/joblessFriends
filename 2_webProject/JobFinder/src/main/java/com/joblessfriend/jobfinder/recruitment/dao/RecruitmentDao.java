@@ -1,5 +1,6 @@
 package com.joblessfriend.jobfinder.recruitment.dao;
 
+import com.joblessfriend.jobfinder.recruitment.domain.CompanyRecruitmentVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
 
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
@@ -21,6 +22,6 @@ public interface RecruitmentDao {
     void insertJobPostTag(RecruitmentVo recruitmentVo, List<Integer> tagIdList);
 
 	List<RecruitmentVo> adminRecruitmentList();
-	List<RecruitmentVo> companyRecruitmentSelectList(int companyId);
+	List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId);
 
 }
