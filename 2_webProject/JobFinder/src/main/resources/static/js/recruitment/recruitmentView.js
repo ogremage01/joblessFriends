@@ -153,4 +153,70 @@ $(document).ready(function () {
         alert('처리예정입니다');
     });
 });
+function validateFilters() {
+    const jobIds = $('input[name="job"]:checked').length;
+    const careers = $('input[name="career"]:checked').length;
 
+    if (careers > 0 && jobIds === 0) {
+        loginFailPop("경력 조건은 직군·직무 선택 후 사용 가능합니다.");
+
+        return false;
+    }
+    return true;
+}
+
+function getFilterParams() {
+    const jobIds = $('input[name="job"]:checked').map(function () {
+        return $(this).data('id');
+    }).get();
+
+    const careers = $('input[name="career"]:checked').map(function () {
+        return $(this).val();
+    }).get();
+
+    const educations = $('input[name="education"]:checked').map(function () {
+        return $(this).val();
+    }).get();
+
+    const skillTags = $('input[name="skill"]:checked').map(function () {
+        return $(this).data('id');
+    }).get();
+
+    return {
+        jobIds, careers, educations, skillTags
+    };
+}
+
+function updateFilteredCount() {
+    const params = getFilterParams();
+
+    if (!validateFilters()) {
+        $('#filteredCount').text('0');
+        return;
+    }
+
+    $.ajax({
+        url: '/Recruitment/filter/count',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(params),
+        success: function (count) {
+            $('#filteredCount').text(count.toLocaleString());
+        },
+        error: function () {
+            $('#filteredCount').text('0');
+        }
+    });
+}
+$(document).on('change', '.chk, input[name="career"], input[name="education"], input[name="skill"]', function () {
+    updateFilteredCount();
+});
+
+
+function loginFailPop(msg) {
+    $('#askConfirm').html(msg);
+    $('#askConfirm').attr('class', 'active');
+    setTimeout(function() {
+        $('#askConfirm').removeClass('active');
+    }, 1500);
+}

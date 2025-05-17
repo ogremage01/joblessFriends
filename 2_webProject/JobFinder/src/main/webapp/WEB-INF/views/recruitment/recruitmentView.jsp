@@ -7,7 +7,7 @@
 <head>
     <title>채용정보 메인</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <link rel="stylesheet" href="/css/common/common.css">
     <link rel="stylesheet" href="/css/recruitment/recruitmentView.css">
 
@@ -15,6 +15,10 @@
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 
 
 <body>
@@ -88,8 +92,10 @@
 
                 <!-- 적용, 초기화 버튼 -->
                 <div id="filterActions">
-                    <button type="button">적용</button>
-                    <button type="button">초기화</button>
+                    <div id="filterSummary">
+                        <button id="btnResetFilters">선택초기화 🔄</button>
+                        <button id="btnSearchFiltered">선택된 <span id="filteredCount">0</span>건 검색하기</button>
+                    </div>
                 </div>
             </div>
 
@@ -147,8 +153,40 @@
 </div>
 
 <jsp:include page="../common/footer.jsp"/>
+<div id="askConfirm">
+</div>
+<script>
+    const editor = new toastui.Editor({
+        el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
+        height: '500px',                        // 에디터 영역의 높이 값 (500px로 지정)
+        initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg 중에 markdown버전으로 처음 보여짐)
+        initialValue: '',                       // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함(아무내용 없음)
+        previewStyle: 'vertical',               // 마크다운 프리뷰 스타일 (tab || vertical)
+        placeholder: '내용을 입력해 주세요.',
+    });
 
+
+
+    $('#insertForm').on('submit', function () {
+        const markdown = editor.getHTML();
+        console.log("🔥 submitEditor called");
+        $('#hiddenContent').val(markdown);
+
+        const selectedSkillIds = $('input[name="tagId"]:checked')
+            .map(function () {
+                return $(this).val();
+            }).get().slice(0, 5);
+        console.log("✅ selected skills:", selectedSkillIds);
+        $('input[name="skills"]').val(selectedSkillIds.join(','));
+
+        return true;
+    });
+
+
+
+</script>
 <script src="/js/recruitment/recruitmentView.js"></script>
+
 
 </body>
 
