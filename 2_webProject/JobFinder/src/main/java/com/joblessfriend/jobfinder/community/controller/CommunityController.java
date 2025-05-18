@@ -1,4 +1,5 @@
 package com.joblessfriend.jobfinder.community.controller;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,6 +96,7 @@ public class CommunityController {
 	@PostMapping("/upload")
 	public String communityUpload(@ModelAttribute CommunityVo communityVo,
 			 @SessionAttribute(name = "userLogin", required = false) MemberVo userLogin, 
+			 HttpSession session,
 			 MultipartHttpServletRequest mhr) throws Exception{	
 	    System.out.println("글쓰기 시작");
 
@@ -104,39 +106,16 @@ public class CommunityController {
 	    //게시글 관련 전부 저장
 	    communityService.communityInsertOne(communityVo);
 	    
-	    // 2. 파일 업로드 및 파일 메타정보 가져오기
-	    List<Map<String, Object>> fileList = fileUtils.uploadFilesInfo(communityVo.getCommunityId(), mhr);
-	   
-	    logger.info("이미지 107번쨰 라인 시작");
-	    logger.info("fileList: {}", fileList); 
-	    // 3. 파일 정보를 DB에 저장
-	    for (Map<String, Object> fileMap : fileList) {
-	    	logger.info("이미지 107번쨰 라인 안 for문 시작");
-
-	        communityService.communityFileInsertOne(fileMap);
+	    // 2. 파일 정보 세션에서 가져오기
+	    List<Map<String, Object>> uploadedFiles = (List<Map<String, Object>>) session.getAttribute("uploadedFiles");
+	    if (uploadedFiles != null) {
+	        for (Map<String, Object> fileMap : uploadedFiles) {
+	            fileMap.put("parentId", communityVo.getCommunityId()); // 커뮤니티 ID 연결
+	            communityService.communityFileInsertOne(fileMap);
+	        }
+	        session.removeAttribute("uploadedFiles"); // 사용 후 제거
 	    }
-	    /*start +img */
-	    //에디터 본문 내용(이미지까지 포함됨)
-	    //String content = communityVo.getContent();
 	    
-		/*
-		 * //정규표현식으로 <img src="링크"> 추출 후 content 삽입 Pattern pattern =
-		 * Pattern.compile("<img[^>]+src=[\"']http://localhost:9090/img/(.+?[\"'])");
-		 * Matcher matcher = pattern.matcher(content);
-		 */
-		/*
-		 * //파일 정보를 DB에 저장할 MAP(이미지 URL이 포함된 경우) while(matcher.find()) { String
-		 * storedFileName = matcher.group(1);//추출된 파일 이름
-		 * 
-		 * Map<String,Object> fileMap = new HashMap<>(); fileMap.put("parentId",
-		 * communityVo.getCommunityId());//게시글 ID fileMap.put("storedFileName",
-		 * storedFileName);//저장된 파일명
-		 * 
-		 * communityService.communityFileInsertOne(fileMap); }
-		 */
-	    
-	    /*end +img*/
-
 
 	    // 글 작성 완료 후 목록 페이지로 리다이렉트
 	    return "redirect:/community";
@@ -200,27 +179,65 @@ public class CommunityController {
 	//------------------------------
 	//이미지 업로드(서버 파일 시스템에만 저장)
 	@PostMapping("/uploadImage")
-	public ResponseEntity<Map<String, Object>> uploadImage(@RequestParam("uploadFile") MultipartFile file) throws Exception {
+	public ResponseEntity<Map<String, Object>> uploadImage(@RequestParam("uploadFile") 
+	MultipartFile file, HttpSession session) throws Exception {
 	    // fileUtils의 uploadFile 메서드 호출
 	    Map<String, String> uploadResult = fileUtils.uploadFile(file);
 
 	    String storedFileName = uploadResult.get("storedFileName");
-	    System.out.println("파일명: "+storedFileName);
-	    String imageUrl = "http://localhost:9090/image/" + storedFileName;
 	    String originalFileName = uploadResult.get("originalFileName");
+	    String fileExtension = storedFileName.substring(storedFileName.lastIndexOf('.') + 1); // 확장자 추출
+	    String imageUrl = "http://localhost:9090/image/"+ storedFileName;
+
+	    		
+	    System.out.println("\n파일명: " + storedFileName);
+	    System.out.println("원래파일명: " + originalFileName);
+	    System.out.println("확장자명: "+ fileExtension);
+	    System.out.println("링크: "+imageUrl);
+	    System.out.println("파일 사이즈: "+ file.getSize());
+		/* System.out.println("파일 사이즈: "+ communityId); */
 	    
-	    System.out.println("원래파일명: "+originalFileName);
+	    Map<String, Object> fileMap = new HashMap<>();
+
+	    fileMap.put("originalFileName", originalFileName);
+	    fileMap.put("storedFileName", storedFileName);
+	    fileMap.put("fileSize", file.getSize());
+	    fileMap.put("fileExtension", fileExtension);
+	    fileMap.put("fileLink", imageUrl);
 	    
-	    Map<String, Object> fileMeta = new HashMap<>();
-	    fileMeta.put("storedFileName", storedFileName);
-	    fileMeta.put("originalFileName", originalFileName);
-	    fileMeta.put("fileSize", file.getSize());
+	    
+	    // 세션에 파일 정보 추가
+	    List<Map<String, Object>> uploadedFiles = (List<Map<String, Object>>) session.getAttribute("uploadedFiles");
+	    if (uploadedFiles == null) {
+	        uploadedFiles = new ArrayList<>();
+	    }
+	    uploadedFiles.add(fileMap);
+	    session.setAttribute("uploadedFiles", uploadedFiles);
+	    
+
+	    // DB에 저장
+	  //  communityService.communityFileInsertOne(fileMap);
 	    
 	    
 	    Map<String, Object> response = new HashMap<>();
 	    response.put("imageUrl", imageUrl);
+	    response.put("fileName", originalFileName);
+	    response.put("fileId", storedFileName); // 고유 식별자 대체
 
 	    return ResponseEntity.ok(response);
+	}
+	
+	//파일 삭제
+	@DeleteMapping("/deleteImage/{fileId}")
+	public ResponseEntity<String> deleteImage(@PathVariable("fileId") String fileId, HttpSession session) {
+	    List<Map<String, Object>> uploadedFiles = (List<Map<String, Object>>) session.getAttribute("uploadedFiles");
+
+	    if (uploadedFiles != null) {
+	        uploadedFiles.removeIf(file -> fileId.equals(file.get("storedFileName"))); // 혹은 고유 ID가 있다면 그걸로
+	        session.setAttribute("uploadedFiles", uploadedFiles); // 리스트 갱신
+	    }
+
+	    return ResponseEntity.ok("삭제 성공");
 	}
 	
 
