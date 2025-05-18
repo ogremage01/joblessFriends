@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <link rel="stylesheet" href="/css/common/common.css">
     <link rel="stylesheet" href="/css/recruitment/recruitmentView.css">
+    <link rel="stylesheet" href="/css/recruitment/recruitmentNav.css">
 
 </head>
 
@@ -63,9 +64,9 @@
                     <button type="button" class="dropdown-toggle">경력 ▼</button>
                     <div class="dropdown-content education-dropdown-content">
                         <label><input type="checkbox" name="career" value="신입"> 신입</label>
-                        <label><input type="checkbox" name="career" value="경력직"> 1~3년</label>
-                        <label><input type="checkbox" name="career" value="경력직"> 3~5년</label>
-                        <label><input type="checkbox" name="career" value="경력직"> 5년이상</label>
+                        <label><input type="checkbox" name="career" value="1~3년"> 1~3년</label>
+                        <label><input type="checkbox" name="career" value="3~5년"> 3~5년</label>
+                        <label><input type="checkbox" name="career" value="5년이상"> 5년이상</label>
                     </div>
                 </div>
 
@@ -73,8 +74,8 @@
                     <button type="button" class="dropdown-toggle">학력 ▼</button>
                     <div class="dropdown-content education-dropdown-content">
                         <label><input type="checkbox" name="education" value="학력무관"> 학력무관</label>
-                        <label><input type="checkbox" name="education" value="대학 졸업(4년)"> 대학교 졸업(4년)</label>
-                        <label><input type="checkbox" name="education" value="대학 졸업(2,3년)"> 대학 졸업(2,3년)</label>
+                        <label><input type="checkbox" name="education" value="대학교 졸업(4년)"> 대학교 졸업(4년)</label>
+                        <label><input type="checkbox" name="education" value="대학교 졸업(2,3년)"> 대학 졸업(2,3년)</label>
                         <label><input type="checkbox" name="education" value="대학원 석사졸업"> 대학원 석사졸업</label>
                         <label><input type="checkbox" name="education" value="대학원 박사졸업"> 대학원 박사졸업</label>
                         <label><input type="checkbox" name="education" value="고등학교 졸업"> 고등학교 졸업</label>
@@ -93,7 +94,7 @@
                 <!-- 적용, 초기화 버튼 -->
                 <div id="filterActions">
                     <div id="filterSummary">
-                        <button id="btnResetFilters">선택초기화 🔄</button>
+                        <button id="btnResetFilter">선택초기화 🔄</button>
                         <button id="btnSearchFiltered">선택된 <span id="filteredCount">0</span>건 검색하기</button>
                     </div>
                 </div>

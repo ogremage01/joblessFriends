@@ -8,6 +8,7 @@ import com.joblessfriend.jobfinder.company.service.CompanyService;
 import com.joblessfriend.jobfinder.job.domain.JobVo;
 import com.joblessfriend.jobfinder.job.service.JobService;
 import com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao;
+import com.joblessfriend.jobfinder.recruitment.domain.FilterRequestVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentDetailVo;
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
@@ -156,6 +157,27 @@ public class RecruitmentController {
 
 
         return "redirect:/Recruitment/list";
+    }
+
+    @PostMapping("/filter/count")
+    @ResponseBody
+    public int filterCount(@RequestBody Map<String, Object> filterParams) {
+        // 필터 값 꺼내기 (null safe 처리)
+        List<Integer> jobIds = (List<Integer>) filterParams.getOrDefault("jobIds", new ArrayList<>());
+        List<String> careers = (List<String>) filterParams.getOrDefault("careers", new ArrayList<>());
+        List<String> educations = (List<String>) filterParams.getOrDefault("educations", new ArrayList<>());
+        List<Integer> skillTags = (List<Integer>) filterParams.getOrDefault("skillTags", new ArrayList<>());
+
+        FilterRequestVo filterRequestVo = new FilterRequestVo();
+        filterRequestVo.setJobIds(jobIds);
+        filterRequestVo.setCareers(careers);
+        filterRequestVo.setEducations(educations);
+        filterRequestVo.setSkillTags(skillTags);
+
+        // 서비스 계층 호출 (필터 조건 기반 count)
+        int count = recruitmentService.countFilteredPosts(filterRequestVo);
+
+        return count;
     }
 }
 
