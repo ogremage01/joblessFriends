@@ -36,10 +36,19 @@ $("#navCompany").click(function(event) {
 
 // 아이디 찾기
 function findCompanyId() {
-
+	console.log("아이디 찾기");
+	
+	if ($("#representative").val() == "") {
+		toastPopup("담당자 명을 입력하세요.");
+		return false;
+	}
+	if ($("#brn").val() == "") {
+		toastPopup("사업자 등록번호를 입력하세요.");
+		return false;
+	}
 	//비동기 처리 필요
 	var findIdForm = $("#findForm").serialize();
-
+	
 	$.ajax({
 		type: 'post',
 		url: '/auth/find/companyId',
@@ -48,11 +57,40 @@ function findCompanyId() {
 		success: function(data) {
 			console.log("아이디 찾기 성공");
 
-			alert("회원님의 아이디는 " + data + " 입니다.");
+			idPopup(data);
 		},
 		error: function(xhr, status, error) {
-			alert("아이디 찾기에 실패했습니다. 입력된 정보를 다시 확인해주십시오.");
+			toastPopup("아이디 찾기에 실패했습니다. 입력된 정보를 다시 확인해주십시오.");
 		}
 	}); // ajax end
 
 } // findCompanyId end
+
+
+function toastPopup(msg) {
+	$('#askConfirm').html(msg);
+	$('#askConfirm').attr('class', 'active');
+	setTimeout(function() {
+		$('#askConfirm').removeClass('active');
+	}, 1500);
+}
+
+var idCheck = false;
+function idPopup(data) {
+	if(idCheck) return;
+	idCheck = true;
+	var msg= "회원님의 아이디는 " + data + " 입니다. "
+	msg += "<button id='copyBtn' onclick='idCopy(\"" + data + "\")'>복사</button>";
+	
+	$('#askConfirm').html(msg);
+	$('#askConfirm').attr('class', 'active');
+}
+
+function idCopy(data){
+	navigator.clipboard.writeText(data);
+	$('#askConfirm').removeClass('active');
+	setTimeout(function() {
+			toastPopup("복사되었습니다.");
+			idCheck=false;
+	}, 400);
+}

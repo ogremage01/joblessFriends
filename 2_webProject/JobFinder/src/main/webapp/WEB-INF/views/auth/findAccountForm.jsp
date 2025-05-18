@@ -68,6 +68,9 @@
 			
 		</div>
 	</div>
+	
+	<div id="askConfirm">
+	</div>
 
 </body>
 <script src="/js/auth/findAccountForm.js"></script>
