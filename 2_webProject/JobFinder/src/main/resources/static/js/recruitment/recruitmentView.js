@@ -115,7 +115,8 @@ $(document).on('change', 'input[name="skill"]', function () {
     const currentChecked = $('input[name="skill"]:checked').length;
 
     if (currentChecked > maxSkillCount) {
-        alert(`스킬은 최대 ${maxSkillCount}개까지만 선택할 수 있습니다.`);
+        loginFailPop(`스킬은 최대 ${maxSkillCount}개까지만 선택할 수 있습니다.`);
+
         $(this).prop('checked', false);
         return;
     }
@@ -153,17 +154,9 @@ $(document).ready(function () {
         alert('처리예정입니다');
     });
 });
-function validateFilters() {
-    const jobIds = $('input[name="job"]:checked').length;
-    const careers = $('input[name="career"]:checked').length;
 
-    if (careers > 0 && jobIds === 0) {
-        loginFailPop("경력 조건은 직군·직무 선택 후 사용 가능합니다.");
 
-        return false;
-    }
-    return true;
-}
+
 
 function getFilterParams() {
     const jobIds = $('input[name="job"]:checked').map(function () {
@@ -190,7 +183,8 @@ function getFilterParams() {
 function updateFilteredCount() {
     const params = getFilterParams();
 
-    if (!validateFilters()) {
+    const caseNum = validateFilterCase();
+    if (caseNum === false) {
         $('#filteredCount').text('0');
         return;
     }
@@ -220,3 +214,76 @@ function loginFailPop(msg) {
         $('#askConfirm').removeClass('active');
     }, 1500);
 }
+
+
+
+
+/**
+ * 필터 조합 유효성 검사 + 케이스 번호 반환
+ * @returns {number|false} - 유효하면 1~12 케이스 번호, 유효하지 않으면 false 반환
+ */
+function validateFilterCase() {
+    const jobIds = $('input[name="job"]:checked').length;
+    const jobGroupSelected = $('.job-group.selected').length > 0;
+    const careers = $('input[name="career"]:checked').length;
+    const educations = $('input[name="education"]:checked').length;
+    const skills = $('input[name="skill"]:checked').length;
+
+    const hasJob = jobIds > 0;
+    const hasGroup = jobGroupSelected > 0;
+    const hasCareer = careers > 0;
+    const hasEdu = educations > 0;
+    const hasSkill = skills > 0;
+
+    // Case 2: 경력 단독 선택 → 유효하지 않음
+    if (hasCareer && !hasJob) {
+        loginFailPop("경력 조건은 직군·직무 선택 후 사용 가능합니다.");
+        return false;
+    }
+
+    //  Case 11: 직무만 단독 선택 → 유효하지 않음
+    if (hasJob && !hasGroup) {
+        loginFailPop("직군을 먼저 선택해주세요.");
+        return false;
+    }
+
+    //  Case 10: 경력+학력+스킬, 직군/직무 없음 → 유효하지 않음
+    if (hasCareer && hasEdu && hasSkill && !hasJob) {
+        loginFailPop("직군/직무를 선택해주세요.");
+        return false;
+    }
+
+    // ✅ 유효한 조합: 케이스 번호 판단
+    if (hasGroup && hasJob && !hasCareer && !hasEdu && !hasSkill) return 1;
+    if (!hasJob && hasEdu && !hasCareer && !hasSkill) return 3;
+    if (!hasJob && hasSkill && !hasCareer && !hasEdu) return 4;
+    if (hasGroup && hasJob && hasCareer && !hasEdu && !hasSkill) return 5;
+    if (hasGroup && hasJob && hasCareer && hasEdu && !hasSkill) return 6;
+    if (hasGroup && hasJob && hasCareer && hasEdu && hasSkill) return 7;
+    if (hasGroup && hasJob && !hasCareer && hasEdu && !hasSkill) return 8;
+    if (!hasGroup && !hasJob && !hasCareer && hasEdu && hasSkill) return 9;
+    if (!hasGroup && !hasJob && hasCareer && hasEdu && hasSkill) return 10;
+    if ((hasGroup && !hasJob) || (!hasGroup && hasJob)) return 11;
+    if (!hasGroup && !hasJob && !hasCareer && !hasEdu && !hasSkill) return 12;
+
+    // 예외 상황
+    return -1;
+}
+
+$(document).on('change', '.chk, input[name="career"], input[name="education"], input[name="skill"]', function () {
+    updateFilteredCount();
+});
+
+// 경력 체크 시 → 직군·직무 없으면 체크 막기 , 1개이상 체크불가
+$(document).on('click', 'input[name="career"]', function (e) {
+    const jobChecked = $('input[name="job"]:checked').length > 0;
+    if (!jobChecked) {
+        loginFailPop("경력 조건은 직군·직무 선택 후 사용 가능합니다.");
+        e.preventDefault(); // ✅ 체크 자체를 막음
+    }
+    $('input[name="career"]').not(this).prop('checked', false);
+});
+//학력도 1개만
+$(document).on('click', 'input[name="education"]', function () {
+    $('input[name="education"]').not(this).prop('checked', false);
+});
