@@ -58,13 +58,30 @@
         WHERE jp.job_post_id = #{jobPostId}
     </select>
     
+    <delete id="jobPostFileDelete" parameterType="list">
+    
+	    DELETE FROM JOB_POST_FILE
+	    WHERE JOB_POST_ID IN
+	    <foreach item="id" collection="list" open="(" separator="," close=")">
+    	    #{id}
+    	</foreach>
+    </delete>
+    
+    <delete id="jobPostTagDelete" parameterType="list">
+	    DELETE FROM JOB_POST_TAG
+	    WHERE JOB_POST IN
+	    <foreach item="id" collection="list" open="(" separator="," close=")">
+     	   #{id}
+    	</foreach>
+    </delete>
+    
     <delete id="jobPostDelete" parameterType="list">
-    DELETE FROM JOB_POST
-    WHERE JOB_POST_ID IN
-    <foreach item="id" collection="list" open="(" separator="," close=")">
-        #{id}
-    </foreach>
-</delete>
+	    DELETE FROM JOB_POST
+	    WHERE JOB_POST_ID IN
+	    <foreach item="id" collection="list" open="(" separator="," close=")">
+	        #{id}
+	    </foreach>    
+	</delete>
 <!--채용공고 인서트 -->
     <insert id="insertRecruitment" parameterType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
         <selectKey keyProperty="jobPostId"

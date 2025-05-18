@@ -89,74 +89,9 @@
     
 	<!-- 메인 -->
   <div class="main">
-  <h1>공고 관리</h1>
+  <h1>지원자관리</h1>
     
-   	<table id="recruitmentList" class="table table-border">
-   		<thead class="table-group-divider">
-   			<tr>
-   				<th>공고</th>
-   				<th colspan="2">관리</th>
-   			</tr>
-   		</thead>
-   		<tbody>
-   			   	
-   			   	<c:if test="${recruitmentList.size() eq 0}">
-   			   	<tr>
-   			   		<td colspan="3"><span id="emptyList">등록된 공고가 없습니다</span></td>
-   			   	</tr>
-   			   	</c:if>
-   
-   			<c:forEach var="recruitment" items="${recruitmentList}">
-				<tr>
-   					<td><h3><a class="jobPostTitle" href="/Recruitment/detail?companyId=${recruitment.companyId}&jobPostId=${recruitment.jobPostId}">
-   						${recruitment.title}</a></h3></td>
-   					<td class="buttonPlace" rowspan="2">
-   						<a href="/" class="btn btn-light mb-2"><i class="bi bi-pencil-square"></i>수정 하기</a><br>
-   						<a href="./recruitment/${recruitment.jobPostId}/applicants" class="btn btn-light mb-2"><i class="bi bi-file-person"></i>지원자 보기</a><br>
-   					</td>
-   					<td rowspan="2"><button class="btn delBtn" value="${recruitment.jobPostId}"><i class="bi bi-x"></i></button></td>
-   				</tr>
-   				<tr>
-   					<td>
-    					<table class="innerTable">
-   							<tr>
-   								<td class="name">지원자격</td>
-   								<td class="info">${recruitment.education}</td>
-   								<td class="name">채용부문</td>
-   								<td class="info">${recruitment.jobName}</td>
-   								<td class="name">공고마감</td>
-   								<td class="info"><fmt:formatDate value="${recruitment.endDate}"/></td>
-   							</tr>
-   							<tr>
-   								<td class="name">스킬</td>
-   								<td class="info">
-   								<!-- 최대 2개까지 뜨도록 설정 -->
-	   								<c:forEach var="skill" items="${recruitment.skillList}" varStatus="status" begin="0" end="1">
-								    ${skill.tagName}
-								    <c:if test="${!status.last}">, </c:if>
-									</c:forEach>
-								</td>
-   								<td class="name">채용인원</td>
-   								<td class="info">정보없음</td>
-   								<td class="name">지원자</td>
-   								<td class="info">정보없음</td>
-   							</tr>
-   							<tr>
-   								<td class="name">최종 수정일 
-   								<td class="info" colspan="5">
-   									<fmt:formatDate value="${recruitment.modifiedDate eq null?recruitment.endDate:recruitment.modifiedDate}"/>
-   								</td>
-   							</tr>
-   						</table>
-   						
-   					</td>
-   					<!-- <td></td> -->
-   				</tr>
-   			</c:forEach>
-   		</tbody>
-   	
-   	</table>
-   
+
     </div>
     
     

@@ -7,6 +7,8 @@ import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 public interface RecruitmentService {
     //직군 직무
     public List<JobGroupVo> jobGroupList();
@@ -18,7 +20,7 @@ public interface RecruitmentService {
     public List<RecruitmentVo> recruitmentList();
     //채용공고 상세뷰
     RecruitmentVo getRecruitmentId(int jobPostId);
-	public int jobPostDelete(List<Integer> jobPostIdList);
+	public void jobPostDelete(List<Integer> jobPostIdList);
 
     public void insertRecruitment(RecruitmentVo recruitmentVo, List<Integer> tagIdList);
 

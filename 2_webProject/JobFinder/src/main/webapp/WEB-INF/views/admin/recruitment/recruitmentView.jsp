@@ -96,7 +96,7 @@
 	        return response.text();
 	    })
 	    .then(data => {
-	        if (data == jobPostIds.length) {
+	        if (data == "삭제완료") {
 	            alert("삭제 성공");
 	            location.reload();
 	        } else {

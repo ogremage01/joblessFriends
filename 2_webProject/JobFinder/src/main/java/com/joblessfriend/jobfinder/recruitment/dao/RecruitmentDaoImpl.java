@@ -39,8 +39,8 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
     }
 
 	@Override
-	public int jobPostDelete(List<Integer> jobPostIdList) {
-		return sqlSession.delete("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.jobPostDelete", jobPostIdList);
+	public void jobPostDelete(List<Integer> jobPostIdList) {
+		sqlSession.delete("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.jobPostDelete", jobPostIdList);
 	}
 
 
@@ -73,6 +73,20 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
 	public List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.companyRecruitmentList",companyId);
+	}
+
+	@Override
+	public void jobPostFileDelete(List<Integer> jobPostIdList) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.jobPostFileDelete", jobPostIdList);
+		
+	}
+
+	@Override
+	public void jobPostTagDelete(List<Integer> jobPostIdList) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.jobPostTagDelete", jobPostIdList);
+		
 	}
 	
 
