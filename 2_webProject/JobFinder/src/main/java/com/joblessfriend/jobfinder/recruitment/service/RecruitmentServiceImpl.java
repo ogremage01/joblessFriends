@@ -1,12 +1,14 @@
 package com.joblessfriend.jobfinder.recruitment.service;
 
 import com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao;
+import com.joblessfriend.jobfinder.recruitment.domain.CompanyRecruitmentVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
 import com.joblessfriend.jobfinder.skill.dao.SkillDao;
 import com.joblessfriend.jobfinder.skill.domain.SkillVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,9 +45,14 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     }
 
 	@Override
-	public int jobPostDelete(List<Integer> jobPostIdList) {
+	@Transactional
+	public void jobPostDelete(List<Integer> jobPostIdList) {
 		// TODO Auto-generated method stub
-		return recruitmentDao.jobPostDelete(jobPostIdList);
+		
+		recruitmentDao.jobPostFileDelete(jobPostIdList);
+		recruitmentDao.jobPostTagDelete(jobPostIdList);
+		recruitmentDao.jobPostDelete(jobPostIdList);
+		
 	}
 
 
@@ -66,7 +73,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 	}
 
 	@Override
-	public List<RecruitmentVo> companyRecruitmentSelectList(int companyId) {
+	public List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId) {
 		// TODO Auto-generated method stub
 		return recruitmentDao.companyRecruitmentSelectList(companyId);
 	}
