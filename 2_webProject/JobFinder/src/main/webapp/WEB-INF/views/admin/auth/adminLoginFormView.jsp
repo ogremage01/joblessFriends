@@ -42,7 +42,7 @@
 .login-title {
     margin-top: 15px;
     text-align: center;
-    font-size: 30px;
+    font-size: 25px;
     letter-spacing: 2px;
     margin-top: 15px;
     font-weight: bold;
@@ -144,6 +144,8 @@ label {
 .loginbttm {
     padding: 0px;
 }
+
+
     </style>
 </head>
 <body class="d-flex align-items-center py-4 bg-body-tertiary">

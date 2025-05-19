@@ -29,4 +29,6 @@ public interface RecruitmentService {
 	public List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId);
 
     public int countFilteredPosts(FilterRequestVo filterRequestVo);
+	public boolean checkCompanyOwnsJobPost(int companyId, int jobPostId);
+	public void jobPostStop(List<Integer> jobPostIdList);
 }

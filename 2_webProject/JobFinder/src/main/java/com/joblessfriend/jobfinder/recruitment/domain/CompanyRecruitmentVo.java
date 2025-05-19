@@ -33,9 +33,10 @@ public class CompanyRecruitmentVo {
     private String jobName;         // 직업이름
     private String jobGroupName;    // 직군이름
     private Boolean isContinuous; //공고 마감 여부. 0:마감아님.1:마감
-    private Integer maxApplicants;
+    private Integer maxApplicants;//최대 채용인원
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date modifiedDate; //최종수정일
     private List<SkillVo> skillList; //스킬리스트
+    private int applicantCount;
     //상시채용건 추가필요//
 }

@@ -156,35 +156,45 @@
         jg.job_group_name AS jobGroupName,
         j.job_name AS jobName,
         jp.start_date AS startDate,
-        jp.end_date AS endDate
+        jp.end_date AS endDate,
+        jp.MAX_APPLICANTS AS maxApplicants,
+        jp.IS_CONTINUOUS as isContinuous
     FROM JOB_POST jp
              JOIN COMPANY c ON jp.company_id = c.company_id
              JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
              JOIN JOB j ON jp.job_id = j.job_id
-    ORDER BY jp.end_date ASC
+    ORDER BY jp.job_post_id DESC
 
     </select>
     
     
     <select id="companyRecruitmentList" resultType="com.joblessfriend.jobfinder.recruitment.domain.CompanyRecruitmentVo">
-    SELECT
-        jp.job_post_id AS jobPostId,
-        c.company_id AS companyId,
-        c.company_name AS companyName,
-        jp.title AS title,
-        jp.career_type AS careerType,
-        jp.education AS education,
-        jg.job_group_name AS jobGroupName,
-        j.job_name AS jobName,
-        jp.start_date AS startDate,
-        jp.end_date AS endDate,
-        jp.modified_date as modifiedDate
-    FROM JOB_POST jp
-             JOIN COMPANY c ON jp.company_id = c.company_id
-             JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
-             JOIN JOB j ON jp.job_id = j.job_id
-             WHERE C.COMPANY_ID = #{companyId}
-    ORDER BY jp.end_date ASC
+		SELECT
+		    jp.job_post_id AS jobPostId,
+		    c.company_id AS companyId,
+		    c.company_name AS companyName,
+		    jp.title AS title,
+		    jp.career_type AS careerType,
+		    jp.education AS education,
+		    jg.job_group_name AS jobGroupName,
+		    j.job_name AS jobName,
+		    jp.start_date AS startDate,
+		    jp.end_date AS endDate,
+		    jp.modified_date AS modifiedDate,
+		    jp.max_applicants AS maxApplicants,
+		    jp.is_continuous AS isContinuous,
+		    NVL(rm.resume_count, 0) AS applicantCount
+		FROM job_post jp
+		JOIN company c ON jp.company_id = c.company_id
+		JOIN job_group jg ON jp.job_group_id = jg.job_group_id
+		JOIN job j ON jp.job_id = j.job_id
+		LEFT JOIN (
+		    SELECT job_post_id, COUNT(*) AS resume_count
+		    FROM resume_manage
+		    GROUP BY job_post_id
+		) rm ON jp.job_post_id = rm.job_post_id
+		WHERE c.company_id = #{companyId}
+		ORDER BY jp.job_post_id DESC
 
     </select>
 <!--    필터 카운팅 -->
@@ -224,7 +234,14 @@
         </if>
     </select>
 
-
+    <update id="jobPostStop" parameterType="list">
+	    UPDATE JOB_POST
+	    SET IS_CONTINUOUS = 1
+	    WHERE JOB_POST_ID IN
+	    <foreach item="id" collection="list" open="(" separator="," close=")">
+	        #{id}
+	    </foreach>    
+	</update>
 
 
 </mapper>
