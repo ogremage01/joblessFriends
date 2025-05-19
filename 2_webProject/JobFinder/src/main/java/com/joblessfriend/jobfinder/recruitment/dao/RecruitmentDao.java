@@ -28,5 +28,6 @@ public interface RecruitmentDao {
 	List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId);
 //    필터
     public int countFilteredPosts(FilterRequestVo filterRequestVo);
+    public List<RecruitmentVo> getFilteredRecruitmentList(FilterRequestVo filterRequestVo);
 
 }

@@ -179,5 +179,27 @@ public class RecruitmentController {
 
         return count;
     }
+
+    @GetMapping("/filter/list")
+    @ResponseBody
+    public Map<String, Object>  filterSearchView(FilterRequestVo filterRequestVo){
+        List<JobGroupVo> jobGroupList = recruitmentService.jobGroupList();
+        List<RecruitmentVo> recruitmentList  = recruitmentService.getFilteredRecruitmentList(filterRequestVo);
+
+
+        Map<Integer, List<SkillVo>> skillMap = new HashMap<>();
+
+        for (RecruitmentVo r : recruitmentList ) {
+            int jobPostId = r.getJobPostId();
+            List<SkillVo> skillList = skillService.postTagList(jobPostId);//태그리스트들 put
+            skillMap.put(jobPostId, skillList);
+        }
+        Map<String,Object> result = new HashMap<>();
+        result.put("jobGroupList", jobGroupList);
+        result.put("recruitmentList", recruitmentList );
+        result.put("skillMap", skillMap);
+
+        return result;
+    }
 }
 

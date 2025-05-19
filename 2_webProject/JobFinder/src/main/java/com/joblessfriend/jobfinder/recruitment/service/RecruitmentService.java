@@ -29,4 +29,6 @@ public interface RecruitmentService {
 	public List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId);
 
     public int countFilteredPosts(FilterRequestVo filterRequestVo);
+
+    public List<RecruitmentVo> getFilteredRecruitmentList(FilterRequestVo filterRequestVo);
 }
