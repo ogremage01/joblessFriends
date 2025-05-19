@@ -7,7 +7,7 @@
 <head>
     <title>채용정보 메인</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <link rel="stylesheet" href="/css/common/common.css">
     <link rel="stylesheet" href="/css/recruitment/recruitmentView.css">
 
@@ -15,6 +15,10 @@
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 
 
 <body>
@@ -88,8 +92,10 @@
 
                 <!-- 적용, 초기화 버튼 -->
                 <div id="filterActions">
-                    <button type="button">적용</button>
-                    <button type="button">초기화</button>
+                    <div id="filterSummary">
+                        <button id="btnResetFilters">선택초기화 🔄</button>
+                        <button id="btnSearchFiltered">선택된 <span id="filteredCount">0</span>건 검색하기</button>
+                    </div>
                 </div>
             </div>
 
@@ -147,8 +153,33 @@
 </div>
 
 <jsp:include page="../common/footer.jsp"/>
+<div id="askConfirm">
+</div>
+<script>
 
+
+
+    $('#insertForm').on('submit', function () {
+        const markdown = editor.getHTML();
+        console.log("🔥 submitEditor called");
+        $('#hiddenContent').val(markdown);
+
+        const selectedSkillIds = $('input[name="tagId"]:checked')
+            .map(function () {
+                return $(this).val();
+            }).get().slice(0, 5);
+        console.log("✅ selected skills:", selectedSkillIds);
+        $('input[name="skills"]').val(selectedSkillIds.join(','));
+
+        return true;
+    });
+
+
+
+</script>
 <script src="/js/recruitment/recruitmentView.js"></script>
+
+<div id="askConfirm" class="toast-popup"></div>
 
 </body>
 
