@@ -19,4 +19,8 @@ public interface CommunityDao {
 
 	void communityFileInsertOne(Map<String, Object> fileMap);
 
+	int communitySeqNum();
+
+	List<Map<String, Object>> communityFileList(int communityId);
+
 }

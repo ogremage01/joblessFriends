@@ -1,125 +1,174 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시글 작성</title>
+<title>게시글 수정</title>
+
+<!-- 스타일 시트 -->
 <link rel="stylesheet" href="/css/community/communityCommonStyle.css"> 
+<link rel="stylesheet" href="/css/community/communityUploadStyle.css"> 
 <link rel="stylesheet" href="/css/common/common.css">
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
 
-<style type="text/css">
-	
-	#containerWrap{
-		margin-bottom: 100px;
-	}
-	.boxStyle{
-		width: 1190px;
-		height: 45px;
-		
-		font-size: 14pt;
-	
-	}
-	
-	#cancleBtn, #uploadBtn{
-		width: 100px;
-		height: 45px;
-		
-		font-size: 14pt;
-	}
-	
-	#cancleBtn{
-		background-color: white;
-		color: #6D707B;
-		border: 2px solid #D1D5E3; 
-	}
-	
-	#btnWrap{
-		margin-top: 20px;
-		
-		float: right;
-		margin-right: 10px;
-		
-	}
-	
-	.contentBox{
-		width: 1200px;
-	}
-	
-	.marginPart{
-		margin-top: 50px;
-	}
-	
-	.marginPart>p{
-		font-size: 20px;
-		color: #6D707B;
-	}
-	
-	
-	
+<!-- 에디터 및 jQuery -->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<style>
+    #uploadedFileList {
+        margin-top: 10px;
+    }
+
+    .fileItem {
+        margin-bottom: 5px;
+        padding: 5px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        alignItems: center;
+    }
+
+    .fileItem button {
+        margin-left: 10px;
+        background-color: #ff6666;
+        color: white;
+        border: none;
+        padding: 3px 7px;
+        cursor: pointer;
+    }
 </style>
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script
->
-<script type="text/javascript">
 
-	
-</script>
 </head>
-
 <body>
-	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <div id='containerWrap' class="wrap">
-	<div class="markdown-body">		
-			
-			<h2>글쓰기</h2>
-			<form action="/community/update" method="post">
-				<input type="hidden" name="communityId" value="${community.communityId}">
-				<div class='marginPart'>
-					<p>제목</p>
-					<input name='title' type="text" class='boxStyle'
-						value="${community.title}" />
-				</div>
-				<div class='marginPart'>
-					<p >내용</p>
-					<div id="content" class="contentBox"></div>
-					<!-- 에디터 내용을 담을 숨겨진 textarea -->
-					<textarea name="content" id="hiddenContent" style="display: none;"></textarea>
-				</div>
-				<div id="btnWrap">
-					<button id='cancleBtn' class='inputBtn'>취소</button>
-					<button type="submit" id='uploadBtn' class='inputBtn' onclick="submitEditor()">등록</button>
-				</div>
-			</form>
-			<!-- TUI 에디터 JS CDN -->
-	
-			<script>
-			const rawContent = `${community.content}`;
-		    const formattedContent = rawContent.replace(/\n/g, '\n');
-				 const editor = new toastui.Editor({
-		            el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
-		            height: '500px',                        // 에디터 영역의 높이 값 (500px로 지정)
-		            initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg 중에 markdown버전으로 처음 보여짐)
-		            initialValue: formattedContent,                       // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함(아무내용 없음)
-		            previewStyle: 'vertical',               // 마크다운 프리뷰 스타일 (tab || vertical)
-		        });
-		        
-		        function submitEditor() {
-		            const markdown = editor.getMarkdown(); // 또는 getHTML()
-		            document.getElementById('hiddenContent').value = markdown;
-		            return true; // 폼 제출 계속 진행
-		        }
-	    	</script>
-			
-	
-	</div>
+    <h2>글쓰기</h2>
+
+    <form action="/community/upldate" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="communityId" value="${community.communityId}">
+
+        <!-- 제목 입력 -->
+        <div id='titleWrap'>
+            <p>제목</p>
+            <input name='title' type="text" class='boxStyle' value="${community.title}" />
+        </div>
+
+        <!-- 에디터 입력 -->
+        <div id='contentWriteWrap'>
+            <p>내용</p>
+            <div id="content" class="contentBox"></div>
+            <textarea name="content" id="hiddenContent" style="display: none;"></textarea>
+        </div>
+
+        <!-- 업로드된 파일 목록 표시 -->
+        <div id="fileUploadWrap">
+            <p>첨부된 이미지 목록(추가 예정)</p>
+            <div id="uploadedFileList">
+            <c:forEach var="file" items="${fileList}">
+			    <div class="fileItem" data-url="${file.FILELINK}">
+			        <span>${file.FILENAME}</span>
+			        <button type="button" onclick="deleteFile('${file.COMMUNITYFILEID}', this)">삭제</button>
+			    </div>
+			</c:forEach>
+            </div>
+        </div>
+
+        <!-- 등록/취소 버튼 -->
+        <div id="btnWrap">
+            <button id='cancleBtn' class='inputBtn' type="button" onclick="history.back()">취소</button>
+            <button type="submit" id='uploadBtn' class='inputBtn' onclick="submitEditor()">등록</button>
+        </div>
+    </form>
+
+    <!-- 에디터 초기화 및 이미지 업로드 처리 -->
+    <script>
+		const rawContent = `${community.content}`;
+		const formattedContent = rawContent.replace(/\n/g, '\n');
+		
+        const editor = new toastui.Editor({
+            el: document.querySelector('#content'),
+            height: '500px',
+            initialEditType: 'markdown',
+            initialValue: formattedContent,
+            previewStyle: 'vertical',
+            hooks: {
+                addImageBlobHook(blob, callback) {
+                    const formData = new FormData();
+                    formData.append('updateFile', blob);//여기서 /community/updateImage 주소의 @RequestParam("uploadFile")로 데이터 전달
+
+                    $.ajax({
+                        url: '/community/updateImage',//communityId가 같은 것만 삭제, 추가로 구현할 예정//communityUpdate메서드에 따로 호출해줘야함.(안그럼 실행 안됨)
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            const imageUrl = response.imageUrl;
+                            const fileName = response.fileName;
+                            const fileId = response.fileId;
+
+                            callback(imageUrl, fileName); // 에디터에 ![이미지명](url) 삽입
+
+                            // 이미지 목록에 표시
+                            const fileListContainer = document.getElementById('uploadedFileList');
+                            const fileItem = document.createElement('div');
+                            fileItem.classList.add('fileItem');
+                            fileItem.setAttribute('data-url', imageUrl);
+                            fileItem.innerHTML = `
+                                <span>\${fileName}</span>
+                                <button type="button" onclick="deleteFile('\${fileId}', this)">삭제</button>
+                            `;
+                            fileListContainer.appendChild(fileItem);
+                        },
+                        error: function() {
+                            alert('이미지 업로드 실패');
+                        }
+                    });
+
+                    return false;
+                }
+            }
+        });
+
+        function submitEditor() {
+            const markdown = editor.getMarkdown();
+            document.getElementById('hiddenContent').value = markdown;
+            return true;
+        }
+
+        function deleteFile(fileId, btn) {
+            if (!confirm("정말 삭제하시겠습니까?")) return;
+
+            const fileItem = btn.parentElement;
+            const imageUrl = fileItem.getAttribute('data-url');
+
+            $.ajax({
+                url: `/community/deleteImage/\${fileId}`,
+                type: 'DELETE',
+                success: function() {
+                    // 1. 에디터 마크다운에서 이미지 제거
+                    const markdown = editor.getMarkdown();
+                    const updatedMarkdown = markdown.replace(new RegExp(`!\\[.*?\\]\\(\${imageUrl}\\)`, 'g'), '');
+                    editor.setMarkdown(updatedMarkdown);
+
+                    // 2. 첨부파일 목록에서 제거
+                    fileItem.remove();
+                },
+                error: function() {
+                    alert("파일 삭제 실패");
+                }
+            });
+        }
+    </script>
 </div>
+
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
-
-
 </html>

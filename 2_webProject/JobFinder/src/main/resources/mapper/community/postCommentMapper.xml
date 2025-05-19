@@ -29,8 +29,6 @@
 	</insert>
 	
 	<delete id="postCommentDelete" parameterType="int">
-		DELETE FROM REPLY
-		WHERE POST_COMMENT_ID = #{postCommentId}
 		
 		DELETE FROM POST_COMMENT
 		WHERE POST_COMMENT_ID = #{postCommentId}

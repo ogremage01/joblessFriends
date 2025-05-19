@@ -14,11 +14,11 @@
 			javaType="java.util.Date" />
 		<result column="VIEWS" property="views" />
 	</resultMap>
-	<!--커뮤니티|칼럼 : 게시글 작성-->
 	
+	<!--커뮤니티|칼럼 : 게시글 작성-->	
 	<insert id="communityInsertOne" parameterType="com.joblessfriend.jobfinder.community.domain.CommunityVo" keyProperty="communityId">
 		INSERT INTO COMMUNITY (COMMUNITY_ID, MEMBER_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, VIEWS)
-		VALUES(COMMUNITY_ID_SEQ.NEXTVAL, #{memberId}, #{title}, #{content}, SYSDATE, NULL, 0)
+		VALUES(#{communityId}, #{memberId}, #{title}, #{content}, SYSDATE, NULL, 0)
 	</insert>
 	
 	<select id="communitySelectList" parameterType="com.joblessfriend.jobfinder.community.domain.CommunityVo" resultMap="communityResultVo">
@@ -41,14 +41,37 @@
 	</update>
 	
 	<delete id="communityDelete" parameterType="int">
+
 		DELETE FROM COMMUNITY
+		WHERE COMMUNITY_ID = #{communityId}
+		
+	</delete>
+	
+	<!-- 파일 저장(게시물 생성, 수정 시 사용) -->
+	<insert id="communityFileInsert" parameterType="map">
+		INSERT INTO COMMUNITY_FILE (COMMUNITY_FILE_ID, COMMUNITY_ID, FILE_NAME, STORED_FILE_NAME, FILE_SIZE, CREATE_AT, MODIFIED_AT, FILE_EXTENSION, FILE_LINK)
+		VALUES(COMMUNITY_FILE_ID_SEQ.NEXTVAL, #{parentId}, #{originalFileName}, #{storedFileName}, #{fileSize}, SYSDATE, NULL, #{fileExtension}, #{fileLink})
+	</insert>
+	
+	<!-- 파일 삭제(업데이트 시 사용) -->
+	<delete id="deleteCommunityFile" parameterType="int">
+		DELETE FROM COMMUNITY_FILE
 		WHERE COMMUNITY_ID = #{communityId}
 	</delete>
 	
-	<insert id="communityFileInsert" parameterType="map">
-		INSERT INTO COMMUNITY_FILE (COMMUNITY_FILE_ID, COMMUNITY_ID, FILE_NAME, STORED_FILE_NAME, FILE_SIZE, CREATE_AT, MODIFIED_AT, FILE_EXTENSION, FILE_LINK)
-		VALUES(COMMUNITY_FILE_ID_SEQ.NEXTVAL, 1, #{originalFileName}, #{storedFileName}, #{fileSize}, SYSDATE, NULL, #{fileExtension}, #{fileLink})
-	</insert>
+	<!-- 파일 찾기(업데이트 시 리스트 저장 사용) -->
+	<select id="communityFileList" parameterType="int" resultType="map">
+		SELECT COMMUNITY_FILE_ID AS communityFileID, COMMUNITY_ID AS communityId, FILE_NAME AS fileName, STORED_FILE_NAME AS storedFileName, 
+			FILE_SIZE AS fileSize, CREATE_AT AS createAt, MODIFIED_AT AS modifiedAt, FILE_EXTENSION AS fileExtension, FILE_LINK AS fileLink
+		FROM COMMUNITY_FILE
+		WHERE COMMUNITY_ID = #{communityId}
+	</select>
+	
+	
+	<!-- 파일 저장용 시퀀스 넘버 -->
+	<select id="communitySeqNum" resultType="int">
+		 SELECT COMMUNITY_ID_SEQ.NEXTVAL FROM DUAL
+	</select>
 	
 
 </mapper>

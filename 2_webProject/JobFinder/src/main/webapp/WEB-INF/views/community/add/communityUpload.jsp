@@ -83,7 +83,7 @@
         const editor = new toastui.Editor({
             el: document.querySelector('#content'),
             height: '500px',
-            initialEditType: 'markdown',
+            initialEditType: 'wysiwyg',
             initialValue: '',
             previewStyle: 'vertical',
             placeholder: '내용을 입력해 주세요.',
