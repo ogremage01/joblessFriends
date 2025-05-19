@@ -46,8 +46,8 @@
 	</delete>
 	
 	<insert id="communityFileInsert" parameterType="map">
-		INSERT INTO COMMUNITY_FILE (COMMUNITY_FILE_ID, COMMUNITY_ID, FILE_NAME, STORED_FILE_NAME, FILE_SIZE, CREATE_AT, MODIFIED_AT)
-		VALUES(COMMUNITY_FILE_ID_SEQ.NEXTVAL, #{parentId}, #{originalFileName}, #{storedFileName}, #{fileSize}, SYSDATE, NULL)
+		INSERT INTO COMMUNITY_FILE (COMMUNITY_FILE_ID, COMMUNITY_ID, FILE_NAME, STORED_FILE_NAME, FILE_SIZE, CREATE_AT, MODIFIED_AT, FILE_EXTENSION, FILE_LINK)
+		VALUES(COMMUNITY_FILE_ID_SEQ.NEXTVAL, 1, #{originalFileName}, #{storedFileName}, #{fileSize}, SYSDATE, NULL, #{fileExtension}, #{fileLink})
 	</insert>
 	
 
