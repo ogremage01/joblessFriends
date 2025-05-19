@@ -134,26 +134,6 @@ function removeDetail(button) {
 }
 
 
-$(document).ready(function () {
-
-    $('.job').on('click', function (e) {
-        // 만약 클릭한 요소가 '지원하기 버튼'이면 return
-        if ($(e.target).hasClass('apply-btn')) {
-            return;
-        }
-
-        const jobPostId = $(this).data('jobpostid');
-        const companyId = $(this).data('companyid');
-
-        // 상세페이지 이동
-        window.location.href = `detail?companyId=${companyId}&jobPostId=${jobPostId}`;
-    });
-
-    // 지원하기 버튼 클릭처리예정
-    $('.apply-btn').on('click', function () {
-        alert('처리예정입니다');
-    });
-});
 
 
 
@@ -312,4 +292,66 @@ $(document).on('click', '#btnResetFilter', function (e) {
     // 5. AJAX 호출 대신 UI만 초기화 (굳이 updateFilteredCount 호출 안 해도 됨)
 });
 
+$('#btnSearchFiltered').on('click', function () {
 
+    const params = getFilterParams();
+    console.log("🔍 필터 파라미터:", params);
+    $.ajax({
+        url: '/Recruitment/filter/list',
+        type: 'GET',
+        data: {
+            jobIds: params.jobIds,
+            careers: params.careers,
+            educations: params.educations,
+            skillTags: params.skillTags
+        },
+        traditional: true, // 배열 전송시 반드시 필요!
+        success: function (data) {
+            console.log('채용공고:', data.recruitmentList);
+            console.log('스킬맵:', data.skillMap);
+            console.log('직군:', data.jobGroupList);
+            $('#jobListings').empty(); // 기존 리스트 지우기
+
+            data.recruitmentList.forEach(function (item) {
+                const html = `
+    <div class="job" data-jobpostid="${item.jobPostId}" data-companyid="${item.companyId}">
+      <div class="company-name">${item.companyName}</div>
+      <div class="job-info">
+        <div class="job-title">${item.title} <span class="star">★</span></div>
+        <div class="job-meta">
+          <span>🧑‍💻 지원자격: ${item.education} </span>
+          <span>🎓 경력: ${item.careerType}</span>
+          <span>💼 채용직: ${item.jobName}</span>
+        </div>
+        <div class="job-meta-skill">
+          🧩 스킬: ${
+                    (data.skillMap[item.jobPostId] || [])
+                        .map(skill => `<span class="tag">${skill.tagName}</span>`)
+                        .join('')
+                }
+        </div>
+      </div>
+    </div>
+  `;
+                $('#jobListings').append(html);
+            });
+
+
+        },
+        error: function () {
+            alert('검색 중 오류가 발생했습니다.');
+        }
+    });
+});
+
+$(document).on('click', '.job', function (e) {
+    if ($(e.target).hasClass('apply-btn')) return;
+
+    const jobPostId = $(this).data('jobpostid');
+    const companyId = $(this).data('companyid');
+    window.location.href = `detail?companyId=${companyId}&jobPostId=${jobPostId}`;
+});
+
+$(document).on('click', '.apply-btn', function () {
+    alert('처리예정입니다');
+});

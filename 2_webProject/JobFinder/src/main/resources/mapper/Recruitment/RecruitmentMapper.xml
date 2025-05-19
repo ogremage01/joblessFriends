@@ -191,31 +191,31 @@
     <select id="countFilteredPosts"
             parameterType="com.joblessfriend.jobfinder.recruitment.domain.FilterRequestVo"
             resultType="int">
-        SELECT COUNT(DISTINCT r.job_post_id)
-        FROM job_post r
-        LEFT JOIN job_post_tag jpt ON jpt.job_post = r.job_post_id
+
+        SELECT COUNT(DISTINCT jp_inner.job_post_id)
+        FROM job_post jp_inner
+        <if test="skillTags != null and skillTags.size() > 0">
+            JOIN job_post_tag jpt ON jpt.job_post = jp_inner.job_post_id
+        </if>
         WHERE 1 = 1
         <if test="jobIds != null and jobIds.size() > 0">
-            AND r.job_id IN
+            AND jp_inner.job_id IN
             <foreach collection="jobIds" item="jobId" open="(" separator="," close=")">
                 #{jobId}
             </foreach>
         </if>
-
         <if test="careers != null and careers.size() > 0">
-            AND r.career_type IN
+            AND jp_inner.career_type IN
             <foreach collection="careers" item="career" open="(" separator="," close=")">
                 #{career}
             </foreach>
         </if>
-
         <if test="educations != null and educations.size() > 0">
-            AND r.education IN
+            AND jp_inner.education IN
             <foreach collection="educations" item="edu" open="(" separator="," close=")">
                 #{edu}
             </foreach>
         </if>
-
         <if test="skillTags != null and skillTags.size() > 0">
             AND jpt.tag_id IN
             <foreach collection="skillTags" item="tagId" open="(" separator="," close=")">
@@ -224,6 +224,57 @@
         </if>
     </select>
 
+    <select id="getFilteredRecruitmentList"
+            parameterType="com.joblessfriend.jobfinder.recruitment.domain.FilterRequestVo"
+            resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
+
+        SELECT
+        jp.job_post_id AS jobPostId,
+        c.company_id AS companyId,
+        c.company_name AS companyName,
+        jp.title AS title,
+        jp.career_type AS careerType,
+        jp.education AS education,
+        jg.job_group_name AS jobGroupName,
+        j.job_name AS jobName,
+        jp.end_date AS endDate
+        FROM job_post jp
+        JOIN company c ON jp.company_id = c.company_id
+        JOIN job j ON jp.job_id = j.job_id
+        JOIN job_group jg ON j.job_group_id = jg.job_group_id
+        WHERE jp.job_post_id IN (
+        SELECT DISTINCT jp_inner.job_post_id
+        FROM job_post jp_inner
+        <if test="skillTags != null and skillTags.size() > 0">
+            JOIN job_post_tag jpt ON jpt.job_post = jp_inner.job_post_id
+        </if>
+        WHERE 1 = 1
+        <if test="jobIds != null and jobIds.size() > 0">
+            AND jp_inner.job_id IN
+            <foreach collection="jobIds" item="jobId" open="(" separator="," close=")">
+                #{jobId}
+            </foreach>
+        </if>
+        <if test="careers != null and careers.size() > 0">
+            AND jp_inner.career_type IN
+            <foreach collection="careers" item="career" open="(" separator="," close=")">
+                #{career}
+            </foreach>
+        </if>
+        <if test="educations != null and educations.size() > 0">
+            AND jp_inner.education IN
+            <foreach collection="educations" item="edu" open="(" separator="," close=")">
+                #{edu}
+            </foreach>
+        </if>
+        <if test="skillTags != null and skillTags.size() > 0">
+            AND jpt.tag_id IN
+            <foreach collection="skillTags" item="tagId" open="(" separator="," close=")">
+                #{tagId}
+            </foreach>
+        </if>
+        )
+    </select>
 
 
 

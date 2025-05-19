@@ -83,6 +83,12 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public int countFilteredPosts(FilterRequestVo filterRequestVo) {
         return recruitmentDao.countFilteredPosts(filterRequestVo);
     }
+
+    @Override
+    public List<RecruitmentVo> getFilteredRecruitmentList(FilterRequestVo filterRequestVo) {
+        return recruitmentDao.getFilteredRecruitmentList(filterRequestVo);
+    }
+
     //카운트필터
 
 

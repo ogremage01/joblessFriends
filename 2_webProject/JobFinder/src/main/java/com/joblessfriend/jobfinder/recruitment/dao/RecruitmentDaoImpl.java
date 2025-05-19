@@ -70,8 +70,13 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
         return sqlSession.selectOne(namespace+".countFilteredPosts", filterRequestVo);
     }
 
+    @Override
+    public List<RecruitmentVo> getFilteredRecruitmentList(FilterRequestVo filterRequestVo) {
+        return sqlSession.selectList(namespace+".getFilteredRecruitmentList",filterRequestVo);
+    }
 
-	@Override
+
+    @Override
 	public List<RecruitmentVo> adminRecruitmentList() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.adminRecruitmentList");
