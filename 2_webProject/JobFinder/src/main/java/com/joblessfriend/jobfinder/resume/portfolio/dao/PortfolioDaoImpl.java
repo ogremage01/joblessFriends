@@ -6,7 +6,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.joblessfriend.jobfinder.resume.portfolio.domain.PortfolioVo;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class PortfolioDaoImpl implements PortfolioDao{
 	
 	@Autowired

@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.joblessfriend.jobfinder.resume.portfolio.domain.PortfolioVo;
 
-@Mapper
+
 public interface PortfolioDao {
 	
 	public List<PortfolioVo> portfolioAllList();
