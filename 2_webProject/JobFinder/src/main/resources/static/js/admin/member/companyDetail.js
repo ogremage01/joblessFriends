@@ -1,6 +1,11 @@
 // 기업 정보 수정 폼 객체 가져오기
 let companyInforSubmitFormObj = document.getElementById("companyInforSubmitForm");
 
+// 메타 태그에서 CSRF 정보 가져오기 -활성화시 적용 예정
+/*const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');*/
+
+
 // data-company-id 속성에서 companyId 가져오기
 const companyId = document.getElementById("companyData").dataset.companyId;
 
@@ -25,7 +30,8 @@ companyInforSubmitFormObj.addEventListener("submit", function(e) {
     fetch(`/admin/member/company/${companyId}`, {
         method: 'PATCH', // RESTful하게 PATCH 사용
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+			[csrfHeader]: csrfToken
         },
         body: JSON.stringify(jsonData) // JSON 형식으로 변환
     })
@@ -73,6 +79,7 @@ deleteBtn.addEventListener("click", function(e) {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
+				//,[csrfHeader]: csrfToken csrf 활성화시 적용예정
             },
             
         })

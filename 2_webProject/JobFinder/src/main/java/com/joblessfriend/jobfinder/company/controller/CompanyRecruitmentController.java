@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,10 +68,37 @@ public class CompanyRecruitmentController {
 		return ResponseEntity.ok("삭제완료"); 
 	}
 	
-	@GetMapping("/{jobPostId}/applicants")
-	public String jobPostApplicantsList(@PathVariable int jobPostId) {
+	@PatchMapping("/stop")
+
+	public ResponseEntity<String> recruitmentStop(@RequestBody List<Integer> jobPostIdList) {
+		//logger.info("공고삭제메서드");
+
+		for (Integer i : jobPostIdList) {
+			System.out.println("마감할 공고 Id" + i);
+
+		}
 		
-		return "company/recruitment/applicantsListView";
+		recruitmentService.jobPostStop(jobPostIdList);
+
+		
+		return ResponseEntity.ok("마감완료"); 
+	}
+	
+	
+	
+	@GetMapping("/{jobPostId}/applicants")
+	public String jobPostApplicantsList(HttpSession session, @PathVariable int jobPostId) {
+	    CompanyVo companyVo = (CompanyVo) session.getAttribute("userLogin");
+	    if (companyVo == null) {
+	        return "redirect:/login";
+	    }
+
+	    boolean hasPermission = recruitmentService.checkCompanyOwnsJobPost(companyVo.getCompanyId(), jobPostId);
+	    if (hasPermission) {
+	        return "company/recruitment/applicantsListView";
+	    } else {
+	        return "error/error";
+	    }
 	}
 	
 }

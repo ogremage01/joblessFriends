@@ -91,5 +91,18 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     //카운트필터
 
+	@Override
+	public boolean checkCompanyOwnsJobPost(int companyId, int jobPostId) {
+	    RecruitmentVo recruitment = getRecruitmentId(jobPostId);
+	    return recruitment != null && recruitment.getCompanyId() == companyId;
+	}
+
+	@Override
+	public void jobPostStop(List<Integer> jobPostIdList) {
+		// TODO Auto-generated method stub
+		recruitmentDao.jobPostStop(jobPostIdList);
+		
+	}
+
 
 }

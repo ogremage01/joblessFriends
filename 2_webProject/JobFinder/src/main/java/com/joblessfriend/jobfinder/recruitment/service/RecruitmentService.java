@@ -30,5 +30,10 @@ public interface RecruitmentService {
 
     public int countFilteredPosts(FilterRequestVo filterRequestVo);
 
+
     public List<RecruitmentVo> getFilteredRecruitmentList(FilterRequestVo filterRequestVo);
+
+	public boolean checkCompanyOwnsJobPost(int companyId, int jobPostId);
+	public void jobPostStop(List<Integer> jobPostIdList);
+
 }

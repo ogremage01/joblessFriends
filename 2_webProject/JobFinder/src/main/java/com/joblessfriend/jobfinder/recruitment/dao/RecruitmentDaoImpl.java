@@ -104,6 +104,13 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
 		sqlSession.delete("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.jobPostTagDelete", jobPostIdList);
 		
 	}
+
+	@Override
+	public void jobPostStop(List<Integer> jobPostIdList) {
+		// TODO Auto-generated method stub
+		sqlSession.update(namespace+".jobPostStop", jobPostIdList);
+		
+	}
 	
 
 }
