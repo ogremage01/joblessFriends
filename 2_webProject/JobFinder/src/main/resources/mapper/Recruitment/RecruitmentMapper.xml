@@ -31,7 +31,8 @@
         jp.education AS education,
         jg.job_group_name AS jobGroupName,
         j.job_name AS jobName,
-        jp.end_date AS endDate
+        jp.end_date AS endDate,
+        jp.job_img AS jobImg
     FROM JOB_POST jp
              JOIN COMPANY c ON jp.company_id = c.company_id
              JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id

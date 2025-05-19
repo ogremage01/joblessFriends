@@ -31,5 +31,7 @@ public interface MemberDao {
 
 	int memberDeleteList(List<Integer> memberIdList);
 
+	int updatePassword(String password, int memberId);
+
 
 }

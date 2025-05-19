@@ -1,0 +1,128 @@
+	/* 사이드바 카테고리 선택 색상 */
+	.sidebar .infoMng {
+		color: #F69800;
+		font-weight: bold;	
+	}
+	
+	.content {
+		user-select: none;
+	}
+	
+	/* 개인정보 관리*/
+	.accountInfo {
+		display: flex;
+		flex-direction: column;
+		gap: 25px;
+	}
+	
+	.accountInfo h2 {
+		margin:0px;
+		padding: 15px 0px;
+		border-top: 1px solid #D3D5D9;
+		border-bottom: 1px solid #D3D5D9;
+		
+		font-size: 20px;
+		font-weight: bold;
+		color: #1B202F;
+	}
+	.infoCategory {
+		color:#6D707B;
+		font-size: 16px;
+		font-weight: bold;
+		display:inline-block;
+	}
+	
+	#passwordChange .infoCategory{
+		margin-bottom: 15px;
+	}
+	
+	/* 	이메일 */
+	#userEmail {
+		margin-left: 25px;
+		font-size: 16px;
+		color:#6D707B;
+	}
+	
+	/* 복사버튼 */
+	#copyBtn {
+		border: none;
+		color: #6D707B;
+		cursor: pointer;
+		background: none;
+		font-size: 16px;
+	}
+	
+	/* 비밀번호 변경 폼 */
+	#pwdChangeForm {
+		width: 250px;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+	
+	#pwdChangeForm label{
+		color:#6D707B;
+		font-size: 14px;
+		display: block;
+		margin-bottom: 8px;
+	}
+	
+	#pwdChangeForm input {
+		width: 230px;
+		height: 14px;
+		padding: 13px 10px;
+		border: 1px solid #D1D5E3;
+		outline: none;
+		border-radius: 5px;
+		font-size: 14px;
+	}
+	
+	#pwdChangeForm input::placeholder {
+		color: #BABECA;
+	}
+	
+	#pwdChangeForm input:hover{
+		border:1px solid #C9C9C9;
+	}
+	
+	#pwdChangeForm input:focus {
+		border: 1px solid #F69800;
+	}
+	
+	.valiCheckText {
+		color: red;
+		font-size: 14px;
+	}
+	
+	#changeBtn {
+		border-radius: 5px;
+		border: 1px solid #AFB2BD;
+		
+		background-color: white;
+		color: #7F8184;
+		
+		padding: 10px;
+		font-size: 16px;
+		cursor: pointer;
+	}
+	
+	#changeBtn:hover {
+		background-color: #F3F4F8;
+	}
+	
+	
+	/* 토스트 팝업 */
+	#copyPop {
+		opacity: 0%;
+	    padding: 3px 20px;
+	    font-size: 14px;
+	    background: rgba(0, 0, 0, 0.30);
+	    border-radius: 100px;
+	    color: white;
+	    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+	    transition: all 0.5s;
+	}
+	/*토스트 메시지 활성화 되었을 때*/
+	#copyPop.active {
+	    opacity: 100%;
+	}

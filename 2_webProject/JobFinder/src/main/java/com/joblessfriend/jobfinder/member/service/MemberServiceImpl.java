@@ -138,5 +138,11 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.memberDeleteList(memberIdList);
 	}
 
+	@Override
+	public int updatePassword(String password, int memberId) {
+		// TODO Auto-generated method stub
+		return memberDao.updatePassword(password, memberId);
+	}
+
 
 }
