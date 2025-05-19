@@ -1,9 +1,6 @@
 package com.joblessfriend.jobfinder.recruitment.dao;
 
-import com.joblessfriend.jobfinder.recruitment.domain.CompanyRecruitmentVo;
-import com.joblessfriend.jobfinder.recruitment.domain.FilterRequestVo;
-import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
-import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
+import com.joblessfriend.jobfinder.recruitment.domain.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -41,7 +38,12 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
         return sqlSession.selectOne(namespace+".getRecruitmentId",jobPostId);
     }
 
-	@Override
+    @Override
+    public List<WelfareVo> selectWelfareByJobPostId(int jobPostId) {
+        return sqlSession.selectList(namespace+".selectWelfareByJobPostId",jobPostId);
+    }
+
+    @Override
 	public void jobPostDelete(List<Integer> jobPostIdList) {
 		sqlSession.delete(namespace+".jobPostDelete", jobPostIdList);
 	}
@@ -50,6 +52,7 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
 
     @Override
     public void insertRecruitment(RecruitmentVo recruitmentVo) {
+        System.out.println("🔥 insertRecruitment 에서 실제 할당된 jobPostId: " + recruitmentVo.getJobPostId());
        sqlSession.insert(namespace+".insertRecruitment", recruitmentVo);
 /*
         return recruitmentVo; // selectKey로 세팅된 ID가 들어 dlT*/
@@ -57,13 +60,18 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
 
     @Override
     public void insertJobPostTag(RecruitmentVo recruitmentVo, List<Integer> tagIdList) {
+
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("jobPostId", recruitmentVo.getJobPostId());
         paramMap.put("tagIdList", tagIdList);
 
         sqlSession.insert(namespace+".insertJobPostTag", paramMap);
     }
+    @Override
+    public void insertJobPostWelfare(List<WelfareVo> welfareList) {
 
+        sqlSession.insert(namespace + ".insertJobPostWelfare", welfareList);
+    }
     //필터카운팅
     @Override
     public int countFilteredPosts(FilterRequestVo filterRequestVo) {

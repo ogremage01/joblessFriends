@@ -58,7 +58,19 @@
                  JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
         WHERE jp.job_post_id = #{jobPostId}
     </select>
-    
+<!--    복지리스트-->
+    <select id="selectWelfareByJobPostId" parameterType="int" resultType="com.joblessfriend.jobfinder.recruitment.domain.WelfareVo">
+        SELECT
+            JOB_WELFARE_ID AS jobWelfareId ,
+            JOB_POST_ID AS jobPostId,
+            BENEFIT_TEXT AS benefitText
+        FROM
+            JOB_POST_WELFARE
+        WHERE
+            JOB_POST_ID = #{jobPostId}
+    </select>
+
+
     <delete id="jobPostFileDelete" parameterType="list">
     
 	    DELETE FROM JOB_POST_FILE
@@ -141,11 +153,31 @@
         SELECT * FROM dual
     </insert>
 
+<!--복리후생 -->
+    <insert id="insertJobPostWelfare" parameterType="java.util.List">
+        INSERT ALL
+        <foreach collection="list" item="welfare">
+            INTO JOB_POST_WELFARE (
+            JOB_WELFARE_ID, JOB_POST_ID, BENEFIT_TEXT
+            ) VALUES (
+            SEQ_JOB_WELFARE_ID.NEXTVAL,
+            #{welfare.jobPostId},
+            #{welfare.benefitText}
+            )
+        </foreach>
+        SELECT * FROM DUAL
+    </insert>
 
 
 
 
-<!--    관리자용 -->
+
+
+
+
+
+
+    <!--    관리자용 -->
     <select id="adminRecruitmentList" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">-->
     SELECT
         jp.job_post_id AS jobPostId,

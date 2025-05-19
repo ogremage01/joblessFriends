@@ -27,7 +27,7 @@
     <div id="containerWrap">
 
 
-        <form id="insertForm" action="${pageContext.request.contextPath}/Recruitment/insert" method="post" onsubmit="return submitEditor();">
+        <form id="insertForm" action="${pageContext.request.contextPath}/Recruitment/insert" method="post">
         <div class="InsertMain">
 
                 <!-- 제목 -->
@@ -138,6 +138,27 @@
 
                     <input type="hidden" name="content" id="hiddenContent" />
                 </div>
+            <div class="InsertWelfare box-section">
+                <label class="section-title">복리후생</label>
+
+                <div class="flex-row">
+                    <input type="text" id="welfareInput" class="form-control welfare-text"
+                           placeholder="예) 사내 피트니스, 카페, 연 100만원 포인트 제공" />
+                    <button type="button" id="addWelfareBtn" class="add-job">+ 추가</button>
+                </div>
+
+                <div id="welfareList" class="job-set">
+                    <!-- 아래와 같은 div가 동적으로 추가됨 -->
+                    <!--
+                    <div class="flex-row welfare-item">
+                        <span>사내 피트니스</span>
+                        <button type="button" class="remove-welfare">X</button>
+                    </div>
+                    -->
+                </div>
+
+                <input type="hidden" name="welfareList" />
+            </div>
                 <div class="InsertTemplate box-section">
                     <label class="section-title">🧩 템플릿 생성 도우미</label>
                     <button type="button" id="generateTemplate" class="template-btn">📄 템플릿 미리보기</button>
