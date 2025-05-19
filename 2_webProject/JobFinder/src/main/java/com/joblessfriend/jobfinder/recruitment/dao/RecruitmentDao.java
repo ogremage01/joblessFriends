@@ -1,6 +1,7 @@
 package com.joblessfriend.jobfinder.recruitment.dao;
 
 import com.joblessfriend.jobfinder.recruitment.domain.CompanyRecruitmentVo;
+import com.joblessfriend.jobfinder.recruitment.domain.FilterRequestVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
 
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
@@ -25,6 +26,7 @@ public interface RecruitmentDao {
 
 	List<RecruitmentVo> adminRecruitmentList();
 	List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId);
-	
+//    필터
+    public int countFilteredPosts(FilterRequestVo filterRequestVo);
 
 }

@@ -2,6 +2,7 @@ package com.joblessfriend.jobfinder.recruitment.service;
 
 import com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao;
 import com.joblessfriend.jobfinder.recruitment.domain.CompanyRecruitmentVo;
+import com.joblessfriend.jobfinder.recruitment.domain.FilterRequestVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
 import com.joblessfriend.jobfinder.skill.dao.SkillDao;
@@ -77,5 +78,12 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 		// TODO Auto-generated method stub
 		return recruitmentDao.companyRecruitmentSelectList(companyId);
 	}
+
+    @Override
+    public int countFilteredPosts(FilterRequestVo filterRequestVo) {
+        return recruitmentDao.countFilteredPosts(filterRequestVo);
+    }
+    //카운트필터
+
 
 }

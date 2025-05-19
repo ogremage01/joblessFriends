@@ -21,7 +21,7 @@
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 
 <body>
-<jsp:include page="../common/header.jsp"/>
+<jsp:include page="../common/insertHeader.jsp"/>
 
 <div id="container">
     <div id="containerWrap">

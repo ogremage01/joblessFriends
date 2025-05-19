@@ -64,7 +64,7 @@ $(document).on('click', '.job-group', function (e) {
                             <input class="chk" type="checkbox"
                                    name="skill"
                                    value="${item.tagName}"
-                                   data-id="${item.tagName}"
+                                   data-id="${item.tagId}"
                                    data-group="${item.jobGroupId}">
                             ${item.tagName}
                         </label>
@@ -166,13 +166,15 @@ function getFilterParams() {
     const careers = $('input[name="career"]:checked').map(function () {
         return $(this).val();
     }).get();
-
+    console.log("스킬 값은 :"+careers );
     const educations = $('input[name="education"]:checked').map(function () {
         return $(this).val();
     }).get();
 
     const skillTags = $('input[name="skill"]:checked').map(function () {
+
         return $(this).data('id');
+
     }).get();
 
     return {
@@ -184,8 +186,9 @@ function updateFilteredCount() {
     const params = getFilterParams();
 
     const caseNum = validateFilterCase();
-    if (caseNum === false) {
+    if (caseNum === false || caseNum === 12) {
         $('#filteredCount').text('0');
+        $('#btnSearchFiltered').html('선택된 <span id="filteredCount">0</span>건 검색하기');
         return;
     }
 
@@ -196,15 +199,14 @@ function updateFilteredCount() {
         data: JSON.stringify(params),
         success: function (count) {
             $('#filteredCount').text(count.toLocaleString());
+            $('#selectedCountBtn').text(`선택된 ${count}건 검색하기`); // ✅ 버튼 텍스트 업데이트
         },
         error: function () {
             $('#filteredCount').text('0');
+            $('#selectedCountBtn').text('선택된 0건 검색하기'); // 실패 시에도 0건 표시
         }
     });
 }
-$(document).on('change', '.chk, input[name="career"], input[name="education"], input[name="skill"]', function () {
-    updateFilteredCount();
-});
 
 
 function loginFailPop(msg) {
@@ -287,3 +289,27 @@ $(document).on('click', 'input[name="career"]', function (e) {
 $(document).on('click', 'input[name="education"]', function () {
     $('input[name="education"]').not(this).prop('checked', false);
 });
+//버튼초기화 //
+
+
+$(document).on('click', '#btnResetFilter', function (e) {
+    e.stopPropagation();
+
+    // 1. 모든 체크박스 해제
+    $('input.chk, input[name="career"], input[name="education"], input[name="skill"]').prop('checked', false);
+
+    // 2. 선택된 직무 리스트 초기화
+    $('#divSelectedCon').empty();
+
+    // 3. 전역 변수 초기화
+    checkedJobs = {};
+
+    // 4. 카운터 초기화 (직접 UI 초기화)
+    $('#skill-count').text('0');
+    $('#filteredCount').text('0');
+    $('#btnSearchFiltered').html('선택된 <span id="filteredCount">0</span>건 검색하기');
+
+    // 5. AJAX 호출 대신 UI만 초기화 (굳이 updateFilteredCount 호출 안 해도 됨)
+});
+
+
