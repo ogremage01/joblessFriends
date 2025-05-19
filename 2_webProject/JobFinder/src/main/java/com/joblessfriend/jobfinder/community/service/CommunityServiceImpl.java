@@ -58,4 +58,16 @@ public class CommunityServiceImpl implements CommunityService{
 		communityDao.communityFileInsertOne(fileMap);
 	}
 
+	@Override
+	public int communitySeqNum() {
+		// TODO Auto-generated method stub
+		return communityDao.communitySeqNum();
+	}
+
+	@Override
+	public List<Map<String, Object>> communityFileList(int communityId) {
+		// TODO Auto-generated method stub
+		return communityDao.communityFileList(communityId);
+	}
+
 }

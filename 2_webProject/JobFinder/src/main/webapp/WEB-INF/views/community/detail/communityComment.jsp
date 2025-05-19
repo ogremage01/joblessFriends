@@ -18,7 +18,7 @@
 
 <body>
 	<div id="commentWrap" class="boxStyle contentBox">
-		<form id="commentForm" method="post" action="">
+<!-- 		<form id="commentForm" method="post" action=""> -->
 			<div id="inputCommentWrap">
 				<p>댓글</p>
 				<textarea id="inputCommentBox" class="boxStyle" placeholder="댓글을 입력해주세요."></textarea>
@@ -35,7 +35,6 @@
 		
 		<!-- 댓글 리스트가 여기에 들어옴 -->
 		<div id="commentContainer">
-<%-- 			<jsp:include page="/WEB-INF/views/community/detail/postComment/commentList.jsp"/> --%>
 		</div>
 	</div>
 

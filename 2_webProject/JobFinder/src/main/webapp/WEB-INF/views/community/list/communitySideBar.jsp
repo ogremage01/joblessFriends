@@ -103,30 +103,57 @@
 		location.href = "/community/upload";
 	}
 </script>
-
-<c:if test="${sessionScope.userLogin ne null}">
-	<div id='boxWrap' class="boxStyle">
-		<div id='boxTextWrap'>
-			<div>
-				<p>${sessionScope.userLogin.nickname} 님</p>
-				<p>작성한 글 (-)개</p>
-				<p>작성한 댓글 (-)개</p>
-			</div>
-			<a>프로필 변경</a>
-		</div>
-	
-		<button id='writeBtn' onclick="moveUpload()">
-			<svg xmlns="http://www.w3.org/2000/svg" width="100" height="50"
-				fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 70 16">
-			  <path
-					d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-			  <path fill-rule="evenodd"
-					d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-			  <text x="20" y="13" font-size="14">글쓰기</text>
-			</svg>
-		</button>
-	</div>
-</c:if>
+<c:choose>
+	<c:when test="${sessionScope.userLogin ne null}">
+		<c:choose>
+			<c:when test="${sessionScope.userType eq 'member'}">
+				<div id='boxWrap' class="boxStyle">
+					<div id='boxTextWrap'>
+						<div>
+							<p>${sessionScope.userLogin.nickname} 님</p>
+							<p>작성한 글 (-)개</p>
+							<p>작성한 댓글 (-)개</p>
+						</div>
+						<a>프로필 변경</a>
+					</div>
+				
+					<button id='writeBtn' onclick="moveUpload()">
+						<svg xmlns="http://www.w3.org/2000/svg" width="100" height="50"
+							fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 70 16">
+						  <path
+								d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+						  <path fill-rule="evenodd"
+								d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+						  <text x="20" y="13" font-size="14">글쓰기</text>
+						</svg>
+					</button>
+				</div>
+			</c:when>
+			<c:when test="${sessionScope.userType eq 'company'}">
+				<div id='boxWrap' class="boxStyle">
+					<div id='boxTextWrap'>
+						<div>
+							<p>${sessionScope.userLogin.companyName} 님</p>
+							<p>(작성 고민부분)</p>
+							<p>(작성 고민부분)</p>
+						</div>
+					</div>
+				</div>
+			</c:when>
+			<c:otherwise> 
+				<div id='boxWrap' class="boxStyle">
+					<div id='boxTextWrap'>
+						<div>
+							<p>관리자님 환영합니다。</p>
+						</div>
+					</div>
+				</div> 
+			</c:otherwise>
+		</c:choose>
+	</c:when>
+	<c:otherwise>  
+	</c:otherwise>
+</c:choose>
 <form name="searchContent" method="post" action="">
 	<div id='searchBoxPadding' class="boxStyle searchBox">
 		<input class="searchBox" type="text" placeholder="게시글을 검색해보세요" />

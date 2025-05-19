@@ -57,6 +57,18 @@ public class CommunityDaoImpl implements CommunityDao {
 		// TODO Auto-generated method stub
 		sqlSession.insert(namespace+"communityFileInsert", fileMap);
 	}
+
+	@Override
+	public int communitySeqNum() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace+"communitySeqNum");
+	}
+
+	@Override
+	public List<Map<String, Object>> communityFileList(int communityId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace+"communityFileList",communityId);
+	}
 	
 	
 
