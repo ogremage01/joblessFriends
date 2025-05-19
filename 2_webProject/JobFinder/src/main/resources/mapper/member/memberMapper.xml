@@ -103,6 +103,11 @@
 		    </foreach>
 		</delete>
 		
+		<update id="updatePassword" parameterType="map">
+			UPDATE MEMBER
+			SET PASSWORD = #{password}
+			WHERE MEMBER_ID = #{memberId}
+		</update>
 	</mapper>
 	
 	

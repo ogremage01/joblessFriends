@@ -18,7 +18,9 @@
 				<a href="/resume/management"style="text-decoration: none;">이력서 관리</a>
 			</li>
 			<li class="">구직활동 내역</li>
-			<li class="">개인정보 관리</li>
+			<li class="infoMng">
+				<a href="/member/info"style="text-decoration: none;">개인정보 관리</a>
+			</li>
 			<li class="">내가 찜한 공고</li>
 		</ul>
 		

@@ -108,4 +108,13 @@ public class MemberDaoImpl implements MemberDao{
 		// TODO Auto-generated method stub
 		return sqlSession.delete(namespace + "memberDeleteList", memberIdList);
 	}
+
+	@Override
+	public int updatePassword(String password, int memberId) {
+		// TODO Auto-generated method stub
+		Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("password", password);
+	    paramMap.put("memberId", memberId);
+		return sqlSession.update(namespace + "updatePassword", paramMap);
+	}
 }
