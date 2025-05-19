@@ -235,7 +235,7 @@
         </if>
     </select>
 
-<<<<<<< HEAD
+
     <select id="getFilteredRecruitmentList"
             parameterType="com.joblessfriend.jobfinder.recruitment.domain.FilterRequestVo"
             resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
