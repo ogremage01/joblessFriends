@@ -19,4 +19,15 @@
         WHERE RESUME_ID=#{resumeId}
     </select>
 
+	<insert id="certificateInsertOne">
+		INSERT INTO CERTIFICATE
+		(CERTIFICATE_ID, RESUME_ID, CERTIFICATE_NAME, ACQUISITION_DATE, ISSUING_AUTHORITY)
+		VALUES(CERTIFICATE_ID_SEQ.NEXTVAL, #{resumeId},#{certificateName},#{acquisitionDate},#{issuingAuthority})
+	</insert>
+	
+	<delete id="certificateDeleteOne" parameterType="map">
+		DELETE FROM CERTIFICATE
+        WHERE RESUME_ID=#{resumeId}
+        AND CERTIFICATE_ID=#{certificateId}
+	</delete>
 </mapper>
