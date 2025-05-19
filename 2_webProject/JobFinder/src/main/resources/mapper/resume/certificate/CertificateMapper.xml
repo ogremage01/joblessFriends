@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.joblessfriend.jobfinder.resume.certificate">
+
+    <resultMap type="com.joblessfriend.jobfinder.resume.certificate.domain.CertificateVo" id="certificateResultMap">
+        <id column="CERTIFICATE_ID" property="certificateId" />
+        <result column="RESUME_ID" property="resumeId" />
+        <result column="CERTIFICATE_NAME" property="certificateName" />
+        <result column="ACQUISITION_DATE" property="acquisitionDate" javaType="java.util.Date" />
+        <result column="ISSUING_AUTHORITY" property="issuingAuthority" />        
+    </resultMap>
+    
+    
+    <select id="certificateSelectList" resultMap="certificateResultMap">
+        SELECT CERTIFICATE_ID, RESUME_ID, CERTIFICATE_NAME, ACQUISITION_DATE, ISSUING_AUTHORITY
+        FROM CERTIFICATE
+        WHERE RESUME_ID=#{resumeId}
+    </select>
+
+</mapper>
