@@ -101,6 +101,7 @@ body {
   position: relative;
   max-width: 1280px;
   margin: 0 auto;
+  
 }
 
 .container {
@@ -158,7 +159,7 @@ textarea::placeholder {
   padding: 24px;
   border: 1px solid #D1D5E3; /* 경계선 색상 */
   border-radius: 5px;         /* 모서리 둥글게 */
-  background-color: #fff;     /* 섹션 배경색 명시적으로 흰색 지정 */
+  background-color: #fff;
 }
 
 .section-block h2 {
@@ -190,23 +191,27 @@ textarea::placeholder {
 .field-block {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .field-block label {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
-  color: #6D707B;
   margin-bottom: 5px;
+  color: #6D707B;
 }
 
-.field-block input {
+.field-block input,
+.field-block select,
+.field-block textarea {
   height: 40px;
   border-radius: 5px;
   border: 1px solid #D1D5E3;
   padding-left: 10px;
   font-size: 14px;
   font-weight: 700;
-  color: #BABECA;
+  color: #36383F;
 }
 
 .photo-wrapper {
@@ -216,6 +221,8 @@ textarea::placeholder {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  align-self: flex-start;
+  margin-top: 35px;
 }
 
 .photo-box {
@@ -446,6 +453,7 @@ textarea::placeholder {
 .field-block {
   width: 100%;
   box-sizing: border-box;
+  margin-bottom: 40px;
 }
 
 .field-block textarea {
