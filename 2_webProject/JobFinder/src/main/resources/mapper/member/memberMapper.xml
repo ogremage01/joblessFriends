@@ -25,7 +25,14 @@
 		<insert id="memberInsertOne" parameterType="memberVo">
 			INSERT INTO MEMBER
 			(MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER)
-			VALUES(MEMBER_ID_SEQ.NEXTVAL, #{email}, #{password},#{nickname},5, SYSDATE, SYSDATE, 'normal')
+			VALUES(MEMBER_ID_SEQ.NEXTVAL, #{email}, #{password},#{nickname},5, SYSDATE, SYSDATE,
+		    <if test="provider != null">
+		      #{provider}
+		    </if>
+		    <if test="provider == null">
+		      'normal'
+		    </if>
+			)
 		</insert>
 		
 		<select id="isNicknameExists"  parameterType="String" resultType="String">
@@ -108,6 +115,13 @@
 			SET PASSWORD = #{password}
 			WHERE MEMBER_ID = #{memberId}
 		</update>
+		
+		<select id="googleMemberExist" parameterType="string"
+			resultMap="memberResultMap">
+			SELECT MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER
+			FROM MEMBER
+			WHERE EMAIL = #{email}
+		</select>
 	</mapper>
 	
 	
