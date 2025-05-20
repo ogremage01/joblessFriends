@@ -76,9 +76,12 @@
                         ${recruitmentDetailVo.recruitment.content}
                     </p>
                     <ul>
-                        <li>정규직 / 주 5일 근무 / 유연 출퇴근제</li>
-                        <li>우대사항: JPA 실무 경험, 대용량 트래픽 서비스 운영 경험</li>
-                        <li>복지: 사내 피트니스, 카페, 연 100만원 포인트 제공   수정예정</li>
+
+                        <c:forEach var="welfare" items="${recruitmentDetailVo.welfare}">
+                            <li>${welfare.benefitText}</li>
+                        </c:forEach>
+
+
                     </ul>
                 </section>
 

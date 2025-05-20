@@ -1,10 +1,7 @@
 package com.joblessfriend.jobfinder.recruitment.service;
 
 import com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao;
-import com.joblessfriend.jobfinder.recruitment.domain.CompanyRecruitmentVo;
-import com.joblessfriend.jobfinder.recruitment.domain.FilterRequestVo;
-import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
-import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
+import com.joblessfriend.jobfinder.recruitment.domain.*;
 import com.joblessfriend.jobfinder.skill.dao.SkillDao;
 import com.joblessfriend.jobfinder.skill.domain.SkillVo;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +41,10 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public RecruitmentVo getRecruitmentId(int jobPostId) {
         return recruitmentDao.getRecruitmentId(jobPostId);
     }
-
+    @Override
+    public List<WelfareVo> selectWelfareByJobPostId(int jobPostId) {
+        return recruitmentDao.selectWelfareByJobPostId(jobPostId);
+    }
 	@Override
 	@Transactional
 	public void jobPostDelete(List<Integer> jobPostIdList) {
@@ -57,17 +57,32 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 	}
 
 
-    @Override
+
+
     @Transactional
-    public void insertRecruitment(RecruitmentVo recruitmentVo, List<Integer> tagIdList) {
-        recruitmentDao.insertRecruitment(recruitmentVo); // jobPostId 생성
-        recruitmentDao.insertJobPostTag(recruitmentVo, tagIdList); // 생성된 ID 사용
+    @Override
+    public void insertRecruitment(RecruitmentVo recruitmentVo, List<Integer> tagIdList, List<WelfareVo> welfareList) {
+        // 1. 메인 채용공고 insert → selectKey로 jobPostId 생성됨
+        System.out.println("🚀 service 들어옴");
+        recruitmentDao.insertRecruitment(recruitmentVo);
+
+
+        // 2. 태그 연결
+        recruitmentDao.insertJobPostTag(recruitmentVo, tagIdList);
+
+        // 3. 복리후생 jobPostId 세팅
+        int jobPostId = recruitmentVo.getJobPostId();
+        for (WelfareVo vo : welfareList) {
+            vo.setJobPostId(jobPostId);
+            recruitmentDao.insertJobPostWelfare(vo); // 단건 삽입
+        }
     }
 
 
 
 
-	@Override
+
+    @Override
 	public List<RecruitmentVo> adminRecruitmentList() {
 		// TODO Auto-generated method stub
 		return recruitmentDao.adminRecruitmentList();

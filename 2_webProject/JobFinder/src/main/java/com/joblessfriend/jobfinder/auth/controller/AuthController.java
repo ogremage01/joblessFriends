@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -103,9 +104,13 @@ public class AuthController {
 	
 	// 로그인 뷰
 	@GetMapping("/login")
-	public String login() {
+	public String login(Authentication authentication) {
 		logger.info(logTitleMsg);
 		logger.info("==login==");
+		if (authentication != null && authentication.isAuthenticated()) {
+			//.isAuthenticated()는 사용자가 인증된 상태임을 확인하는 조건식 (익명이 아니면 true 리턴)
+			return "redirect:/";
+		}
 		
 		return "auth/loginForm";
 	}

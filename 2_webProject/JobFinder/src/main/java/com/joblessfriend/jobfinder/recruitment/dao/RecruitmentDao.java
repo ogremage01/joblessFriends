@@ -1,10 +1,8 @@
 package com.joblessfriend.jobfinder.recruitment.dao;
 
-import com.joblessfriend.jobfinder.recruitment.domain.CompanyRecruitmentVo;
-import com.joblessfriend.jobfinder.recruitment.domain.FilterRequestVo;
-import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
+import com.joblessfriend.jobfinder.recruitment.domain.*;
 
-import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 
@@ -16,6 +14,7 @@ public interface RecruitmentDao {
     List<JobGroupVo> jobList(int jobGroupId);
     public List<RecruitmentVo> recruitmentList();
     RecruitmentVo getRecruitmentId(int jobPostId);
+    List<WelfareVo> selectWelfareByJobPostId(int jobPostId);
 	void jobPostDelete(List<Integer> jobPostIdList);//공고 삭제
 	void jobPostFileDelete(List<Integer> jobPostIdList);//공고첨부파일삭제
 	void jobPostTagDelete(List<Integer> jobPostIdList);//공고태그삭제
@@ -23,8 +22,10 @@ public interface RecruitmentDao {
 
     void insertRecruitment(RecruitmentVo recruitmentVo);
     void insertJobPostTag(RecruitmentVo recruitmentVo, List<Integer> tagIdList);
+    void insertJobPostWelfare(WelfareVo Welfarevo);
 
-	List<RecruitmentVo> adminRecruitmentList();
+
+    List<RecruitmentVo> adminRecruitmentList();
 	List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId);
 //    필터
     public int countFilteredPosts(FilterRequestVo filterRequestVo);

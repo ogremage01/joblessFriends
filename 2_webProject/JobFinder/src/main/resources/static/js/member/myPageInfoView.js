@@ -1,13 +1,3 @@
-var msg = '${msg}';
-let success = '비밀번호가 수정되었습니다.';
-let fail = '수정에 실패했습니다.'
-if(msg === success) {
-    alert(success);
-}
-if(msg === fail) {
-    alert(fail);
-}
-
 
 // 복사 팝업
 $("#copyBtn").click(function(){
@@ -120,8 +110,10 @@ function sameCheckPwd(){
 	
 }
 
-// 유효한 폼만 submit 가능
-function submitCheck(){
+// 비밀번호 변경 폼 submit
+$('#pwdChangeForm').on('submit', function(e) {
+	e.preventDefault(); // 기본 submit 막기
+	
 	checkOldPwd();
 	sameCheckPwd();
 	valiCheckPwd();
@@ -141,5 +133,35 @@ function submitCheck(){
 		return false;
 	};
 	
-	return false;
-}
+
+	$.ajax({
+		url: '/member/passwordCheck',
+		method: 'POST',
+		data: $(this).serialize(),
+		
+		// ✅ Ajax 요청 직전에 버튼 비활성화
+		beforeSend: function() {
+			$('#changeBtn').attr("disabled", true);
+		},
+		
+		success: function(result) {
+			if (result == 1) {
+				alert("비밀번호가 변경되었습니다.");
+				location.reload();
+			} else {
+				alert("비밀번호에 변경에 실패했습니다.");
+			}
+		},
+		error: function() {
+			alert("서버 오류가 발생했습니다.");
+		},
+		
+		// ✅ 요청 완료 후 버튼 다시 활성화
+		complete: function() {
+			$('#changeBtn').attr("disabled", false);
+		}
+		
+	}); // ajax end	
+	
+})
+
