@@ -331,6 +331,10 @@ $('#btnSearchFiltered').on('click', function () {
                 }
         </div>
       </div>
+      <div class="job-action">
+                <button class="apply-btn" type="button" onclick="">지원하기</button>
+                <div class="deadline">~${formatDateWithDay(item.endDate)}</div>
+      </div>
     </div>
   `;
                 $('#jobListings').append(html);
@@ -355,3 +359,15 @@ $(document).on('click', '.job', function (e) {
 $(document).on('click', '.apply-btn', function () {
     alert('처리예정입니다');
 });
+//날짜 포멧 //ajax용 ,
+function formatDateWithDay(dateString) {
+    const date = new Date(dateString);
+
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 1월 → 01
+    const day = String(date.getDate()).padStart(2, '0');
+
+    const weekNames = ['일', '월', '화', '수', '목', '금', '토'];
+    const weekDay = weekNames[date.getDay()]; // 0~6 → 요일
+
+    return `${month}/${day}(${weekDay})`;
+}

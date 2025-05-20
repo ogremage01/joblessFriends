@@ -1,5 +1,7 @@
 package com.joblessfriend.jobfinder.util;
 
+import com.joblessfriend.jobfinder.recruitment.domain.FilterRequestVo;
+
 public class Pagination {
 		private int totalRecordCount;     // 전체 데이터 수
 		private int totalPageCount;       // 전체 페이지 수
@@ -15,7 +17,12 @@ public class Pagination {
 	            calculation(params);
 	        }
 	    }
-
+		public Pagination(int totalRecordCount, FilterRequestVo params) {
+			if (totalRecordCount > 0) {
+				this.totalRecordCount = totalRecordCount;
+				calculation(params.getPage(), params.getRecordSize(), 10); // 또는 params.getPageSize()가 있으면 그걸 사용
+			}
+		}
 	    private void calculation(SearchVo params) {
 
 	        // 전체 페이지 수 계산
@@ -46,6 +53,51 @@ public class Pagination {
 	        // 다음 페이지 존재 여부 확인
 	        existNextPage = (endPage * params.getRecordSize()) < totalRecordCount;
 	    }
+		private void calculation(int page, int recordSize, int pageSize) {
+			totalPageCount = ((totalRecordCount - 1) / recordSize) + 1;
+
+			if (page > totalPageCount) {
+				page = totalPageCount;
+			}
+
+			startPage = ((page - 1) / pageSize) * pageSize + 1;
+			endPage = startPage + pageSize - 1;
+			if (endPage > totalPageCount) {
+				endPage = totalPageCount;
+			}
+
+			limitStart = (page - 1) * recordSize;
+			existPrevPage = startPage != 1;
+			existNextPage = (endPage * recordSize) < totalRecordCount;
+		}
+
+	public int getLimitStart() {
+		return limitStart;
+	}
+
+	public int getTotalRecordCount() {
+		return totalRecordCount;
+	}
+
+	public int getTotalPageCount() {
+		return totalPageCount;
+	}
+
+	public int getStartPage() {
+		return startPage;
+	}
+
+	public int getEndPage() {
+		return endPage;
+	}
+
+	public boolean isExistPrevPage() {
+		return existPrevPage;
+	}
+
+	public boolean isExistNextPage() {
+		return existNextPage;
+	}
 
 }
 	
