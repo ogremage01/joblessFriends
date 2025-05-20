@@ -44,7 +44,7 @@
                             <span>~</span>
                             <input type="date" name="endDate" class="endDate" required />
                             <label class="inline-checkbox">
-                                <input type="checkbox" name="openEnded" /> 상시채용
+
 <%--                                컬럼추가필요--%>
                             </label>
                         </div>
