@@ -117,4 +117,10 @@ public class MemberDaoImpl implements MemberDao{
 	    paramMap.put("memberId", memberId);
 		return sqlSession.update(namespace + "updatePassword", paramMap);
 	}
+
+	@Override
+	public MemberVo googleMemberExist(String email) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + "googleMemberExist", email);
+	}
 }

@@ -128,6 +128,15 @@
 		color: #898989;
 		font-size: 12px;
 	}
+	
+	/* 	소셜로그인  */
+	#socialLogin {
+		text-align: center;
+	}
+	.socialIcon {
+		width: 300px;
+		margin-top: 15px;
+	}
 
 	/* 유효성검사 토스트 팝업 */
 	#askConfirm {

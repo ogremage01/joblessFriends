@@ -52,6 +52,7 @@ textarea {
     background-color: #fff;
 }
 
+
 /* input 기본 크기 */
 input[type="text"],
 select {
@@ -66,6 +67,28 @@ textarea {
     min-height: 160px;
 }
 
+/*복지쪽 */
+.InsertWelfare input[type="text"]{
+    min-width: 500px;
+    height: 50px;
+}
+.welfare-item {
+    gap: 10px;
+    margin-top: 10px;
+}
+.welfare-item span {
+    background: #f3f3f3;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+.remove-welfare {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #d33;
+    cursor: pointer;
+}
 /* 태그 입력창 */
 .tag-input {
     border: 1.5px solid #f69800;

@@ -51,6 +51,7 @@ $(document).ready(function () {
 
 
 $("#generateTemplate").on('click',function () {
+    updateWelfareInput();
     if (!validateFormInputs()) return;
     let titleValue = $(".InsertTitle > input").val();
 
@@ -64,6 +65,7 @@ $("#generateTemplate").on('click',function () {
 
     let startDate = $('.InsertDate input[name="startDate"]').val();
     let endDate = $('.InsertDate input[name="endDate"]').val();
+    const welfareHtml = welfareTags.map(text => `<li>${text}</li>`).join('');
     const selectedTags = $('input[name="tagId"]:checked')
         .map(function () {
             return $(this).parent().text().trim();
@@ -122,9 +124,7 @@ $("#generateTemplate").on('click',function () {
             <div>${contentValue}</div>
             
                 <ul>
-                        <li>정규직 / 주 5일 근무 / 유연 출퇴근제</li>
-                        <li>우대사항: JPA 실무 경험, 대용량 트래픽 서비스 운영 경험</li>
-                        <li>복지: 사내 피트니스, 카페, 연 100만원 포인트 제공   수정예정</li>
+                        ${welfareHtml}
                    </ul>
         </section>
 
@@ -260,9 +260,14 @@ function validateFormInputs() {
     // 상세내용
     if (!content || content === "<p><br></p>") {
         loginFailPop("상세 내용을 입력해주세요.");
+        window.editor.focus(); //전역 객체로 접근
         return false;
     }
-
+    if (welfareTags.length === 0) {
+        loginFailPop("복리후생 항목을 최소 1개 이상 입력해주세요.");
+        $('#welfareInput').focus();
+        return false;
+    }
     return true;
 }
 
@@ -275,4 +280,61 @@ function loginFailPop(msg) {
         $('#askConfirm').removeClass('active');
     }, 1500);
 }
+
+let welfareTags = [];
+
+function updateWelfareInput() {
+    $('input[name="welfareList"]').val(welfareTags.join('|'));
+}
+
+function addWelfareItem() {
+    const value = $('#welfareInput').val().trim();
+    if (!value || welfareTags.includes(value)) return;
+
+    welfareTags.push(value);
+    $('#welfareList').append(`
+        <div class="flex-row welfare-item">
+            <span>${value}</span>
+            <button type="button" class="remove-welfare" data-val="${value}">X</button>
+        </div>
+    `);
+    $('#welfareInput').val('');
+    updateWelfareInput();
+}
+
+$('#addWelfareBtn').on('click', addWelfareItem);
+$('#welfareInput').on('keypress', function (e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        addWelfareItem();
+    }
+});
+
+$(document).on('click', '.remove-welfare', function () {
+    const val = $(this).data('val');
+    welfareTags = welfareTags.filter(tag => tag !== val);
+    $(this).closest('.welfare-item').remove();
+    updateWelfareInput();
+});
+
+$('#insertForm').on('submit', function () {
+    const markdown = editor.getHTML();
+    $('#hiddenContent').val(markdown);
+
+    // 유효성 검사 먼저 수행
+    if (!validateFormInputs())
+    {
+        return false;
+    }
+
+    const selectedSkillIds = $('input[name="tagId"]:checked')
+        .map(function () {
+            return $(this).val();
+        }).get().slice(0, 5);
+    $('input[name="skills"]').val(selectedSkillIds.join(','));
+
+    updateWelfareInput(); // 복리후생 hidden 처리
+
+    return true; // ✅ 모든 유효성 통과 시 전송
+});
 

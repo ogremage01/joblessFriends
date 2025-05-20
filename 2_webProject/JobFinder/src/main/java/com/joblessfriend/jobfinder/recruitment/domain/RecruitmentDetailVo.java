@@ -15,5 +15,5 @@ public class RecruitmentDetailVo {
     private CompanyVo company;
     private JobVo job;
     private List<SkillVo> skill;
-
+    private List<WelfareVo> welfare;
 }

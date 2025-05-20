@@ -1,13 +1,17 @@
 package com.joblessfriend.jobfinder.member.controller;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.joblessfriend.jobfinder.auth.controller.AuthController;
@@ -37,14 +41,17 @@ public class MemberController {
 	}
 	
 	@PostMapping("/passwordCheck")
-	public String passwordCheck(String password, int memberId, RedirectAttributes rttr) {
+	public ResponseEntity<Integer> passwordCheck(@RequestParam String password, @RequestParam int memberId, HttpSession session) {
 		int result = memberService.updatePassword(password, memberId);
 		if(result == 1) {
-			rttr.addFlashAttribute("msg", "비밀번호가 수정되었습니다.");
+			logger.info("비밀번호 변경 성공");
+			MemberVo memberVo = (MemberVo)session.getAttribute("userLogin");
+			memberVo.setPassword(password);
+			session.setAttribute("userLogin", memberVo);
 		}else {
-			rttr.addFlashAttribute("msg", "수정에 실패했습니다.");
+			logger.info("비밀번호 변경 실패");
 		}
-		return "redirect:/member/myPageInfoView";
+		return ResponseEntity.ok(result);
 	}
 	
 }
