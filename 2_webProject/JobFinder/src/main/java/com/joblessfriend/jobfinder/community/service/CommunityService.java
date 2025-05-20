@@ -27,4 +27,8 @@ public interface CommunityService{
 
 	List<Map<String, Object>> communityFileList(int communityId);
 
+	void communityFileDelete(int communityId);
+
+	void communityFileNewInsert(Map<String, Object> fileMap);
+
 }

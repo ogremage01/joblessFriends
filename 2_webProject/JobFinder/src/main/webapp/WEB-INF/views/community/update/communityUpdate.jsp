@@ -50,7 +50,7 @@
 <div id='containerWrap' class="wrap">
     <h2>글쓰기</h2>
 
-    <form action="/community/upldate" method="post" enctype="multipart/form-data">
+    <form action="/community/update" method="post" enctype="multipart/form-data">
         <input type="hidden" name="communityId" value="${community.communityId}">
 
         <!-- 제목 입력 -->

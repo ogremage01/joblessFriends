@@ -100,7 +100,7 @@ public class CommunityController {
 			 HttpSession session,
 			 MultipartHttpServletRequest mhr) throws Exception{	
 	    System.out.println("글쓰기 시작");
-	    //고용 시퀀스 넘버 생성용 저장 변수
+	    //게시글 시퀀스 넘버 생성용 저장 변수
 	    int communityId = communityService.communitySeqNum();
 
 	    //세션정보 저장(로그인 유저 ID 저장)
@@ -110,8 +110,7 @@ public class CommunityController {
 	    
 	    //게시글 관련 전부 저장
 	    communityService.communityInsertOne(communityVo);
-	    System.err.println("게시글 번호: "+ communityVo.getCommunityId());
-	    // 2. 파일 정보 세션에서 가져오기
+	    // 2. 파일 정보 세션에서 가져오기(uploadImage에서 저장한 것)
 	    List<Map<String, Object>> uploadedFiles = (List<Map<String, Object>>) session.getAttribute("uploadedFiles");
 	    if (uploadedFiles != null) {
 	        for (Map<String, Object> fileMap : uploadedFiles) {
@@ -122,8 +121,8 @@ public class CommunityController {
 	    }
 	    
 
-	    // 글 작성 완료 후 목록 페이지로 리다이렉트
-	    return "redirect:/community";
+	    // 글 작성 완료 후 자신이 쓴 글 상세로 이동
+	    return "redirect:/community/detail?no="+communityId;
 	}
 	
 	//커뮤니티 세부
@@ -149,6 +148,7 @@ public class CommunityController {
 		return "community/detail/communityDetail";
 	}
 	
+	//커뮤니티 업데이트(화면)
 	@GetMapping("/update")
 	public String communityUpdate(@RequestParam int no, Model model) {
 		System.out.println("게시판 수정 시작");
@@ -158,26 +158,47 @@ public class CommunityController {
 		
 		//게시글의 파일 리스트 불러옴
 		List<Map<String, Object>> fileList = communityService.communityFileList(no);
+		//잘 불러와지는지 확인
 		for (Map<String, Object> file : fileList) {
 		    System.out.println("\nfile: " + file);
 		}
+		//model객체에 저장
 		model.addAttribute("fileList", fileList);
 		
 		//글 상세 화면
 		return "community/update/communityUpdate";
 	}
 	
-	//커뮤니티 업로드
+	//커뮤니티 업데이트(저장)
 	@PostMapping("/update")
-	public String communityUpdate(@ModelAttribute CommunityVo communityVo, Model model) {
+	public String communityUpdate(@ModelAttribute CommunityVo communityVo, 
+			Model model, HttpSession session) {
 		System.out.println("게시판 수정 시작");
+		int communityId=communityVo.getCommunityId();
 		
-		communityService.communityUpdate(communityVo);
+
 		
 		model.addAttribute("community", communityVo);
+		
+	    //게시글 관련 전부 저장
+		communityService.communityUpdate(communityVo);
+	    // 2. 파일 정보 세션에서 가져오기(uploadImage에서 저장한 것)
+	    List<Map<String, Object>> updatedFiles = (List<Map<String, Object>>) session.getAttribute("updatedFiles");
+	    
+	    //3. 업데이트 전 기존 파일 목록 삭제
+	    communityService.communityFileDelete(communityId);
+	    
+	    //4. 새 파일 저장
+	    if (updatedFiles != null) {
+	        for (Map<String, Object> fileMap : updatedFiles) {
+	            fileMap.put("parentId", communityId); // 커뮤니티 ID 연결
+	            communityService.communityFileNewInsert(fileMap);//파일 삽입
+	        }
+	        session.removeAttribute("updatedFiles"); // 사용 후 제거
+	    }
 		    
 		//글 상세 화면
-		return "redirect:/community/detail?no="+communityVo.getCommunityId();
+		return "redirect:/community/detail?no="+communityId;
 	}
 	
 	//커뮤니티 삭제
@@ -201,12 +222,6 @@ public class CommunityController {
 	    String fileExtension = storedFileName.substring(storedFileName.lastIndexOf('.') + 1); // 확장자 추출
 	    String imageUrl = "http://localhost:9090/image/"+ storedFileName;
 
-	    		
-	    System.out.println("\n파일명: " + storedFileName);
-	    System.out.println("원래파일명: " + originalFileName);
-	    System.out.println("확장자명: "+ fileExtension);
-	    System.out.println("링크: "+imageUrl);
-	    System.out.println("파일 사이즈: "+ file.getSize());
 	    
 	    Map<String, Object> fileMap = new HashMap<>();
 
@@ -224,10 +239,6 @@ public class CommunityController {
 	    }
 	    uploadedFiles.add(fileMap);
 	    session.setAttribute("uploadedFiles", uploadedFiles);
-	    
-
-	    // DB에 저장
-	  //  communityService.communityFileInsertOne(fileMap);
 	    
 	    
 	    Map<String, Object> response = new HashMap<>();
@@ -254,13 +265,14 @@ public class CommunityController {
 	
 	//파일 업데이트(단순 수정, 삭제 이용)
 	@PostMapping("/updateImage")
-	public ResponseEntity<Map<String, Object>> updateImage(@RequestParam("uploadFile") 
+	public ResponseEntity<Map<String, Object>> updateImage(@RequestParam("updateFile") 
 		MultipartFile file, HttpSession session) throws Exception {
 	    // fileUtils의 uploadFile 메서드 호출
-	    Map<String, String> uploadResult = fileUtils.uploadFile(file);
+	    Map<String, String> updateResult = fileUtils.uploadFile(file);
 
-	    String storedFileName = uploadResult.get("storedFileName");
-	    String originalFileName = uploadResult.get("originalFileName");
+	    //맵 리스트에 저장할 정보
+	    String storedFileName = updateResult.get("storedFileName");
+	    String originalFileName = updateResult.get("originalFileName");
 	    String fileExtension = storedFileName.substring(storedFileName.lastIndexOf('.') + 1); // 확장자 추출
 	    String imageUrl = "http://localhost:9090/image/"+ storedFileName;
 
@@ -282,16 +294,12 @@ public class CommunityController {
 	    
 	    
 	    // 세션에 파일 정보 추가
-	    List<Map<String, Object>> uploadedFiles = (List<Map<String, Object>>) session.getAttribute("uploadedFiles");
-	    if (uploadedFiles == null) {
-	        uploadedFiles = new ArrayList<>();
+	    List<Map<String, Object>> updatedFiles = (List<Map<String, Object>>) session.getAttribute("updatedFiles");
+	    if (updatedFiles == null) {
+	    	updatedFiles = new ArrayList<>();
 	    }
-	    uploadedFiles.add(fileMap);
-	    session.setAttribute("uploadedFiles", uploadedFiles);
-	    
-
-	    // DB에 저장
-	  //  communityService.communityFileInsertOne(fileMap);
+	    updatedFiles.add(fileMap);
+	    session.setAttribute("uploadedFiles", updatedFiles);
 	    
 	    
 	    Map<String, Object> response = new HashMap<>();

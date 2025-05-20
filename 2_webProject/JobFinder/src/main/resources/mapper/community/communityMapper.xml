@@ -47,14 +47,20 @@
 		
 	</delete>
 	
-	<!-- 파일 저장(게시물 생성, 수정 시 사용) -->
+	<!-- 파일 저장(게시물 생성 시 사용) -->
 	<insert id="communityFileInsert" parameterType="map">
 		INSERT INTO COMMUNITY_FILE (COMMUNITY_FILE_ID, COMMUNITY_ID, FILE_NAME, STORED_FILE_NAME, FILE_SIZE, CREATE_AT, MODIFIED_AT, FILE_EXTENSION, FILE_LINK)
 		VALUES(COMMUNITY_FILE_ID_SEQ.NEXTVAL, #{parentId}, #{originalFileName}, #{storedFileName}, #{fileSize}, SYSDATE, NULL, #{fileExtension}, #{fileLink})
 	</insert>
 	
+		<!-- 파일 저장(게시물수정 시 사용)-수정날짜 존재 -->
+	<insert id="communityFileNewInsert" parameterType="map">
+		INSERT INTO COMMUNITY_FILE (COMMUNITY_FILE_ID, COMMUNITY_ID, FILE_NAME, STORED_FILE_NAME, FILE_SIZE, CREATE_AT, MODIFIED_AT, FILE_EXTENSION, FILE_LINK)
+		VALUES(COMMUNITY_FILE_ID_SEQ.NEXTVAL, #{parentId}, #{originalFileName}, #{storedFileName}, #{fileSize}, NULL, SYSDATE, #{fileExtension}, #{fileLink})
+	</insert>
+	
 	<!-- 파일 삭제(업데이트 시 사용) -->
-	<delete id="deleteCommunityFile" parameterType="int">
+	<delete id="communityFileDelete" parameterType="int">
 		DELETE FROM COMMUNITY_FILE
 		WHERE COMMUNITY_ID = #{communityId}
 	</delete>
