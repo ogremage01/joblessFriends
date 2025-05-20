@@ -154,19 +154,19 @@
     </insert>
 
 <!--복리후생 -->
-    <insert id="insertJobPostWelfare" parameterType="java.util.List">
-        INSERT ALL
-        <foreach collection="list" item="welfare">
-            INTO JOB_POST_WELFARE (
-            JOB_WELFARE_ID, JOB_POST_ID, BENEFIT_TEXT
-            ) VALUES (
-            SEQ_JOB_WELFARE_ID.NEXTVAL,
-            #{welfare.jobPostId},
-            #{welfare.benefitText}
-            )
-        </foreach>
-        SELECT * FROM DUAL
+    <insert id="insertJobPostWelfare" parameterType="com.joblessfriend.jobfinder.recruitment.domain.WelfareVo">
+        INSERT INTO JOB_POST_WELFARE (
+            JOB_WELFARE_ID,
+            JOB_POST_ID,
+            BENEFIT_TEXT
+        ) VALUES (
+                     SEQ_JOB_WELFARE_ID.NEXTVAL,
+                     #{jobPostId},
+                     #{benefitText}
+                 )
     </insert>
+
+
 
 
 

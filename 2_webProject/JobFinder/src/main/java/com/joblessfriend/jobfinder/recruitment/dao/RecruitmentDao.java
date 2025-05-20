@@ -2,6 +2,7 @@ package com.joblessfriend.jobfinder.recruitment.dao;
 
 import com.joblessfriend.jobfinder.recruitment.domain.*;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 
@@ -21,9 +22,10 @@ public interface RecruitmentDao {
 
     void insertRecruitment(RecruitmentVo recruitmentVo);
     void insertJobPostTag(RecruitmentVo recruitmentVo, List<Integer> tagIdList);
-    void insertJobPostWelfare(List<WelfareVo> welfareList);
+    void insertJobPostWelfare(WelfareVo Welfarevo);
 
-	List<RecruitmentVo> adminRecruitmentList();
+
+    List<RecruitmentVo> adminRecruitmentList();
 	List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId);
 //    필터
     public int countFilteredPosts(FilterRequestVo filterRequestVo);

@@ -213,7 +213,7 @@
 
             return true;
         });
-
+    window.editor = editor;
 
 
 </script>

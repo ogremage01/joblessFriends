@@ -260,9 +260,14 @@ function validateFormInputs() {
     // 상세내용
     if (!content || content === "<p><br></p>") {
         loginFailPop("상세 내용을 입력해주세요.");
+        window.editor.focus(); //전역 객체로 접근
         return false;
     }
-
+    if (welfareTags.length === 0) {
+        loginFailPop("복리후생 항목을 최소 1개 이상 입력해주세요.");
+        $('#welfareInput').focus();
+        return false;
+    }
     return true;
 }
 
@@ -314,18 +319,22 @@ $(document).on('click', '.remove-welfare', function () {
 
 $('#insertForm').on('submit', function () {
     const markdown = editor.getHTML();
-    console.log("🔥 submitEditor called");
     $('#hiddenContent').val(markdown);
+
+    // 유효성 검사 먼저 수행
+    if (!validateFormInputs())
+    {
+        return false;
+    }
 
     const selectedSkillIds = $('input[name="tagId"]:checked')
         .map(function () {
             return $(this).val();
         }).get().slice(0, 5);
-    console.log("✅ selected skills:", selectedSkillIds);
     $('input[name="skills"]').val(selectedSkillIds.join(','));
 
-    // ✅ 복리후생 리스트 값 업데이트
-    updateWelfareInput();
+    updateWelfareInput(); // 복리후생 hidden 처리
 
-    return true;
+    return true; // ✅ 모든 유효성 통과 시 전송
 });
+

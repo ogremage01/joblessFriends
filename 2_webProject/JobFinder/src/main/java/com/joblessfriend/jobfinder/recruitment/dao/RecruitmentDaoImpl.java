@@ -68,9 +68,9 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
         sqlSession.insert(namespace+".insertJobPostTag", paramMap);
     }
     @Override
-    public void insertJobPostWelfare(List<WelfareVo> welfareList) {
+    public void insertJobPostWelfare(WelfareVo Welfarevo) {
 
-        sqlSession.insert(namespace + ".insertJobPostWelfare", welfareList);
+        sqlSession.insert(namespace + ".insertJobPostWelfare", Welfarevo);
     }
     //필터카운팅
     @Override

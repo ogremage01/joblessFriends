@@ -74,10 +74,8 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         int jobPostId = recruitmentVo.getJobPostId();
         for (WelfareVo vo : welfareList) {
             vo.setJobPostId(jobPostId);
+            recruitmentDao.insertJobPostWelfare(vo); // 단건 삽입
         }
-
-        // 4. 복리후생 insert
-        recruitmentDao.insertJobPostWelfare(welfareList);
     }
 
 
