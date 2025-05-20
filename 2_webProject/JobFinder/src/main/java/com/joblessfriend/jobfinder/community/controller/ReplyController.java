@@ -1,0 +1,86 @@
+package com.joblessfriend.jobfinder.community.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.joblessfriend.jobfinder.community.domain.PostCommentVo;
+import com.joblessfriend.jobfinder.community.service.ReplyService;
+
+@RequestMapping("/community/detail")
+@Controller
+public class ReplyController {
+	
+	@Autowired
+	private ReplyService replyService;
+
+	//결과 화면 테스트용 메서드 하나 만들기-postreply 아이디 직접 입력 
+	
+	/* 댓글 등록 후 댓글리스트가 갱신되는 로직 */
+	@GetMapping("/reply/{postCommentId}")
+	@ResponseBody
+	public List<PostCommentVo> replyList(@PathVariable("postCommentId") int postCommentId){
+		
+		
+	    return replyService.replySelectList(postCommentId);
+	}
+	
+	@GetMapping("testRe/{postCommentId}")
+	public String test(@PathVariable("postCommentId") int postCommentId, Model model){
+		
+		List<PostCommentVo> replysList = replyService.replySelectList(postCommentId);
+		System.out.println("댓글 수: " + replysList.size());
+		
+		model.addAttribute("replysList", replysList);
+		
+		return "community/detail/postComment/reply";
+	}
+	
+/*	
+	@PostMapping("/replyUpload/{postCommentId}")
+	@ResponseBody
+	public ResponseEntity<?> replyUpload(@PathVariable int postCommentId,
+			 @RequestBody PostCommentVo replyVo) {
+		System.out.println("~~~~~~~~~~~~~~~~댓글쓰기 시작~~~~~~~~~~~~~~");
+		replyVo.setCommunityId(postCommentId);
+		
+		System.out.println(replyVo);
+		replyService.replyInsert(replyVo);
+		
+		return ResponseEntity.ok().build();
+	}
+	
+	@PostMapping("/replyUpdate/{replyId}")
+	@ResponseBody
+	public ResponseEntity<?> replyUpdate(@PathVariable int replyId,
+			 @RequestBody PostCommentVo replyVo) {
+		System.out.println("~~~~~~게시판 수정 시작~~~~~~~~~~");
+		replyVo.setPostCommentId(replyId);
+		replyService.replyUpdate(replyVo);
+		    
+		return ResponseEntity.ok().build();
+	}
+	
+	@DeleteMapping("/delete/{replyId}")
+	@ResponseBody
+	public ResponseEntity<String> replyUpload(@PathVariable("replyId") int replyId) {
+		System.out.println("~~~~~~~~~~~~~~~~댓글삭제 시작~~~~~~~~~~~~~~");
+		
+		replyService.replyDelete(replyId);
+		
+		return ResponseEntity.ok("댓글 삭제");
+	}
+	
+	*/
+	
+}
