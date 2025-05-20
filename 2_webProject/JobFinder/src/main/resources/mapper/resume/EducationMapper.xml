@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.joblessfriend.jobfinder.resume.education">
+
+    <resultMap type="com.joblessfriend.jobfinder.resume.domain.EducationVo" id="educationResultMap">
+        <id column="EDU_ID" property="eduId" />
+        <result column="RESUME_ID" property="resumeId" />
+        <result column="EDU_INSTITUTION" property="eduInstitution" />
+        <result column="EDU_NAME" property="eduName" />     
+        <result column="START_DATE" property="startDate" javaType="java.util.Date" />
+        <result column="END_DATE" property="endDate" javaType="java.util.Date" />   
+    </resultMap>
+    
+    <select id="educationSelectList" resultMap="educationResultMap">
+        SELECT EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE
+        FROM EDUCATION
+        WHERE RESUME_ID=#{resumeId}
+    </select>
+
+	<insert id="educationInsertOne">
+		INSERT INTO EDUCATION
+		(EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE)
+		VALUES(EDU_ID_SEQ.NEXTVAL, #{resumeId}, #{eduInstitution}, #{eduName}, #{startDate}, #{endDate})
+	</insert>
+	
+	<delete id="educationDeleteOne" parameterType="map">
+		DELETE FROM EDUCATION
+        WHERE RESUME_ID=#{resumeId}
+        AND EDU_ID=#{eduId}
+	</delete>
+</mapper>
