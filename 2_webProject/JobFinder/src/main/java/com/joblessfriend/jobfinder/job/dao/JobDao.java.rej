@@ -1,0 +1,17 @@
+diff a/2_webProject/JobFinder/src/main/java/com/joblessfriend/jobfinder/job/dao/JobDao.java b/2_webProject/JobFinder/src/main/java/com/joblessfriend/jobfinder/job/dao/JobDao.java	(rejected hunks)
+@@ -1,10 +1,12 @@
+ package com.joblessfriend.jobfinder.job.dao;
+ 
++import java.util.List;
++
+ import com.joblessfriend.jobfinder.job.domain.JobVo;
+-import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
+ 
+ public interface JobDao {
+ 
+-
+-    JobVo getJobById(int jobPostId);
++    JobVo getJobByIdForRecruitment(int jobPostId);
++    
++	List<JobVo> selectJobsByGroupId(int jobGroupId); 
+ }

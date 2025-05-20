@@ -20,4 +20,14 @@ public class JobDaoImpl implements JobDao {
         return sqlSession.selectOne("com.joblessfriend.jobfinder.job.dao.JobDao.getJobById", jobPostId);
 
     }
+    @Override
+    public JobVo getJobByIdForRecruitment(int jobPostId) {
+        return sqlSession.selectOne("com.joblessfriend.jobfinder.job.dao.JobDao.getJobByIdForRecruitment", jobPostId);
+
+    }
+    @Override
+    public List<JobVo> selectJobsByGroupId(int jobGroupId) {
+        // TODOAuto-generated method stub
+        return sqlSession.selectList("com.joblessfriend.jobfinder.job.dao.JobDao.selectJobsByGroupId", jobGroupId);
+    }
 }

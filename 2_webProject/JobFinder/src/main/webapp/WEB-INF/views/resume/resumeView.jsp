@@ -367,16 +367,15 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("응답 content-type:", res.headers.get("content-type"));  // 확인용 로그
         return res.json();
       })
-      .then((data) => {
-        console.log("직무 데이터:", data);  // 받아온 직무 데이터 출력
-        const jobList = data.data || data.jobs || data;
-        data.forEach((job) => {
-          const option = document.createElement("option");
-          option.value = job.jobId;
-          option.textContent = job.jobName;
-          jobSelect.appendChild(option);
-        });
-      })
+    .then((data) => {
+	  console.log("직무 데이터:", data);
+	  data.forEach((job) => {
+	    const option = document.createElement("option");
+	    option.value = job.jobId;
+	    option.textContent = job.jobName;
+	    jobSelect.appendChild(option);
+	  });
+	})
       .catch((err) => {
         console.error("직무 요청 오류", err);  // 에러 발생 시 로그
       });
