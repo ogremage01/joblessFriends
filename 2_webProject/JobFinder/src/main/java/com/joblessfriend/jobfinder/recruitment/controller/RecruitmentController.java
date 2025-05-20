@@ -8,10 +8,7 @@ import com.joblessfriend.jobfinder.company.service.CompanyService;
 import com.joblessfriend.jobfinder.job.domain.JobVo;
 import com.joblessfriend.jobfinder.job.service.JobService;
 import com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao;
-import com.joblessfriend.jobfinder.recruitment.domain.FilterRequestVo;
-import com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo;
-import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentDetailVo;
-import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
+import com.joblessfriend.jobfinder.recruitment.domain.*;
 import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
 import com.joblessfriend.jobfinder.skill.domain.SkillVo;
 import com.joblessfriend.jobfinder.skill.service.SkillService;
@@ -92,6 +89,7 @@ public class RecruitmentController {
         RecruitmentVo recruitmentVo = recruitmentService.getRecruitmentId(jobPostId);
         CompanyVo companyVo = companyService.companySelectOne(companyId);
         List<SkillVo> skillList = skillService.postTagList(jobPostId);
+        List<WelfareVo> welfare = recruitmentService.selectWelfareByJobPostId(jobPostId);
         if (recruitmentVo.getCompanyId() != companyVo.getCompanyId()) {
             throw new IllegalArgumentException("회사 정보가 일치하지 않습니다.");
         }
@@ -105,6 +103,7 @@ public class RecruitmentController {
         recruitmentDetailVo.setCompany(companyVo);
         recruitmentDetailVo.setRecruitment(recruitmentVo);
         recruitmentDetailVo.setSkill(skillList);
+        recruitmentDetailVo.setWelfare(welfare);
         System.out.println(recruitmentDetailVo.getRecruitment());
 
         model.addAttribute("recruitmentDetailVo", recruitmentDetailVo);
@@ -131,9 +130,9 @@ public class RecruitmentController {
 
     @PostMapping("/insert")
     public String insertRecruitment(@ModelAttribute RecruitmentVo recruitmentVo,
-                                    @RequestParam("skills") String skills,
+                                    @RequestParam("skills") String skills, @RequestParam("welfareList") String welfareList,
                                     HttpSession session) {
-
+        System.out.println("📥 컨트롤러 진입");
         // 1. 로그인 체크
         Object loginMember = session.getAttribute("userLogin");
         Object userType = session.getAttribute("userType");
@@ -151,9 +150,22 @@ public class RecruitmentController {
                 .filter(s -> !s.isBlank())
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
+        List<WelfareVo> welfareVoList = Arrays.stream(welfareList.split("\\|"))
+                .filter(w -> !w.isBlank())
+                .map(w -> {
+                    WelfareVo vo = new WelfareVo();
+                    vo.setBenefitText(w); // jobPostId는 나중에 세팅됨
+                    return vo;
+                })
+                .collect(Collectors.toList());
+        try {
+            recruitmentService.insertRecruitment(recruitmentVo, tagIdList,welfareVoList);
+            System.out.println("✅ insert 성공");
+        } catch (Exception e) {
+            e.printStackTrace(); // 꼭 전체 출력!
+        }
 
 
-        recruitmentService.insertRecruitment(recruitmentVo, tagIdList);
 
 
         return "redirect:/Recruitment/list";
