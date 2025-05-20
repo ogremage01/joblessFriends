@@ -31,4 +31,6 @@ public interface MemberService {
 
 	int updatePassword(String password, int memberId);
 
+	String generateUniqueNickname();
+
 }

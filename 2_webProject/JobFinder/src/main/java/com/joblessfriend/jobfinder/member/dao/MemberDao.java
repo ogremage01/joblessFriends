@@ -33,5 +33,7 @@ public interface MemberDao {
 
 	int updatePassword(String password, int memberId);
 
+	MemberVo googleMemberExist(String email);
+
 
 }

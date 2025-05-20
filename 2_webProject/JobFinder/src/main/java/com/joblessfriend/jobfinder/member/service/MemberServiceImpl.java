@@ -22,8 +22,11 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDao memberDao;
 	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
+
+    public MemberServiceImpl(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 	
 	// 로그인
 	@Override
@@ -48,6 +51,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	// 닉네임 생성 메소드
+	@Override
 	public String generateUniqueNickname() {
 		final String CHAR_POOL = "abcdefghijklmnopqrstuvwxyz0123456789";
 		final int LENGTH = 5;
