@@ -92,11 +92,15 @@
 		<div class="grid-2">
 			<div class="field-block">
 				<label>직군</label>
-				<input type="text" value="IT 개발·데이터" />
+				<select id="jobGroupSelect">
+					<option value="">직군 선택</option>
+				</select>
 			</div>
 				<div class="field-block">
 				<label>직무</label>
-				<input type="text" value="데이터 사이언티스트" />
+				<select id="jobSelect">
+					<option value="">직무 선택</option>
+				</select>
 			</div>
 		</div>
 	</section>
@@ -324,6 +328,59 @@ document.getElementById("profileImageInput").addEventListener("change", function
     .catch(err => {
         console.error("업로드 실패", err);
     });
+});
+
+ // 직군
+document.addEventListener("DOMContentLoaded", function () {
+  const jobGroupSelect = document.getElementById("jobGroupSelect");
+  const jobSelect = document.getElementById("jobSelect");
+
+  // 직군 목록 불러오기
+  fetch("/jobGroup/list")
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("✅ 직군 데이터:", data);
+      data.forEach((group) => {
+        const option = document.createElement("option");
+        option.value = group.jobGroupId; // 숫자
+        option.textContent = group.jobGroupName;
+        jobGroupSelect.appendChild(option);
+      });
+    });
+
+  // 직군 선택 시 직무 목록 가져오기
+  jobGroupSelect.addEventListener("change", function () {
+    const jobGroupId = this.value;
+
+    console.log("👉 선택된 직군 ID:", jobGroupId);
+
+    // 숫자 문자열인지 확인
+    if (!jobGroupId || isNaN(Number(jobGroupId))) {
+      console.warn("⛔ 유효하지 않은 직군 ID");
+      return;
+    }
+
+    jobSelect.innerHTML = '<option value="">직무 선택</option>'; // 초기화
+
+    fetch(`/job/list?jobGroupId=${jobGroupId}`)
+    .then((res) => {
+        console.log("응답 content-type:", res.headers.get("content-type"));  // 확인용 로그
+        return res.json();
+      })
+      .then((data) => {
+        console.log("직무 데이터:", data);  // 받아온 직무 데이터 출력
+        const jobList = data.data || data.jobs || data;
+        data.forEach((job) => {
+          const option = document.createElement("option");
+          option.value = job.jobId;
+          option.textContent = job.jobName;
+          jobSelect.appendChild(option);
+        });
+      })
+      .catch((err) => {
+        console.error("직무 요청 오류", err);  // 에러 발생 시 로그
+      });
+  });
 });
 
 </script>

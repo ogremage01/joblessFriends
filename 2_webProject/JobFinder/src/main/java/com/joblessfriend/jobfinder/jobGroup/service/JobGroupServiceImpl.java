@@ -13,7 +13,7 @@ import com.joblessfriend.jobfinder.jobGroup.domain.JobGroupVo;
 public class JobGroupServiceImpl implements JobGroupService{
 	
 	@Autowired
-	JobGroupDao jobGroupDao;
+	private JobGroupDao jobGroupDao;
 
 	@Override
 	public List<JobGroupVo> jobGroupSelectList(int page) {
@@ -37,6 +37,12 @@ public class JobGroupServiceImpl implements JobGroupService{
 	public int jobGroupCount() {
 		// TODO Auto-generated method stub
 		return jobGroupDao.jobGroupCount();
+	}
+
+	@Override
+	public List<JobGroupVo> selectAllJobGroupsForAjax() {
+		// TODO Auto-generated method stub
+		return jobGroupDao.selectAllJobGroupsForAjax();
 	}
 	
 

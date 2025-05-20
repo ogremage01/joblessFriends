@@ -21,10 +21,12 @@
 		<select id="jobGroupCount" resultType="int">
 			SELECT COUNT(*)
 			FROM JOB_GROUP
+		</select>
 		
-		
+		<select id="selectAllJobGroupsForAjax" resultMap="jobGroupResultMap">
+		    SELECT JOB_GROUP_ID, JOB_GROUP_NAME
+		    FROM JOB_GROUP
+		    ORDER BY JOB_GROUP_ID ASC
 		</select>
 
-	</mapper>
-	
-	
+	</mapper> 
