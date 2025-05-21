@@ -94,9 +94,9 @@ blockquote p {
 </div>
 
 
-	<jsp:include page="/WEB-INF/views/community/topBar.jsp"/>
+<jsp:include page="/WEB-INF/views/community/topBar.jsp"/>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
-</body>
 <script src="/js/community/communityDetail.js"></script>
+</body>
 </html>
 

@@ -6,7 +6,22 @@ public class SearchVo {
 	private int pageSize;         // 화면 하단에 출력할 페이지 사이즈
 	private String keyword;       // 검색 키워드
 	private String searchType; // 검색 유형
-	
+	private int startRow;
+	private int endRow;
+
+	// Getter/Setter 추가
+	public int getStartRow() {
+		return startRow;
+	}
+	public void setStartRow(int startRow) {
+		this.startRow = startRow;
+	}
+	public int getEndRow() {
+		return endRow;
+	}
+	public void setEndRow(int endRow) {
+		this.endRow = endRow;
+	}
 	public SearchVo() {
 		this.page = 1;
 		this.recordSize = 8;
