@@ -10,14 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.joblessfriend.jobfinder.auth.controller.AuthController;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
+import com.joblessfriend.jobfinder.member.service.MemberBookmarkService;
 import com.joblessfriend.jobfinder.member.service.MemberRecruitmentService;
 import com.joblessfriend.jobfinder.member.service.MemberService;
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
@@ -41,6 +44,8 @@ public class MemberController {
 	private MemberRecruitmentService recruitmentService;
 	@Autowired
 	private SkillService skillService;
+	@Autowired
+	private MemberBookmarkService bookmarkService;
 
 	@GetMapping("/mypage")
 	public String myPage() {
@@ -88,5 +93,17 @@ public class MemberController {
         model.addAttribute("skillMap", skillMap);
 		
 		return "member/bookmark/bookmarkView";
+	}
+	
+	@DeleteMapping("/bookmark")
+	public ResponseEntity<String> bookmarkDelete(HttpSession session, @RequestBody int jobPostId){
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
+		
+		int memberId = memberVo.getMemberId();
+		
+		bookmarkService.deleteOne(memberId, jobPostId);
+		
+		return ResponseEntity.ok("찜삭제");
 	}
 }
