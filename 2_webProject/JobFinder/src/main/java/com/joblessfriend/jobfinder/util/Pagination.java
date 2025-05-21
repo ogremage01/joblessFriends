@@ -10,8 +10,9 @@ public class Pagination {
 		private int limitStart;           // LIMIT 시작 위치
 		private boolean existPrevPage;    // 이전 페이지 존재 여부
 		private boolean existNextPage;    // 다음 페이지 존재 여부
+		private int page;				//전체 페이지 계산 후 "결과" 전달	뷰(JSP/JS)에 현재 페이지가 몇인지 전달하려면 필요함
 
-	    public Pagination(int totalRecordCount, SearchVo params) {
+	public Pagination(int totalRecordCount, SearchVo params) {
 	        if (totalRecordCount > 0) {
 	            this.totalRecordCount = totalRecordCount;
 	            calculation(params);
@@ -71,6 +72,29 @@ public class Pagination {
 			existNextPage = (endPage * recordSize) < totalRecordCount;
 		}
 
+	private void calculationRecruitment(SearchVo params) {
+		totalPageCount = ((totalRecordCount - 1) / params.getRecordSize()) + 1;
+
+		if (params.getPage() > totalPageCount) {
+			params.setPage(totalPageCount);
+		}
+
+		this.page = params.getPage(); // ✅ 현재 페이지 설정
+
+		startPage = ((params.getPage() - 1) / params.getPageSize()) * params.getPageSize() + 1;
+		endPage = startPage + params.getPageSize() - 1;
+		if (endPage > totalPageCount) {
+			endPage = totalPageCount;
+		}
+
+		limitStart = (params.getPage() - 1) * params.getRecordSize();
+		existPrevPage = startPage != 1;
+		existNextPage = (endPage * params.getRecordSize()) < totalRecordCount;
+	}
+
+	public int getPage() {
+		return page;
+	}
 	public int getLimitStart() {
 		return limitStart;
 	}

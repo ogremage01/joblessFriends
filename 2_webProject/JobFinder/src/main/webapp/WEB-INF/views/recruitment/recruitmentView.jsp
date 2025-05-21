@@ -148,10 +148,24 @@
                 </div>
             </c:forEach>
         </div>
+        <div id="pagination">
+            <c:if test="${pagination.existPrevPage}">
+                <button class="page-btn" data-page="${pagination.startPage - 1}">«</button>
+            </c:if>
 
+            <c:forEach var="i" begin="${pagination.startPage}" end="${pagination.endPage}">
+                <button class="page-btn" data-page="${i}" ${i == page ? 'disabled' : ''}>${i}</button>
+            </c:forEach>
+
+            <c:if test="${pagination.existNextPage}">
+                <button class="page-btn" data-page="${pagination.endPage + 1}">»</button>
+            </c:if>
+        </div>
 
     </div>
 </div>
+
+
 
 <jsp:include page="../common/footer.jsp"/>
 <div id="askConfirm">

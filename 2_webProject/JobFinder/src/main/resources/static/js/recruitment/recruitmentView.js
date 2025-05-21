@@ -292,61 +292,6 @@ $(document).on('click', '#btnResetFilter', function (e) {
     // 5. AJAX 호출 대신 UI만 초기화 (굳이 updateFilteredCount 호출 안 해도 됨)
 });
 
-$('#btnSearchFiltered').on('click', function () {
-
-    const params = getFilterParams();
-    console.log("🔍 필터 파라미터:", params);
-    $.ajax({
-        url: '/Recruitment/filter/list',
-        type: 'GET',
-        data: {
-            jobIds: params.jobIds,
-            careers: params.careers,
-            educations: params.educations,
-            skillTags: params.skillTags
-        },
-        traditional: true, // 배열 전송시 반드시 필요!
-        success: function (data) {
-            console.log('채용공고:', data.recruitmentList);
-            console.log('스킬맵:', data.skillMap);
-            console.log('직군:', data.jobGroupList);
-            $('#jobListings').empty(); // 기존 리스트 지우기
-
-            data.recruitmentList.forEach(function (item) {
-                const html = `
-    <div class="job" data-jobpostid="${item.jobPostId}" data-companyid="${item.companyId}">
-      <div class="company-name">${item.companyName}</div>
-      <div class="job-info">
-        <div class="job-title">${item.title} <span class="star">★</span></div>
-        <div class="job-meta">
-          <span>🧑‍💻 지원자격: ${item.education} </span>
-          <span>🎓 경력: ${item.careerType}</span>
-          <span>💼 채용직: ${item.jobName}</span>
-        </div>
-        <div class="job-meta-skill">
-          🧩 스킬: ${
-                    (data.skillMap[item.jobPostId] || [])
-                        .map(skill => `<span class="tag">${skill.tagName}</span>`)
-                        .join('')
-                }
-        </div>
-      </div>
-      <div class="job-action">
-                <button class="apply-btn" type="button" onclick="">지원하기</button>
-                <div class="deadline">~${formatDateWithDay(item.endDate)}</div>
-      </div>
-    </div>
-  `;
-                $('#jobListings').append(html);
-            });
-
-
-        },
-        error: function () {
-            alert('검색 중 오류가 발생했습니다.');
-        }
-    });
-});
 
 $(document).on('click', '.job', function (e) {
     if ($(e.target).hasClass('apply-btn')) return;
@@ -371,3 +316,130 @@ function formatDateWithDay(dateString) {
 
     return `${month}/${day}(${weekDay})`;
 }
+
+$(document).on('click', '.page-btn', function () {
+    const page = $(this).data('page');
+    const params = getFilterParams();
+    params.page = page; // ✅ 페이지 정보 추가
+    $('.page-btn').removeClass('active');
+    $(this).addClass('active');
+
+    const caseNum = validateFilterCase();
+
+    const url = (caseNum === false || caseNum === 12)
+        ? '/Recruitment/list/json'
+        : '/Recruitment/filter/list';
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+        data: params,
+        traditional: true,
+        success: function (data) {
+            renderJobList(data.recruitmentList, data.skillMap);
+            renderPagination(data.pagination); // ✅ 버튼 다시 그림
+        },
+        error: function () {
+            alert('페이지 이동 중 오류 발생');
+        }
+    });
+});
+
+
+
+
+function renderJobList(recruitmentList, skillMap) {
+    $('#jobListings').empty(); // 기존 리스트 지우기
+
+    // 필터링된 공고를 렌더링
+    recruitmentList.forEach(function (item) {
+        const html = `
+            <div class="job" data-jobpostid="${item.jobPostId}" data-companyid="${item.companyId}">
+              <div class="company-name">${item.companyName}</div>
+              <div class="job-info">
+                <div class="job-title">${item.title} <span class="star">★</span></div>
+                <div class="job-meta">
+                  <span>🧑‍💻 지원자격: ${item.education}</span>
+                  <span>🎓 경력: ${item.careerType}</span>
+                  <span>💼 채용직: ${item.jobName}</span>
+                </div>
+                <div class="job-meta-skill">
+                  🧩 스킬: ${
+            (skillMap[item.jobPostId] || [])
+                .map(skill => `<span class="tag">${skill.tagName}</span>`)
+                .join('')
+        }
+                </div>
+              </div>
+              <div class="job-action">
+                <button class="apply-btn" type="button">지원하기</button>
+                <div class="deadline">~${formatDateWithDay(item.endDate)}</div>
+              </div>
+            </div>
+        `;
+        $('#jobListings').append(html); // 필터링된 공고 리스트에 추가
+    });
+}
+
+
+$('#btnSearchFiltered').on('click', function () {
+    const params = getFilterParams();
+    console.log("🔍 필터 파라미터:", params);
+
+    $.ajax({
+        url: '/Recruitment/filter/list',
+        type: 'GET',
+        data: params,
+        traditional: true,
+        success: function (data) {
+            renderJobList(data.recruitmentList, data.skillMap); // 필터링된 공고 렌더링
+            renderPagination(data.pagination); // 페이지 버튼 다시 그리기
+        },
+        error: function () {
+            alert('검색 중 오류가 발생했습니다.');
+        }
+    });
+});
+function renderPagination(pagination) {
+    const $paginationContainer = $('#pagination');
+
+    // 🧹 기존 버튼 제거 (핵심)
+    $paginationContainer.empty();
+
+    const currentPage = pagination.page;
+    const totalPage = pagination.totalPageCount;
+
+    // 📭 페이지가 없을 경우 메시지 출력
+    if (totalPage === 0) {
+        $paginationContainer.html('<span class="no-result">결과 없음</span>');
+        return;
+    }
+
+    // ◀ 이전 버튼
+    if (pagination.existPrevPage) {
+        $paginationContainer.append(`
+            <button class="page-btn" data-page="${pagination.startPage - 1}">«</button>
+        `);
+    }
+
+    // 🔢 번호 버튼
+    for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+        const isActive = i === currentPage ? 'active' : '';
+        $paginationContainer.append(`
+        <button class="page-btn ${isActive}" data-page="${i}">
+            ${i}
+        </button>
+    `);
+    }
+
+    // ▶ 다음 버튼
+    if (pagination.existNextPage) {
+        $paginationContainer.append(`
+            <button class="page-btn" data-page="${pagination.endPage + 1}">»</button>
+        `);
+    }
+}
+
+
+
+
