@@ -12,4 +12,8 @@ public class FilterRequestVo {
     private List<String> careers;
     private List<String> educations;
     private List<Integer> skillTags;
+    private int page = 1;
+    private int recordSize = 4;
+    private int startRow;
+    private int endRow;
 }

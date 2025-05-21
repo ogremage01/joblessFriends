@@ -2,6 +2,7 @@ package com.joblessfriend.jobfinder.recruitment.dao;
 
 import com.joblessfriend.jobfinder.recruitment.domain.*;
 
+import com.joblessfriend.jobfinder.util.SearchVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +13,8 @@ import java.util.List;
 public interface RecruitmentDao {
     List<JobGroupVo> jobGroupList();
     List<JobGroupVo> jobList(int jobGroupId);
-    public List<RecruitmentVo> recruitmentList();
+    int getRecruitmentTotalCount(SearchVo searchVo);
+    List<RecruitmentVo> recruitmentList(SearchVo searchVo);
     RecruitmentVo getRecruitmentId(int jobPostId);
     List<WelfareVo> selectWelfareByJobPostId(int jobPostId);
 	void jobPostDelete(List<Integer> jobPostIdList);//공고 삭제
@@ -31,7 +33,7 @@ public interface RecruitmentDao {
     public int countFilteredPosts(FilterRequestVo filterRequestVo);
 
     public List<RecruitmentVo> getFilteredRecruitmentList(FilterRequestVo filterRequestVo);
-
+    int getFilteredRecruitmentTotalCount(FilterRequestVo filterRequestVo);
 	void jobPostStop(List<Integer> jobPostIdList);
 	List<RecruitmentVo> selectRecruitmentList(int memberId);
 

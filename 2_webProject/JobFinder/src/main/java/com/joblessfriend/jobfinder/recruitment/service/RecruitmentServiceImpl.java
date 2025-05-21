@@ -4,6 +4,7 @@ import com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao;
 import com.joblessfriend.jobfinder.recruitment.domain.*;
 import com.joblessfriend.jobfinder.skill.dao.SkillDao;
 import com.joblessfriend.jobfinder.skill.domain.SkillVo;
+import com.joblessfriend.jobfinder.util.SearchVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,10 +34,14 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     }
 
     @Override
-    public List<RecruitmentVo> recruitmentList() {
-        return recruitmentDao.recruitmentList();
+    public int getRecruitmentTotalCount(SearchVo searchVo) {
+        return recruitmentDao.getRecruitmentTotalCount(searchVo);
     }
 
+    @Override
+    public List<RecruitmentVo> recruitmentList(SearchVo searchVo) {
+        return recruitmentDao.recruitmentList(searchVo);
+    }
     @Override
     public RecruitmentVo getRecruitmentId(int jobPostId) {
         return recruitmentDao.getRecruitmentId(jobPostId);
@@ -103,7 +108,10 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public List<RecruitmentVo> getFilteredRecruitmentList(FilterRequestVo filterRequestVo) {
         return recruitmentDao.getFilteredRecruitmentList(filterRequestVo);
     }
-
+    @Override
+    public int getFilteredRecruitmentTotalCount(FilterRequestVo filterRequestVo) {
+        return recruitmentDao.getFilteredRecruitmentTotalCount(filterRequestVo);
+    }
     //카운트필터
 
 	@Override
