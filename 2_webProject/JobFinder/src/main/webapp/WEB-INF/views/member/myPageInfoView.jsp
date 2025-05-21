@@ -43,7 +43,7 @@
 					    	<div id="passwordChange">
 					    		<span class="infoCategory">비밀번호 변경</span>
 					    		<div id="pwdChangeMain">
-						    		<form id="pwdChangeForm" class="formStyle" method="post" action="/member/passwordCheck" onsubmit="return submitCheck();">
+						    		<form id="pwdChangeForm" class="formStyle" method="post" action="/member/passwordCheck">
 						    			<div class="inputGroup">
 						    				<label for="oldPassword">현재 비밀번호</label>
 											<input id="oldPassword" name="oldPassword" type="password" value="" onblur="checkOldPwd();" placeholder="비밀번호 입력"/>			    		

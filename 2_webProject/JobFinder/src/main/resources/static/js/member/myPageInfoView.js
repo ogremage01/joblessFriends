@@ -142,13 +142,13 @@ function sameCheckPwd(){
 }
 
 // 비밀번호 변경 폼 submit
-$('#pwdChangeForm').on('submit', function(e) {
+$('#pwdChangeForm').on('submit',async function(e) {
 	e.preventDefault(); // 기본 submit 막기
 	
-	checkOldPwd();
+	await checkOldPwd();
 	sameCheckPwd();
 	valiCheckPwd();
-	
+
 	if(!oldPwdPass) {
 		$("#oldPassword").focus();
 		return false;
@@ -164,11 +164,13 @@ $('#pwdChangeForm').on('submit', function(e) {
 		return false;
 	};
 	
-
+	var memberId = $("#memberId").val();
+	var password = $("#password").val();
+	
 	$.ajax({
 		url: '/member/passwordCheck',
 		method: 'POST',
-		data: $(this).serialize(),
+		data: {memberId: memberId, password: password},
 		
 		// ✅ Ajax 요청 직전에 버튼 비활성화
 		beforeSend: function() {
@@ -291,7 +293,7 @@ $(".popSubmit").click(function(){
 	var memberId = $("#memberId").val();
 	
 	$.ajax({
-			url: '/admin/member/individual/'+ memberId,
+			url: '/member/delete/'+ memberId,
 			method: 'DELETE',
 			data: { memberId: memberId },
 			success: function(result) {

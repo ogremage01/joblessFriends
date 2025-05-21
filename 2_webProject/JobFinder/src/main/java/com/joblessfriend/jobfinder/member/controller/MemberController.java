@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +58,7 @@ public class MemberController {
 		return "member/myPageInfoView";
 	}
 	
+	// 비밀번호 변경
 	@PostMapping("/passwordCheck")
 	public ResponseEntity<Integer> passwordCheck(@RequestParam String password, @RequestParam int memberId, HttpSession session) {
 		int result = memberService.updatePassword(password, memberId);
@@ -70,6 +72,19 @@ public class MemberController {
 		}
 		return ResponseEntity.ok(result);
 	}
+	
+    // 탈퇴
+    @DeleteMapping("/delete/{memberId}")
+    public ResponseEntity<Integer> memberDeleteOne(@PathVariable int memberId) {
+        logger.info("개인회원 탈퇴프로세스 진행-개인회원");
+        System.out.println(memberId); // 디버깅 출력
+        // 나중에 댓글, 게시글, 이력서 등등 있는 경우도 봐야함 (fk 때문에 삭제안됨)
+
+        int result = memberService.memberDeleteOne(memberId);
+
+        return ResponseEntity.ok(result); // 삭제 결과 반환
+    }
+	
 	@GetMapping("/bookmark")
 	public String bookmark(Model model, HttpSession session) {
 		
