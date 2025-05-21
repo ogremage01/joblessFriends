@@ -5,7 +5,7 @@
 <mapper namespace="com.joblessfriend.jobfinder.member.dao.RecruitmentDao">
 
 
-    <select id="selectRecruitmentList" parameterType="int" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">-->
+    <select id="selectRecruitmentList" parameterType="int" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
     SELECT
         jp.job_post_id AS jobPostId,
         c.company_id AS companyId,
