@@ -3,11 +3,7 @@ package com.joblessfriend.jobfinder.community.controller;
 import org.commonmark.node.*;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
-import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 //실행이 안되는 마크다운 언어를 html 태그로 수동 변환하는 부분
 

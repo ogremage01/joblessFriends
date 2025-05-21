@@ -70,4 +70,16 @@ public class CommunityServiceImpl implements CommunityService{
 		return communityDao.communityFileList(communityId);
 	}
 
+	@Override
+	public void communityFileDelete(int communityId) {
+		// TODO Auto-generated method stub
+		communityDao.communityFileDelete(communityId);
+	}
+
+	@Override
+	public void communityFileNewInsert(Map<String, Object> fileMap) {
+		// TODO Auto-generated method stub
+		communityDao.communityFileNewInsert(fileMap);
+	}
+
 }

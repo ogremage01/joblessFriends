@@ -34,7 +34,7 @@
 }
 
 .commentBottom{
-	font-size: 10pt;
+	font-size: 11pt;
 	color: #A1A4AF;
 	display: flex;
 	gap: 10px;
@@ -44,3 +44,33 @@
 .commentBoxStyle>p {
 	margin: 0px;
 }
+
+.replyBox{
+	width: 860px;
+	
+}
+
+#nonCommentList{
+	width: 860px;
+	height: 150px;
+	display: flex;
+	
+}
+
+#nonCommentList>span{
+	color:#898989;
+	margin: auto;
+	
+}
+
+
+.repCntBtn{
+	background-color: #fff;
+	color: #6D707B;
+	border-radius: 3px;
+	border: 2px solid #D1D5E3;
+	
+	min-width: 50px;
+	height: 25px;
+}
+

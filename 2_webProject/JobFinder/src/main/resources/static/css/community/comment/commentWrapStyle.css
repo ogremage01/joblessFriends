@@ -5,7 +5,6 @@
         width: 840px;
         min-height: 80px;
         padding: 10px;
-        margin-bottom: 10px;
         font-family: noto-sans-kt;
         border-bottom: 1px solid #D1D5E3;
     }
@@ -22,6 +21,8 @@
         resize: none;
         font-family: noto-sans-kt;
     }
+    
+    
 
     #inputCommentWrap {
         padding-bottom: 13px;
@@ -34,7 +35,7 @@
     }
 
     #commentBtnWrap {
-        width: 855px;
+        width: 850px;
         margin-bottom: 10px;
         margin-top: 3px;
         display: flex;
@@ -61,3 +62,72 @@
     	width: 840px;
     	gap: 10px;
     }
+    
+    #inputReplyBox{
+     	width: 800px;
+        height: 80px;
+        padding: 10px;
+        margin: auto;
+        margin-bottom: 10px;
+        resize: none;
+        font-family: noto-sans-kt;
+        
+
+    }
+    
+    .replyBoxStyle{
+    	margin-left: 50px;
+    	padding-top: 20px;
+    	margin-bottom: 30px;
+    	
+    }
+    
+    .replyBoundary{
+    	border-bottom: 1px solid #bdc3c9;
+    }
+    
+    #inputReplyWrap{
+    	margin-top: 30px;
+		padding-left: 20px;
+    	padding-bottom: 13px;
+        border-bottom: 1px solid #D1D5E3;
+    }
+    #replyBtnWrap{
+    	width: 820px;
+        margin-bottom: 10px;
+        margin-top: 3px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 20px;
+    }
+    
+    #replyBtnWrap p {
+    	padding-top: 2px;
+        margin: 2px;
+        margin-left: auto;
+        color: #6D707B;
+        font-size: 13px;
+    }
+    
+    .replyBottom{
+	font-size: 11pt;
+	color: #A1A4AF;
+	display: flex;
+	gap: 10px;
+	
+	}
+	
+	.nonReplyBoundary{
+	width: 860px;
+	height: 50px;
+	margin: 0px;
+	padding-top: 20px;
+	display: flex;
+	
+	}
+	
+	.nonReplyBoundary>span{
+	color:#898989;
+	margin: auto;
+	
+	}
