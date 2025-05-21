@@ -34,4 +34,5 @@ public interface RecruitmentService {
 	public boolean checkCompanyOwnsJobPost(int companyId, int jobPostId);
 	public void jobPostStop(List<Integer> jobPostIdList);
 
+
 }

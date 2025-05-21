@@ -33,6 +33,7 @@ public interface RecruitmentDao {
     public List<RecruitmentVo> getFilteredRecruitmentList(FilterRequestVo filterRequestVo);
 
 	void jobPostStop(List<Integer> jobPostIdList);
+	List<RecruitmentVo> selectRecruitmentList(int memberId);
 
 
 }

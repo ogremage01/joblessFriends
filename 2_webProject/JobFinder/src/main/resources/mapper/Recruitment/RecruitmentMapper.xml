@@ -177,30 +177,7 @@
 
 
 
-    <!--    관리자용 -->
-    <select id="adminRecruitmentList" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">-->
-    SELECT
-        jp.job_post_id AS jobPostId,
-        c.company_id AS companyId,
-        c.company_name AS companyName,
-        jp.title AS title,
-        jp.career_type AS careerType,
-        jp.education AS education,
-        jg.job_group_name AS jobGroupName,
-        j.job_name AS jobName,
-        jp.start_date AS startDate,
-        jp.end_date AS endDate,
-        jp.MAX_APPLICANTS AS maxApplicants,
-        jp.IS_CONTINUOUS as isContinuous
-    FROM JOB_POST jp
-             JOIN COMPANY c ON jp.company_id = c.company_id
-             JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
-             JOIN JOB j ON jp.job_id = j.job_id
-    ORDER BY jp.job_post_id DESC
 
-    </select>
-    
-    
     <select id="companyRecruitmentList" resultType="com.joblessfriend.jobfinder.recruitment.domain.CompanyRecruitmentVo">
 		SELECT
 		    jp.job_post_id AS jobPostId,
@@ -330,6 +307,27 @@
 	    </foreach>    
 	</update>
 
+    <select id="selectRecruitmentList" parameterType="int" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">-->
+    SELECT
+        jp.job_post_id AS jobPostId,
+        c.company_id AS companyId,
+        c.company_name AS companyName,
+        jp.title AS title,
+        jp.career_type AS careerType,
+        jp.education AS education,
+        jg.job_group_name AS jobGroupName,
+        j.job_name AS jobName,
+        jp.end_date AS endDate,
+        jp.job_img AS jobImg
+    FROM JOB_POST jp
+             JOIN COMPANY c ON jp.company_id = c.company_id
+             JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
+             JOIN JOB j ON jp.job_id = j.job_id
+             JOIN BOOKMARK BK ON JP.JOB_POST_ID = BK.JOB_POST
+    WHERE BK.MEMBER_ID = #{memberId}
+    ORDER BY jp.end_date ASC
+
+    </select>
 
 
 </mapper>
