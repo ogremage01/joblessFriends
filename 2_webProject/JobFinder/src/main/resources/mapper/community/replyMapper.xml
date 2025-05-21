@@ -12,6 +12,10 @@
 			javaType="java.util.Date" />
 	</resultMap>
 	
-	
+	<select id="replySelectList" parameterType="int" resultMap="replyResultVo">
+	 	SELECT REPLY_ID, POST_COMMENT_ID, MEMBER_ID, COMMENT_CONTENT, CREATE_AT, MODIFIED_AT 
+		FROM REPLY
+		WHERE POST_COMMENT_ID=#{postCommentId}
+	</select>
 
 </mapper>

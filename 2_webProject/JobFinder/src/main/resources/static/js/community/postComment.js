@@ -19,7 +19,7 @@ $(document).ready(function () {
 		        url: urlStr,
 		        type: "GET",
 		        dataType: "json",//서버에서 받는쪽
-		        success: function (comments) {
+		        success: function (comments) {//comments : Controller에서의 commentList메서드(urlStr경로) 반환값.
 		            console.log("받은 댓글 목록:", comments);
 		
 		            let html = '';
