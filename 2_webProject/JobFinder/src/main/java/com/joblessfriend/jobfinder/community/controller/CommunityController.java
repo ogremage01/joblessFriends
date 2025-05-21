@@ -3,8 +3,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.catalina.User;
 import org.apache.ibatis.annotations.Delete;
@@ -44,7 +42,7 @@ import jakarta.servlet.http.HttpSession;
 public class CommunityController {
 
 	private Logger logger = LoggerFactory.getLogger(CommunityController.class);
-    private final CommunityServiceImpl communityServiceImpl;
+
 	@Autowired
 	private PostCommentService postCommentService;
 	@Autowired
@@ -54,9 +52,6 @@ public class CommunityController {
 	@Autowired
 	private FileUtils fileUtils;
 
-    CommunityController(CommunityServiceImpl communityServiceImpl) {
-        this.communityServiceImpl = communityServiceImpl;
-    }
 
 	//커뮤니티 메인
 //	@RequestMapping(value="", method = {RequestMethod.GET, RequestMethod.POST})
@@ -114,7 +109,7 @@ public class CommunityController {
 	    List<Map<String, Object>> uploadedFiles = (List<Map<String, Object>>) session.getAttribute("uploadedFiles");
 	    if (uploadedFiles != null) {
 	        for (Map<String, Object> fileMap : uploadedFiles) {
-	            fileMap.put("parentId", communityVo.getCommunityId()); // 커뮤니티 ID 연결
+	            fileMap.put("COMMUNITYID", communityVo.getCommunityId()); // 커뮤니티 ID 연결
 	            communityService.communityFileInsertOne(fileMap);
 	        }
 	        session.removeAttribute("uploadedFiles"); // 사용 후 제거
@@ -150,52 +145,78 @@ public class CommunityController {
 	
 	//커뮤니티 업데이트(화면)
 	@GetMapping("/update")
-	public String communityUpdate(@RequestParam int no, Model model) {
+	public String communityUpdate(@RequestParam int no, Model model, HttpSession session) {
 		System.out.println("게시판 수정 시작");
+
+		
+
 		//게시글 불러옴
 		CommunityVo communityVo = communityService.communityDetail(no);		
 		model.addAttribute("community", communityVo);
 		
 		//게시글의 파일 리스트 불러옴
 		List<Map<String, Object>> fileList = communityService.communityFileList(no);
-		//잘 불러와지는지 확인
+		//잘 불러와지는지 확인(잘뜸)
 		for (Map<String, Object> file : fileList) {
-		    System.out.println("\nfile: " + file);
+		    System.out.println("\n열 부적합 확인해보는 file: " + file);
 		}
 		//model객체에 저장
 		model.addAttribute("fileList", fileList);
 		
+		
+		// 이미 세션에 updatedFiles가 있으면 다시 넣지 않음
+	    if (session.getAttribute("updatedFiles") == null) {
+	        session.setAttribute("updatedFiles", fileList);
+	    }
+
+		 // 세션에 파일 정보 추가
+//	    List<Map<String, Object>> updatedFiles = (List<Map<String, Object>>) session.getAttribute("updatedFiles");
+//	    if (updatedFiles == null) {
+//	    	updatedFiles = new ArrayList<>();
+//	    }
+//	    
+//	    for (Map<String, Object> file : fileList) {
+//	    	updatedFiles.add(fileMap);
+//		}
+//	    
+	    
+		session.setAttribute("updatedFiles", fileList);//<<열부적합은 해결했는데 이번엔 영원히 들어간다.
+//		session.removeAttribute("updatedFiles");
 		//글 상세 화면
 		return "community/update/communityUpdate";
 	}
 	
-	//커뮤니티 업데이트(저장)
+	//커뮤니티 업데이트(저장) 여기서 뻑남
 	@PostMapping("/update")
 	public String communityUpdate(@ModelAttribute CommunityVo communityVo, 
 			Model model, HttpSession session) {
 		System.out.println("게시판 수정 시작");
 		int communityId=communityVo.getCommunityId();
-		
-
+		System.out.println("수정 시 게시글 아이디값: "+communityId);
 		
 		model.addAttribute("community", communityVo);
 		
+		System.out.println("communityVo 확인용: ㄴ"+ communityVo);
+		
 	    //게시글 관련 전부 저장
 		communityService.communityUpdate(communityVo);
-	    // 2. 파일 정보 세션에서 가져오기(uploadImage에서 저장한 것)
+		
 	    List<Map<String, Object>> updatedFiles = (List<Map<String, Object>>) session.getAttribute("updatedFiles");
+	    System.out.println("updatedFiles 확인용: "+ updatedFiles);//잘나옴
 	    
+
 	    //3. 업데이트 전 기존 파일 목록 삭제
-	    communityService.communityFileDelete(communityId);
-	    
-	    //4. 새 파일 저장
-	    if (updatedFiles != null) {
+	    communityService.communityFileDelete(communityId);//파일 전체 삭제- Db
+	    if (updatedFiles != null && !updatedFiles.isEmpty()) {
+	    // 2. 파일 정보 세션에서 가져오기(uploadImage에서 저장한 것)
+    
+		    //4. 새 파일 저장
 	        for (Map<String, Object> fileMap : updatedFiles) {
-	            fileMap.put("parentId", communityId); // 커뮤니티 ID 연결
+	            fileMap.put("COMMUNITYID", communityId); // 커뮤니티 ID 연결
 	            communityService.communityFileNewInsert(fileMap);//파일 삽입
 	        }
-	        session.removeAttribute("updatedFiles"); // 사용 후 제거
 	    }
+		session.removeAttribute("updatedFiles"); // 사용 후 제거
 		    
 		//글 상세 화면
 		return "redirect:/community/detail?no="+communityId;
@@ -204,8 +225,8 @@ public class CommunityController {
 	//커뮤니티 삭제
 	@DeleteMapping("/delete/{communityId}")
 	public ResponseEntity<String> communityDelete(@PathVariable("communityId") int communityId){
+		communityService.communityFileDelete(communityId);
 		communityService.communityDelete(communityId);
-		
 		return ResponseEntity.ok("게시물이 삭제되었습니다.");
 	}
 	
@@ -225,11 +246,12 @@ public class CommunityController {
 	    
 	    Map<String, Object> fileMap = new HashMap<>();
 
-	    fileMap.put("originalFileName", originalFileName);
-	    fileMap.put("storedFileName", storedFileName);
-	    fileMap.put("fileSize", file.getSize());
-	    fileMap.put("fileExtension", fileExtension);
-	    fileMap.put("fileLink", imageUrl);
+	    System.out.println("originalFileName: "+originalFileName);
+	    fileMap.put("FILENAME", originalFileName);
+	    fileMap.put("STOREDFILENAME", storedFileName);
+	    fileMap.put("FILESIZE", file.getSize());
+	    fileMap.put("FILEEXTENSION", fileExtension);
+	    fileMap.put("FILELINK", imageUrl);
 	    
 	    
 	    // 세션에 파일 정보 추가
@@ -253,12 +275,20 @@ public class CommunityController {
 	@DeleteMapping("/deleteImage/{fileId}")
 	public ResponseEntity<String> deleteImage(@PathVariable("fileId") String fileId, HttpSession session) {
 	    List<Map<String, Object>> uploadedFiles = (List<Map<String, Object>>) session.getAttribute("uploadedFiles");
+	    List<Map<String, Object>> updatedFiles = (List<Map<String, Object>>) session.getAttribute("updatedFiles");
 
+	    // 각각 null이 아닐 경우에만 필터링해서 삭제
 	    if (uploadedFiles != null) {
-	        uploadedFiles.removeIf(file -> fileId.equals(file.get("storedFileName"))); // storedFileName가 같은 경우 리스트에서 제외
-	        session.setAttribute("uploadedFiles", uploadedFiles); // 리스트 갱신
+	        uploadedFiles.removeIf(file -> fileId.equals(file.get("STOREDFILENAME")));
+	        session.setAttribute("uploadedFiles", uploadedFiles);
 	    }
 
+	    if (updatedFiles != null) {
+	    	updatedFiles.removeIf(file -> fileId.equals(file.get("STOREDFILENAME")));
+	        session.setAttribute("updatedFiles", updatedFiles);
+	    }
+	    System.out.println("삭제 후 updatedFiles: " + updatedFiles);
+	    
 	    return ResponseEntity.ok("삭제 성공");
 	}
 	
@@ -286,20 +316,22 @@ public class CommunityController {
 	    
 	    Map<String, Object> fileMap = new HashMap<>();
 
-	    fileMap.put("originalFileName", originalFileName);
-	    fileMap.put("storedFileName", storedFileName);
-	    fileMap.put("fileSize", file.getSize());
-	    fileMap.put("fileExtension", fileExtension);
-	    fileMap.put("fileLink", imageUrl);
+	    fileMap.put("FILENAME", originalFileName);
+	    fileMap.put("STOREDFILENAME", storedFileName);
+	    fileMap.put("FILESIZE", file.getSize());
+	    fileMap.put("FILEEXTENSION", fileExtension);
+	    fileMap.put("FILELINK", imageUrl);
 	    
-	    
+	
+		System.out.println("\n열 부적합 확인해보는 새로넣은 file: " + fileMap);
+		
 	    // 세션에 파일 정보 추가
 	    List<Map<String, Object>> updatedFiles = (List<Map<String, Object>>) session.getAttribute("updatedFiles");
 	    if (updatedFiles == null) {
 	    	updatedFiles = new ArrayList<>();
 	    }
 	    updatedFiles.add(fileMap);
-	    session.setAttribute("uploadedFiles", updatedFiles);
+	    session.setAttribute("updatedFiles", updatedFiles);
 	    
 	    
 	    Map<String, Object> response = new HashMap<>();

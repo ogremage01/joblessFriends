@@ -5,7 +5,6 @@
         width: 840px;
         min-height: 80px;
         padding: 10px;
-        margin-bottom: 10px;
         font-family: noto-sans-kt;
         border-bottom: 1px solid #D1D5E3;
     }
@@ -22,6 +21,8 @@
         resize: none;
         font-family: noto-sans-kt;
     }
+    
+    
 
     #inputCommentWrap {
         padding-bottom: 13px;
@@ -60,4 +61,40 @@
     #modifiedWrap>#commentBtnWrap{
     	width: 840px;
     	gap: 10px;
+    }
+    
+    #inputReplyBox{
+     	width: 800px;
+        height: 80px;
+        padding: 10px;
+        margin: auto;
+        margin-bottom: 10px;
+        resize: none;
+        font-family: noto-sans-kt;
+
+    }
+    
+    .replyBoxStyle{
+    	margin-left: 50px;
+    }
+    
+    #inputReplyWrap{
+    	width: 800px;
+    	padding-bottom: 13px;
+        border-bottom: 1px solid #D1D5E3;
+    }
+    #repltBtnWrap{
+    	width: 855px;
+        margin-bottom: 10px;
+        margin-top: 3px;
+        display: flex;
+        gap: 20px;
+    }
+    
+    #repltBtnWrap p {
+    	padding-top: 10px;
+        margin: 2px;
+        margin-left: auto;
+        color: #6D707B;
+        font-size: 13px;
     }
