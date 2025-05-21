@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.joblessfriend.jobfinder.auth.controller.AuthController;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
+import com.joblessfriend.jobfinder.member.service.MemberRecruitmentService;
 import com.joblessfriend.jobfinder.member.service.MemberService;
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
 import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
@@ -37,7 +38,7 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@Autowired
-	private RecruitmentService recruitmentService;
+	private MemberRecruitmentService recruitmentService;
 	@Autowired
 	private SkillService skillService;
 
