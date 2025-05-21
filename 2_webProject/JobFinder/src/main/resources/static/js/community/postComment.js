@@ -25,7 +25,11 @@ $(document).ready(function () {
 		            let html = '';
 		
 		            if (comments.length === 0) {
-		                html += `<p>댓글이 없습니다.</p>`;
+		                html += `
+						<div id="nonCommentList">        
+							<span>작성 된 댓글이 없습니다.</span>
+						</div>
+						`;
 		            } else {
 	
 		                html += `<input type="hidden" name="no" value="${communityId}">`;
@@ -37,6 +41,7 @@ $(document).ready(function () {
 		                	var month = date.getMonth();
 		                	var day = date.getDate();
 		                	
+							//.replyBox : 닫을 리댓 박스 리스트를 찾기 위함
 							html += `
 								<div id="commentList">        
 									<div id="commentNo_${comment.postCommentId}">
@@ -51,7 +56,7 @@ $(document).ready(function () {
 				                	            	<a onclick='commentUpdateForm(${comment.postCommentId}, "${comment.content}")'>수정</a> 
 				                	            	<a onclick='commentDelete(${comment.postCommentId})'>삭제</a>
 				                	            </p>
-						                	     <p><button onclick="loadReplyList(${comment.postCommentId})">답글</button></p>
+						                	     <p><button class='repCntBtn' onclick="loadReplyList(${comment.postCommentId})">답글</button></p>
 			                	            </div>
 
 				                        </div>
@@ -77,7 +82,7 @@ $(document).ready(function () {
 		function uploadComment(communityId, memberId){
 			const urlStr = "/community/detail/commentUpload/" + communityId;
 			
-		    const content = $("#inputCommentBox").val();//작성항 글의 내용
+		    const content = $("#inputCommentBox").val();//작성한 글의 내용
 		
 		    if (!content.trim()) {
 		        alert("댓글을 입력해주세요.");
