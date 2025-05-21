@@ -50,7 +50,7 @@
 <div id='containerWrap' class="wrap">
     <h2>글쓰기</h2>
 
-    <form action="/community/upldate" method="post" enctype="multipart/form-data">
+    <form action="/community/update" method="post" enctype="multipart/form-data">
         <input type="hidden" name="communityId" value="${community.communityId}">
 
         <!-- 제목 입력 -->
@@ -70,15 +70,17 @@
         <div id="fileUploadWrap">
             <p>첨부된 이미지 목록(추가 예정)</p>
             <div id="uploadedFileList">
-            <c:forEach var="file" items="${fileList}">
-			    <div class="fileItem" data-url="${file.FILELINK}">
-			        <span>${file.FILENAME}</span>
-			        <button type="button" onclick="deleteFile('${file.COMMUNITYFILEID}', this)">삭제</button>
-			    </div>
-			</c:forEach>
+	            <c:forEach var="file" items="${fileList}">
+				    <div class="fileItem" data-url="${file.FILELINK}">
+				        <span>${file.FILENAME}</span>
+				        <button type="button" onclick="deleteFile('${file.STOREDFILENAME}', this)">삭제</button>
+				    </div>
+				</c:forEach>
             </div>
         </div>
-
+		
+		
+		
         <!-- 등록/취소 버튼 -->
         <div id="btnWrap">
             <button id='cancleBtn' class='inputBtn' type="button" onclick="history.back()">취소</button>
@@ -90,11 +92,12 @@
     <script>
 		const rawContent = `${community.content}`;
 		const formattedContent = rawContent.replace(/\n/g, '\n');
+		console.log(formattedContent);
 		
         const editor = new toastui.Editor({
             el: document.querySelector('#content'),
             height: '500px',
-            initialEditType: 'markdown',
+            initialEditType: 'wysiwyg',
             initialValue: formattedContent,
             previewStyle: 'vertical',
             hooks: {
@@ -111,7 +114,7 @@
                         success: function(response) {
                             const imageUrl = response.imageUrl;
                             const fileName = response.fileName;
-                            const fileId = response.fileId;
+                            const fileStoredName = response.fileStoredName;
 
                             callback(imageUrl, fileName); // 에디터에 ![이미지명](url) 삽입
 
@@ -122,7 +125,7 @@
                             fileItem.setAttribute('data-url', imageUrl);
                             fileItem.innerHTML = `
                                 <span>\${fileName}</span>
-                                <button type="button" onclick="deleteFile('\${fileId}', this)">삭제</button>
+                                <button type="button" onclick="deleteFile('\${fileStoredName}', this)">삭제</button>
                             `;
                             fileListContainer.appendChild(fileItem);
                         },
@@ -142,14 +145,14 @@
             return true;
         }
 
-        function deleteFile(fileId, btn) {
+        function deleteFile(fileStoredName, btn) {
             if (!confirm("정말 삭제하시겠습니까?")) return;
 
             const fileItem = btn.parentElement;
             const imageUrl = fileItem.getAttribute('data-url');
 
             $.ajax({
-                url: `/community/deleteImage/\${fileId}`,
+                url: `/community/deleteImage/\${fileStoredName}`,
                 type: 'DELETE',
                 success: function() {
                     // 1. 에디터 마크다운에서 이미지 제거

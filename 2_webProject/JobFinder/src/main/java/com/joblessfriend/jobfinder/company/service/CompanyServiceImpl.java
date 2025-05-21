@@ -19,18 +19,7 @@ public class CompanyServiceImpl implements CompanyService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	@Override
-	public List<CompanyVo> companySelectList(int page) {
-		// TODO Auto-generated method stub
-		
-		return companyDao.companySelectList(page);
-	}
 
-	@Override
-	public int companyCount() {
-		// TODO Auto-generated method stub
-		return companyDao.companyCount();
-	}
 
 	@Override
 	public CompanyVo companySelectOne(int companyId) {
@@ -52,11 +41,7 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyDao.companyDeleteOne(companyId);
 	}
 
-	@Override
-	public int companyDeleteList(List<Integer> companyIdList) {
-		// TODO Auto-generated method stub
-		return companyDao.companyDeleteList(companyIdList);
-	}
+
 	// 기업회원가입
 	@Override
 	public int companyInsertOne(CompanyVo companyVo) {
@@ -106,18 +91,6 @@ public class CompanyServiceImpl implements CompanyService {
 		// TODO Auto-generated method stub
 		return companyDao.companyEmailExist(email);
 
-	}
-
-	@Override
-	public List<CompanyVo> companySelectList(int page, String keyword) {
-		// TODO Auto-generated method stub
-		return companyDao.companySelectList(page,keyword);
-	}
-
-	@Override
-	public int companyCount(String keyword) {
-		// TODO Auto-generated method stub
-		return companyDao.companyCount(keyword);
 	}
 
 }

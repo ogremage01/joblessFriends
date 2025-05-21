@@ -20,29 +20,7 @@
 
 		</resultMap>
 
-		<select id="companySelectList" resultMap="companyResultMap">
-		  SELECT * 
-		  FROM (SELECT ROWNUM AS RN, INNERTABLE.*
-		    FROM (SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
-		      FROM COMPANY
-		      ORDER BY COMPANY_ID DESC) INNERTABLE
-		    WHERE ROWNUM &lt;= (#{page} + 1) * 10)
-		  WHERE RN &gt; #{page} * 10
-		</select>
-		
-		
-	<select id="companyList" resultMap="companyResultMap">
-		SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
-		      FROM COMPANY
-		      ORDER BY COMPANY_ID DESC
-		</select>
-		
-		
-		<select id="companyCount" resultType="int">
-			SELECT COUNT(COMPANY_ID)
-			FROM COMPANY
-		</select>
-		
+	
 		
 		<select id="companySelectOne" resultMap="companyResultMap">
 			SELECT *
@@ -73,14 +51,6 @@
 		
 		</delete>
 
-		<delete id="companyDeleteList" parameterType="java.util.List">
-		    DELETE FROM COMPANY
-		    WHERE COMPANY_ID IN
-		    <foreach item="companyId" collection="list" open="(" separator="," close=")">
-		        #{companyId}
-		    </foreach>
-		    
-		</delete>
 
 
 
@@ -113,21 +83,6 @@
 		</select>
 		
 		
-		<select id="companySelectListByKeyword" resultMap="companyResultMap">
-		  SELECT * 
-		  FROM (SELECT ROWNUM AS RN, INNERTABLE.*
-		    FROM (SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
-		      FROM COMPANY
-		      WHERE UPPER(COMPANY_NAME) LIKE UPPER('%' || #{keyword} || '%')
-		      ORDER BY COMPANY_ID DESC) INNERTABLE
-		    WHERE ROWNUM &lt;= (#{page} + 1) * 10)
-		  WHERE RN &gt; #{page} * 10
-		</select>
 
-		<select id="companyCountByKeyword" resultType="int">
-			SELECT COUNT(COMPANY_NAME)
-			FROM COMPANY
-			WHERE UPPER(COMPANY_NAME) LIKE UPPER('%' || #{keyword} || '%')
-		</select>
 
 	</mapper>

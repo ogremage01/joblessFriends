@@ -5,6 +5,7 @@ import com.joblessfriend.jobfinder.recruitment.domain.*;
 
 import java.util.List;
 
+import com.joblessfriend.jobfinder.util.SearchVo;
 import org.springframework.http.ResponseEntity;
 
 public interface RecruitmentService {
@@ -15,7 +16,9 @@ public interface RecruitmentService {
 
     //채용공고 전체
 
-    public List<RecruitmentVo> recruitmentList();
+
+    int getRecruitmentTotalCount(SearchVo searchVo);
+    public List<RecruitmentVo> recruitmentList(SearchVo searchVo);
     //채용공고 상세뷰
     RecruitmentVo getRecruitmentId(int jobPostId);
 	public void jobPostDelete(List<Integer> jobPostIdList);
@@ -30,8 +33,9 @@ public interface RecruitmentService {
 
 
     public List<RecruitmentVo> getFilteredRecruitmentList(FilterRequestVo filterRequestVo);
-
+    int getFilteredRecruitmentTotalCount(FilterRequestVo filterRequestVo);
 	public boolean checkCompanyOwnsJobPost(int companyId, int jobPostId);
 	public void jobPostStop(List<Integer> jobPostIdList);
+
 
 }

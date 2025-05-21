@@ -19,18 +19,7 @@ public class CompanyDaoImpl implements CompanyDao{
 	private String namespace = "com.joblessfriend.jobfinder.company.";
 	
 
-	@Override
-	public List<CompanyVo> companySelectList(int page) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace + "companySelectList",page);
-	}
 
-
-	@Override
-	public int companyCount() {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace + "companyCount");
-	}
 
 
 	@Override
@@ -56,12 +45,7 @@ public class CompanyDaoImpl implements CompanyDao{
 	}
 
 
-	@Override
-	public int companyDeleteList(List<Integer> companyIdList) {
-		// TODO Auto-generated method stub
-		return sqlSession.delete(namespace + "companyDeleteList", companyIdList);
-	}
-	
+
 	
 	
 
@@ -102,25 +86,5 @@ public class CompanyDaoImpl implements CompanyDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(namespace + "companyEmailExist", email);
 	}
-
-	//검색기업 목록
-	@Override
-	public List<CompanyVo> companySelectList(int page, String keyword) {
-		// TODO Auto-generated method stub
-				
-		Map<String, Object> paramMap = new HashMap<>();
-	    paramMap.put("page", page);
-	    paramMap.put("keyword", keyword);
-		
-		return sqlSession.selectList(namespace + "companySelectListByKeyword",paramMap);
-	}
-
-	//검색 기업 숫자
-	@Override
-	public int companyCount(String keyword) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace + "companyCountByKeyword",keyword);
-	}
-
 
 }

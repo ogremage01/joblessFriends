@@ -19,28 +19,44 @@
         FROM JOB
         WHERE JOB_GROUP_ID = #{jobGroupId}
     </select>
-
-<!--    채용공고리스트 , 기업join, 직군 , 직무만 join상태 채용공고 main페이지전용 -->
-    <select id="RecruitmentList" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">-->
-    SELECT
-        jp.job_post_id AS jobPostId,
-        c.company_id AS companyId,
-        c.company_name AS companyName,
-        jp.title AS title,
-        jp.career_type AS careerType,
-        jp.education AS education,
-        jg.job_group_name AS jobGroupName,
-        j.job_name AS jobName,
-        jp.end_date AS endDate,
-        jp.job_img AS jobImg
-    FROM JOB_POST jp
-             JOIN COMPANY c ON jp.company_id = c.company_id
-             JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
-             JOIN JOB j ON jp.job_id = j.job_id
-    ORDER BY jp.end_date ASC
-
+    <select id="getRecruitmentTotalCount" resultType="int" parameterType="com.joblessfriend.jobfinder.util.SearchVo">
+        SELECT COUNT(*)
+        FROM job_post jp
+                 JOIN company c ON jp.company_id = c.company_id
+                 JOIN job_group jg ON jp.job_group_id = jg.job_group_id
+                 JOIN job j ON jp.job_id = j.job_id
     </select>
-<!-- 스킬리스트  -->
+<!--    채용공고리스트 , 기업join, 직군 , 직무만 join상태 채용공고 main페이지전용 -->
+    <select id="RecruitmentList" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo"
+            parameterType="com.joblessfriend.jobfinder.util.SearchVo">
+
+        SELECT *
+        FROM (
+                 SELECT inner_query.*, ROWNUM AS rnum
+                 FROM (
+                          SELECT
+                              jp.job_post_id AS jobPostId,
+                              c.company_id AS companyId,
+                              c.company_name AS companyName,
+                              jp.title AS title,
+                              jp.career_type AS careerType,
+                              jp.education AS education,
+                              jg.job_group_name AS jobGroupName,
+                              j.job_name AS jobName,
+                              jp.end_date AS endDate,
+                              jp.job_img AS jobImg
+                          FROM job_post jp
+                                   JOIN company c ON jp.company_id = c.company_id
+                                   JOIN job_group jg ON jp.job_group_id = jg.job_group_id
+                                   JOIN job j ON jp.job_id = j.job_id
+                          ORDER BY jp.end_date ASC
+                      ) inner_query
+                 WHERE ROWNUM &lt;= #{endRow}
+             )
+        WHERE rnum &gt;= #{startRow}
+    </select>
+
+    <!-- 스킬리스트  -->
     <select id="getRecruitmentId" parameterType="int" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
         SELECT
             jp.job_post_id AS jobPostId,
@@ -177,30 +193,7 @@
 
 
 
-    <!--    관리자용 -->
-    <select id="adminRecruitmentList" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">-->
-    SELECT
-        jp.job_post_id AS jobPostId,
-        c.company_id AS companyId,
-        c.company_name AS companyName,
-        jp.title AS title,
-        jp.career_type AS careerType,
-        jp.education AS education,
-        jg.job_group_name AS jobGroupName,
-        j.job_name AS jobName,
-        jp.start_date AS startDate,
-        jp.end_date AS endDate,
-        jp.MAX_APPLICANTS AS maxApplicants,
-        jp.IS_CONTINUOUS as isContinuous
-    FROM JOB_POST jp
-             JOIN COMPANY c ON jp.company_id = c.company_id
-             JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
-             JOIN JOB j ON jp.job_id = j.job_id
-    ORDER BY jp.job_post_id DESC
 
-    </select>
-    
-    
     <select id="companyRecruitmentList" resultType="com.joblessfriend.jobfinder.recruitment.domain.CompanyRecruitmentVo">
 		SELECT
 		    jp.job_post_id AS jobPostId,
@@ -272,6 +265,8 @@
             parameterType="com.joblessfriend.jobfinder.recruitment.domain.FilterRequestVo"
             resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
 
+        SELECT * FROM (
+        SELECT inner_query.*, ROWNUM AS rnum FROM (
         SELECT
         jp.job_post_id AS jobPostId,
         c.company_id AS companyId,
@@ -318,7 +313,48 @@
             </foreach>
         </if>
         )
+        ORDER BY jp.end_date ASC
+        ) inner_query
+        WHERE ROWNUM &lt;= #{endRow}
+        )
+        WHERE rnum &gt;= #{startRow}
     </select>
+<!--    갯수 조회용쿼리 -->
+    <select id="getFilteredRecruitmentTotalCount"
+            parameterType="com.joblessfriend.jobfinder.recruitment.domain.FilterRequestVo"
+            resultType="int">
+        SELECT COUNT(DISTINCT jp_inner.job_post_id)
+        FROM job_post jp_inner
+        <if test="skillTags != null and skillTags.size() > 0">
+            JOIN job_post_tag jpt ON jpt.job_post = jp_inner.job_post_id
+        </if>
+        WHERE 1 = 1
+        <if test="jobIds != null and jobIds.size() > 0">
+            AND jp_inner.job_id IN
+            <foreach collection="jobIds" item="jobId" open="(" separator="," close=")">
+                #{jobId}
+            </foreach>
+        </if>
+        <if test="careers != null and careers.size() > 0">
+            AND jp_inner.career_type IN
+            <foreach collection="careers" item="career" open="(" separator="," close=")">
+                #{career}
+            </foreach>
+        </if>
+        <if test="educations != null and educations.size() > 0">
+            AND jp_inner.education IN
+            <foreach collection="educations" item="edu" open="(" separator="," close=")">
+                #{edu}
+            </foreach>
+        </if>
+        <if test="skillTags != null and skillTags.size() > 0">
+            AND jpt.tag_id IN
+            <foreach collection="skillTags" item="tagId" open="(" separator="," close=")">
+                #{tagId}
+            </foreach>
+        </if>
+    </select>
+
 
 
     <update id="jobPostStop" parameterType="list">
@@ -330,6 +366,27 @@
 	    </foreach>    
 	</update>
 
+    <select id="selectRecruitmentList" parameterType="int" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">-->
+    SELECT
+        jp.job_post_id AS jobPostId,
+        c.company_id AS companyId,
+        c.company_name AS companyName,
+        jp.title AS title,
+        jp.career_type AS careerType,
+        jp.education AS education,
+        jg.job_group_name AS jobGroupName,
+        j.job_name AS jobName,
+        jp.end_date AS endDate,
+        jp.job_img AS jobImg
+    FROM JOB_POST jp
+             JOIN COMPANY c ON jp.company_id = c.company_id
+             JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
+             JOIN JOB j ON jp.job_id = j.job_id
+             JOIN BOOKMARK BK ON JP.JOB_POST_ID = BK.JOB_POST
+    WHERE BK.MEMBER_ID = #{memberId}
+    ORDER BY jp.end_date ASC
+
+    </select>
 
 
 </mapper>

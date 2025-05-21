@@ -86,6 +86,7 @@ public class FileUtils {
 	//단일 파일 업로드(후크 테스트용)
 	@PostMapping("/uploadImage")
 	public Map<String, String> uploadFile(MultipartFile multipartFile) throws Exception {
+		//파일이 비어있을 경우반환.
 	    if (multipartFile == null || multipartFile.isEmpty()) {
 	        throw new IllegalArgumentException("File is empty");
 	    }
@@ -94,11 +95,13 @@ public class FileUtils {
 	    String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 	    String storedFileName = RandomUtils.getRandomString() + fileExtension;
 
+	    //파일 디렉토리 없을 경우 추가
 	    File fileDir = new File(filePath);
 	    if (!fileDir.exists()) {
 	        fileDir.mkdirs();
 	    }
 
+	    //저장할 객체
 	    File fileToSave = new File(fileDir, storedFileName);
 	    multipartFile.transferTo(fileToSave);
 

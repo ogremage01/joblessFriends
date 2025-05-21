@@ -12,6 +12,8 @@ import com.joblessfriend.jobfinder.recruitment.domain.*;
 import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
 import com.joblessfriend.jobfinder.skill.domain.SkillVo;
 import com.joblessfriend.jobfinder.skill.service.SkillService;
+import com.joblessfriend.jobfinder.util.Pagination;
+import com.joblessfriend.jobfinder.util.SearchVo;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,26 +42,56 @@ public class RecruitmentController {
     private SkillService skillService;
 
     @GetMapping("/list")
-    public String getAllList(Model model) {
+    public String getAllList(@ModelAttribute SearchVo searchVo, Model model) {
+        searchVo.setRecordSize(4);
+        int totalCount = recruitmentService.getRecruitmentTotalCount(searchVo); // 총 레코드 수 조회
+        Pagination pagination = new Pagination(totalCount, searchVo);
+
+        // Oracle 11g에 맞게 startRow, endRow 계산
+        searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
+        searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
+
         List<JobGroupVo> jobGroupList = recruitmentService.jobGroupList();
-        List<RecruitmentVo> recruitmentList = recruitmentService.recruitmentList();
-        System.out.println(recruitmentList);
+        List<RecruitmentVo> recruitmentList = recruitmentService.recruitmentList(searchVo);
 
         Map<Integer, List<SkillVo>> skillMap = new HashMap<>();
-
         for (RecruitmentVo r : recruitmentList) {
             int jobPostId = r.getJobPostId();
-            List<SkillVo> skillList = skillService.postTagList(jobPostId);//태그리스트들 put
+            List<SkillVo> skillList = skillService.postTagList(jobPostId);
             skillMap.put(jobPostId, skillList);
         }
 
         model.addAttribute("jobGroupList", jobGroupList);
-        //        //추가적인페이지네이션 5개단위  //
         model.addAttribute("recruitmentList", recruitmentList);
         model.addAttribute("skillMap", skillMap);
-
+        model.addAttribute("pagination", pagination);
 
         return "recruitment/recruitmentView";
+    }
+
+
+    //페이지네이션 ajax
+    @GetMapping("/list/json")
+    @ResponseBody
+    public Map<String, Object> getAllListJson(@ModelAttribute SearchVo searchVo) {
+        searchVo.setRecordSize(4);
+        int totalCount = recruitmentService.getRecruitmentTotalCount(searchVo);
+        Pagination pagination = new Pagination(totalCount, searchVo);
+
+        searchVo.setStartRow(pagination.getLimitStart() + 1);
+        searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
+
+        List<RecruitmentVo> recruitmentList = recruitmentService.recruitmentList(searchVo);
+        Map<Integer, List<SkillVo>> skillMap = new HashMap<>();
+        for (RecruitmentVo r : recruitmentList) {
+            skillMap.put(r.getJobPostId(), skillService.postTagList(r.getJobPostId()));
+        }
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("recruitmentList", recruitmentList);
+        result.put("skillMap", skillMap);
+        result.put("pagination", pagination);
+        return result;
     }
 
     @GetMapping("/searchJob")
@@ -194,24 +226,33 @@ public class RecruitmentController {
 
     @GetMapping("/filter/list")
     @ResponseBody
-    public Map<String, Object>  filterSearchView(FilterRequestVo filterRequestVo){
-        List<JobGroupVo> jobGroupList = recruitmentService.jobGroupList();
-        List<RecruitmentVo> recruitmentList  = recruitmentService.getFilteredRecruitmentList(filterRequestVo);
-
-
-        Map<Integer, List<SkillVo>> skillMap = new HashMap<>();
-
-        for (RecruitmentVo r : recruitmentList ) {
-            int jobPostId = r.getJobPostId();
-            List<SkillVo> skillList = skillService.postTagList(jobPostId);//태그리스트들 put
-            skillMap.put(jobPostId, skillList);
+    public Map<String, Object> filterSearchView(FilterRequestVo filterRequestVo) {
+        if (filterRequestVo.getPage() == 0) {
+            filterRequestVo.setPage(1);
         }
-        Map<String,Object> result = new HashMap<>();
-        result.put("jobGroupList", jobGroupList);
-        result.put("recruitmentList", recruitmentList );
-        result.put("skillMap", skillMap);
+        if (filterRequestVo.getRecordSize() == 0) {
+            filterRequestVo.setRecordSize(4); // 기본 4개씩
+        }
 
+        int totalCount = recruitmentService.getFilteredRecruitmentTotalCount(filterRequestVo);
+        Pagination pagination = new Pagination(totalCount, filterRequestVo);
+
+        filterRequestVo.setStartRow(pagination.getLimitStart() + 1);
+        filterRequestVo.setEndRow(filterRequestVo.getStartRow() + filterRequestVo.getRecordSize() - 1);
+
+        List<RecruitmentVo> recruitmentList = recruitmentService.getFilteredRecruitmentList(filterRequestVo);
+        Map<Integer, List<SkillVo>> skillMap = new HashMap<>();
+        for (RecruitmentVo r : recruitmentList) {
+            skillMap.put(r.getJobPostId(), skillService.postTagList(r.getJobPostId()));
+        }
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("recruitmentList", recruitmentList);
+        result.put("skillMap", skillMap);
+        result.put("pagination", pagination);
         return result;
     }
+
+
 }
 

@@ -2,13 +2,10 @@ package com.joblessfriend.jobfinder.community.domain;
 
 import java.util.Date;
 
-import com.joblessfriend.jobfinder.member.domain.MemberVo;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 @Data
 @AllArgsConstructor
