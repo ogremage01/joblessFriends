@@ -119,6 +119,12 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
 		sqlSession.update(namespace+".jobPostStop", jobPostIdList);
 		
 	}
+
+	@Override
+	public List<RecruitmentVo> selectRecruitmentList(int memberId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace+".selectRecruitmentList",memberId);
+	}
 	
 
 }

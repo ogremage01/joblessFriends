@@ -1,5 +1,7 @@
 package com.joblessfriend.jobfinder.member.controller;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -17,6 +19,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.joblessfriend.jobfinder.auth.controller.AuthController;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import com.joblessfriend.jobfinder.member.service.MemberService;
+import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
+import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
+import com.joblessfriend.jobfinder.skill.domain.SkillVo;
+import com.joblessfriend.jobfinder.skill.service.SkillService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -29,6 +35,11 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private RecruitmentService recruitmentService;
+	@Autowired
+	private SkillService skillService;
 
 	@GetMapping("/mypage")
 	public String myPage() {
@@ -53,5 +64,28 @@ public class MemberController {
 		}
 		return ResponseEntity.ok(result);
 	}
-	
+	@GetMapping("/bookmark")
+	public String bookmark(Model model, HttpSession session) {
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
+		int memberId = memberVo.getMemberId();
+		
+        List<RecruitmentVo> recruitmentList = recruitmentService.selectRecruitmentList(memberId);
+        System.out.println(recruitmentList);
+
+        Map<Integer, List<SkillVo>> skillMap = new HashMap<>();
+
+        for (RecruitmentVo r : recruitmentList) {
+            int jobPostId = r.getJobPostId();
+            List<SkillVo> skillList = skillService.postTagList(jobPostId);//태그리스트들 put
+            skillMap.put(jobPostId, skillList);
+        }
+
+       
+        //        //추가적인페이지네이션 5개단위  //
+        model.addAttribute("recruitmentList", recruitmentList);
+        model.addAttribute("skillMap", skillMap);
+		
+		return "member/bookmark/bookmarkView";
+	}
 }

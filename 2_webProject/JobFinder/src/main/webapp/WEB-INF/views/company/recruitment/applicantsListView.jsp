@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>기업 페이지-공고란</title>
+<title>공고별 지원자 관리</title>
 
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
@@ -26,58 +26,7 @@
 	rel="stylesheet">
 
 
-<style type="text/css">
-
-	
-	.main{
-		width: 800px;
-		margin: auto;
-	
-	}
-	
-	#recruitmentList{
-		margin: auto;
-	}
-	
-	.emptyList{
-	}
-	
-	.buttonPlace {
-    text-align: center;
-    vertical-align: middle;
-	}
-	
-	#recruitmentList>thead{
-	
-	background: gray;
-	text-align: center;
-	}
-	
-	.buttonPlace>a{
-		width: 130px;
-	
-	}
-	
-	.innerTable{
-		font-size: small;
-		width: 600px;
-	
-	}
-	
-	.info{
-		text-align: justify;
-		color: gray;
-	}
-	.name{
-		text-align: left;
-	}
-	
-	.jobPostTitle{
-		  text-decoration: none;  
-  		  color: inherit;         
-	}
-
-</style>
+<link href="/css/company/applicantsList.css" rel="stylesheet">
 
 </head>
 <body>
@@ -86,12 +35,59 @@
 
 
 <div class="container">
-    
+    <div class="sideBar">
+		<jsp:include page="../companyPage/companyPageSidebar.jsp"/>
+    </div>
 	<!-- 메인 -->
-  <div class="main">
-  <h1>지원자관리</h1>
-    
+  <div class="main" style="width: 800px;">
+  
+  <h1>지원자 관리</h1>
+  
 
+   	<table id="recruitmentList" class="table table-border">
+	  <thead id="table-header" class="table-group-divider">
+	    <tr>
+	      <th>지원자</th>
+	      <th>제목</th>
+	      <th>지원일자</th>
+	      <th>적합도</th>
+	      <th>관리</th>
+	    </tr>
+	  </thead>
+
+
+    <tbody>
+      <tr>
+        <td colspan="5">
+          <span id="emptyList">(지원자가 없을 때)지원자가 없습니다</span>
+        </td>
+      </tr>
+    </tbody>
+
+    <tbody>
+      <tr>
+        <td style="text-align: center;">
+          <span>지원자</span>
+        </td>
+        <td style="text-align: center;">
+          <span>제목</span>
+        </td>
+        <td style="text-align: center;">
+          <span>지원일자</span>
+        </td>
+        <td style="text-align: center;">
+          <span>적합도</span>
+        </td>
+         <td style="text-align: center;">
+          <span>버튼?</span>
+        </td>
+      </tr>
+    </tbody>
+
+
+</table>
+
+   
     </div>
     
     
@@ -102,47 +98,7 @@
 <jsp:include page="../../common/footer.jsp" />
 </body>
 
-	<script type="text/javascript">
 
-function deleteRecruitments(jobPostIds) {
-    if (!confirm("삭제를 진행합니까?")) return;
-
-    fetch("/company/recruitment", {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(jobPostIds) // 배열 전달
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("서버 오류: " + response.status);
-        }
-        return response.text();
-    })
-    .then(data => {
-        if (data == "삭제완료") {
-            alert("삭제 성공");
-            location.reload();
-        } else {
-            alert("삭제 실패: 서버 응답 오류");
-        }
-    })
-    .catch(error => {
-        alert("삭제 실패");
-        console.error("에러 발생:", error);
-    });
-}
-
-const delBtnArr = document.getElementsByClassName("delBtn");
-
-for (let i = 0; i < delBtnArr.length; i++) {
-    delBtnArr[i].addEventListener("click", function (e) {
-        const jobPostId = e.currentTarget.value;
-        deleteRecruitments([jobPostId]); // 단일도 배열로
-    });
-}
-    </script>
 
 
 </html>

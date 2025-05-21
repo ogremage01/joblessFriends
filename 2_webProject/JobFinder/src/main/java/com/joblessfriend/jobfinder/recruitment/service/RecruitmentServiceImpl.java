@@ -119,5 +119,11 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 		
 	}
 
+	@Override
+	public List<RecruitmentVo> selectRecruitmentList(int memberId) {
+		// TODO Auto-generated method stub
+		return recruitmentDao.selectRecruitmentList(memberId);
+	}
+
 
 }
