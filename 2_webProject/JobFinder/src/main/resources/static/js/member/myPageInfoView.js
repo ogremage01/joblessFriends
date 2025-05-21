@@ -54,7 +54,7 @@ async function checkOldPwd(){
 		return;
 	}
 	
-	var email = $("#email").val();
+	var email = $("#userEmail").text();
 	var pwdStatusStr = "틀린 비밀번호입니다."
 	
 	try {
@@ -216,7 +216,7 @@ var delPwdPass = false;
 async function valiCheckPwdDel(){
 	delPwdPass = false;
 	var pwd = $("#passwordDel").val();
-	var email = $("#email").val();
+	var email = $("#userEmail").text();
 	var pwdStatusStr = "틀린 비밀번호입니다."
 
 	// 비밀번호를 비동기적으로 확인
@@ -253,19 +253,22 @@ function enableScroll() {
 
 // 모달 열기
 $("#modalOpen").click(async function(){
-	var pwd = $("#passwordDel").val();
 	
-	// 공백 체크
-	if(pwd == ""){
-		var htmlStr = "비밀번호를 입력해주세요.";
-		$("#passwordDelStatus").html(htmlStr);
-		$("#passwordDel").css("border", "1px solid red");
-		return;
+	if($("#provider").val() == 'normal'){
+		var pwd = $("#passwordDel").val();
+		
+		// 공백 체크
+		if(pwd == ""){
+			var htmlStr = "비밀번호를 입력해주세요.";
+			$("#passwordDelStatus").html(htmlStr);
+			$("#passwordDel").css("border", "1px solid red");
+			return;
+		}
+		
+		await valiCheckPwdDel();
+	
+		if(!delPwdPass) return;
 	}
-	
-	await valiCheckPwdDel();
-
-	if(!delPwdPass) return;
 	
 	$("#popup").css('display','flex').hide().fadeIn();
 	disableScroll();

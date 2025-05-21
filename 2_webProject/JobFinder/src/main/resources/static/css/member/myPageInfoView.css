@@ -36,11 +36,14 @@
 		margin-bottom: 15px;
 	}
 	
-	/* 	이메일 */
-	#userEmail {
-		margin-left: 25px;
+	.socialInfo {
+		margin-left: 20px;
 		font-size: 16px;
 		color:#6D707B;
+	}
+	
+	.inGoogle {
+		color:#b0b3b9;
 	}
 	
 	/* 복사버튼 */
