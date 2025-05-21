@@ -52,22 +52,38 @@
 		font-size: 16px;
 	}
 	
+	#pwdChangeMain {
+		display: flex;
+	}
+	.changeReset {
+		display: flex;
+		flex-direction: column-reverse;
+	}
+	
+	.resetBtn{
+		margin-bottom: 13px;
+		margin-left: 15px;
+		color: #6D707B;
+		cursor: pointer;
+		font-size: 14px;
+	}
+	
 	/* 비밀번호 변경 폼 */
-	#pwdChangeForm {
+	.formStyle {
 		width: 250px;
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
 	}
 	
-	#pwdChangeForm label{
+	.formStyle label{
 		color:#6D707B;
 		font-size: 14px;
 		display: block;
 		margin-bottom: 8px;
 	}
 	
-	#pwdChangeForm input {
+	.formStyle input {
 		width: 230px;
 		height: 14px;
 		padding: 13px 10px;
@@ -77,15 +93,15 @@
 		font-size: 14px;
 	}
 	
-	#pwdChangeForm input::placeholder {
+	.formStyle input::placeholder {
 		color: #BABECA;
 	}
 	
-	#pwdChangeForm input:hover{
+	.formStyle input:hover{
 		border:1px solid #C9C9C9;
 	}
 	
-	#pwdChangeForm input:focus {
+	.formStyle input:focus {
 		border: 1px solid #F69800;
 	}
 	
@@ -94,22 +110,76 @@
 		font-size: 14px;
 	}
 	
-	#changeBtn {
+	.btnStyle {
 		border-radius: 5px;
 		border: 1px solid #AFB2BD;
 		
 		background-color: white;
-		color: #7F8184;
+		color: #6D707B;
 		
 		padding: 10px;
 		font-size: 16px;
 		cursor: pointer;
 	}
 	
-	#changeBtn:hover {
+	.btnStyle:hover {
 		background-color: #F3F4F8;
 	}
 	
+	/* 	회원탈퇴 */
+	.accountDelete {
+		margin-top: 50px;
+	}
+	
+	.accountDelete #deleteCheck {
+		width: 18px;
+	}
+	.accountDelete #deleteCheckLabel {
+		display: inline;
+	}
+	
+	.popTitle {
+		font-size: 18px;
+		font-weight: bold;
+		display: inline-block;
+		margin-bottom: 10px;
+	}
+	
+	.popText {
+		font-size: 14px;
+	}
+	
+	.popup-wrap {
+		background-color:rgba(0,0,0,0.5);
+		 justify-content:center;
+		 align-items:center;
+		 position:fixed;
+		 top:0;
+		 left:0;
+		 right:0;
+		 bottom:0;
+		 display:none; 
+	}
+	
+	.modalPopup{
+		width:100%;
+		max-width:300px;
+		background-color:#ffffff;
+		border-radius:10px;
+		overflow:hidden;
+
+		margin:auto;
+		position:relative;
+		top:-10%;
+		
+		padding: 50px;
+		
+		text-align: center;
+	}
+	
+	.popBtns {
+		margin-top: 20px;
+	}
 	
 	/* 토스트 팝업 */
 	#copyPop {

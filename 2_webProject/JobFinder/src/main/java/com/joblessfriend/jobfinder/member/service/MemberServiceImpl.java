@@ -142,10 +142,15 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.memberDeleteList(memberIdList);
 	}
 
+	//마이페이지 비밀번호 변경
 	@Override
 	public int updatePassword(String password, int memberId) {
 		// TODO Auto-generated method stub
-		return memberDao.updatePassword(password, memberId);
+		//비밀번호 암호화
+		String pwdEncoder = passwordEncoder.encode(password);
+		System.out.println("비번 확인: " + password + " / " + pwdEncoder);
+				
+		return memberDao.updatePassword(pwdEncoder, memberId);
 	}
 
 
