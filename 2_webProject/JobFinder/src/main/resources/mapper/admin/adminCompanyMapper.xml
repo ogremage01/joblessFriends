@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-	<mapper namespace="com.joblessfriend.jobfinder.company">
+	<mapper namespace="com.joblessfriend.jobfinder.admin.dao.AdminCompanyDao">
 
 
 
@@ -20,7 +20,29 @@
 
 		</resultMap>
 
-	
+		<select id="companySelectList" parameterType="int" resultMap="companyResultMap">
+		  SELECT * 
+		  FROM (SELECT ROWNUM AS RN, INNERTABLE.*
+		    FROM (SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
+		      FROM COMPANY
+		      ORDER BY COMPANY_ID DESC) INNERTABLE
+		    WHERE ROWNUM &lt;= (#{page} + 1) * 10)
+		  WHERE RN &gt; #{page} * 10
+		</select>
+		
+		
+	<select id="companyList" resultMap="companyResultMap">
+		SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
+		      FROM COMPANY
+		      ORDER BY COMPANY_ID DESC
+		</select>
+		
+		
+		<select id="companyCount" resultType="int">
+			SELECT COUNT(COMPANY_ID)
+			FROM COMPANY
+		</select>
+		
 		
 		<select id="companySelectOne" resultMap="companyResultMap">
 			SELECT *
@@ -51,31 +73,16 @@
 		
 		</delete>
 
+		<delete id="companyDeleteList" parameterType="java.util.List">
+		    DELETE FROM COMPANY
+		    WHERE COMPANY_ID IN
+		    <foreach item="companyId" collection="list" open="(" separator="," close=")">
+		        #{companyId}
+		    </foreach>
+		    
+		</delete>
 
 
-
-
-		<insert id="companyInsertOne" parameterType="com.joblessfriend.jobfinder.company.domain.CompanyVo">
-			INSERT INTO COMPANY
-			(COMPANY_ID, EMAIL, PASSWORD, COMPANY_NAME, BRN, REPRESENTATIVE, TEL)
-			VALUES(COMPANY_ID_SEQ.NEXTVAL, #{email}, #{password}, #{companyName}, #{brn}, #{representative}, #{tel})
-		</insert>
-		
-		<select id="companyExist" parameterType="map"
-		resultMap="companyResultMap">
-			SELECT COMPANY_ID, EMAIL, PASSWORD, COMPANY_NAME, BRN, REPRESENTATIVE, TEL, POSTAL_CODE_ID, ADDRESS
-			FROM COMPANY
-			WHERE EMAIL = #{email, jdbcType=VARCHAR}
-			AND PASSWORD = #{password, jdbcType=VARCHAR}
-		</select>
-		
-		<select id="companyFindId" parameterType="map"
-		resultMap="companyResultMap">
-			SELECT EMAIL
-			FROM COMPANY
-			WHERE REPRESENTATIVE = #{representative}
-			AND BRN = #{brn}
-		</select>
 		
 		<select id="companyEmailExist" parameterType="String" resultMap="companyResultMap">
 			SELECT COMPANY_ID, EMAIL, PASSWORD, COMPANY_NAME, BRN, REPRESENTATIVE, TEL, POSTAL_CODE_ID, ADDRESS
@@ -83,6 +90,21 @@
 		</select>
 		
 		
+		<select id="companySelectListByKeyword" resultMap="companyResultMap">
+		  SELECT * 
+		  FROM (SELECT ROWNUM AS RN, INNERTABLE.*
+		    FROM (SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
+		      FROM COMPANY
+		      WHERE UPPER(COMPANY_NAME) LIKE UPPER('%' || #{keyword} || '%')
+		      ORDER BY COMPANY_ID DESC) INNERTABLE
+		    WHERE ROWNUM &lt;= (#{page} + 1) * 10)
+		  WHERE RN &gt; #{page} * 10
+		</select>
 
+		<select id="companyCountByKeyword" resultType="int">
+			SELECT COUNT(COMPANY_NAME)
+			FROM COMPANY
+			WHERE UPPER(COMPANY_NAME) LIKE UPPER('%' || #{keyword} || '%')
+		</select>
 
 	</mapper>

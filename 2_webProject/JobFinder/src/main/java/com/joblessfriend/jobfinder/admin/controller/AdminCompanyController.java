@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.joblessfriend.jobfinder.admin.service.AdminCompanyService;
 import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 import com.joblessfriend.jobfinder.company.service.CompanyService;
 
@@ -21,7 +22,7 @@ public class AdminCompanyController {
 	private Logger logger = LoggerFactory.getLogger(AdminAuthController.class); // 로그 출력용
 
 	@Autowired
-	private CompanyService companyService; // 기업 서비스 주입
+	private AdminCompanyService companyService; // 기업 서비스 주입
 
 	/**
 	 * 기업 회원 목록 페이지로 이동 (페이징 및 키워드 검색 가능)
@@ -39,11 +40,13 @@ public class AdminCompanyController {
 
 		// 검색어가 있을 경우 검색 목록 조회
 		if (keyword != null && !keyword.trim().isEmpty()) {
+			System.out.println("키워드 있음");
 			companyList = companyService.companySelectList(page, keyword);
 			companyCount = companyService.companyCount(keyword);
 			totalPage = companyCount / 10 + (companyCount % 10 == 0 ? 0 : 1);
 		} else {
 			// 검색어가 없을 경우 전체 목록 조회
+			System.out.println("키워드 없음");
 			companyList = companyService.companySelectList(page);
 			companyCount = companyService.companyCount();
 			System.out.println(companyCount); // 디버깅 출력
