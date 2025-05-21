@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.joblessfriend.jobfinder.admin.service.AdminMemberService;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import com.joblessfriend.jobfinder.member.service.MemberService;
 
@@ -28,7 +29,7 @@ public class AdminMemberController {
 	private Logger logger = LoggerFactory.getLogger(AdminMemberController.class);
 	
 	@Autowired
-	private MemberService memberService;
+	private AdminMemberService memberService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;

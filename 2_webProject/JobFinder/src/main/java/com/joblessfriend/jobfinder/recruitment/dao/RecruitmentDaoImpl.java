@@ -1,6 +1,7 @@
 package com.joblessfriend.jobfinder.recruitment.dao;
 
 import com.joblessfriend.jobfinder.recruitment.domain.*;
+import com.joblessfriend.jobfinder.util.SearchVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,10 +30,14 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
     }
 
     @Override
-    public List<RecruitmentVo> recruitmentList() {
-        return sqlSession.selectList(namespace+".RecruitmentList");
+    public int getRecruitmentTotalCount(SearchVo searchVo) {
+        return sqlSession.selectOne(namespace + ".getRecruitmentTotalCount", searchVo);
     }
 
+    @Override
+    public List<RecruitmentVo> recruitmentList(SearchVo searchVo) {
+        return sqlSession.selectList(namespace + ".RecruitmentList", searchVo);
+    }
     @Override
     public RecruitmentVo getRecruitmentId(int jobPostId) {
         return sqlSession.selectOne(namespace+".getRecruitmentId",jobPostId);
@@ -82,7 +87,10 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
     public List<RecruitmentVo> getFilteredRecruitmentList(FilterRequestVo filterRequestVo) {
         return sqlSession.selectList(namespace+".getFilteredRecruitmentList",filterRequestVo);
     }
-
+    @Override
+    public int getFilteredRecruitmentTotalCount(FilterRequestVo filterRequestVo) {
+        return sqlSession.selectOne(namespace + ".getFilteredRecruitmentTotalCount", filterRequestVo);
+    }
 
     @Override
 	public List<RecruitmentVo> adminRecruitmentList() {
@@ -118,6 +126,12 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
 		// TODO Auto-generated method stub
 		sqlSession.update(namespace+".jobPostStop", jobPostIdList);
 		
+	}
+
+	@Override
+	public List<RecruitmentVo> selectRecruitmentList(int memberId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace+".selectRecruitmentList",memberId);
 	}
 	
 

@@ -1,7 +1,6 @@
 package com.joblessfriend.jobfinder.community.dao;
 
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +52,6 @@ public class CommunityDaoImpl implements CommunityDao {
 
 	@Override
 	public void communityFileInsertOne(Map<String, Object> fileMap) {
-		System.out.println("맵!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+fileMap);
 		// TODO Auto-generated method stub
 		sqlSession.insert(namespace+"communityFileInsert", fileMap);
 	}
@@ -68,6 +66,18 @@ public class CommunityDaoImpl implements CommunityDao {
 	public List<Map<String, Object>> communityFileList(int communityId) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(namespace+"communityFileList",communityId);
+	}
+
+	@Override
+	public void communityFileDelete(int communityId) {
+		// TODO Auto-generated method stub
+		sqlSession.delete(namespace+"communityFileDelete",communityId);
+	}
+
+	@Override
+	public void communityFileNewInsert(Map<String, Object> fileMap) {
+		// TODO Auto-generated method stub
+		sqlSession.insert(namespace+"communityFileNewInsert", fileMap);
 	}
 	
 	

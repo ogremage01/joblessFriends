@@ -108,13 +108,10 @@
      <!-- 스킬 -->
 	<section class="section-block">
 		<h2 class="section-title">스킬</h2>
-			<input type="text" class="tag-input" placeholder="스킬을 입력해주세요" />
-			<br></br>
-		<div class="tag-list">
-			<span class="tag">Java</span>
-			<span class="tag">Spring Boot</span>
-			<span class="tag">MySQL</span>
-			<span class="tag">React</span>
+			<p id="selectedJobGroupLabel" class="selected-job-group-label" style="display: none;"></p>
+			
+		<div id="skillContainer" class="tag-select">
+			
 		</div>
 	</section>
 
@@ -330,56 +327,89 @@ document.getElementById("profileImageInput").addEventListener("change", function
     });
 });
 
- // 직군
-document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function () {
   const jobGroupSelect = document.getElementById("jobGroupSelect");
   const jobSelect = document.getElementById("jobSelect");
+  const skillContainer = document.getElementById("skillContainer");
+  const selectedJobGroupLabel = document.getElementById("selectedJobGroupLabel");
+  const selectedSkills = new Set(); // 선택된 스킬 저장용
 
   // 직군 목록 불러오기
   fetch("/jobGroup/list")
     .then((res) => res.json())
     .then((data) => {
-      console.log("✅ 직군 데이터:", data);
       data.forEach((group) => {
         const option = document.createElement("option");
-        option.value = group.jobGroupId; // 숫자
+        option.value = group.jobGroupId;
         option.textContent = group.jobGroupName;
         jobGroupSelect.appendChild(option);
       });
     });
 
-  // 직군 선택 시 직무 목록 가져오기
+  // 직군 선택 시 직무 + 스킬 처리
   jobGroupSelect.addEventListener("change", function () {
     const jobGroupId = this.value;
+    const selectedGroupName = this.options[this.selectedIndex].textContent;
 
-    console.log("👉 선택된 직군 ID:", jobGroupId);
-
-    // 숫자 문자열인지 확인
-    if (!jobGroupId || isNaN(Number(jobGroupId))) {
-      console.warn("⛔ 유효하지 않은 직군 ID");
-      return;
+    // 직군 이름 표시
+    if (jobGroupId) {
+      selectedJobGroupLabel.style.display = "block";
+      selectedJobGroupLabel.textContent = selectedGroupName;
+    } else {
+      selectedJobGroupLabel.style.display = "none";
     }
 
-    jobSelect.innerHTML = '<option value="">직무 선택</option>'; // 초기화
+    // 직무 초기화 및 가져오기
+    jobSelect.innerHTML = '<option value="">직무 선택</option>';
+    fetch('/job/list?jobGroupId=' + jobGroupId)
+      .then(res => res.json())
+      .then(data => {
+        data.forEach(job => {
+          const option = document.createElement("option");
+          option.value = job.jobId;
+          option.textContent = job.jobName;
+          jobSelect.appendChild(option);
+        });
+      });
 
-    fetch(`/job/list?jobGroupId=${jobGroupId}`)
-    .then((res) => {
-        console.log("응답 content-type:", res.headers.get("content-type"));  // 확인용 로그
-        return res.json();
+    // 스킬 초기화 및 가져오기
+    skillContainer.innerHTML = "";
+    fetch('/skill/list?jobGroupId=' + jobGroupId)
+      .then(res => res.json())
+      .then(tags => {
+        renderSkillTags(tags);
       })
-    .then((data) => {
-	  console.log("직무 데이터:", data);
-	  data.forEach((job) => {
-	    const option = document.createElement("option");
-	    option.value = job.jobId;
-	    option.textContent = job.jobName;
-	    jobSelect.appendChild(option);
-	  });
-	})
-      .catch((err) => {
-        console.error("직무 요청 오류", err);  // 에러 발생 시 로그
+      .catch(err => {
+        console.error("스킬 요청 실패:", err);
       });
   });
+  // 스킬 태그 버튼 생성 및 선택 토글 기능
+  function renderSkillTags(tags) {
+    skillContainer.innerHTML = "";
+    selectedSkills.clear();
+
+    tags.forEach(tag => {
+      const btn = document.createElement("button");
+      btn.className = "tag-button";
+      btn.textContent = tag.tagName;
+      btn.dataset.tagId = tag.tagId;
+
+      // 버튼 클릭 시 선택/해제 토글
+      btn.addEventListener("click", function () {
+        const tagId = this.dataset.tagId;
+
+        if (selectedSkills.has(tagId)) {
+          selectedSkills.delete(tagId);
+          this.classList.remove("selected");
+        } else {
+          selectedSkills.add(tagId);
+          this.classList.add("selected");
+        }
+      });
+
+      skillContainer.appendChild(btn);
+    });
+  }
 });
 
 </script>

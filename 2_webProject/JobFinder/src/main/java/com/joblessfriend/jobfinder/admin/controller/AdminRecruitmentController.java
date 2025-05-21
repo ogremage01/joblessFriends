@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.joblessfriend.jobfinder.admin.service.AdminRecruitmentService;
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
-import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
 
 @RequestMapping("/admin/recruitment")
 @Controller
@@ -25,7 +25,7 @@ public class AdminRecruitmentController {
 	private final String logTitleMsg = "==Admin control==";
 
 	@Autowired
-	private RecruitmentService recruitmentService; // 구인공고 서비스 의존성 주입
+	private AdminRecruitmentService adminRecruitmentService; // 구인공고 서비스 의존성 주입
 
 	@GetMapping("")
 	public String recruitmentSelectList(Model model, @RequestParam(defaultValue = "0") int page, // 페이지 번호, 기본값은 0
@@ -33,7 +33,7 @@ public class AdminRecruitmentController {
 
 		logger.info("공고목록으로 이동");
 
-		List<RecruitmentVo> recruitmentList = recruitmentService.adminRecruitmentList();
+		List<RecruitmentVo> recruitmentList = adminRecruitmentService.adminRecruitmentList();
 
 		model.addAttribute("recruitmentList", recruitmentList);
 
@@ -50,7 +50,7 @@ public class AdminRecruitmentController {
 
 		}
 		
-		recruitmentService.jobPostDelete(jobPostIdList);
+		adminRecruitmentService.jobPostDelete(jobPostIdList);
 
 		
 		return ResponseEntity.ok("삭제완료"); 

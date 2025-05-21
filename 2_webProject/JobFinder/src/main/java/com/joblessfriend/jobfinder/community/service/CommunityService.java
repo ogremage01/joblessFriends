@@ -3,9 +3,6 @@ package com.joblessfriend.jobfinder.community.service;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 import com.joblessfriend.jobfinder.community.domain.CommunityVo;
 
@@ -26,5 +23,9 @@ public interface CommunityService{
 	int communitySeqNum();
 
 	List<Map<String, Object>> communityFileList(int communityId);
+
+	void communityFileDelete(int communityId);
+
+	void communityFileNewInsert(Map<String, Object> fileMap);
 
 }

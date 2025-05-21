@@ -21,7 +21,9 @@
 			<li class="infoMng">
 				<a href="/member/info"style="text-decoration: none;">개인정보 관리</a>
 			</li>
-			<li class="">내가 찜한 공고</li>
+			<li class="">
+				<a href="/member/bookmark"style="text-decoration: none;">내가 찜한 공고</a>
+			</li>
 		</ul>
 		
 	</div>

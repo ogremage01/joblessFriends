@@ -8,16 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.joblessfriend.jobfinder.community.domain.CommunityVo;
 import com.joblessfriend.jobfinder.community.domain.PostCommentVo;
-import com.joblessfriend.jobfinder.community.service.CommunityService;
 import com.joblessfriend.jobfinder.community.service.PostCommentService;
 
 @RequestMapping("/community/detail")
@@ -41,16 +38,16 @@ public class PostCommentController {
 	    return postCommentService.postCommentSelectList(communityId);
 	}
 	
-//	@GetMapping("test/{communityId}")
-//	public String test(@PathVariable("communityId") int communityId, Model model){
-//		
-//		List<PostCommentVo> commentsList = postCommentService.postCommentSelectList(communityId);
-//		System.out.println("댓글 수: " + commentsList.size());		
-//		
-//		model.addAttribute("commentsList", commentsList);
-//		
-//		return "community/detail/postComment/commentList";
-//	}
+	@GetMapping("test/{communityId}")
+	public String test(@PathVariable("communityId") int communityId, Model model){
+		
+		List<PostCommentVo> commentsList = postCommentService.postCommentSelectList(communityId);
+		System.out.println("댓글 수: " + commentsList.size());		
+		
+		model.addAttribute("commentsList", commentsList);
+		
+		return "community/detail/postComment/commentList";
+	}
 	
 	
 	@PostMapping("/commentUpload/{communityId}")
@@ -68,7 +65,7 @@ public class PostCommentController {
 	
 	@PostMapping("/commentUpdate/{postCommentId}")
 	@ResponseBody
-	public ResponseEntity<?> communityUpdate(@PathVariable int postCommentId,
+	public ResponseEntity<?> commentUpdate(@PathVariable int postCommentId,
 			 @RequestBody PostCommentVo postCommentVo) {
 		System.out.println("~~~~~~게시판 수정 시작~~~~~~~~~~");
 		postCommentVo.setPostCommentId(postCommentId);

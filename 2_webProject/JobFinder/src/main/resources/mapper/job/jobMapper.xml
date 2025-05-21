@@ -9,12 +9,14 @@
 	    </resultMap>
 
 	    <select id="getJobByIdForRecruitment" parameterType="int" resultMap="jobResultMap">
-	        SELECT JOB_ID, JOB_GROUP_ID, JOB_NAME FROM JOB
+	        SELECT JOB_ID, JOB_GROUP_ID, JOB_NAME 
+	        FROM JOB
 	        WHERE JOB_ID = #{jobPostId}
 	    </select>
 	
 	    <select id="selectJobsByGroupId" parameterType="int" resultMap="jobResultMap">
-	        SELECT JOB_ID, JOB_GROUP_ID, JOB_NAME FROM JOB
+	        SELECT JOB_ID, JOB_GROUP_ID, JOB_NAME 
+	        FROM JOB
 	        WHERE JOB_GROUP_ID = #{jobGroupId}
 	    </select>
 	    
