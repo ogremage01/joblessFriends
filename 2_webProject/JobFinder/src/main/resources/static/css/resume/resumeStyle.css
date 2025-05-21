@@ -286,30 +286,46 @@ textarea::placeholder {
   color: #36383F;
 }
 
-.tag-input {
-  padding: 10px 15px;
-  width: 220px;
-  border: 1px solid black;
-  border-radius: 6px;
-  font-size: 14px;
-}
-
-.tag-list {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.tag {
-  padding: 10px 20px;
-  border: 1px solid #F69800;
-  border-radius: 15px;
-  color: #F69800;
+.selected-job-group-label {
+  display: inline-block;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
   font-weight: bold;
-  font-family: NanumGothic;
-  font-size: 14px;
-  background-color: white;
+  color: #333;
+  padding: 6px 30px;
+  border-radius: 12px;
+  margin: 10px 0 16px;
 }
+
+.tag-select button {
+  border: 1px solid orange;
+  padding: 6px 14px;
+  margin: 4px 6px 0 0;
+  background-color: white;
+  color: orange;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.tag-select button.selected {
+  background-color: orange;
+  color: white;
+}
+
+.selected-tags {
+  margin-top: 12px;
+}
+.selected-tags .selected-tag {
+  display: inline-block;
+  background-color: #f1f1f1;
+  padding: 6px 12px;
+  margin: 4px 6px 0 0;
+  border-radius: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
 
 /* 학력 */
 .education-entry {
