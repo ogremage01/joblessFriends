@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<mapper namespace="com.joblessfriend.jobfinder.job.dao.JobDao">
+	    <resultMap id="jobResultMap" type="com.joblessfriend.jobfinder.job.domain.JobVo">
+	        <id column="JOB_ID" property="jobId" />
+	        <result column="JOB_GROUP_ID" property="jobGroupId" />
+	        <result column="JOB_NAME" property="jobName" />
+	    </resultMap>
+
+	    <select id="getJobByIdForRecruitment" parameterType="int" resultMap="jobResultMap">
+	        SELECT JOB_ID, JOB_GROUP_ID, JOB_NAME FROM JOB
+	        WHERE JOB_ID = #{jobPostId}
+	    </select>
+	
+	    <select id="selectJobsByGroupId" parameterType="int" resultMap="jobResultMap">
+	        SELECT JOB_ID, JOB_GROUP_ID, JOB_NAME FROM JOB
+	        WHERE JOB_GROUP_ID = #{jobGroupId}
+	    </select>
+	    
+	    <select id="getJobById" parameterType="int" resultMap="jobResultMap">
+         SELECT job_id, job_name
+         FROM Job
+         WHERE job_id = #{jobPostId}
+      </select>
+
+</mapper>

@@ -14,5 +14,7 @@ public interface JobGroupDao {
 	int jobGroupCount(String keyword);
 
 	int jobGroupCount();
+	
+	List<JobGroupVo> selectAllJobGroupsForAjax();
 
 }

@@ -15,5 +15,7 @@ public interface JobGroupService {
 	int jobGroupCount(String keyword);
 
 	int jobGroupCount();
+	
+	List<JobGroupVo> selectAllJobGroupsForAjax();
 
 }
