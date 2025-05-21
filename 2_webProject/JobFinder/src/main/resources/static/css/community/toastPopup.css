@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+/* 유효성검사 토스트 팝업 */
+	#askConfirm {
+		position: fixed;
+		opacity: 0%;
+/* 	    bottom: -50px; */
+		top: -50px;
+		
+	    left: 50%;
+	    transform: translate(-50%,0);
+	    padding: 10px 50px;
+	    background: rgba(246, 152, 0, 0.70);
+	    border-radius: 100px;
+	    color: #fff;
+	    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+	    transition: all 0.5s;
+	}
+	/*토스트 메시지 활성화 되었을 때*/
+	#askConfirm.active {
+	    opacity: 100%;
+/* 	    bottom: 50px; */
+		top: 30px;
+	}
