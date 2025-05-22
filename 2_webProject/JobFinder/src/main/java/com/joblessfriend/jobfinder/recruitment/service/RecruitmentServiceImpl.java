@@ -50,6 +50,9 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     public List<WelfareVo> selectWelfareByJobPostId(int jobPostId) {
         return recruitmentDao.selectWelfareByJobPostId(jobPostId);
     }
+
+
+
 	@Override
 	@Transactional
 	public void jobPostDelete(List<Integer> jobPostIdList) {
@@ -81,9 +84,18 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             vo.setJobPostId(jobPostId);
             recruitmentDao.insertJobPostWelfare(vo); // 단건 삽입
         }
+        if (recruitmentVo.getTempKey() != null && !recruitmentVo.getTempKey().isBlank()) {
+            recruitmentDao.updateJobPostIdByTempKey( recruitmentVo.getJobPostId(), recruitmentVo.getTempKey());
+        }
     }
-
-
+    @Override
+    public void insertJobPostFile(JobPostFileVo fileVo) {
+        recruitmentDao.insertJobPostFile(fileVo);
+    }
+    @Override
+    public void updateJobPostIdByTempKey(int jobPostId,String tempKey) {
+        recruitmentDao.updateJobPostIdByTempKey(jobPostId ,tempKey);
+    }
 
     @Override
     public int countFilteredPosts(FilterRequestVo filterRequestVo) {

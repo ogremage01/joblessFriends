@@ -77,6 +77,20 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
 
         sqlSession.insert(namespace + ".insertJobPostWelfare", Welfarevo);
     }
+    @Override
+    public void insertJobPostFile(JobPostFileVo fileVo) {
+        sqlSession.insert(namespace+".insertJobPostFile", fileVo);
+    }
+
+    @Override
+    public void updateJobPostIdByTempKey(int jobPostId,String tempKey) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("tempKey", tempKey);
+        paramMap.put("jobPostId", jobPostId);
+
+        sqlSession.update(namespace + ".updateJobPostIdByTempKey", paramMap);
+    }
+
     //필터카운팅
     @Override
     public int countFilteredPosts(FilterRequestVo filterRequestVo) {

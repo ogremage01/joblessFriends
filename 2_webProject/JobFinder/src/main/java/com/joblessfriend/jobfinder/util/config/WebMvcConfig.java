@@ -16,6 +16,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 		.addResourceLocations("file:///C:/upload/profile/");  
 		registry.addResourceHandler("/image/**")
 		.addResourceLocations("file:///D:/files/");
+		 registry.addResourceHandler("/upload/job_post/**")
+				 .addResourceLocations("file:/C:/upload/job_post/");
 	 }
 	 
  }

@@ -72,9 +72,7 @@
                 <!-- 2. 상세 내용 -->
                 <section class="detail-section">
                     <h3>상세 내용</h3>
-                    <p>
-                        ${recruitmentDetailVo.recruitment.content}
-                    </p>
+                    <p><c:out value="${recruitmentDetailVo.recruitment.content}" escapeXml="false" /></p>
                     <ul>
 
                         <c:forEach var="welfare" items="${recruitmentDetailVo.welfare}">

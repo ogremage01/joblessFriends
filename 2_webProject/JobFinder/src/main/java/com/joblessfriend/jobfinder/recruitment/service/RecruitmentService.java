@@ -26,6 +26,9 @@ public interface RecruitmentService {
     //
     public void insertRecruitment(RecruitmentVo recruitmentVo, List<Integer> tagIdList, List<WelfareVo> welfareList);
 
+    void insertJobPostFile(JobPostFileVo fileVo);
+    void updateJobPostIdByTempKey(int jobPostId, String tempKey);
+
 
     public int countFilteredPosts(FilterRequestVo filterRequestVo);
 
