@@ -26,8 +26,9 @@ public interface RecruitmentService {
     //
     public void insertRecruitment(RecruitmentVo recruitmentVo, List<Integer> tagIdList, List<WelfareVo> welfareList);
 
-	public List<RecruitmentVo> adminRecruitmentList();
-	public List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId);
+    void insertJobPostFile(JobPostFileVo fileVo);
+    void updateJobPostIdByTempKey(int jobPostId, String tempKey);
+
 
     public int countFilteredPosts(FilterRequestVo filterRequestVo);
 
@@ -35,7 +36,5 @@ public interface RecruitmentService {
     public List<RecruitmentVo> getFilteredRecruitmentList(FilterRequestVo filterRequestVo);
     int getFilteredRecruitmentTotalCount(FilterRequestVo filterRequestVo);
 	public boolean checkCompanyOwnsJobPost(int companyId, int jobPostId);
-	public void jobPostStop(List<Integer> jobPostIdList);
-
 
 }

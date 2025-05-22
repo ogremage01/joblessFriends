@@ -338,3 +338,8 @@ $('#insertForm').on('submit', function () {
     return true; // ✅ 모든 유효성 통과 시 전송
 });
 
+const cleanTempKey = crypto.randomUUID();
+const tempKey = cleanTempKey.trim().replaceAll(",", "");
+$(() => {
+    $('#insertForm').append(`<input type="hidden" name="tempKey" value="${tempKey}">`);
+});

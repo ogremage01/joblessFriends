@@ -3,14 +3,15 @@ package com.joblessfriend.jobfinder.admin.dao;
 import java.util.List;
 
 import com.joblessfriend.jobfinder.company.domain.CompanyVo;
+import com.joblessfriend.jobfinder.util.SearchVo;
+
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AdminCompanyDao {
 
-	public List<CompanyVo> companySelectList(int page);
+	public List<CompanyVo> companySelectList(SearchVo searchVo);
 
-	public int companyCount();
 
 	public CompanyVo companySelectOne(int companyId);
 
@@ -21,8 +22,8 @@ public interface AdminCompanyDao {
 
 	public int companyDeleteList(List<Integer> companyIdList);
 
-	public List<CompanyVo> companySelectList(int page, String keyword);
 
-	public int companyCount(String keyword);
+
+	public int companyCount(SearchVo searchVo);
 
 }
