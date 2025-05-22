@@ -23,6 +23,7 @@ public class RecruitmentVo {
     private String careerType;      // 경력
     private String education;       // 학력
     private String tempKey;         // 이미지 임시저장용 컬럼
+    private String templateType;    //템플릿타입
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
 
