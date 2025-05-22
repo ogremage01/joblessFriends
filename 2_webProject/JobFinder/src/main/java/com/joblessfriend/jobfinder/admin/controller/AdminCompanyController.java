@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import com.joblessfriend.jobfinder.admin.service.AdminCompanyService;
 import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 import com.joblessfriend.jobfinder.company.service.CompanyService;
+import com.joblessfriend.jobfinder.util.Pagination;
+import com.joblessfriend.jobfinder.util.SearchVo;
 
 @RequestMapping("/admin/member/company") // "/admin/member/company" 경로 하위 요청 처리
 @Controller
@@ -28,36 +30,28 @@ public class AdminCompanyController {
 	 * 기업 회원 목록 페이지로 이동 (페이징 및 키워드 검색 가능)
 	 */
 	@GetMapping("")
-	public String memberCompany(Model model,
-			@RequestParam(defaultValue = "0") int page, // 페이지 번호 기본값 0
-			@RequestParam(value = "keyword", required = false) String keyword) { // 검색어 (선택)
+	public String memberCompany(Model model, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "") String keyword) {
 
 		logger.info("기업회원 목록으로 이동");
 
+		SearchVo searchVo = new SearchVo();
+		searchVo.setKeyword(keyword);
+		searchVo.setPage(page);
+		
+		int totalPage = companyService.companyCount(searchVo);
+		Pagination pagination = new Pagination(totalPage, searchVo);
+		
+		// Oracle 11g에 맞게 startRow, endRow 계산
+		searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
+		searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
 		List<CompanyVo> companyList = new ArrayList<>();
 		int companyCount = 0;
-		int totalPage = 0;
+		companyList = companyService.companySelectList(searchVo);
+				// 뷰로 데이터 전달
 
-		// 검색어가 있을 경우 검색 목록 조회
-		if (keyword != null && !keyword.trim().isEmpty()) {
-			System.out.println("키워드 있음");
-			companyList = companyService.companySelectList(page, keyword);
-			companyCount = companyService.companyCount(keyword);
-			totalPage = companyCount / 10 + (companyCount % 10 == 0 ? 0 : 1);
-		} else {
-			// 검색어가 없을 경우 전체 목록 조회
-			System.out.println("키워드 없음");
-			companyList = companyService.companySelectList(page);
-			companyCount = companyService.companyCount();
-			System.out.println(companyCount); // 디버깅 출력
-			totalPage = companyCount / 10 + (companyCount % 10 == 0 ? 0 : 1);
-		}
-
-		// 뷰로 데이터 전달
-		int curPage = page;
+		model.addAttribute("searchVo", searchVo);
 		model.addAttribute("companyList", companyList);
-		model.addAttribute("totalPage", totalPage);
-		model.addAttribute("curPage", curPage);
+		model.addAttribute("pagination", pagination);
 
 		return "admin/member/memberCompanyView"; // 기업 회원 목록 뷰
 	}
@@ -112,7 +106,7 @@ public class AdminCompanyController {
 		}
 
 		// 주소 관련 정보는 향후 구현 시 활성화
-		
+
 		if (companyVo.getPostalCodeId() != 0) {
 			existCompanyVo.setPostalCodeId(companyVo.getPostalCodeId());
 		}
@@ -122,7 +116,6 @@ public class AdminCompanyController {
 		if (companyVo.getAddress() != null) {
 			existCompanyVo.setAddress(companyVo.getAddress());
 		}
-		
 
 		System.out.println("바꾼 후 정보: " + existCompanyVo.toString());
 

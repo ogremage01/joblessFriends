@@ -3,12 +3,13 @@ package com.joblessfriend.jobfinder.admin.service;
 import java.util.List;
 
 import com.joblessfriend.jobfinder.company.domain.CompanyVo;
+import com.joblessfriend.jobfinder.util.SearchVo;
 
 public interface AdminCompanyService {
 
-	List<CompanyVo> companySelectList(int page);
 
-	int companyCount();
+
+	int companyCount(SearchVo searchVo);
 
 	CompanyVo companySelectOne(int companyId);
 
@@ -20,9 +21,8 @@ public interface AdminCompanyService {
 	int companyDeleteList(List<Integer> companyIdList);
 
 
-	List<CompanyVo> companySelectList(int page, String keyword);
+	List<CompanyVo> companySelectList(SearchVo searchVo);
 
-	int companyCount(String keyword);
 
 
 }

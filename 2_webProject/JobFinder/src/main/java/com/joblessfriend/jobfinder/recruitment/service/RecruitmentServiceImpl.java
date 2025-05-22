@@ -85,20 +85,6 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
 
 
-
-
-    @Override
-	public List<RecruitmentVo> adminRecruitmentList() {
-		// TODO Auto-generated method stub
-		return recruitmentDao.adminRecruitmentList();
-	}
-
-	@Override
-	public List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId) {
-		// TODO Auto-generated method stub
-		return recruitmentDao.companyRecruitmentSelectList(companyId);
-	}
-
     @Override
     public int countFilteredPosts(FilterRequestVo filterRequestVo) {
         return recruitmentDao.countFilteredPosts(filterRequestVo);
@@ -120,12 +106,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 	    return recruitment != null && recruitment.getCompanyId() == companyId;
 	}
 
-	@Override
-	public void jobPostStop(List<Integer> jobPostIdList) {
-		// TODO Auto-generated method stub
-		recruitmentDao.jobPostStop(jobPostIdList);
-		
-	}
+
 
 
 

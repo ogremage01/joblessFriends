@@ -73,26 +73,28 @@
 
 
 			<div id='pageNation'>
-				<c:if test="${totalPage > 0}">
+				<c:if test="${pagination.totalPageCount > 0}">
 				<nav aria-label="...">
 				
 					<ul class="pagination justify-content-center">
-						<li class="page-item ${curPage==0?'disabled':''}">
-							<a class="page-link" href="./company?page=${curPage-1}">Previous</a>
+						<li class="page-item ${searchVo.page==1?'disabled':''}">
+							<a class="page-link" href="./company?page=${searchVo.page-1}&keyword=${searchVo.keyword}">Previous</a>
 						</li>
-						<c:forEach begin="0" var="i" end="${totalPage-1}">
-							<li class="page-item ${curPage==i?'active':''}">
-							<a class="page-link" href="./company?page=${i}">${i+1}</a></li>
+						<c:forEach begin="${pagination.startPage}" var="i" 
+							end="${pagination.endPage}">
+							<li class="page-item ${searchVo.page==i?'active':''}">
+							<a class="page-link" href="./company?page=${i}&keyword=${searchVo.keyword}">${i}</a></li>
 						</c:forEach>
 
 						<!-- <li class="page-item active" aria-current="page"><a
 						class="page-link" href="#">2</a></li> -->
 						<li class="page-item"><a
-							class="page-link ${curPage==totalPage-1? 'disabled':''}" href="./company?page=${curPage+1}">Next</a></li>
+							class="page-link ${searchVo.page==pagination.totalPageCount? 'disabled':''}" href="./company?page=${searchVo.page+1}&keyword=${searchVo.keyword}">Next</a></li>
 					</ul>
 				
 				</nav>
 				</c:if>
+
 			</div>
 
 			<div id="searchContainer">

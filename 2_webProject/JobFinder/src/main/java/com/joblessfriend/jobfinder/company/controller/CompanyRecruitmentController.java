@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.joblessfriend.jobfinder.company.domain.CompanyVo;
+import com.joblessfriend.jobfinder.company.service.CompanyRecruitmentService;
 import com.joblessfriend.jobfinder.recruitment.domain.CompanyRecruitmentVo;
-import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
-import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
 import com.joblessfriend.jobfinder.skill.service.SkillService;
 
 import jakarta.servlet.http.HttpSession;
@@ -27,78 +26,69 @@ import jakarta.servlet.http.HttpSession;
 public class CompanyRecruitmentController {
 
 	@Autowired
-	RecruitmentService recruitmentService;
-	
+	CompanyRecruitmentService recruitmentService;
+
 	@Autowired
 	SkillService skillService;
-	
+
 	@GetMapping("")
 	public String CompanyRecruitmentList(Model model, HttpSession session) {
 		CompanyVo companyVo = (CompanyVo) session.getAttribute("userLogin");
 
 		int companyId = companyVo.getCompanyId();
-		
+
 		List<CompanyRecruitmentVo> CompanyRecruitmentList = recruitmentService.companyRecruitmentSelectList(companyId);
-		
-		
+
 		for (Iterator iterator = CompanyRecruitmentList.iterator(); iterator.hasNext();) {
 			CompanyRecruitmentVo companyRecruitmentVo = (CompanyRecruitmentVo) iterator.next();
-			
+
 			companyRecruitmentVo.setSkillList(skillService.postTagList(companyRecruitmentVo.getJobPostId()));
 		}
-		
+
 		model.addAttribute("recruitmentList", CompanyRecruitmentList);
-		
+
 		return "company/recruitment/recruitmentListView";
 	}
-	
+
 	@DeleteMapping("")
 
 	public ResponseEntity<String> recruitmentDelete(@RequestBody List<Integer> jobPostIdList) {
-		//logger.info("공고삭제메서드");
+		// logger.info("공고삭제메서드");
 
 		for (Integer i : jobPostIdList) {
 			System.out.println("삭제할 공고 Id" + i);
 
 		}
-		
+
 		recruitmentService.jobPostDelete(jobPostIdList);
 
-		
-		return ResponseEntity.ok("삭제완료"); 
+		return ResponseEntity.ok("삭제완료");
 	}
-	
+
 	@PatchMapping("/stop")
 
 	public ResponseEntity<String> recruitmentStop(@RequestBody List<Integer> jobPostIdList) {
-		//logger.info("공고삭제메서드");
+		// logger.info("공고삭제메서드");
 
 		for (Integer i : jobPostIdList) {
 			System.out.println("마감할 공고 Id" + i);
 
 		}
-		
+
 		recruitmentService.jobPostStop(jobPostIdList);
 
-		
-		return ResponseEntity.ok("마감완료"); 
+		return ResponseEntity.ok("마감완료");
 	}
-	
-	
-	
+
 	@GetMapping("/{jobPostId}/applicants")
 	public String jobPostApplicantsList(HttpSession session, @PathVariable int jobPostId) {
-	    CompanyVo companyVo = (CompanyVo) session.getAttribute("userLogin");
-	    if (companyVo == null) {
-	        return "redirect:/login";
-	    }
+		CompanyVo companyVo = (CompanyVo) session.getAttribute("userLogin");
+		if (companyVo == null) {
+			return "redirect:/login";
+		}
 
-	    boolean hasPermission = recruitmentService.checkCompanyOwnsJobPost(companyVo.getCompanyId(), jobPostId);
-	    if (hasPermission) {
-	        return "company/recruitment/applicantsListView";
-	    } else {
-	        return "error/error";
-	    }
+		return "company/recruitment/applicantsListView";
+
 	}
-	
+
 }

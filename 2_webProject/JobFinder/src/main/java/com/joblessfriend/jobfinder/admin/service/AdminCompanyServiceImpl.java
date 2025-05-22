@@ -10,6 +10,7 @@ import com.joblessfriend.jobfinder.admin.dao.AdminCompanyDao;
 import com.joblessfriend.jobfinder.company.dao.CompanyDao;
 import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
+import com.joblessfriend.jobfinder.util.SearchVo;
 
 @Service
 public class AdminCompanyServiceImpl implements AdminCompanyService {
@@ -20,17 +21,12 @@ public class AdminCompanyServiceImpl implements AdminCompanyService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	@Override
-	public List<CompanyVo> companySelectList(int page) {
-		// TODO Auto-generated method stub
-		
-		return companyDao.companySelectList(page);
-	}
+
 
 	@Override
-	public int companyCount() {
+	public int companyCount(SearchVo searchVo) {
 		// TODO Auto-generated method stub
-		return companyDao.companyCount();
+		return companyDao.companyCount(searchVo);
 	}
 
 	@Override
@@ -61,15 +57,10 @@ public class AdminCompanyServiceImpl implements AdminCompanyService {
 
 
 	@Override
-	public List<CompanyVo> companySelectList(int page, String keyword) {
+	public List<CompanyVo> companySelectList(SearchVo searchVo) {
 		// TODO Auto-generated method stub
-		return companyDao.companySelectList(page,keyword);
+		return companyDao.companySelectList(searchVo);
 	}
 
-	@Override
-	public int companyCount(String keyword) {
-		// TODO Auto-generated method stub
-		return companyDao.companyCount(keyword);
-	}
 
 }
