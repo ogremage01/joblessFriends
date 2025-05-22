@@ -16,10 +16,32 @@ function copyPop(msg) {
 }
 
 
-var oldPwdPass = false;
+
+// 암호화 된 비밀번호 체크하기
+function passwordExist(email, password){
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			url: '/auth/login/member',
+			method: 'POST',
+			data: {email:email, password:password},
+			success: function(result) {
+				if (result.success) {
+					resolve(false);
+				} else {
+					resolve(true);
+				}
+			},
+			error: function() {
+				alert("서버 오류가 발생했습니다.");
+				reject(false); // 오류 시 false를 reject
+			},
+		}); // ajax end
+	});	
+}
 
 // 기존 비밀번호 검사
-function checkOldPwd(){
+var oldPwdPass = false;
+async function checkOldPwd(){
 	oldPwdPass = false;
 
 	var pwd = $("#oldPassword").val();
@@ -28,27 +50,35 @@ function checkOldPwd(){
 		noBlank = "비밀번호를 입력해주세요.";
 		$("#oldpwdStatus").html(noBlank);
 		$("#oldPassword").css("border", "1px solid red");
+		oldPwdPass = false;
 		return;
 	}
 	
-	var userPwd = $("#userPassword").val();
-	
+	var email = $("#userEmail").text();
 	var pwdStatusStr = "틀린 비밀번호입니다."
-	if(pwd != userPwd){
-		$("#oldpwdStatus").html(pwdStatusStr);
-		$("#oldPassword").css("border", "1px solid red");
-		return;
-	}else{
-		$("#oldpwdStatus").html("");
-		$("#oldPassword").removeAttr("style");
-		oldPwdPass = true;
-	}
+	
+	try {
+        // passwordExist 함수의 결과를 기다림
+        var isIncorrect = await passwordExist(email, pwd);
+
+        if (isIncorrect) {
+            $("#oldpwdStatus").html(pwdStatusStr);
+            $("#oldPassword").css("border", "1px solid red");
+            oldPwdPass = false;
+        } else {
+            $("#oldpwdStatus").html("");
+            $("#oldPassword").removeAttr("style");
+            oldPwdPass = true;
+        }
+    } catch (error) {
+        console.error("비밀번호 확인 오류:", error);
+    }
 
 }
 
-var pwdPass = false;
 
 // 비밀번호 유효성 검사
+var pwdPass = false;
 function valiCheckPwd(){
 	
 	pwdPass = false;
@@ -68,6 +98,7 @@ function valiCheckPwd(){
 	if(!(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(pwd))){
 		$("#pwdStatus").html(pwdStatusStr);
 		$("#password").css("border", "1px solid red");
+		pwdPass = false;
 		return;
 	} else{
 		$("#pwdStatus").html("");
@@ -78,9 +109,9 @@ function valiCheckPwd(){
 };
 
 
-var pwdCheckPass = false;
 
 // 비밀번호 확인
+var pwdCheckPass = false;
 function sameCheckPwd(){
 	
 	pwdCheckPass = false;
@@ -111,13 +142,13 @@ function sameCheckPwd(){
 }
 
 // 비밀번호 변경 폼 submit
-$('#pwdChangeForm').on('submit', function(e) {
+$('#pwdChangeForm').on('submit',async function(e) {
 	e.preventDefault(); // 기본 submit 막기
 	
-	checkOldPwd();
+	await checkOldPwd();
 	sameCheckPwd();
 	valiCheckPwd();
-	
+
 	if(!oldPwdPass) {
 		$("#oldPassword").focus();
 		return false;
@@ -133,11 +164,13 @@ $('#pwdChangeForm').on('submit', function(e) {
 		return false;
 	};
 	
-
+	var memberId = $("#memberId").val();
+	var password = $("#password").val();
+	
 	$.ajax({
 		url: '/member/passwordCheck',
 		method: 'POST',
-		data: $(this).serialize(),
+		data: {memberId: memberId, password: password},
 		
 		// ✅ Ajax 요청 직전에 버튼 비활성화
 		beforeSend: function() {
@@ -164,4 +197,119 @@ $('#pwdChangeForm').on('submit', function(e) {
 	}); // ajax end	
 	
 })
+
+//비밀번호 입력 초기화
+$(".resetBtn").click(function(){
+	$("#oldpwdStatus").html("");
+	$("#oldPassword").removeAttr("style");
+	$("#oldPassword").val("");
+	
+	$("#pwdStatus").html("");
+	$("#password").removeAttr("style");
+	$("#password").val("");
+	
+	$("#pwdCheckStatus").html("");
+	$("#passwordCheck").removeAttr("style");
+	$("#passwordCheck").val("");
+});
+
+//입력 유효성 확인	
+var delPwdPass = false;
+async function valiCheckPwdDel(){
+	delPwdPass = false;
+	var pwd = $("#passwordDel").val();
+	var email = $("#userEmail").text();
+	var pwdStatusStr = "틀린 비밀번호입니다."
+
+	// 비밀번호를 비동기적으로 확인
+    try {
+        // passwordExist 함수가 끝날 때까지 기다림
+        var isIncorrect = await passwordExist(email, pwd);
+
+        if (isIncorrect && pwd != "") {
+            $("#passwordDelStatus").html(pwdStatusStr);
+            $("#passwordDel").css("border", "1px solid red");
+            delPwdPass = false;
+        } else {
+            $("#passwordDelStatus").html("");
+            $("#passwordDel").removeAttr("style");
+            delPwdPass = true;
+        }
+    } catch (error) {
+        console.error("비밀번호 검증 오류:", error);
+    }
+}
+
+
+// 스크롤 비활성화
+function disableScroll() {
+    // body 요소의 overflow를 hidden으로 변경하여 스크롤 비활성화
+    document.body.style.overflow = 'hidden';
+}
+
+// 스크롤 활성화
+function enableScroll() {
+	// body 요소의 overflow를 다시 visible로 변경하여 스크롤 활성화
+	document.body.style.overflow = 'visible';
+}
+
+// 모달 열기
+$("#modalOpen").click(async function(){
+	
+	if($("#provider").val() == 'normal'){
+		var pwd = $("#passwordDel").val();
+		
+		// 공백 체크
+		if(pwd == ""){
+			var htmlStr = "비밀번호를 입력해주세요.";
+			$("#passwordDelStatus").html(htmlStr);
+			$("#passwordDel").css("border", "1px solid red");
+			return;
+		}
+		
+		await valiCheckPwdDel();
+	
+		if(!delPwdPass) return;
+	}
+	
+	$("#popup").css('display','flex').hide().fadeIn();
+	disableScroll();
+});
+
+// 모달팝업 닫기
+function modalClose(){
+	$("#popup").fadeOut(); //페이드아웃 효과
+}
+
+// 팝업에서 모달 닫기
+$(".popCancel").click(function(){
+	//모달 닫기 함수 호출
+	modalClose();
+	enableScroll();
+});
+
+// 팝업에서 탈퇴하기 버튼
+$(".popSubmit").click(function(){
+	var memberId = $("#memberId").val();
+	
+	$.ajax({
+			url: '/member/delete/'+ memberId,
+			method: 'DELETE',
+			data: { memberId: memberId },
+			success: function(result) {
+				if (result == 1) {
+					alert("탈퇴되었습니다. \n지금까지 이용해주셔서 감사합니다.");
+					location.href='/auth/logout';
+				} else {
+					alert("회원탈퇴에 실패했습니다.");
+				}
+			},
+			error: function() {
+				alert("서버 오류가 발생했습니다.");
+				location.reload();
+			},
+			
+		}); // ajax end	
+	
+});
 
