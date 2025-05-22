@@ -1,14 +1,11 @@
 package com.joblessfriend.jobfinder.company.dao;
 
 import com.joblessfriend.jobfinder.recruitment.domain.*;
-import com.joblessfriend.jobfinder.util.SearchVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class CompanyRecruitmentDaoImpl implements CompanyRecruitmentDao {

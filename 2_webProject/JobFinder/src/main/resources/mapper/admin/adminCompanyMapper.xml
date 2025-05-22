@@ -20,27 +20,32 @@
 
 		</resultMap>
 
-		<select id="companySelectList" parameterType="int" resultMap="companyResultMap">
-		  SELECT * 
-		  FROM (SELECT ROWNUM AS RN, INNERTABLE.*
-		    FROM (SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
-		      FROM COMPANY
-		      ORDER BY COMPANY_ID DESC) INNERTABLE
-		    WHERE ROWNUM &lt;= (#{page} + 1) * 10)
-		  WHERE RN &gt; #{page} * 10
+		<select id="companySelectList"
+		        parameterType="com.joblessfriend.jobfinder.util.SearchVo"
+		        resultMap="companyResultMap">
+		    SELECT *
+		    FROM (
+		        SELECT ROWNUM AS RN, INNERTABLE.*
+		        FROM (
+		            SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
+		            FROM COMPANY
+		            <if test="keyword != null and keyword != ''">
+		                WHERE COMPANY_NAME LIKE '%' || #{keyword} || '%'
+		            </if>
+		            ORDER BY COMPANY_ID DESC
+		        ) INNERTABLE
+		        WHERE ROWNUM &lt;= #{endRow}
+		    )
+		    WHERE RN &gt;= #{startRow}
 		</select>
-		
-		
-	<select id="companyList" resultMap="companyResultMap">
-		SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
-		      FROM COMPANY
-		      ORDER BY COMPANY_ID DESC
-		</select>
-		
+
 		
 		<select id="companyCount" resultType="int">
 			SELECT COUNT(COMPANY_ID)
 			FROM COMPANY
+			 <if test="keyword != null and keyword != ''">	
+			 	WHERE UPPER(COMPANY_NAME) LIKE UPPER('%' || #{keyword} || '%')
+			 </if>
 		</select>
 		
 		
@@ -83,28 +88,6 @@
 		</delete>
 
 
-		
-		<select id="companyEmailExist" parameterType="String" resultMap="companyResultMap">
-			SELECT COMPANY_ID, EMAIL, PASSWORD, COMPANY_NAME, BRN, REPRESENTATIVE, TEL, POSTAL_CODE_ID, ADDRESS
-			FROM COMPANY WHERE EMAIL = #{email}
-		</select>
-		
-		
-		<select id="companySelectListByKeyword" resultMap="companyResultMap">
-		  SELECT * 
-		  FROM (SELECT ROWNUM AS RN, INNERTABLE.*
-		    FROM (SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
-		      FROM COMPANY
-		      WHERE UPPER(COMPANY_NAME) LIKE UPPER('%' || #{keyword} || '%')
-		      ORDER BY COMPANY_ID DESC) INNERTABLE
-		    WHERE ROWNUM &lt;= (#{page} + 1) * 10)
-		  WHERE RN &gt; #{page} * 10
-		</select>
 
-		<select id="companyCountByKeyword" resultType="int">
-			SELECT COUNT(COMPANY_NAME)
-			FROM COMPANY
-			WHERE UPPER(COMPANY_NAME) LIKE UPPER('%' || #{keyword} || '%')
-		</select>
 
 	</mapper>
