@@ -132,11 +132,11 @@ $(document).ready(function () {
 	
 	
 	//업데이트 데이터 전송
-	function commentUpdate(postCommentId,content){
+	function commentUpdate(postCommentId){
 	//	const commentObj = $('#commentNo_'+postCommentId);
 		const urlStr = "/community/detail/commentUpdate/" + postCommentId;
 		
-	    content = $("#editCommentContent_"+postCommentId).val();//작성항 글의 내용
+	    const content = $("#editCommentContent_"+postCommentId).val();//작성항 글의 내용
 	
 	    if (!content.trim()) {
 	        alert("수정 댓글이 비었습니다!");
