@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.joblessfriend.jobfinder.community.domain.PostCommentVo;
+import com.joblessfriend.jobfinder.community.domain.ReplyVo;
 
 @Repository
 public class ReplyDaoImpl implements ReplyDao{
@@ -19,6 +20,12 @@ public class ReplyDaoImpl implements ReplyDao{
 	public List<PostCommentVo> replySelectList(int postCommentId) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(namespace+"replySelectList", postCommentId);
+	}
+
+	@Override
+	public void replyInsert(ReplyVo replyVo) {
+		// TODO Auto-generated method stub
+		sqlSession.insert(namespace+"replyInsertOne", replyVo);
 	}
 
 }

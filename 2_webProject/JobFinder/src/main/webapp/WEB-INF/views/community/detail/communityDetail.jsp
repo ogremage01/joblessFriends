@@ -11,6 +11,7 @@
 
 <link rel="stylesheet" href="/css/community/communityCommonStyle.css">
 <link rel="stylesheet" href="/css/community/communityDetailStyle.css">
+<link rel="stylesheet" href="/css/community/communityNav.css"> 
 <link rel="stylesheet" href="/css/common/common.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
 

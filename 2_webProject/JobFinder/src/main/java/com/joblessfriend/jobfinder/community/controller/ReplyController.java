@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.joblessfriend.jobfinder.community.domain.PostCommentVo;
+import com.joblessfriend.jobfinder.community.domain.ReplyVo;
 import com.joblessfriend.jobfinder.community.service.ReplyService;
 
 @RequestMapping("/community/detail")
@@ -35,23 +36,23 @@ public class ReplyController {
 	    return replyService.replySelectList(postCommentId);
 	}
 	
-	@GetMapping("testRe/{postCommentId}")
-	public String test(@PathVariable("postCommentId") int postCommentId, Model model){
-		
-		List<PostCommentVo> replysList = replyService.replySelectList(postCommentId);
-		System.out.println("댓글 수: " + replysList.size());
-		
-		model.addAttribute("replysList", replysList);
-		
-		return "community/detail/postComment/reply";
-	}
+//	@GetMapping("testRe/{postCommentId}")
+//	public String test(@PathVariable("postCommentId") int postCommentId, Model model){
+//		
+//		List<PostCommentVo> replysList = replyService.replySelectList(postCommentId);
+//		System.out.println("댓글 수: " + replysList.size());
+//		
+//		model.addAttribute("replysList", replysList);
+//		
+//		return "community/detail/postComment/reply";
+//	}
 	
-/*	
+	/* 리댓(대댓글) 작성하기 */
 	@PostMapping("/replyUpload/{postCommentId}")
 	@ResponseBody
 	public ResponseEntity<?> replyUpload(@PathVariable int postCommentId,
-			 @RequestBody PostCommentVo replyVo) {
-		System.out.println("~~~~~~~~~~~~~~~~댓글쓰기 시작~~~~~~~~~~~~~~");
+			 @RequestBody ReplyVo replyVo) {
+		System.out.println("~~~~~~~~~~~~~~~~답글쓰기 시작~~~~~~~~~~~~~~");
 		replyVo.setCommunityId(postCommentId);
 		
 		System.out.println(replyVo);
@@ -59,7 +60,7 @@ public class ReplyController {
 		
 		return ResponseEntity.ok().build();
 	}
-	
+/*	
 	@PostMapping("/replyUpdate/{replyId}")
 	@ResponseBody
 	public ResponseEntity<?> replyUpdate(@PathVariable int replyId,
