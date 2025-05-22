@@ -55,7 +55,7 @@
         </a>
       </li>
       <li class="mb-1">
-        <a href="/admin/chat" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
+        <a href="/admin/chat/rooms" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
           채팅관리
         </a>
       </li>
