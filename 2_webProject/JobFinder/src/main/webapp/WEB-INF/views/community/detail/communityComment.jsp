@@ -33,7 +33,7 @@
 								<button type="button" id="inputCommentBtn" class="inputBtn">등록</button>
 							</div>
 						</div>
-						<!-- 댓글 입력부분 -->
+						<!-- 댓글 입력시 정보부분 -->
 						<input type="hidden" id="communityNo" value="${community.communityId}" />
 						<script type="text/javascript">
 							const memberId = ${sessionScope.userLogin.memberId};

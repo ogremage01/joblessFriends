@@ -11,4 +11,8 @@ public interface ReplyDao {
 
 	void replyInsert(ReplyVo replyVo);
 
+	void replyDelete(int replyId);
+
+	void replyUpdate(ReplyVo replyVo);
+
 }

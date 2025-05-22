@@ -28,4 +28,16 @@ public class ReplyDaoImpl implements ReplyDao{
 		sqlSession.insert(namespace+"replyInsertOne", replyVo);
 	}
 
+	@Override
+	public void replyDelete(int replyId) {
+		// TODO Auto-generated method stub
+		sqlSession.delete(namespace+"replyDeleteOne", replyId);
+	}
+
+	@Override
+	public void replyUpdate(ReplyVo replyVo) {
+		// TODO Auto-generated method stub
+		sqlSession.update(namespace+"replyUpadte", replyVo);
+	}
+
 }

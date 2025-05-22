@@ -60,28 +60,31 @@ public class ReplyController {
 		
 		return ResponseEntity.ok().build();
 	}
-/*	
+	
+	
+	/* 업데이트 작성하기 */
 	@PostMapping("/replyUpdate/{replyId}")
 	@ResponseBody
-	public ResponseEntity<?> replyUpdate(@PathVariable int replyId,
-			 @RequestBody PostCommentVo replyVo) {
+	public ResponseEntity<?> replyUpdate(@PathVariable int replyId, @RequestBody ReplyVo replyVo) {
 		System.out.println("~~~~~~게시판 수정 시작~~~~~~~~~~");
-		replyVo.setPostCommentId(replyId);
+		replyVo.setReplyId(replyId);
 		replyService.replyUpdate(replyVo);
 		    
 		return ResponseEntity.ok().build();
 	}
+		
 	
-	@DeleteMapping("/delete/{replyId}")
+	/* 대댓글(리댓) 삭제 기능 */
+	@DeleteMapping("/replyDelete/{replyId}")
 	@ResponseBody
 	public ResponseEntity<String> replyUpload(@PathVariable("replyId") int replyId) {
-		System.out.println("~~~~~~~~~~~~~~~~댓글삭제 시작~~~~~~~~~~~~~~");
+		System.out.println("~~~~~~~~~~~~~~~~답글삭제 시작~~~~~~~~~~~~~~");
 		
 		replyService.replyDelete(replyId);
 		
-		return ResponseEntity.ok("댓글 삭제");
+		return ResponseEntity.ok("답글 삭제");
 	}
 	
-	*/
+
 	
 }

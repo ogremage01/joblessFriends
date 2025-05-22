@@ -11,4 +11,8 @@ public interface ReplyService {
 
 	void replyInsert(ReplyVo replyVo);
 
+	void replyDelete(int replyId);
+
+	void replyUpdate(ReplyVo replyVo);
+
 }
