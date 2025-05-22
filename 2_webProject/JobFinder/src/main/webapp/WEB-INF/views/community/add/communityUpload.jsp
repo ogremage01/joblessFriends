@@ -8,6 +8,7 @@
 <!-- 스타일 시트 -->
 <link rel="stylesheet" href="/css/community/communityCommonStyle.css"> 
 <link rel="stylesheet" href="/css/community/communityUploadStyle.css"> 
+<link rel="stylesheet" href="/css/community/toastPopup.css"> 
 <link rel="stylesheet" href="/css/common/common.css">
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
@@ -49,13 +50,13 @@
 <div id='containerWrap' class="wrap">
     <h2>글쓰기</h2>
 
-    <form action="/community/upload" method="post" enctype="multipart/form-data">
+    <form action="/community/upload" method="post" enctype="multipart/form-data"  onsubmit="return submitEditor()">
         <input type="hidden" name="writer" value="${sessionScope.userLogin.memberId}" />
 
         <!-- 제목 입력 -->
         <div id='titleWrap'>
             <p>제목</p>
-            <input name='title' type="text" class='boxStyle' placeholder="제목을 입력해주세요." />
+            <input  id='title' name='title' type="text" class='boxStyle' placeholder="제목을 입력해주세요." />
         </div>
 
         <!-- 에디터 입력 -->
@@ -74,7 +75,7 @@
         <!-- 등록/취소 버튼 -->
         <div id="btnWrap">
             <button id='cancleBtn' class='inputBtn' type="button" onclick="history.back()">취소</button>
-            <button type="submit" id='uploadBtn' class='inputBtn' onclick="submitEditor()">등록</button>
+            <button type="submit" id='uploadBtn' class='inputBtn' onsubmit="submitEditor()">등록</button>
         </div>
     </form>
 
@@ -101,7 +102,7 @@
                         success: function(response) {
                             const imageUrl = response.imageUrl;
                             const fileName = response.fileName;
-                            const fileId = response.fileId;
+                            const fileStoredName = response.fileStoredName;
 
                             callback(imageUrl, fileName); // 에디터에 ![](url) 삽입
 
@@ -112,7 +113,7 @@
                             fileItem.setAttribute('data-url', imageUrl);
                             fileItem.innerHTML = `
                                 <span>\${fileName}</span>
-                                <button type="button" onclick="deleteFile('\${fileId}', this)">삭제</button>
+                                <button type="button" onclick="deleteFile('\${fileName}','\${fileStoredName}', this)">삭제</button>
                             `;
                             fileListContainer.appendChild(fileItem);
                         },
@@ -127,24 +128,36 @@
         });
 
         function submitEditor() {
+
+        	
             const markdown = editor.getMarkdown();
             document.getElementById('hiddenContent').value = markdown;
+            
+        	if ($("#title").val().trim() === "") {
+        		askConfirm("제목을");
+        		return false;
+        	}
+        	if ($("#hiddenContent").val().trim() === "") {
+        		askConfirm("내용을");
+        		return false;
+        	}
+        	
             return true;
         }
 
-        function deleteFile(fileId, btn) {
+        function deleteFile(fileName,fileStoredName, btn) {
             if (!confirm("정말 삭제하시겠습니까?")) return;
 
             const fileItem = btn.parentElement;
             const imageUrl = fileItem.getAttribute('data-url');
 
             $.ajax({
-                url: `/community/deleteImage/\${fileId}`,
+                url: `/community/deleteImage/\${fileStoredName}`,
                 type: 'DELETE',
                 success: function() {
                     // 1. 에디터 마크다운에서 이미지 제거
                     const markdown = editor.getMarkdown();
-                    const updatedMarkdown = markdown.replace(new RegExp(`!\\[.*?\\]\\(\${imageUrl}\\)`, 'g'), '');
+                    const updatedMarkdown = markdown.replace(new RegExp(`!\\[\${fileName}\\]\\(\${imageUrl}\\)`, 'g'), '');
                     editor.setMarkdown(updatedMarkdown);
 
                     // 2. 첨부파일 목록에서 제거
@@ -158,6 +171,11 @@
     </script>
 </div>
 
+
+<div id="askConfirm">
+</div>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+<script src="/js/community/toastPopup.js"></script>
 </body>
 </html>
