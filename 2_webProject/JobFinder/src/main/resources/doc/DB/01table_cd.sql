@@ -191,7 +191,7 @@ CREATE TABLE JOB_POST (
         Job_Post_ID NUMBER(5),
         COMPANY_ID NUMBER(5) NOT NULL,
         Title VARCHAR2(3000) NOT NULL,
-        Content VARCHAR2(3000) NOT NULL,
+        Content CLOB NOT NULL,
         Salary VARCHAR2(4000),
         Work_Hours VARCHAR2(200),      --근무시간 ex:월~금
         Job_ID NUMBER(3),
@@ -200,6 +200,7 @@ CREATE TABLE JOB_POST (
         Job_Img VARCHAR2(3000),
         Career_Type VARCHAR2(200),
         Education VARCHAR2(200),
+        template_type VARCHAR2(200),
         Start_Date DATE,
         End_Date DATE,
         Is_Continuous NUMBER(1) DEFAULT 0,         -- 상시채용 여부
