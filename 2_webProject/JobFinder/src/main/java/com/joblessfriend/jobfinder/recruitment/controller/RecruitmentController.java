@@ -7,7 +7,6 @@ import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 import com.joblessfriend.jobfinder.company.service.CompanyService;
 import com.joblessfriend.jobfinder.job.domain.JobVo;
 import com.joblessfriend.jobfinder.job.service.JobService;
-import com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao;
 import com.joblessfriend.jobfinder.recruitment.domain.*;
 import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
 import com.joblessfriend.jobfinder.skill.domain.SkillVo;
@@ -20,7 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -162,9 +164,12 @@ public class RecruitmentController {
 
     @PostMapping("/insert")
     public String insertRecruitment(@ModelAttribute RecruitmentVo recruitmentVo,
-                                    @RequestParam("skills") String skills, @RequestParam("welfareList") String welfareList,
-                                    HttpSession session) {
+                                    @RequestParam("skills") String skills, @RequestParam("welfareList") String welfareList
+                                    ,@RequestParam("tempKey") String tempKey,HttpSession session) {
         System.out.println("📥 컨트롤러 진입");
+        String cleanTempKey = tempKey.trim().replaceAll(",", "");
+
+        System.out.println("🔥 정제된 tempKey = " + cleanTempKey);
         // 1. 로그인 체크
         Object loginMember = session.getAttribute("userLogin");
         Object userType = session.getAttribute("userType");
@@ -176,7 +181,7 @@ public class RecruitmentController {
         // 2. 회사 ID 세팅
         CompanyVo company = (CompanyVo) loginMember;
         recruitmentVo.setCompanyId(company.getCompanyId());
-
+        recruitmentVo.setTempKey(cleanTempKey);
 
         List<Integer> tagIdList = Arrays.stream(skills.split(","))
                 .filter(s -> !s.isBlank())
@@ -192,7 +197,10 @@ public class RecruitmentController {
                 .collect(Collectors.toList());
         try {
             recruitmentService.insertRecruitment(recruitmentVo, tagIdList,welfareVoList);
-            System.out.println("✅ insert 성공");
+            System.out.println("🔥 생성된 jobPostId = " + recruitmentVo.getJobPostId());
+            System.out.println("🔥 생성된 tempKey = " + cleanTempKey);
+            recruitmentService.updateJobPostIdByTempKey(recruitmentVo.getJobPostId(),cleanTempKey);
+            System.out.println("insert 성공");
         } catch (Exception e) {
             e.printStackTrace(); // 꼭 전체 출력!
         }
@@ -201,6 +209,50 @@ public class RecruitmentController {
 
 
         return "redirect:/Recruitment/list";
+    }
+    @PostMapping("/uploadImage")
+    @ResponseBody
+    public Map<String, Object> uploadImage(@RequestParam("image") MultipartFile file,
+                                           @RequestParam("tempKey") String tempKey) throws IOException {
+
+
+        // 5. JSON 응답 (Toast UI Editor에서 기대하는 형식)
+        Map<String, Object> result = new HashMap<>();
+        try {
+            // 1. 저장 경로 설정
+            String uploadDir = "C:/upload/job_post/";
+            File dir = new File(uploadDir);
+            if (!dir.exists()) dir.mkdirs();
+
+            // 2. 저장 파일 이름 생성
+            String originalName = file.getOriginalFilename();
+            String uuid = UUID.randomUUID().toString();
+            String storedName = uuid + "_" + originalName;
+
+            // 3. 실제 저장
+            File dest = new File(uploadDir + storedName);
+            file.transferTo(dest);
+
+            // 4. DB 저장 정보 구성
+            JobPostFileVo fileVo = new JobPostFileVo();
+            fileVo.setFileName(originalName);
+            fileVo.setStoredFileName(storedName);
+            fileVo.setFileExtension(originalName.substring(originalName.lastIndexOf('.') + 1));
+            fileVo.setFileSize(file.getSize());
+            fileVo.setTempKey(tempKey); // 임시 식별 키
+
+            recruitmentService.insertJobPostFile(fileVo);
+            result.put("success", 1);
+            Map<String, String> fileMap = new HashMap<>();
+            fileMap.put("url", "/upload/job_post/" + storedName);
+            result.put("file", fileMap);
+            System.out.println("url"+fileMap.get("url"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.put("success", 0);
+            result.put("message", "서버 오류 발생: " + e.getMessage());
+        }
+        return result;
     }
 
     @PostMapping("/filter/count")

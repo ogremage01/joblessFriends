@@ -25,8 +25,8 @@ public interface RecruitmentDao {
     void insertRecruitment(RecruitmentVo recruitmentVo);
     void insertJobPostTag(RecruitmentVo recruitmentVo, List<Integer> tagIdList);
     void insertJobPostWelfare(WelfareVo Welfarevo);
-
-
+    void insertJobPostFile(JobPostFileVo fileVo);
+    void updateJobPostIdByTempKey(@Param("jobPostId") int jobPostId, @Param("tempKey") String tempKey);
     List<RecruitmentVo> adminRecruitmentList();
 	List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId);
 //    필터

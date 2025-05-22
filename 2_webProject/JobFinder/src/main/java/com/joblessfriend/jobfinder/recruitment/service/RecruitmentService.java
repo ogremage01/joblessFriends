@@ -25,7 +25,8 @@ public interface RecruitmentService {
     List<WelfareVo> selectWelfareByJobPostId(int jobPostId);
     //
     public void insertRecruitment(RecruitmentVo recruitmentVo, List<Integer> tagIdList, List<WelfareVo> welfareList);
-
+    void insertJobPostFile(JobPostFileVo fileVo);
+    void updateJobPostIdByTempKey(int jobPostId, String tempKey);
 	public List<RecruitmentVo> adminRecruitmentList();
 	public List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId);
 

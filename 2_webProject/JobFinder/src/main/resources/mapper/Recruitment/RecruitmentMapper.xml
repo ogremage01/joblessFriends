@@ -182,7 +182,34 @@
                  )
     </insert>
 
-
+    <insert id="insertJobPostFile" parameterType="com.joblessfriend.jobfinder.recruitment.domain.JobPostFileVo">
+        INSERT INTO JOB_POST_FILE (
+        JOB_POST_FILE_ID,
+        JOB_POST_ID,
+        FILE_NAME,
+        STORED_FILE_NAME,
+        FILE_EXTENSION,
+        FILE_SIZE,
+        TEMP_KEY,
+        CREATE_AT,
+        MODIFIED_AT
+        ) VALUES (
+        SEQ_JOB_POST_FILE_ID.NEXTVAL,
+        NULL,  <!-- 추후 등록 시 갱신 -->
+        #{fileName},
+        #{storedFileName},
+        #{fileExtension},
+        #{fileSize},
+        #{tempKey},
+        SYSDATE,
+        SYSDATE
+        )
+    </insert>
+    <update id="updateJobPostIdByTempKey">
+        UPDATE JOB_POST_FILE
+        SET JOB_POST_ID = #{jobPostId}
+        WHERE TEMP_KEY = #{tempKey}
+    </update>
 
 
 
