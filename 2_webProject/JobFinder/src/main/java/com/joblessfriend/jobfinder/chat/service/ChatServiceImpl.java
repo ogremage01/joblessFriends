@@ -14,6 +14,8 @@ import org.springframework.web.socket.TextMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joblessfriend.jobfinder.chat.domain.ChatMessageVo;
 import com.joblessfriend.jobfinder.chat.domain.ChatRoomVo;
+import com.joblessfriend.jobfinder.company.domain.CompanyVo;
+import com.joblessfriend.jobfinder.company.service.CompanyService;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatServiceImpl implements ChatService {
 
 	private final ObjectMapper objectMapper;
+	private final CompanyService companyService;
 	private Map<String, ChatRoomVo> chatRooms;
 	private Map<String, List<ChatMessageVo>> chatMessages;
 
@@ -102,9 +105,15 @@ public class ChatServiceImpl implements ChatService {
 			return room;
 		}
 
+		// 회사 정보 조회
+		CompanyVo company = companyService.companySelectOne(companyId);
+		String roomName = company != null ? 
+			String.format("[%s] %s", key, company.getCompanyName()) : 
+			String.format("[%s] 알 수 없는 기업", key);
+
 		ChatRoomVo newRoom = ChatRoomVo.builder()
 				.roomId(key)
-				.name("기업 " + key + "의 채팅방")
+				.name(roomName)
 				.build();
 
 		chatRooms.put(key, newRoom);
@@ -172,8 +181,7 @@ public class ChatServiceImpl implements ChatService {
 		
 		log.debug("기업 채팅방 조회 결과:");
 		rooms.forEach(room -> 
-			log.debug("- Room[id={}, name={}]", 
-				room.getRoomId(), room.getName()));
+			log.debug("- Room[id={}, name={}]", room.getRoomId(), room.getName()));
 		log.info("기업 채팅방 조회 완료 - 총 {}개", rooms.size());
 		
 		return rooms;
@@ -181,9 +189,20 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public List<ChatMessageVo> findMessagesByRoomId(String roomId) {
-		log.debug("채팅 메시지 조회 - roomId: {}", roomId);
-		List<ChatMessageVo> messages = chatMessages.getOrDefault(roomId, new ArrayList<>());
-		log.debug("조회된 메시지 수: {}", messages.size());
-		return messages;
+		if (roomId == null || roomId.trim().isEmpty()) {
+			log.warn("Invalid roomId for message lookup: null or empty");
+			return new ArrayList<>();
+		}
+
+		String cleanRoomId = roomId.trim();
+		List<ChatMessageVo> messages = chatMessages.get(cleanRoomId);
+		
+		if (messages == null) {
+			log.debug("No messages found for roomId: {}", cleanRoomId);
+			return new ArrayList<>();
+		}
+		
+		log.debug("Found {} messages for roomId: {}", messages.size(), cleanRoomId);
+		return new ArrayList<>(messages);
 	}
 }
