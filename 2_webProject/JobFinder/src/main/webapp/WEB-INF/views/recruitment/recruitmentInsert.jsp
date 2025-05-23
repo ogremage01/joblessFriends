@@ -161,14 +161,6 @@
             </div>
                 <div class="InsertTemplate box-section">
                     <label class="section-title">🧩 템플릿 생성 도우미</label>
-
-
-                        <label class="section-title">📐 상세 템플릿 유형</label>
-                        <select name="templateType" class="templateType" required>
-                            <option value="default">기본형</option>
-                            <option value="self">직접작성 및 이미지 공고</option>
-
-                        </select>
                     <button type="button" id="generateTemplate" class="template-btn">📄 템플릿 미리보기</button>
                     <div id="templatePreview" class="template-preview-box">조건을 선택하고 미리보기를 눌러주세요.</div>
 

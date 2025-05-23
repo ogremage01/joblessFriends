@@ -16,12 +16,5 @@ public class GlobalExceptionHandler {
 
     }
 
-    @ExceptionHandler(NullPointerException.class)
-    public String handleNullPointerArgument(NullPointerException e, Model model){
-
-        model.addAttribute("message", e.getMessage());
-        return "error/error";
-
-    }
 
 }

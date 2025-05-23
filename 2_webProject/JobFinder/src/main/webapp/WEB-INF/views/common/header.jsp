@@ -99,7 +99,7 @@
 													<a href="/Recruitment/insert">공고 등록</a>
 												</li>
 												<li>
-													<a href="/company/recruitment">공고 관리</a>
+													<a href="">공고 관리</a>
 												</li>
 												<li>
 													<a href="/company/info">기업정보 관리</a>

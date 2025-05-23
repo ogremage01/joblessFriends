@@ -9,7 +9,6 @@
 <!-- 스타일 시트 -->
 <link rel="stylesheet" href="/css/community/communityCommonStyle.css"> 
 <link rel="stylesheet" href="/css/community/communityUploadStyle.css"> 
-<link rel="stylesheet" href="/css/community/communityNav.css"> 
 <link rel="stylesheet" href="/css/community/toastPopup.css"> 
 <link rel="stylesheet" href="/css/common/common.css">
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />

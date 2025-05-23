@@ -12,8 +12,8 @@
 <body>
 
 	<div id="replyContainer">
-		<div class="replyBox" style="background-color: #F8F8F9">
-			<input type="hidden"  id="replyId" value="${replyId}">
+		<div id="reply_id" class="replyBox" style="background-color: #F8F8F9">
+			<input type="hidden" id="reply_${replyId}" value="${replyId}">
 			<div class="replylist">
 				<div>
 					<p id='memName' class="commentBoxStyle" style="margin-left: 50px;">${nickname}</p>
@@ -73,8 +73,8 @@
                 	var day = date.getDate();
                 	
 					html += `
-						<div class="replyBox" style="background-color: #F8F8F9">
-						<input type="hidden" id="replyId" value="${replyId}">
+						<div id="reply_id" class="replyBox" style="background-color: #F8F8F9">
+						<input type="hidden" id="reply_${replyId}" value="${replyId}">
 							<div class="replylist">
 								<div>
 									<p id='memName' class="commentBoxStyle" style="margin-left: 50px;">${nickname}</p>

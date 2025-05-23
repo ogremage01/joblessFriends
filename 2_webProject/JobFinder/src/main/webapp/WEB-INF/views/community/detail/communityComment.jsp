@@ -27,13 +27,13 @@
 <!-- 일반 회원용 -->
 						<div id="inputCommentWrap">
 							<p>댓글</p>
-							<textarea id="inputCommentBox" class="boxStyle" placeholder="댓글을 입력해주세요."></textarea>
+							<textarea id="inputCommentBox" class="boxStyle"
+								placeholder="댓글을 입력해주세요."></textarea>
 							<div id="commentBtnWrap">
 								<p>0/1000자</p>
 								<button type="button" id="inputCommentBtn" class="inputBtn">등록</button>
 							</div>
 						</div>
-						<!-- 댓글 입력시 정보부분 -->
 						<input type="hidden" id="communityNo" value="${community.communityId}" />
 						<script type="text/javascript">
 							const memberId = ${sessionScope.userLogin.memberId};
@@ -80,7 +80,7 @@
 			</c:otherwise>
 		</c:choose>
 
-		<input type="hidden" id="memberReply" value="${sessionScope.userLogin.memberId}">
+
 		<!-- 댓글 리스트가 여기에 들어옴 -->
 		<div id="commentContainer"></div>
 	</div>

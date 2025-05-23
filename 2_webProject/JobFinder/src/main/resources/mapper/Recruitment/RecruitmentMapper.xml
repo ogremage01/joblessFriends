@@ -69,8 +69,7 @@
             jp.company_id AS companyId,
             jp.job_id AS jobId,
             jp.salary AS salary,
-            jp.work_hours AS workHours,
-            jp.TEMPLATE_TYPE AS templateType
+            jp.work_hours AS workHours
         FROM JOB_POST jp
                  JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
         WHERE jp.job_post_id = #{jobPostId}
@@ -108,7 +107,6 @@
         JOB_IMG,
         CAREER_TYPE,
         EDUCATION,
-        TEMPLATE_TYPE,
         START_DATE,
         END_DATE,
         IS_CONTINUOUS,
@@ -127,7 +125,6 @@
         NULL,
         #{careerType},
         #{education},
-        #{templateType},
         #{startDate},
         #{endDate},
         0,

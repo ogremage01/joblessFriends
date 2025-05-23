@@ -150,13 +150,6 @@
 			<artifactId>spring-boot-starter-oauth2-client</artifactId>
 		</dependency>
 		
-		    <!--채팅기능을 위한 웹소켓 의존성 주입-->
-	    <dependency>
-	    	<groupId>org.springframework.boot</groupId>
-	    	<artifactId>spring-boot-starter-websocket</artifactId>
-		</dependency>
-    
-		
     </dependencies>
     <build>
         <plugins>

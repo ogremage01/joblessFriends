@@ -8,7 +8,6 @@
 <title>게시물 목록</title>
 
 <link rel="stylesheet" href="/css/common/common.css">
-<link rel="stylesheet" href="/css/community/communityNav.css"> 
 <style type="text/css">	
 	.wrap{
 

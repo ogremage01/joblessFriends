@@ -62,7 +62,7 @@ $("#generateTemplate").on('click',function () {
     let workHoursValue = $("select[name='workHours']").val();
     let salaryValue = $(".InsertJob  input[name='salary']").val();
     let contentValue = editor.getHTML();
-    let templateType = $("select[name='templateType']").val();    //템플릿 타입  //
+
     let startDate = $('.InsertDate input[name="startDate"]').val();
     let endDate = $('.InsertDate input[name="endDate"]').val();
     const welfareHtml = welfareTags.map(text => `<li>${text}</li>`).join('');
@@ -75,115 +75,97 @@ $("#generateTemplate").on('click',function () {
     console.log({ startDate, endDate, salaryValue }); // 디버깅
     const tagHtml = selectedTags.map(tag => `<span class="tag">${tag}</span>`).join('');
 
-    let html = '';
+    const html = `
+<link rel="stylesheet" href="/css/recruitment/recruitmentDetail.css" />
+<div class="detail-wrapper">
 
-    if (templateType === 'self') {
-        // 🧩 직접작성형
-        html = `
-           <link rel="stylesheet" href="/css/recruitment/recruitmentDetail.css" />
-            <div class="detail-wrapper">
-                <div class="detail-main">
-                    <div class="detail-header">
-                        <h2>${titleValue}</h2>
-                        <div class="company-name">기업명</div>
-                    </div>
-                    <div class="detail-info-grid">
-                        <div><span class="detail-info-label">경력</span>${careerTypeValue}</div>
-                        <div><span class="detail-info-label">근무시간</span>${workHoursValue}</div>
-                        <div><span class="detail-info-label">접수 시작일</span>${startDate}</div>
-                        <div><span class="detail-info-label">접수 마감일</span>${endDate}</div>
-                        <div><span class="detail-info-label">학력</span>${educationValue}</div>
-                        <div><span class="detail-info-label">급여</span>${salaryValue}만원</div>
-                    </div>
-                </div>
-                <div class="detail-sidebar">
-                    <div class="dday">접수 마감일까지 남은 시간<br><span>-- 계산 예정 --</span></div>
-                    <div class="btn-group">
-                        <button class="btn-bookmark">★ 공고 찜하기</button>
-                        <button class="btn-apply">지원하기</button>
-                    </div>
-                </div>
-            </div>
-            <div class="detail-body">
-        <div class="detail-content-wrapper">
-       
-            <section class="detail-section">
-                <h3>공고 내용</h3>
-                <div>${contentValue}</div>
-            </section>
-           
+    <!-- 왼쪽 본문 -->
+    <div class="detail-main">
+        <div class="detail-header">
+            <h2>${titleValue}</h2>
+            <div class="company-name">기업명</div>
         </div>
-         </div>
-    `;
-    } else {
-        // 🧩 기본형
-        html = `
-            <link rel="stylesheet" href="/css/recruitment/recruitmentDetail.css" />
-            <div class="detail-wrapper">
-                <div class="detail-main">
-                    <div class="detail-header">
-                        <h2>${titleValue}</h2>
-                        <div class="company-name">기업명</div>
-                    </div>
-                    <div class="detail-info-grid">
-                        <div><span class="detail-info-label">경력</span>${careerTypeValue}</div>
-                        <div><span class="detail-info-label">근무시간</span>${workHoursValue}</div>
-                        <div><span class="detail-info-label">접수 시작일</span>${startDate}</div>
-                        <div><span class="detail-info-label">접수 마감일</span>${endDate}</div>
-                        <div><span class="detail-info-label">학력</span>${educationValue}</div>
-                        <div><span class="detail-info-label">급여</span>${salaryValue}만원</div>
-                    </div>
-                </div>
-                <div class="detail-sidebar">
-                    <div class="dday">접수 마감일까지 남은 시간<br><span>-- 계산 예정 --</span></div>
-                    <div class="btn-group">
-                        <button class="btn-bookmark">★ 공고 찜하기</button>
-                        <button class="btn-apply">지원하기</button>
-                    </div>
-                </div>
-            </div>
 
-            <div class="detail-body">
-                <div class="detail-content-wrapper">
-                    <section class="detail-section">
-                        <h3>요구 스킬</h3>
-                        <div class="tag-list">${tagHtml}</div>
-                    </section>
-                    <section class="detail-section">
-                        <h3>상세 내용</h3>
-                        <div>${contentValue}</div>
-                        <h3>복리후생</h3>
-                        <ul>${welfareHtml}</ul>
-                    </section>
-                    <section class="detail-section">
-                        <h3>전형 절차</h3>
-                        <ol class="step-list">
-                            <li>서류 전형</li>
-                            <li>실무 면접</li>
-                            <li>임원 면접</li>
-                            <li>최종 합격</li>
-                        </ol>
-                    </section>
-                    <section class="detail-section">
-                        <h3>제출 서류</h3>
-                        <ul>
-                            <li>이력서</li>
-                            <li>자기소개서 (자유 양식)</li>
-                        </ul>
-                    </section>
-                    <section class="detail-section">
-                        <h3>기업 정보</h3>
-                        <ul>
-                            <li><strong>기업명:</strong> 기업</li>
-                            <li><strong>담당자명:</strong> 담당자</li>
-                            <li><strong>연락처:</strong> 02-805-2311</li>
-                            <li><strong>주소:</strong> 서울 금천구 시흥동</li>
-                        </ul>
-                    </section>
-                </div>
+        <div class="detail-info-grid">
+            <div><span class="detail-info-label">경력</span>${careerTypeValue}</div>
+            <div><span class="detail-info-label">근무시간</span>${workHoursValue}</div>
+            <div><span class="detail-info-label">접수 시작일</span>${startDate}</div>
+            <div><span class="detail-info-label">접수 마감일</span>${endDate}</div>
+            <div><span class="detail-info-label">학력</span>${educationValue}</div>
+            <div><span class="detail-info-label">급여</span>${salaryValue}만원</div>
+        </div>
+    </div>
+
+    <!-- 오른쪽 사이드 영역 -->
+    <div class="detail-sidebar">
+        <div class="dday">접수 마감일까지 남은 시간<br><span>-- 계산 예정 --</span></div>
+        <div class="btn-group">
+            <button class="btn-bookmark">★ 공고 찜하기</button>
+            <button class="btn-apply">지원하기</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="detail-body">
+    <div class="detail-content-wrapper">
+
+        <!-- 스킬 -->
+        <section class="detail-section">
+            <h3>요구 스킬</h3>
+            <div class="tag-list">
+                ${tagHtml}
             </div>
-        `;
-    }
+        </section>
+
+        <!-- 상세 내용 -->
+        <section class="detail-section">
+            <h3>상세 내용</h3>
+            <div>${contentValue}</div>
+            
+                <ul>
+                        ${welfareHtml}
+                   </ul>
+        </section>
+
+        <!-- 전형 절차, 제출 서류 등은 필요에 따라 하드코딩 or 조건부 생성 -->
+    </div>
+</div>
+           <!-- 2. 상세 내용 -->
+         
+
+                <!-- 3. 전형 절차 -->
+                <section class="detail-section">
+                    <h3>전형 절차</h3>
+                    <ol class="step-list">
+                        <li>서류 전형</li>
+                        <li>실무 면접</li>
+                        <li>임원 면접</li>
+                        <li>최종 합격</li>
+                    </ol>
+                </section>
+
+                <!-- 4. 제출 서류 -->
+                <section class="detail-section">
+                    <h3>제출 서류</h3>
+                    <ul>
+                        <li>이력서</li>
+                        <li>자기소개서 (자유 양식)</li>
+                    </ul>
+                </section>
+
+                <!-- 5. 기업 정보 -->
+                <section class="detail-section">
+                    <h3>기업 정보</h3>
+                    <ul>
+                        <li><strong>기업명:</strong>  기업</li>
+                        <li><strong>담당자명:</strong> 담당자</li>
+                        <li><strong>연락처:</strong> 02-805-2311</li>
+                        <li><strong>주소:</strong> 서울 금천구 시흥동 </li>
+                    </ul>
+                </section>
+
+`;
 
     $("#templatePreview").html(html);
 
@@ -352,7 +334,7 @@ $('#insertForm').on('submit', function () {
     $('input[name="skills"]').val(selectedSkillIds.join(','));
 
     updateWelfareInput(); // 복리후생 hidden 처리
-    if (!confirm("등록하시겠습니까?")) return false;      //컨펌창 수정예정//
+
     return true; // ✅ 모든 유효성 통과 시 전송
 });
 

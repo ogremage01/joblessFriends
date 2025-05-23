@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.joblessfriend.jobfinder.community.dao.ReplyDao;
 import com.joblessfriend.jobfinder.community.domain.PostCommentVo;
-import com.joblessfriend.jobfinder.community.domain.ReplyVo;
 
 @Service
 public class ReplyServiceImpl implements ReplyService{
@@ -23,24 +22,6 @@ public class ReplyServiceImpl implements ReplyService{
 	public List<PostCommentVo> replySelectList(int postCommentId) {
 		// TODO Auto-generated method stub
 		return replyDao.replySelectList(postCommentId);
-	}
-
-	@Override
-	public void replyInsert(ReplyVo replyVo) {
-		// TODO Auto-generated method stub
-		replyDao.replyInsert(replyVo);
-	}
-
-	@Override
-	public void replyDelete(int replyId) {
-		// TODO Auto-generated method stub
-		replyDao.replyDelete(replyId);
-	}
-
-	@Override
-	public void replyUpdate(ReplyVo replyVo) {
-		// TODO Auto-generated method stub
-		replyDao.replyUpdate(replyVo);
 	}
 
 }

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.joblessfriend.jobfinder.community.domain.PostCommentVo;
-import com.joblessfriend.jobfinder.community.domain.ReplyVo;
 import com.joblessfriend.jobfinder.community.service.ReplyService;
 
 @RequestMapping("/community/detail")
@@ -36,23 +35,23 @@ public class ReplyController {
 	    return replyService.replySelectList(postCommentId);
 	}
 	
-//	@GetMapping("testRe/{postCommentId}")
-//	public String test(@PathVariable("postCommentId") int postCommentId, Model model){
-//		
-//		List<PostCommentVo> replysList = replyService.replySelectList(postCommentId);
-//		System.out.println("댓글 수: " + replysList.size());
-//		
-//		model.addAttribute("replysList", replysList);
-//		
-//		return "community/detail/postComment/reply";
-//	}
+	@GetMapping("testRe/{postCommentId}")
+	public String test(@PathVariable("postCommentId") int postCommentId, Model model){
+		
+		List<PostCommentVo> replysList = replyService.replySelectList(postCommentId);
+		System.out.println("댓글 수: " + replysList.size());
+		
+		model.addAttribute("replysList", replysList);
+		
+		return "community/detail/postComment/reply";
+	}
 	
-	/* 리댓(대댓글) 작성하기 */
+/*	
 	@PostMapping("/replyUpload/{postCommentId}")
 	@ResponseBody
 	public ResponseEntity<?> replyUpload(@PathVariable int postCommentId,
-			 @RequestBody ReplyVo replyVo) {
-		System.out.println("~~~~~~~~~~~~~~~~답글쓰기 시작~~~~~~~~~~~~~~");
+			 @RequestBody PostCommentVo replyVo) {
+		System.out.println("~~~~~~~~~~~~~~~~댓글쓰기 시작~~~~~~~~~~~~~~");
 		replyVo.setCommunityId(postCommentId);
 		
 		System.out.println(replyVo);
@@ -61,30 +60,27 @@ public class ReplyController {
 		return ResponseEntity.ok().build();
 	}
 	
-	
-	/* 업데이트 작성하기 */
 	@PostMapping("/replyUpdate/{replyId}")
 	@ResponseBody
-	public ResponseEntity<?> replyUpdate(@PathVariable int replyId, @RequestBody ReplyVo replyVo) {
+	public ResponseEntity<?> replyUpdate(@PathVariable int replyId,
+			 @RequestBody PostCommentVo replyVo) {
 		System.out.println("~~~~~~게시판 수정 시작~~~~~~~~~~");
-		replyVo.setReplyId(replyId);
+		replyVo.setPostCommentId(replyId);
 		replyService.replyUpdate(replyVo);
 		    
 		return ResponseEntity.ok().build();
 	}
-		
 	
-	/* 대댓글(리댓) 삭제 기능 */
-	@DeleteMapping("/replyDelete/{replyId}")
+	@DeleteMapping("/delete/{replyId}")
 	@ResponseBody
 	public ResponseEntity<String> replyUpload(@PathVariable("replyId") int replyId) {
-		System.out.println("~~~~~~~~~~~~~~~~답글삭제 시작~~~~~~~~~~~~~~");
+		System.out.println("~~~~~~~~~~~~~~~~댓글삭제 시작~~~~~~~~~~~~~~");
 		
 		replyService.replyDelete(replyId);
 		
-		return ResponseEntity.ok("답글 삭제");
+		return ResponseEntity.ok("댓글 삭제");
 	}
 	
-
+	*/
 	
 }

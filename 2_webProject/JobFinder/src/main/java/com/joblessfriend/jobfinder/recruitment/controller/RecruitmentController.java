@@ -142,9 +142,9 @@ public class RecruitmentController {
 
         model.addAttribute("recruitmentDetailVo", recruitmentDetailVo);
 
+
         return "recruitment/recruitmentDetail";
     }
-
     @GetMapping("/insert")
     public String recruitmentInsert(Model model, HttpSession session) {
         Object loginMember = session.getAttribute("userLogin");
