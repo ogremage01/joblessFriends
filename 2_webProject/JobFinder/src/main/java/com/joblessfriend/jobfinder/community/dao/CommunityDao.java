@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.joblessfriend.jobfinder.community.domain.CommunityVo;
+import com.joblessfriend.jobfinder.util.SearchVo;
 
 public interface CommunityDao {
 
 	void communityInsertOne(CommunityVo communityVo);
 	
-	List<CommunityVo> communitySelectList();
+	List<CommunityVo> communitySelectList(SearchVo searchVo);
 
 	CommunityVo communityDetail(int no);
 
@@ -26,5 +27,8 @@ public interface CommunityDao {
 	void communityFileDelete(int communityId);
 
 	void communityFileNewInsert(Map<String, Object> fileMap);
+
+	//페이지네이션 전체 페이지 수
+	int getCommunityTotalCount(SearchVo searchVo);
 
 }

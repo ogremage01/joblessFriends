@@ -94,7 +94,6 @@
 				
 				</nav>
 				</c:if>
-
 			</div>
 
 			<div id="searchContainer">
