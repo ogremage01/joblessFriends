@@ -122,7 +122,7 @@
         #{jobId},
         #{jobGroupId},
         0,
-        NULL,
+        #{jobImg},
         #{careerType},
         #{education},
         #{startDate},

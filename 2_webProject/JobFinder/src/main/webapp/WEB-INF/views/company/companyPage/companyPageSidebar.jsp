@@ -18,7 +18,7 @@
 				<a href="/Recruitment/insert#" style="text-decoration: none;">공고 등록</a>
 			</li>
 			<li class="">
-				<a href="/company/recruitment#" style="text-decoration: none;">공고 관리</a>
+				<a href="/company/recruitment?" style="text-decoration: none;">공고 관리</a>
 			</li>
 			<li class="">
 				<a href="/company/info#" style="text-decoration: none;">기업 상세 정보</a>

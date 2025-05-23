@@ -13,7 +13,11 @@
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
@@ -27,13 +31,25 @@
     <div id="containerWrap">
 
 
-        <form id="insertForm" action="${pageContext.request.contextPath}/Recruitment/insert" method="post">
+        <form id="insertForm" action="${pageContext.request.contextPath}/Recruitment/insert" method="post" enctype="multipart/form-data">
         <div class="InsertMain">
 
                 <!-- 제목 -->
                 <div class="InsertTitle box-section">
+                    <label class="section-title">채용공고 타이틀</label>
                     <input type="text" style="width: 100%" name="title" placeholder="공고 제목을 입력하세요" required />
                 </div>
+            <div class="InsertTitle box-section">
+                <label class="section-title">채용공고 대표 이미지 업로드</label>
+
+                <input type="file" name="jobImgFile" accept="image/*" id="jobImgFile" />
+                <button type="button" id="generateTitle" class="template-btn">이미지 미리보기</button>
+
+                <div id="fileInfoBox" style="margin-top: 8px; display: none;">
+                    <span id="fileNameText" style="margin-right: 6px;"></span>
+                    <button type="button" id="removeFileBtn" style="background: none; border: none; color: red; font-size: 14px; cursor: pointer;">✕</button>
+                </div>
+            </div>
 
                 <!-- 접수기간 & 지원자격 -->
                 <div class="flex-wrap">
