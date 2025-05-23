@@ -159,24 +159,37 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
 		// roomId 처리
 		if (chatMessage.getRoomId() == null || chatMessage.getRoomId().isEmpty()) {
+			String userType = (String) session.getAttributes().get("userType");
+			
 			if (chatMessage.getType() == ChatMessageVo.MessageType.ENTER) {
-				String userType = (String) session.getAttributes().get("userType");
 				if ("admin".equals(userType)) {
+					log.warn("관리자의 ENTER 메시지에 roomId가 없습니다");
+					session.sendMessage(new TextMessage(objectMapper.writeValueAsString(
+						Map.of("error", "채팅방을 먼저 선택해주세요.")
+					)));
 					return;
 				} else if ("company".equals(userType)) {
 					CompanyVo companyVo = (CompanyVo) session.getAttributes().get("userLogin");
 					ChatRoomVo newRoom = chatService.companyCreateRoom(companyVo.getCompanyId());
+					chatMessage.setRoomId(String.valueOf(companyVo.getCompanyId()));
 					chatService.sendMessage(session, newRoom);
 					return;
 				} else {
 					MemberVo memberVo = (MemberVo) session.getAttributes().get("userLogin");
-					ChatRoomVo newRoom = chatService.createRoom(memberVo.getEmail());
+					String roomId = memberVo.getEmail();
+					ChatRoomVo newRoom = chatService.createRoom(roomId);
+					chatMessage.setRoomId(roomId);
 					chatService.sendMessage(session, newRoom);
 					return;
 				}
 			} else {
-				String userType = (String) session.getAttributes().get("userType");
-				if ("company".equals(userType)) {
+				if ("admin".equals(userType)) {
+					log.warn("관리자의 TALK 메시지에 roomId가 없습니다");
+					session.sendMessage(new TextMessage(objectMapper.writeValueAsString(
+						Map.of("error", "채팅방을 먼저 선택해주세요.")
+					)));
+					return;
+				} else if ("company".equals(userType)) {
 					CompanyVo companyVo = (CompanyVo) session.getAttributes().get("userLogin");
 					chatMessage.setRoomId(String.valueOf(companyVo.getCompanyId()));
 				} else {
@@ -186,17 +199,35 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			}
 		}
 
+		// roomId가 설정되었는지 다시 확인
+		if (chatMessage.getRoomId() == null || chatMessage.getRoomId().isEmpty()) {
+			log.error("메시지에 roomId가 없습니다: {}", chatMessage);
+			session.sendMessage(new TextMessage(objectMapper.writeValueAsString(
+				Map.of("error", "채팅방 ID가 없습니다.")
+			)));
+			return;
+		}
+
 		ChatRoomVo room = chatService.findRoomById(chatMessage.getRoomId());
 		if (room == null) {
 			log.warn("존재하지 않는 roomId: {}, 새로 생성합니다", chatMessage.getRoomId());
 			String userType = (String) session.getAttributes().get("userType");
-			if ("company".equals(userType)) {
+			if ("admin".equals(userType)) {
+				log.error("관리자가 존재하지 않는 채팅방에 메시지를 보내려고 했습니다: {}", chatMessage.getRoomId());
+				session.sendMessage(new TextMessage(objectMapper.writeValueAsString(
+					Map.of("error", "존재하지 않는 채팅방입니다.")
+				)));
+				return;
+			} else if ("company".equals(userType)) {
 				CompanyVo companyVo = (CompanyVo) session.getAttributes().get("userLogin");
 				room = chatService.companyCreateRoom(companyVo.getCompanyId());
 			} else {
 				room = chatService.createRoom(chatMessage.getRoomId());
 			}
 		}
+
+		log.debug("메시지 처리: roomId={}, type={}, sender={}, message={}", 
+			chatMessage.getRoomId(), chatMessage.getType(), chatMessage.getSender(), chatMessage.getMessage());
 		room.handleActions(session, chatMessage, chatService);
 	}
 

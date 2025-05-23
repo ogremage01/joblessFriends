@@ -184,10 +184,12 @@
                 return;
             }
 
-            const wsUrl = '/ws/chat';
-            console.log('WebSocket 연결 시도:', wsUrl, '방 ID:', roomId);
-            ws = new SockJS(wsUrl);
-            let isAuthError = false;
+            const wsUrl = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+            const host = window.location.host;
+            const fullUrl = wsUrl + host + '/ws/chat';
+            
+            console.log('WebSocket 연결 시도:', fullUrl, '방 ID:', roomId);
+            ws = new SockJS(fullUrl);
 
             // WebSocket 이벤트 핸들러 설정
             setupWebSocketHandlers(ws, roomId);
@@ -229,6 +231,7 @@
                 console.warn('입장 메시지 전송 실패: 유효하지 않은 roomId');
             }
             
+            // 큐에 있는 메시지 전송
             processMessageQueue(ws);
         }
 
@@ -272,6 +275,11 @@
             if (!msg) return false;
 
             updateLastActivityTime();
+
+            if (!currentRoomId) {
+                alert('채팅방을 먼저 선택해주세요.');
+                return false;
+            }
 
             const messageObj = {
                 type: 'TALK',
@@ -335,26 +343,51 @@
         function fetchRooms(type, listId) {
             fetch('/admin/chat/rooms?type=' + type)
                 .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            window.location.href = '/auth/login';
+                            throw new Error('로그인이 필요합니다.');
+                        }
+                        throw new Error('Network response was not ok');
+                    }
                     return response.json();
                 })
-                .then(data => updateRoomList(data, listId))
-                .catch(err => handleRoomLoadError(err, listId));
+                .then(data => {
+                    if (typeof data === 'string') {
+                        throw new Error(data);
+                    }
+                    updateRoomList(data, listId);
+                })
+                .catch(err => {
+                    console.error('채팅방 목록 로드 실패:', err);
+                    const roomList = document.getElementById(listId);
+                    if (err.message === '로그인이 필요합니다.') {
+                        roomList.innerHTML = '<li class="list-group-item text-danger">로그인이 필요합니다. 잠시 후 로그인 페이지로 이동합니다.</li>';
+                    } else {
+                        roomList.innerHTML = '<li class="list-group-item text-danger">채팅방 목록을 불러오는데 실패했습니다.</li>';
+                    }
+                });
         }
 
         function selectRoom(roomId, roomName) {
-            console.log('채팅방 선택 시도:', { roomId, roomName });
-            
             if (!roomId || roomId === 'undefined' || roomId === 'null' || roomId.trim() === '') {
                 console.error('유효하지 않은 채팅방 ID:', roomId);
+                alert('유효하지 않은 채팅방입니다.');
                 return;
             }
 
-            const sanitizedRoomId = roomId.toString().trim();
-            console.log('처리된 채팅방 ID:', sanitizedRoomId);
+            const sanitizedRoomId = roomId.trim();
+            const sanitizedRoomName = (roomName || roomId).trim();
+
+            console.log('채팅방 선택:', { roomId: sanitizedRoomId, roomName: sanitizedRoomName });
+            
+            if (currentRoomId === sanitizedRoomId) {
+                console.log('이미 선택된 채팅방입니다.');
+                return;
+            }
             
             currentRoomId = sanitizedRoomId;
-            updateRoomTitle({ name: roomName });
+            updateRoomTitle({ name: sanitizedRoomName });
             clearMessages();
             loadPreviousMessages(sanitizedRoomId);
             
@@ -365,45 +398,50 @@
 
         function updateRoomList(rooms, listId) {
             const roomList = document.getElementById(listId);
-            if (!rooms || rooms.length === 0) {
+            if (!rooms || !Array.isArray(rooms) || rooms.length === 0) {
                 roomList.innerHTML = '<li class="list-group-item">채팅방이 없습니다.</li>';
                 return;
             }
 
             console.log(`채팅방 목록 업데이트 (${listId}):`, rooms);
 
-            roomList.innerHTML = rooms.map(room => {
-                // 채팅방 ID 확인 및 처리
-                let roomId = room.roomId;
-                if (!roomId && room.email) {
-                    roomId = room.email;
+            const validRooms = rooms.filter(room => {
+                if (!room || !room.roomId) {
+                    console.warn('유효하지 않은 방 정보:', room);
+                    return false;
                 }
-                
-                if (!roomId) {
-                    console.warn('방 정보에 ID가 없습니다:', room);
-                    return '';
-                }
+                return true;
+            });
 
-                // 채팅방 이름 설정
-                let displayName = room.name || roomId;
+            if (validRooms.length === 0) {
+                roomList.innerHTML = '<li class="list-group-item">유효한 채팅방이 없습니다.</li>';
+                return;
+            }
+
+            roomList.innerHTML = validRooms.map(room => {
+                const roomId = room.roomId.trim();
+                let displayName = room.name ? room.name.trim() : roomId;
+
+                // 채팅방 타입에 따른 이름 형식 확인
                 if (listId === 'companyRoomList' && !displayName.includes('기업')) {
                     displayName = `기업 ${displayName}`;
+                } else if (listId === 'memberRoomList' && !displayName.includes('채팅방')) {
+                    displayName = `${displayName}의 채팅방`;
                 }
 
                 console.log(`채팅방 정보 - ID: ${roomId}, 이름: ${displayName}`);
 
-                const sanitizedRoomId = roomId.toString().trim();
-                const sanitizedDisplayName = displayName.replace(/'/g, "\\'");
-
                 return `
                     <li class="list-group-item" style="cursor: pointer;" 
-                        data-room-id="${sanitizedRoomId}"
-                        data-room-name="${sanitizedDisplayName}"
-                        onclick="selectRoom('${sanitizedRoomId}', '${sanitizedDisplayName}')">
-                        ${displayName}
-                        <span class="badge bg-primary rounded-pill float-end">
-                            ${room.sessions ? room.sessions.length : 0}
-                        </span>
+                        data-room-id="${roomId}"
+                        data-room-name="${displayName.replace(/'/g, "\\'")}"
+                        onclick="selectRoom('${roomId}', '${displayName.replace(/'/g, "\\'")}')">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>${displayName}</span>
+                            <span class="badge bg-primary rounded-pill">
+                                ${room.sessions ? room.sessions.length : 0}
+                            </span>
+                        </div>
                     </li>
                 `;
             }).join('');
@@ -453,18 +491,24 @@
             const sanitizedRoomId = roomId.toString().trim();
             console.log('이전 메시지 로드 시도:', sanitizedRoomId);
 
-            // URL에서 후행 슬래시 제거
             fetch(`/admin/chat/messages/${sanitizedRoomId}`.replace(/\/+$/, ''))
                 .then(response => {
                     if (!response.ok) {
+                        if (response.status === 401) {
+                            window.location.href = '/auth/login';
+                            throw new Error('로그인이 필요합니다.');
+                        }
                         throw new Error('메시지 로드 실패');
                     }
                     return response.json();
                 })
-                .then(messages => {
-                    console.log('로드된 메시지:', messages);
-                    if (Array.isArray(messages)) {
-                        messages.forEach(message => appendMessage(message));
+                .then(data => {
+                    if (typeof data === 'string') {
+                        throw new Error(data);
+                    }
+                    console.log('로드된 메시지:', data);
+                    if (Array.isArray(data)) {
+                        data.forEach(message => appendMessage(message));
                     }
                 })
                 .catch(error => {
@@ -472,7 +516,11 @@
                     const chatMessages = document.getElementById('chatMessages');
                     const errorDiv = document.createElement('div');
                     errorDiv.className = 'text-center text-danger';
-                    errorDiv.textContent = '이전 메시지를 불러오는데 실패했습니다.';
+                    if (error.message === '로그인이 필요합니다.') {
+                        errorDiv.textContent = '로그인이 필요합니다. 잠시 후 로그인 페이지로 이동합니다.';
+                    } else {
+                        errorDiv.textContent = '이전 메시지를 불러오는데 실패했습니다.';
+                    }
                     chatMessages.appendChild(errorDiv);
                 });
         }

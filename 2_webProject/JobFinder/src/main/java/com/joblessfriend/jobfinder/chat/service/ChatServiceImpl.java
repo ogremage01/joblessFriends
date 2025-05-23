@@ -36,25 +36,48 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public List<ChatRoomVo> findAllRoom() {
-		return new ArrayList<>(chatRooms.values());
+		List<ChatRoomVo> rooms = new ArrayList<>(chatRooms.values());
+		log.debug("전체 채팅방 조회 - 총 {}개", rooms.size());
+		return rooms;
 	}
 
 	@Override
-	public ChatRoomVo findRoomById(String userEmail) {
-		return chatRooms.get(userEmail);
+	public ChatRoomVo findRoomById(String roomId) {
+		if (roomId == null || roomId.trim().isEmpty()) {
+			log.warn("Invalid roomId: null or empty");
+			return null;
+		}
+		ChatRoomVo room = chatRooms.get(roomId.trim());
+		if (room == null) {
+			log.debug("Room not found for id: {}", roomId);
+		} else {
+			log.debug("Room found - id: {}, name: {}", room.getRoomId(), room.getName());
+		}
+		return room;
 	}
 
 	@Override
 	public ChatRoomVo createRoom(String userEmail) {
-		// 이메일에서 채팅방 이름 부분 제거
-		String cleanEmail = userEmail.replace("의 채팅방", "");
+		if (userEmail == null || userEmail.trim().isEmpty()) {
+			log.error("Invalid email: null or empty");
+			throw new IllegalArgumentException("유효하지 않은 이메일입니다.");
+		}
+
+		String cleanEmail = userEmail.replace("의 채팅방", "").trim();
+		if (cleanEmail.isEmpty()) {
+			log.error("Invalid email after cleaning: empty");
+			throw new IllegalArgumentException("유효하지 않은 이메일입니다.");
+		}
 		
 		ChatRoomVo room = findRoomById(cleanEmail);
-		if (room != null) return room;
+		if (room != null) {
+			log.debug("기존 채팅방 반환 - roomId: {}, name: {}", cleanEmail, room.getName());
+			return room;
+		}
 
 		ChatRoomVo newRoom = ChatRoomVo.builder()
 				.roomId(cleanEmail)
-				.name(cleanEmail)
+				.name(cleanEmail + "의 채팅방")
 				.email(cleanEmail)
 				.build();
 
@@ -68,8 +91,16 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public ChatRoomVo companyCreateRoom(int companyId) {
 		String key = String.valueOf(companyId);
+		if (companyId <= 0) {
+			log.error("Invalid companyId: {}", companyId);
+			throw new IllegalArgumentException("유효하지 않은 기업 ID입니다.");
+		}
+
 		ChatRoomVo room = findRoomById(key);
-		if (room != null) return room;
+		if (room != null) {
+			log.debug("기존 기업 채팅방 반환 - roomId: {}, name: {}", key, room.getName());
+			return room;
+		}
 
 		ChatRoomVo newRoom = ChatRoomVo.builder()
 				.roomId(key)
@@ -78,7 +109,7 @@ public class ChatServiceImpl implements ChatService {
 
 		chatRooms.put(key, newRoom);
 		chatMessages.put(key, new ArrayList<>());
-		log.info("채팅방 생성됨 - roomId: {}, name: {}", key, newRoom.getName());
+		log.info("기업 채팅방 생성됨 - roomId: {}, name: {}", key, newRoom.getName());
 		return newRoom;
 	}
 
@@ -116,16 +147,36 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public List<ChatRoomVo> findMemberRooms() {
-		return chatRooms.values().stream()
+		List<ChatRoomVo> rooms = chatRooms.values().stream()
+				.filter(room -> room != null && room.getRoomId() != null)
 				.filter(room -> !room.getRoomId().matches("\\d+"))
+				.filter(room -> room.getName() != null)
 				.collect(Collectors.toList());
+		
+		log.debug("회원 채팅방 조회 결과:");
+		rooms.forEach(room -> 
+			log.debug("- Room[id={}, name={}, email={}]", 
+				room.getRoomId(), room.getName(), room.getEmail()));
+		log.info("회원 채팅방 조회 완료 - 총 {}개", rooms.size());
+		
+		return rooms;
 	}
 
 	@Override
 	public List<ChatRoomVo> findCompanyRooms() {
-		return chatRooms.values().stream()
+		List<ChatRoomVo> rooms = chatRooms.values().stream()
+				.filter(room -> room != null && room.getRoomId() != null)
 				.filter(room -> room.getRoomId().matches("\\d+"))
+				.filter(room -> room.getName() != null)
 				.collect(Collectors.toList());
+		
+		log.debug("기업 채팅방 조회 결과:");
+		rooms.forEach(room -> 
+			log.debug("- Room[id={}, name={}]", 
+				room.getRoomId(), room.getName()));
+		log.info("기업 채팅방 조회 완료 - 총 {}개", rooms.size());
+		
+		return rooms;
 	}
 
 	@Override
