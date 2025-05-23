@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Component("fileUtils")//Spring Bean으로 등록
 public class FileUtils {
-	private static final String filePath = "C:\\files"; //파일 저장경로
+	private static final String filePath = "C:\\upload\\files"; //파일 저장경로
 	
 	//다중 파일 업로드 처리
 	//MultipartHttpServletRequest: 서버에서 요청보낸 이미지를 이곳에 받음(저장 x-저장로직은 따로)

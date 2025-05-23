@@ -1,11 +1,11 @@
-package com.joblessfriend.jobfinder.resume.portfolio.service;
+package com.joblessfriend.jobfinder.resume.service;
 
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.joblessfriend.jobfinder.resume.portfolio.domain.PortfolioVo;
+import com.joblessfriend.jobfinder.resume.domain.PortfolioVo;
 
 public interface PortfolioService {
 

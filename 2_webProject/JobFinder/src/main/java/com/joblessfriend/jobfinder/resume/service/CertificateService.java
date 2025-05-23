@@ -1,8 +1,8 @@
-package com.joblessfriend.jobfinder.resume.certificate.service;
+package com.joblessfriend.jobfinder.resume.service;
 
 import java.util.List;
 
-import com.joblessfriend.jobfinder.resume.certificate.domain.CertificateVo;
+import com.joblessfriend.jobfinder.resume.domain.CertificateVo;
 
 public interface CertificateService {
 	public List<CertificateVo> certificateSelectList(int resumeId);

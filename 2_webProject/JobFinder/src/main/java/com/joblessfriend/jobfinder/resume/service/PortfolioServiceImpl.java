@@ -1,4 +1,4 @@
-package com.joblessfriend.jobfinder.resume.portfolio.service;
+package com.joblessfriend.jobfinder.resume.service;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.joblessfriend.jobfinder.resume.portfolio.dao.PortfolioDao;
-import com.joblessfriend.jobfinder.resume.portfolio.domain.PortfolioVo;
+import com.joblessfriend.jobfinder.resume.dao.PortfolioDao;
+import com.joblessfriend.jobfinder.resume.domain.PortfolioVo;
 
 @Service
 public class PortfolioServiceImpl implements PortfolioService {

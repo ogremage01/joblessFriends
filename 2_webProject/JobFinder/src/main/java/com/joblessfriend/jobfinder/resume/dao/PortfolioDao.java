@@ -1,4 +1,4 @@
-package com.joblessfriend.jobfinder.resume.portfolio.dao;
+package com.joblessfriend.jobfinder.resume.dao;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.joblessfriend.jobfinder.resume.portfolio.domain.PortfolioVo;
+import com.joblessfriend.jobfinder.resume.domain.PortfolioVo;
 
 
 public interface PortfolioDao {

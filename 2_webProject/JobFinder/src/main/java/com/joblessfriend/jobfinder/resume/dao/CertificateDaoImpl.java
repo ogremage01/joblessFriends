@@ -1,4 +1,4 @@
-package com.joblessfriend.jobfinder.resume.certificate.dao;
+package com.joblessfriend.jobfinder.resume.dao;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.joblessfriend.jobfinder.resume.certificate.domain.CertificateVo;
+import com.joblessfriend.jobfinder.resume.domain.CertificateVo;
 
 @Repository
 public class CertificateDaoImpl implements CertificateDao {
