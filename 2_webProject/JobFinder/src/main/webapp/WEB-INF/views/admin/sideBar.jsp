@@ -55,7 +55,11 @@
         </a>
       </li>
       <li class="mb-1">
+<<<<<<< HEAD
         <a href="/admin/chat" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
+=======
+        <a href="/admin/chat/view" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">
+>>>>>>> origin/owr
           채팅관리
         </a>
       </li>
