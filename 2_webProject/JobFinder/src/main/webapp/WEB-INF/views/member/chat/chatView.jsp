@@ -10,7 +10,10 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+<<<<<<< HEAD
+=======
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+>>>>>>> origin/jhs
 
 </head>
 <body>
@@ -45,6 +48,79 @@
 </body>
 
 <script type="text/javascript">
+<<<<<<< HEAD
+const userId = "회원아이디"; // 세션, 페이지 렌더링 시 서버에서 넣어줘야 함
+const roomId = userId; // 예를 들어, 회원 아이디로 방 구분 (서버 매핑 필요)
+
+let ws;
+
+function connectWebSocket() {
+  ws = new WebSocket('ws://localhost:9090/ws/chat');
+
+  ws.onopen = () => {
+    console.log('WebSocket 연결됨');
+    ws.send(JSON.stringify({
+      type: 'ENTER',
+      roomId: roomId,
+      sender: userId,
+      message: '입장합니다.'
+    }));
+  };
+
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    appendMessage(data);
+  };
+
+  ws.onclose = () => {
+    console.log('WebSocket 연결 종료');
+  };
+
+  ws.onerror = (error) => {
+    console.error('WebSocket 에러:', error);
+  };
+}
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return false;
+
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify({
+      type: 'TALK',
+      roomId: roomId,
+      sender: userId,
+      message: msg
+    }));
+  } else {
+    alert('채팅방에 연결되어 있지 않습니다.');
+  }
+
+  input.value = '';
+  return false;
+}
+
+function appendMessage(data) {
+  const chatMessages = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.textContent = `${data.sender}: ${data.message}`;
+  div.style.marginBottom = '5px';
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// 페이지 로드 시 연결 시작
+window.addEventListener('load', () => {
+  connectWebSocket();
+  document.getElementById('chatForm').onsubmit = (e) => {
+    e.preventDefault();
+    sendMessage();
+  };
+});
+
+
+=======
 const userId = "${sessionScope.userLogin.email}"; 
 const roomId = userId; 
 
@@ -285,5 +361,6 @@ window.addEventListener('beforeunload', () => {
         ws.close(1000, "Page unloading"); // 정상 종료 코드와 이유 명시
     }
 });
+>>>>>>> origin/jhs
 </script>
 </html>

@@ -1,4 +1,4 @@
-package com.joblessfriend.jobfinder.resume.certificate.domain;
+package com.joblessfriend.jobfinder.resume.domain;
 
 import java.util.Date;
 

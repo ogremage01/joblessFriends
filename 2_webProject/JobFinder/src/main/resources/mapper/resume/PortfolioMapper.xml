@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.joblessfriend.jobfinder.resume.portfolio">
+<mapper namespace="com.joblessfriend.jobfinder.resume">
 
-    <resultMap type="com.joblessfriend.jobfinder.resume.portfolio.domain.PortfolioVo" id="portfolioResultMap">
+    <resultMap type="com.joblessfriend.jobfinder.resume.domain.PortfolioVo" id="portfolioResultMap">
         <id column="PORTFOLIO_ID" property="portfolioId" />
         <result column="RESUME_ID" property="resumeID" />
         <result column="FILE_NAME" property="fileName" />

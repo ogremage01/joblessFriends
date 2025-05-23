@@ -1,8 +1,8 @@
-package com.joblessfriend.jobfinder.resume.certificate.dao;
+package com.joblessfriend.jobfinder.resume.dao;
 
 import java.util.List;
 
-import com.joblessfriend.jobfinder.resume.certificate.domain.CertificateVo;
+import com.joblessfriend.jobfinder.resume.domain.CertificateVo;
 
 public interface CertificateDao {
 
