@@ -1,21 +1,23 @@
-
 package com.joblessfriend.jobfinder.chat.config;
 
+import java.util.Map;
+
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
-
 import org.springframework.web.socket.server.HandshakeInterceptor;
 import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
-
+import com.joblessfriend.jobfinder.admin.domain.AdminVo;
 import com.joblessfriend.jobfinder.chat.handler.WebSocketHandler;
-
 import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 
-
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,14 +27,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class WebSocketConfig implements WebSocketConfigurer {
 
-		
     private final WebSocketHandler webSocketHandler;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-
-       registry.addHandler(webSocketHandler, "/ws/chat").setAllowedOrigins("*");
-
         registry.addHandler(webSocketHandler, "/ws/chat")
                .addInterceptors(new CustomHandshakeInterceptor())
                .setAllowedOrigins("*")  // 모든 도메인 허용
@@ -40,10 +38,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
                .setWebSocketEnabled(true)
                .setDisconnectDelay(30 * 1000)
                .setHeartbeatTime(25 * 1000);
-
     }
-	
-	
 
     private class CustomHandshakeInterceptor implements HandshakeInterceptor {
         @Override
@@ -111,5 +106,4 @@ public class WebSocketConfig implements WebSocketConfigurer {
             }
         }
     }
-
 }

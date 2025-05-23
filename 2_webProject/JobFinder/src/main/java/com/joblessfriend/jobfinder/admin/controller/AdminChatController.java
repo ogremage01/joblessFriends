@@ -2,22 +2,24 @@ package com.joblessfriend.jobfinder.admin.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.joblessfriend.jobfinder.chat.domain.ChatMessageVo;
 import com.joblessfriend.jobfinder.chat.domain.ChatRoomVo;
 import com.joblessfriend.jobfinder.chat.service.ChatService;
 import com.joblessfriend.jobfinder.admin.domain.AdminVo;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.ResponseBody;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/admin/chat")
 @RequiredArgsConstructor
@@ -25,8 +27,7 @@ public class AdminChatController {
 
     private final ChatService chatService;
 
-
-
+    @GetMapping("/rooms")
     @ResponseBody
     public ResponseEntity<?> getRooms(@RequestParam String type, HttpSession session) {
         log.info("채팅방 목록 요청 - type: {}", type);
@@ -109,6 +110,5 @@ public class AdminChatController {
             return "redirect:/auth/login";
         }
         return "admin/chat/adminChatListView";
-
     }
 }

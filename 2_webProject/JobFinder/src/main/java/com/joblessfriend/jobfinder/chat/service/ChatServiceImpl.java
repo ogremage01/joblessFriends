@@ -1,4 +1,3 @@
-
 package com.joblessfriend.jobfinder.chat.service;
 
 import java.io.IOException;
@@ -6,18 +5,19 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.TextMessage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.joblessfriend.jobfinder.chat.domain.ChatMessageVo;
 import com.joblessfriend.jobfinder.chat.domain.ChatRoomVo;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.socket.TextMessage;
 
 @Service
 @RequiredArgsConstructor
@@ -26,49 +26,23 @@ public class ChatServiceImpl implements ChatService {
 
 	private final ObjectMapper objectMapper;
 	private Map<String, ChatRoomVo> chatRooms;
+	private Map<String, List<ChatMessageVo>> chatMessages;
 
 	@PostConstruct
-	public void init() {
-		// TODO Auto-generated method stub
+	private void init() {
 		chatRooms = new LinkedHashMap<>();
-
+		chatMessages = new LinkedHashMap<>();
 	}
 
 	@Override
 	public List<ChatRoomVo> findAllRoom() {
-
-		// TODO Auto-generated method stub
-		return new ArrayList<>(chatRooms.values());
-
 		List<ChatRoomVo> rooms = new ArrayList<>(chatRooms.values());
 		log.debug("전체 채팅방 조회 - 총 {}개", rooms.size());
 		return rooms;
-
 	}
 
 	@Override
 	public ChatRoomVo findRoomById(String roomId) {
-
-		// TODO Auto-generated method stub
-		return chatRooms.get(roomId);
-	}
-
-	@Override
-	public ChatRoomVo createRoom(String name) {
-		// TODO Auto-generated method stub
-		String randomId = UUID.randomUUID().toString();
-		ChatRoomVo chatRoom = ChatRoomVo.builder().roomId(randomId) // 채팅방 구별을 위한 UUID
-				.name(name).build();
-		chatRooms.put(randomId, chatRoom);
-		log.info("채팅방 생성됨 - roomId: {}, name: {}", randomId, name); // 추가
-		System.out.println("채팅방 생성됨 - roomId: " + randomId + ", name: " + name);
-		return chatRoom;
-	}
-
-	@Override
-	public <T> void sendMessage(WebSocketSession session, T Message) {
-		// TODO Auto-generated method stub
-
 		if (roomId == null || roomId.trim().isEmpty()) {
 			log.warn("Invalid roomId: null or empty");
 			return null;
@@ -141,15 +115,35 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public <T> void sendMessage(WebSocketSession session, T message) {
-
 		try {
-			session.sendMessage(new TextMessage(objectMapper.writeValueAsString(Message)));
+			if (session == null || !session.isOpen()) {
+				log.warn("Attempted to send message to null or closed session");
+				return;
+			}
+
+			String messageString = objectMapper.writeValueAsString(message);
+			session.sendMessage(new TextMessage(messageString));
+			
+			// 메시지를 저장소에 저장
+			if (message instanceof ChatMessageVo) {
+				ChatMessageVo chatMessage = (ChatMessageVo) message;
+				String roomId = chatMessage.getRoomId();
+				
+				if (roomId != null) {
+					chatMessages.computeIfAbsent(roomId, k -> new ArrayList<>()).add(chatMessage);
+					log.debug("메시지 저장됨 - roomId: {}, sender: {}, message: {}", 
+							roomId, chatMessage.getSender(), chatMessage.getMessage());
+				}
+			}
 		} catch (IOException e) {
-			log.error(e.getMessage(), e);
+			log.error("Failed to send message: {}", e.getMessage());
+			try {
+				session.close();
+			} catch (IOException ex) {
+				log.error("Error closing problematic session", ex);
+			}
 		}
 	}
-
-
 
 	@Override
 	public List<ChatRoomVo> findMemberRooms() {
@@ -192,5 +186,4 @@ public class ChatServiceImpl implements ChatService {
 		log.debug("조회된 메시지 수: {}", messages.size());
 		return messages;
 	}
->>>>>>> origin/owr
 }
