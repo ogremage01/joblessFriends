@@ -22,31 +22,22 @@ public class CompanyRecruitmentDaoImpl implements CompanyRecruitmentDao {
 
 	@Override
 	public List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(
-				"com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.companyRecruitmentList", companyId);
+		return sqlSession.selectList(namespace + ".companyRecruitmentList", companyId);
 	}
 
 	@Override
 	public void jobPostFileDelete(List<Integer> jobPostIdList) {
-		// TODO Auto-generated method stub
-		sqlSession.delete("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.jobPostFileDelete",
-				jobPostIdList);
-
+		sqlSession.delete(namespace + ".jobPostFileDelete", jobPostIdList);
 	}
 
 	@Override
 	public void jobPostTagDelete(List<Integer> jobPostIdList) {
-		// TODO Auto-generated method stub
-		sqlSession.delete("com.joblessfriend.jobfinder.recruitment.dao.RecruitmentDao.jobPostTagDelete", jobPostIdList);
-
+		sqlSession.delete(namespace + ".jobPostTagDelete", jobPostIdList);
 	}
 
 	@Override
 	public void jobPostStop(List<Integer> jobPostIdList) {
-		// TODO Auto-generated method stub
 		sqlSession.update(namespace + ".jobPostStop", jobPostIdList);
-
 	}
 
 }

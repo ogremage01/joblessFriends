@@ -165,7 +165,7 @@ public class RecruitmentController {
     @PostMapping("/insert")
     public String insertRecruitment(@ModelAttribute RecruitmentVo recruitmentVo,
                                     @RequestParam("skills") String skills, @RequestParam("welfareList") String welfareList
-                                    ,@RequestParam("tempKey") String tempKey,HttpSession session) {
+                                    ,@RequestParam("tempKey") String tempKey,@RequestParam("jobImgFile") MultipartFile jobImgFile,HttpSession session) {
         System.out.println("📥 컨트롤러 진입");
         String cleanTempKey = tempKey.trim().replaceAll(",", "");
 
@@ -177,12 +177,12 @@ public class RecruitmentController {
         if (loginMember == null || !"company".equals(userType)) {
             return "redirect:/auth/login";
         }
-
+        String savedName = saveImage(jobImgFile);
         // 2. 회사 ID 세팅
         CompanyVo company = (CompanyVo) loginMember;
         recruitmentVo.setCompanyId(company.getCompanyId());
         recruitmentVo.setTempKey(cleanTempKey);
-
+        recruitmentVo.setJobImg(savedName);
         List<Integer> tagIdList = Arrays.stream(skills.split(","))
                 .filter(s -> !s.isBlank())
                 .map(Integer::parseInt)
@@ -210,6 +210,32 @@ public class RecruitmentController {
 
         return "redirect:/Recruitment/list";
     }
+
+    //파일업로드//
+    private String saveImage(MultipartFile file) {
+        if (file == null || file.isEmpty()) return null;
+
+        try {
+            String uploadDir = "C:/upload/job_post/thumbs/";
+            File dir = new File(uploadDir);
+            if (!dir.exists()) dir.mkdirs();
+
+            String originalName = file.getOriginalFilename();
+            String extension = originalName.substring(originalName.lastIndexOf('.') + 1);
+            String uuid = UUID.randomUUID().toString();
+            String storedName = uuid + "." + extension;
+
+            File dest = new File(uploadDir + storedName);
+            file.transferTo(dest);
+
+            // DB에는 상대 경로 or URL 형태로 저장
+            return "/upload/job_post/thumbs/" + storedName;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @PostMapping("/uploadImage")
     @ResponseBody
     public Map<String, Object> uploadImage(@RequestParam("image") MultipartFile file,
