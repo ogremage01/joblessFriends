@@ -10,6 +10,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
 
 </head>
 <body>
@@ -44,31 +45,50 @@
 </body>
 
 <script type="text/javascript">
-const userId = "회원아이디"; // 세션, 페이지 렌더링 시 서버에서 넣어줘야 함
+const userId = "${sessionScope.userLogin.email}"; // 세션, 페이지 렌더링 시 서버에서 넣어줘야 함
 const roomId = userId; // 예를 들어, 회원 아이디로 방 구분 (서버 매핑 필요)
 
 let ws;
 
 function connectWebSocket() {
-  ws = new WebSocket('ws://localhost:9090/ws/chat');
+  if (ws) {
+    ws.close();
+  }
+
+  // SockJS를 사용하여 WebSocket 연결
+  const wsUrl = '/ws/chat';
+  console.log('Connecting to WebSocket URL:', wsUrl);
+  ws = new SockJS(wsUrl);
 
   ws.onopen = () => {
     console.log('WebSocket 연결됨');
+    // 조용히 입장
     ws.send(JSON.stringify({
       type: 'ENTER',
       roomId: roomId,
       sender: userId,
-      message: '입장합니다.'
+      message: ''
     }));
   };
 
   ws.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    appendMessage(data);
+    try {
+      console.log('원본 메시지:', event.data);
+      const data = JSON.parse(event.data);
+      console.log('파싱된 메시지:', data);
+      appendMessage(data);
+    } catch (err) {
+      console.error('메시지 처리 중 오류:', err);
+    }
   };
 
-  ws.onclose = () => {
-    console.log('WebSocket 연결 종료');
+  ws.onclose = (event) => {
+    console.log('WebSocket 연결 종료:', event.code, event.reason);
+    // 3초 후 재연결 시도
+    setTimeout(() => {
+      console.log('WebSocket 재연결 시도...');
+      connectWebSocket();
+    }, 3000);
   };
 
   ws.onerror = (error) => {
@@ -81,13 +101,16 @@ function sendMessage() {
   const msg = input.value.trim();
   if (!msg) return false;
 
+  const messageObj = {
+    type: 'TALK',
+    roomId: roomId,
+    sender: userId,
+    message: msg
+  };
+
   if (ws && ws.readyState === WebSocket.OPEN) {
-    ws.send(JSON.stringify({
-      type: 'TALK',
-      roomId: roomId,
-      sender: userId,
-      message: msg
-    }));
+    ws.send(JSON.stringify(messageObj));
+    // 서버에서 에코되어 돌아올 때 표시되므로, 여기서는 즉시 표시하지 않음
   } else {
     alert('채팅방에 연결되어 있지 않습니다.');
   }
@@ -97,10 +120,39 @@ function sendMessage() {
 }
 
 function appendMessage(data) {
+  if (!data || !data.message) {
+    console.warn('Invalid message data:', data);
+    return;
+  }
+
   const chatMessages = document.getElementById('chatMessages');
   const div = document.createElement('div');
-  div.textContent = `${data.sender}: ${data.message}`;
-  div.style.marginBottom = '5px';
+  const sender = data.sender || "익명";
+  const message = data.message || "(메시지 없음)";
+  
+  // 메시지 컨테이너 스타일 설정
+  div.style.marginBottom = '10px';
+  div.style.padding = '8px';
+  div.style.borderRadius = '5px';
+  div.style.maxWidth = '70%';
+  
+  // 본인이 보낸 메시지와 받은 메시지를 구분
+  if (sender === userId) {
+    div.style.backgroundColor = '#007bff';
+    div.style.color = 'white';
+    div.style.marginLeft = 'auto';
+    div.style.marginRight = '10px';
+  } else {
+    div.style.backgroundColor = '#f1f1f1';
+    div.style.marginRight = 'auto';
+    div.style.marginLeft = '10px';
+  }
+  
+  // 발신자 이름과 메시지 내용 추가
+  div.innerHTML = 
+    '<div style="font-weight: bold; font-size: 0.9em; margin-bottom: 3px;">' + sender + '</div>' +
+    '<div>' + message + '</div>';
+  
   chatMessages.appendChild(div);
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
@@ -113,7 +165,5 @@ window.addEventListener('load', () => {
     sendMessage();
   };
 });
-
-
 </script>
 </html>
