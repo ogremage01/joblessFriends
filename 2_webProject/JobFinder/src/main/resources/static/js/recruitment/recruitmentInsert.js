@@ -362,3 +362,21 @@ $(() => {
     $('#insertForm').append(`<input type="hidden" name="tempKey" value="${tempKey}">`);
 });
 
+$(function () {
+    $('#jobImgFile').on('change', function () {
+        const file = this.files[0];
+        if (file) {
+            $('#fileNameText').text(file.name);
+            $('#fileInfoBox').show();
+        } else {
+            $('#fileInfoBox').hide();
+            $('#fileNameText').text('');
+        }
+    });
+
+    $('#removeFileBtn').on('click', function () {
+        $('#jobImgFile').val('');
+        $('#fileInfoBox').hide();
+        $('#fileNameText').text('');
+    });
+});

@@ -39,11 +39,17 @@
                     <label class="section-title">채용공고 타이틀</label>
                     <input type="text" style="width: 100%" name="title" placeholder="공고 제목을 입력하세요" required />
                 </div>
-                <div class="InsertTile box-section">
-                    <label class="section-title">채용공고 대표 이미지 업로드</label>
+            <div class="InsertTitle box-section">
+                <label class="section-title">채용공고 대표 이미지 업로드</label>
 
-                    <input type="file" name="jobImgFile" accept="image/*" />
+                <input type="file" name="jobImgFile" accept="image/*" id="jobImgFile" />
+                <button type="button" id="generateTitle" class="template-btn">이미지 미리보기</button>
+
+                <div id="fileInfoBox" style="margin-top: 8px; display: none;">
+                    <span id="fileNameText" style="margin-right: 6px;"></span>
+                    <button type="button" id="removeFileBtn" style="background: none; border: none; color: red; font-size: 14px; cursor: pointer;">✕</button>
                 </div>
+            </div>
 
                 <!-- 접수기간 & 지원자격 -->
                 <div class="flex-wrap">
