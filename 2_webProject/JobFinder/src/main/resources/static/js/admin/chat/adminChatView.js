@@ -21,10 +21,12 @@ let isConnectionExplicitlyClosedByInactivity = false;
 let messageQueue = [];
 
 // WebSocket 연결 URL 설정
-const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+const protocol = window.location.protocol; // 'http:' or 'https:'
 const host = window.location.hostname;
-const port = window.location.port || (protocol === 'wss:' ? '443' : '80');
-const baseUrl = `${protocol}//${host}:${port}`;
+const port = window.location.port ? `:${window.location.port}` : '';
+const baseUrl = `${protocol}//${host}${port}`;  // http://localhost:9090 or https://...
+
+const wsUrl = `${baseUrl}/ws/chat`;
 
 // =========================================
 // 활동 감지 및 WebSocket 연결 관리

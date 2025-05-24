@@ -24,9 +24,6 @@
 			<li class="">
 				<a href="/member/bookmark"style="text-decoration: none;">내가 찜한 공고</a>
 			</li>
-			<li class="">
-			<a href="/member/chat/room">관리자 채팅</a>
-			</li>
 		</ul>
 		
 	</div>

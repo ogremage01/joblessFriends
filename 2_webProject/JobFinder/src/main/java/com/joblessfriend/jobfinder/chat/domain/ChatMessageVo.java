@@ -1,5 +1,7 @@
 package com.joblessfriend.jobfinder.chat.domain;
 
+import java.time.LocalDateTime;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +13,15 @@ import lombok.Setter;
 @Setter
 public class ChatMessageVo {
 
-    /**
+    public ChatMessageVo(MessageType type, String roomId, String sender, String message, LocalDateTime sendTime) {
+		super();
+		this.type = type;
+		this.roomId = roomId;
+		this.sender = sender;
+		this.message = message;
+		this.sendTime = sendTime;
+	}
+	/**
      * 채팅 메시지 타입을 정의하는 열거형
      * ENTER: 채팅방 입장 메시지
      * TALK: 일반 대화 메시지
@@ -29,4 +39,5 @@ public class ChatMessageVo {
     private String sender;
     // 메시지 내용
     private String message;
+	private LocalDateTime sendTime;
 }

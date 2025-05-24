@@ -69,6 +69,7 @@ public class AdminChatController {
         
         try {
             List<ChatMessageVo> messages = chatService.findMessagesByRoomId(roomId);
+            System.out.println("전송받은 메시지 개수: " + messages.size());
             return ResponseEntity.ok(messages);
         } catch (Exception e) {
             log.error("채팅 메시지 조회 실패", e);
