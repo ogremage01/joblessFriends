@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.Comparator;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketSession;
@@ -39,9 +40,9 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public List<ChatRoomVo> findAllRoom() {
-		List<ChatRoomVo> rooms = new ArrayList<>(chatRooms.values());
-		log.debug("전체 채팅방 조회 - 총 {}개", rooms.size());
-		return rooms;
+		return chatRooms.values().stream()
+			.sorted(Comparator.comparing(ChatRoomVo::getLastMessageTime).reversed())
+			.collect(Collectors.toList());
 	}
 
 	@Override
@@ -133,13 +134,17 @@ public class ChatServiceImpl implements ChatService {
 			String messageString = objectMapper.writeValueAsString(message);
 			session.sendMessage(new TextMessage(messageString));
 			
-			// 메시지를 저장소에 저장
+			// 메시지를 저장소에 저장하고 채팅방의 lastMessageTime 업데이트
 			if (message instanceof ChatMessageVo) {
 				ChatMessageVo chatMessage = (ChatMessageVo) message;
 				String roomId = chatMessage.getRoomId();
 				
 				if (roomId != null) {
 					chatMessages.computeIfAbsent(roomId, k -> new ArrayList<>()).add(chatMessage);
+					ChatRoomVo room = chatRooms.get(roomId);
+					if (room != null) {
+						room.setLastMessageTime(java.time.LocalDateTime.now());
+					}
 					log.debug("메시지 저장됨 - roomId: {}, sender: {}, message: {}", 
 							roomId, chatMessage.getSender(), chatMessage.getMessage());
 				}
@@ -156,35 +161,22 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public List<ChatRoomVo> findMemberRooms() {
-		List<ChatRoomVo> rooms = chatRooms.values().stream()
+		return chatRooms.values().stream()
 				.filter(room -> room != null && room.getRoomId() != null)
 				.filter(room -> !room.getRoomId().matches("\\d+"))
 				.filter(room -> room.getName() != null)
+				.sorted(Comparator.comparing(ChatRoomVo::getLastMessageTime).reversed())
 				.collect(Collectors.toList());
-		
-		log.debug("회원 채팅방 조회 결과:");
-		rooms.forEach(room -> 
-			log.debug("- Room[id={}, name={}, email={}]", 
-				room.getRoomId(), room.getName(), room.getEmail()));
-		log.info("회원 채팅방 조회 완료 - 총 {}개", rooms.size());
-		
-		return rooms;
 	}
 
 	@Override
 	public List<ChatRoomVo> findCompanyRooms() {
-		List<ChatRoomVo> rooms = chatRooms.values().stream()
+		return chatRooms.values().stream()
 				.filter(room -> room != null && room.getRoomId() != null)
 				.filter(room -> room.getRoomId().matches("\\d+"))
 				.filter(room -> room.getName() != null)
+				.sorted(Comparator.comparing(ChatRoomVo::getLastMessageTime).reversed())
 				.collect(Collectors.toList());
-		
-		log.debug("기업 채팅방 조회 결과:");
-		rooms.forEach(room -> 
-			log.debug("- Room[id={}, name={}]", room.getRoomId(), room.getName()));
-		log.info("기업 채팅방 조회 완료 - 총 {}개", rooms.size());
-		
-		return rooms;
 	}
 
 	@Override
