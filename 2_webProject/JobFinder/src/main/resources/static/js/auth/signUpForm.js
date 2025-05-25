@@ -131,8 +131,8 @@ function valiCheckEmail(){
 		success: function(data) {
 			console.log("이메일 중복확인 성공");
 			
-			// data --> 중복 or 사용가능
-			if(data === "중복"){
+			// data --> 존재 or 없음
+			if(data === "존재"){
 				emailStatusStr = "이미 가입된 이메일입니다.";
 				$("#emailStatus").html(emailStatusStr);
 				$("#email").css("border", "1px solid red");

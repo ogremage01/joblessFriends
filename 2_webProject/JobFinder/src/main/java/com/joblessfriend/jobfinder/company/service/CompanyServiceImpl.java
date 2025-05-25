@@ -92,5 +92,17 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyDao.companyEmailExist(email);
 
 	}
+	
+	// 비밀번호 변경
+	@Override
+	public int updatePassword(String password, int companyId) {
+		// TODO Auto-generated method stub
+		
+		//비밀번호 암호화
+		String pwdEncoder = passwordEncoder.encode(password);
+		System.out.println("비번 확인: " + password + " / " + pwdEncoder);
+		
+		return companyDao.updatePassword(pwdEncoder, companyId);
+	}
 
 }

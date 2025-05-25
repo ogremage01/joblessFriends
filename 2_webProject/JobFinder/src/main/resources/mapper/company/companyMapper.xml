@@ -82,7 +82,11 @@
 			FROM COMPANY WHERE EMAIL = #{email}
 		</select>
 		
-		
+		<update id="updatePassword" parameterType="map">
+		    UPDATE COMPANY
+		    SET PASSWORD = #{password}
+		    WHERE COMPANY_ID = #{companyId}
+		</update>
 
 
 	</mapper>

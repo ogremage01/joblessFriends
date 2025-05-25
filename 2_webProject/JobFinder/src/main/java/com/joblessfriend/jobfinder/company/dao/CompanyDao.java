@@ -20,4 +20,6 @@ public interface CompanyDao {
 
 	public CompanyVo companyEmailExist(String email);
 
+	public int updatePassword(String password, int companyId);
+
 }

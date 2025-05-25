@@ -22,6 +22,7 @@ import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 import com.joblessfriend.jobfinder.company.service.CompanyService;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import com.joblessfriend.jobfinder.member.service.MemberService;
+import com.joblessfriend.jobfinder.util.service.MailService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -36,6 +37,8 @@ public class AuthController {
 	private MemberService memberService;
 	@Autowired
 	private CompanyService companyService;
+	@Autowired
+	private MailService mailService;
 	
 	// 회원가입 뷰
 	@GetMapping("/signup")
@@ -55,9 +58,11 @@ public class AuthController {
 		MemberVo memberVo = memberService.memberEmailExist(email);
 		String checkStr = "";
 		if (memberVo == null) {
-			checkStr = "사용가능";
+			checkStr = "없음";
+			logger.info("==valiCheckEmail Member== checkStr: {}", checkStr);
 		}else {
-			checkStr = "중복";
+			checkStr = "존재";
+			logger.info("==valiCheckEmail Member== checkStr: {}", checkStr);
 		}
 		
 		return ResponseEntity.ok(checkStr);
@@ -186,20 +191,60 @@ public class AuthController {
 	
 	// 개인회원 비밀번호 찾기
 	@PostMapping("/find/memberPwd")
-	public String findMemberPwd() {
+	public String findMemberPwd(@RequestParam String email) {
 		logger.info(logTitleMsg);
-		logger.info("findMemberPwd! ");
+		logger.info("findMemberPwd! email: {}", email);
 		
-		return "redirect:auth/login";
+		// 회원 아이디
+		MemberVo memberVo = memberService.memberEmailExist(email);
+		int memberId = memberVo.getMemberId();
+		
+		// 임시 비밀번호 메일로 발송
+		String tempPwd;
+		tempPwd = mailService.sendTempPwdEmail(email);
+		
+		// DB에 임시 비밀번호로 업데이트
+		int result = memberService.updatePassword(tempPwd, memberId);
+		if(result == 1) {
+			logger.info("개인회원 임시비밀번호로 변경 성공");
+		} else {
+			logger.info("개인회원 임시비밀번호로 변경 실패");
+		}
+
+		return "redirect:/auth/find/success";
 	}
 	
 	// 기업회원 비밀번호 찾기
 	@PostMapping("/find/companyPwd")
-	public String findCompanyPwd() {
+	public String findCompanyPwd(@RequestParam String email) {
 		logger.info(logTitleMsg);
-		logger.info("findCompanyPwd! ");
+		logger.info("findCompanyPwd! email: {}", email);
 		
-		return "redirect:auth/login";
+		// 회원 아이디
+		CompanyVo companyVo = companyService.companyEmailExist(email);
+		int companyId = companyVo.getCompanyId();
+		
+		// 임시 비밀번호 메일로 발송
+		String tempPwd;
+		tempPwd = mailService.sendTempPwdEmail(email);
+		
+		// DB에 임시 비밀번호로 업데이트
+		int result = companyService.updatePassword(tempPwd, companyId);
+		if(result == 1) {
+			logger.info("기업회원 임시비밀번호로 변경 성공");
+		} else {
+			logger.info("기업회원 임시비밀번호로 변경 실패");
+		}
+		return "redirect:/auth/find/success";
+	}
+	
+	// 임시 비밀번호 발송 성공페이지
+	@GetMapping("/find/success")
+	public String findSuccess() {
+		logger.info(logTitleMsg);
+		logger.info("==findSuccess==");
+		
+		return "auth/tempPasswordSendSuccessView";
 	}
 	
 	// 기업회원 아이디 찾기
@@ -208,11 +253,17 @@ public class AuthController {
 		logger.info(logTitleMsg);
 		logger.info("findCompanyId! representative: {}, brn: {}", representative, brn);
 		
-		CompanyVo companyVo = companyService.companyFindId(representative, brn);
-		String email = companyVo.getEmail();
+		String result;
 		
-		return ResponseEntity.ok(email);
+		CompanyVo companyVo = companyService.companyFindId(representative, brn);
+		if(companyVo == null) {
+			result = "없음";
+		}else {
+			result = companyVo.getEmail();
+			logger.info("기업회원 아이디 찾기 콘트롤러 email: {}", result);
+		}
+		
+		return ResponseEntity.ok(result);
 	}
-	
 
 }
