@@ -281,6 +281,61 @@ public class RecruitmentController {
         return result;
     }
 
+    //업데이트 갯 //
+    @GetMapping("/update")
+    public String updateRecruitmentForm(@RequestParam("jobPostId") int jobPostId,
+                                        HttpSession session,
+                                        Model model) {
+
+        System.out.println("컨트롤러 updateRecruitmentForm jobPostId = " + jobPostId);
+        // 로그인 및 권한 확인
+        Object loginMember = session.getAttribute("userLogin");
+        Object userType = session.getAttribute("userType");
+
+        if (loginMember == null || !"company".equals(userType)) {
+            return "redirect:/auth/login";
+        }
+
+        CompanyVo company = (CompanyVo) loginMember;
+
+        // 1. 채용공고 조회
+        RecruitmentVo recruitmentVo = recruitmentService.getRecruitmentId(jobPostId);
+
+        if (recruitmentVo == null) {
+            throw new IllegalArgumentException("공고를 찾을 수 없습니다.");
+        }
+
+        // 2. 권한 확인 (회사 소유 공고인지)
+//        if (recruitmentVo.getCompanyId() != company.getCompanyId()) {
+//            throw new AccessDeniedException("수정 권한이 없습니다.");
+//        }
+
+        // 3. 직무 정보
+        JobVo jobVo = jobService.getJobById(jobPostId);
+
+        // 4. 복리후생, 스킬, 직군 목록
+        List<WelfareVo> welfareList = recruitmentService.selectWelfareByJobPostId(jobPostId);
+        List<SkillVo> selectedSkills = skillService.postTagList(jobPostId);
+        List<JobGroupVo> jobGroupList = recruitmentService.jobGroupList();
+
+        // 5. 선택된 스킬 ID만 추출
+        List<Integer> selectedSkillIds = selectedSkills.stream()
+                .map(SkillVo::getTagId)
+                .collect(Collectors.toList());
+
+
+        // Model에 데이터 추가
+        model.addAttribute("recruitmentVo", recruitmentVo);
+        model.addAttribute("jobVo", jobVo);
+        model.addAttribute("welfareList", welfareList);
+        model.addAttribute("jobGroupList", jobGroupList);
+        model.addAttribute("selectedSkills", selectedSkills);
+
+        return "recruitment/recruitmentUpdate"; // JSP 경로
+    }
+
+
+
     @PostMapping("/filter/count")
     @ResponseBody
     public int filterCount(@RequestBody Map<String, Object> filterParams) {

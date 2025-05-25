@@ -82,7 +82,7 @@
           </h5>
         </td>
         <td class="buttonPlace" rowspan="2">
-          <a href="/" class="btn btn-light mb-2">
+          <a href="/Recruitment/update?jobPostId=${recruitment.jobPostId}" class="btn btn-light mb-2">
             <i class="bi bi-pencil-square"></i> 수정하기
           </a><br>
           <a href="./recruitment/${recruitment.jobPostId}/applicants" class="btn btn-light mb-2">
