@@ -57,15 +57,16 @@
 				<label>전화번호</label>
 				<input type="text" placeholder="예시) 01012349999" />
 			</div>
-			<div class="field-block">
-				<label>주소</label>
-				<input type="text" placeholder="주소를 입력해주세요" />
-			</div>
 			
 			<!-- 2행 -->
 			<div class="field-block">
+				<label>주소</label>
+				<input type="text" id="roadAddress" placeholder="주소를 입력해주세요" readonly />
+				<button type="button" class="address-search-btn" onclick="openJusoPopup()">🔍</button>
+			</div>
+			<div class="field-block">
 				<label>상세주소</label>
-				<input type="text" placeholder="상세주소" />
+				<input type="text" id="jibunAddress" placeholder="상세주소" readonly />
 			</div>
 				<div class="field-block">
 				<label>메일</label>
@@ -318,6 +319,27 @@ document.getElementById("profileImageInput").addEventListener("change", function
         console.error("업로드 실패", err);
     });
 });
+
+// 주소자동완성
+function openJusoPopup() {
+	  const confmKey = "${jusoApiKey}";  // properties에서 가져온 값 그대로 넣어도 됨
+	  const returnUrl = "http://localhost:9090/addrCallback.jsp";  // 콜백 JSP의 경로
+	  const resultType = "4"; // 도로명+지번+상세
+
+	  const popUrl = "https://business.juso.go.kr/addrlink/addrLinkUrl.do"
+	    + "?confmKey=" + encodeURIComponent(confmKey)
+	    + "&returnUrl=" + encodeURIComponent(returnUrl)
+	    + "&resultType=" + resultType;
+
+	  window.open(popUrl, "_blank", "width=570,height=420,scrollbars=yes,resizable=yes");
+}
+
+// 팝업에서 주소 전달받는 함수
+function handleJusoCallback(roadAddr, addrDetail) {
+  document.getElementById("roadAddress").value = roadAddr || "";
+  document.getElementById("jibunAddress").value = addrDetail || "";
+}
+
 
   document.addEventListener("DOMContentLoaded", function () {
   const jobGroupSelect = document.getElementById("jobGroupSelect");

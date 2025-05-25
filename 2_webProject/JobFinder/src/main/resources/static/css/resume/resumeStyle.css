@@ -193,6 +193,8 @@ textarea::placeholder {
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
+  position: relative; /* 버튼 절대 위치의 기준 */
+  
 }
 
 .field-block label {
@@ -212,6 +214,21 @@ textarea::placeholder {
   font-size: 14px;
   font-weight: 700;
   color: #36383F;
+}
+/* 돋보기 아이콘 */
+.address-search-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #6D707B;
+}
+
+.address-search-btn:hover {
+  color: #000;
 }
 
 .photo-wrapper {
