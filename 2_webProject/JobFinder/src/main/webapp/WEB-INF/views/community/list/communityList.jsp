@@ -38,7 +38,6 @@
 	</div>
 	<div id="pageWrap">
 		<div id="pagination">
-
 			<!-- 이전 페이지 -->
 			<button class="page-btn" 
 			        ${searchVo.page == 1 ? 'disabled' : ''}
@@ -62,7 +61,7 @@
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 	
 	
-	<form id='pagingForm' action="./community" method='get'>
+	<form id='pagingForm' action="/community" method='get'>
 		<input type="hidden" name="page" id="pageInput">
 		<input type="hidden" name="keyword" id="keywordInput">
 	</form>
@@ -70,6 +69,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
+
 	function goToPage(page, keyWord){
 		$('#pageInput').val(page);
 		$('#keywordInput').val(keyWord);

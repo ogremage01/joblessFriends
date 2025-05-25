@@ -17,6 +17,7 @@
 		FROM REPLY RE JOIN MEMBER MEM
 		ON RE.MEMBER_ID = MEM.MEMBER_ID
 		WHERE RE.POST_COMMENT_ID=#{postCommentId}
+		ORDER BY RE.REPLY_ID DESC
 	</select>
 	
 	<insert id="replyInsertOne" parameterType="com.joblessfriend.jobfinder.community.domain.ReplyVo">
@@ -32,6 +33,11 @@
 	<delete id="replyDeleteOne" parameterType="int">
 		DELETE FROM REPLY 
 		WHERE REPLY_ID = #{replyId}
+	</delete>
+	
+	<delete id="replyCommentDelete" parameterType="int">
+		DELETE FROM REPLY 
+		WHERE POST_COMMENT_ID = #{postCommentId}
 	</delete>
 
 </mapper>

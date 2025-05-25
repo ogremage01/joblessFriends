@@ -154,10 +154,10 @@
 	<c:otherwise>  
 	</c:otherwise>
 </c:choose>
-<form name="searchContent" method="post" action="">
+<form name="searchContent"  onsubmit="sendInfo(); return false;" action="/community">
 	<div id='searchBoxPadding' class="boxStyle searchBox">
-		<input class="searchBox" type="text" placeholder="게시글을 검색해보세요" />
-		<button onclick="sendInfo()"> <!-- 여기서 함수로 검색버튼전송 할건지 form으로 서버 보낼지 고민 -->
+		<input id='searchStr' class="searchBox" type="text" name='keyword' placeholder="게시글을 검색해보세요" />
+		<button type="submit"> <!-- 여기서 함수로 검색버튼전송 할건지 form으로 서버 보낼지 고민 -->
 			<svg xmlns="http://www.w3.org/2000/svg" width="30" height="40"
 				fill="currentColor" class="bi bi-search" viewBox="-4 0 23 23">
 			  	<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
@@ -165,6 +165,17 @@
 		</button>
 	</div>
 </form>
+
+<script type="text/javascript">
+	sendInfo(){
+		const keyword = $('#searchStr').val();
+		$('#pageInput').val(1); // 검색 시 첫 페이지로 초기화
+		$('#keywordInput').val(keyword);
+		$('#pagingForm').submit();
+		
+	}
+	
+</script>
 
 
 

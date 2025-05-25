@@ -7,12 +7,14 @@ import com.joblessfriend.jobfinder.community.domain.ReplyVo;
 
 public interface ReplyService {
 
-	List<PostCommentVo> replySelectList(int postCommentId);
+	List<ReplyVo> replySelectList(int postCommentId);
 
 	void replyInsert(ReplyVo replyVo);
 
 	void replyDelete(int replyId);
 
 	void replyUpdate(ReplyVo replyVo);
+
+	void replyCommentDelete(int postCommentId);
 
 }

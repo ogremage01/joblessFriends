@@ -17,4 +17,5 @@ public class PostCommentVo extends CommunityVo{
 	private String content;
 	private Date createAt;
 	private Date modifiedAt;
+	private int replyCount;
 }

@@ -32,4 +32,6 @@ public interface CommunityService{
 	//페이지네이션 전체 페이지 수
 	int getCommunityTotalCount(SearchVo searchVo);
 
+	void communityViewCount(CommunityVo communityVo);
+
 }

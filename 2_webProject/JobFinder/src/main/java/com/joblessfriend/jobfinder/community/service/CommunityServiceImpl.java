@@ -90,4 +90,10 @@ public class CommunityServiceImpl implements CommunityService{
 		return communityDao.getCommunityTotalCount(searchVo);
 	}
 
+	@Override
+	public void communityViewCount(CommunityVo communityVo) {
+		// TODO Auto-generated method stub
+		communityDao.communityViewCount(communityVo);
+	}
+
 }

@@ -20,7 +20,7 @@ public class ReplyServiceImpl implements ReplyService{
 	private ReplyDao replyDao;
 	
 	@Override
-	public List<PostCommentVo> replySelectList(int postCommentId) {
+	public List<ReplyVo> replySelectList(int postCommentId) {
 		// TODO Auto-generated method stub
 		return replyDao.replySelectList(postCommentId);
 	}
@@ -41,6 +41,12 @@ public class ReplyServiceImpl implements ReplyService{
 	public void replyUpdate(ReplyVo replyVo) {
 		// TODO Auto-generated method stub
 		replyDao.replyUpdate(replyVo);
+	}
+
+	@Override
+	public void replyCommentDelete(int postCommentId) {
+		// TODO Auto-generated method stub
+		replyDao.replyCommentDelete(postCommentId);
 	}
 
 }

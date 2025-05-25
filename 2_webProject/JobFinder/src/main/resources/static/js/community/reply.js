@@ -78,9 +78,12 @@ $(document).ready(function () {
 							html += `<span> | ${modifiedyear}-${modifiedmonth}-${modifiedday} 수정</span>`;
 						}						
 						
+						if(userType=='member' && memberId ==reply.memberId){
 						html += `	
 												<a onclick='replyUpdateForm(${reply.replyId}, "${reply.commentContent}")'>수정</a>
-												<a onclick='replyDelete(${reply.replyId})' >삭제</a>
+												<a onclick='replyDelete(${reply.replyId})' >삭제</a>`;
+						}
+						html +=`
 											</p>
 										</div>
 									</div>

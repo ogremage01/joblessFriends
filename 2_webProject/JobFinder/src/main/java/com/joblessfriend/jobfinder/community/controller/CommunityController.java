@@ -61,6 +61,9 @@ public class CommunityController {
 		searchVo.setPage(page);
 		searchVo.setRecordSize(4);
 		
+		System.out.println("키워트 검색부분: "+keyword);
+		
+		
 	    int totalCount = communityService.getCommunityTotalCount(searchVo);//전체 데이터 수
 	    Pagination pagination = new Pagination(totalCount, searchVo);
 	    
@@ -71,9 +74,11 @@ public class CommunityController {
         
 	    // 커뮤니티 리스트 조회
 	    List<CommunityVo> communityList = communityService.communitySelectList(searchVo);  // DB에서 리스트 가져오기
-    
+	    
 
-
+	    List<PostCommentVo> commentList = null;
+	    int commentCount = 0;
+	    
 	    // communityList를 순회하면서 각 커뮤니티의 content를 마크다운 -> HTML로 변환 후, 태그 제거
 	    for (CommunityVo communityVo : communityList) {
 	        // 마크다운을 HTML로 변환
@@ -84,12 +89,17 @@ public class CommunityController {
 
 	        // 변환된 텍스트를 커뮤니티 객체에 다시 저장
 	        communityVo.setContent(textContent);  // 태그 제거된 텍스트만 저장
+	        
+	        //댓글 수 저장
+	        commentList=postCommentService.postCommentSelectList(communityVo.getCommunityId());
+	        communityVo.setCommentCount(commentList.size());
 	    }
 
 	    // 변환된 커뮤니티 리스트를 모델에 추가(화면에 출력하기 위함)
 	    model.addAttribute("communityList", communityList);
 	    model.addAttribute("searchVo", searchVo);
 	    model.addAttribute("pagination", pagination);
+	    
 	    
 	    // 리스트 화면 반환
 	    return "community/list/communityList";
@@ -141,9 +151,20 @@ public class CommunityController {
 	@GetMapping("/detail")
 	public String communityDetail(@RequestParam int no, Model model) {
 		System.out.println("게시판 세부 시작");
+
+		
 		
 		// 커뮤니티 상세 정보 가져오기
 		CommunityVo communityVo = communityService.communityDetail(no);
+
+		int views = communityVo.getViews();
+		views += 1;
+		
+		communityVo.setViews(views);
+		
+		//조회수 업데이트
+		communityService.communityViewCount(communityVo);
+		
 		// 마크다운 -> HTML 변환
 		String htmlContent = Markdown.markdownToHtml(communityVo.getContent());
 	    
@@ -151,8 +172,7 @@ public class CommunityController {
 		List<PostCommentVo> commentsList = postCommentService.postCommentSelectList(no);
 		System.out.println("댓글 수: " + commentsList.size());		
 		
-		model.addAttribute("commentsList", commentsList);
-		
+		model.addAttribute("commentsList", commentsList);	
 	    model.addAttribute("community", communityVo);
 	    model.addAttribute("contentHtml", htmlContent); // 변환된 HTML
 		

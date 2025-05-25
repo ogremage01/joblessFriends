@@ -86,6 +86,12 @@ public class CommunityDaoImpl implements CommunityDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(namespace+"getCommunityTotalCount", searchVo);
 	}
+
+	@Override
+	public void communityViewCount(CommunityVo communityVo) {
+		// TODO Auto-generated method stub
+		sqlSession.update(namespace+"communityViewCount", communityVo);
+	}
 	
 	
 

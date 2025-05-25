@@ -17,7 +17,7 @@ public class ReplyDaoImpl implements ReplyDao{
 	String namespace = "com.joblessfriend.jobfinder.communityReply.";
 	
 	@Override
-	public List<PostCommentVo> replySelectList(int postCommentId) {
+	public List<ReplyVo> replySelectList(int postCommentId) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(namespace+"replySelectList", postCommentId);
 	}
@@ -38,6 +38,12 @@ public class ReplyDaoImpl implements ReplyDao{
 	public void replyUpdate(ReplyVo replyVo) {
 		// TODO Auto-generated method stub
 		sqlSession.update(namespace+"replyUpadte", replyVo);
+	}
+
+	@Override
+	public void replyCommentDelete(int postCommentId) {
+		// TODO Auto-generated method stub
+		sqlSession.delete(namespace+"replyCommentDelete", postCommentId);
 	}
 
 }
