@@ -1,0 +1,95 @@
+@charset "UTF-8";
+
+.sideBarBoxStyle{
+	
+	margin-top: 0px;
+}
+
+#boxWrap {
+	width: 220px;
+	height: 180px;
+	padding: 15px;
+	margin-bottom: 15px;
+}
+
+#boxTextWrap {
+	display: flex;
+}
+
+#boxWrap>div p {
+	color: #6D707B;
+	font-size: 12pt;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+}
+
+#boxWrap a {
+	height: 20px;
+	color: #6D707B;
+	font-size: 12pt;
+	font-weight: bold;
+	margin-top: 8px;
+	margin-left: auto;
+}
+
+#writeBtn {
+	color: white;
+	background-color: #F69800;
+	width: 215px;
+	height: 50px;
+	border-radius: 5px;
+	border: none;
+	outline: none;
+	box-shadow: none;
+	margin-top: 20px;
+}
+
+#writeBtn:hover {
+	color: #F69800;
+	background-color: white;
+	border: 1px solid #F69800;
+}
+
+.searchBox {
+	height: 35px;
+	padding-left: 8px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	width: 241px;
+}
+
+#searchBoxPadding {
+	display: flex;
+}
+
+#searchBoxPadding .searchBox {
+	padding: 0px;
+	border: none;
+	margin-right: 2px;
+	width: 210px;
+	font-size: 16px;
+}
+
+#searchBoxPadding button {
+	border: 0;
+	background-color: transparent;
+	margin-bottom: 2px;
+	color: #F69800;
+}
+
+#searchBoxPadding button:hover {
+	border: 0;
+	border-radius: 50px;
+	background-color: #F69800;
+	color: white;
+}
+
+.nickName{
+	width: 1300px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	
+}

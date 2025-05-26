@@ -5,19 +5,24 @@
 <head>
 <meta charset="UTF-8">
 <style type="text/css">
-		#topBtn{
+	#topBtn{
+
+		color: black;
+		
 		position: fixed;
 		bottom: 100px;
 		right: 100px;
 		
-		width: 50px;
+		width: 100px;
 		height: 50px;
 		
 		text-decoration-line: none;
-		margin: auto;
+		
+		text-align: center;
+		line-height: 50px;
 		
 	}
 </style>
 </head>
 
-<a id='topBtn' class='boxStyle' href="#">맨 위로</a>
+<a id='topBtn' class='boxStyle' href="#">▲ TOP</a>

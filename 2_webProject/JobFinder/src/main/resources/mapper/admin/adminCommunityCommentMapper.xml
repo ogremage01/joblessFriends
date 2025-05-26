@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joblessfriend.jobfinder.admin.dao.communityComment">
+	<resultMap type="PostCommentVo" id="adminPostCommentResultVo">
+		<id column="POST_COMMENT_ID" property="postCommentId" />
+		<result column="COMMUNITY_ID" property="communityId" />
+		<result column="MEMBER_ID" property="memberId" />
+		<result column="NICKNAME" property="nickname" />
+		<result column="CONTENT" property="content" />
+		<result column="CREATE_AT" property="createAt"
+			javaType="java.util.Date" />
+		<result column="MODIFIED_AT" property="modifiedAt"
+			javaType="java.util.Date" />
+	</resultMap>
+	
+	
+	
+		<!-- 페이지네이션 -->
+	<select id="getCommentTotalCount" resultType="int" parameterType="com.joblessfriend.jobfinder.community.domain.CommunityVo">
+        SELECT COUNT(*)
+        FROM POST_COMMENT PCOM INNER JOIN MEMBER MEM
+		ON PCOM.MEMBER_ID = MEM.MEMBER_ID
+        <if test="keyword != null or keyword != ''">
+	     	where (PCOM.CONTENT LIKE '%' || #{keyword} || '%'
+	        OR MEM.NICKNAME LIKE '%' || #{keyword} || '%')
+        </if>
+    </select>
+    
+    <select id="commentSelectList" parameterType="com.joblessfriend.jobfinder.community.domain.PostCommentVo" resultMap="adminPostCommentResultVo">
+		<![CDATA[
+			SELECT *
+			FROM (SELECT INNER_QUERY.*, ROWNUM AS rnum
+			        FROM (SELECT PCOM.POST_COMMENT_ID, PCOM.COMMUNITY_ID, PCOM.MEMBER_ID, PCOM.CONTENT, 
+                                PCOM.CREATE_AT, PCOM.MODIFIED_AT, MEM.NICKNAME
+                            FROM POST_COMMENT PCOM INNER JOIN MEMBER MEM
+                            ON PCOM.MEMBER_ID = MEM.MEMBER_ID
+                            WHERE 1=1
+		]]>
+			<if test="keyword != null or keyword != ''">
+                    AND (PCOM.CONTENT LIKE '%' || #{keyword} || '%'
+                    OR MEM.NICKNAME LIKE '%' || #{keyword} || '%')
+            </if>
+        <![CDATA[
+			                ORDER BY PCOM.POST_COMMENT_ID DESC) INNER_QUERY 
+			        WHERE ROWNUM <= #{endRow}
+			    )
+			WHERE rnum >= #{startRow}
+		]]>
+	</select>
+	
+	<delete id="commentDeleteList" parameterType="list">
+		DELETE FROM POST_COMMENT_ID
+		WHERE POST_COMMENT_ID IN
+		<foreach item="postCommentId" collection="list" open="(" separator="," close=")">
+			#{postCommentId}
+		</foreach>
+	</delete>
+
+
+</mapper>
