@@ -10,10 +10,9 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-<<<<<<< HEAD
-=======
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
->>>>>>> origin/jhs
+
 
 </head>
 <body>
@@ -48,14 +47,18 @@
 </body>
 
 <script type="text/javascript">
-<<<<<<< HEAD
-const userId = "회원아이디"; // 세션, 페이지 렌더링 시 서버에서 넣어줘야 함
-const roomId = userId; // 예를 들어, 회원 아이디로 방 구분 (서버 매핑 필요)
+
+const userId = "${sessionScope.userLogin.email}"; // 세션에서 회원 이메일 가져오기
+const roomId = userId; // 회원 이메일로 방 구분
 
 let ws;
 
 function connectWebSocket() {
-  ws = new WebSocket('ws://localhost:9090/ws/chat');
+  const wsUrl = '/ws/chat';
+  console.log('Connecting to WebSocket URL:', wsUrl);
+  ws = new SockJS(wsUrl, null, {
+      transports: ['websocket', 'xhr-streaming', 'xhr-polling']
+  });
 
   ws.onopen = () => {
     console.log('WebSocket 연결됨');
@@ -112,6 +115,11 @@ function appendMessage(data) {
 
 // 페이지 로드 시 연결 시작
 window.addEventListener('load', () => {
+  if (!userId) {
+    alert('로그인이 필요한 서비스입니다.');
+    window.location.href = '/auth/login';
+    return;
+  }
   connectWebSocket();
   document.getElementById('chatForm').onsubmit = (e) => {
     e.preventDefault();
@@ -119,17 +127,6 @@ window.addEventListener('load', () => {
   };
 });
 
-
-=======
-const userId = "${sessionScope.userLogin.email}"; 
-const roomId = userId; 
-
-if (!userId) {
-    alert('로그인이 필요한 서비스입니다.');
-    window.location.href = '/auth/login';
-}
-
-let ws;
 let lastActivityTime = Date.now();
 const INACTIVITY_TIMEOUT = 60 * 1000; // 1분
 let isConnectionExplicitlyClosedByInactivity = false;
@@ -361,6 +358,6 @@ window.addEventListener('beforeunload', () => {
         ws.close(1000, "Page unloading"); // 정상 종료 코드와 이유 명시
     }
 });
->>>>>>> origin/jhs
+
 </script>
 </html>

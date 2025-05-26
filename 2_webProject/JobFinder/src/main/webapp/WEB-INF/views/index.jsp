@@ -17,8 +17,56 @@
             integrity="sha256-eKhayi8LEQwp4NKxN+Cfch+3qOVUtJn3QNZOtciWLP4="
             crossorigin="anonymous">
     </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/common/index.css">
     <link rel="stylesheet" href="/css/common/common.css">
+    
+    <!-- 채팅 관련 스크립트 -->
+    <script type="text/javascript">
+        function openChat(event) {
+            event.preventDefault();
+            
+            var loginType = "${sessionScope.userType}";
+            var isLoggedIn = "${not empty sessionScope.userLogin}";
+            
+            if (isLoggedIn === "false") {
+                alert("로그인이 필요한 서비스입니다.");
+                location.href = "auth/login";
+                return;
+            }
+            
+            var chatUrl = "";
+            var popupWidth = 450;  // 약 12cm
+            var popupHeight = 800; // 약 21cm
+            var left = (window.innerWidth - popupWidth) / 2;
+            var top = (window.innerHeight - popupHeight) / 2;
+            
+            switch(loginType) {
+                case "member":
+                    chatUrl = "member/chat/room";
+                    break;
+                case "company":
+                    chatUrl = "company/chat/room";
+                    break;
+                default:
+                    alert("잘못된 접근입니다.");
+                    return;
+            }
+            
+            var popupOptions = "width=" + popupWidth + 
+                             ",height=" + popupHeight + 
+                             ",left=" + left + 
+                             ",top=" + top + 
+                             ",scrollbars=yes" +
+                             ",resizable=yes" +
+                             ",status=no" +
+                             ",location=no" +
+                             ",toolbar=no" +
+                             ",menubar=no";
+            
+            window.open(chatUrl, "채팅", popupOptions);
+        }
+    </script>
 </head>
 <body>
 	<jsp:include page="common/header.jsp"/>
@@ -100,5 +148,10 @@
 	
 
 	<jsp:include page="common/footer.jsp"/>
+
+    <!-- 채팅 플로팅 버튼 -->
+    <a href="#" class="chat-floating-btn" title="채팅하기" onclick="openChat(event)">
+        <i class="bi bi-chat-dots-fill"></i>
+    </a>
 </body>
 </html>

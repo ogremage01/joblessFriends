@@ -1,5 +1,18 @@
 SET DEFINE OFF;
 
+--chat_message
+DROP TABLE chat_message CASCADE CONSTRAINTS;
+CREATE TABLE chat_message (
+    id NUMBER PRIMARY KEY,
+    room_id VARCHAR2(255) NOT NULL,
+    sender VARCHAR2(255) NOT NULL,
+    message VARCHAR2(4000) NOT NULL,
+    send_time TIMESTAMP NOT NULL
+);
+
+
+
+
 -- job_group
 DROP TABLE JOB_GROUP CASCADE CONSTRAINTS;
 CREATE TABLE JOB_GROUP (

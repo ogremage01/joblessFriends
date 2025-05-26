@@ -33,11 +33,10 @@ public class WebSocketConfig implements WebSocketConfigurer {
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(webSocketHandler, "/ws/chat")
                .addInterceptors(new CustomHandshakeInterceptor())
-               .setAllowedOrigins("*")  // 모든 도메인 허용
+               .setAllowedOriginPatterns("*")  // 모든 도메인 허용
                .withSockJS()
-               .setWebSocketEnabled(true)
-               .setDisconnectDelay(30 * 1000)
-               .setHeartbeatTime(25 * 1000);
+               .setClientLibraryUrl("https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js")
+               .setWebSocketEnabled(true);
     }
 
     private class CustomHandshakeInterceptor implements HandshakeInterceptor {
@@ -55,38 +54,33 @@ public class WebSocketConfig implements WebSocketConfigurer {
                         return false;
                     }
 
-                    // 어드민 세션 확인
-                    AdminVo admin = (AdminVo) session.getAttribute("admin");
-                    if (admin != null) {
-                        log.info("Admin WebSocket connection established");
-                        attributes.put("userType", "admin");
-                        attributes.put("userLogin", admin);
-                        return true;
-                    }
-                    
-                    // 기업회원 세션 확인
-                    Object companyObj = session.getAttribute("userLogin");
-                    if (companyObj != null && companyObj instanceof CompanyVo) {
-                        CompanyVo company = (CompanyVo) companyObj;
-                        log.info("Company WebSocket connection: {}", company.getCompanyName());
-                        attributes.put("userType", "company");
-                        attributes.put("companyId", company.getCompanyId());
-                        attributes.put("companyName", company.getCompanyName());
-                        attributes.put("userLogin", company);
-                        return true;
-                    }
-                    
-                    // 일반 사용자 세션 확인
-                    Object userObj = session.getAttribute("userLogin");
-                    if (userObj != null && userObj instanceof MemberVo) {
-                        MemberVo member = (MemberVo) userObj;
-                        log.info("Member WebSocket connection: {}", member.getEmail());
-                        attributes.put("userLogin", member);
-                        attributes.put("userType", "member");
-                        return true;
+                    // 사용자 타입 확인
+                    String userType = (String) session.getAttribute("userType");
+                    Object userLogin = session.getAttribute("userLogin");
+
+                    if (userLogin == null) {
+                        log.warn("No user login found in session");
+                        return false;
                     }
 
-                    log.warn("Invalid session type found");
+                    if ("admin".equals(userType)) {
+                        log.info("Admin WebSocket connection established");
+                        attributes.put("userType", "admin");
+                        attributes.put("userLogin", userLogin);
+                        return true;
+                    } else if ("member".equals(userType)) {
+                        log.info("Member WebSocket connection established");
+                        attributes.put("userType", "member");
+                        attributes.put("userLogin", userLogin);
+                        return true;
+                    } else if ("company".equals(userType)) {
+                        log.info("Company WebSocket connection established");
+                        attributes.put("userType", "company");
+                        attributes.put("userLogin", userLogin);
+                        return true;
+                    }
+                    
+                    log.warn("Invalid user type: {}", userType);
                     return false;
                 }
                 log.warn("Request is not a ServletServerHttpRequest");
