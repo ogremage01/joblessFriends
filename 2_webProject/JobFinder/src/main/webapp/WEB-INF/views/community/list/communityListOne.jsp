@@ -61,13 +61,13 @@
 		<div id='commentCount' style="min-width: 130px">
 			<svg xmlns="http://www.w3.org/2000/svg" width="130" height="24" fill="#a2a6b1" class="bi bi-chat-left" viewBox="-5 -2 120 16">
 			  	<path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-				<text x="22" y="12" font-size="12">${community.commentConut}</text>
+				<text x="22" y="12" font-size="12">${community.commentCount}</text>
 				<text x="100" y="11" font-size="12">|</text>
 			</svg>
 		</div>
 		<div>
 			<svg xmlns="http://www.w3.org/2000/svg" width="190" height="24" fill="#a2a6b1" class="bi bi-chat-left" viewBox="0 -2 145 16">
-			  	<text x="0" y="12" font-size="12"><fmt:formatDate pattern="yyyy-MM-dd" value="${community.createAt}"/></text>
+			  	<text x="0" y="12" font-size="12"><fmt:formatDate pattern="yyyy-MM-dd" value="${community.createAt}"/>  작성</text>
 			</svg>
 		</div>
 	</div>
