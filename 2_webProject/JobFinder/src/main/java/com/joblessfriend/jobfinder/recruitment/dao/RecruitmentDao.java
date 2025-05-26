@@ -42,7 +42,7 @@ public interface RecruitmentDao {
 
     // 복리후생 재삽입 insertJobPostFile  사용
     // 파일 테이블 연동 (TEMP_KEY → JOB_POST_ID 업데이트)   updateJobPostIdByTempKey 사용
-
+    void increaseViews(int jobPostId);
 
     List<RecruitmentVo> adminRecruitmentList();
 	List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId);

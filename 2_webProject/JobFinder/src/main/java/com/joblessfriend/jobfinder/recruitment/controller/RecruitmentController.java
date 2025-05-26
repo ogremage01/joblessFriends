@@ -117,9 +117,14 @@ public class RecruitmentController {
 
 
     @GetMapping("detail")
-    public String getDetail(@RequestParam int companyId,@RequestParam int jobPostId, Model model) {
+    public String getDetail(@RequestParam int companyId,@RequestParam int jobPostId, Model model,HttpSession session) {
+        String viewKey = "viewed_" + jobPostId;
+        if (session.getAttribute(viewKey) == null) {
+            recruitmentService.increaseViews(jobPostId);
+            session.setAttribute(viewKey, true); // 중복 방지 플래그 저장
+        }
 
-
+        
         RecruitmentVo recruitmentVo = recruitmentService.getRecruitmentId(jobPostId);
         JobVo jobVo = jobService.getJobById(recruitmentVo.getJobId());
         CompanyVo companyVo = companyService.companySelectOne(companyId);

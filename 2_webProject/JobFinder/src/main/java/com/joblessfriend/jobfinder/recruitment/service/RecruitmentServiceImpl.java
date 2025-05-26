@@ -126,6 +126,11 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     }
 
     @Override
+    public void increaseViews(int jobPostId) {
+        recruitmentDao.increaseViews(jobPostId);
+    }
+
+    @Override
     public void insertJobPostFile(JobPostFileVo fileVo) {
         recruitmentDao.insertJobPostFile(fileVo);
     }

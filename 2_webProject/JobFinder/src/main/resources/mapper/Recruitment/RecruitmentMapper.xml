@@ -94,7 +94,11 @@
             JOB_POST_ID = #{jobPostId}
     </select>
 
-
+    <update id="increaseViews" parameterType="int">
+        UPDATE JOB_POST
+        SET VIEWS = VIEWS + 1
+        WHERE JOB_POST_ID = #{jobPostId}
+    </update>
 <!--채용공고 인서트 -->
     <insert id="insertRecruitment" parameterType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
         <selectKey keyProperty="jobPostId"

@@ -106,6 +106,11 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
         sqlSession.delete(namespace+".deleteWelfareByJobPostId",jobPostId);
     }
 
+    @Override
+    public void increaseViews(int jobPostId) {
+        sqlSession.update(namespace+".increaseViews", jobPostId);
+    }
+
     //필터카운팅
     @Override
     public int countFilteredPosts(FilterRequestVo filterRequestVo) {

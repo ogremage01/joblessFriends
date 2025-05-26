@@ -312,11 +312,7 @@ function validateFormInputs() {
         window.editor.focus(); //전역 객체로 접근
         return false;
     }
-    if (welfareTags.length === 0) {
-        loginFailPop("복리후생 항목을 최소 1개 이상 입력해주세요.");
-        $('#welfareInput').focus();
-        return false;
-    }
+
     return true;
 }
 
