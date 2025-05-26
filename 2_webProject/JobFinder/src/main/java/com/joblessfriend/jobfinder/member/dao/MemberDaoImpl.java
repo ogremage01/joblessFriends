@@ -123,4 +123,14 @@ public class MemberDaoImpl implements MemberDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(namespace + "googleMemberExist", email);
 	}
+	
+	//닉네임 변경
+	@Override
+	public int updateNickname(String nickname, int memberId) {
+		// TODO Auto-generated method stub
+		Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("nickname", nickname);
+	    paramMap.put("memberId", memberId);
+		return sqlSession.update(namespace + "updateNickname", paramMap);
+	}
 }

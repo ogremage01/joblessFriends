@@ -27,6 +27,11 @@
 			    	<div class="accountInfo">
 				    	<h2>계정 정보</h2>
 				    	<div>
+				    		<span class="infoCategory">닉네임</span>
+				    		<span id="userNickname" class="socialInfo">${sessionScope.userLogin.nickname}</span>
+				    		<button type="button" class="infoBtn" id="nickChangeBtn">변경</button>
+				    	</div>
+				    	<div>
 				    		<span class="infoCategory">이메일</span>
 				    		<span id="userEmail" class="socialInfo">${sessionScope.userLogin.email}</span>
 				    		
@@ -35,7 +40,7 @@
 				    		</c:if>
 				    		
 				    		<c:if test="${sessionScope.userLogin.provider eq 'normal'}">
-					    		<button type="button" id="copyBtn">복사</button>
+					    		<button type="button" class="infoBtn" id="copyBtn">복사</button>
 				    			<span id="copyPop">복사되었습니다.</span>
 				    		</c:if>
 				    	</div>
@@ -80,7 +85,7 @@
 						    				<div id="passwordDelStatus" class="valiCheckText"></div>
 						    			</div>
 					    			</c:if>
-				    			<button id="modalOpen" class="btnStyle" type="button">회원탈퇴</button>
+				    			<button id="delModalOpen" class="btnStyle" type="button">회원탈퇴</button>
 				    		</form>
 		    			</div>
 		    		</div>
@@ -91,12 +96,12 @@
 	<div class="popup-wrap" id="popup">
    		<div class="modalPopup">
           <div class="popContent">
-            <span class="popTitle">정말 탈퇴하시겠어요?</span><br>
-            <span class="popText">회원탈퇴 시 관련된 정보는 모두 삭제되며<br>복구가 불가능합니다.</span>
+            <span class="popTitle"></span><br>
+            <span class="popText"></span>
           </div>
           <div class="popBtns">
-          	<button class="popBtnStyle popCancel" type="button">취소</button>
-          	<button class="popBtnStyle popSubmit" type="button">탈퇴하기</button>
+          	<button class="popBtnStyle popCancel" type="button"></button>
+          	<button class="popBtnStyle popSubmit" type="button"></button>
           </div>
     	</div>
     </div>
