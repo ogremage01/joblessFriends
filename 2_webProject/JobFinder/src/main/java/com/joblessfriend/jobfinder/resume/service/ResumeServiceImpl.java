@@ -29,4 +29,10 @@ public class ResumeServiceImpl implements ResumeService{
 		// TODO Auto-generated method stub
 		resumeDao.updateProfileImage(resumeId, memberId, imageUrl);
 	}
+
+	@Override
+	public ResumeVo getResumeByResumeId(int resumeId) {
+		// TODO Auto-generated method stub
+		return resumeDao.getResumeByResumeId(resumeId);
+	}
 }

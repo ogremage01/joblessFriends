@@ -22,4 +22,10 @@ public class SkillServiceImpl implements SkillService{
     public List<SkillVo> postTagList(int jobPostId) {
         return skillDao.postTagList(jobPostId);
     }
+
+	@Override
+	public List<SkillVo> resumeTagList(int resumeId) {
+		// TODO Auto-generated method stub
+		return skillDao.resumeTagList(resumeId);
+	}
 }

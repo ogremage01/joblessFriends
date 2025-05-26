@@ -28,5 +28,15 @@
 
 
     </select>
+    
+    <select id="resumeTagList" parameterType="int" resultType="com.joblessfriend.jobfinder.skill.domain.SkillVo">
+        SELECT
+            RT.RESUME_TAG_ID AS resumeTag,
+		    T.TAG_ID AS tagId,
+		    T.TAG_NAME AS tagName
+        FROM RESUME_TAG RT JOIN TAG T
+        ON RT.TAG_ID = T.TAG_ID
+        WHERE RESUME_ID = #{resumeId}
+    </select>
 
 </mapper>
