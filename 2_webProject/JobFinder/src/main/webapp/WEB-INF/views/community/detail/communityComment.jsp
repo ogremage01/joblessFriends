@@ -18,12 +18,12 @@
 </head>
 
 <body>
-	<div id="commentWrap" class="boxStyle contentBox">
+	<div id="commentWrap" class="boxStyle contentBox" style="padding-top: 5px">
 		<!-- 		<form id="commentForm" method="post" action=""> -->
 		<c:choose>
-			<c:when test="${sessionScope.userType eq 'member'}">
+			<c:when test="${sessionScope.userLogin ne null}"><!-- 유저로그인 중 -->
 				<c:choose>
-					<c:when test="${sessionScope.userType eq 'member'}">
+					<c:when test="${sessionScope.userType eq 'member'}"><!-- 유저타입이 '멤버' -->
 <!-- 일반 회원용 -->
 						<div id="inputCommentWrap">
 							<p>댓글</p>
@@ -36,51 +36,74 @@
 						<!-- 댓글 입력시 정보부분 -->
 						<input type="hidden" id="communityNo" value="${community.communityId}" />
 						<script type="text/javascript">
-							const memberId = ${sessionScope.userLogin.memberId};
+						  	const userType = "${sessionScope.userType}";
+							const memberId = "${sessionScope.userLogin.memberId}";
 						</script>
-
 
 					</c:when>
 					
-					<c:when test="${sessionScope.admin ne null}">
-<!-- 관리자용 댓글 -->
-
+					<c:when test="${sessionScope.userType eq 'company'}"> <!-- 유저타입이 회사 -->
+<!-- 기업 회원용 -->				
+						<div id="inputCommentWrap">
+							<p>댓글</p>
+							<textarea id="inputCommentBox" class="boxStyle" placeholder="댓글을 입력해주세요."></textarea>
+							<div id="commentBtnWrap">
+								<p>0/1000자</p>
+								<button type="button" class="inputBtn"
+									onclick="alert(' 개인회원 전용 기능입니다. 개인 회원 전용으로 로그인해주세요.')">등록</button>
+							</div>
+						</div>
+						<input type="hidden" id="communityNo" value="${community.communityId}" />
+					</c:when>
+					<c:when test="${sessionScope.admin ne null}"><!-- 관리자용 댓글 -->
 						<div id="inputCommentWrap">
 							<p>댓글</p>
 							<textarea id="inputCommentBox" class="boxStyle"
 								placeholder="댓글을 입력해주세요."></textarea>
 							<div id="commentBtnWrap">
 								<p>0/1000자</p>
-								<button type="button" id="inputCommentBtn" class="inputBtn">등록</button>
+								<button type="button" id="inputCommentBtn" class="inputBtn"
+									onclick="alert(' 개인회원 전용 기능입니다. 개인 회원 전용으로 로그인해주세요.')">등록</button>
 							</div>
 						</div>
-						<input type="hidden" id="communityNo"
-							value="${community.communityId}" />
+						<input type="hidden" id="communityNo" value="${community.communityId}" />
 						<script type="text/javascript">
-							/* const memberId = ${sessionScope.userLogin.memberId}; */
-							/* 여기 just 관리자라고 뜨기 */
+							const userType = "";
+							const memberId = "${sessionScope.admin.adminId}";
 						</script>
-
-					</c:when>
-					
+					</c:when>				
 				</c:choose>
 			</c:when>
 			<c:otherwise> 
-				<div id="inputCommentWrap">
-					<p>댓글</p>
-					<textarea id="inputCommentBox" class="boxStyle"
-						placeholder="댓글을 입력해주세요."></textarea>
+				<div id="inputCommentWrap" style="padding-top: 0px">
+					<p style="margin-top: 0px">댓글</p>
+					<textarea id="inputCommentBox" class="boxStyle" placeholder="댓글을 입력해주세요."></textarea>
 					<div id="commentBtnWrap">
 						<p>0/1000자</p>
-						<button type="button" class="inputBtn"
-							onclick="alert(' 개인회원 전용 기능입니다. 개인 회원 전용으로 로그인해주세요.')">등록</button>
+						<button type="button" id="inputCommentBtn" class="inputBtn"
+									onclick="alert(' 개인회원 전용 기능입니다. 개인 회원 전용으로 로그인해주세요.')">등록</button>
 					</div>
 				</div>
-				<input type="hidden" id="communityNo" value="${community.communityId}" />
+					<input type="hidden" id="communityNo" value="${community.communityId}" />
+						<script type="text/javascript">
+						  	const userType = "";
+							const memberId = 0;
+						</script>
+				
 			</c:otherwise>
 		</c:choose>
-
-		<input type="hidden" id="memberReply" value="${sessionScope.userLogin.memberId}">
+<c:choose>
+	<c:when test="${sessionScope.userLogin ne null}"><!-- 유저로그인 중 -->
+		<c:choose>
+			<c:when test="${sessionScope.userType eq 'member'}">
+				<input type="hidden" id="memberReply" value="${sessionScope.userLogin.memberId}">
+			</c:when>
+		</c:choose>
+	</c:when>
+	<c:when test="${sessionScope.admin ne null}">
+		<input type="hidden" id="memberReply" value="${sessionScope.admin.adminId}">
+	</c:when>
+</c:choose>
 		<!-- 댓글 리스트가 여기에 들어옴 -->
 		<div id="commentContainer"></div>
 	</div>

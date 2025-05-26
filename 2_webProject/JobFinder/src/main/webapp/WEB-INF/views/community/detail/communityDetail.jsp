@@ -80,10 +80,14 @@ blockquote p {
 
 				<div id="bottomSide">
 					<p style="margin: 0px;">작성자 ${community.nickname}</p>
-					<div id="aTags">
-						<a href="./update?no=${community.communityId}">수정</a>
-						<a onclick="deleteCommunity(${community.communityId})">삭제</a>
-					</div>
+					<c:if test="${sessionScope.userType eq 'member'}">	
+						<c:if test="${sessionScope.userLogin.memberId eq community.memberId}">				
+							<div id="aTags">
+								<a href="./update?no=${community.communityId}">수정</a>
+								<a onclick="deleteCommunity(${community.communityId})">삭제</a>
+							</div>
+						</c:if>
+					</c:if>
 				</div>
 			</div>
 

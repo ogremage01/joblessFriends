@@ -52,13 +52,17 @@ $(document).ready(function () {
 			                	        	<div id="commentlistNo_${comment.postCommentId}">
 				                	            <p class="commentBoxStyle">${comment.content}</p>  
 				                	            <p class='commentBottom'>
-				            	            		<span>${year}-${month}-${day}  작성</span>
-				                	            	<a onclick='commentUpdateForm(${comment.postCommentId}, "${comment.content}")'>수정</a> 
-				                	            	<a onclick='commentDelete(${comment.postCommentId})'>삭제</a>
-				                	            </p>
-						                	     <p><button class='repCntBtn' onclick="loadReplyList(${comment.postCommentId})">답글</button></p>
-			                	            </div>
+				            	            		<span>${year}-${month}-${day}  작성</span>`;
 
+					
+							if(userType=='member' && memberId ==comment.memberId){
+								html += `<a onclick='commentUpdateForm(${comment.postCommentId}, "${comment.content}")'>수정</a> 
+						                	<a onclick='commentDelete(${comment.postCommentId})'>삭제</a>
+										`;
+								}		
+				                html +=`</p>
+						                	<p><button class='repCntBtn' onclick="loadReplyList(${comment.postCommentId})">답글 ${comment.replyCount}</button></p>
+			                	          </div>
 				                        </div>
 										<div id="replyContainer_${comment.postCommentId}" style="background-color: #F8F8F9"></div>
 									</div>

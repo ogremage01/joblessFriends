@@ -25,4 +25,5 @@ public class CommunityVo extends MemberVo{
 	private Date createAt;
 	private Date modifiedAt;
 	private int views;
+	private int commentCount;
 }

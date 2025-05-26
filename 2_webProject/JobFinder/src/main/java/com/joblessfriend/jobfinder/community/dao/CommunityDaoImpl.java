@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.joblessfriend.jobfinder.community.domain.CommunityVo;
+import com.joblessfriend.jobfinder.util.SearchVo;
 
 
 @Repository
@@ -27,9 +28,9 @@ public class CommunityDaoImpl implements CommunityDao {
 	}
 
 	@Override
-	public List<CommunityVo> communitySelectList() {
+	public List<CommunityVo> communitySelectList(SearchVo searchVo) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace+"communitySelectList");
+		return sqlSession.selectList(namespace+"communitySelectList", searchVo);
 	}
 
 	@Override
@@ -78,6 +79,18 @@ public class CommunityDaoImpl implements CommunityDao {
 	public void communityFileNewInsert(Map<String, Object> fileMap) {
 		// TODO Auto-generated method stub
 		sqlSession.insert(namespace+"communityFileNewInsert", fileMap);
+	}
+
+	@Override
+	public int getCommunityTotalCount(SearchVo searchVo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace+"getCommunityTotalCount", searchVo);
+	}
+
+	@Override
+	public void communityViewCount(CommunityVo communityVo) {
+		// TODO Auto-generated method stub
+		sqlSession.update(namespace+"communityViewCount", communityVo);
 	}
 	
 	

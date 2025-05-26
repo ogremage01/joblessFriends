@@ -44,3 +44,20 @@ h2 {
 	margin: 0px;
 	font-size: 10pt;
 }
+
+#noCommunity{
+	color: #D1D5E3;
+	margin: auto;
+}
+
+#noCommunityBox{
+	
+	width: 900px;
+	height: 150px;
+	padding: 30px;
+	margin-bottom: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+}

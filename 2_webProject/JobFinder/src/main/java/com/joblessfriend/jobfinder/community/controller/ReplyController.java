@@ -30,7 +30,7 @@ public class ReplyController {
 	/* 댓글 등록 후 댓글리스트가 갱신되는 로직 */
 	@GetMapping("/reply/{postCommentId}")
 	@ResponseBody
-	public List<PostCommentVo> replyList(@PathVariable("postCommentId") int postCommentId){
+	public List<ReplyVo> replyList(@PathVariable("postCommentId") int postCommentId){
 		
 		
 	    return replyService.replySelectList(postCommentId);

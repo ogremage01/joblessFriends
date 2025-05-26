@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.joblessfriend.jobfinder.community.dao.CommunityDao;
 import com.joblessfriend.jobfinder.community.domain.CommunityVo;
+import com.joblessfriend.jobfinder.util.SearchVo;
 
 @Service
 public class CommunityServiceImpl implements CommunityService{
@@ -26,9 +27,9 @@ public class CommunityServiceImpl implements CommunityService{
 	}
 
 	@Override
-	public List<CommunityVo> communitySelectList() {
+	public List<CommunityVo> communitySelectList(SearchVo searchVo) {
 		// TODO Auto-generated method stub
-		return communityDao.communitySelectList();
+		return communityDao.communitySelectList(searchVo);
 	}
 
 	@Override
@@ -80,6 +81,19 @@ public class CommunityServiceImpl implements CommunityService{
 	public void communityFileNewInsert(Map<String, Object> fileMap) {
 		// TODO Auto-generated method stub
 		communityDao.communityFileNewInsert(fileMap);
+	}
+
+	//페이지네이션 전체 페이지 수
+	@Override
+	public int getCommunityTotalCount(SearchVo searchVo) {
+		// TODO Auto-generated method stub
+		return communityDao.getCommunityTotalCount(searchVo);
+	}
+
+	@Override
+	public void communityViewCount(CommunityVo communityVo) {
+		// TODO Auto-generated method stub
+		communityDao.communityViewCount(communityVo);
 	}
 
 }

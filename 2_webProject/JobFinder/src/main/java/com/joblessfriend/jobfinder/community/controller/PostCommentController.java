@@ -14,14 +14,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.joblessfriend.jobfinder.community.domain.CommunityVo;
 import com.joblessfriend.jobfinder.community.domain.PostCommentVo;
+import com.joblessfriend.jobfinder.community.domain.ReplyVo;
 import com.joblessfriend.jobfinder.community.service.PostCommentService;
+import com.joblessfriend.jobfinder.community.service.ReplyService;
 
 @RequestMapping("/community/detail")
 @Controller
 public class PostCommentController {
 	@Autowired
 	private PostCommentService postCommentService;
+	@Autowired
+	private ReplyService replyService;
 
 	/*
 	 * 기억할 것 (추가 예쩡)
@@ -34,19 +39,17 @@ public class PostCommentController {
 	@ResponseBody
 	public List<PostCommentVo> commentList(@PathVariable("communityId") int communityId){
 		
+		List<PostCommentVo> commentList = postCommentService.postCommentSelectList(communityId);
+		List<ReplyVo> replyList = null;
 		
-	    return postCommentService.postCommentSelectList(communityId);
-	}
-	
-	@GetMapping("test/{communityId}")
-	public String test(@PathVariable("communityId") int communityId, Model model){
 		
-		List<PostCommentVo> commentsList = postCommentService.postCommentSelectList(communityId);
-		System.out.println("댓글 수: " + commentsList.size());		
 		
-		model.addAttribute("commentsList", commentsList);
-		
-		return "community/detail/postComment/commentList";
+		for (PostCommentVo commentVo : commentList) {        
+	        //답글(리댓) 수 저장
+	        replyList=replyService.replySelectList(commentVo.getPostCommentId());
+	        commentVo.setReplyCount(replyList.size());
+	    }
+	    return commentList;
 	}
 	
 	
@@ -79,6 +82,7 @@ public class PostCommentController {
 	public ResponseEntity<String> commentUpload(@PathVariable("postCommentId") int postCommentId) {
 		System.out.println("~~~~~~~~~~~~~~~~댓글삭제 시작~~~~~~~~~~~~~~");
 		
+		replyService.replyCommentDelete(postCommentId);
 		postCommentService.postCommentDelete(postCommentId);
 		
 		return ResponseEntity.ok("댓글 삭제");

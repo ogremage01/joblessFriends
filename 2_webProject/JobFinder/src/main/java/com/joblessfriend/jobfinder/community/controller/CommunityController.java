@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -26,6 +28,8 @@ import com.joblessfriend.jobfinder.community.domain.PostCommentVo;
 import com.joblessfriend.jobfinder.community.service.CommunityService;
 import com.joblessfriend.jobfinder.community.service.PostCommentService;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
+import com.joblessfriend.jobfinder.util.Pagination;
+import com.joblessfriend.jobfinder.util.SearchVo;
 import com.joblessfriend.jobfinder.util.file.FileUtils;
 
 import jakarta.servlet.http.HttpSession;
@@ -49,11 +53,33 @@ public class CommunityController {
 	//커뮤니티 메인
 //	@RequestMapping(value="", method = {RequestMethod.GET, RequestMethod.POST})
 	@GetMapping("")
-	public String communityList(Model model) {
+	public String communityList(Model model, @RequestParam(defaultValue = "1") int page, 
+			@RequestParam(defaultValue = "") String keyword) {
+
+/* 페이지네이션 */
+		SearchVo searchVo = new SearchVo();
+		searchVo.setKeyword(keyword);
+		searchVo.setPage(page);
+		searchVo.setRecordSize(4);
+		
+		System.out.println("키워트 검색부분: "+keyword);
+		
+		
+	    int totalCount = communityService.getCommunityTotalCount(searchVo);//전체 데이터 수
+	    Pagination pagination = new Pagination(totalCount, searchVo);
+	    
+        searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
+        searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
+/* 페이지네이션 세팅 끝 */
+        
+        
 	    // 커뮤니티 리스트 조회
-	    List<CommunityVo> communityList = communityService.communitySelectList();  // DB에서 리스트 가져오기
+	    List<CommunityVo> communityList = communityService.communitySelectList(searchVo);  // DB에서 리스트 가져오기
+	    
 
-
+	    List<PostCommentVo> commentList = null;
+	    int commentCount = 0;
+	    
 	    // communityList를 순회하면서 각 커뮤니티의 content를 마크다운 -> HTML로 변환 후, 태그 제거
 	    for (CommunityVo communityVo : communityList) {
 	        // 마크다운을 HTML로 변환
@@ -64,14 +90,22 @@ public class CommunityController {
 
 	        // 변환된 텍스트를 커뮤니티 객체에 다시 저장
 	        communityVo.setContent(textContent);  // 태그 제거된 텍스트만 저장
+	        
+	        //댓글 수 저장
+	        commentList=postCommentService.postCommentSelectList(communityVo.getCommunityId());
+	        communityVo.setCommentCount(commentList.size());
 	    }
 
-	    // 변환된 커뮤니티 리스트를 모델에 추가
+	    // 변환된 커뮤니티 리스트를 모델에 추가(화면에 출력하기 위함)
 	    model.addAttribute("communityList", communityList);
-
+	    model.addAttribute("searchVo", searchVo);
+	    model.addAttribute("pagination", pagination);
+	    
+	    
 	    // 리스트 화면 반환
 	    return "community/list/communityList";
 	}
+
 	
 	//커뮤니티 생성(화면)
 	@GetMapping("/upload")
@@ -88,6 +122,7 @@ public class CommunityController {
 			 HttpSession session,
 			 MultipartHttpServletRequest mhr) throws Exception{	
 	    System.out.println("글쓰기 시작");
+	    
 	    //게시글 시퀀스 넘버 생성용 저장 변수
 	    int communityId = communityService.communitySeqNum();
 
@@ -115,11 +150,31 @@ public class CommunityController {
 	
 	//커뮤니티 세부
 	@GetMapping("/detail")
-	public String communityDetail(@RequestParam int no, Model model) {
+	public String communityDetail(@RequestParam int no, Model model, HttpSession session) {
 		System.out.println("게시판 세부 시작");
-		
+
 		// 커뮤니티 상세 정보 가져오기
 		CommunityVo communityVo = communityService.communityDetail(no);
+		
+		if(session != null || session.getAttribute("userLogin")!=null) {
+			Boolean viewed = (Boolean) session.getAttribute("community_"+no);
+			
+			if(viewed == null || !viewed) {
+	
+				int views = communityVo.getViews();
+				
+				views += 1;
+				
+				communityVo.setViews(views);
+				
+				//조회수 업데이트
+				communityService.communityViewCount(communityVo);
+				
+				session.setAttribute("community_"+no, true);
+			}
+		
+		}
+		
 		// 마크다운 -> HTML 변환
 		String htmlContent = Markdown.markdownToHtml(communityVo.getContent());
 	    
@@ -127,8 +182,7 @@ public class CommunityController {
 		List<PostCommentVo> commentsList = postCommentService.postCommentSelectList(no);
 		System.out.println("댓글 수: " + commentsList.size());		
 		
-		model.addAttribute("commentsList", commentsList);
-		
+		model.addAttribute("commentsList", commentsList);	
 	    model.addAttribute("community", communityVo);
 	    model.addAttribute("contentHtml", htmlContent); // 변환된 HTML
 		
@@ -141,11 +195,16 @@ public class CommunityController {
 	public String communityUpdate(@RequestParam int no, Model model, HttpSession session) {
 		System.out.println("게시판 수정 시작");
 
-		
-
 		//게시글 불러옴
 		CommunityVo communityVo = communityService.communityDetail(no);		
 		model.addAttribute("community", communityVo);
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
+		
+		if(memberVo.getMemberId() != communityVo.getMemberId()) {
+			
+			return "error/error";
+		}
 		
 		//게시글의 파일 리스트 불러옴
 		List<Map<String, Object>> fileList = communityService.communityFileList(no);
@@ -161,25 +220,14 @@ public class CommunityController {
 	    if (session.getAttribute("updatedFiles") == null) {
 	        session.setAttribute("updatedFiles", fileList);
 	    }
-
-		 // 세션에 파일 정보 추가
-//	    List<Map<String, Object>> updatedFiles = (List<Map<String, Object>>) session.getAttribute("updatedFiles");
-//	    if (updatedFiles == null) {
-//	    	updatedFiles = new ArrayList<>();
-//	    }
-//	    
-//	    for (Map<String, Object> file : fileList) {
-//	    	updatedFiles.add(fileMap);
-//		}
-//	    
 	    
 		session.setAttribute("updatedFiles", fileList);//<<열부적합은 해결했는데 이번엔 영원히 들어간다.
-//		session.removeAttribute("updatedFiles");
+
 		//글 상세 화면
 		return "community/update/communityUpdate";
 	}
 	
-	//커뮤니티 업데이트(저장) 여기서 뻑남
+	//커뮤니티 업데이트(저장)
 	@PostMapping("/update")
 	public String communityUpdate(@ModelAttribute CommunityVo communityVo, 
 			Model model, HttpSession session) {
@@ -217,7 +265,17 @@ public class CommunityController {
 	
 	//커뮤니티 삭제
 	@DeleteMapping("/delete/{communityId}")
-	public ResponseEntity<String> communityDelete(@PathVariable("communityId") int communityId){
+	public ResponseEntity<String> communityDelete(@PathVariable("communityId") int communityId, HttpSession session){		
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
+		//게시글 불러옴
+		CommunityVo communityVo = communityService.communityDetail(communityId);	
+				
+		if(memberVo.getMemberId() != communityVo.getMemberId()) {
+			
+			return ResponseEntity.notFound().build();
+		}
+		
 		communityService.communityFileDelete(communityId);
 		communityService.communityDelete(communityId);
 		return ResponseEntity.ok("게시물이 삭제되었습니다.");

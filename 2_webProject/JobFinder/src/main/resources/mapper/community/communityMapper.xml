@@ -21,10 +21,23 @@
 		VALUES(#{communityId}, #{memberId}, #{title}, #{content}, SYSDATE, NULL, 0)
 	</insert>
 	
-	<select id="communitySelectList" parameterType="com.joblessfriend.jobfinder.community.domain.CommunityVo" resultMap="communityResultVo">
+	<select id="communitySelectList" parameterType="com.joblessfriend.jobfinder.util.SearchVo" resultMap="communityResultVo">
 		<![CDATA[
-			SELECT COMMUNITY_ID, MEMBER_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, VIEWS
-			FROM COMMUNITY
+			SELECT *
+			FROM (SELECT INNER_QUERY.*, ROWNUM AS rnum
+			        FROM (SELECT COMM.COMMUNITY_ID, COMM.MEMBER_ID, COMM.TITLE, COMM.CONTENT, COMM.CREATE_AT, COMM.MODIFIED_AT, COMM.VIEWS
+			                FROM COMMUNITY COMM
+			                WHERE 1=1
+		]]>
+			<if test="keyword != null or keyword != ''">
+               		 AND (COMM.TITLE LIKE '%' || #{keyword} || '%'
+                     OR COMM.CONTENT LIKE '%' || #{keyword} || '%')
+            </if>
+        <![CDATA[
+			                ORDER BY COMMUNITY_ID DESC) INNER_QUERY 
+			        WHERE ROWNUM <= #{endRow}
+			    )
+			WHERE rnum >= #{startRow}
 		]]>
 	</select>
 	
@@ -78,6 +91,22 @@
 	<select id="communitySeqNum" resultType="int">
 		 SELECT COMMUNITY_ID_SEQ.NEXTVAL FROM DUAL
 	</select>
+	
+	
+	<!-- 페이지네이션 -->
+	<select id="getCommunityTotalCount" resultType="int" parameterType="com.joblessfriend.jobfinder.community.domain.CommunityVo">
+        SELECT COUNT(*)
+        FROM COMMUNITY
+        <if test="keyword != null or keyword != ''">
+	     	where (TITLE LIKE '%' || #{keyword} || '%'
+	        OR CONTENT LIKE '%' || #{keyword} || '%')
+         </if>
+    </select>
+    
+    <update id="communityViewCount">
+   		UPDATE COMMUNITY SET VIEWS=#{views}
+		WHERE COMMUNITY_ID = #{communityId}
+    </update>
 	
 
 </mapper>
