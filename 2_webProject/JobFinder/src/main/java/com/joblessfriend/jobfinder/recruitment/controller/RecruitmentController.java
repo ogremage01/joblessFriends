@@ -119,8 +119,9 @@ public class RecruitmentController {
     @GetMapping("detail")
     public String getDetail(@RequestParam int companyId,@RequestParam int jobPostId, Model model) {
 
-        JobVo jobVo = jobService.getJobById(jobPostId);
+
         RecruitmentVo recruitmentVo = recruitmentService.getRecruitmentId(jobPostId);
+        JobVo jobVo = jobService.getJobById(recruitmentVo.getJobId());
         CompanyVo companyVo = companyService.companySelectOne(companyId);
         List<SkillVo> skillList = skillService.postTagList(jobPostId);
         List<WelfareVo> welfare = recruitmentService.selectWelfareByJobPostId(jobPostId);
@@ -311,7 +312,7 @@ public class RecruitmentController {
 //        }
 
         // 3. 직무 정보
-        JobVo jobVo = jobService.getJobById(jobPostId);
+        JobVo jobVo = jobService.getJobById(recruitmentVo.getJobId());
 
         // 4. 복리후생, 스킬, 직군 목록
         List<WelfareVo> welfareList = recruitmentService.selectWelfareByJobPostId(jobPostId);
@@ -332,6 +333,60 @@ public class RecruitmentController {
         model.addAttribute("selectedSkills", selectedSkills);
 
         return "recruitment/recruitmentUpdate"; // JSP 경로
+    }
+
+    @PostMapping("/update")
+    public String updateRecruitment(@ModelAttribute RecruitmentVo recruitmentVo,
+                                    @RequestParam("skills") String skills,
+                                    @RequestParam("welfareList") String welfareList,
+                                    @RequestParam("tempKey") String tempKey,
+                                    @RequestParam("jobImgFile") MultipartFile jobImgFile,
+                                    HttpSession session) {
+
+        // 1. 로그인 체크
+        Object loginMember = session.getAttribute("userLogin");
+        Object userType = session.getAttribute("userType");
+        if (loginMember == null || !"company".equals(userType)) {
+            return "redirect:/auth/login";
+        }
+
+        // 2. 기업 ID 세팅
+        CompanyVo company = (CompanyVo) loginMember;
+        recruitmentVo.setCompanyId(company.getCompanyId());
+
+        // 3. 이미지 저장 처리 (수정일 경우 새 이미지가 들어왔을 때만 처리)
+        if (jobImgFile != null && !jobImgFile.isEmpty()) {
+            String savedName = saveImage(jobImgFile);
+            recruitmentVo.setJobImg(savedName);
+        }
+
+        // 4. skills 처리
+        List<Integer> tagIdList = Arrays.stream(skills.split(","))
+                .filter(s -> !s.isBlank())
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+
+        // 5. 복리후생 리스트 처리
+        List<WelfareVo> welfareVoList = Arrays.stream(welfareList.split("\\|"))
+                .filter(w -> !w.isBlank())
+                .map(w -> {
+                    WelfareVo vo = new WelfareVo();
+                    vo.setBenefitText(w);
+                    return vo;
+                })
+                .collect(Collectors.toList());
+
+        try {
+            // 6. 서비스 호출
+            recruitmentService.updateRecruitment(recruitmentVo, tagIdList, welfareVoList, tempKey);
+            System.out.println("✅ 채용공고 업데이트 성공 - jobPostId: " + recruitmentVo.getJobPostId());
+        } catch (Exception e) {
+            e.printStackTrace(); // 예외 로깅
+            // 예외 페이지 혹은 에러처리 로직 구성 가능
+        }
+
+        return "redirect:/Recruitment/detail?jobPostId=" + recruitmentVo.getJobPostId()
+                + "&companyId=" + recruitmentVo.getCompanyId();
     }
 
 
