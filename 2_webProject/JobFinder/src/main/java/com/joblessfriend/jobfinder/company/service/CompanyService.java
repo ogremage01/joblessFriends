@@ -20,4 +20,6 @@ public interface CompanyService {
 
 	CompanyVo companyEmailExist(String email);
 
+	int updatePassword(String tempPwd, int companyId);
+
 }

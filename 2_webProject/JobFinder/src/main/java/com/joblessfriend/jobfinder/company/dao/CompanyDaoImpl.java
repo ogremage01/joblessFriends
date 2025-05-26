@@ -87,4 +87,16 @@ public class CompanyDaoImpl implements CompanyDao{
 		return sqlSession.selectOne(namespace + "companyEmailExist", email);
 	}
 
+	// 비밀번호 변경
+	@Override
+	public int updatePassword(String password, int companyId) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> paramMap = new HashMap<>();
+		
+		paramMap.put("companyId", companyId);
+		paramMap.put("password", password);
+		
+		return sqlSession.update(namespace + "updatePassword", paramMap);
+	}
+
 }

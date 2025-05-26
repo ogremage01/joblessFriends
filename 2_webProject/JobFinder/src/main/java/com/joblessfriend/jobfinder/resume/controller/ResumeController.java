@@ -208,5 +208,10 @@ public class ResumeController {
 
 		    return ResponseEntity.ok("삭제 성공");
 		}
-
+	    
+	    // 이력서 미리보기 뷰
+	    @GetMapping("/preview")
+	    public String signup() {
+	        return "resume/resumePreview";
+	    }
 }
