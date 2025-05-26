@@ -38,4 +38,5 @@ public interface RecruitmentDao {
 	List<RecruitmentVo> selectRecruitmentList(int memberId);
 
 
+
 }
