@@ -57,15 +57,16 @@
 				<label>전화번호</label>
 				<input type="text" placeholder="예시) 01012349999" />
 			</div>
-			<div class="field-block">
-				<label>주소</label>
-				<input type="text" placeholder="주소를 입력해주세요" />
-			</div>
 			
 			<!-- 2행 -->
 			<div class="field-block">
+				<label>주소</label>
+				<input type="text" id="roadAddress" placeholder="주소를 입력해주세요" readonly />
+				<button type="button" class="address-search-btn" onclick="openJusoPopup()">🔍</button>
+			</div>
+			<div class="field-block">
 				<label>상세주소</label>
-				<input type="text" placeholder="상세주소" />
+				<input type="text" id="jibunAddress" placeholder="상세주소" readonly />
 			</div>
 				<div class="field-block">
 				<label>메일</label>
@@ -117,31 +118,23 @@
 
 	<section class="section-block">
 		<h2>학력</h2>
-		<div class="education-entry">
+		<div class="edu-row-combined">		   
+			   <!-- 학교 구분 선택 -->
 			<div class="field-block">
 				<label>구분</label>
-				<select>
-					<option>고등학교</option>
-					<option>대학교(4년)</option>
+				<select id="schoolTypeSelect">
+					<option value="high">고등학교</option>
+					<option value="univ4">대학교(4년)</option>
+					<option value="univ2">대학교(2,3년)</option>
 				</select>
 			</div>
-		<div class="field-block">
-			<label>학교명</label>
-			<input type="text" placeholder="학교명을 입력해주세요" />
-		</div>
-		<div class="field-block">
-			<label>졸업년도</label>
-			<input type="text" placeholder="예시) 2025" />
-		</div>
-		<div class="field-block">
-			<label>졸업상태</label>
-				<select>
-					<option>졸업예정</option>
-					<option>졸업</option>
-					<option>재학중</option>
-				</select>
-		</div>
-			<button class="delete-btn">×</button>
+			
+			<!-- 여기에 동적으로 필드가 채워짐 -->
+			<div id="edu-dynamic-fields" class="edu-dynamic-fields" style="display: contents;"></div>
+			
+			<!-- 삭제버튼 -->
+			<button type="button" class="delete-btn">×</button>
+			
 		</div>
 		
 		<div class="add-education-btn">
@@ -327,6 +320,27 @@ document.getElementById("profileImageInput").addEventListener("change", function
     });
 });
 
+// 주소자동완성
+function openJusoPopup() {
+	  const confmKey = "${jusoApiKey}";  // properties에서 가져온 값 그대로 넣어도 됨
+	  const returnUrl = "http://localhost:9090/addrCallback.jsp";  // 콜백 JSP의 경로
+	  const resultType = "4"; // 도로명+지번+상세
+
+	  const popUrl = "https://business.juso.go.kr/addrlink/addrLinkUrl.do"
+	    + "?confmKey=" + encodeURIComponent(confmKey)
+	    + "&returnUrl=" + encodeURIComponent(returnUrl)
+	    + "&resultType=" + resultType;
+
+	  window.open(popUrl, "_blank", "width=570,height=420,scrollbars=yes,resizable=yes");
+}
+
+// 팝업에서 주소 전달받는 함수
+function handleJusoCallback(roadAddr, addrDetail) {
+  document.getElementById("roadAddress").value = roadAddr || "";
+  document.getElementById("jibunAddress").value = addrDetail || "";
+}
+
+
   document.addEventListener("DOMContentLoaded", function () {
   const jobGroupSelect = document.getElementById("jobGroupSelect");
   const jobSelect = document.getElementById("jobSelect");
@@ -411,6 +425,190 @@ document.getElementById("profileImageInput").addEventListener("change", function
     });
   }
 });
+  
+//학력 구분(select) 선택에 따라 동적 입력 필드를 생성하는 로직
+
+//페이지가 로드되면 실행
+document.addEventListener("DOMContentLoaded", function () {
+ const container = document.getElementById("edu-dynamic-fields"); // 입력 필드 삽입 대상 영역
+ const select = document.getElementById("schoolTypeSelect"); // 고등학교/대학교(2,3년/4년) 선택 박스
+ 
+ // 요소가 없으면 중단
+ if (!container || !select) {
+   console.error("DOM 요소를 찾을 수 없습니다.");
+   return;
+ }
+
+ console.log("초기값:", select.value); // ✅ 여기는 이제 실행됨
+ renderFields(select.value); // ✅ 기본 필드 생성
+
+ select.addEventListener("change", () => {
+   console.log("선택 변경됨:", select.value);
+   renderFields(select.value);
+ });
+
+ // 학력 구분 선택에 따른 필드 렌더링 함수
+ function renderFields(type) {
+   container.innerHTML = ""; // 기존 입력 영역 초기화
+
+   if (type === "high") {
+     // 고등학교 선택 시 표시할 필드들
+     container.innerHTML = `
+    	 <div class="field-block">
+    	    <label>학교명</label>
+    	    <input type="text" id="schoolNameInput" placeholder="학교명을 입력해주세요" />
+    	    <ul id="schoolSuggestions" class="autocomplete-list" style="display: none;"></ul>
+    	  </div>
+    	  <div class="field-block">
+    	    <label>졸업년도</label>
+    	    <input type="text" placeholder="예시) 2025" />
+    	  </div>
+    	  <div class="field-block">
+    	    <label>졸업상태</label>
+    	    <select>
+    	      <option>졸업예정</option>
+    	      <option>졸업</option>
+    	      <option>재학중</option>
+    	    </select>
+    	  </div>
+    	`;
+     attachHighschoolAutocomplete(); // 자동완성 기능 부착
+
+   } else {
+     // 대학교 선택 시 표시할 필드들 (입학/졸업/전공 포함)
+     container.innerHTML = `
+    	 <div class="edu-fields-wrapper">
+    	    <div class="field-block full-width">
+    	      <label>학교명</label>
+    	      <input type="text" id="univNameInput" placeholder="대학교명을 입력해주세요" autocomplete="off" />
+    	      <ul id="univSuggestions" class="autocomplete-list" style="display: none;"></ul>
+    	    </div>
+    	    <div class="field-block">
+    	      <label>입학년월</label>
+    	      <input type="text" placeholder="예시) 2022.03" />
+    	    </div>
+    	    <div class="field-block">
+    	      <label>졸업년월</label>
+    	      <input type="text" placeholder="예시) 2025.02" />
+    	    </div>
+    	    <div class="field-block">
+    	      <label>졸업상태</label>
+    	      <select>
+    	        <option>졸업예정</option>
+    	        <option>졸업</option>
+    	        <option>재학중</option>
+    	      </select>
+    	    </div>
+    	    <div class="field-block full-width">
+    	      <label>전공명</label>
+    	      <input type="text" placeholder="예시) 컴퓨터공학과" />
+    	    </div>
+    	  </div>
+     `;
+     attachUniversityAutocomplete(type); // 대학교 자동완성 기능 부착
+   }
+ };
+
+ // 셀렉트박스 변경 시 해당 학력 유형의 필드 렌더링
+ select.addEventListener("change", () => {
+	 console.log("초기 렌더링:", select.value);
+   renderFields(select.value);
+ });
+
+ // 초기 렌더링 (페이지 처음 로드될 때 default 선택값 기준으로)
+ console.log("초기 렌더링:", select.value);
+ renderFields(select.value);
+});
+
+//고등학교 자동완성 함수 정의 (기존 자동완성 로직을 이곳에 넣음)
+function attachHighschoolAutocomplete() {
+ const schoolInput = document.getElementById("schoolNameInput");
+ const suggestionList = document.getElementById("schoolSuggestions");
+ const schoolTypeSelect = document.getElementById("schoolTypeSelect");
+ let debounceTimer;
+
+ schoolInput.addEventListener("input", function () {
+   const keyword = this.value.trim();
+   if (schoolTypeSelect.value !== "high") return; // 고등학교 아닐 시 무시
+   clearTimeout(debounceTimer);
+   if (keyword.length < 2) return;
+
+   debounceTimer = setTimeout(() => {
+     fetch("/api/school/search?keyword=" + encodeURIComponent(keyword))
+       .then(res => res.json())
+       .then(data => {
+         suggestionList.innerHTML = "";
+         if (data.length > 0) {
+           suggestionList.style.display = "block";
+           data.forEach(item => {
+             const li = document.createElement("li");
+             li.textContent = item.schoolName;
+             li.addEventListener("click", () => {
+               schoolInput.value = item.schoolName;
+               suggestionList.innerHTML = "";
+               suggestionList.style.display = "none";
+             });
+             suggestionList.appendChild(li);
+           });
+         } else {
+           suggestionList.style.display = "none";
+         }
+       });
+   }, 150);
+ });
+
+ // 외부 클릭 시 자동완성 숨기기
+ document.addEventListener("click", function (e) {
+   if (!schoolInput.contains(e.target) && !suggestionList.contains(e.target)) {
+     suggestionList.style.display = "none";
+   }
+ });
+}
+
+//대학교 자동완성 함수 정의
+function attachUniversityAutocomplete(type) {
+ const input = document.getElementById("univNameInput");
+ const list = document.getElementById("univSuggestions");
+ let debounce;
+
+ input.addEventListener("input", function () {
+   const keyword = this.value.trim();
+   clearTimeout(debounce);
+   if (keyword.length < 2) {
+     list.style.display = "none";
+     return;
+   }
+
+   debounce = setTimeout(() => {
+	   fetch("/api/university/search?keyword=" + encodeURIComponent(keyword) + "&schoolType=" + type)
+       .then(res => res.json())
+       .then(data => {
+         list.innerHTML = "";
+         if (data.length) {
+           list.style.display = "block";
+           data.forEach(u => {
+             const li = document.createElement("li");
+             li.textContent = u.schoolName;
+             li.addEventListener("click", () => {
+               input.value = u.schoolName;
+               list.innerHTML = "";
+               list.style.display = "none";
+             });
+             list.appendChild(li);
+           });
+         } else {
+           list.style.display = "none";
+         }
+       });
+   }, 150);
+ });
+
+ document.addEventListener("click", (e) => {
+   if (!input.contains(e.target) && !list.contains(e.target)) {
+     list.style.display = "none";
+   }
+ });
+}
 
 </script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-3fp9tS8p9A2Mq7Qz+S8jfwD+xdgu9T+O+NRZz8N5eA8=" crossorigin="anonymous"></script>

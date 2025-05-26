@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,9 +39,13 @@ public class ResumeController {
 	@Autowired
 	private FileUtils fileUtils;
 	
+	@Value("${api.juso.key}")
+	private String jusoApiKey;
+	
 	//이력서 폼으로 이동
 	@GetMapping("/write")
-	public String resumeWritePage() {
+	public String resumeWritePage(Model model) {
+		model.addAttribute("jusoApiKey", jusoApiKey);
 		return "resume/resumeView";
 	}
 	

@@ -193,6 +193,8 @@ textarea::placeholder {
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
+  position: relative; /* 버튼 절대 위치의 기준 */
+  
 }
 
 .field-block label {
@@ -212,6 +214,21 @@ textarea::placeholder {
   font-size: 14px;
   font-weight: 700;
   color: #36383F;
+}
+/* 돋보기 아이콘 */
+.address-search-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #6D707B;
+}
+
+.address-search-btn:hover {
+  color: #000;
 }
 
 .photo-wrapper {
@@ -328,78 +345,91 @@ textarea::placeholder {
 
 
 /* 학력 */
-.education-entry {
-  position: relative;
-  padding: 20px 0;
-  border-bottom: 1px solid #E0E0E0;
+
+/* 구분 + 동적 필드 전체를 감싸는 행 */
+.edu-row-combined {
   display: grid;
-  grid-template-columns: repeat(4, 1fr) auto;
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
   align-items: end;
+  margin-top: 20px;
+  position: relative;
+  padding-top: 20px;
 }
 
-.education-entry .field-block {
+.edu-row-combined .field-block {
   display: flex;
   flex-direction: column;
+  min-width: 160px;
+  position: relative;
 }
 
-.education-entry .field-block label {
+.edu-row-combined .field-block label {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.edu-row-combined .field-block input,
+.edu-row-combined .field-block select {
+  padding: 10px;
   font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 5px;
-  color: #6D707B;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.education-entry .field-block input,
-.education-entry .field-block select {
-  height: 40px;
-  padding-left: 10px;
-  border-radius: 5px;
-  border: 1px solid #D1D5E3;
+/* 자동완성 리스트 */
+.autocomplete-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;       /* input과 동일한 너비 */
+  margin-top: 4px;
+  padding: 0;
+  list-style: none;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 999;
+  box-sizing: border-box;
+}
+
+.school-autocomplete-block {
+  position: relative; /* ✅ 이것이 기준이 되어야 합니다 */
+}
+
+.autocomplete-list li {
+  padding: 10px 14px;
   font-size: 14px;
-  font-weight: 700;
-  color: #36383F;
+  color: #333;
 }
 
-.education-entry .delete-btn {
+.autocomplete-list li:hover {
+  background-color: #e6f0ff;
+  font-weight: 500;
+}
+
+/* 삭제버튼 */
+.delete-btn {
+  grid-column: 4; /* 4번째 열에 위치 */
+  justify-self: end; /* 오른쪽 정렬 */
   align-self: center;
-  margin-top: 25px;
-  background: none;
+  background: transparent;
   border: none;
-  font-size: 18px;
+  font-size: 20px;
   color: #999;
   cursor: pointer;
+  padding: 4px 8px;
 }
 
-.add-btn {
-  margin-top: 20px;
-  background: none;
-  border: none;
-  color: #6D707B;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
+.delete-btn:hover {
+  color: #e74c3c;
 }
 
-.add-btn::before {
-  content: '＋';
-  margin-right: 6px;
-  font-size: 18px;
-}
-.add-education-btn {
-  display: flex;
-  justify-content: center;
-  margin-top: 16px;
-}
-
-.add-education-btn button {
-  background: none;
-  border: none;
-  color: #6D707B;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-}
 
 /* 경력 */
 .grid-3 {

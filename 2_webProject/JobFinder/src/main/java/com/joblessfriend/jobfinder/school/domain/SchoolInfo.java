@@ -8,14 +8,11 @@ import lombok.ToString;
 @Setter
 @ToString
 public class SchoolInfo {
-	
-		private String SECD;
-		private String FCLTYCD;
-		private String FCLTYNM;
-		private String LNMADDR;
-		private String LATITUDE;
-		private String LONGITUDE;
-		private String X;
-		private String Y;
 
+	private String schoolName; // 학교이름
+    private String address; // 학교주소
+    
+    
+    // 대학교용 추가 필드
+    private String kindName; // 학교이름
 }
