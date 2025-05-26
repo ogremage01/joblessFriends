@@ -222,7 +222,8 @@
 
                 <!-- 버튼 -->
                 <div class="form-footer">
-                    <button type="submit" class="submit-btn">작성완료</button>
+                    <button type="button" class="cancel-btn">수정취소</button>
+                    <button type="submit" class="submit-btn">수정완료</button>
                 </div>
             </div>
         </form>
@@ -282,10 +283,10 @@
     });
 
     $(function () {
-        $('#insertForm').append(`<input type="hidden" name="tempKey" value="${tempKey}">`);
+        $('#updateForm').append(`<input type="hidden" name="tempKey" value="${tempKey}">`);
     });
 
-    $('#insertForm').on('submit', function () {
+    $('#updateForm ').on('submit', function () {
         const htmlContent = editor.getHTML();
         $('#hiddenContent').val(htmlContent);
 

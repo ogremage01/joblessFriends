@@ -124,7 +124,7 @@ public class RecruitmentController {
             session.setAttribute(viewKey, true); // 중복 방지 플래그 저장
         }
 
-        
+
         RecruitmentVo recruitmentVo = recruitmentService.getRecruitmentId(jobPostId);
         JobVo jobVo = jobService.getJobById(recruitmentVo.getJobId());
         CompanyVo companyVo = companyService.companySelectOne(companyId);

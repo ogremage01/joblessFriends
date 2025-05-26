@@ -362,14 +362,15 @@ $(document).on('click', '.remove-welfare', function () {
     updateWelfareInput();
 });
 
-$('#updateForm').on('submit', function () {
+$('#updateForm').on('submit', function (e) {
+    e.preventDefault(); // 기본 submit 막기
+
     const markdown = editor.getHTML();
     $('#hiddenContent').val(markdown);
 
     // 유효성 검사 먼저 수행
-    if (!validateFormInputs())
-    {
-        return false;
+    if (!validateFormInputs()) {
+        return;
     }
 
     const selectedSkillIds = $('input[name="tagId"]:checked')
@@ -379,8 +380,19 @@ $('#updateForm').on('submit', function () {
     $('input[name="skills"]').val(selectedSkillIds.join(','));
 
     updateWelfareInput(); // 복리후생 hidden 처리
-    if (!confirm("등록하시겠습니까?")) return false;      //컨펌창 수정예정//
-    return true; // ✅ 모든 유효성 통과 시 전송
+
+    // ✅ SweetAlert 컨펌
+    Swal.fire({
+        title: '수정하시겠습니까?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: '확인',
+        cancelButtonText: '취소'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            e.target.submit(); // ✅ 실제 form 전송
+        }
+    });
 });
 
 
@@ -401,4 +413,23 @@ $(function () {
         $('#fileInfoBox').hide();
         $('#fileNameText').text('');
     });
+});
+
+$(document).ready(function () {
+    $(".cancel-btn").on("click", function () {
+        Swal.fire({
+            title: '작성을 취소하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '닫기'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/company/recruitment";
+            }
+        });
+    });
+
+
+
 });
