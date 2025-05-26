@@ -48,7 +48,7 @@
         <div class="collapse" id="member-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
             <li><a href="/admin/member/individual" class="link-body-emphasis d-inline-flex text-decoration-none rounded">일반회원</a></li>
-            <li><a href="/admin/member/company" class="link-body-emphasis d-inline-flex text-decoration-none rounded">기업회원</a></li>
+            <li><a href="/admin/community" class="link-body-emphasis d-inline-flex text-decoration-none rounded">기업회원</a></li>
             <!-- <li><a href="/admin/admin" class="link-body-emphasis d-inline-flex text-decoration-none rounded">관리자</a></li> -->
           </ul>
         </div>
@@ -96,8 +96,72 @@
     <a href="/admin/logout" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed">로그아웃</a>
   </div>
   <!-- 사이드바 영역 -->
+  
+  
 	  <!-- 본문영역  -->
-  		  <div id="container">게시판 관리</div>
+		<div id="container">
+			<h1 style="text-align: center;">커뮤니티 관리 목록</h1>
+			<table class="table table-striped">
+				<thead class="table-dark" style="margin: auto;">
+					<tr>
+						<td><button id="massDelCom">삭제</button></td>
+						<td>ID</td>
+						<td>제목</td>
+						<td>작성자</td>
+						<td>작성 날짜</td>
+						<td>조회수</td>
+						<td>삭제</td>
+					</tr>
+				</thead>
+				<tbody class="table-group-divider">
+					<c:forEach var="communityVo" items="${communityList}">
+						<tr>
+							<td style="text-align: center;"><input type="checkbox" class="delCompany" name="delete" value="${communityVo.communityId}"></td>
+							<td>${communityVo.communityId}</td>
+							<td><a href="./community/detail?no=${communityVo.communityId}">${communityVo.title}</a></td>
+							<td>${communityVo.nickName}</td>
+							<td>${communityVo.createAt}</td>
+							<td>${communityVo.views}</td>
+							<td><button class="delBtn" value="${recruitmentVo.jobPostId}">삭제</button></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			
+
+
+			<div id='pageNation'>
+				<c:if test="${pagination.totalPageCount > 0}">
+				<nav aria-label="...">
+				
+					<ul class="pagination justify-content-center">
+						<li class="page-item ${searchVo.page==1?'disabled':''}">
+							<a class="page-link" href="./community?page=${searchVo.page-1}&keyword=${searchVo.keyword}">Previous</a>
+						</li>
+						<c:forEach begin="${pagination.startPage}" var="i" 
+							end="${pagination.endPage}">
+							<li class="page-item ${searchVo.page==i?'active':''}">
+							<a class="page-link" href="./community?page=${i}&keyword=${searchVo.keyword}">${i}</a></li>
+						</c:forEach>
+
+						<!-- <li class="page-item active" aria-current="page"><a
+						class="page-link" href="#">2</a></li> -->
+						<li class="page-item"><a
+							class="page-link ${searchVo.page==pagination.totalPageCount? 'disabled':''}" href="./community?page=${searchVo.page+1}&keyword=${searchVo.keyword}">Next</a></li>
+					</ul>
+				
+				</nav>
+				</c:if>
+			</div>
+
+			<div id="searchContainer">
+				<input id="communityKeyword" type="text" placeholder="제목 검색">
+				<button id="communitySearchBtn" class="btn btn-light">검색</button>
+			
+			</div>
+			
+		
+		</div>
       <!-- 본문영역  -->
 </main>
 

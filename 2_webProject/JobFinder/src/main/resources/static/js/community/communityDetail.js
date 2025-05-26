@@ -9,8 +9,7 @@ function deleteCommunity(communityId){
 		}).then(
 			function(response){
 				if(response.ok){
-					alert("게시물이 성공적으로 삭제되었습니다.");
-					
+
 					location.href = '/community';
 				}
 			}

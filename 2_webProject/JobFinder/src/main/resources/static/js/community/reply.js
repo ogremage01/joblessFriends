@@ -207,14 +207,13 @@ function replyUpdate(replyId){
 function replyDelete(replyId){
 	let url = "/community/detail/replyDelete/"+replyId;
 
-	if(confirm('댓글을 삭제하시겠습니까?')){
+	if(confirm('답글을 삭제하시겠습니까?')){
 	
 		fetch(url, {
 			method: 'DELETE'
 		}).then(
 			function(response){
 				if(response.ok){
-					alert("답글이 삭제되었습니다.");
 					loadCommentList();
 					
 				}
