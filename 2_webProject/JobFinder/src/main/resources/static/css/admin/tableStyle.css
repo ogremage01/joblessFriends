@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.view{
+	max-width: 100px;
+	overflow: hidden;
+	white-space: normal;
+	text-overflow: ellipsis;	
+	
+	text-align: center;
+	
+}
+
+

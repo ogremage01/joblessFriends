@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import com.joblessfriend.jobfinder.community.domain.CommunityVo;
 import com.joblessfriend.jobfinder.util.SearchVo;
 
-
 @Repository
 public class CommunityDaoImpl implements CommunityDao {
 
