@@ -332,12 +332,7 @@ function updateRoomList(rooms, listId) {
 		const roomId = room.roomId.trim();
 		let displayName = room.name ? room.name.trim() : roomId;
 
-		// 채팅방 이름 가공
-		if (listId === 'companyRoomList' && !displayName.includes('기업')) {
-			displayName = '기업 ' + displayName;
-		} else if (listId === 'memberRoomList' && !displayName.includes('채팅방')) {
-			displayName = displayName + '의 채팅방';
-		}
+		
 
 		// 서버에서 제공하는 unreadCount 사용, 없으면 0으로 초기화
 		const unread = room.unreadCount !== undefined ? room.unreadCount : 0;
@@ -353,7 +348,7 @@ function updateRoomList(rooms, listId) {
 	            data-room-name="${displayName.replace(/'/g, "\\'")}"
 	            onclick="selectRoom('${roomId}', '${displayName.replace(/'/g, "\\'")}')">
 	            <div class="d-flex justify-content-between align-items-center">
-	                <span>${displayName}</span>
+	                <span class="displayName">${displayName}</span>
 	                <span>
 	                    ${unreadBadge}
 	                </span>

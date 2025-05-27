@@ -123,7 +123,7 @@ public class ChatServiceImpl implements ChatService {
                     int companyId = Integer.parseInt(room.getRoomId());
                     CompanyVo company = companyService.companySelectOne(companyId);
                     if (company != null && company.getCompanyName() != null && !company.getCompanyName().isEmpty()) {
-                        room.setName("기업 " + company.getCompanyName());
+                        room.setName("기업 " + "[" + room.getRoomId() + "] " + company.getCompanyName());
                     } else {
                         room.setName("기업 " + room.getRoomId());
                     }
