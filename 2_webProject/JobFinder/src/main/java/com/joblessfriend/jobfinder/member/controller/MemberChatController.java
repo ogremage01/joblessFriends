@@ -1,6 +1,8 @@
 package com.joblessfriend.jobfinder.member.controller;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.joblessfriend.jobfinder.chat.domain.ChatMessageVo;
 import com.joblessfriend.jobfinder.chat.domain.ChatRoomVo;
+import com.joblessfriend.jobfinder.chat.domain.UserChatRoomLastRead;
+import com.joblessfriend.jobfinder.chat.repository.ChatMessageRepository;
+import com.joblessfriend.jobfinder.chat.repository.UserChatRoomLastReadRepository;
 import com.joblessfriend.jobfinder.chat.service.ChatService;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 
@@ -30,6 +35,8 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberChatController {
 
     private final ChatService chatService;
+    private final ChatMessageRepository chatMessageRepository;
+    private final UserChatRoomLastReadRepository userChatRoomLastReadRepository;
 
     /**
      * 회원의 채팅방으로 입장하거나, 채팅방이 없으면 생성하여 입장합니다.
@@ -89,6 +96,45 @@ public class MemberChatController {
         } catch (Exception e) {
             log.error("[MemberChatController] 채팅방 '{}' 메시지 조회 중 오류 발생", roomId, e);
             return ResponseEntity.internalServerError().body("메시지 조회 중 오류가 발생했습니다.");
+        }
+    }
+
+    /**
+     * 회원의 안읽은 메시지 수를 확인합니다.
+     * 회원은 자신의 이메일을 roomId로 하는 채팅방에서만 안읽은 메시지를 확인할 수 있습니다.
+     *
+     * @param session 현재 HTTP 세션 객체. 회원 로그인 정보를 가져오는 데 사용됩니다.
+     * @return 안읽은 메시지 수를 담은 ResponseEntity를 반환합니다.
+     */
+    @GetMapping("/unread-count")
+    @ResponseBody
+    public ResponseEntity<?> getUnreadMessageCount(HttpSession session) {
+        log.debug("[MemberChatController] 안읽은 메시지 수 확인 요청");
+
+        MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
+
+        if (memberVo == null) {
+            log.warn("[MemberChatController] 비로그인 사용자의 안읽은 메시지 수 확인 시도");
+            return ResponseEntity.status(401).body("로그인이 필요합니다.");
+        }
+
+        try {
+            String roomId = memberVo.getEmail(); // 회원의 채팅방 ID는 이메일과 동일
+            String userId = memberVo.getEmail(); // 사용자 ID도 이메일
+
+            // 마지막 읽은 시간 조회
+            Optional<UserChatRoomLastRead> lastReadOpt = userChatRoomLastReadRepository.findByUserIdAndRoomId(userId, roomId);
+            Date lastReadTime = lastReadOpt.map(UserChatRoomLastRead::getLastReadTimestamp).orElse(new Date(0)); // 읽은 기록이 없으면 1970년 1월 1일
+
+            // 마지막 읽은 시간 이후의 관리자 메시지 수 계산 (sender가 "관리자"인 메시지)
+            long unreadCount = chatMessageRepository.countByRoomIdAndSenderNotAndSendTimeAfter(roomId, userId, lastReadTime);
+
+            log.debug("[MemberChatController] 회원 '{}'의 안읽은 메시지 수: {}", memberVo.getEmail(), unreadCount);
+            return ResponseEntity.ok().body(unreadCount);
+
+        } catch (Exception e) {
+            log.error("[MemberChatController] 안읽은 메시지 수 확인 중 오류 발생. 회원: {}", memberVo.getEmail(), e);
+            return ResponseEntity.internalServerError().body("안읽은 메시지 수 확인 중 오류가 발생했습니다.");
         }
     }
 }

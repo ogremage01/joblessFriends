@@ -1,6 +1,8 @@
 package com.joblessfriend.jobfinder.admin.dao;
 
 import com.joblessfriend.jobfinder.recruitment.domain.*;
+import com.joblessfriend.jobfinder.util.SearchVo;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,9 +30,9 @@ public class AdminRecruitmentDaoImpl implements AdminRecruitmentDao {
 
 
     @Override
-	public List<RecruitmentVo> adminRecruitmentList() {
+	public List<RecruitmentVo> adminRecruitmentList(SearchVo searchVo) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("com.joblessfriend.jobfinder.admin.dao.AdminRecruitmentDao.adminRecruitmentList");
+		return sqlSession.selectList("com.joblessfriend.jobfinder.admin.dao.AdminRecruitmentDao.adminRecruitmentList",searchVo);
     }
 
 
@@ -50,7 +52,10 @@ public class AdminRecruitmentDaoImpl implements AdminRecruitmentDao {
 		
 	}
 
-	
+	 @Override
+	    public int getRecruitmentTotalCount(SearchVo searchVo) {
+	        return sqlSession.selectOne("com.joblessfriend.jobfinder.admin.dao.AdminRecruitmentDao.getRecruitmentTotalCount", searchVo);
+	    }
 	
 
 }

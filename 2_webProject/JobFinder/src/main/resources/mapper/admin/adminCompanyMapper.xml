@@ -30,7 +30,7 @@
 		            SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
 		            FROM COMPANY
 		            <if test="keyword != null and keyword != ''">
-		                WHERE COMPANY_NAME LIKE '%' || #{keyword} || '%'
+		                WHERE UPPER(COMPANY_NAME) LIKE UPPER('%' || #{keyword} || '%')
 		            </if>
 		            ORDER BY COMPANY_ID DESC
 		        ) INNERTABLE

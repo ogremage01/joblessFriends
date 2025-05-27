@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.joblessfriend.jobfinder.admin.service.AdminRecruitmentService;
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
+import com.joblessfriend.jobfinder.util.Pagination;
+import com.joblessfriend.jobfinder.util.SearchVo;
 
 @RequestMapping("/admin/recruitment")
 @Controller
@@ -28,15 +30,33 @@ public class AdminRecruitmentController {
 	private AdminRecruitmentService adminRecruitmentService; // 구인공고 서비스 의존성 주입
 
 	@GetMapping("")
-	public String recruitmentSelectList(Model model, @RequestParam(defaultValue = "0") int page, // 페이지 번호, 기본값은 0
-			@RequestParam(value = "keyword", required = false) String keyword) { // 검색 키워드 (옵션)
+	public String recruitmentSelectList(Model model, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "") String keyword) { // 검색 키워드 (옵션)
 
 		logger.info("공고목록으로 이동");
-
-		List<RecruitmentVo> recruitmentList = adminRecruitmentService.adminRecruitmentList();
+		
+		System.out.println();
+		System.out.println("검색어 내용: " + keyword);
+		System.out.println();
+		
+		SearchVo searchVo = new SearchVo();
+		searchVo.setKeyword(keyword);
+		searchVo.setPage(page);
+		System.out.println();
+		System.out.println("searchVo 내용: " + searchVo.getKeyword() + searchVo.getPage());
+		System.out.println();
+		
+		int totalPage = adminRecruitmentService.getRecruitmentTotalCount(searchVo);
+		Pagination pagination = new Pagination(totalPage, searchVo);
+		
+		// Oracle 11g에 맞게 startRow, endRow 계산
+		searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
+		searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
+		List<RecruitmentVo> recruitmentList = adminRecruitmentService.adminRecruitmentList(searchVo);
 
 		model.addAttribute("recruitmentList", recruitmentList);
-
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("searchVo", searchVo);
+		
 		return "admin/recruitment/recruitmentView";
 	}
 

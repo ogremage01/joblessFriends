@@ -1,6 +1,8 @@
 package com.joblessfriend.jobfinder.company.controller;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody; // ResponseBody 임
 
 import com.joblessfriend.jobfinder.chat.domain.ChatMessageVo;
 import com.joblessfriend.jobfinder.chat.domain.ChatRoomVo;
+import com.joblessfriend.jobfinder.chat.domain.UserChatRoomLastRead;
+import com.joblessfriend.jobfinder.chat.repository.ChatMessageRepository;
+import com.joblessfriend.jobfinder.chat.repository.UserChatRoomLastReadRepository;
 import com.joblessfriend.jobfinder.chat.service.ChatService;
 import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 
@@ -31,6 +36,8 @@ import lombok.extern.slf4j.Slf4j;
 public class CompanyChatController {
 
 	private final ChatService chatService; // 채팅 관련 비즈니스 로직을 처리하는 서비스
+	private final ChatMessageRepository chatMessageRepository;
+	private final UserChatRoomLastReadRepository userChatRoomLastReadRepository;
 
 	/**
 	 * 기업 회원의 채팅방 (주로 관리자와의 채팅)으로 입장하거나 생성하여 입장합니다.
@@ -103,6 +110,50 @@ public class CompanyChatController {
 		} catch (Exception e) {
 		    log.error("[CompanyChatController] 기업 채팅방 '{}' 메시지 조회 중 오류 발생", roomId, e);
 		    return ResponseEntity.internalServerError().body("메시지 조회 중 오류가 발생했습니다."); // 500 Internal Server Error
+		}
+	}
+
+	/**
+	 * 기업 회원의 안읽은 메시지 수를 확인합니다.
+	 * 기업 회원은 자신의 companyId를 roomId로 하는 채팅방에서만 안읽은 메시지를 확인할 수 있습니다.
+	 *
+	 * @param session 현재 HTTP 세션 객체. 기업 회원 로그인 정보를 가져오는 데 사용됩니다.
+	 * @return 안읽은 메시지 수를 담은 ResponseEntity를 반환합니다.
+	 */
+	@GetMapping("/unread-count")
+	@ResponseBody
+	public ResponseEntity<?> getUnreadMessageCount(HttpSession session) {
+		log.debug("[CompanyChatController] 안읽은 메시지 수 확인 요청");
+
+		Object userObj = session.getAttribute("userLogin");
+		if (userObj == null) {
+			log.warn("[CompanyChatController] 비로그인 사용자의 안읽은 메시지 수 확인 시도");
+			return ResponseEntity.status(401).body("로그인이 필요합니다.");
+		}
+
+		if (!(userObj instanceof CompanyVo)) {
+			log.warn("[CompanyChatController] userLogin 세션 객체가 CompanyVo 타입이 아님. 타입: {}", userObj.getClass().getName());
+			return ResponseEntity.status(401).body("잘못된 사용자 세션입니다.");
+		}
+
+		try {
+			CompanyVo companyVo = (CompanyVo) userObj;
+			String roomId = String.valueOf(companyVo.getCompanyId()); // 기업의 채팅방 ID는 companyId
+			String userId = String.valueOf(companyVo.getCompanyId()); // 사용자 ID도 companyId
+
+			// 마지막 읽은 시간 조회
+			Optional<UserChatRoomLastRead> lastReadOpt = userChatRoomLastReadRepository.findByUserIdAndRoomId(userId, roomId);
+			Date lastReadTime = lastReadOpt.map(UserChatRoomLastRead::getLastReadTimestamp).orElse(new Date(0)); // 읽은 기록이 없으면 1970년 1월 1일
+
+			// 마지막 읽은 시간 이후의 관리자 메시지 수 계산 (sender가 "관리자"인 메시지)
+			long unreadCount = chatMessageRepository.countByRoomIdAndSenderNotAndSendTimeAfter(roomId, userId, lastReadTime);
+
+			log.debug("[CompanyChatController] 기업 '{}'(ID:{})의 안읽은 메시지 수: {}", companyVo.getCompanyName(), companyVo.getCompanyId(), unreadCount);
+			return ResponseEntity.ok().body(unreadCount);
+
+		} catch (Exception e) {
+			log.error("[CompanyChatController] 안읽은 메시지 수 확인 중 오류 발생", e);
+			return ResponseEntity.internalServerError().body("안읽은 메시지 수 확인 중 오류가 발생했습니다.");
 		}
 	}
 
