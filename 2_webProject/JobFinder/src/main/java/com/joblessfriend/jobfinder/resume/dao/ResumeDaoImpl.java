@@ -4,11 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.joblessfriend.jobfinder.resume.domain.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 
 @Repository
 public class ResumeDaoImpl implements ResumeDao{
@@ -49,4 +48,39 @@ public class ResumeDaoImpl implements ResumeDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(namespace + ".getResumeByResumeId", resumeId);
 	}
+
+    @Override
+    public void insertResume(ResumeVo resume) {
+
+    }
+
+    @Override
+    public void insertSchool(SchoolVo school) {
+
+    }
+
+    @Override
+    public void insertEducation(EducationVo education) {
+
+    }
+
+    @Override
+    public void insertCareer(CareerVo career) {
+
+    }
+
+    @Override
+    public void insertCertificateResume(int resumeId, Long certificateId) {
+
+    }
+
+    @Override
+    public void insertResumeTag(int resumeId, Long tagId) {
+
+    }
+
+    @Override
+    public void insertPortfolio(PortfolioVo portfolio) {
+
+    }
 }

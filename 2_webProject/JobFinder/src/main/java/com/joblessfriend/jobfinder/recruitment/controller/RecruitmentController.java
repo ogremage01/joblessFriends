@@ -369,6 +369,7 @@ public class RecruitmentController {
         List<Integer> tagIdList = Arrays.stream(skills.split(","))
                 .filter(s -> !s.isBlank())
                 .map(Integer::parseInt)
+                .distinct() // ✅ 이 한 줄로 중복 태그 방지
                 .collect(Collectors.toList());
 
         // 5. 복리후생 리스트 처리

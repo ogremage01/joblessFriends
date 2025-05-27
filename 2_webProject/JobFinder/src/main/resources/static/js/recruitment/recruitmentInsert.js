@@ -192,6 +192,7 @@ $("#generateTemplate").on('click',function () {
 
 
 function validateFormInputs() {
+
     const title = $('input[name="title"]').val().trim();
     const startDate = $('input[name="startDate"]').val();
     const endDate = $('input[name="endDate"]').val();

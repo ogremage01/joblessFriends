@@ -99,12 +99,20 @@ $("#generateTemplate").on('click',function () {
     const welfareHtml = welfareTags.map(text => `<li>${text}</li>`).join('');
     const selectedTags = $('input[name="tagId"]:checked')
         .map(function () {
-            return $(this).parent().text().trim();
+            return $(this).val(); // tagId만 수집
         })
         .get()
-        .slice(0, 5); //스킬리스트수집
-    console.log({ startDate, endDate, salaryValue }); // 디버깅
-    const tagHtml = selectedTags.map(tag => `<span class="tag">${tag}</span>`).join('');
+        .slice(0, 5);
+
+// tagId → tagName 매핑용
+    const tagMap = {};
+    $('#tag-list input[name="tagId"]').each(function () {
+        const tagId = $(this).val();
+        const tagName = $(this).parent().text().trim();
+        tagMap[tagId] = tagName;
+    });
+
+    const tagHtml = selectedTags.map(id => `<span class="tag">${tagMap[id]}</span>`).join('');
 
     let html = '';
 
@@ -223,6 +231,10 @@ $("#generateTemplate").on('click',function () {
 
 
 function validateFormInputs() {
+    if (typeof editor === 'undefined' || !editor) {
+        alert("에디터 초기화가 아직 안 됐습니다!");
+        return false;
+    }
     const title = $('input[name="title"]').val().trim();
     const startDate = $('input[name="startDate"]').val();
     const endDate = $('input[name="endDate"]').val();

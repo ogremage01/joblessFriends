@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,6 +34,7 @@
         <form id="updateForm" action="${pageContext.request.contextPath}/Recruitment/update" method="post" enctype="multipart/form-data">
             <input type="hidden" name="tempKey" value="${recruitmentVo.tempKey}" />
             <input type="hidden" name="jobPostId" value="${recruitmentVo.jobPostId}" />
+            <input type="hidden" name="welfareList">
             <div class="InsertMain">
 
                 <!-- 제목 -->
@@ -239,54 +240,55 @@
 
 <jsp:include page="../common/footer.jsp"/>
 
-<script src="/js/recruitment/recruitmentUpdate.js"></script>
-<div id="askConfirm">
-</div>
 <script>
-    // uuid 미리 생성
-
-    const editor = new toastui.Editor({
-        el: document.querySelector('#content'),
-        height: '500px',
-        initialEditType: 'wysiwyg',
-        previewStyle: 'vertical',
-        initialValue: '${recruitmentVo.content}',
-        placeholder: '내용을 입력해 주세요.',
-        hooks: {
-            addImageBlobHook: function (blob, callback) {
-                const formData = new FormData();
-                formData.append('image', blob);
-                formData.append('tempKey', tempKey);
-
-                $.ajax({
-                    url: '/Recruitment/uploadImage',
-                    method: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function (res) {
-                        console.log("업로드 응답:", res);
-                        if (res && res.file && res.file.url) {
-                            callback(res.file.url, '업로드 이미지');
-                        } else {
-                            alert("⚠️ 서버 응답에 이미지 URL이 없습니다.");
-                        }
-                    },
-                    error: function () {
-                        alert('이미지 업로드 실패');
-                    }
-                });
-
-                return false;
-            }
-        }
-    });
+    // 전역 변수로 선언하여 외부 JS에서도 접근 가능하게 수정
+    let editor;
 
     $(function () {
+        editor = new toastui.Editor({
+            el: document.querySelector('#content'),
+            height: '500px',
+            initialEditType: 'wysiwyg',
+            previewStyle: 'vertical',
+                initialValue: `${recruitmentVo.content}`,
+            placeholder: '내용을 입력해 주세요.',
+            hooks: {
+                addImageBlobHook: function (blob, callback) {
+                    const formData = new FormData();
+                    formData.append('image', blob);
+                    formData.append('tempKey', tempKey);
+
+                    $.ajax({
+                        url: '/Recruitment/uploadImage',
+                        method: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (res) {
+                            console.log("업로드 응답:", res);
+                            if (res && res.file && res.file.url) {
+                                callback(res.file.url, '업로드 이미지');
+                            } else {
+                                alert("⚠️ 서버 응답에 이미지 URL이 없습니다.");
+                            }
+                        },
+                        error: function () {
+                            alert('이미지 업로드 실패');
+                        }
+                    });
+
+                    return false;
+                }
+            }
+        });
+
+        window.editor = editor;
+
+        // tempKey 히든필드 추가
         $('#updateForm').append(`<input type="hidden" name="tempKey" value="${tempKey}">`);
     });
 
-    $('#updateForm ').on('submit', function () {
+    $('#updateForm').on('submit', function () {
         const htmlContent = editor.getHTML();
         $('#hiddenContent').val(htmlContent);
 
@@ -297,10 +299,13 @@
 
         return true;
     });
-
-    window.editor = editor;
-
 </script>
+
+<script src="/js/recruitment/recruitmentUpdate.js"></script>
+<div id="askConfirm">
+</div>
+
+
 
 
 </body>
