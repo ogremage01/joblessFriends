@@ -10,7 +10,7 @@
 	<div class="sidebar">
 	
 		<h2>
-			<a href="/member/mypage" style="text-decoration: none; color: inherit;">마이페이지</a>
+			<span style="text-decoration: none; color: inherit; user-select:none;">마이페이지</span>
 		</h2>
 	
 		<ul>

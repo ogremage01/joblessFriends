@@ -34,7 +34,12 @@ public class CompanyRecruitmentController {
 	@GetMapping("")
 	public String CompanyRecruitmentList(Model model, HttpSession session) {
 		CompanyVo companyVo = (CompanyVo) session.getAttribute("userLogin");
-
+		Object userType = session.getAttribute("userType");
+		
+		if (companyVo == null || !"company".equals(userType)) {
+            return "redirect:/auth/login";
+        }
+		
 		int companyId = companyVo.getCompanyId();
 
 		List<CompanyRecruitmentVo> CompanyRecruitmentList = recruitmentService.companyRecruitmentSelectList(companyId);
