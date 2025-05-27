@@ -74,7 +74,7 @@
 	<div id="container">
 		<div id="containerWrap">
 			<div class="jobInfoSection section">
-				<h2>채용정보</h2>
+				<h2>요즘 많이 보는 공고👀</h2>
 				
 				<div class="jobInfoContent">
 					<c:forEach var="rec" items="${recruitmentList}">
