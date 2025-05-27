@@ -282,6 +282,8 @@
 	
 <script>
 
+let ignoreNextInput = false;
+
 document.getElementById("photoBox").addEventListener("click", function () {
     document.getElementById("profileImageInput").click();
 });
@@ -435,15 +437,12 @@ document.addEventListener("DOMContentLoaded", function () {
  
  // 요소가 없으면 중단
  if (!container || !select) {
-   console.error("DOM 요소를 찾을 수 없습니다.");
    return;
  }
 
- console.log("초기값:", select.value); // ✅ 여기는 이제 실행됨
  renderFields(select.value); // ✅ 기본 필드 생성
 
  select.addEventListener("change", () => {
-   console.log("선택 변경됨:", select.value);
    renderFields(select.value);
  });
 
@@ -477,46 +476,44 @@ document.addEventListener("DOMContentLoaded", function () {
    } else {
      // 대학교 선택 시 표시할 필드들 (입학/졸업/전공 포함)
      container.innerHTML = `
-    	 <div class="edu-fields-wrapper">
-    	    <div class="field-block full-width">
-    	      <label>학교명</label>
-    	      <input type="text" id="univNameInput" placeholder="대학교명을 입력해주세요" autocomplete="off" />
-    	      <ul id="univSuggestions" class="autocomplete-list" style="display: none;"></ul>
-    	    </div>
-    	    <div class="field-block">
-    	      <label>입학년월</label>
-    	      <input type="text" placeholder="예시) 2022.03" />
-    	    </div>
-    	    <div class="field-block">
-    	      <label>졸업년월</label>
-    	      <input type="text" placeholder="예시) 2025.02" />
-    	    </div>
-    	    <div class="field-block">
-    	      <label>졸업상태</label>
-    	      <select>
-    	        <option>졸업예정</option>
-    	        <option>졸업</option>
-    	        <option>재학중</option>
-    	      </select>
-    	    </div>
-    	    <div class="field-block full-width">
-    	      <label>전공명</label>
-    	      <input type="text" placeholder="예시) 컴퓨터공학과" />
-    	    </div>
-    	  </div>
+    	 <div class="field-block">
+         <label>학교명</label>
+         <input type="text" id="univNameInput" placeholder="대학교명을 입력해주세요" autocomplete="off" />
+         <ul id="univSuggestions" class="autocomplete-list" style="display: none;"></ul>
+       </div>
+       <div class="field-block">
+         <label>전공명</label>
+         <input type="text" id="majorNameInput" placeholder="예시) 컴퓨터공학과" />
+         <ul id="majorSuggestions" class="autocomplete-list" style="display: none;"></ul>
+       </div>
+       <div class="field-block">
+         <label>입학년월</label>
+         <input type="text" placeholder="예시) 2022.03" />
+       </div>
+       <div class="field-block">
+         <label>졸업년월</label>
+         <input type="text" placeholder="예시) 2025.02" />
+       </div>
+       <div class="field-block">
+         <label>졸업상태</label>
+         <select>
+           <option>졸업예정</option>
+           <option>졸업</option>
+           <option>재학중</option>
+         </select>
+       </div>
      `;
      attachUniversityAutocomplete(type); // 대학교 자동완성 기능 부착
+     attachMajorAutocomplete(); // 전공 자동완성
    }
  };
 
  // 셀렉트박스 변경 시 해당 학력 유형의 필드 렌더링
  select.addEventListener("change", () => {
-	 console.log("초기 렌더링:", select.value);
    renderFields(select.value);
  });
 
  // 초기 렌더링 (페이지 처음 로드될 때 default 선택값 기준으로)
- console.log("초기 렌더링:", select.value);
  renderFields(select.value);
 });
 
@@ -528,6 +525,11 @@ function attachHighschoolAutocomplete() {
  let debounceTimer;
 
  schoolInput.addEventListener("input", function () {
+	 if (ignoreNextInput) {
+	      ignoreNextInput = false;
+	      return;
+	    }
+	 
    const keyword = this.value.trim();
    if (schoolTypeSelect.value !== "high") return; // 고등학교 아닐 시 무시
    clearTimeout(debounceTimer);
@@ -543,8 +545,9 @@ function attachHighschoolAutocomplete() {
            data.forEach(item => {
              const li = document.createElement("li");
              li.textContent = item.schoolName;
-             li.addEventListener("click", () => {
+             li.addEventListener("pointerdown", () => {
                schoolInput.value = item.schoolName;
+               ignoreNextInput = true;
                suggestionList.innerHTML = "";
                suggestionList.style.display = "none";
              });
@@ -557,12 +560,6 @@ function attachHighschoolAutocomplete() {
    }, 150);
  });
 
- // 외부 클릭 시 자동완성 숨기기
- document.addEventListener("click", function (e) {
-   if (!schoolInput.contains(e.target) && !suggestionList.contains(e.target)) {
-     suggestionList.style.display = "none";
-   }
- });
 }
 
 //대학교 자동완성 함수 정의
@@ -572,11 +569,16 @@ function attachUniversityAutocomplete(type) {
  let debounce;
 
  input.addEventListener("input", function () {
+
+	if (ignoreNextInput) {
+		ignoreNextInput = false;
+			return;
+	}
    const keyword = this.value.trim();
-   clearTimeout(debounce);
-   if (keyword.length < 2) {
-     list.style.display = "none";
-     return;
+	   clearTimeout(debounce);
+	   if (keyword.length < 2) {
+	     list.style.display = "none";
+	     	return;
    }
 
    debounce = setTimeout(() => {
@@ -589,8 +591,10 @@ function attachUniversityAutocomplete(type) {
            data.forEach(u => {
              const li = document.createElement("li");
              li.textContent = u.schoolName;
-             li.addEventListener("click", () => {
+             
+             li.addEventListener("pointerdown", () => {
                input.value = u.schoolName;
+               ignoreNextInput = true;
                list.innerHTML = "";
                list.style.display = "none";
              });
@@ -603,12 +607,66 @@ function attachUniversityAutocomplete(type) {
    }, 150);
  });
 
- document.addEventListener("click", (e) => {
-   if (!input.contains(e.target) && !list.contains(e.target)) {
-     list.style.display = "none";
-   }
- });
 }
+ // 전공 자동완성 함수
+ function attachMajorAutocomplete() {
+	  const input = document.getElementById("majorNameInput");
+	  const list = document.getElementById("majorSuggestions");
+	  let timer;
+
+	  input.addEventListener("input", function () {
+
+		  if (ignoreNextInput) {
+		      ignoreNextInput = false;
+		      return;
+		  }
+		  
+	    const keyword = this.value.trim();
+	    clearTimeout(timer);
+	    if (keyword.length < 2) {
+	      list.style.display = "none";
+	      return;
+	    }
+
+	    timer = setTimeout(() => {
+	      fetch("/api/major/search?keyword=" + encodeURIComponent(keyword))
+	        .then(res => res.json())
+	        .then(data => {
+	          list.innerHTML = "";
+	          if (data.length > 0) {
+	            list.style.display = "block";
+	            data.forEach(item => {
+	              const li = document.createElement("li");
+	              li.textContent = item.majorName;
+	              li.addEventListener("pointerdown", () => {
+	                input.value = item.majorName;
+	                ignoreNextInput = true;
+	                list.innerHTML = "";
+	                list.style.display = "none";
+	              });
+	              list.appendChild(li);
+	            });
+	          } else {
+	            list.style.display = "none";
+	          }
+	        });
+	    }, 150);
+	  });
+}
+ 
+document.addEventListener("click", function (e) {
+	const allInputs = [
+		{ input: document.getElementById("schoolNameInput"), list: document.getElementById("schoolSuggestions") },
+		{ input: document.getElementById("univNameInput"), list: document.getElementById("univSuggestions") },
+		{ input: document.getElementById("majorNameInput"), list: document.getElementById("majorSuggestions") },
+	];
+	
+	allInputs.forEach(({ input, list }) => {
+	      if (input && list && !input.contains(e.target) && !list.contains(e.target)) {
+	        list.style.display = "none";
+		}
+	});
+});
 
 </script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-3fp9tS8p9A2Mq7Qz+S8jfwD+xdgu9T+O+NRZz8N5eA8=" crossorigin="anonymous"></script>
