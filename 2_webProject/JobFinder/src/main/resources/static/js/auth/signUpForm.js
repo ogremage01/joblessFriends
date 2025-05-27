@@ -38,7 +38,7 @@ $("#navCompany").click(function(event) {
 					</div>
 					
 					<div class="inputGroup">
-						<input id="brn" name="brn" type="text" onblur="noBlankBrnFnc();" value="" placeholder="사업자 등록번호 ('-'포함)" >
+						<input id="brn" name="brn" type="text" onblur="noBlankBrnFnc();" value="" placeholder="사업자 등록번호" >
 						<div id="brnStatus" class="valiCheckText"></div>
 					</div>
 					
@@ -48,7 +48,7 @@ $("#navCompany").click(function(event) {
 					</div>
 					
 					<div class="inputGroup">
-						<input id="tel" name="tel" type="text" onblur="noBlankTelFnc();" value="" placeholder="연락처 ('-'포함)">
+						<input id="tel" name="tel" type="text" onblur="noBlankTelFnc();" value="" placeholder="연락처">
 						<div id="telStatus" class="valiCheckText"></div>
 					</div>
 					
@@ -212,7 +212,7 @@ function sameCheckPwd(){
 }
 
 // -----------공백 체크-----------
-
+// 기업명
 function noBlankNameFnc() {
 	var value = $("#companyName").val();
 	
@@ -230,9 +230,24 @@ function noBlankNameFnc() {
 	}
 }
 
+// 사업자번호 숫자만 입력, 하이픈 자동 삽입
+$(document).on('input', '#brn', function() {
+	let value = $(this).val().replace(/\D/g, ''); // 숫자만 추출
+
+	if (value.length > 3 && value.length <= 5) {
+		value = value.slice(0, 3) + '-' + value.slice(3);
+	} else if (value.length > 5) {
+		value = value.slice(0, 3) + '-' + value.slice(3, 5) + '-' + value.slice(5, 10);
+	}
+
+	$(this).val(value);
+});
+
+// 사업자번호 유효성 검사 // onblur
 function noBlankBrnFnc() {
 	var value = $("#brn").val();
 	
+	// 공백체크
 	if(value == ""){
 		brnPass = false;
 		var noBlank = "사업자 등록번호를 입력해주세요.";
@@ -243,10 +258,25 @@ function noBlankBrnFnc() {
 	}else{
 		$("#brnStatus").html("");
 		$("#brn").removeAttr("style");
+	}
+	
+	// 형식체크
+	const isValid = /^\d{3}-\d{2}-\d{5}$/.test(value);
+	if (!isValid) {
+		brnPass = false;
+		var brnStatusStr = "형식이 올바르지 않습니다. xxx-xx-xxxxx 형식으로 입력하세요.";
+		$("#brnStatus").html(brnStatusStr);
+		$("#brn").css("border", "1px solid red");
+		askConfirm("사업자 등록번호를");
+		return;
+	} else {
+		$("#brnStatus").html("");
+		$("#brn").removeAttr("style");
 		brnPass = true;
 	}
 }
 
+// 담당자 명
 function noBlankRepFnc() {
 	var value = $("#representative").val();
 	
@@ -264,9 +294,46 @@ function noBlankRepFnc() {
 	}
 }
 
+// 연락처 하이픈 자동 삽입
+$(document).on('input', '#tel', function() {
+	let raw = $(this).val().replace(/\D/g, ''); // 숫자만 추출
+	let formatted = '';
+
+	if (raw.startsWith('02')) {
+		// 2자리 지역번호 (서울)
+		if (raw.length <= 2) {
+			formatted = raw;
+		} else if (raw.length <= 5) {
+			formatted = raw.slice(0, 2) + '-' + raw.slice(2);
+		} else {
+			const mid = raw.length - 4 >= 3 ? raw.length - 4 : raw.length - 3;
+			formatted = raw.slice(0, 2) + '-' + raw.slice(2, mid) + '-' + raw.slice(mid);
+		}
+	}
+	else if (/^0\d{2}/.test(raw)) {
+		// 3자리 지역번호 또는 휴대폰 번호
+		if (raw.length <= 3) {
+			formatted = raw;
+		} else if (raw.length <= 7) {
+			formatted = raw.slice(0, 3) + '-' + raw.slice(3);
+		} else {
+			const mid = raw.length - 4 >= 3 ? raw.length - 4 : raw.length - 3;
+			formatted = raw.slice(0, 3) + '-' + raw.slice(3, mid) + '-' + raw.slice(mid);
+		}
+	}
+	else {
+		// 그 외 번호는 그냥 숫자만 보여주기
+		formatted = raw;
+	}
+
+	$(this).val(formatted);
+});
+
+// 연락처 유효성 검사
 function noBlankTelFnc() {
 	var value = $("#tel").val();
 	
+	// 공백 체크
 	if(value == ""){
 		telPass = false;
 		var noBlank = "연락처를 입력해주세요.";
@@ -275,6 +342,20 @@ function noBlankTelFnc() {
 		askConfirm("연락처를");
 		return;
 	}else{
+		$("#telStatus").html("");
+		$("#tel").removeAttr("style");
+	}
+	
+	// 한국 전화번호 정규식 (02, 0505, 010 등)
+	const phoneRegex = /^(0\d{1,3})-(\d{3,4})-(\d{4})$/;
+
+	if (!phoneRegex.test(value)) {
+		telPass = false;
+		var telStatusStr = "유효하지 않은 전화번호입니다. 예: 010-1234-5678";
+		$("#telStatus").html(telStatusStr);
+		$("#tel").css("border", "1px solid red");
+		askConfirm("연락처를");
+	} else {
 		$("#telStatus").html("");
 		$("#tel").removeAttr("style");
 		telPass = true;

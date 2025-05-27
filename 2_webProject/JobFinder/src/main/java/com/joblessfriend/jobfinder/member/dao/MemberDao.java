@@ -35,5 +35,7 @@ public interface MemberDao {
 
 	MemberVo googleMemberExist(String email);
 
+	int updateNickname(String nickname, int memberId);
+
 
 }

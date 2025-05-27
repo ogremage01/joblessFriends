@@ -19,4 +19,6 @@ public interface MemberService {
 
 	String generateUniqueNickname();
 
+	int updateNickname(String nickname, int memberId);
+
 }

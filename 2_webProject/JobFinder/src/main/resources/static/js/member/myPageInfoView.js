@@ -240,22 +240,12 @@ async function valiCheckPwdDel(){
     }
 }
 
+///////////////////모달 팝업
 
-// 스크롤 비활성화
-function disableScroll() {
-    // body 요소의 overflow를 hidden으로 변경하여 스크롤 비활성화
-    document.body.style.overflow = 'hidden';
-}
-
-// 스크롤 활성화
-function enableScroll() {
-	// body 요소의 overflow를 다시 visible로 변경하여 스크롤 활성화
-	document.body.style.overflow = 'visible';
-}
-
-// 모달 열기
-$("#modalOpen").click(async function(){
+// 탈퇴 모달 열기
+$("#delModalOpen").click(async function(){
 	
+	//일반 회원일 경우 비밀번호 체크
 	if($("#provider").val() == 'normal'){
 		var pwd = $("#passwordDel").val();
 		
@@ -272,24 +262,17 @@ $("#modalOpen").click(async function(){
 		if(!delPwdPass) return;
 	}
 	
+	$(".popTitle").html("정말 탈퇴하시겠어요?");
+	$(".popText").html("회원탈퇴 시 관련된 정보는 모두 삭제되며<br>복구가 불가능합니다.");
+	$(".popCancel").html("취소");
+	$(".popSubmit").html("탈퇴하기");
+	$(".popSubmit").addClass("deleteId");
+
 	$("#popup").css('display','flex').hide().fadeIn();
-	disableScroll();
 });
 
-// 모달팝업 닫기
-function modalClose(){
-	$("#popup").fadeOut(); //페이드아웃 효과
-}
-
-// 팝업에서 모달 닫기
-$(".popCancel").click(function(){
-	//모달 닫기 함수 호출
-	modalClose();
-	enableScroll();
-});
-
-// 팝업에서 탈퇴하기 버튼
-$(".popSubmit").click(function(){
+// 탈퇴 버튼
+$(".popBtns").on("click", ".deleteId", function() {
 	var memberId = $("#memberId").val();
 	
 	$.ajax({
@@ -308,8 +291,104 @@ $(".popSubmit").click(function(){
 				alert("서버 오류가 발생했습니다.");
 				location.reload();
 			},
-			
 		}); // ajax end	
-	
 });
+
+// 닉네임 변경 모달 열기
+$("#nickChangeBtn").click(async function(){
+	
+	//팝업 내용 넣기
+	$(".popTitle").html("닉네임 변경");
+	$(".popText").html("변경할 닉네임을 입력하세요.<span id='charCount'>(0/15)</span>");
+	var userNickname = $("#userNickname").html();
+	var inputHtml =`<input id="nicknameInput" type="text" value="${userNickname}" maxlength="15">`;
+	$(".popContent").append(inputHtml);
+	$(".popCancel").html("취소");
+	$(".popSubmit").html("변경하기");
+	$(".popSubmit").addClass("changeNick");
+	//열기
+	$("#popup").css('display','flex').hide().fadeIn();
+});
+
+// 닉네임 유효성 검사
+$(".popContent").on("input", "#nicknameInput", function() {
+	
+	var inputValue = $(this).val().replace(/\s/g, ''); // 공백 제거
+	$(this).val(inputValue);
+	var inputLength = inputValue.length;  // 현재 입력된 글자 수
+	var maxLength = 15;  // 최대 글자 수
+	
+	// 글자 수 초과하면 더 이상 입력되지 않음
+	if (inputLength > maxLength) {
+		$(this).val(inputValue.substring(0, maxLength));  // 15자 초과 시 잘라냄
+		inputLength = mexLength;
+	}
+
+	// 글자 수 표시
+	$("#charCount").text("(" + inputLength + "/" + maxLength + ")");
+
+	// 글자 수가 최대에 도달하면 색상 변경
+	if (inputLength >= maxLength) {
+		$("#charCount").addClass("maxReached");  // 빨간색으로 변경
+	} else {
+		$("#charCount").removeClass("maxReached");  // 색상 원래대로
+	}
+});
+
+// 닉네임 변경 버튼
+$(".popBtns").on("click", ".changeNick", function() {
+	var nicknameInput = $("#nicknameInput").val();
+	if(nicknameInput==""){
+		alert("입력된 닉네임이 없습니다.");
+		return;
+	}
+	var memberId = $("#memberId").val();
+	$.ajax({
+			url: '/member/nickchange',
+			method: 'POST',
+			data: { nickname: nicknameInput, memberId: memberId },
+			success: function(result) {
+				if (result == 1) {
+					alert("닉네임이 변경되었습니다.");
+					location.reload();
+				} else {
+					alert("닉네임 변경에 실패했습니다.");
+				}
+			},
+			error: function() {
+				alert("서버 오류가 발생했습니다.");
+				location.reload();
+			},
+		}); // ajax end	
+});
+
+// 모달팝업 닫기
+function modalClose(){
+	$("#popup").fadeOut(400, function() {  // 400ms로 페이드아웃, 완료 후 콜백 실행
+	       // 모달 닫기 후 내용 초기화
+	       $(".popTitle").html("");
+	       $(".popText").html("");
+	       $(".popCancel").html("");
+	       $(".popSubmit").html("");
+		   
+		   if ($(".popSubmit").hasClass("deleteId")) {
+		       $(".popSubmit").removeClass("deleteId");
+		   }
+		   if ($(".popSubmit").hasClass("changeNick")) {
+		       $(".popSubmit").removeClass("changeNick");
+		   }
+		   
+		   if ($("#nicknameInput").length) {
+		       $("#nicknameInput").remove();
+		   }
+	   });
+}
+
+// 팝업에서 모달 닫기
+$(".popCancel").click(function(){
+	//모달 닫기 함수 호출
+	modalClose();
+});
+
+
 

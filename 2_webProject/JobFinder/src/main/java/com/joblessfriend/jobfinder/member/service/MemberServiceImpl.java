@@ -110,5 +110,12 @@ public class MemberServiceImpl implements MemberService {
 				
 		return memberDao.updatePassword(pwdEncoder, memberId);
 	}
+	
+	// 닉네임 변경
+	@Override
+	public int updateNickname(String nickname, int memberId) {
+		// TODO Auto-generated method stub
+		return memberDao.updateNickname(nickname, memberId);
+	}
 
 }

@@ -121,4 +121,19 @@ public class MemberController {
 		
 		return ResponseEntity.ok("찜삭제");
 	}
+	
+	// 닉네임 변경
+	@PostMapping("/nickchange")
+	public ResponseEntity<Integer> nickchange(@RequestParam String nickname, @RequestParam int memberId, HttpSession session){
+		int result = memberService.updateNickname(nickname, memberId);
+		if(result == 1) {
+			logger.info("닉네임 변경 성공");
+			MemberVo memberVo = (MemberVo)session.getAttribute("userLogin");
+			memberVo.setNickname(nickname);
+			session.setAttribute("userLogin", memberVo);
+		}else {
+			logger.info("닉네임 변경 실패");
+		}
+		return ResponseEntity.ok(result);
+	}
 }
