@@ -75,7 +75,7 @@
                     <div class="dropdown-content education-dropdown-content">
                         <label><input type="checkbox" name="education" value="학력무관"> 학력무관</label>
                         <label><input type="checkbox" name="education" value="대학교 졸업(4년)"> 대학교 졸업(4년)</label>
-                        <label><input type="checkbox" name="education" value="대학교 졸업(2,3년)"> 대학 졸업(2,3년)</label>
+                        <label><input type="checkbox" name="education" value="대학 졸업(2,3년)"> 대학 졸업(2,3년)</label>
                         <label><input type="checkbox" name="education" value="대학원 석사졸업"> 대학원 석사졸업</label>
                         <label><input type="checkbox" name="education" value="대학원 박사졸업"> 대학원 박사졸업</label>
                         <label><input type="checkbox" name="education" value="고등학교 졸업"> 고등학교 졸업</label>
