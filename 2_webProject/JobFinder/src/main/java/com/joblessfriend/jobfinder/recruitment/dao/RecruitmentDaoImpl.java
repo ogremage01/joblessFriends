@@ -91,6 +91,26 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
         sqlSession.update(namespace + ".updateJobPostIdByTempKey", paramMap);
     }
 
+    @Override
+    public void updateRecruitment(RecruitmentVo recruitmentVo) {
+        sqlSession.update(namespace+".updateRecruitment", recruitmentVo);
+    }
+
+    @Override
+    public void deleteTagsByJobPostId(int jobPostId) {
+        sqlSession.delete(namespace+".deleteTagsByJobPostId", jobPostId);
+    }
+
+    @Override
+    public void deleteWelfareByJobPostId(int jobPostId) {
+        sqlSession.delete(namespace+".deleteWelfareByJobPostId",jobPostId);
+    }
+
+    @Override
+    public void increaseViews(int jobPostId) {
+        sqlSession.update(namespace+".increaseViews", jobPostId);
+    }
+
     //필터카운팅
     @Override
     public int countFilteredPosts(FilterRequestVo filterRequestVo) {

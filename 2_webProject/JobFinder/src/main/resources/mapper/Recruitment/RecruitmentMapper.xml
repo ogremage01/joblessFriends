@@ -74,7 +74,8 @@
             j.job_name AS jobName,
             jp.salary AS salary,
             jp.work_hours AS workHours,
-            jp.template_type AS templateType
+            jp.template_type AS templateType,
+            jp.job_img as jobImg
         FROM JOB_POST jp
                  JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
                  JOIN JOB j ON jp.job_id = j.job_id
@@ -93,7 +94,11 @@
             JOB_POST_ID = #{jobPostId}
     </select>
 
-
+    <update id="increaseViews" parameterType="int">
+        UPDATE JOB_POST
+        SET VIEWS = VIEWS + 1
+        WHERE JOB_POST_ID = #{jobPostId}
+    </update>
 <!--채용공고 인서트 -->
     <insert id="insertRecruitment" parameterType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
         <selectKey keyProperty="jobPostId"
@@ -155,17 +160,7 @@
     </insert>
 
 <!--복리후생 -->
-    <insert id="insertJobPostWelfare" parameterType="com.joblessfriend.jobfinder.recruitment.domain.WelfareVo">
-        INSERT INTO JOB_POST_WELFARE (
-            JOB_WELFARE_ID,
-            JOB_POST_ID,
-            BENEFIT_TEXT
-        ) VALUES (
-                     SEQ_JOB_WELFARE_ID.NEXTVAL,
-                     #{jobPostId},
-                     #{benefitText}
-                 )
-    </insert>
+
 
     <insert id="insertJobPostFile" parameterType="com.joblessfriend.jobfinder.recruitment.domain.JobPostFileVo">
         INSERT INTO JOB_POST_FILE (
@@ -196,7 +191,48 @@
         WHERE TEMP_KEY = #{tempKey}
     </update>
 
+<!--채용공고 업데이트 라인 -->
 
+    <update id="updateRecruitment" parameterType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
+        UPDATE JOB_POST
+        SET
+            TITLE = #{title},
+            CONTENT = #{content},
+            SALARY = #{salary},
+            WORK_HOURS = #{workHours},
+            JOB_ID = #{jobId},
+            JOB_GROUP_ID = #{jobGroupId},
+            JOB_IMG = #{jobImg,jdbcType=VARCHAR},
+            CAREER_TYPE = #{careerType},
+            EDUCATION = #{education},
+            TEMPLATE_TYPE = #{templateType},
+            START_DATE = #{startDate, jdbcType=DATE},
+            END_DATE = #{endDate, jdbcType=DATE}
+        WHERE JOB_POST_ID = #{jobPostId}
+    </update>
+<!--    삭제후 재등록 -->
+    <delete id="deleteTagsByJobPostId" parameterType="int">
+        DELETE FROM JOB_POST_TAG WHERE JOB_POST = #{jobPostId}
+    </delete>
+
+
+
+    <delete id="deleteWelfareByJobPostId" parameterType="int">
+        DELETE FROM JOB_POST_WELFARE WHERE JOB_POST_ID = #{jobPostId}
+    </delete>
+
+
+    <insert id="insertJobPostWelfare" parameterType="com.joblessfriend.jobfinder.recruitment.domain.WelfareVo">
+        INSERT INTO JOB_POST_WELFARE (
+            JOB_WELFARE_ID,
+            JOB_POST_ID,
+            BENEFIT_TEXT
+        ) VALUES (
+                     SEQ_JOB_WELFARE_ID.NEXTVAL,
+                     #{jobPostId},
+                     #{benefitText}
+                 )
+    </insert>
 
 
 <!--    필터 카운팅 -->

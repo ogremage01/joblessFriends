@@ -32,6 +32,8 @@
 
 
         <form id="updateForm" action="${pageContext.request.contextPath}/Recruitment/update" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="tempKey" value="${recruitmentVo.tempKey}" />
+            <input type="hidden" name="jobPostId" value="${recruitmentVo.jobPostId}" />
             <div class="InsertMain">
 
                 <!-- 제목 -->
@@ -51,6 +53,17 @@
                         <button type="button" id="removeFileBtn"
                                 style="background: none; border: none; color: red; font-size: 14px; cursor: pointer;">✕</button>
                     </div>
+<%--                    파일 이미지  --%>
+                    <c:if test="${not empty recruitmentVo.jobImg}">
+                        <script>
+                            $(function () {
+                                const jobImgPath = "${recruitmentVo.jobImg}";
+                                const fileName = jobImgPath.substring(jobImgPath.lastIndexOf('/') + 1);
+                                $('#fileNameText').text(fileName);
+                                $('#fileInfoBox').show();
+                            });
+                        </script>
+                    </c:if>
                 </div>
 
 
@@ -209,7 +222,8 @@
 
                 <!-- 버튼 -->
                 <div class="form-footer">
-                    <button type="submit" class="submit-btn">작성완료</button>
+                    <button type="button" class="cancel-btn">수정취소</button>
+                    <button type="submit" class="submit-btn">수정완료</button>
                 </div>
             </div>
         </form>
@@ -269,10 +283,10 @@
     });
 
     $(function () {
-        $('#insertForm').append(`<input type="hidden" name="tempKey" value="${tempKey}">`);
+        $('#updateForm').append(`<input type="hidden" name="tempKey" value="${tempKey}">`);
     });
 
-    $('#insertForm').on('submit', function () {
+    $('#updateForm ').on('submit', function () {
         const htmlContent = editor.getHTML();
         $('#hiddenContent').val(htmlContent);
 

@@ -88,6 +88,48 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             recruitmentDao.updateJobPostIdByTempKey( recruitmentVo.getJobPostId(), recruitmentVo.getTempKey());
         }
     }
+    //업데이트라인 //
+    @Override
+    @Transactional
+    public void updateRecruitment(RecruitmentVo vo, List<Integer> tagList, List<WelfareVo> welfareList, String tempKey){
+        // 1. 메인 테이블 UPDATE
+        recruitmentDao.updateRecruitment(vo);
+
+        // 2. 기존 태그 삭제 후 다시 삽입
+        recruitmentDao.deleteTagsByJobPostId(vo.getJobPostId());
+        recruitmentDao.insertJobPostTag(vo, tagList);
+
+        // 3. 기존 복리후생 삭제 후 다시 삽입
+        recruitmentDao.deleteWelfareByJobPostId(vo.getJobPostId());
+        for (WelfareVo welfare : welfareList) {
+            welfare.setJobPostId(vo.getJobPostId());
+            recruitmentDao.insertJobPostWelfare(welfare);
+        }
+
+        // 4. 이미지가 새로 업로드되어 tempKey가 있는 경우, 파일 테이블 갱신
+        if (tempKey != null && !tempKey.isBlank()) {
+            recruitmentDao.updateJobPostIdByTempKey(vo.getJobPostId(), tempKey);
+        }
+
+    }
+
+
+
+    @Override
+    public void deleteTagsByJobPostId(int jobPostId) {
+        recruitmentDao.deleteTagsByJobPostId(jobPostId);
+    }
+
+    @Override
+    public void deleteWelfareByJobPostId(int jobPostId) {
+        recruitmentDao.deleteWelfareByJobPostId(jobPostId);
+    }
+
+    @Override
+    public void increaseViews(int jobPostId) {
+        recruitmentDao.increaseViews(jobPostId);
+    }
+
     @Override
     public void insertJobPostFile(JobPostFileVo fileVo) {
         recruitmentDao.insertJobPostFile(fileVo);

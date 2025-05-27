@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <link rel="stylesheet" href="/css/common/common.css">
+
     <link rel="stylesheet" href="/css/recruitment/recruitmentInsert.css">
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
@@ -192,7 +193,10 @@
 
                 <!-- 버튼 -->
                 <div class="form-footer">
+
+                    <button type="button" class="cancel-btn">작성취소</button>
                     <button type="submit" class="submit-btn">작성완료</button>
+
                 </div>
             </div>
         </form>
@@ -201,9 +205,6 @@
 
     </div>
 </div>
-
-
-
 
 
 <jsp:include page="../common/footer.jsp"/>
