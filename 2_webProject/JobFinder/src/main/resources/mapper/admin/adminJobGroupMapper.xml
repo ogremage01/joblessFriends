@@ -22,7 +22,7 @@
 		    ) B
 		    WHERE ROWNUM &lt;= #{endRow}
 		  )
-		  WHERE RN &gt; #{startRow}
+		  WHERE RN &gt;= #{startRow}
 		</select>
 
 		
