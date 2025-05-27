@@ -8,7 +8,7 @@ import com.joblessfriend.jobfinder.chat.event.ChatMessageSavedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -32,7 +32,7 @@ public class ChatMessageEventListener {
                     .roomId(vo.getRoomId())
                     .sender(vo.getSender())
                     .message(vo.getMessage())
-                    .sendTime(vo.getSendTime() != null ? vo.getSendTime() : LocalDateTime.now())  // null 방지
+                    .sendTime(vo.getSendTime() != null ? vo.getSendTime() : new Date()) 	 // null 방지
                     .build();
 
             chatMessageRepository.save(entity);

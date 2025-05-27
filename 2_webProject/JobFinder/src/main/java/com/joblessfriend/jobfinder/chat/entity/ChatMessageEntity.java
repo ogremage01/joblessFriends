@@ -2,7 +2,7 @@ package com.joblessfriend.jobfinder.chat.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "chat_message")
@@ -27,5 +27,8 @@ public class ChatMessageEntity {
     private String message;
 
     @Column(name = "send_time", nullable = false)
-    private LocalDateTime sendTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date sendTime;
+
+	
 }

@@ -69,6 +69,36 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			
+				<div id='pageNation'>
+				<c:if test="${pagination.totalPageCount > 0}">
+				<nav aria-label="...">
+				
+					<ul class="pagination justify-content-center">
+						<li class="page-item ${searchVo.page==1?'disabled':''}">
+							<a class="page-link" href="./recruitment?page=${searchVo.page-1}&keyword=${searchVo.keyword}">Previous</a>
+						</li>
+						<c:forEach begin="${pagination.startPage}" var="i" 
+							end="${pagination.endPage}">	
+							<li class="page-item ${searchVo.page==i?'active':''}">
+							<a class="page-link" href="./recruitment?page=${i}&keyword=${searchVo.keyword}">${i}</a></li>
+						</c:forEach>
+
+						
+						<li class="page-item"><a
+							class="page-link ${searchVo.page==pagination.totalPageCount? 'disabled':''}" href="./recruitment?page=${searchVo.page+1}&keyword=${searchVo.keyword}">Next</a></li>
+					</ul>
+				
+				</nav>
+				</c:if>
+			</div>
+
+			<div id="searchContainer" class="d-flex justify-content-center my-4">
+   				 <input id="recruitmentKeyword" type="text" placeholder="공고제목" class="form-control me-2" style="max-width: 300px;" value="${searchVo.keyword}">
+  				  <button id="recruitmentSearchBtn" class="btn btn-light">검색</button>
+			</div>
+
+			
 		</div>
 
 		<!-- 본문영역 -->
@@ -131,6 +161,27 @@
 	    deleteRecruitments(jobPostIds);
 	});
 	
+	const searchRecruitmentBtn = document.getElementById("recruitmentSearchBtn");
+
+	searchRecruitmentBtn.addEventListener("click", function(e){
+	    const recruitmentKeywordVal = document.getElementById("recruitmentKeyword").value.trim();
+	    
+	    // 검색어가 있을 때와 없을 때 모두 처리
+	    if (recruitmentKeywordVal !== "") {
+	    	let url = '/admin/recruitment?page=1&keyword=' + recruitmentKeywordVal
+	        location.href = url;
+	    } else {
+	        // 검색어가 없으면 전체 목록으로
+	        location.href = `/admin/recruitment?page=1`;
+	    }
+	});
+
+	// Enter 키 이벤트 추가
+	document.getElementById("recruitmentKeyword").addEventListener("keypress", function(e) {
+	    if (e.key === "Enter") {
+	        searchRecruitmentBtn.click();
+	    }
+	});
 	
 	
 

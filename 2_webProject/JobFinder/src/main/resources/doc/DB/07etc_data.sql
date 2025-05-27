@@ -8,7 +8,7 @@ INSERT INTO STATE (STATE_ID, STATE_NAME) VALUES (state_id_seq.nextval, '불합�
 
 --태그
 INSERT INTO TAG (TAG_ID, TAG_NAME, CREATE_AT, MODIFIED_AT, JOB_GROUP_ID, JOB_ID) 
-VALUES(tag_id_seq.nextval, sysdate, sysdate, 'JSP', 6, 85);
+VALUES(tag_id_seq.nextval, sysdate, sysdate, 'JSP', 6, 5);
 
 --이력서
 --INSERT INTO RESUME (RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL) 
@@ -77,76 +77,6 @@ VALUES (REPLY_ID_SEQ.nextval, 1, 2, '그러게요!', sysdate, sysdate);
 
 
 
---채용공고
-
-INSERT INTO JOB_POST (
-    Job_Post_ID, COMPANY_ID, Title, Content, Salary, Work_Hours,
-    Job_Group_ID, Job_ID, Views, Job_Img,
-    Career_Type, Education, Start_Date, End_Date,
-    Is_Continuous, Max_Applicants, Current_Applicants
-) VALUES (
-             JOB_POST_ID_SEQ.NEXTVAL, 50, '백엔드 개발자 채용',
-             '당사 백엔드 개발팀에서 새로운 인재를 찾습니다. Java, Spring 경험 필수.',
-             '4500', '주5일(월~금)',
-             6, 85, 0, '/img/Amorepacific.jpg',
-             '신입', '대학교 졸업(4년)',
-             TO_DATE('2025-05-10', 'YYYY-MM-DD'),
-             TO_DATE('2025-05-31', 'YYYY-MM-DD'),
-             0, 100, 0
-         );
-
-INSERT INTO JOB_POST (
-    Job_Post_ID, COMPANY_ID, Title, Content, Salary, Work_Hours,
-    Job_Group_ID, Job_ID, Views, Job_Img,
-    Career_Type, Education, Start_Date, End_Date,
-    Is_Continuous, Max_Applicants, Current_Applicants
-) VALUES (
-             JOB_POST_ID_SEQ.NEXTVAL, 2, '경영기획 경력직 채용',
-             'SK하이닉스 경영기획팀에서 3~5년 경력직을 찾습니다.',
-             '6000', '주5일(월~금)',
-             1, 2, 0, '/img/SK.jpg',
-             '3~5년', '대학교 졸업(4년)',
-             TO_DATE('2025-05-15', 'YYYY-MM-DD'),
-             TO_DATE('2025-06-10', 'YYYY-MM-DD'),
-             0, 100, 0
-         );
-
-INSERT INTO JOB_POST (
-    Job_Post_ID, COMPANY_ID, Title, Content, Salary, Work_Hours,
-    Job_Group_ID, Job_ID, Views, Job_Img,
-    Career_Type, Education, Start_Date, End_Date,
-    Is_Continuous, Max_Applicants, Current_Applicants
-) VALUES (
-             JOB_POST_ID_SEQ.NEXTVAL, 9, '법무팀 변호사 채용',
-             'LG화학 법무팀에서 변호사 경력직 채용 중입니다. 변호사 자격 필수.',
-             '8500', '주5일(월~금)',
-             5, 9, 0, '/img/LG_Chemical.jpg',
-             '5년 이상', '대학원 박사졸업',
-             TO_DATE('2025-05-20', 'YYYY-MM-DD'),
-             TO_DATE('2025-06-20', 'YYYY-MM-DD'),
-             0, 100, 0
-         );
-
-INSERT INTO JOB_POST (
-    Job_Post_ID, COMPANY_ID, Title, Content, Salary, Work_Hours,
-    Job_Group_ID, Job_ID, Views, Job_Img,
-    Career_Type, Education, Start_Date, End_Date,
-    Is_Continuous, Max_Applicants, Current_Applicants
-) VALUES (
-             JOB_POST_ID_SEQ.NEXTVAL, 10, 'POSCO AI 연구원 모집',
-             '포스코 AI 연구소에서 연구원을 찾습니다. AI, 머신러닝 경험자 우대.',
-             '7000', '자율출퇴근',
-             17, 17, 0, '/img/POSCO_INTERNATIONAL.jpg',
-             '3~5년', '대학원 석사졸업',
-             TO_DATE('2025-05-18', 'YYYY-MM-DD'),
-             TO_DATE('2025-06-15', 'YYYY-MM-DD'),
-             0, 100, 0
-         );
-
-COMMIT;
-
-
-commit;
 
 
 
@@ -208,38 +138,6 @@ SELECT *
 FROM RESUME 
 WHERE MEMBER_ID = 1;
 
-
-
-BEGIN
-    FOR i IN 1..5 LOOP
-        INSERT INTO JOB_POST (
-            Job_Post_ID, COMPANY_ID, Title, Content, Salary, Work_Hours,
-            Job_Group_ID, Job_ID, Views, Job_Img,
-            Career_Type, Education, Start_Date, End_Date,
-            Is_Continuous, Max_Applicants, Current_Applicants
-        ) VALUES (
-            JOB_POST_ID_SEQ.NEXTVAL,
-            50,
-            '백엔드 개발자 채용 ' || i,
-            '당사 백엔드 개발팀에서 새로운 인재를 찾습니다. Java, Spring 경험 필수. [지원번호: ' || i || ']',
-            TO_CHAR(4000 + MOD(i, 10) * 100), -- 급여 4000~4900 랜덤 생성
-            '주5일(월~금)',
-            6,
-            85,
-            0,
-            '/img/Amorepacific.jpg',
-            '신입',
-            '대학교 졸업(4년)',
-            TO_DATE('2025-05-10', 'YYYY-MM-DD'),
-            TO_DATE('2025-05-31', 'YYYY-MM-DD'),
-            0,
-            100,
-            0
-        );
-    END LOOP;
-    COMMIT;
-END;
-/
 
 
 INSERT INTO CAREER_GRADE

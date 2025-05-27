@@ -15,6 +15,7 @@
 		flex-direction: column;
 		cursor: pointer;
 		user-select: none;
+		width: 280px;
 	}
 	
 	.jobImg {
@@ -55,33 +56,45 @@
 		text-align: center;
 		
 		color: white;
-		background-color: rgba(0, 0, 0, 0.5);
+		background-color: rgba(0, 0, 0, 0.6);
 		border-radius: 5px;
 	}
 	
 	.skillTagsWrap {
 		position: absolute;
 		bottom: 8px;
-		left: 8px;
-		
+		left: 10px;
 		display: flex;
-		flex-wrap: wrap;
+		flex-wrap: nowrap;
 		gap: 4px;
+		width: 260px;
+		overflow: hidden;
 	}
 	
 	.jobSkillTag {
+		flex: 0 1 auto;
+		min-width: 0;
+		max-width: 100%;
 		font-size: 12px;
 		padding: 3px 8px;
 		color: white;
-		background-color: rgb(0, 0, 0, 0.5);
-		border-radius: 15px;
+		background-color: rgb(0, 0, 0, 0.6);
+		border-radius: 5px;
+		
+		display: flex;
+		align-items: center;
+		
+		 /* 텍스트 말줄임 */
+	    white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
 	}
 	
 	.jobSkillTag span{
-		display: inline-block;
-		max-width:70px;
-		overflow:hidden;
-		text-overflow:ellipsis
+		min-width: 0;
+		overflow: hidden;
+		text-overflow:ellipsis;
+		white-space: nowrap;
 	}
 
 	
@@ -90,6 +103,11 @@
 		font-weight: bold;
 		margin-top: 10px;
 		line-height: 35px;
+		
+		display: inline-block;
+		white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
 	}
 
 	.jobInfoItem span{
@@ -124,5 +142,36 @@
 	.chat-floating-btn i {
 		color: white;
 		font-size: 24px;
+	}
+
+	/* 안읽은 메시지 배지 스타일 */
+	.unread-badge {
+		position: absolute;
+		top: -5px;
+		right: -5px;
+		width: 20px;
+		height: 20px;
+		background-color: #ff4444;
+		color: white;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 14px;
+		font-weight: bold;
+		border: 2px solid white;
+		animation: pulse 2s infinite;
+	}
+
+	@keyframes pulse {
+		0% {
+			transform: scale(1);
+		}
+		50% {
+			transform: scale(1.1);
+		}
+		100% {
+			transform: scale(1);
+		}
 	}
        

@@ -202,7 +202,7 @@
             
             const chatMessages = document.getElementById('chatMessages');
             const div = document.createElement('div');
-            const sender = data.sender || "익명";
+            const sender = data.senderDisplayName || "익명";
             
             div.className = 'message ' + (sender === companyName ? 'message-company' : 'message-admin');
             div.innerHTML = 
@@ -214,14 +214,33 @@
         }
 
         // 페이지 로드 시 WebSocket 연결
-        window.addEventListener('load', connectWebSocket);
-
+            window.addEventListener('load', () => {
+            loadPreviousMessages(roomId); // 기존 connectWebSocket() 호출 전 또는 후 아무 때나
+            connectWebSocket();
+        });
         // 페이지 언로드 시 WebSocket 정리
         window.addEventListener('beforeunload', () => {
             if (ws && ws.readyState === WebSocket.OPEN) {
                 ws.close(1000, "Page unloading");
             }
         });
+        
+        function loadPreviousMessages(roomId) {
+            fetch('./messages/'+roomId)
+                .then(res => {
+                    if (!res.ok) throw new Error('메시지 로드 실패');
+                    return res.json();
+                })
+                .then(messages => {
+                    messages.forEach(msg => appendMessage(msg));
+                    console.log(messages)
+                })
+                .catch(err => {
+                    console.error('이전 메시지 불러오기 오류:', err);
+                });
+        }
+
+
     </script>
 </body>
 </html> 

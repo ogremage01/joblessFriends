@@ -6,28 +6,30 @@
 
     <resultMap type="com.joblessfriend.jobfinder.resume.domain.CertificateVo" id="certificateResultMap">
         <id column="CERTIFICATE_ID" property="certificateId" />
-        <result column="RESUME_ID" property="resumeId" />
         <result column="CERTIFICATE_NAME" property="certificateName" />
-        <result column="ACQUISITION_DATE" property="acquisitionDate" javaType="java.util.Date" />
-        <result column="ISSUING_AUTHORITY" property="issuingAuthority" />        
+        <result column="ISSUING_AUTHORITY" property="issuingAuthority" />
+        <result column="IS_ACTIVE" property="isActive" /> 
     </resultMap>
     
-    
-    <select id="certificateSelectList" resultMap="certificateResultMap">
-        SELECT CERTIFICATE_ID, RESUME_ID, CERTIFICATE_NAME, ACQUISITION_DATE, ISSUING_AUTHORITY
+    <select id="certificateList" resultMap="certificateResultMap">
+        SELECT CERTIFICATE_ID, CERTIFICATE_NAME, ISSUING_AUTHORITY
         FROM CERTIFICATE
+    </select>
+    
+    <select id="certificateSelectListByResumeId" resultMap="certificateResultMap">
+        SELECT CERTIFICATE_RESUME_ID, CERTIFICATE_ID, CERTIFICATE_NAME, ACQUISITION_DATE, ISSUING_AUTHORITY
+        FROM CERTIFICATE_RESUME
         WHERE RESUME_ID=#{resumeId}
     </select>
-
+    
 	<insert id="certificateInsertOne">
-		INSERT INTO CERTIFICATE
-		(CERTIFICATE_ID, RESUME_ID, CERTIFICATE_NAME, ACQUISITION_DATE, ISSUING_AUTHORITY)
-		VALUES(CERTIFICATE_ID_SEQ.NEXTVAL, #{resumeId},#{certificateName},#{acquisitionDate},#{issuingAuthority})
+		INSERT INTO CERTIFICATE_RESUME
+		(CERTIFICATE_RESUME_ID, RESUME_ID, CERTIFICATE_ID, ACQUISITION_DATE)
+		VALUES(CERTIFICATE_RESUME_ID_SEQ.NEXTVAL, #{resumeId}, #{certificateId}, #{acquisitionDate})
 	</insert>
 	
 	<delete id="certificateDeleteOne" parameterType="map">
-		DELETE FROM CERTIFICATE
+		DELETE FROM CERTIFICATE_RESUME
         WHERE RESUME_ID=#{resumeId}
-        AND CERTIFICATE_ID=#{certificateId}
 	</delete>
 </mapper>

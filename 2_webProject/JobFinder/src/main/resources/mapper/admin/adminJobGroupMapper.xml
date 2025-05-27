@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<mapper namespace="com.joblessfriend.jobfinder.admin.dao.AdminJobGroupDao">
+	
+	<resultMap type="com.joblessfriend.jobfinder.jobGroup.domain.JobGroupVo" id="jobGroupResultMap">
+		<id column="JOB_GROUP_ID" property="jobGroupId"/>
+		<result column="JOB_GROUP_NAME" property="jobGroupName"/>
+	</resultMap>
+	
+		<select id="jobGroupSelectList" parameterType="com.joblessfriend.jobfinder.util.SearchVo" resultMap="jobGroupResultMap">
+		  SELECT *
+		  FROM (
+		    SELECT B.*, ROWNUM AS RN
+		    FROM (
+		      SELECT *
+		      FROM JOB_GROUP
+		      <if test="keyword != null and keyword != ''">
+		        WHERE UPPER(JOB_GROUP_NAME) LIKE UPPER('%' || #{keyword} || '%')
+		      </if>
+		      ORDER BY JOB_GROUP_ID DESC
+		    ) B
+		    WHERE ROWNUM &lt;= #{endRow}
+		  )
+		  WHERE RN &gt;= #{startRow}
+		</select>
+
+		
+		<select id="jobGroupCount" parameterType="com.joblessfriend.jobfinder.util.SearchVo" resultType="int">
+			SELECT COUNT(*)
+			FROM JOB_GROUP
+			<if test="keyword != null and keyword != ''">
+			WHERE UPPER(JOB_GROUP_NAME) LIKE UPPER('%' || #{keyword} || '%')
+			</if>
+		</select>
+		
+		<insert id="jobGroupInsert">
+			INSERT INTO JOB_GROUP
+			(JOB_GROUP_ID,JOB_GROUP_NAME)
+			VALUES(JOB_GROUP_ID_SEQ.NEXTVAL,#{jobGroupName})
+		</insert>
+
+	</mapper> 

@@ -31,6 +31,7 @@ public class IndexController {
 		// 1. 기본 SearchVo 생성 (recordSize = 8 기본값)
 		SearchVo searchVo = new SearchVo();
 		searchVo.setPage(1); // 첫 페이지
+		searchVo.setRecordSize(40);
 
 		// 2. 전체 개수 조회 → Pagination 객체 생성
 		int totalCount = recruitmentService.getRecruitmentTotalCount(searchVo);

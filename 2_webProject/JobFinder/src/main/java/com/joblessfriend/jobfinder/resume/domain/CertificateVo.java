@@ -10,9 +10,8 @@ import lombok.Setter;
 public class CertificateVo {
 
 	private int certificateId;
-	private int resumeId;
 	private String certificateName;
-	private Date acquisitionDate;
 	private String issuingAuthority;
+	private int isActive;
 	
 }
