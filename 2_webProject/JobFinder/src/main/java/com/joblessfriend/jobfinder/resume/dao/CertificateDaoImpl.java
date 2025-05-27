@@ -19,9 +19,15 @@ public class CertificateDaoImpl implements CertificateDao {
 	String namespace = "com.joblessfriend.jobfinder.resume.certificate.";
 
 	@Override
-	public List<CertificateVo> certificateSelectList(int resumeId) {
+	public List<CertificateVo> certificateList() {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace + "certificateSelectList", resumeId);
+		return sqlSession.selectList(namespace + "certificateSelectList");
+	}
+
+	@Override
+	public List<CertificateVo> certificateSelectListByResumeId(int resumeId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace + "certificateSelectListByResumeId", resumeId);
 	}
 
 	@Override
@@ -31,13 +37,10 @@ public class CertificateDaoImpl implements CertificateDao {
 	}
 
 	@Override
-	public void certificateDeleteOne(int certificateId, int resumeId) {
+	public void certificateDeleteOne(int resumeId) {
 		// TODO Auto-generated method stub
-		Map<String, Object> map = new HashMap<>();
-		
-		map.put("certificateId", certificateId);
-		map.put("resumeId", resumeId);
-		
-		sqlSession.delete(namespace + "certificateDeleteOne", map);
+		sqlSession.delete(namespace + "certificateDeleteOne", resumeId);
 	}
+
+	
 }
