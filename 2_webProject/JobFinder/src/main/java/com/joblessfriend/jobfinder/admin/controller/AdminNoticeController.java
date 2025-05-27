@@ -1,6 +1,7 @@
 package com.joblessfriend.jobfinder.admin.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.joblessfriend.jobfinder.admin.domain.AdminVo;
 import com.joblessfriend.jobfinder.community.controller.Markdown;
 import com.joblessfriend.jobfinder.community.domain.CommunityVo;
+import com.joblessfriend.jobfinder.community.domain.NoticeCategoryVo;
 import com.joblessfriend.jobfinder.community.domain.NoticeVo;
+import com.joblessfriend.jobfinder.community.service.NoticeCategoryService;
 import com.joblessfriend.jobfinder.community.service.NoticeService;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import com.joblessfriend.jobfinder.util.Pagination;
@@ -25,7 +28,7 @@ import com.joblessfriend.jobfinder.util.SearchVo;
 import jakarta.servlet.http.HttpSession;
 
 //공지 부문
-/* 존재하는 기능: 공지글 삽입, 삭제, 업데이트(화면 따로 디자인 및 생성), 전체 띄우기*/
+/* 존재하는 기능: 공지글 삽입, 삭제, 업데이트(화면 따로 디자인 및 생성), 리스트 띄우기*/
 
 
 @RequestMapping("/admin/community/notice")
@@ -34,6 +37,9 @@ public class AdminNoticeController {
 	
 	@Autowired
 	private NoticeService noticeService;
+	
+	@Autowired
+	private NoticeCategoryService noticeCategoryService;
 	
 	//관리자: 공지 리스트
 	@GetMapping("")
@@ -67,12 +73,17 @@ public class AdminNoticeController {
 		return "admin/community/notice/noticeView";
 	}
 	
-	//관리자: 공지 추가
+	
+/* 관리자: 공지 추가 */
 	@GetMapping("/upload")
 	public String noticeAdminUpload(Model model) {
-
+		
+		//카테고리 정보 전체 리스트로 가져오기
+		List<NoticeCategoryVo> noticeCategoryList = noticeCategoryService.noticeCategoryList();
+		
+		model.addAttribute("noticeCategoryList", noticeCategoryList);
 		//업로드 화면
-		return "community/add/noticeUpload";
+		return "admin/community/notice/noticeUploadView";
 	}
 	
 	@PostMapping("/upload")
@@ -80,17 +91,45 @@ public class AdminNoticeController {
 			 @SessionAttribute(name = "userLogin", required = false) AdminVo userLogin,//이부분은 좀 관리자에 맞게 수정 
 			 HttpSession session,
 			 MultipartHttpServletRequest mhr) {
-    
+		
+		
+		//게시글 시퀀스 넘버 생성용 저장 변수
+	    int noticeId = noticeService.noticeSeqNum();
+
+	    //세션정보 저장(로그인 관리자 ID 저장)
+	    noticeVo.setAdminId(userLogin.getAdminId()); 
+	    
+	    //커뮤니티 아이디 저장
+	    noticeVo.setNoticeId(noticeId);
+	    
+	    //게시글 관련 전부 저장
+	    noticeService.noticeInsertOne(noticeVo);
+	    
+/*파일 관련 우선 주석	    
+	    // 2. 파일 정보 세션에서 가져오기(uploadImage에서 저장한 것)
+	    List<Map<String, Object>> uploadedFiles = (List<Map<String, Object>>) session.getAttribute("uploadedFiles");
+	    if (uploadedFiles != null) {
+	        for (Map<String, Object> fileMap : uploadedFiles) {
+	            fileMap.put("NOTICEID", noticeVo.getNoticeId()); // 커뮤니티 ID 연결
+	            noticeService.noticeFileInsertOne(fileMap);
+	        }
+	        session.removeAttribute("uploadedFiles"); // 사용 후 제거
+	    }
+ */	   
 		// 글 작성 완료 후 목록으로 돌아가기
-	    return "redirect:/admin/community/notice/noticeView";
+	    return "redirect:/admin/community/notice";
 	}
+
+/* 관리자: 공지 추가 end */	
 	
 	
-	//관리자: 공지 삭제
+	/* 관리자: 공지 삭제 */
 	
+	/* 관리자: 공지 삭제 end*/
 	
-	//관리자: 공지 수정
+	/* 관리자: 공지 수정 */
 	
+	/* 관리자: 공지 수정 */
 	
 
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joblessfriend.jobfinder.community.noticeCategory">
+	<resultMap type="NoticeCategoryVo" id="noticeCategoryResultVo">
+			<id column="NOTICE_CATEGORY_ID" property="noticeCategoryId" />
+			<result column="NOTICE_CATEGORY_CONTENT" property="noticeCategoryContent" />
+			<result column="CREATE_AT" property="createAt"
+				javaType="java.util.Date" />
+			<result column="MODIFIED_AT" property="modifiedAt"
+				javaType="java.util.Date" />				
+	</resultMap>
+	
+	<select id="noticeCategoryList" resultMap="noticeCategoryResultVo">
+		SELECT *
+		FROM NOTICE_CATEGORY
+	</select>
+
+
+</mapper>

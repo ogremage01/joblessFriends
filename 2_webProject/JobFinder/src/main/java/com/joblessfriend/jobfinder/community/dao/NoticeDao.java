@@ -11,4 +11,8 @@ public interface NoticeDao {
 
 	List<NoticeVo> noticeSelectList(SearchVo searchVo);
 
+	int noticeSeqNum();
+
+	void noticeInsertOne(NoticeVo noticeVo);
+
 }

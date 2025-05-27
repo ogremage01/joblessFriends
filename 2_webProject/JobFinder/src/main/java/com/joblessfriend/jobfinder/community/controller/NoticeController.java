@@ -68,7 +68,7 @@ public class NoticeController {
 	    
 	    
 	    // 리스트 화면 반환
-	    return "community/notice/list/noticeList";
+	    return "community/notice/noticeMain";
 	}
 	
 	

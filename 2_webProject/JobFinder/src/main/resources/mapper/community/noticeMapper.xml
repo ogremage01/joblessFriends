@@ -35,7 +35,7 @@
 	]]>
 		<if test="keyword != null and keyword != ''">
 		         AND (NOTI.TITLE LIKE '%' || #{keyword} || '%'
-		         OR NOTI.CONTENT LIKE '%' || #{keyword} || '%')
+		         OR CATE.NOTICE_CATEGORY_CONTENT LIKE '%' || #{keyword} || '%')
 		</if>
 	<![CDATA[
 		        ORDER BY NOTI.NOTICE_ID DESC) INNER_QUERY 
@@ -52,6 +52,16 @@
 	        OR CONTENT LIKE '%' || #{keyword} || '%')
          </if>
 	</select>
+	
+	<insert id="noticeInsertOne" parameterType="com.joblessfriend.jobfinder.community.domain.NoticeVo">
+		INSERT INTO NOTICE(NOTICE_ID, ADMIN_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, VIEWS)
+		VALUES(#{noticeId}, #{adminId}, #{noticeCategoryId}, #{title}, #{content}, SYSDATE, NULL, 0)	
+	</insert>
+	
+	<select id="noticeSeqNum" resultType="int">
+		 SELECT NOTICE_ID_SEQ.NEXTVAL FROM DUAL
+	</select>
+	
 	
 	
 </mapper>

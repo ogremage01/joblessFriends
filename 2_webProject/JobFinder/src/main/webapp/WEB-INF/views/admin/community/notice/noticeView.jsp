@@ -80,18 +80,18 @@
 				
 					<ul class="pagination justify-content-center">
 						<li class="page-item ${searchVo.page==1?'disabled':''}">
-							<a class="page-link" href="/admin/community/post?page=${searchVo.page-1}&keyword=${searchVo.keyword}">Previous</a>
+							<a class="page-link" href="/admin/community/notice?page=${searchVo.page-1}&keyword=${searchVo.keyword}">Previous</a>
 						</li>
 						<c:forEach begin="${pagination.startPage}" var="i" 
 							end="${pagination.endPage}">
 							<li class="page-item ${searchVo.page==i?'active':''}">
-							<a class="page-link" href="/admin/community/post?page=${i}&keyword=${searchVo.keyword}">${i}</a></li>
+							<a class="page-link" href="/admin/community/notice?page=${i}&keyword=${searchVo.keyword}">${i}</a></li>
 						</c:forEach>
 
 						<!-- <li class="page-item active" aria-current="page"><a
 						class="page-link" href="#">2</a></li> -->
 						<li class="page-item"><a
-							class="page-link ${searchVo.page==pagination.totalPageCount? 'disabled':''}" href="/admin/community/post?page=${searchVo.page+1}&keyword=${searchVo.keyword}">Next</a></li>
+							class="page-link ${searchVo.page==pagination.totalPageCount? 'disabled':''}" href="/admin/community/notice?page=${searchVo.page+1}&keyword=${searchVo.keyword}">Next</a></li>
 					</ul>
 				
 				</nav>
@@ -99,10 +99,10 @@
 			</div>
 			<div id="search_upload">
 				<div id="searchContainer">
-					<input id="communityKeyword" type="text" name="keyword" placeholder="제목 검색">
-					<button id="communitySearchBtn" class="btn btn-light">검색</button>
+					<input id="noticeKeyword" type="text" name="keyword" placeholder="제목 검색">
+					<button id="noticeSearchBtn" class="btn btn-light">검색</button>
 				</div>
-				<button id="uploadNotice">+공지 추가</button>
+				<button id="uploadNotice" onclick="uploadNotice()">+공지 추가</button>
 			</div>
 		</div>
 			
@@ -115,15 +115,15 @@
 <script type="text/javascript">
 
 	
-	function deleteCommunities(communityIdList) {
+	function deleteNotices(noticeIdList) {
 	    if (!confirm("삭제를 진행합니까?")) return;
 
-	    fetch("/admin/community/post/delete", {
+	    fetch("/admin/community/notice/delete", {
 	        method: "DELETE",
 	        headers: {
 	            "Content-Type": "application/json"
 	        },
-	        body: JSON.stringify(communityIdList) // 배열 전달
+	        body: JSON.stringify(noticeIdList) // 배열 전달
 	    })
 	    .then(response => {
 	        if (!response.ok) {
@@ -149,39 +149,41 @@
 
 	for (let i = 0; i < delBtnArr.length; i++) {//선택된 삭제 목록
 	    delBtnArr[i].addEventListener("click", function (e) {
-	        const communityId = e.target.value;
-	        deleteCommunities([communityId]); // 단일도 배열로
+	        const noticeId = e.target.value;
+	        deleteNotices([noticeId]); // 단일도 배열로
 	    });
 	}
 	
 	document.getElementById("massDelCom").addEventListener("click", function () {
 	    const checked = document.querySelectorAll(".delPost:checked");
-	    const communityIdList = Array.from(checked).map(el => el.value);
+	    const noticeIdList = Array.from(checked).map(el => el.value);
 
-	    if (communityIdList.length === 0) {
+	    if (noticeIdList.length === 0) {
 	        alert("삭제할 항목을 선택하세요.");
 	        return;
 	    }
 
-	    deleteCommunities(communityIdList);
+	    deleteNotices(noticeIdList);
 	});
 	
 	
-	const searchCommunityBtn = document.getElementById("communitySearchBtn");
+	const searchNoticeBtn = document.getElementById("noticeSearchBtn");
 
-	searchCommunityBtn.addEventListener("click", function(e){
-	    const communityKeywordVal = document.getElementById("communityKeyword").value;
+	searchNoticeBtn.addEventListener("click", function(e){
+	    const noticeKeywordVal = document.getElementById("noticeKeyword").value;
 	    
-	    if(communityKeywordVal != null || communityKeywordVal != ""){
+	    if(noticeKeywordVal != null || noticeKeywordVal != ""){
 	        
-	        location.href=`/admin/community/post?keyword=\${communityKeywordVal}`;
+	        location.href=`/admin/community/notice?keyword=\${noticeKeywordVal}`;
 	        
-	    }
-	    
-	    
-	    
+	    } 
 	    
 	});
+	
+	
+	function uploadNotice(){
+		location.href="/admin/community/notice/upload";
+	}
 
 
 </script>

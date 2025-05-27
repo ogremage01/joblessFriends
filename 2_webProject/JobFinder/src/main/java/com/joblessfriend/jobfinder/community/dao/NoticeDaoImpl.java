@@ -28,6 +28,18 @@ public class NoticeDaoImpl implements NoticeDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(namespace+"getNoticeTotalCount", searchVo);
 	}
+
+	@Override
+	public int noticeSeqNum() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace+"noticeSeqNum");
+	}
+
+	@Override
+	public void noticeInsertOne(NoticeVo noticeVo) {
+		// TODO Auto-generated method stub
+		sqlSession.insert(namespace+"noticeInsertOne", noticeVo);
+	}
 	
 
 }
