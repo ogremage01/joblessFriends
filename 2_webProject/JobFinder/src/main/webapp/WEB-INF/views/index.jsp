@@ -120,18 +120,7 @@
 							
 							<span class="jobTitle">${rec.title}</span>
 							<span class="jobRegionCareer">
-								<c:choose>
-									<c:when test="${rec.education eq '대학교 졸업(4년)'||rec.education eq '대학 졸업(2,3년)'}">
-										대졸
-									</c:when>
-									<c:when test="${rec.education eq '고등학교 졸업'}">
-										고졸
-									</c:when>
-									<c:otherwise>
-										${rec.education}
-									</c:otherwise>
-								</c:choose>
-								· ${rec.careerType}
+								${rec.education} · ${rec.careerType}
 							</span>
 							<span class="jobCompanyName">${rec.companyName}</span>
 							

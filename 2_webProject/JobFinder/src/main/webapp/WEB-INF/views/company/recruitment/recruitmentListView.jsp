@@ -25,131 +25,120 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
 	rel="stylesheet">
 
-
-
-<link rel="stylesheet" href="/css/recruitment/recruitmentNav.css">
+<link rel="stylesheet" href="/css/common/common.css">
+<link rel="stylesheet" href="/css/member/memberMyPage.css" />
 <link rel="stylesheet" href="/css/company/recruitmentList.css">
 </head>
 <body>
 <jsp:include page="../../common/header.jsp"/>
 
-
-
-<div class="container">
-    <div class="sideBar">
-		<jsp:include page="../companyPage/companyPageSidebar.jsp"/>
-    </div>
-	<!-- 메인 -->
-  <div class="main" style="width: 800px;">
-  
-  <h1>공고 관리</h1>
-  
-	<div class="d-flex justify-content-end mb-2">
-	    <a href="/Recruitment/insert" id="newPost" class="btn">
-	        <i class="bi bi-plus-circle"></i> 공고 작성하기
-	    </a>
-	</div>
-
-   	<table id="recruitmentList" class="table table-border">
-  <thead id="table-header" class="table-group-divider">
-    <tr>
-      <th>공고</th>
-      <th colspan="2">관리</th>
-    </tr>
-  </thead>
-
-  <c:if test="${recruitmentList.size() eq 0}">
-    <tbody>
-      <tr>
-        <td colspan="3">
-          <span id="emptyList">등록된 공고가 없습니다</span>
-        </td>
-      </tr>
-    </tbody>
-  </c:if>
-
-  <c:forEach var="recruitment" items="${recruitmentList}">
-    <tbody id="recruitment${recruitment.jobPostId}">
-      <tr>
-        <td>
-          <h5 id="title${recruitment.jobPostId}">
-            <a class="jobPostTitle" href="/Recruitment/detail?companyId=${recruitment.companyId}&jobPostId=${recruitment.jobPostId}">
-              ${recruitment.title}
-            </a>
-            <c:if test="${recruitment.isContinuous eq true}">
-              <span class="stoppedPost">마감</span>
-            </c:if>
-          </h5>
-        </td>
-        <td class="buttonPlace" rowspan="2">
-          <a href="/Recruitment/update?jobPostId=${recruitment.jobPostId}" class="btn btn-light mb-2">
-            <i class="bi bi-pencil-square"></i> 수정하기
-          </a><br>
-          <a href="./recruitment/${recruitment.jobPostId}/applicants" class="btn btn-light mb-2">
-            <i class="bi bi-file-person"></i> 지원자 보기
-          </a><br>
-         
-            <button id="stopBtn${recruitment.jobPostId}" class="btn btn-light mb-2 stopBtn"
-				value="${recruitment.jobPostId}"
-				<c:if test="${recruitment.isContinuous eq true}">disabled</c:if>>
-				<i class="bi bi-sign-stop"></i> 마감하기
-			</button>
-          
-        </td>
-        <td rowspan="2">
-          <button class="btn delBtn" value="${recruitment.jobPostId}">
-            <i class="bi bi-x"></i>
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <table class="innerTable">
-            <tr>
-              <td class="name">지원자격</td>
-              <td class="info">${recruitment.education}</td>
-              <td class="name">채용부문</td>
-              <td class="info">${recruitment.jobName}</td>
-              <td class="name">공고마감</td>
-              <td class="info">
-                <fmt:formatDate value="${recruitment.endDate}" />
-              </td>
-            </tr>
-            <tr>
-              <td class="name">스킬</td>
-              <td class="info">
-                <c:forEach var="skill" items="${recruitment.skillList}" varStatus="status" begin="0" end="1">
-                  ${skill.tagName}
-                  <c:if test="${!status.last}">, </c:if>
-                </c:forEach>
-              </td>
-              <td class="name">채용인원</td>
-              <td class="info">${recruitment.maxApplicants} 명</td>
-              <td class="name">지원자</td>
-              <td class="info">${recruitment.applicantCount}</td>
-            </tr>
-            <tr>
-              <td class="name">최종 수정일</td>
-              <td class="info" colspan="5">
-                <fmt:formatDate value="${recruitment.modifiedDate eq null ? recruitment.endDate : recruitment.modifiedDate}" />
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </tbody>
-  </c:forEach>
-</table>
-
-   
-    </div>
-    
-    
-    
-
-</div>
+	<div class="container">
+		<div id="containerWrap">
+			<jsp:include page="../companyPage/companyPageSidebar.jsp" />
+			<!-- 메인 -->
+			<div class="main">
+				<div class="content">
+					<h1 class="mainTitle">공고 관리</h1>
+					<div class="d-flex justify-content-end">
+						<a href="/Recruitment/insert" id="newPost" class="btn"> <i
+							class="bi bi-plus-circle"></i> 공고 작성하기
+						</a>
+					</div>
 	
-<jsp:include page="../../common/footer.jsp" />
+					<table id="recruitmentList" class="table table-border">
+						<thead id="table-header" class="table-group-divider">
+							<tr>
+								<th>공고</th>
+								<th colspan="2">관리</th>
+							</tr>
+						</thead>
+	
+						<c:if test="${recruitmentList.size() eq 0}">
+							<tbody>
+								<tr>
+									<td colspan="3"><span id="emptyList">등록된 공고가 없습니다</span></td>
+								</tr>
+							</tbody>
+						</c:if>
+	
+						<c:forEach var="recruitment" items="${recruitmentList}">
+							<tbody id="recruitment${recruitment.jobPostId}">
+								<tr>
+									<td>
+										<h5 id="title${recruitment.jobPostId}">
+											<a class="jobPostTitle"
+												href="/Recruitment/detail?companyId=${recruitment.companyId}&jobPostId=${recruitment.jobPostId}">
+												${recruitment.title} </a>
+											<c:if test="${recruitment.isContinuous eq true}">
+												<span class="stoppedPost">마감</span>
+											</c:if>
+										</h5>
+									</td>
+									<td class="buttonPlace" rowspan="2"><a
+										href="/Recruitment/update?jobPostId=${recruitment.jobPostId}"
+										class="btn btn-light mb-2"> <i class="bi bi-pencil-square"></i>
+											수정하기
+									</a><br> <a
+										href="./recruitment/${recruitment.jobPostId}/applicants"
+										class="btn btn-light mb-2"> <i class="bi bi-file-person"></i>
+											지원자 보기
+									</a><br>
+	
+										<button id="stopBtn${recruitment.jobPostId}"
+											class="btn btn-light mb-2 stopBtn"
+											value="${recruitment.jobPostId}"
+											<c:if test="${recruitment.isContinuous eq true}">disabled</c:if>>
+											<i class="bi bi-sign-stop"></i> 마감하기
+										</button></td>
+									<td rowspan="2">
+										<button class="btn delBtn" value="${recruitment.jobPostId}">
+											<i class="bi bi-x"></i>
+										</button>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<table class="innerTable">
+											<tr>
+												<td class="name">지원자격</td>
+												<td class="info">${recruitment.education}</td>
+												<td class="name">채용부문</td>
+												<td class="info">${recruitment.jobName}</td>
+												<td class="name">공고마감</td>
+												<td class="info"><fmt:formatDate
+														value="${recruitment.endDate}" /></td>
+											</tr>
+											<tr>
+												<td class="name">스킬</td>
+												<td class="info"><c:forEach var="skill"
+														items="${recruitment.skillList}" varStatus="status"
+														begin="0" end="1">
+	                  ${skill.tagName}
+	                  <c:if test="${!status.last}">, </c:if>
+													</c:forEach></td>
+												<td class="name">채용인원</td>
+												<td class="info">${recruitment.maxApplicants}명</td>
+												<td class="name">지원자</td>
+												<td class="info">${recruitment.applicantCount}</td>
+											</tr>
+											<tr>
+												<td class="name">최종 수정일</td>
+												<td class="info" colspan="5"><fmt:formatDate
+														value="${recruitment.modifiedDate eq null ? recruitment.endDate : recruitment.modifiedDate}" />
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+						</c:forEach>
+					</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<jsp:include page="../../common/footer.jsp" />
 </body>
 
 	<script src="/js/company/recruitmentList.js"></script>

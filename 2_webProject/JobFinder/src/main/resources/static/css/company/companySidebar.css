@@ -1,0 +1,40 @@
+/* 사이드바 */
+.sidebar {
+	width: 180px;
+	height: 200px;
+	border: 1px solid #D8D9E3;
+	border-radius: 5px;
+}
+
+.sidebar h2 {
+	font-size: 20px;
+	font-weight: bold;
+	color: #1B202F;
+	border-bottom: 1px solid #D8D9E3;
+
+	margin: 0px auto;
+	padding: 15px 30px;
+}
+
+.sidebar h2 a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.sidebar ul {
+	list-style: none;
+	margin: 0;
+	padding: 20px 30px;
+	display: flex;
+	flex-direction: column;
+	gap:10px;
+}
+
+.sidebar li {
+	font-size: 15px;
+	color: #1B202F;
+}
+
+.sidebar li a {
+	color: inherit;
+}

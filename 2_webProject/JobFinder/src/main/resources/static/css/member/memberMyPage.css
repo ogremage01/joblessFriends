@@ -26,6 +26,7 @@ body {
 /* 카테고리 h1*/
 .mainTitle {
 	font-size: 32px;
+	font-weight: bold;
 	margin: 0px;
 	margin-bottom: 30px;
 }

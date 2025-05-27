@@ -1,8 +1,10 @@
 // 기업 정보 수정 폼 객체 가져오기
 let companyInforSubmitFormObj = document.getElementById("companyInforSubmitForm");
 
-// data-company-id 속성에서 companyId 가져오기
-const companyId = document.getElementById("companyData").dataset.companyId;
+// data-company-id 속성에서 companyId 가져오기 // 2025.05.27 화면조정중 input으로 변경했습니다 - pcj
+//const companyId = document.getElementById("companyData").dataset.companyId;
+const companyId = document.getElementById("companyData").value;
+console.log("companyId: "+ companyId);
 
 // 기업 정보 수정 폼이 제출될 때 실행
 companyInforSubmitFormObj.addEventListener("submit", function(e) {
