@@ -8,7 +8,7 @@ INSERT INTO STATE (STATE_ID, STATE_NAME) VALUES (state_id_seq.nextval, '불합�
 
 --태그
 INSERT INTO TAG (TAG_ID, TAG_NAME, CREATE_AT, MODIFIED_AT, JOB_GROUP_ID, JOB_ID) 
-VALUES(tag_id_seq.nextval, sysdate, sysdate, 'JSP', 6, 85);
+VALUES(tag_id_seq.nextval, sysdate, sysdate, 'JSP', 6, 5);
 
 --이력서
 --INSERT INTO RESUME (RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL) 

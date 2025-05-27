@@ -6,10 +6,10 @@ import com.joblessfriend.jobfinder.resume.domain.CertificateVo;
 
 public interface CertificateDao {
 
-	List<CertificateVo> certificateSelectList(int resumeId);
-
+	List<CertificateVo> certificateList();
+	List<CertificateVo> certificateSelectListByResumeId(int resumeId);
 	void certificateInsertOne(CertificateVo certificateVo);
-
-	void certificateDeleteOne(int certificateId, int resumeId);
+	void certificateDeleteOne(int resumeId);
+	
 
 }

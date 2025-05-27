@@ -15,9 +15,15 @@ public class CertificateServiceImpl implements CertificateService{
 	public CertificateDao certificateDao;
 	
 	@Override
-	public List<CertificateVo> certificateSelectList(int resumeId) {
+	public List<CertificateVo> certificateList() {
 		// TODO Auto-generated method stub
-		return certificateDao.certificateSelectList(resumeId);
+		return certificateDao.certificateList();
+	}
+
+	@Override
+	public List<CertificateVo> certificateSelectListByResumeId(int resumeId) {
+		// TODO Auto-generated method stub
+		return certificateDao.certificateSelectListByResumeId(resumeId);
 	}
 
 	@Override
@@ -27,9 +33,10 @@ public class CertificateServiceImpl implements CertificateService{
 	}
 
 	@Override
-	public void certificateDeleteOne(int certificateId, int resumeId) {
+	public void certificateDeleteOne(int resumeId) {
 		// TODO Auto-generated method stub
-		certificateDao.certificateDeleteOne(certificateId, resumeId);
+		certificateDao.certificateDeleteOne(resumeId);
 	}
+
 
 }
