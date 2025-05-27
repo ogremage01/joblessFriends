@@ -2,92 +2,97 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-	<mapper namespace="com.joblessfriend.jobfinder.admin.dao.AdminCompanyDao">
+<mapper
+	namespace="com.joblessfriend.jobfinder.admin.dao.AdminCompanyDao">
 
 
 
-		<resultMap type="com.joblessfriend.jobfinder.company.domain.CompanyVo" id="companyResultMap">
-			<id column="COMPANY_ID" property="companyId"/>
-			<result column="EMAIL" property="email"/>
-			<result column="PASSWORD" property="password"/>
-			<result column="COMPANY_NAME" property="companyName"/>
-			<result column="BRN" property="brn"/>
-			<result column="REPRESENTATIVE" property="representative"/>
-			<result column="TEL" property="tel"/>
-			<result column="POSTAL_CODE_ID" property="postalCodeId"/>
-			<result column="ARENA_NAME" property="arenaName"/>
-			<result column="ADDRESS" property="address"/>
+	<resultMap
+		type="com.joblessfriend.jobfinder.company.domain.CompanyVo"
+		id="companyResultMap">
+		<id column="COMPANY_ID" property="companyId" />
+		<result column="EMAIL" property="email" />
+		<result column="PASSWORD" property="password" />
+		<result column="COMPANY_NAME" property="companyName" />
+		<result column="BRN" property="brn" />
+		<result column="REPRESENTATIVE" property="representative" />
+		<result column="TEL" property="tel" />
+		<result column="POSTAL_CODE_ID" property="postalCodeId" />
+		<result column="ARENA_NAME" property="arenaName" />
+		<result column="ADDRESS" property="address" />
 
-		</resultMap>
+	</resultMap>
 
-		<select id="companySelectList"
-		        parameterType="com.joblessfriend.jobfinder.util.SearchVo"
-		        resultMap="companyResultMap">
-		    SELECT *
-		    FROM (
-		        SELECT ROWNUM AS RN, INNERTABLE.*
-		        FROM (
-		            SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
-		            FROM COMPANY
-		            <if test="keyword != null and keyword != ''">
-		                WHERE COMPANY_NAME LIKE '%' || #{keyword} || '%'
-		            </if>
-		            ORDER BY COMPANY_ID DESC
-		        ) INNERTABLE
-		        WHERE ROWNUM &lt;= #{endRow}
-		    )
-		    WHERE RN &gt;= #{startRow}
-		</select>
-
-		
-		<select id="companyCount" resultType="int">
-			SELECT COUNT(COMPANY_ID)
-			FROM COMPANY
-			 <if test="keyword != null and keyword != ''">	
-			 	WHERE UPPER(COMPANY_NAME) LIKE UPPER('%' || #{keyword} || '%')
-			 </if>
-		</select>
-		
-		
-		<select id="companySelectOne" resultMap="companyResultMap">
-			SELECT *
-			FROM COMPANY
-			WHERE COMPANY_ID = #{companyId}
-		</select>
-
- 		<update id="companyUpdateOne" parameterType="com.joblessfriend.jobfinder.company.domain.CompanyVo">
-		    UPDATE COMPANY
-		    <set>
-		        <if test="companyName != null">COMPANY_NAME = #{companyName},</if>
-		        <if test="email != null">EMAIL = #{email},</if>
-		        <if test="brn != null">BRN = #{brn},</if>
-		        <if test="representative != null">REPRESENTATIVE = #{representative},</if>
-		        <if test="tel != null">TEL = #{tel},</if>
-		   <if test="postalCodeId != null">POSTAL_CODE_ID = #{postalCodeId},</if>
-		    <if test="arenaName != null">ARENA_NAME = #{arenaName},</if>
-		        <if test="address != null">ADDRESS = #{address},</if>
-		        <if test="password != null">PASSWORD = #{password},</if>
-		    </set>
-		    WHERE COMPANY_ID = #{companyId}
-		</update>
-		
-
-		<delete id="companyDeleteOne">
-			DELETE COMPANY
-			WHERE COMPANY_ID = #{companyId}
-		
-		</delete>
-
-		<delete id="companyDeleteList" parameterType="java.util.List">
-		    DELETE FROM COMPANY
-		    WHERE COMPANY_ID IN
-		    <foreach item="companyId" collection="list" open="(" separator="," close=")">
-		        #{companyId}
-		    </foreach>
-		    
-		</delete>
+	<select id="companySelectList"
+		parameterType="com.joblessfriend.jobfinder.util.SearchVo"
+		resultMap="companyResultMap">
+		SELECT *
+		FROM (
+			SELECT ROWNUM AS RN, INNERTABLE.*
+				FROM (
+				SELECT COMPANY_ID, EMAIL, COMPANY_NAME, TEL
+				FROM COMPANY
+					<if test="keyword != null and keyword != ''">
+						WHERE UPPER(COMPANY_NAME) LIKE UPPER('%' || #{keyword} || '%')
+					</if>
+					ORDER BY COMPANY_ID DESC
+			) INNERTABLE
+			WHERE ROWNUM &lt;= #{endRow}
+		)
+		WHERE RN &gt;= #{startRow}
+	</select>
 
 
+	<select id="companyCount" resultType="int">
+		SELECT COUNT(COMPANY_ID)
+		FROM COMPANY
+		<if test="keyword != null and keyword != ''">
+			WHERE UPPER(COMPANY_NAME) LIKE UPPER('%' || #{keyword} || '%')
+		</if>
+	</select>
 
 
-	</mapper>
+	<select id="companySelectOne" resultMap="companyResultMap">
+		SELECT *
+		FROM COMPANY
+		WHERE COMPANY_ID = #{companyId}
+	</select>
+
+	<update id="companyUpdateOne"
+		parameterType="com.joblessfriend.jobfinder.company.domain.CompanyVo">
+		UPDATE COMPANY
+		<set>
+			<if test="companyName != null">COMPANY_NAME = #{companyName},</if>
+			<if test="email != null">EMAIL = #{email},</if>
+			<if test="brn != null">BRN = #{brn},</if>
+			<if test="representative != null">REPRESENTATIVE = #{representative},</if>
+			<if test="tel != null">TEL = #{tel},</if>
+			<if test="postalCodeId != null">POSTAL_CODE_ID = #{postalCodeId},</if>
+			<if test="arenaName != null">ARENA_NAME = #{arenaName},</if>
+			<if test="address != null">ADDRESS = #{address},</if>
+			<if test="password != null">PASSWORD = #{password},</if>
+		</set>
+		WHERE COMPANY_ID = #{companyId}
+	</update>
+
+
+	<delete id="companyDeleteOne">
+		DELETE COMPANY
+		WHERE COMPANY_ID = #{companyId}
+
+	</delete>
+
+	<delete id="companyDeleteList" parameterType="java.util.List">
+		DELETE FROM COMPANY
+		WHERE COMPANY_ID IN
+		<foreach item="companyId" collection="list" open="("
+			separator="," close=")">
+			#{companyId}
+		</foreach>
+
+	</delete>
+
+
+
+
+</mapper>

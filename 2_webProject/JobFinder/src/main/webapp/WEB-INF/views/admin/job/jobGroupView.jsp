@@ -75,13 +75,31 @@
 
 
 			<div id='pageNation'>
-				<!-- 페이지네이션이 들어갈 위치 -->
+				<c:if test="${pagination.totalPageCount > 0}">
+				<nav aria-label="...">
+				
+					<ul class="pagination justify-content-center">
+						<li class="page-item ${searchVo.page==1?'disabled':''}">
+							<a class="page-link" href="./jobGroup?page=${searchVo.page-1}&keyword=${searchVo.keyword}">Previous</a>
+						</li>
+						<c:forEach begin="${pagination.startPage}" var="i" 
+							end="${pagination.endPage}">
+							<li class="page-item ${searchVo.page==i?'active':''}">
+							<a class="page-link" href="./jobGroup?page=${i}&keyword=${searchVo.keyword}">${i}</a></li>
+						</c:forEach>
+
+						<li class="page-item">
+						<a class="page-link ${searchVo.page==pagination.totalPageCount? 'disabled':''}" href="./jobGroup?page=${searchVo.page+1}&keyword=${searchVo.keyword}">Next</a></li>
+					</ul>
+				
+				</nav>
+				</c:if>
 			</div>
 
-			<div id="searchContainer">
-				<input id="companyKeyword" type="text" placeholder="직군명">
-				<button id="companySearchBtn" class="btn btn-light">검색</button>
-
+			<div id="searchContainer" class="d-flex justify-content-center my-4">
+				<input id="jobGroupKeyword" type="text" placeholder="직군명" value="${searchVo.keyword}">
+				<button id="jobGroupSearchBtn" class="btn btn-light">검색</button>
+			
 			</div>
 
 
@@ -106,7 +124,30 @@
 	});
 	
 	
+	const searchjobGroupBtn = document.getElementById("jobGroupSearchBtn");
+	const jobGroupKeywordInput = document.getElementById("jobGroupKeyword");
+
+	function performSearch() {
+	    const jobGroupKeywordVal = jobGroupKeywordInput.value.trim();
+	    
+	    // 검색어가 있을 때와 없을 때 모두 처리
+	    if (jobGroupKeywordVal !== "") {
+	    	let url = '/admin/job/jobGroup?page=1&keyword=' + encodeURIComponent(jobGroupKeywordVal);
+	        location.href = url;
+	    } else {
+	        // 검색어가 없으면 전체 목록으로
+	        location.href = `/admin/job/jobGroup?page=1`;
+	    }
+	}
+
+	searchjobGroupBtn.addEventListener("click", performSearch);
 	
+	// Enter 키 이벤트 추가
+	jobGroupKeywordInput.addEventListener("keypress", function(e) {
+	    if (e.key === "Enter") {
+	        performSearch();
+	    }
+	});
 	
 
 </script>

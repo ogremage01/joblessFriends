@@ -8,20 +8,6 @@
 		<result column="JOB_GROUP_NAME" property="jobGroupName"/>
 	</resultMap>
 	
-		<select id="jobGroupSelectList" resultMap="jobGroupResultMap">
-		  SELECT * 
-		  FROM (SELECT ROWNUM AS RN, INNERTABLE.*
-		    FROM (SELECT *
-		      FROM JOB_GROUP
-		      ORDER BY JOB_GROUP_ID DESC) INNERTABLE
-		    WHERE ROWNUM &lt;= (#{page} + 1) * 10)
-		  WHERE RN &gt; #{page} * 10
-		</select>
-		
-		<select id="jobGroupCount" resultType="int">
-			SELECT COUNT(*)
-			FROM JOB_GROUP
-		</select>
 		
 		<select id="selectAllJobGroupsForAjax" resultMap="jobGroupResultMap">
 		    SELECT JOB_GROUP_ID, JOB_GROUP_NAME

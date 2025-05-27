@@ -7,7 +7,7 @@ CREATE TABLE chat_message (
     room_id VARCHAR2(255) NOT NULL,
     sender VARCHAR2(255) NOT NULL,
     message VARCHAR2(4000) NOT NULL,
-    send_time TIMESTAMP NOT NULL
+    send_time date NOT NULL
 );
 
 

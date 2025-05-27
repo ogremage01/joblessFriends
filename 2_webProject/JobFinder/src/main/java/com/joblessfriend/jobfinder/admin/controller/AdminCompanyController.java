@@ -45,7 +45,7 @@ public class AdminCompanyController {
 		searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
 		searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
 		List<CompanyVo> companyList = new ArrayList<>();
-		int companyCount = 0;
+		
 		companyList = companyService.companySelectList(searchVo);
 				// 뷰로 데이터 전달
 

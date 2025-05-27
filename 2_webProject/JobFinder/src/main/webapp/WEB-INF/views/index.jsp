@@ -66,6 +66,81 @@
             
             window.open(chatUrl, "채팅", popupOptions);
         }
+
+        // 안읽은 메시지 확인 함수
+        function checkUnreadMessages() {
+            var loginType = "${sessionScope.userType}";
+            var isLoggedIn = "${not empty sessionScope.userLogin}";
+            
+            // 로그인하지 않았거나 관리자인 경우 확인하지 않음
+            if (isLoggedIn === "false" || loginType === "admin") {
+                return;
+            }
+            
+            var apiUrl = "";
+            switch(loginType) {
+                case "member":
+                    apiUrl = "/member/chat/unread-count";
+                    break;
+                case "company":
+                    apiUrl = "/company/chat/unread-count";
+                    break;
+                default:
+                    return;
+            }
+            
+            fetch(apiUrl, {
+                method: 'GET',
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok');
+            })
+            .then(unreadCount => {
+                updateChatIcon(unreadCount);
+            })
+            .catch(error => {
+                console.log('안읽은 메시지 확인 중 오류:', error);
+            });
+        }
+
+        // 채팅 아이콘 업데이트 함수
+        function updateChatIcon(unreadCount) {
+            var chatBtn = document.querySelector('.chat-floating-btn');
+            var existingBadge = chatBtn.querySelector('.unread-badge');
+            
+            if (unreadCount > 0) {
+                // 안읽은 메시지가 있으면 느낌표 배지 표시
+                if (!existingBadge) {
+                    var badge = document.createElement('div');
+                    badge.className = 'unread-badge';
+                    badge.innerHTML = '!';
+                    chatBtn.appendChild(badge);
+                }
+            } else {
+                // 안읽은 메시지가 없으면 배지 제거
+                if (existingBadge) {
+                    existingBadge.remove();
+                }
+            }
+        }
+
+        // 페이지 로드 시 초기 확인 및 주기적 확인 설정
+        document.addEventListener('DOMContentLoaded', function() {
+            var loginType = "${sessionScope.userType}";
+            var isLoggedIn = "${not empty sessionScope.userLogin}";
+            
+            if (isLoggedIn === "true" && (loginType === "member" || loginType === "company")) {
+                // 초기 확인
+                checkUnreadMessages();
+                
+                // 30초마다 확인
+                setInterval(checkUnreadMessages, 30000);
+            }
+        });
     </script>
 </head>
 <body>

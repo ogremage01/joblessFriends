@@ -25,7 +25,7 @@
             ) INNERTABLE
             WHERE ROWNUM &lt;= (#{page} + 1) * 10
         )
-        WHERE RN &gt; #{page} * 10
+        WHERE RN &gt;= #{page} * 10
     </select>
 
     <select id="memberCount" resultType="int">
@@ -46,7 +46,7 @@
             ) INNERTABLE
             WHERE ROWNUM &lt;= (#{page} + 1) * 10
         )
-        WHERE RN &gt; #{page} * 10
+        WHERE RN &gt;= #{page} * 10
     </select>
 
     <select id="memberCountByKeyword" parameterType="string" resultType="int">

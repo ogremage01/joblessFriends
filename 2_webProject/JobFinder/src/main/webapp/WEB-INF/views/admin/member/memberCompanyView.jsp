@@ -96,7 +96,7 @@
 				</c:if>
 			</div>
 
-			<div id="searchContainer">
+			<div id="searchContainer" class="d-flex justify-content-center my-4">
 				<input id="companyKeyword" type="text" placeholder="기업명">
 				<button id="companySearchBtn" class="btn btn-light">검색</button>
 			
