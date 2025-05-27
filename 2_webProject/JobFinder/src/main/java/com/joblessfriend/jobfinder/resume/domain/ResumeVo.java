@@ -21,6 +21,8 @@ public class ResumeVo {
 	    private int postalCodeId;
 	    private Date createDate;
 	    private Date modifyDate;
+	    private int jobGroupId;
+	    private int jobId;
 	    
 	    // getter, setter
 	    
