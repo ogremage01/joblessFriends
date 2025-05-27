@@ -25,7 +25,7 @@
 				<div id='boxWrap' class="boxStyle sideBarBoxStyle">
 					<div id='boxTextWrap'>
 						<div>
-							<p><span class="nickName">${sessionScope.userLogin.nickname}</span> 님</p>
+							<p><span class="nickName">${sessionScope.userLogin.nickname}</span></p>
 							<p>작성한 글 (-)개</p>
 							<p>작성한 댓글 (-)개</p>
 						</div>

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReplyVo extends CommunityVo{
+public class ReplyVo extends PostCommentVo{
 	
 	@Id
 	private int replyId;

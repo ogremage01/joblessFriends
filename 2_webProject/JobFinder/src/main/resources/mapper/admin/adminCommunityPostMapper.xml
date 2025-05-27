@@ -25,4 +25,13 @@
 </delete>
 
 
+<delete id="fileByCommunityPostDelete" parameterType="list">
+	DELETE FROM COMMUNITY_FILE
+	WHERE COMMUNITY_ID IN
+	<foreach item="communityId" collection="list" open="(" separator="," close=")">
+		#{communityId}
+	</foreach>
+</delete>
+
+
 </mapper>

@@ -63,9 +63,7 @@ public class AdminCommunityCommentController {
 
 		for (Integer i : commentIdList) {
 			System.out.println("삭제할 댓글 Id " + i);
-
-		}
-		
+		}		
 		commentService.commentDelete(commentIdList);
 
 		

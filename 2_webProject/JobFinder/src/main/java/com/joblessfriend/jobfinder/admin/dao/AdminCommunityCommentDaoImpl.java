@@ -32,6 +32,7 @@ public class AdminCommunityCommentDaoImpl implements AdminCommunityCommentDao{
 	@Override
 	public void commentDelete(List<Integer> commentIdList) {
 		// TODO Auto-generated method stub
+		sqlSession.delete(namespace+"replyByCommentDeleteList", commentIdList);//오류방지를 위한 자식 삭제
 		sqlSession.delete(namespace+"commentDeleteList", commentIdList);
 	}
 

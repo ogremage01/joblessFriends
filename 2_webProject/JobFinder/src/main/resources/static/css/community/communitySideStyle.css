@@ -88,8 +88,17 @@
 }
 
 .nickName{
-	width: 1300px;
+	width: 120px;
+	height: 20px;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	white-space: normal;
 	
+}
+
+#boxTextWrap p{
+	width: 120px;
+	height: 20px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }

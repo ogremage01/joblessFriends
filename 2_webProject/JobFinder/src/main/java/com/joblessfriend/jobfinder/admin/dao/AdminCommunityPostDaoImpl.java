@@ -17,6 +17,8 @@ public class AdminCommunityPostDaoImpl implements AdminCommunityPostDao{
 	@Override
 	public void communityPostDelete(List<Integer> communityIdList) {
 		// TODO Auto-generated method stub
+
+		sqlSession.delete(namespace+"fileByCommunityPostDelete", communityIdList);	
 		sqlSession.delete(namespace+"communityPostDelete", communityIdList); 
 	}
 
