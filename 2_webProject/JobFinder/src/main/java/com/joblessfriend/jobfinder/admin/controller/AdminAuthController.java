@@ -30,7 +30,7 @@ public class AdminAuthController {
 	@GetMapping("")
 	public String base(Model model, HttpSession session) {
 		// 세션에 어드민 정보가 있으면 메인으로, 없으면 로그인 페이지로 이동
-		if(session.getAttribute("admin") != null) {
+		if(session.getAttribute("userLogin") instanceof AdminVo) {
 			return "redirect:/admin/main";
 		}else {
 			return "redirect:/admin/login";
@@ -56,10 +56,13 @@ public class AdminAuthController {
 
 		// 입력된 ID와 비밀번호로 어드민 존재 여부 확인
 		AdminVo adminVo = adminService.adminExist(adminId, password);
+		System.out.println("admininfo" + adminVo.toString());
 
 		if (adminVo != null) {
 			// 로그인 성공 → 세션에 어드민 정보 저장 후 메인으로 이동
-			session.setAttribute("admin", adminVo);
+			session.setAttribute("userLogin", adminVo);
+			session.setAttribute("userType", "admin");
+			System.out.println("어드민 로그인 성공");
 			return "redirect:/admin/main";
 		} else {
 			// 로그인 실패 → 실패 페이지로 이동

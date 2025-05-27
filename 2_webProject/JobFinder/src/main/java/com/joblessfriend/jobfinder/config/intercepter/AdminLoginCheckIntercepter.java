@@ -16,7 +16,7 @@ public class AdminLoginCheckIntercepter implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-        AdminVo admin = (AdminVo) request.getSession().getAttribute("admin"); // 세션 키 확인
+        AdminVo admin = (AdminVo) request.getSession().getAttribute("userLogin"); // 세션 키 확인
         
         if (admin == null) {
             response.sendRedirect(request.getContextPath() + "/admin/login"); // 로그인 안됐으면 로그인 페이지로

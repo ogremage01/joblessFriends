@@ -15,11 +15,11 @@ public class AdminVo {
 		this.password = password;
 	}
 
-	public String getadminId() {
+	public String getAdminId() {
 		return adminId;
 	}
 
-	public void setadminId(String adminId) {
+	public void setAdminId(String adminId) {
 		this.adminId = adminId;
 	}
 

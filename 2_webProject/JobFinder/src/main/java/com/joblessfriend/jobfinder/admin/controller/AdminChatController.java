@@ -1,6 +1,8 @@
 package com.joblessfriend.jobfinder.admin.controller;
 
 import java.util.List;
+import java.util.Collections;
+import java.util.ArrayList;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,29 +31,27 @@ public class AdminChatController {
 
     @GetMapping("/rooms")
     @ResponseBody
-    public ResponseEntity<?> getRooms(@RequestParam String type, HttpSession session) {
+    public ResponseEntity<?> getRooms(@RequestParam(required = false) String type, HttpSession session) {
         log.info("채팅방 목록 요청 - type: {}", type);
-        
-        // 관리자 세션 확인
-        AdminVo admin = (AdminVo) session.getAttribute("admin");
+
+        AdminVo admin = (AdminVo) session.getAttribute("userLogin");
         if (admin == null) {
             log.warn("Unauthorized access to admin chat rooms");
-            return ResponseEntity.status(401).body("Unauthorized access");
+            return ResponseEntity.status(401).body(Collections.singletonMap("error", "Unauthorized access"));
         }
-        
+        String adminId = admin.getAdminId();
+        if (adminId == null || adminId.isEmpty()) {
+            log.warn("Admin ID not found in session");
+            return ResponseEntity.status(401).body(Collections.singletonMap("error", "Admin ID not found"));
+        }
+
         try {
-            List<ChatRoomVo> rooms;
-            if ("member".equals(type)) {
-                rooms = chatService.findMemberRooms();
-            } else if ("company".equals(type)) {
-                rooms = chatService.findCompanyRooms();
-            } else {
-                rooms = chatService.findAllRoom();
-            }
+            List<ChatRoomVo> rooms = chatService.findAllRoom(adminId);
+            if (rooms == null) rooms = new ArrayList<>();
             return ResponseEntity.ok(rooms);
         } catch (Exception e) {
             log.error("채팅방 목록 조회 실패", e);
-            return ResponseEntity.internalServerError().body("Internal server error");
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", "Internal server error"));
         }
     }
 
@@ -60,16 +60,22 @@ public class AdminChatController {
     public ResponseEntity<?> getRoomMessages(@PathVariable String roomId, HttpSession session) {
         log.info("채팅 메시지 목록 요청 - roomId: {}", roomId);
         
-        // 관리자 세션 확인
-        AdminVo admin = (AdminVo) session.getAttribute("admin");
+        AdminVo admin = (AdminVo) session.getAttribute("userLogin");
         if (admin == null) {
             log.warn("Unauthorized access to admin chat messages");
             return ResponseEntity.status(401).body("Unauthorized access");
         }
         
+        String adminId = admin.getAdminId();
+        if (adminId == null || adminId.isEmpty()) {
+            log.warn("Admin ID not found in session for messages");
+            return ResponseEntity.status(401).body("Admin ID not found");
+        }
+        
         try {
-            List<ChatMessageVo> messages = chatService.findMessagesByRoomId(roomId);
-            System.out.println("전송받은 메시지 개수: " + messages.size());
+            // getMessagesByRoomId로 변경하고 adminId 전달
+            List<ChatMessageVo> messages = chatService.getMessagesByRoomId(roomId, adminId);
+            log.info("전송받은 메시지 개수: {}", messages.size()); // System.out.println 대신 logger 사용
             return ResponseEntity.ok(messages);
         } catch (Exception e) {
             log.error("채팅 메시지 조회 실패", e);
@@ -83,7 +89,7 @@ public class AdminChatController {
         log.info("채팅방 정보 요청 - roomId: {}", roomId);
         
         // 관리자 세션 확인
-        AdminVo admin = (AdminVo) session.getAttribute("admin");
+        AdminVo admin = (AdminVo) session.getAttribute("userLogin");;
         if (admin == null) {
             log.warn("Unauthorized access to admin chat room");
             return ResponseEntity.status(401).body("Unauthorized access");
@@ -105,7 +111,7 @@ public class AdminChatController {
     @GetMapping("/view")
     public String chatView(HttpSession session) {
         // 관리자 세션 확인
-        AdminVo admin = (AdminVo) session.getAttribute("admin");
+        AdminVo admin = (AdminVo) session.getAttribute("userLogin");
         if (admin == null) {
             log.warn("Unauthorized access to admin chat view");
             return "redirect:/auth/login";
