@@ -43,4 +43,10 @@ public class ResumeDaoImpl implements ResumeDao{
         sqlSession.update(namespace + ".updateProfileImage", param);
 		
 	}
+
+	@Override
+	public ResumeVo getResumeByResumeId(int resumeId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + ".getResumeByResumeId", resumeId);
+	}
 }

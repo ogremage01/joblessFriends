@@ -26,6 +26,12 @@
         ORDER BY RESUME_ID DESC
 	</select>
 
+	<select id="findResumeByResumeId" resultMap="ResumeResultMap">
+        SELECT RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, ADDRESS, SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT	
+        FROM RESUME
+        WHERE RESUME_ID = #{resumeId}
+	</select>
+
     <delete id="deleteResumeById">
         DELETE FROM RESUME 
         WHERE RESUME_ID = #{resumeId}

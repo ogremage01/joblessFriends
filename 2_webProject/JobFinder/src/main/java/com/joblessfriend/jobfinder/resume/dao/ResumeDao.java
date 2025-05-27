@@ -11,4 +11,6 @@ public interface ResumeDao {
     
 	void updateProfileImage(int resumeId, int memberId, String imageUrl);
 
+	ResumeVo getResumeByResumeId(int resumeId);
+
 }

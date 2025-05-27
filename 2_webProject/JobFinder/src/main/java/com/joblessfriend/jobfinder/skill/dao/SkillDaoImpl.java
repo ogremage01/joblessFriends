@@ -24,4 +24,10 @@ public class SkillDaoImpl implements SkillDao{
     public List<SkillVo> postTagList(int jobPostId) {
         return sqlSession.selectList("com.joblessfriend.jobfinder.skill.dao.SkillDao.postTagList", jobPostId);
     }
+
+	@Override
+	public List<SkillVo> resumeTagList(int resumeId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("com.joblessfriend.jobfinder.skill.dao.SkillDao.resumeTagList", resumeId);
+	}
 }
