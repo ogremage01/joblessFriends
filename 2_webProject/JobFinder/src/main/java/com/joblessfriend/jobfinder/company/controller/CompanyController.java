@@ -44,7 +44,12 @@ public class CompanyController {
 	public String companyInfo(Model model, HttpSession session) {
 		
 		CompanyVo loginCompanyVo = (CompanyVo) session.getAttribute("userLogin");
-		
+        Object userType = session.getAttribute("userType");
+
+        if (loginCompanyVo == null || !"company".equals(userType)) {
+            return "redirect:/auth/login";
+        }
+        
 		CompanyVo companyVo = companyService.companySelectOne(loginCompanyVo.getCompanyId());
 		
 		model.addAttribute("companyVo",companyVo);

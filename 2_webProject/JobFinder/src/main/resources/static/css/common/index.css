@@ -15,6 +15,7 @@
 		flex-direction: column;
 		cursor: pointer;
 		user-select: none;
+		width: 280px;
 	}
 	
 	.jobImg {
@@ -55,33 +56,45 @@
 		text-align: center;
 		
 		color: white;
-		background-color: rgba(0, 0, 0, 0.5);
+		background-color: rgba(0, 0, 0, 0.6);
 		border-radius: 5px;
 	}
 	
 	.skillTagsWrap {
 		position: absolute;
 		bottom: 8px;
-		left: 8px;
-		
+		left: 10px;
 		display: flex;
-		flex-wrap: wrap;
+		flex-wrap: nowrap;
 		gap: 4px;
+		width: 260px;
+		overflow: hidden;
 	}
 	
 	.jobSkillTag {
+		flex: 0 1 auto;
+		min-width: 0;
+		max-width: 100%;
 		font-size: 12px;
 		padding: 3px 8px;
 		color: white;
-		background-color: rgb(0, 0, 0, 0.5);
-		border-radius: 15px;
+		background-color: rgb(0, 0, 0, 0.6);
+		border-radius: 5px;
+		
+		display: flex;
+		align-items: center;
+		
+		 /* 텍스트 말줄임 */
+	    white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
 	}
 	
 	.jobSkillTag span{
-		display: inline-block;
-		max-width:70px;
-		overflow:hidden;
-		text-overflow:ellipsis
+		min-width: 0;
+		overflow: hidden;
+		text-overflow:ellipsis;
+		white-space: nowrap;
 	}
 
 	
@@ -90,6 +103,11 @@
 		font-weight: bold;
 		margin-top: 10px;
 		line-height: 35px;
+		
+		display: inline-block;
+		white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
 	}
 
 	.jobInfoItem span{

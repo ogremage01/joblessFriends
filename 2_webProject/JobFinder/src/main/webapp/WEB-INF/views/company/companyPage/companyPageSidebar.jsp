@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="/css/common/mypageSidebar.css">
+<link rel="stylesheet" href="/css/company/companySidebar.css">
 </head>
 <body>
 
@@ -14,14 +14,14 @@
 		</h2>
 	
 		<ul>
-			<li class="">
+			<li class="recruitInsert">
 				<a href="/Recruitment/insert#" style="text-decoration: none;">공고 등록</a>
 			</li>
-			<li class="">
+			<li class="recruitMgr">
 				<a href="/company/recruitment?" style="text-decoration: none;">공고 관리</a>
 			</li>
-			<li class="">
-				<a href="/company/info#" style="text-decoration: none;">기업 상세 정보</a>
+			<li class="infoMgr">
+				<a href="/company/info#" style="text-decoration: none;">기업 정보 관리</a>
 			</li>
 		</ul>
 		

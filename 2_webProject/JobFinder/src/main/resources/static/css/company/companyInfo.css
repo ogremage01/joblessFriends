@@ -1,0 +1,90 @@
+	/* 사이드바 카테고리 선택 색상 */
+	.sidebar .infoMgr {
+		color: #F69800;
+		font-weight: bold;	
+	}
+	
+	.content {
+		user-select: none;
+	}
+	
+	/* 계정 정보*/
+	.accountInfo {
+		display: flex;
+		flex-direction: column;
+		gap: 25px;
+	}
+	
+	.accountInfo h2 {
+		margin:0px;
+		padding: 15px 0px;
+		border-top: 1px solid #D3D5D9;
+		border-bottom: 1px solid #D3D5D9;
+		
+		font-size: 20px;
+		font-weight: bold;
+		color: #1B202F;
+	}
+	
+	/* 폼 */
+	.formStyle {
+		width: 400px;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+	
+	.formStyle label{
+		color:#6D707B;
+		font-size: 14px;
+		display: block;
+		margin-bottom: 8px;
+	}
+	
+	.formStyle .form-control, .formStyle .form-control-plaintext {
+		width: 230px;
+		height: 14px;
+		padding: 13px 10px;
+		border: 1px solid #D1D5E3;
+		outline: none;
+		border-radius: 5px;
+		font-size: 14px;
+	}
+	
+	.formStyle input::placeholder {
+		color: #BABECA;
+	}
+	
+	.formStyle input:hover{
+		border:1px solid #C9C9C9;
+	}
+	
+	.formStyle input:focus {
+		border: 1px solid #F69800;
+	}
+	
+	/* 	유효성 검사 */
+	.valiCheckText {
+		color: red;
+		font-size: 14px;
+	}
+	
+	/* 	버튼  */
+	.btn {
+		border-radius: 3px;
+		border: none;
+		outline: 1px solid #AFB2BD;
+		
+		background-color: white;
+		color: #6D707B;
+		
+		padding: 5px 10px;
+		font-size: 14px;
+		cursor: pointer;
+	}
+	
+	.btn:hover {
+		border: none;
+		background-color: #F3F4F8;
+	}
+	
