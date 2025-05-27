@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joblessfriend.jobfinder.admin.dao.communityPost">
+
+	<resultMap type="CommunityVo" id="communityPostResultVo">
+		<id column="COMMUNITY_ID" property="communityId" />
+		<result column="MEMBER_ID" property="memberId" />
+		<result column="NICKNAME" property="nickname" />
+		<result column="TITLE" property="title" />
+		<result column="CONTENT" property="content" />
+		<result column="CREATE_AT" property="createAt"
+			javaType="java.util.Date" />
+		<result column="MODIFIED_AT" property="modifiedAt"
+			javaType="java.util.Date" />
+		<result column="VIEWS" property="views" />
+	</resultMap>
+
+
+<delete id="communityPostDelete" parameterType="list">
+	DELETE FROM COMMUNITY
+	WHERE COMMUNITY_ID IN
+	<foreach item="communityId" collection="list" open="(" separator="," close=")">
+		#{communityId}
+	</foreach>
+</delete>
+
+
+</mapper>

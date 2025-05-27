@@ -60,10 +60,7 @@ public class CommunityController {
 		SearchVo searchVo = new SearchVo();
 		searchVo.setKeyword(keyword);
 		searchVo.setPage(page);
-		searchVo.setRecordSize(4);
-		
-		System.out.println("키워트 검색부분: "+keyword);
-		
+		searchVo.setRecordSize(4);	
 		
 	    int totalCount = communityService.getCommunityTotalCount(searchVo);//전체 데이터 수
 	    Pagination pagination = new Pagination(totalCount, searchVo);
@@ -156,6 +153,7 @@ public class CommunityController {
 		// 커뮤니티 상세 정보 가져오기
 		CommunityVo communityVo = communityService.communityDetail(no);
 		
+		//session중일 떄 view 카운트
 		if(session != null || session.getAttribute("userLogin")!=null) {
 			Boolean viewed = (Boolean) session.getAttribute("community_"+no);
 			
@@ -170,7 +168,7 @@ public class CommunityController {
 				//조회수 업데이트
 				communityService.communityViewCount(communityVo);
 				
-				session.setAttribute("community_"+no, true);
+				session.setAttribute("community_"+no, true);//해당 세션 중 뷰 카운트 했으면 true(여러번 카운트 못하게 막음)
 			}
 		
 		}

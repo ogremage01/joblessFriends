@@ -54,6 +54,10 @@
 							</div>
 						</div>
 						<input type="hidden" id="communityNo" value="${community.communityId}" />
+						<script type="text/javascript">
+							const userType = "";
+							const memberId = 0;
+						</script>
 					</c:when>
 					<c:when test="${sessionScope.admin ne null}"><!-- 관리자용 댓글 -->
 						<div id="inputCommentWrap">

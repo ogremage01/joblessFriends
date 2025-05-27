@@ -105,29 +105,29 @@
   
 	  <!-- 본문영역  -->
 		<div id="container">
-			<h1 style="text-align: center;">커뮤니티 관리 목록</h1>
+			<h1 style="text-align: center;">댓글 관리 목록</h1>
 			<table class="table table-striped">
 				<thead class="table-dark" style="margin: auto;">
 					<tr>
 						<td><button id="massDelCom">삭제</button></td>
 						<td>ID</td>
-						<td>제목</td>
+						<td>내용</td>
 						<td>작성자</td>
 						<td>작성 날짜</td>
-						<td>조회수</td>
+						<td>관련 포스트</td>
 						<td>삭제</td>
 					</tr>
 				</thead>
 				<tbody class="table-group-divider">
-					<c:forEach var="communityVo" items="${communityList}">
+					<c:forEach var="commentVo" items="${commentList}">
 						<tr>
-							<td style="text-align: center;"><input type="checkbox" class="delPost" name="delete" value="${communityVo.communityId}"></td>
-							<td>${communityVo.communityId}</td>
-							<td><a href="http://localhost:9090/community/detail?no=${communityVo.communityId}">${communityVo.title}</a></td>
-							<td>${communityVo.nickname}</td>
-							<td><fmt:formatDate value="${communityVo.createAt}" pattern="yyyy-MM-dd" /></td>
-							<td class='view'>${communityVo.views}</td>
-							<td><button class="delBtn" value="${communityVo.communityId}">삭제</button></td>
+							<td style="text-align: center;"><input type="checkbox" class="delPost" name="delete" value="${commentVo.postCommentId}"></td>
+							<td>${commentVo.postCommentId}</td>
+							<td><a href="http://localhost:9090/community/detail?no=${commentVo.postCommentId}">${commentVo.content}</a></td>
+							<td>${commentVo.nickname}</td>
+							<td><fmt:formatDate value="${commentVo.createAt}" pattern="yyyy-MM-dd" /></td>
+							<td>${commentVo.postCommentId}</td> <!-- 종류부분: 댓글, 대댓글+번호 -->
+							<td><button class="delBtn" value="${commentVo.postCommentId}">삭제</button></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -141,18 +141,18 @@
 				
 					<ul class="pagination justify-content-center">
 						<li class="page-item ${searchVo.page==1?'disabled':''}">
-							<a class="page-link" href="/admin/community/post?page=${searchVo.page-1}&keyword=${searchVo.keyword}">Previous</a>
+							<a class="page-link" href="/admin/community/comment?page=${searchVo.page-1}&keyword=${searchVo.keyword}">Previous</a>
 						</li>
 						<c:forEach begin="${pagination.startPage}" var="i" 
 							end="${pagination.endPage}">
 							<li class="page-item ${searchVo.page==i?'active':''}">
-							<a class="page-link" href="/admin/community/post?page=${i}&keyword=${searchVo.keyword}">${i}</a></li>
+							<a class="page-link" href="/admin/community/comment?page=${i}&keyword=${searchVo.keyword}">${i}</a></li>
 						</c:forEach>
 
 						<!-- <li class="page-item active" aria-current="page"><a
 						class="page-link" href="#">2</a></li> -->
 						<li class="page-item"><a
-							class="page-link ${searchVo.page==pagination.totalPageCount? 'disabled':''}" href="/admin/community/post?page=${searchVo.page+1}&keyword=${searchVo.keyword}">Next</a></li>
+							class="page-link ${searchVo.page==pagination.totalPageCount? 'disabled':''}" href="/admin/community/comment?page=${searchVo.page+1}&keyword=${searchVo.keyword}">Next</a></li>
 					</ul>
 				
 				</nav>
@@ -160,8 +160,8 @@
 			</div>
 
 			<div id="searchContainer">
-				<input id="communityKeyword" type="text" name="keyword" placeholder="제목 검색">
-				<button id="communitySearchBtn" class="btn btn-light">검색</button>
+				<input id="commentKeyword" type="text" name="keyword" placeholder="제목 검색">
+				<button id="commentSearchBtn" class="btn btn-light">검색</button>
 			</div>
 		</div>
 			
@@ -174,15 +174,15 @@
 <script type="text/javascript">
 
 	
-	function deleteCommunities(communityIdList) {
+	function deleteComments(commentIdList) {
 	    if (!confirm("삭제를 진행합니까?")) return;
 
-	    fetch("/admin/community/post/delete", {
+	    fetch("/admin/community/comment/delete", {
 	        method: "DELETE",
 	        headers: {
 	            "Content-Type": "application/json"
 	        },
-	        body: JSON.stringify(communityIdList) // 배열 전달
+	        body: JSON.stringify(commentIdList) // 배열 전달
 	    })
 	    .then(response => {
 	        if (!response.ok) {
@@ -208,32 +208,32 @@
 
 	for (let i = 0; i < delBtnArr.length; i++) {//선택된 삭제 목록
 	    delBtnArr[i].addEventListener("click", function (e) {
-	        const communityId = e.target.value;
-	        deleteCommunities([communityId]); // 단일도 배열로
+	        const commentId = e.target.value;
+	        deleteComments([commentId]); // 단일도 배열로
 	    });
 	}
 	
 	document.getElementById("massDelCom").addEventListener("click", function () {
 	    const checked = document.querySelectorAll(".delPost:checked");
-	    const communityIdList = Array.from(checked).map(el => el.value);
+	    const commentIdList = Array.from(checked).map(el => el.value);
 
-	    if (communityIdList.length === 0) {
+	    if (commentIdList.length === 0) {
 	        alert("삭제할 항목을 선택하세요.");
 	        return;
 	    }
 
-	    deleteCommunities(communityIdList);
+	    deleteComments(commentIdList);
 	});
 	
 	
-	const searchCommunityBtn = document.getElementById("communitySearchBtn");
+	const searchCommentBtn = document.getElementById("commentSearchBtn");
 
-	searchCommunityBtn.addEventListener("click", function(e){
-	    const communityKeywordVal = document.getElementById("communityKeyword").value;
+	searchCommentBtn.addEventListener("click", function(e){
+	    const commentKeywordVal = document.getElementById("commentKeyword").value;
 	    
-	    if(communityKeywordVal != null || communityKeywordVal != ""){
+	    if(commentKeywordVal != null || commentKeywordVal != ""){
 	        
-	        location.href=`/admin/community/post?keyword=\${communityKeywordVal}`;
+	        location.href=`/admin/community/comment?keyword=\${commentKeywordVal}`;
 	        
 	    }
 	    

@@ -7,6 +7,7 @@ import java.util.Map;
 import com.joblessfriend.jobfinder.community.domain.CommunityVo;
 import com.joblessfriend.jobfinder.util.SearchVo;
 
+
 public interface CommunityService{
 
 	void communityInsertOne(CommunityVo communityVo);

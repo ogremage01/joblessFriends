@@ -43,6 +43,8 @@ h2 {
 	width: 50px;
 	margin: 0px;
 	font-size: 10pt;
+	color: #a2a6b1;
+	display: flex;
 }
 
 #noCommunity{
