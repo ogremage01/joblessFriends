@@ -87,7 +87,7 @@
 	color: white;
 }
 
-.nickName{
+.nickName p{
 	width: 120px;
 	height: 20px;
 	overflow: hidden;
@@ -96,9 +96,3 @@
 	
 }
 
-#boxTextWrap p{
-	width: 120px;
-	height: 20px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}

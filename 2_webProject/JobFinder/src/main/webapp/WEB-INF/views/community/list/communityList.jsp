@@ -30,13 +30,29 @@
 </head>
 
 <body>
+<!-- 헤더부분 -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-
+<!-- 헤더부분 끝ㄴ -->
 	<div id='containerWrap' class="wrap">
 		<div id='communityList'>
 			<jsp:include page="/WEB-INF/views/community/list/communitySideBar.jsp"/>
 		</div>	
+
+		
+		
+	<!-- 	게시글 리스트 부분 -->
 		<div>
+		
+				<!-- 공지사항 항목 뜨는 부분 -->	
+				<div id='notice' class='boxStyle ' onclick="moveNoticePage(this)">
+					<div id='noticeType'>
+						공지
+					</div>
+				</div>
+				<!-- 공지사항 항목 뜨는 부분 끝 -->	
+				
+		
+		
 			<c:if test="${empty communityList}">
 				<div id='noCommunityBox'>
 					<span id='noCommunity'> 게시글이 존재하지 않습니다. </span>
@@ -81,7 +97,7 @@
 			
 			</c:forEach>
 		</div>
-		
+		<!-- 	게시글 리스트 부분 끝 -->
 		<jsp:include page="/WEB-INF/views/community/topBar.jsp"/>
 	</div>
 	<div id="pageWrap">

@@ -63,3 +63,35 @@ h2 {
 	justify-content: space-between;
 
 }
+
+#notice{	
+	width: 908px;
+	height: 36px;
+	padding: 6px;
+	margin-bottom: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	cursor: pointer;
+
+/* 	border: 2px solid #D1D5E3; */
+ 	border: 2px solid #F69800; 
+	border-radius: 5px;	
+	background-color: white;
+}
+
+#noticeType{/* 공지 타입(일반공지, 이벤트) 등이 뜨는 란 */
+	width: 80px;
+	height: 35px;
+	
+	border: 1px solid #F69800; 	
+	border-radius: 50px;
+	background-color: #fff3e0;
+	
+	color: #F69800;
+	
+	text-align: center;
+	line-height: 35px;
+	
+	
+}

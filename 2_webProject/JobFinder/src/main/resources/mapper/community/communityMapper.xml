@@ -95,7 +95,7 @@
 	
 	
 	<!-- 페이지네이션 -->
-	<select id="getCommunityTotalCount" resultType="int" parameterType="com.joblessfriend.jobfinder.community.domain.CommunityVo">
+	<select id="getCommunityTotalCount" resultType="int" parameterType="com.joblessfriend.jobfinder.util.SearchVo">
         SELECT COUNT(*)
         FROM COMMUNITY
         <if test="keyword != null or keyword != ''">

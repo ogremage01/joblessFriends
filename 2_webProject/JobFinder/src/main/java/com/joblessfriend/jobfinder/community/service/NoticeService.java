@@ -1,0 +1,14 @@
+package com.joblessfriend.jobfinder.community.service;
+
+import java.util.List;
+
+import com.joblessfriend.jobfinder.community.domain.NoticeVo;
+import com.joblessfriend.jobfinder.util.SearchVo;
+
+public interface NoticeService {
+
+	int getNoticeTotalCount(SearchVo searchVo);
+
+	List<NoticeVo> noticeSelectList(SearchVo searchVo);
+
+}

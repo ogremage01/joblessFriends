@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joblessfriend.jobfinder.community.notice">
+
+	<resultMap type="NoticeVo" id="noticeResultVo">
+		<id column="NOTICE_ID" property="noticeId" />
+		<result column="ADMIN_ID" property="adminId" />
+		<result column="NOTICE_CATEGORY_ID" property="noticeCategoryId" />
+		<result column="TITLE" property="title" />
+		<result column="CONTENT" property="content" />
+		<result column="CREATE_AT" property="createAt"
+			javaType="java.util.Date" />
+		<result column="MODIFIED_AT" property="modifiedAt"
+			javaType="java.util.Date" />
+		<result column="VIEWS" property="views" />
+		
+		<!-- noticeCategory 내부 매핑 -->
+	    <association property="noticeCategory" javaType="com.joblessfriend.jobfinder.community.domain.NoticeCategoryVo">
+	        <result column="NOTICE_CATEGORY_CONTENT" property="noticeCategoryContent" />        
+	    </association>
+		
+	</resultMap>
+	
+
+	<select id="noticeSelectList" parameterType="com.joblessfriend.jobfinder.util.SearchVo" resultMap="noticeResultVo" >
+	<![CDATA[
+		SELECT *
+		FROM (SELECT INNER_QUERY.*, ROWNUM AS rnum
+		        FROM (SELECT NOTI.NOTICE_ID, NOTI.ADMIN_ID, NOTI.NOTICE_CATEGORY_ID, 
+		        		NOTI.TITLE,NOTI.CONTENT, NOTI.CREATE_AT, NOTI.MODIFIED_AT, NOTI.VIEWS,  
+		        		CATE.NOTICE_CATEGORY_CONTENT
+		                FROM NOTICE NOTI INNER JOIN NOTICE_CATEGORY CATE
+		                ON NOTI.NOTICE_CATEGORY_ID = CATE.NOTICE_CATEGORY_ID
+		                WHERE 1=1
+	]]>
+		<if test="keyword != null and keyword != ''">
+		         AND (NOTI.TITLE LIKE '%' || #{keyword} || '%'
+		         OR NOTI.CONTENT LIKE '%' || #{keyword} || '%')
+		</if>
+	<![CDATA[
+		        ORDER BY NOTI.NOTICE_ID DESC) INNER_QUERY 
+		    WHERE ROWNUM <= #{endRow})
+		WHERE rnum >= #{startRow}
+	]]>
+	</select>
+	
+	<select id="getNoticeTotalCount" resultType="int" parameterType="com.joblessfriend.jobfinder.util.SearchVo">
+		SELECT COUNT(*)
+        FROM NOTICE
+        <if test="keyword != null or keyword != ''">
+	     	where (TITLE LIKE '%' || #{keyword} || '%'
+	        OR CONTENT LIKE '%' || #{keyword} || '%')
+         </if>
+	</select>
+	
+	
+</mapper>
