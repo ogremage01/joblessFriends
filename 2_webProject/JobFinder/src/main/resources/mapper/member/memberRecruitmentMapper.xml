@@ -21,7 +21,7 @@
              JOIN COMPANY c ON jp.company_id = c.company_id
              JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
              JOIN JOB j ON jp.job_id = j.job_id
-             JOIN BOOKMARK BK ON JP.JOB_POST_ID = BK.JOB_POST
+             JOIN BOOKMARK BK ON JP.JOB_POST_ID = BK.JOB_POST_ID
     WHERE BK.MEMBER_ID = #{memberId}
     ORDER BY jp.end_date ASC
 
