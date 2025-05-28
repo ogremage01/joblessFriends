@@ -14,6 +14,16 @@
 	<link rel="stylesheet" href="/css/common/common.css">
 	<link rel="stylesheet" href="/css/member/memberMyPage.css" />
 	<link rel="stylesheet" href="/css/member/bookmarkView.css" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" 
+	rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" 
+	integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+	
+<style type="text/css">
+
+
+</style>
 
 </head>
 <body>
@@ -63,10 +73,8 @@
 				
 				                    <!-- 오른쪽: 버튼 및 마감일 -->
 				                    <span class="deleteBookmark"data-jobpostid="${item.jobPostId}">
-				                    	<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-											  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-											  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-											</svg></span>
+				                    	<i class="bi bi-trash"></i>
+									</span>
 				                    <div class="job-action">
 				                        <button class="apply-btn" type="button" onclick="">지원하기</button>
 				                        <div class="deadline">~<fmt:formatDate value="${item.endDate}" pattern="MM/dd(E)" /></div>
@@ -77,7 +85,35 @@
 				            </c:forEach>
 				        </div>
 
+			    	<!-- 페이지네이션 배치 -->
 			    	
+			    		<div id="pageWrap">
+						<div id="pagination">
+							<!-- 이전 페이지 -->
+							<button class="page-btn" 
+							        ${searchVo.page == 1 ? 'disabled' : ''}
+							        onclick="goToPage(${searchVo.page - 1}, '${searchVo.keyword}')">«</button>
+					
+							<!-- 페이지 번호 -->
+							<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="i">
+								<button class="page-btn ${searchVo.page == i ? 'active' : ''}"
+								        ${searchVo.page == i ? 'disabled' : ''}
+								        onclick="goToPage(${i},  '${searchVo.keyword}')">${i}</button>
+							</c:forEach>
+					
+							<!-- 다음 페이지 -->
+							<button class="page-btn"
+							        ${searchVo.page == pagination.totalPageCount ? 'disabled' : ''}
+							        onclick="goToPage(${searchVo.page + 1}, '${searchVo.keyword}')">»</button>
+				
+						</div>
+						
+							<form id='pagingForm' action="/member/bookmark" method='get'>
+								<input type="hidden" name="page" id="pageInput">
+								<input type="hidden" name="keyword" id="keywordInput">
+							</form>
+												
+					</div>
 		    	</div>
 		      
 		    </div>
@@ -89,4 +125,7 @@
 </body>
 
 <script src="/js/member/bookmarkView.js"></script>
+
+
+
 </html>

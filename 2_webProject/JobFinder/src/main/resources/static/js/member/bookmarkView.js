@@ -44,3 +44,12 @@ $(document).on('click', '.deleteBookmark', function(e){
 			    });
 	}
 });
+
+
+function goToPage(page, keyWord){
+	$('#pageInput').val(page);
+	$('#keywordInput').val(keyWord);
+	$('#pagingForm').submit();
+	
+
+}

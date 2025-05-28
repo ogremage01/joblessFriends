@@ -2,6 +2,8 @@ package com.joblessfriend.jobfinder.member.service;
 
 import com.joblessfriend.jobfinder.member.dao.MemberRecruitmentDao;
 import com.joblessfriend.jobfinder.recruitment.domain.*;
+import com.joblessfriend.jobfinder.util.SearchVo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -16,10 +18,24 @@ public class MemberRecruitmentServiceImpl implements MemberRecruitmentService {
 
 
 	@Override
-	public List<RecruitmentVo> selectRecruitmentList(int memberId) {
+	public List<RecruitmentVo> selectRecruitmentList(int memberId, SearchVo searchVo) {
 		// TODO Auto-generated method stub
-		return recruitmentDao.selectRecruitmentList(memberId);
+		return recruitmentDao.selectRecruitmentList(memberId, searchVo);
 	}
 
+	
+	@Override
+	public void deleteOne(int memberId, int jobPostId) {
+		// TODO Auto-generated method stub
+
+		recruitmentDao.deleteOne(memberId, jobPostId);
+	}
+
+
+	@Override
+	public int bookmarkCount(int memberId, SearchVo searchVo) {
+		// TODO Auto-generated method stub
+		return recruitmentDao.bookmarkCount(memberId, searchVo);
+	}
 
 }
