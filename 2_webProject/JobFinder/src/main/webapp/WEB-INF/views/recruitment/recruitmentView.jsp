@@ -142,9 +142,20 @@
 
                     <!-- 오른쪽: 버튼 및 마감일 -->
                     <div class="job-action">
-                        <button class="apply-btn" type="button" onclick="">지원하기</button>
-                        <div class="deadline">~<fmt:formatDate value="${item.endDate}" pattern="MM/dd(E)" /></div>
+                        <c:choose>
+                            <c:when test="${item.isContinuous == 0}">
+                                <button class="apply-btn" type="button" onclick="location.href='/apply?jobPostId=${item.jobPostId}'">지원하기</button>
+                            </c:when>
+                            <c:otherwise>
+                                <button class="apply-btn" type="button" disabled style="background: #ccc; cursor: not-allowed;">마감됨</button>
+                            </c:otherwise>
+                        </c:choose>
+
+                        <div class="deadline">
+                            ~<fmt:formatDate value="${item.endDate}" pattern="MM/dd(E)" />
+                        </div>
                     </div>
+
                 </div>
             </c:forEach>
         </div>

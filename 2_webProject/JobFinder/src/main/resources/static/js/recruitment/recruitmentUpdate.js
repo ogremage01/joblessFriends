@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    //복리후생 코드 //
+    syncWelfareTagsFromDOM();
     //파일 이름 //
     $('#jobImgFile').on('change', function () {
         const file = this.files[0];
@@ -11,24 +13,12 @@ $(document).ready(function () {
         }
     });
 
+
     $('#removeFileBtn').on('click', function () {
         $('#jobImgFile').val('');
         $('#fileNameText').text('');
         $('#fileInfoBox').hide();
     });
-    //복리후생리스트
-    const initialWelfare = $('input[name="welfareList"]').val();
-    if (initialWelfare) {
-        welfareTags = initialWelfare.split('|');
-        welfareTags.forEach(tag => {
-            $('#welfareList').append(`
-                <div class="flex-row welfare-item">
-                    <span>${tag}</span>
-                    <button type="button" class="remove-welfare" data-val="${tag}">X</button>
-                </div>
-            `);
-        });
-    }
 
     // 직군 선택 변경 시
     $('select[name="jobGroupId"]').on('change', function () {
@@ -80,9 +70,9 @@ $(document).ready(function () {
 
 
 
-
+//미리보기//
 $("#generateTemplate").on('click',function () {
-    updateWelfareInput();
+
     if (!validateFormInputs()) return;
     let titleValue = $(".InsertTitle > input").val();
 
@@ -96,7 +86,13 @@ $("#generateTemplate").on('click',function () {
     let templateType = $("select[name='templateType']").val();    //템플릿 타입  //
     let startDate = $('.InsertDate input[name="startDate"]').val();
     let endDate = $('.InsertDate input[name="endDate"]').val();
-    const welfareHtml = welfareTags.map(text => `<li>${text}</li>`).join('');
+    const welfareHtml = $(".welfare-item > span")
+        .map(function () {
+            return `<li>${$(this).text().trim()}</li>`;
+        })
+        .get()
+        .join('');
+
     const selectedTags = $('input[name="tagId"]:checked')
         .map(function () {
             return $(this).val(); // tagId만 수집
@@ -338,17 +334,78 @@ function loginFailPop(msg) {
     }, 1500);
 }
 
-let welfareTags = [];
+
+//
+// function updateWelfareInput() {
+//     const tags = [];
+//
+//     $('#welfareList .welfare-item span').each(function () {
+//         const text = $(this).text().trim();
+//         const isValid = text && !text.includes(',') && /^[가-힣a-zA-Z0-9\s]+$/.test(text);
+//         if (isValid && !tags.includes(text)) {
+//             tags.push(text);
+//         }
+//     });
+//     console.log(tags);
+//     $('input[name="welfareList"]').val(tags.length ? tags.join('|') : '');
+// }
 
 function updateWelfareInput() {
-    $('input[name="welfareList"]').val(welfareTags.join('|'));
+    const tags = [];
+
+    $('#welfareList .welfare-item span').each(function () {
+        const text = $(this).text().trim();
+        const isValid = text && !text.includes(',') && /^[가-힣a-zA-Z0-9\s]+$/.test(text);
+        if (isValid && !tags.includes(text)) {
+            tags.push(text);
+        }
+    });
+    console.log(tags);
+    $('input[name="welfareList"]').val(tags.length ? tags.join('|') : '');
 }
+
+
+
+
+function syncWelfareTagsFromDOM() {
+    const seen = new Set();
+    welfareTags = [];
+
+    $('#welfareList .welfare-item span').each(function () {
+        const text = $(this).text().trim();
+
+        // ✅ 유효하지 않으면 return
+        const isValid = text && !text.includes(',') && /^[가-힣a-zA-Z0-9\s]+$/.test(text);
+
+        if (isValid && !seen.has(text)) {
+            seen.add(text);
+            welfareTags.push(text);
+        }
+    });
+
+    // ✅ 빈 배열이면 input 비움
+    if (welfareTags.length === 0) {
+        $('input[name="welfareList"]').val('');
+    } else {
+        updateWelfareInput();
+    }
+}
+
+
+
+
 
 function addWelfareItem() {
     const value = $('#welfareInput').val().trim();
-    if (!value || welfareTags.includes(value)) return;
 
-    welfareTags.push(value);
+    let isDuplicate = false;
+    $('#welfareList .welfare-item span').each(function () {
+        if ($(this).text().trim() === value) {
+            isDuplicate = true;
+        }
+    });
+    if (isDuplicate) return;
+
     $('#welfareList').append(`
         <div class="flex-row welfare-item">
             <span>${value}</span>
@@ -359,6 +416,8 @@ function addWelfareItem() {
     updateWelfareInput();
 }
 
+
+
 $('#addWelfareBtn').on('click', addWelfareItem);
 $('#welfareInput').on('keypress', function (e) {
     if (e.key === 'Enter') {
@@ -367,33 +426,28 @@ $('#welfareInput').on('keypress', function (e) {
     }
 });
 
+//복리후생 x표시처리업데이트 //
 $(document).on('click', '.remove-welfare', function () {
-    const val = $(this).data('val');
-    welfareTags = welfareTags.filter(tag => tag !== val);
-    $(this).closest('.welfare-item').remove();
-    updateWelfareInput();
+    $(this).closest('.welfare-item').remove(); // DOM에서 삭제
+    syncWelfareTagsFromDOM(); // ✅ DOM 기반으로 welfareTags 다시 구성
 });
 
+// submit 전에 무조건 한 번 더 동기화
 $('#updateForm').on('submit', function (e) {
-    e.preventDefault(); // 기본 submit 막기
+    e.preventDefault();
+
 
     const markdown = editor.getHTML();
     $('#hiddenContent').val(markdown);
 
-    // 유효성 검사 먼저 수행
-    if (!validateFormInputs()) {
-        return;
-    }
+    if (!validateFormInputs()) return;
 
     const selectedSkillIds = $('input[name="tagId"]:checked')
-        .map(function () {
-            return $(this).val();
-        }).get().slice(0, 5);
+        .map(function () { return $(this).val(); })
+        .get()
+        .slice(0, 5);
     $('input[name="skills"]').val(selectedSkillIds.join(','));
-
-    updateWelfareInput(); // 복리후생 hidden 처리
-
-    // ✅ SweetAlert 컨펌
+    console.log($('#welfareList').val());
     Swal.fire({
         title: '수정하시겠습니까?',
         icon: 'question',
@@ -402,7 +456,7 @@ $('#updateForm').on('submit', function (e) {
         cancelButtonText: '취소'
     }).then((result) => {
         if (result.isConfirmed) {
-            e.target.submit(); // ✅ 실제 form 전송
+            e.target.submit();
         }
     });
 });

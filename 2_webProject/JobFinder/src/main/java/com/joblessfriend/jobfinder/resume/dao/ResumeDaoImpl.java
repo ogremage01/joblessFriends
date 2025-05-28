@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ResumeDaoImpl implements ResumeDao{
+class ResumeDaoImpl implements ResumeDao{
 	
 	private final String namespace = "com.joblessfriend.jobfinder.resume.dao.ResumeDao";
 
@@ -43,11 +43,10 @@ public class ResumeDaoImpl implements ResumeDao{
 		
 	}
 
-	@Override
-	public ResumeVo getResumeByResumeId(int resumeId) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace + ".getResumeByResumeId", resumeId);
-	}
+    @Override
+    public ResumeVo getResumeByResumeId(int resumeId) {
+        return null;
+    }
 
     @Override
     public void insertResume(ResumeVo resume) {
@@ -83,4 +82,5 @@ public class ResumeDaoImpl implements ResumeDao{
     public void insertPortfolio(PortfolioVo portfolio) {
 
     }
+
 }

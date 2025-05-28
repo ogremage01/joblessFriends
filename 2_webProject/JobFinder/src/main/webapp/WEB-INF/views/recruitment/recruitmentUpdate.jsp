@@ -34,7 +34,7 @@
         <form id="updateForm" action="${pageContext.request.contextPath}/Recruitment/update" method="post" enctype="multipart/form-data">
             <input type="hidden" name="tempKey" value="${recruitmentVo.tempKey}" />
             <input type="hidden" name="jobPostId" value="${recruitmentVo.jobPostId}" />
-            <input type="hidden" name="welfareList">
+
             <div class="InsertMain">
 
                 <!-- 제목 -->
