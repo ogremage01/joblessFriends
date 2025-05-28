@@ -42,5 +42,11 @@ public class CertificateDaoImpl implements CertificateDao {
 		sqlSession.delete(namespace + "certificateDeleteOne", resumeId);
 	}
 
+	@Override
+	public List<CertificateVo> certificateSearchList(String certificateName) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace + "certificateSearchList", certificateName);
+	}
+
 	
 }

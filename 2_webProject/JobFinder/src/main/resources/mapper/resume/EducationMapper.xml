@@ -19,7 +19,7 @@
         WHERE RESUME_ID=#{resumeId}
     </select>
 
-	<insert id="educationInsertOne">
+	<insert id="educationInsertOne" parameterType="com.joblessfriend.jobfinder.resume.domain.EducationVo">
 		INSERT INTO EDUCATION
 		(EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE)
 		VALUES(EDU_ID_SEQ.NEXTVAL, #{resumeId}, #{eduInstitution}, #{eduName}, #{startDate}, #{endDate})
@@ -30,4 +30,13 @@
         WHERE RESUME_ID=#{resumeId}
         AND EDU_ID=#{eduId}
 	</delete>
+	
+	<update id="educationUpdateOne" parameterType="com.joblessfriend.jobfinder.resume.domain.EducationVo">
+		UPDATE EDUCATION
+		SET EDU_NAME = #{eduName}
+		, START_DATE = #{startDate}
+		, END_DATE = #{endDate}
+		WHERE RESUME_ID = #{resumeId}
+		AND EDU_ID = #{eduId};
+	</update>
 </mapper>

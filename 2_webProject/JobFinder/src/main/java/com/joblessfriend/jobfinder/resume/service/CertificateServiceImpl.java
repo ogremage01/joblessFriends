@@ -38,5 +38,11 @@ public class CertificateServiceImpl implements CertificateService{
 		certificateDao.certificateDeleteOne(resumeId);
 	}
 
+	@Override
+	public List<CertificateVo> certificateSearchList(String certificateName) {
+		// TODO Auto-generated method stub
+		return certificateDao.certificateSearchList(certificateName);
+	}
+
 
 }

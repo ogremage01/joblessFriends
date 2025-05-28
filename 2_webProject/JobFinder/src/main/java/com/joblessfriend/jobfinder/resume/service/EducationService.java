@@ -10,4 +10,5 @@ public interface EducationService {
 	public List<EducationVo> educationSelectList(int resumeId);
 	public void educationInsertOne(EducationVo educationVo);
 	public void educationDeleteOne(int eduId, int resumeId);
+	public void educationUpdateOne(EducationVo educationVo);
 }
