@@ -32,6 +32,7 @@ import com.joblessfriend.jobfinder.util.Pagination;
 import com.joblessfriend.jobfinder.util.SearchVo;
 import com.joblessfriend.jobfinder.util.file.FileUtils;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/community")//기본 시작 루트. 하단 모든 경로 앞에 붙는다 생각하기
@@ -44,6 +45,9 @@ public class CommunityController {
 	private PostCommentService postCommentService;
 	@Autowired
 	private CommunityService communityService;
+	
+	@Autowired
+	HttpServletRequest request;//이미지 저장 서버를 위해 생성
 	
 	//파일 업로드용(추가)
 	@Autowired
@@ -290,7 +294,7 @@ public class CommunityController {
 	    String storedFileName = uploadResult.get("storedFileName");
 	    String originalFileName = uploadResult.get("originalFileName");
 	    String fileExtension = storedFileName.substring(storedFileName.lastIndexOf('.') + 1); // 확장자 추출
-	    String imageUrl = "http://localhost:9090/image/"+ storedFileName;
+	    String imageUrl = "/image/"+ storedFileName;
 
 	    
 	    Map<String, Object> fileMap = new HashMap<>();
@@ -353,7 +357,7 @@ public class CommunityController {
 	    String storedFileName = updateResult.get("storedFileName");
 	    String originalFileName = updateResult.get("originalFileName");
 	    String fileExtension = storedFileName.substring(storedFileName.lastIndexOf('.') + 1); // 확장자 추출
-	    String imageUrl = "http://localhost:9090/image/"+ storedFileName;
+	    String imageUrl = "/image/"+ storedFileName;
 
 	    		
 	    System.out.println("\n파일명: " + storedFileName);

@@ -9,10 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.joblessfriend.jobfinder.community.domain.CommunityVo;
 import com.joblessfriend.jobfinder.community.domain.NoticeVo;
+import com.joblessfriend.jobfinder.community.domain.PostCommentVo;
 import com.joblessfriend.jobfinder.community.service.NoticeService;
 import com.joblessfriend.jobfinder.util.Pagination;
 import com.joblessfriend.jobfinder.util.SearchVo;
+
+import jakarta.servlet.http.HttpSession;
 
 //공지 부문
 /* 존재하는 기능: 공지 리스트 보이기, 세부사항 보이기. */
@@ -73,5 +77,43 @@ public class NoticeController {
 	
 	
 	//세부사항
+	
+	@GetMapping("/detail")
+	public String noticeDetail(@RequestParam int no, Model model, HttpSession session) {
+		System.out.println("공지글 세부 시작");
+
+		// 커뮤니티 상세 정보 가져오기
+		NoticeVo noticeVo = noticeService.noticeDetail(no);
+		System.out.println("공지글 세부 아이디: "+no);
+		//session중일 떄 view 카운트
+		if(session != null || session.getAttribute("userLogin")!=null) {
+			Boolean viewed = (Boolean) session.getAttribute("notice_"+no);
+			
+			if(viewed == null || !viewed) {
+	
+				int views = noticeVo.getViews();
+				
+				views += 1;
+				
+				noticeVo.setViews(views);
+				
+				//조회수 업데이트
+				noticeService.noticeViewCount(noticeVo);
+				
+				session.setAttribute("notice_"+no, true);//해당 세션 중 뷰 카운트 했으면 true(여러번 카운트 못하게 막음)
+			}
+		
+		}
+		
+		// 마크다운 -> HTML 변환
+		String htmlContent = Markdown.markdownToHtml(noticeVo.getContent());
+
+	    model.addAttribute("notice", noticeVo);
+	    model.addAttribute("contentHtml", htmlContent); // 변환된 HTML
+		
+		//글 상세 화면
+		return "community/notice/noticeDetail";
+	}
+	
 
 }

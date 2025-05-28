@@ -42,7 +42,7 @@
 		
 		
 	<!-- 	게시글 리스트 부분 -->
-		<div>
+		<div id="SwapContainer">
 			<div class="moveTo">
 				<div onclick="moveNotice()">커뮤니티 게시판</div>
 				<span>|</span>
@@ -50,11 +50,11 @@
 			</div>	
 			
 			<!-- 공지사항 항목 뜨는 부분 -->	
-			<div id='notice' class='boxStyle ' onclick="moveCommunityPage(this)">
+<!-- 			<div id='notice' class='boxStyle ' onclick="moveCommunityPage(this)">
 				<div id='noticeType'>
 					인기글
 				</div>
-			</div>
+			</div> -->
 			
 			<!-- 공지사항 항목 뜨는 부분 끝 -->	
 			
@@ -68,10 +68,15 @@
 				
 			<c:forEach var="notice" items="${noticeList}">
 				<div class='boxStyle boxListOne' onclick="moveDetail(this)">
-				<input type="hidden" id="communityNo" value="${notice.noticeId}">
+				<input type="hidden" id="noticeNo" value="${notice.noticeId}">
 					<div>
-						<div>
+						<div class='listTitle'>
+							<span class='noticeType'>
+								${notice.noticeCategory.noticeCategoryContent}
+							</span>
 							<h2>${notice.title}</h2>
+
+
 						</div>
 						<div id='previewContent'>
 							<p class="previewText"><c:out value="${notice.content}" escapeXml="false"/> </p>
@@ -88,7 +93,7 @@
 						</div>
 
 						<div style="display: flex; min-width: 100px; margin-left: 8px">
-							  	<span><fmt:formatDate pattern="yyyy-MM-dd" value="${community.createAt}"/> 작성</span>
+							  	<span><fmt:formatDate pattern="yyyy-MM-dd" value="${notice.createAt}"/> 작성</span>
 				
 						</div>
 					</div>
@@ -125,13 +130,13 @@
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 	
 	
-	<form id='pagingForm' action="/community" method='get'>
+	<form id='pagingForm' action="/notice/notice" method='get'>
 		<input type="hidden" name="page" id="pageInput">
 		<input type="hidden" name="keyword" id="keywordInput">
 	</form>
 	
-	<form id="communitySelectOneForm" action="/community/detail" method="get">
-		<input type="hidden" id="communityFormNo" name="no" value="">
+	<form id="noticeSelectOneForm" action="/community/notice/detail" method="get">
+		<input type="hidden" id="noticeFormNo" name="no" value="">
 	</form>
 </body>
 
@@ -144,20 +149,20 @@
 		$('#pagingForm').submit();
 		
 		
-/* 		.location.href='./community?page=${page}&keyword=${keyWord}'; */
+/* 		.location.href='./community/notice?page=${page}&keyword=${keyWord}'; */
 	}
 	
 	function moveDetail(divElement){
-		let communityIdInput = divElement.querySelector("input[id='communityNo']");
-		let communityId = communityIdInput.value;
+		let noticeIdInput = divElement.querySelector("input[id='noticeNo']");
+		let noticeId = noticeIdInput.value;
 		
-		console.log(communityId);
+		console.log(noticeId);
 		
-		let communityFormNoObj = document.getElementById('communityFormNo');
-		communityFormNoObj.value = communityId;
+		let noticeFormNoObj = document.getElementById('noticeFormNo');
+		noticeFormNoObj.value = noticeId;
 		
-		let communitySelectOneFormObj = document.getElementById('communitySelectOneForm');
-		communitySelectOneFormObj.submit();
+		let noticeSelectOneFormObj = document.getElementById('noticeSelectOneForm');
+		noticeSelectOneFormObj.submit();
 
 		
 	}

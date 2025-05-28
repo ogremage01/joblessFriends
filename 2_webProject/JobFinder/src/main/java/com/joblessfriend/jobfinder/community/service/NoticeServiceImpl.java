@@ -40,5 +40,17 @@ public class NoticeServiceImpl implements NoticeService{
 		noticeDao.noticeInsertOne(noticeVo);
 	}
 
+	@Override
+	public NoticeVo noticeDetail(int no) {
+		// TODO Auto-generated method stub
+		return noticeDao.noticeDetail(no);
+	}
+
+	@Override
+	public void noticeViewCount(NoticeVo noticeVo) {
+		// TODO Auto-generated method stub
+		noticeDao.noticeViewCount(noticeVo);
+	}
+
 
 }

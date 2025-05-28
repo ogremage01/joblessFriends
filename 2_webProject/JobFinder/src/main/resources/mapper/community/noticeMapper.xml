@@ -58,9 +58,23 @@
 		VALUES(#{noticeId}, #{adminId}, #{noticeCategoryId}, #{title}, #{content}, SYSDATE, NULL, 0)	
 	</insert>
 	
+	<select id="noticeDetail" parameterType="int" resultMap="noticeResultVo">
+		SELECT NOTI.NOTICE_ID, NOTI.ADMIN_ID, NOTI.NOTICE_CATEGORY_ID, 
+		       NOTI.TITLE,NOTI.CONTENT, NOTI.CREATE_AT, NOTI.MODIFIED_AT, NOTI.VIEWS,  
+		        CATE.NOTICE_CATEGORY_CONTENT
+		FROM NOTICE NOTI INNER JOIN NOTICE_CATEGORY CATE
+		ON NOTI.NOTICE_CATEGORY_ID = CATE.NOTICE_CATEGORY_ID
+		WHERE NOTICE_ID= #{noticeId}
+	</select>
+	
 	<select id="noticeSeqNum" resultType="int">
 		 SELECT NOTICE_ID_SEQ.NEXTVAL FROM DUAL
 	</select>
+	
+	<update id="noticeViewCount" parameterType="com.joblessfriend.jobfinder.community.domain.NoticeVo">
+   		UPDATE NOTICE SET VIEWS=#{views}
+		WHERE NOTICE_ID = #{noticeId}		
+	</update>
 	
 	
 	

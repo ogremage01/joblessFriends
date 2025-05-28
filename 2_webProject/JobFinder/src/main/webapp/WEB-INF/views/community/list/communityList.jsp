@@ -50,12 +50,12 @@
 			</div>
 			
 			<!-- 공지사항 항목 뜨는 부분 -->	
-			<div id='notice' class='boxStyle ' onclick="moveNoticePage(this)">
+<!-- 			<div id='notice' class='boxStyle ' onclick="moveNoticePage(this)">
 				
 				<div id='noticeType'>
 					공지
 				</div>
-			</div>
+			</div> -->
 			<!-- 공지사항 항목 뜨는 부분 끝 -->	
 				
 		
@@ -71,7 +71,7 @@
 				<input type="hidden" id="communityNo" value="${community.communityId}">
 					<div>
 						<div>
-							<h2>${community.title}</h2>
+							<h2 class='titleBox'>${community.title}</h2>
 						</div>
 						<div id='previewContent'>
 							<p class="previewText"><c:out value="${community.content}" escapeXml="false"/> </p>
@@ -94,10 +94,12 @@
 							<span style="min-width: 30px; text-align: center;">${community.commentCount}</span>
 							<span>|</span>
 						</div>
-						<div style="display: flex; min-width: 100px; margin-left: 8px">
+						<div style="display: flex; gap:10px; width: 120px; margin-left: 8px">
 							  	<span><fmt:formatDate pattern="yyyy-MM-dd" value="${community.createAt}"/> 작성</span>
-				
+							  	<span>|</span>  	
 						</div>
+
+						<span class="infoWriter" style="width: 300px;">작성자:${community.nickname}</span>
 					</div>
 					
 				</div>

@@ -15,4 +15,8 @@ public interface NoticeService {
 
 	void noticeInsertOne(NoticeVo noticeVo);
 
+	NoticeVo noticeDetail(int no);
+
+	void noticeViewCount(NoticeVo noticeVo);
+
 }

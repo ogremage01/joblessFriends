@@ -18,6 +18,17 @@
 	}
 </script>
 
+<style>
+.moveBtn{
+	width: 210px;
+	height: 40px;
+	
+	margin-bottom: 5px;
+	
+	text-align: center;
+}
+</style>
+
 <c:choose>
 	<c:when test="${sessionScope.userLogin ne null}">
 		<c:choose>
@@ -25,11 +36,11 @@
 				<div id='boxWrap' class="boxStyle sideBarBoxStyle">
 					<div id='boxTextWrap'>
 						<div>
-							<p><span class="nickName">${sessionScope.userLogin.nickname}</span></p>
+							<p class="nameBox"><span class="nickName">${sessionScope.userLogin.nickname}</span></p>
 							<p>작성한 글 (-)개</p>
 							<p>작성한 댓글 (-)개</p>
 						</div>
-						<a>프로필 변경</a>
+						<a href="./member/info">프로필 변경</a>
 					</div>
 					<button id='writeBtn' onclick="moveUpload()">
 						<svg xmlns="http://www.w3.org/2000/svg" width="100" height="50"
@@ -48,7 +59,7 @@
 				<div id='boxWrap' class="boxStyle sideBarBoxStyle">
 					<div id='boxTextWrap'>
 						<div>
-							<p><span class="nickName">${sessionScope.userLogin.companyName}</span> 님</p>
+							<p class="nameBox"><span class="nickName">${sessionScope.userLogin.companyName}</span> 님</p>
 							<p>(작성 고민부분)</p>
 							<p>(작성 고민부분)</p>
 						</div>
@@ -60,6 +71,21 @@
 					<div id='boxTextWrap'>
 						<div>
 							<p>관리자님 환영합니다.</p>
+							<button class='moveBtn' onclick="moveAdmin()">
+								<svg xmlns="http://www.w3.org/2000/svg" width="200" height="30"
+									fill="currentColor" class="bi bi-pencil-square"
+									viewBox="0 0 100 16">
+								  <text x="2" y="13" font-size="12">게시판 관리 페이지</text>
+								</svg>
+							</button>
+							<button class='moveBtn' onclick="moveAdmin()">
+
+								<svg xmlns="http://www.w3.org/2000/svg" width="200" height="30"
+									fill="currentColor" class="bi bi-pencil-square"
+									viewBox="0 0 100 16">
+								  <text x="2" y="13" font-size="12">공지 관리 페이지</text>
+								</svg>
+							</button>
 						</div>
 					</div>
 				</div>
@@ -70,8 +96,8 @@
 		<div id='boxWrap' class="boxStyle sideBarBoxStyle">
 			<div id='boxTextWrap'>
 				<div style="margin-top: 15px;">
-					<p>커뮤니티 작성은 개인 회원 전용 기능입니다.</p>
-					<p>로그인을 진행해주세요.</p>
+					<p style="margin-top: 0px">커뮤니티 작성은 개인 회원 전용 기능입니다.</p>
+					<p style="margin-bottom: 0px">로그인을 진행해주세요.</p>
 					<button id='writeBtn' onclick="moveLogin()">
 						<svg xmlns="http://www.w3.org/2000/svg" width="150" height="50"
 							fill="currentColor" class="bi bi-pencil-square"
@@ -111,6 +137,9 @@
 	}
 	function moveLogin(){
 		location.href="/auth/login";
+	}
+	function moveAdmin(){
+		location.href="/admin";
 	}
 </script>
 

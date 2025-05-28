@@ -53,14 +53,15 @@
 									onclick="alert(' 개인회원 전용 기능입니다. 개인 회원 전용으로 로그인해주세요.')">등록</button>
 							</div>
 						</div>
+						<!-- 댓글 입력시 정보부분: 오류 안나게 일단은 지정 -->
 						<input type="hidden" id="communityNo" value="${community.communityId}" />
 						<script type="text/javascript">
 							const userType = "";
 							const memberId = 0;
 						</script>
 					</c:when>
-					<c:when test="${sessionScope.admin ne null}"><!-- 관리자용 댓글 -->
-						<div id="inputCommentWrap">
+					<c:otherwise>
+						<div id="inputCommentWrap"><!-- 관리자용 댓글 -->	
 							<p>댓글</p>
 							<textarea id="inputCommentBox" class="boxStyle"
 								placeholder="댓글을 입력해주세요."></textarea>
@@ -70,12 +71,14 @@
 									onclick="alert(' 개인회원 전용 기능입니다. 개인 회원 전용으로 로그인해주세요.')">등록</button>
 							</div>
 						</div>
+						
+						<!-- 댓글 입력시 정보부분 -->
 						<input type="hidden" id="communityNo" value="${community.communityId}" />
 						<script type="text/javascript">
-							const userType = "";
-							const memberId = "${sessionScope.admin.adminId}";
+							const userType = "admin";
+							const memberId = 0;
 						</script>
-					</c:when>				
+					</c:otherwise>				
 				</c:choose>
 			</c:when>
 			<c:otherwise> 
@@ -89,25 +92,25 @@
 					</div>
 				</div>
 					<input type="hidden" id="communityNo" value="${community.communityId}" />
-						<script type="text/javascript">
-						  	const userType = "";
-							const memberId = 0;
-						</script>
+					<script type="text/javascript">
+					  	const userType = "";
+						const memberId = 0;
+					</script>
 				
 			</c:otherwise>
 		</c:choose>
-<c:choose>
-	<c:when test="${sessionScope.userLogin ne null}"><!-- 유저로그인 중 -->
 		<c:choose>
-			<c:when test="${sessionScope.userType eq 'member'}">
-				<input type="hidden" id="memberReply" value="${sessionScope.userLogin.memberId}">
+			<c:when test="${sessionScope.userLogin ne null}"><!-- 유저로그인 중 -->
+				<c:choose>
+					<c:when test="${sessionScope.userType eq 'member'}">
+						<input type="hidden" id="memberReply" value="${sessionScope.userLogin.memberId}">
+					</c:when>
+				</c:choose>
+			</c:when>
+			<c:when test="${sessionScope.admin ne null}">
+				<input type="hidden" id="memberReply" value="${sessionScope.userLogin.adminId}">
 			</c:when>
 		</c:choose>
-	</c:when>
-	<c:when test="${sessionScope.admin ne null}">
-		<input type="hidden" id="memberReply" value="${sessionScope.admin.adminId}">
-	</c:when>
-</c:choose>
 		<!-- 댓글 리스트가 여기에 들어옴 -->
 		<div id="commentContainer"></div>
 	</div>
