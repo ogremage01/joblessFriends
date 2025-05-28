@@ -1,5 +1,13 @@
 	.section {
- 		margin-top: 30px;
+ 		margin-top: 50px;
+	}
+	
+	.jobInfoSection {
+		position: relative;
+	}
+	
+	.jobInfoSection h2 {
+		user-select: none;
 	}
 	
 	.jobInfoContent {
@@ -10,6 +18,69 @@
 		row-gap: 50px;
 	}
 	
+	/* 	슬라이드 버튼 : 기본 배치 */
+	.slideBtn {
+		width: 50px;
+		height: 180px;
+		z-index: 5;
+		position: absolute;
+		top: 55px;
+		opacity: 20%;
+		transition: opacity 0.3s ease-in-out; 
+		border: none;
+		background: none;
+	}
+	
+	.slideBtn.left {
+		left: -50px;
+	}
+
+	.slideBtn.right {
+		left: 1210px;
+	}
+	
+	.slideBtn:hover {
+		opacity: 100%;
+	}
+	
+	/*  슬라이드 버튼 : 화살표  */
+	.slideBtn div {
+		width: 20px;
+		height: 20px;
+		margin: auto;
+		border: 3px solid black;
+		border-radius: 0px 0px 0px 2px;
+		transform: rotate(45deg);
+	}
+	.left div{
+		border-top: none;
+		border-right: none;
+	}
+	.right div{
+		border-bottom: none;
+		border-left: none;
+	}
+	
+	
+	/* 	슬라이드 뷰 */
+	#viewsList, #endDateList{
+		flex-wrap: nowrap;
+		overflow: hidden;
+	}
+	
+	.slideWrap {
+		display: flex;
+		justify-content: flex-start;
+		column-gap: 30px;
+		row-gap: 50px;
+		transform: translateX(-1240px);
+	}
+	
+	.translateSlide {
+		transition:transform 0.3s ease-in-out; 
+	}
+	
+	/* 	채용공고  */
 	.jobInfoItem {
 		display: flex;
 		flex-direction: column;

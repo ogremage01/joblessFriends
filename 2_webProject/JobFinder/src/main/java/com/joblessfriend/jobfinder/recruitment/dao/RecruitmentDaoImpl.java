@@ -167,6 +167,18 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(namespace+".selectRecruitmentList",memberId);
 	}
+
+	@Override
+	public List<RecruitmentVo> recruitmentListLatest(SearchVo searchVo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace+".RecruitmentListLatest",searchVo);
+	}
+
+	@Override
+	public List<RecruitmentVo> recruitmentListViews(SearchVo searchVo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace+".RecruitmentListViews",searchVo);
+	}
 	
 
 }

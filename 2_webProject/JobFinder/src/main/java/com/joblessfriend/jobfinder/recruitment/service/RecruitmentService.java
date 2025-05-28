@@ -50,5 +50,9 @@ public interface RecruitmentService {
     public List<RecruitmentVo> getFilteredRecruitmentList(FilterRequestVo filterRequestVo);
     int getFilteredRecruitmentTotalCount(FilterRequestVo filterRequestVo);
 	public boolean checkCompanyOwnsJobPost(int companyId, int jobPostId);
+	
+	//메인용 list
+	public List<RecruitmentVo> recruitmentListLatest(SearchVo searchVo);
+	public List<RecruitmentVo> recruitmentListViews(SearchVo searchVo);
 
 }
