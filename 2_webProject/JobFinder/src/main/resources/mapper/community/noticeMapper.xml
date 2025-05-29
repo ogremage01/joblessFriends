@@ -76,6 +76,19 @@
 		WHERE NOTICE_ID = #{noticeId}		
 	</update>
 	
+	<update id="noticeUpdate">
+		UPDATE NOTICE SET NOTICE_CATEGORY_ID=#{noticeCategoryId}, TITLE=#{title}, CONTENT=#{content}, MODIFIED_AT=SYSDATE
+		WHERE NOTICE_ID=#{noticeId}
+	</update>
+	
+	<delete id="noticeDelete" parameterType="list">
+		DELETE FROM NOTICE
+		WHERE NOTICE_ID IN
+		<foreach item="noticeId" collection="list" open="(" separator="," close=")">
+			#{noticeId}
+		</foreach>
+	</delete>
+	
 	
 	
 </mapper>

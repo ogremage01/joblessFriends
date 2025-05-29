@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -35,8 +36,37 @@ public class SearchController {
 	
 	@Autowired
 	private SearchService searchService;
+	@Autowired
+	private RecruitmentService recruitmentService;
 	
 	SearchVo searchVo = new SearchVo();
+	
+	// 헤더 검색 기능 (임시) - pcj
+	 @PostMapping("")
+	    public String searchMainList(Model model, @RequestParam(defaultValue = "1") int page, 
+		@RequestParam(defaultValue = "") String keyword) {
+		 	
+		 //채용공고 서비스 사용함 추후 검색기능 완성되면 수정 될 예정
+			searchVo.setKeyword(keyword);
+			searchVo.setPage(1);
+			searchVo.setRecordSize(4);
+	        
+			int totalCount = recruitmentService.getRecruitmentTotalCount(searchVo); // 총 레코드 수 조회
+	        Pagination pagination = new Pagination(totalCount, searchVo);
+
+	        // Oracle 11g에 맞게 startRow, endRow 계산
+	        searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
+	        searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
+	        
+	        List<RecruitmentVo> recruitmentList = recruitmentService.recruitmentList(searchVo);
+	        logger.info("메인서치 recruitmentList: "+ recruitmentList);
+	        model.addAttribute("recruitmentList", recruitmentList);
+	        model.addAttribute("pagination", pagination);
+	        model.addAttribute("totalCount", totalCount); // 검색결과 개수
+	        model.addAttribute("keyword", keyword); // 검색어
+
+	        return "mainSearchView";
+	    }
 	
 	 @GetMapping("/recruitment")
 	    public List<RecruitmentVo> searchRecruitmentList(Model model, @RequestParam(defaultValue = "1") int page, 

@@ -6,18 +6,36 @@
 
     <select id="jobGroupList" resultType="com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo">
         SELECT
-            JOB_GROUP_ID AS jobGroupId,
-            JOB_GROUP_NAME AS jobGroupName
-        FROM JOB_GROUP
+            jg.JOB_GROUP_ID AS jobGroupId,
+            jg.JOB_GROUP_NAME AS jobGroupName,
+            COUNT(jp.JOB_POST_ID) AS postCount
+        FROM
+            JOB_GROUP jg
+                LEFT JOIN JOB_POST jp ON jg.JOB_GROUP_ID = jp.JOB_GROUP_ID
+        GROUP BY
+            jg.JOB_GROUP_ID, jg.JOB_GROUP_NAME
+        ORDER BY
+            jg.JOB_GROUP_ID ASC
     </select>
 
 
     <select id="jobList" parameterType="int" resultType="com.joblessfriend.jobfinder.recruitment.domain.JobGroupVo">
         SELECT
-            JOB_NAME AS jobName,
-            JOB_ID AS jobId
-        FROM JOB
-        WHERE JOB_GROUP_ID = #{jobGroupId}
+            j.job_group_id AS jobGroupId,
+            j.job_id AS jobId,
+            j.job_name AS jobName,
+            COUNT(jp.job_post_id) AS postCount
+        FROM
+            job j
+                LEFT JOIN
+            job_post jp ON j.job_id = jp.job_id
+        WHERE
+            j.job_group_id = #{jobGroupId}
+        GROUP BY
+            j.job_group_id, j.job_id, j.job_name
+        ORDER BY
+            j.job_id
+
     </select>
 
 

@@ -794,13 +794,9 @@ async function saveResume() {
     
     console.log("수집된 이력서 데이터:", resumeData);
 
-    // API 엔드포인트 결정
-    const url = isEditMode ? '/api/resume/update' : '/api/resume/save';
-    const method = isEditMode ? 'PUT' : 'POST';
-    
-    // 서버로 전송
-    const response = await fetch(url, {
-      method: method,
+    // 서버로 전송 (신규/수정 모두 save API 사용)
+    const response = await fetch('/api/resume/save', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },

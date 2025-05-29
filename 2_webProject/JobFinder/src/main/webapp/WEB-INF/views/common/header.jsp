@@ -23,7 +23,7 @@
 				</div>
 				<div id="searchDiv">
 				
-					<form id="searchForm" name="searchForm" method="" action="">
+					<form id="searchForm" name="searchForm" method="post" action="/search">
 						<fieldset>
 							<legend>검색</legend>
 							<input id="keyword" name="keyword" type="text" value="" placeholder="자신에게 맞는 채용정보를 찾아보세요" autocomplete="off">

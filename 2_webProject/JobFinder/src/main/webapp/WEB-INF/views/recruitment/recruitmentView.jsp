@@ -44,6 +44,7 @@
                                         data-code="${item.jobGroupId}"
                                         data-name="${item.jobGroupName}">
                                         ${item.jobGroupName}
+                                        <span>  (${item.postCount})</span>
                                 </div>
                             </c:forEach>
                         </div>
@@ -128,7 +129,7 @@
                         </div>
                         <div class="job-meta">
 
-                            <span>🧑‍💻 지원자격:${item.education} </span> <span>🎓 경력: ${item.careerType}</span>
+                            <span>🧑‍💻 지원자격: ${item.education} </span> <span>🎓 경력: ${item.careerType}</span>
                             <span>💼 채용직: ${item.jobName}</span>
 
                         </div>

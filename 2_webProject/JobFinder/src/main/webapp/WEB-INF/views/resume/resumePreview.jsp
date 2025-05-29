@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page session="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<c:set var="resume" value="${resume}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,18 +35,18 @@
 				
 				<!--	인적사항		-->
 				<div id="infoTableBox">
-					<span class="infoTableName">홍길동</span>
-					<span class="infoTableAge" colspan="3">1999(26세)</span>
+					<span class="infoTableName">${resume.memberName}</span>
+					<span class="infoTableAge" colspan="3">${resume.birthDate}</span>
 					<table>
 						<tr>
 							<th class="infoTableTh">이메일</th>
-							<td class="infoTableTd">test123@mail.com</td>
+							<td class="infoTableTd">${resume.email}</td>
 							<th class="infoTableTh">전화번호</th>
-							<td class="infoTableTd">010-0000-0000</td>
+							<td class="infoTableTd">${resume.phoneNumber}</td>
 						</tr>
 						<tr>
 							<th class="infoTableTh">주소</th>
-							<td class="infoTableTd" colspan="3">서울특별시 구로구 182-13 대룡포스트 2차 2층 더조은컴퓨터아트학원</td>
+							<td class="infoTableTd" colspan="3">${resume.address}</td>
 						</tr>
 						<tr>
 							<th class="infoTableTh">희망직무</th>

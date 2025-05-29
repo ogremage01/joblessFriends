@@ -53,20 +53,42 @@ public class ResumeServiceImpl implements ResumeService {
     @Transactional
     public void saveResume(ResumeVo resumeVo) {
         try {
-            // 1. 메인 이력서 정보 저장
-            resumeDao.insertResume(resumeVo);
-            int resumeId = resumeVo.getResumeId();
-            
-            System.out.println(">>> [ResumeService] 메인 이력서 저장 완료, resumeId: " + resumeId);
-            
-            saveResumeDetails(resumeVo, resumeId);
-            
-            System.out.println(">>> [ResumeService] 전체 이력서 저장 완료");
+            // resumeId가 있으면 수정, 없으면 신규 작성
+            if (resumeVo.getResumeId() > 0) {
+                // 수정 모드
+                System.out.println(">>> [ResumeService] 이력서 업데이트 모드, resumeId: " + resumeVo.getResumeId());
+                
+                // 1. 메인 이력서 정보 업데이트
+                resumeDao.updateResume(resumeVo);
+                System.out.println(">>> [ResumeService] 메인 이력서 업데이트 완료");
+                
+                // 2. 기존 하위 데이터 모두 삭제
+                deleteResumeDetails(resumeVo.getResumeId());
+                
+                // 3. 새로운 하위 데이터 저장
+                saveResumeDetails(resumeVo, resumeVo.getResumeId());
+                
+                System.out.println(">>> [ResumeService] 전체 이력서 업데이트 완료");
+            } else {
+                // 신규 작성 모드
+                System.out.println(">>> [ResumeService] 신규 이력서 작성 모드");
+                
+                // 1. 메인 이력서 정보 저장
+                resumeDao.insertResume(resumeVo);
+                int resumeId = resumeVo.getResumeId();
+                
+                System.out.println(">>> [ResumeService] 메인 이력서 저장 완료, resumeId: " + resumeId);
+                
+                // 2. 하위 데이터 저장
+                saveResumeDetails(resumeVo, resumeId);
+                
+                System.out.println(">>> [ResumeService] 전체 이력서 저장 완료");
+            }
             
         } catch (Exception e) {
-            System.err.println(">>> [ResumeService] 이력서 저장 중 오류 발생: " + e.getMessage());
+            System.err.println(">>> [ResumeService] 이력서 저장/수정 중 오류 발생: " + e.getMessage());
             e.printStackTrace();
-            throw new RuntimeException("이력서 저장 중 오류가 발생했습니다.", e);
+            throw new RuntimeException("이력서 저장/수정 중 오류가 발생했습니다.", e);
         }
     }
     

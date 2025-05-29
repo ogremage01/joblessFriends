@@ -48,7 +48,7 @@ $(document).on('click', '.job-group', function (e) {
                                    value="${item.jobName}"
                                    data-id="${item.jobId}"
                                    data-group="${jobGroupName}">
-                            ${item.jobName}
+                            ${item.jobName}&nbsp; <span>(${item.postCount})</span>
                         </label>
                     `;
                     $('#jobList').append(html);
@@ -366,7 +366,7 @@ function renderJobList(recruitmentList, skillMap) {
                 <div class="job-meta-skill">
                   🧩 스킬: ${
             (skillMap[item.jobPostId] || [])
-                .map(skill => `<span class="tag">${skill.tagName}</span>`)
+                .map(skill => `<span class="tag"> ${skill.tagName}</span>`)
                 .join('')
         }
                 </div>
