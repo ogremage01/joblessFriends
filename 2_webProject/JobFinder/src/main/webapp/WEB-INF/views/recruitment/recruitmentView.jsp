@@ -144,7 +144,7 @@
                     <div class="job-action">
                         <c:choose>
                             <c:when test="${item.isContinuous == 0}">
-                                <button class="apply-btn" type="button" onclick="location.href='/apply?jobPostId=${item.jobPostId}'">지원하기</button>
+                                <button class="apply-btn" type="button" onclick="">지원하기</button>
                             </c:when>
                             <c:otherwise>
                                 <button class="apply-btn" type="button" disabled style="background: #ccc; cursor: not-allowed;">마감됨</button>
