@@ -294,6 +294,8 @@ $(".popBtns").on("click", ".deleteId", function() {
 		}); // ajax end	
 });
 
+var maxLength = 15;  // 최대 글자 수
+
 // 닉네임 변경 모달 열기
 $("#nickChangeBtn").click(async function(){
 	
@@ -306,6 +308,14 @@ $("#nickChangeBtn").click(async function(){
 	$(".popCancel").html("취소");
 	$(".popSubmit").html("변경하기");
 	$(".popSubmit").addClass("changeNick");
+	
+	var nickLength = userNickname.length;
+	//글자 수 세기 기본값
+	$("#charCount").text("(" + nickLength + "/"+maxLength+")");
+	if(nickLength >= maxLength){
+		$("#charCount").addClass("maxReached");  // 빨간색으로 변경
+	}
+	
 	//열기
 	$("#popup").css('display','flex').hide().fadeIn();
 });
@@ -316,7 +326,6 @@ $(".popContent").on("input", "#nicknameInput", function() {
 	var inputValue = $(this).val().replace(/\s/g, ''); // 공백 제거
 	$(this).val(inputValue);
 	var inputLength = inputValue.length;  // 현재 입력된 글자 수
-	var maxLength = 15;  // 최대 글자 수
 	
 	// 글자 수 초과하면 더 이상 입력되지 않음
 	if (inputLength > maxLength) {

@@ -1,3 +1,4 @@
+
 	.section {
  		margin-top: 50px;
 	}
@@ -184,6 +185,30 @@
 	.jobInfoItem span{
 		font-size: 14px;
 		line-height: 22px;
+	}
+	
+	/* 	탑 버튼 */
+	.topBtn {
+		position: fixed;
+		bottom: 105px;
+		right: 30px;
+		
+		width: 60px;
+		height: 60px;
+		
+		border: none;		
+		border-radius: 50%;
+		color: white;
+		background-color: #F69800;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+		cursor: pointer;
+		transition: all 0.3s ease;
+		z-index: 1000;
+	}
+	.topBtn:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+		background-color: #e68a00;
 	}
 	
 	/* 채팅 플로팅 버튼 스타일 */

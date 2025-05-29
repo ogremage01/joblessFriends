@@ -1,3 +1,9 @@
+// top버튼 애니메이션
+$(".topBtn").click(function() {
+    $("html, body").animate({ scrollTop: 0 }, 500);
+    return false;
+}) 
+
 // ==== 무한 슬라이드용 복제 요소 ====
 	// 조회순 
 	$('#viewsList .jobInfoItem').slice(0, 4).each(function() {
@@ -38,16 +44,14 @@
 	var viewMoveCount = 2;
 	// 마감임박순
 	var EndDateMoveCount = 2;
-
 	
+	// 순서
+	//둘째복사1 초기 페이지2 둘째페이지3 초기복사4
+	// 이동 값
+	// 1:0px 2: -defult 3: -defult*2 4: -defult*3
+
 // ====  슬라이드 왼쪽 버튼 ==== 
 $(".left").click(function(){
-	console.log("왼쪽 클릭");
-	
-	// 조회순 이동길이
-	var viewtranslateXWidth = defaltWidth*viewMoveCount;
-	// 마감임박순 이동길이
-	var EndtranslateXWidth = defaltWidth*EndDateMoveCount; 
 
 	// 조회 순 카테고리
 		// 클래스가 없으면 추가
@@ -56,30 +60,48 @@ $(".left").click(function(){
 		}
 		// 이동 실행
 		if ($(this).hasClass('views')) {
-			$("#viewsList .slideWrap").css({"transform": "translateX("+viewtranslateXWidth+"px)"})
-			console.log("이동 후: "+viewMoveCount);
-			viewMoveCount--;
+			if (viewMoveCount == 2) {
+				$("#viewsList .slideWrap").css({"transform": "translateX(0px)"});
+				--viewMoveCount;
+			}
+			else if (viewMoveCount == 3) {
+				$("#viewsList .slideWrap").css({"transform": "translateX(-"+ defaltWidth +"px)"});
+				--viewMoveCount;
+			}
+			// 위치 초기화 : 위치 1로가면 3으로 초기화
+			if(viewMoveCount == 1 ){
+				setTimeout(function(){
+					$("#viewsList .slideWrap").removeClass('translateSlide');
+					$("#viewsList .slideWrap").css({"transform": "translateX(-"+defaltWidth*2+"px)"})
+					viewMoveCount = 3;
+				},300)
+			}
 		}
-		// 위치 초기화
-		if(viewMoveCount == 1 ){
-			setTimeout(function(){
-				viewMoveCount = 2;
-				$("#viewsList .slideWrap").removeClass('translateSlide');
-				$("#viewsList .slideWrap").css({"transform": "translateX(-"+defaltWidth*2+"px)"})
-			},300)
+		
+	// 마감임박 순 카테고리
+		// 클래스가 없으면 추가
+		if(!$("#endDateList .slideWrap").hasClass('translateSlide')){
+			$("#endDateList .slideWrap").addClass('translateSlide');
 		}
-	
-	
-	
-	
-	// 조회 순
-	if ($(this).hasClass('views')) {
-		$("#viewsList .slideWrap").css({"transform": "translateX(0px)"})
-	}
-	// 마감임박 순
-	else if ($(this).hasClass('endDate')) {
-		$("#endDateList .slideWrap").css({"transform": "translateX(0px)"})
-	}
+		// 이동 실행
+		if ($(this).hasClass('endDate')) {
+			if (EndDateMoveCount == 2) {
+				$("#endDateList .slideWrap").css({"transform": "translateX(0px)"});
+				--EndDateMoveCount;
+			}
+			else if (EndDateMoveCount == 3) {
+				$("#endDateList .slideWrap").css({"transform": "translateX(-"+ defaltWidth +"px)"});
+				--EndDateMoveCount;
+			}
+			// 위치 초기화 : 위치 1로가면 3으로 초기화
+			if(EndDateMoveCount == 1 ){
+				setTimeout(function(){
+					$("#endDateList .slideWrap").removeClass('translateSlide');
+					$("#endDateList .slideWrap").css({"transform": "translateX(-"+defaltWidth*2+"px)"})
+					EndDateMoveCount = 3;
+				},300)
+			}
+		}
 	
 });
 
@@ -100,10 +122,9 @@ $(".right").click(function(){
 		// 이동 실행
 		if ($(this).hasClass('views')) {
 			$("#viewsList .slideWrap").css({"transform": "translateX(-"+viewtranslateXWidth+"px)"})
-			console.log("이동 후: "+viewMoveCount);
 			viewMoveCount++;
 		}
-		// 위치 초기화
+		// 위치 초기화 : 위치 4로가면 2로 초기화
 		if(viewMoveCount == 4 ){
 			setTimeout(function(){
 				viewMoveCount = 2;
@@ -120,7 +141,6 @@ $(".right").click(function(){
 		// 이동 실행
 		if ($(this).hasClass('endDate')) {
 			$("#endDateList .slideWrap").css({"transform": "translateX(-"+EndtranslateXWidth+"px)"})
-			console.log("이동 후: "+EndDateMoveCount);
 			EndDateMoveCount++;
 		}
 		// 위치 초기화
@@ -131,5 +151,4 @@ $(".right").click(function(){
 				$("#endDateList .slideWrap").css({"transform": "translateX(-"+defaltWidth+"px)"})
 			},300)
 		}
-		
 });

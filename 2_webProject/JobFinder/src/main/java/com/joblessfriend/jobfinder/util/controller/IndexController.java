@@ -68,7 +68,7 @@ public class IndexController {
 		
 		// 조회수 순
 		Map<Integer, List<SkillVo>> skillMapViews = new HashMap<>();
-		for (RecruitmentVo r : recruitmentListLatest) {
+		for (RecruitmentVo r : recruitmentListViews) {
 			int jobPostId = r.getJobPostId();
 			List<SkillVo> skillList = skillService.postTagList(jobPostId);
 			skillMapViews.put(jobPostId, skillList);
@@ -76,7 +76,7 @@ public class IndexController {
 		
 		// 마감임박 순
 		Map<Integer, List<SkillVo>> skillMapEndDate = new HashMap<>();
-		for (RecruitmentVo r : recruitmentListLatest) {
+		for (RecruitmentVo r : recruitmentListEndDate) {
 			int jobPostId = r.getJobPostId();
 			List<SkillVo> skillList = skillService.postTagList(jobPostId);
 			skillMapEndDate.put(jobPostId, skillList);
