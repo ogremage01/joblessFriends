@@ -1,6 +1,8 @@
 package com.joblessfriend.jobfinder.member.dao;
 
 import com.joblessfriend.jobfinder.recruitment.domain.*;
+import com.joblessfriend.jobfinder.util.SearchVo;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,10 +22,43 @@ public class MemberRecruitmentDaoImpl implements MemberRecruitmentDao {
     
 
 	@Override
-	public List<RecruitmentVo> selectRecruitmentList(int memberId) {
+	public List<RecruitmentVo> selectRecruitmentList(int memberId, SearchVo searchVo) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace+".selectRecruitmentList",memberId);
+		
+		Map<String, Object> queryMap = new HashMap<>();
+		
+		queryMap.put("memberId", memberId);
+		queryMap.put("searchVo", searchVo);
+		
+		return sqlSession.selectList(namespace+".selectRecruitmentList",queryMap);
 	}
 	
+	
+	@Override
+	public void deleteOne(int memberId, int jobPostId) {
+		// TODO Auto-generated method stub
+		
+		Map<String, Integer> bookmark = new HashMap<>();
+		
+		bookmark.put("memberId", memberId);
+		bookmark.put("jobPostId", jobPostId);
+		
+		
+		
+		sqlSession.delete(namespace + ".deleteOne", bookmark);
+		
+	}
+
+
+	@Override
+	public int bookmarkCount(int memberId, SearchVo searchVo) {
+		// TODO Auto-generated method stub
+		Map<String, Object> bookmark = new HashMap<>();
+			
+			bookmark.put("memberId", memberId);
+			bookmark.put("searchVo", searchVo);
+		
+		return sqlSession.selectOne(namespace + ".bookmarkCount", bookmark);
+	}
 
 }

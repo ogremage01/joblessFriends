@@ -2,30 +2,63 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.joblessfriend.jobfinder.member.dao.RecruitmentDao">
+<mapper
+	namespace="com.joblessfriend.jobfinder.member.dao.RecruitmentDao">
 
 
-    <select id="selectRecruitmentList" parameterType="int" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
-    SELECT
-        jp.job_post_id AS jobPostId,
-        c.company_id AS companyId,
-        c.company_name AS companyName,
-        jp.title AS title,
-        jp.career_type AS careerType,
-        jp.education AS education,
-        jg.job_group_name AS jobGroupName,
-        j.job_name AS jobName,
-        jp.end_date AS endDate,
-        jp.IS_CONTINUOUS as isContinuous
-    FROM JOB_POST jp
-             JOIN COMPANY c ON jp.company_id = c.company_id
-             JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
-             JOIN JOB j ON jp.job_id = j.job_id
-             JOIN BOOKMARK BK ON JP.JOB_POST_ID = BK.JOB_POST_ID
-    WHERE BK.MEMBER_ID = #{memberId}
-    ORDER BY jp.end_date ASC
+	<select id="selectRecruitmentList"
+		parameterType="map"
+		resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
+		SELECT *
+		FROM(SELECT ORITABLE.*, ROWNUM AS RN
+			FROM (SELECT
+				jp.job_post_id AS jobPostId,
+				c.company_id AS companyId,
+				c.company_name AS companyName,
+				jp.title AS title,
+				jp.career_type AS careerType,
+				jp.education AS education,
+				jg.job_group_name AS jobGroupName,
+				j.job_name AS jobName,
+				jp.end_date AS endDate,
+				jp.IS_CONTINUOUS as isContinuous
+				FROM JOB_POST jp
+				JOIN COMPANY c ON jp.company_id = c.company_id
+				JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
+				JOIN JOB j ON jp.job_id = j.job_id
+				JOIN BOOKMARK BK ON JP.JOB_POST_ID = BK.JOB_POST_ID
+				WHERE BK.MEMBER_ID = #{memberId}
+				<if test="searchVo.keyword != null and searchVo.keyword != ''">
+					AND jp.title LIKE '%' || #{searchVo.keyword} || '%'
+				</if>
+				ORDER BY jp.end_date ASC) ORITABLE
+			WHERE ROWNUM &lt;= #{searchVo.endRow})
+		WHERE RN &gt;= #{searchVo.startRow}	
+			
 
-    </select>
+	</select>
+
+	<delete id="deleteOne" parameterType="map">
+		DELETE FROM BOOKMARK
+		WHERE MEMBER_ID = #{memberId} AND JOB_POST_ID = #{jobPostId}
+	</delete>
+	
+		<select id="bookmarkCount" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM (
+			SELECT
+				jp.job_post_id
+			FROM JOB_POST jp
+			JOIN COMPANY c ON jp.company_id = c.company_id
+			JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
+			JOIN JOB j ON jp.job_id = j.job_id
+			JOIN BOOKMARK bk ON jp.job_post_id = bk.job_post_id
+			WHERE bk.member_id = #{memberId}
+			<if test="searchVo.keyword != null and searchVo.keyword != ''">
+				AND jp.title LIKE '%' || #{searchVo.keyword} || '%'
+			</if>
+			)
+		</select>
 
 
 </mapper>
