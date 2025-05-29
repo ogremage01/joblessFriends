@@ -10,4 +10,5 @@ public class JobGroupVo {
     private String jobGroupName;
     private String jobName;
     private int jobId;
+    private int postCount;
 }
