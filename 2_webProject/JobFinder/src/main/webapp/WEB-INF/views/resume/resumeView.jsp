@@ -390,26 +390,6 @@ document.getElementById("profileImageInput").addEventListener("change", function
 });
 
 
-// 주소 자동완성 기능 (행안부 팝업 API)
-function openJusoPopup() {
-  const confmKey = "${jusoApiKey}"; // JSP에서 properties값 읽어오기
-  const returnUrl = location.origin + "/resume/addrCallback"; // 콜백 처리할 컨트롤러 경로로 변경
-  const resultType = "4"; // 도로명 + 지번 + 상세주소 포함
-
-  const popUrl = "https://business.juso.go.kr/addrlink/addrLinkUrl.do"
-    + "?confmKey=" + encodeURIComponent(confmKey)
-    + "&returnUrl=" + encodeURIComponent(returnUrl)
-    + "&resultType=" + resultType;
-
-  // 팝업창 열기
-  window.open(popUrl, "_blank", "width=570,height=420,scrollbars=yes,resizable=yes");
-}
-
-// 팝업에서 주소값을 받아오는 콜백 함수
-function handleJusoCallback(roadAddr, addrDetail) {
-  document.getElementById("roadAddress").value = roadAddr || "";
-  document.getElementById("jibunAddress").value = addrDetail || "";
-}
 
 
 
