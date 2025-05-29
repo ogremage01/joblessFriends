@@ -44,6 +44,7 @@
                                         data-code="${item.jobGroupId}"
                                         data-name="${item.jobGroupName}">
                                         ${item.jobGroupName}
+                                        <span>  (${item.postCount})</span>
                                 </div>
                             </c:forEach>
                         </div>

@@ -3,12 +3,19 @@ package com.joblessfriend.jobfinder.resume.domain;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 public class ResumeSaveRequestVo {
+	// 이력서 제목
+	private String title;
+	
 	// 인적사항
+	@JsonProperty("name")
 	private String memberName;
+	
+	@JsonProperty("birthdate")
     private Date birthDate;
     private String phoneNumber;
     private String email;

@@ -41,8 +41,10 @@
 </div>
 
     <section class="resume-wrapper">
-	<h1 class="resume-title">이력서 제목을 입력하세요</h1>
-
+    	<div class="resumeTitle" style="margin: 1px;">
+		    <h1>제목</h1>
+			<input type="text" id="title" placeholder="이력서 제목을 입력하세요" />
+		</div>		
       <!-- 인적사항 -->
 	<div class="section-block">
 		<h2>인적사항</h2>
@@ -63,15 +65,19 @@
 			
 			<!-- 2행 -->
 			<div class="field-block">
+				<label>우편번호</label>
+				<input type="text" id="postalCode" placeholder="우편번호" readonly />
+				<button type="button" class="address-search-btn" onclick="execDaumPostcode()">🔍</button>
+			</div>
+			<div class="field-block">
 				<label>주소</label>
 				<input type="text" id="roadAddress" placeholder="주소를 입력해주세요" readonly />
-				<button type="button" class="address-search-btn" onclick="openJusoPopup()">🔍</button>
 			</div>
 			<div class="field-block">
 				<label>상세주소</label>
-				<input type="text" id="jibunAddress" placeholder="상세주소" readonly />
+				<input type="text" id="detailAddress" placeholder="상세주소" />
 			</div>
-				<div class="field-block">
+			<div class="field-block">
 				<label>메일</label>
 				<input type="text" id="email" placeholder="예시) test@mail.com" />
 			</div>
@@ -289,6 +295,52 @@
 	
 <script>
 
+// daum 주소 API 함수
+function execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수
+
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
+
+            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if(data.userSelectedType === 'R'){
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraAddr !== ''){
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+                // 조합된 참고항목을 해당 필드에 넣는다.
+                addr += extraAddr;
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('postalCode').value = data.zonecode;
+            document.getElementById("roadAddress").value = addr;
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById("detailAddress").focus();
+        }
+    }).open();
+}
+
 // 프로필 이미지 업로드 및 미리보기 기능
 let ignoreNextInput = false;
 
@@ -341,7 +393,7 @@ document.getElementById("profileImageInput").addEventListener("change", function
 // 주소 자동완성 기능 (행안부 팝업 API)
 function openJusoPopup() {
   const confmKey = "${jusoApiKey}"; // JSP에서 properties값 읽어오기
-  const returnUrl = location.origin + "/addrCallback.jsp"; // 콜백 처리할 페이지
+  const returnUrl = location.origin + "/resume/addrCallback"; // 콜백 처리할 컨트롤러 경로로 변경
   const resultType = "4"; // 도로명 + 지번 + 상세주소 포함
 
   const popUrl = "https://business.juso.go.kr/addrlink/addrLinkUrl.do"
@@ -631,14 +683,29 @@ document.addEventListener("DOMContentLoaded", function () {
 //이력서 저장 함수
 //작성완료 버튼 클릭 시 전체 데이터 수집 → 서버로 전송
 document.querySelector('.btn-finish').addEventListener('click', async function () {
+ // 세션 체크 (추가 보안)
+ const sessionCheck = await fetch('/api/session/check', { 
+   method: 'GET', 
+   credentials: 'include' 
+ }).catch(() => null);
+ 
+ if (!sessionCheck || !sessionCheck.ok) {
+   alert('세션이 만료되었습니다. 다시 로그인해주세요.');
+   location.href = '/auth/login';
+   return;
+ }
+
  const resumeData = {
-	memberName: document.querySelector('#memberName')?.value || '',
-	birthDatee: document.querySelector('#birthdate')?.value || '',
-	phoneNumber: document.querySelector('#phoneNumber')?.value || '',
-	email: document.querySelector('#email')?.value || '',
-	address: document.querySelector('#roadAddress')?.value || '',
-	selfIntroduction: document.querySelector('#selfIntroduction')?.value || '',
-	profile: window.uploadedImageUrl || '',
+
+   title: document.querySelector('#title')?.value || '제목없는 이력서',
+   name: document.querySelector('#name')?.value || '',
+   birthdate: document.querySelector('#birthdate')?.value || '',
+   phoneNumber: document.querySelector('#phoneNumber')?.value || '',
+   email: document.querySelector('#email')?.value || '',
+   address: (document.querySelector('#roadAddress')?.value || '') + ' ' + (document.querySelector('#detailAddress')?.value || ''),
+   selfIntroduction: document.querySelector('#selfIntroduction')?.value || '',
+   profile: window.uploadedImageUrl || '',
+   postalCodeId: parseInt(document.querySelector('#postalCode')?.value) || 0,
 
    jobGroupId: document.querySelector('#jobGroupSelect')?.value || '',
    jobId: document.querySelector('#jobSelect')?.value || '',
@@ -804,6 +871,7 @@ function collectPortfolios() {
 });
 
 </script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-3fp9tS8p9A2Mq7Qz+S8jfwD+xdgu9T+O+NRZz8N5eA8=" crossorigin="anonymous"></script>
 <script src="/js/resume/resumeView.js"></script>
 </body>

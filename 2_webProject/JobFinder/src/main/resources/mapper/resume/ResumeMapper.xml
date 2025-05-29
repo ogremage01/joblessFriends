@@ -50,13 +50,10 @@
     
     <!-- 이력서 저장 -->
     <insert id="insertResume" parameterType="com.joblessfriend.jobfinder.resume.domain.ResumeVo">
-    
-    	<selectKey keyProperty="resumeId"
-                   resultType="java.lang.Integer"
-                   order="BEFORE">
+
+        <selectKey keyProperty="resumeId" resultType="int" order="BEFORE">
             SELECT RESUME_ID_SEQ.NEXTVAL FROM DUAL
         </selectKey>
-        
 	    INSERT INTO RESUME (
 	    	RESUME_ID,
 	        MEMBER_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL,
@@ -64,7 +61,7 @@
 	        CREATE_AT, MODIFIED_AT
 	    )
 	    VALUES (
-	    	RESUME_ID_SEQ.NEXTVAL,
+	    	#{resumeId},
 	        #{memberId, jdbcType=INTEGER},
 	        #{memberName, jdbcType=VARCHAR},
 	        #{birthDate, jdbcType=DATE},
@@ -93,7 +90,14 @@
 	        #{resumeId}, 
 	        #{sortation}, 
 	        #{schoolName}, 
-	        TO_DATE(#{yearOfGraduation}, 'YYYY'), 
+	        <choose>
+	            <when test="yearOfGraduation != null and yearOfGraduation != ''">
+	                TO_DATE(#{yearOfGraduation}, 'YYYY')
+	            </when>
+	            <otherwise>
+	                NULL
+	            </otherwise>
+	        </choose>, 
 	        #{status}
 	    )
 	</insert>
@@ -101,75 +105,88 @@
 	<!-- 교육정보 저장 -->
 	<insert id="insertEducation" parameterType="com.joblessfriend.jobfinder.resume.domain.EducationVo">
 	    INSERT INTO EDUCATION (
-	        RESUME_ID, 
-	        EDU_INSTITUTION, 
-	        EDU_NAME, 
-	        START_DATE, 
-	        END_DATE
+
+	        EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 	    )
 	    VALUES (
-	        #{resumeId}, #{eduInstitution}, #{eduName}, #{startDate}, #{endDate}
+	        EDU_ID_SEQ.NEXTVAL, #{resumeId}, #{eduInstitution}, #{eduName}, 
+	        <choose>
+	            <when test="startDate != null and startDate != ''">
+	                TO_DATE(#{startDate}, 'YYYY-MM-DD')
+	            </when>
+	            <otherwise>
+	                NULL
+	            </otherwise>
+	        </choose>,
+	        <choose>
+	            <when test="endDate != null and endDate != ''">
+	                TO_DATE(#{endDate}, 'YYYY-MM-DD')
+	            </when>
+	            <otherwise>
+	                NULL
+	            </otherwise>
+	        </choose>,
+	        #{content}
 	    )
 	</insert>
 	
 	<!-- 경력정보 저장 -->
 	<insert id="insertCareer" parameterType="com.joblessfriend.jobfinder.resume.domain.CareerVo">
 	    INSERT INTO CAREER (
-	        RESUME_ID, 
-	        COMPANY_NAME, 
-	        DEPARTMENT_NAME, 
-	        HIRE_YM, 
-	        RESIGN_YM,
-	        POSITION, 
-	        JOB_ID, 
-	        JOB_GROUP_ID, 
-	        DETAIL, 
-	        SALARY
+
+	        CAREER_ID, RESUME_ID, COMPANY_NAME, DEPARTMENT_NAME, HIRE_YM, RESIGN_YM,
+	        POSITION, SALARY, DETAIL
 	    )
 	    VALUES (
-	        #{resumeId}, #{companyName}, #{departmentName}, #{hireYm}, #{resignYm},
-	        #{position}, #{jobTitle}, #{taskRole}, #{workDescription}, #{salary}
+	        CAREER_ID_SEQ.NEXTVAL, #{resumeId}, #{companyName}, #{departmentName}, 
+	        <choose>
+	            <when test="hireYm != null and hireYm != ''">
+	                TO_DATE(#{hireYm}, 'YYYY-MM')
+	            </when>
+	            <otherwise>
+	                NULL
+	            </otherwise>
+	        </choose>,
+	        <choose>
+	            <when test="resignYm != null and resignYm != ''">
+	                TO_DATE(#{resignYm}, 'YYYY-MM')
+	            </when>
+	            <otherwise>
+	                NULL
+	            </otherwise>
+	        </choose>,
+	        #{position}, #{salary}, #{workDescription}
 	    )
 	</insert>
 	
 	<!-- 스킬정보 저장 -->
 	<insert id="insertResumeTag">
 	    INSERT INTO RESUME_TAG (
-	        RESUME_ID, 
-	        TAG_ID, 
-	        CREATE_AT, 
-	        MODIFIED_AT
+
+	        RESUME_TAG_ID, RESUME_ID, TAG_ID, CREATE_AT, MODIFIED_AT
 	    )
 	    VALUES (
-	        #{resumeId}, #{tagId}, SYSDATE, SYSDATE
+	        RESUME_TAG_ID_SEQ.NEXTVAL, #{resumeId}, #{tagId}, SYSDATE, SYSDATE
 	    )
 	</insert>
 	
 	<!-- 자격증정보 저장 -->
 	<insert id="insertCertificateResume">
 		INSERT INTO CERTIFICATE_RESUME (
-		RESUME_ID, 
-		CERTIFICATE_ID, 
-		CREATE_AT, 
-		MODIFIED_AT
+		CERTIFICATE_RESUME_ID, RESUME_ID, CERTIFICATE_ID, CREATE_AT, MODIFIED_AT
 		)
 		VALUES (
-		#{resumeId}, #{certificateId}, SYSDATE, SYSDATE
+		CERTIFICATE_RESUME_ID_SEQ.NEXTVAL, #{resumeId}, #{certificateId}, SYSDATE, SYSDATE
 		)
 	</insert>	
 	
 	<!-- 포트폴리오정보 저장 -->
 	<insert id="insertPortfolio" parameterType="com.joblessfriend.jobfinder.resume.domain.PortfolioVo">
 	    INSERT INTO PORTFOLIO (
-	        RESUME_ID, 
-	        FILE_NAME, 
-	        STORED_FILE_NAME, 
-	        FILE_EXTENSION, 
-	        CREATE_AT, 
-	        MODIFIED_AT
+	        PORTFOLIO_ID, RESUME_ID, FILE_NAME, STORED_FILE_NAME, FILE_EXTENSION, CREATE_AT, MODIFIED_AT
 	    )
 	    VALUES (
-	        #{resumeId}, #{fileName}, #{storedFileName}, #{fileExtension}, SYSDATE, SYSDATE
+	        PORTFOLIO_ID_SEQ.NEXTVAL, #{resumeId}, #{fileName}, #{storedFileName}, #{fileExtension}, SYSDATE, SYSDATE
 	    )
 	</insert>
 	
