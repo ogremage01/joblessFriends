@@ -8,7 +8,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.joblessfriend.jobfinder.resume.domain.CareerVo;
+import com.joblessfriend.jobfinder.resume.domain.EducationVo;
+import com.joblessfriend.jobfinder.resume.domain.PortfolioVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
+import com.joblessfriend.jobfinder.resume.domain.SchoolVo;
 
 @Repository
 public class ResumeDaoImpl implements ResumeDao{
@@ -48,5 +52,62 @@ public class ResumeDaoImpl implements ResumeDao{
 	public ResumeVo getResumeByResumeId(int resumeId) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(namespace + ".getResumeByResumeId", resumeId);
+	}
+
+	@Override
+	public void insertResume(ResumeVo resume) {
+		// TODO Auto-generated method stub
+		System.out.println(">>> [ResumeDaoImpl] insertResume 호출됨");
+		sqlSession.insert(namespace + ".insertResume", resume);
+		System.out.println(">>> [ResumeDaoImpl] insertResume SQL 실행 완료");
+		
+	}
+
+	@Override
+	public void insertSchool(SchoolVo school) {
+		// TODO Auto-generated method stub
+		sqlSession.insert(namespace + ".insertSchool", school);
+		
+	}
+
+	@Override
+	public void insertEducation(EducationVo education) {
+		// TODO Auto-generated method stub
+		sqlSession.insert(namespace + ".insertEducation", education);
+		
+	}
+
+	@Override
+	public void insertCareer(CareerVo career) {
+		// TODO Auto-generated method stub
+		sqlSession.insert(namespace + ".insertCareer", career);
+		
+	}
+
+	@Override
+	public void insertCertificateResume(int resumeId, Long certificateId) {
+		// TODO Auto-generated method stub
+		Map<String, Object> param = new HashMap<>();
+	    param.put("resumeId", resumeId);
+	    param.put("certificateId", certificateId);
+	    sqlSession.insert(namespace + ".insertCertificateResume", param);
+		
+	}
+
+	@Override
+	public void insertResumeTag(int resumeId, Long tagId) {
+		// TODO Auto-generated method stub
+		Map<String, Object> param = new HashMap<>();
+	    param.put("resumeId", resumeId);
+	    param.put("tagId", tagId);
+	    sqlSession.insert(namespace + ".insertResumeTag", param);
+		
+	}
+
+	@Override
+	public void insertPortfolio(PortfolioVo portfolio) {
+		// TODO Auto-generated method stub
+		sqlSession.insert(namespace + ".insertPortfolio", portfolio);
+		
 	}
 }

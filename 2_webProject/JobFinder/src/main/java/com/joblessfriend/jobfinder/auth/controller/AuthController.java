@@ -132,7 +132,6 @@ public class AuthController {
 		logger.info("memberVo: {}", memberVo);
 		
 		Map<String, Object> result = new HashMap<>();
-		
 		if(memberVo != null) {
 			session.setAttribute("userLogin", memberVo);
 			session.setAttribute("userType", "member");

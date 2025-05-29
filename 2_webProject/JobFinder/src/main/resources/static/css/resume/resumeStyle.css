@@ -414,7 +414,7 @@ textarea::placeholder {
 }
 
 /* 삭제버튼 */
-.delete-btn {
+.edu-row-combined .delete-btn {
   grid-column: 4; /* 4번째 열에 위치 */
   justify-self: end; /* 오른쪽 정렬 */
   align-self: center;

@@ -36,6 +36,9 @@ public interface MemberDao {
 	MemberVo googleMemberExist(String email);
 
 	int updateNickname(String nickname, int memberId);
+	
+	MemberVo selectByEmail(String email);  // email 로 memberId 찾고 memberId로 이력서 저장용
+
 
 
 }

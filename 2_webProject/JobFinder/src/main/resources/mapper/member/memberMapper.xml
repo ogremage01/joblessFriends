@@ -73,6 +73,13 @@
 			SET NICKNAME = #{nickname}
 			WHERE MEMBER_ID = #{memberId}
 		</update>
+		
+		<!-- 1. MemberDao에 이메일 기반 사용자 조회 -->
+		<select id="selectByEmail" parameterType="string" resultMap="memberResultMap">
+		    SELECT MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER
+		    FROM MEMBER
+		    WHERE EMAIL = #{email}
+		</select>
 	</mapper>
 	
 	
