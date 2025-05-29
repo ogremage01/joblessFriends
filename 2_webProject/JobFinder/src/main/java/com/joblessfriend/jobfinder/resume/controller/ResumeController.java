@@ -39,13 +39,9 @@ public class ResumeController {
 	@Autowired
 	private FileUtils fileUtils;
 	
-	@Value("${api.juso.key}")
-	private String jusoApiKey;
-	
 	//이력서 폼으로 이동
 	@GetMapping("/write")
 	public String resumeWritePage(Model model) {
-		model.addAttribute("jusoApiKey", jusoApiKey);
 		return "resume/resumeView";
 	}
 	

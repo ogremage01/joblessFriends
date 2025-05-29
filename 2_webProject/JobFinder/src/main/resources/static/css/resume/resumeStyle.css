@@ -654,4 +654,21 @@ textarea::placeholder {
   line-height: 1;
 }
 
+.resumeTitle{
+	margin: 1px;
+}
+
+.resumeTitle>#title{
+	
+		border-radius: 5px;
+		border: 1px solid #D1D5E3;
+		width: 97.7%; 
+		height: 50px; 
+		padding: 10px; 
+		font-size: 20px;
+		font-weight: 700;
+	
+}
+
+
 

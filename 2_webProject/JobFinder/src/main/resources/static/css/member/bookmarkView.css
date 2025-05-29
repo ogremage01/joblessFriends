@@ -13,16 +13,16 @@
 #containerWrap {
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    width: 1210px;
 }
 
 #sideBar {
-  width: 200px;
   flex-shrink: 0;
 }
 
 .main {
   flex-grow: 1;
+  background: gray;
 }
 
 
@@ -221,7 +221,6 @@ h2 {
 	display: flex;
 	gap: 2px;
 	width: 100%;
-
 }
 #pagination{
 	display: flex;
