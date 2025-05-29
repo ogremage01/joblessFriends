@@ -44,24 +44,7 @@ public class ResumeSaveRequestVo {
     // 포트폴리오 (파일명 리스트)
     private List<PortfolioVo> portfolios;
     
-    @Override
-    public String toString() {
-        return "ResumeSaveRequestVo{" +
-                "memberName='" + memberName + '\'' +
-                ", birthDate='" + birthDate + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
-                ", jobGroupId=" + jobGroupId +
-                ", jobId=" + jobId +
-                ", schools=" + schools +
-                ", educations=" + educations +
-                ", careers=" + careers +
-                ", certificateIds=" + certificateIds +
-                ", tagIds=" + tagIds +
-                ", portfolios=" + portfolios +
-                '}';
-    }
+    
 }
 
 

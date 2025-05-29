@@ -12,7 +12,6 @@ public class ResumeSaveParser {
     private final ResumeDao resumeDao;
 
     public void saveAll(ResumeSaveRequestVo request, int memberId) {
-    	System.out.println(">>> [saveAll] 호출됨, memberId = " + memberId);
         // 1. 이력서 메인 저장
         ResumeVo resume = new ResumeVo();
         resume.setMemberId(memberId);
@@ -27,24 +26,17 @@ public class ResumeSaveParser {
         resume.setJobGroupId(request.getJobGroupId());
         resume.setJobId(request.getJobId());
 
-        System.out.println(">>> [saveAll] resumeVo 내용 확인 = " + resume);
         resumeDao.insertResume(resume);
-        System.out.println(">>> [saveAll] 이력서 insert 호출 완료됨");
         
         int resumeId = resume.getResumeId(); // selectKey 방식으로 채워져야 함
-        System.out.println(">>> [saveAll] 생성된 resumeId = " + resumeId);
 
         // 2. 학력
         if (request.getSchools() != null) {
-        	System.out.println("📌 학력 목록 있음. 사이즈: " + request.getSchools().size());
             for (SchoolVo school : request.getSchools()) {
-            	System.out.println("📌 SchoolVo 확인: " + school);
                 school.setResumeId(resumeId);
-                System.out.println("📌 저장할 school: " + school); // toString() 덕분에 잘 보임
                 resumeDao.insertSchool(school);
             }
         }else {
-            System.out.println("❌ [학력 입력] request.getSchools() 가 null 또는 empty");
         }
 
         // 3. 교육
