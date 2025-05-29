@@ -32,3 +32,22 @@ button{
 	cursor: pointer;
 	
 }
+
+.moveTo{
+	margin: 0px 0px 20px 0px;
+	display: flex;
+	gap: 15px;
+	font-size: 23px;
+	
+	text-align: center;
+	
+	cursor: pointer;
+	
+}
+
+.selectedPage{
+	
+	border: 1px solid  #F69800;
+	background: #fff3e0;
+	
+}

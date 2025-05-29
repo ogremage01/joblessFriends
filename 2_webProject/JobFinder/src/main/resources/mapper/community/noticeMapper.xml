@@ -35,7 +35,7 @@
 	]]>
 		<if test="keyword != null and keyword != ''">
 		         AND (NOTI.TITLE LIKE '%' || #{keyword} || '%'
-		         OR NOTI.CONTENT LIKE '%' || #{keyword} || '%')
+		         OR CATE.NOTICE_CATEGORY_CONTENT LIKE '%' || #{keyword} || '%')
 		</if>
 	<![CDATA[
 		        ORDER BY NOTI.NOTICE_ID DESC) INNER_QUERY 
@@ -52,6 +52,30 @@
 	        OR CONTENT LIKE '%' || #{keyword} || '%')
          </if>
 	</select>
+	
+	<insert id="noticeInsertOne" parameterType="com.joblessfriend.jobfinder.community.domain.NoticeVo">
+		INSERT INTO NOTICE(NOTICE_ID, ADMIN_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, VIEWS)
+		VALUES(#{noticeId}, #{adminId}, #{noticeCategoryId}, #{title}, #{content}, SYSDATE, NULL, 0)	
+	</insert>
+	
+	<select id="noticeDetail" parameterType="int" resultMap="noticeResultVo">
+		SELECT NOTI.NOTICE_ID, NOTI.ADMIN_ID, NOTI.NOTICE_CATEGORY_ID, 
+		       NOTI.TITLE,NOTI.CONTENT, NOTI.CREATE_AT, NOTI.MODIFIED_AT, NOTI.VIEWS,  
+		        CATE.NOTICE_CATEGORY_CONTENT
+		FROM NOTICE NOTI INNER JOIN NOTICE_CATEGORY CATE
+		ON NOTI.NOTICE_CATEGORY_ID = CATE.NOTICE_CATEGORY_ID
+		WHERE NOTICE_ID= #{noticeId}
+	</select>
+	
+	<select id="noticeSeqNum" resultType="int">
+		 SELECT NOTICE_ID_SEQ.NEXTVAL FROM DUAL
+	</select>
+	
+	<update id="noticeViewCount" parameterType="com.joblessfriend.jobfinder.community.domain.NoticeVo">
+   		UPDATE NOTICE SET VIEWS=#{views}
+		WHERE NOTICE_ID = #{noticeId}		
+	</update>
+	
 	
 	
 </mapper>

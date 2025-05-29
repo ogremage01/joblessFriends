@@ -57,6 +57,9 @@ $(document).ready(function () {
 						const year = createDate.getFullYear();
 						const month = createDate.getMonth() + 1; // 월은 0부터 시작하므로 +1
 						const day = createDate.getDate();
+						var hour = createDate.getHours();
+						var min = createDate.getMinutes();
+						var sec = createDate.getSeconds();
 
 						html += `
 							<div class='replyBox'>
@@ -67,7 +70,7 @@ $(document).ready(function () {
 										<div id="replylistNo_${reply.replyId}">
 											<p>${reply.commentContent}</p>
 											<p class='replyBottom'>
-												<span>${year}-${month}-${day} 작성</span>`;
+												<span>${year}-${month}-${day}-${hour}: ${min}: ${sec} 작성</span>`;
 						if(reply.modifiedAt!=null){
 							
 							const modifiedDate = new Date(reply.modifiedAt);
@@ -79,9 +82,13 @@ $(document).ready(function () {
 						}						
 						
 						if(userType=='member' && memberId ==reply.memberId){
-						html += `	
+							html += `	
 												<a onclick='replyUpdateForm(${reply.replyId}, "${reply.commentContent}")'>수정</a>
 												<a onclick='replyDelete(${reply.replyId})' >삭제</a>`;
+						}else if(userType=='admin'){
+							html += `	
+												<a onclick='replyDelete(${reply.replyId})' >삭제</a>`;
+							
 						}
 						html +=`
 											</p>

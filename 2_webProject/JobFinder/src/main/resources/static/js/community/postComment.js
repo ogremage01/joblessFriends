@@ -38,8 +38,12 @@ $(document).ready(function () {
 		                	var date = new Date(comment.createAt);
 		                	
 		                	var year = date.getFullYear();
-		                	var month = date.getMonth();
+		                	var month = date.getMonth()+1;
 		                	var day = date.getDate();
+							var hour = date.getHours();
+							var min = date.getMinutes();
+							var sec = date.getSeconds();
+																					
 		                	
 							//.replyBox : 닫을 리댓 박스 리스트를 찾기 위함
 							html += `
@@ -52,14 +56,28 @@ $(document).ready(function () {
 			                	        	<div id="commentlistNo_${comment.postCommentId}">
 				                	            <p class="commentBoxStyle">${comment.content}</p>  
 				                	            <p class='commentBottom'>
-				            	            		<span>${year}-${month}-${day}  작성</span>`;
+												<span>${year}-${month}-${day}-${hour}: ${min}: ${sec} 작성 </span>`;
 
+							if(comment.modifiedAt!=null){
+								
+								const modifiedDate = new Date(comment.modifiedAt);
+								const modifiedyear = modifiedDate.getFullYear();
+								const modifiedmonth = modifiedDate.getMonth() + 1; // 월은 0부터 시작하므로 +1
+								const modifiedday = modifiedDate.getDate();
+								const modifiedHour = modifiedDate.getHours();
+								const modifiedMin = modifiedDate.getMinutes();
+								const modifiedSec = modifiedDate.getSeconds();
+								
+								html += `<span>  | </span>
+										<span>${modifiedyear}-${modifiedmonth}-${modifiedday}-${modifiedHour}:${modifiedMin}:${modifiedSec} 수정</span>`;
+							}	
 					
 							if(userType=='member' && memberId ==comment.memberId){
-								html += `<a onclick='commentUpdateForm(${comment.postCommentId}, "${comment.content}")'>수정</a> 
-						                	<a onclick='commentDelete(${comment.postCommentId})'>삭제</a>
-										`;
-								}		
+								html += `	<a onclick='commentUpdateForm(${comment.postCommentId}, "${comment.content}")'>수정</a> 
+						                	<a onclick='commentDelete(${comment.postCommentId})'>삭제</a>`;
+							}else if(userType=='admin'){
+								html += `	<a onclick='commentDelete(${comment.postCommentId})'>삭제</a>`;
+							}	
 				                html +=`</p>
 						                	<p><button class='repCntBtn' onclick="loadReplyList(${comment.postCommentId})">답글 ${comment.replyCount}</button></p>
 			                	          </div>

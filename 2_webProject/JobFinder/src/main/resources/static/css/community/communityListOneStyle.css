@@ -12,7 +12,7 @@
 }
 
 .boxListOne:hover {
-	background-color: #D1D5E3;
+	background-color: #F4F5F8;
 }
 
 .boxListOne div {
@@ -41,6 +41,13 @@ h2 {
 
 #infoContent div {
 	width: 50px;
+	margin: 0px;
+	font-size: 10pt;
+	color: #a2a6b1;
+	display: flex;
+}
+.infoWriter{
+	width: 300px;
 	margin: 0px;
 	font-size: 10pt;
 	color: #a2a6b1;
@@ -82,7 +89,23 @@ h2 {
 
 #noticeType{/* 공지 타입(일반공지, 이벤트) 등이 뜨는 란 */
 	width: 80px;
-	height: 35px;
+	height: 30px;
+	
+/* 	border: 1px solid #F69800; 	 */
+	border-radius: 50px;
+	background-color: #fff3e0;
+	
+	color: #F69800;
+	
+	text-align: center;
+	line-height: 30px;
+	
+	
+}
+
+.noticeType{	
+	width: 80px;
+	height: 30px;
 	
 	border: 1px solid #F69800; 	
 	border-radius: 50px;
@@ -91,7 +114,21 @@ h2 {
 	color: #F69800;
 	
 	text-align: center;
-	line-height: 35px;
+	line-height: 30px;
 	
+	margin-top: 3px;
+}
+
+.listTitle{
+	height: 35px;
+	display: flex; 
+	gap: 15px; 
+	text-align: center;
+	line-height: 35px;
+}
+
+.titleBox{
+	height: 30px;
+	white-space: nowrap;
 	
 }

@@ -28,5 +28,29 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.noticeSelectList(searchVo);
 	}
 
+	@Override
+	public int noticeSeqNum() {
+		// TODO Auto-generated method stub
+		return noticeDao.noticeSeqNum();
+	}
+
+	@Override
+	public void noticeInsertOne(NoticeVo noticeVo) {
+		// TODO Auto-generated method stub
+		noticeDao.noticeInsertOne(noticeVo);
+	}
+
+	@Override
+	public NoticeVo noticeDetail(int no) {
+		// TODO Auto-generated method stub
+		return noticeDao.noticeDetail(no);
+	}
+
+	@Override
+	public void noticeViewCount(NoticeVo noticeVo) {
+		// TODO Auto-generated method stub
+		noticeDao.noticeViewCount(noticeVo);
+	}
+
 
 }

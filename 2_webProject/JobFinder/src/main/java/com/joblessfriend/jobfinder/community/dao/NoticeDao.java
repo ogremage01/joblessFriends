@@ -11,4 +11,12 @@ public interface NoticeDao {
 
 	List<NoticeVo> noticeSelectList(SearchVo searchVo);
 
+	int noticeSeqNum();
+
+	void noticeInsertOne(NoticeVo noticeVo);
+
+	NoticeVo noticeDetail(int no);
+
+	void noticeViewCount(NoticeVo noticeVo);
+
 }

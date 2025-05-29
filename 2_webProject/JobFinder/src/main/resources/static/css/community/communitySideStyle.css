@@ -14,9 +14,10 @@
 
 #boxTextWrap {
 	display: flex;
+	height: 110px;
 }
 
-#boxWrap>div p {
+/* #boxWrap>div p {
 	color: #6D707B;
 	font-size: 12pt;
 	margin-top: 8px;
@@ -24,7 +25,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 
-}
+} */
 
 #boxWrap a {
 	height: 20px;
@@ -87,12 +88,25 @@
 	color: white;
 }
 
-.nickName p{
+/* .nickName p{
 	width: 120px;
 	height: 20px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: normal;
 	
+} */
+
+.nameBox{
+	width: 120px;
+	height: 20px;
+	
+	color: #6D707B;
+	font-size: 12pt;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
 }
 

@@ -19,6 +19,13 @@
 	margin-bottom: 13px;
 }
 
+.detailTitle {
+	max-width: 870px;
+	margin: 0px;
+	margin-bottom: 13px;
+	overflow-wrap: break-word;
+}
+
 #contentText {
 	margin-top: 20px;
 	white-space: pre-line;
