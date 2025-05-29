@@ -366,7 +366,7 @@ function renderJobList(recruitmentList, skillMap) {
                 <div class="job-meta-skill">
                   🧩 스킬: ${
             (skillMap[item.jobPostId] || [])
-                .map(skill => `<span class="tag">${skill.tagName}</span>`)
+                .map(skill => `<span class="tag"> ${skill.tagName}</span>`)
                 .join('')
         }
                 </div>

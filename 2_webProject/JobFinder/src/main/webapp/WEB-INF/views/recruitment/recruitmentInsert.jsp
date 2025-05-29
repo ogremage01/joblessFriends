@@ -176,6 +176,11 @@
 
                 <input type="hidden" name="welfareList" />
             </div>
+
+            <div class="box-section">
+                <label class="section-title">사전질문 등록하기</label>
+                <button id="btnAddQuestion" class="template-btn" type="button">사전질문 등록</button>
+            </div>
                 <div class="InsertTemplate box-section">
                     <label class="section-title">🧩 템플릿 생성 도우미</label>
 

@@ -430,6 +430,49 @@ $(document).ready(function () {
 
 });
 
+$(document).ready(function () {
+    // 사전질문 등록 버튼 클릭 시 모달 표시
+    $('#btnAddQuestion').on('click', function () {
+        Swal.fire({
+            title: '사전질문 등록',
+            html: `
+                <div style="text-align: left;">
+                    <label>질문 1</label>
+                    <input id="question1" class="swal2-input" placeholder="예: 지원 동기를 말씀해주세요" />
+
+                    <label>질문 2</label>
+                    <input id="question2" class="swal2-input" placeholder="예: 자신의 강점은 무엇인가요?" />
+
+                    <label>질문 3</label>
+                    <input id="question3" class="swal2-input" placeholder="예: 입사 후 포부를 알려주세요" />
+                </div>
+            `,
+            focusConfirm: false,
+            showCancelButton: true,
+            confirmButtonText: '질문 저장',
+            cancelButtonText: '취소',
+            preConfirm: () => {
+                const q1 = $('#question1').val();
+                const q2 = $('#question2').val();
+                const q3 = $('#question3').val();
+
+                // 지금은 미연결이므로 콘솔 출력만
+                console.log("사전질문1:", q1);
+                console.log("사전질문2:", q2);
+                console.log("사전질문3:", q3);
+
+                Swal.fire({
+                    icon: 'success',
+                    title: '사전질문이 임시 저장되었습니다.',
+                    text: '향후 서버 연동 시 함께 전송할 수 있습니다.',
+                });
+            }
+        });
+    });
+});
+
+
+
 $('#generateTitle').on('click', function () {
     const file = $('#jobImgFile')[0].files[0];
 
