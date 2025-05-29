@@ -46,7 +46,7 @@
 			<input type="text" id="title" placeholder="이력서 제목을 입력하세요" />
 		</div>		
       <!-- 인적사항 -->
-	<div class="section-block">
+	<div class="section-block" id="section-personal">
 		<h2>인적사항</h2>
 		<div class="grid-4"> <!-- 총 4열 -->
 			<!-- 1행 -->
@@ -97,7 +97,7 @@
 
 
       <!-- 희망직무 -->
-	<section class="section-block">
+	<section class="section-block" id="section-job">
 		<h2>희망직무</h2>
 		<div class="grid-2">
 			<div class="field-block">
@@ -116,7 +116,7 @@
 	</section>
       
      <!-- 스킬 -->
-	<section class="section-block">
+	<section class="section-block" id="section-skill">
 		<h2 class="section-title">스킬</h2>
 			<p id="selectedJobGroupLabel" class="selected-job-group-label" style="display: none;"></p>
 			
@@ -125,7 +125,7 @@
 		</div>
 	</section>
 
-	<section class="section-block">
+	<section class="section-block" id="section-edu">
 		<h2>학력</h2>
 		<div class="edu-row-combined">		   
 			   <!-- 학교 구분 선택 -->
@@ -149,127 +149,39 @@
 		</div>
 	</section>
 	
-	<section class="section-block">
-	<h2>경력</h2>
-	<div class="career-entry">
-		<button class="delete-btn">×</button>
-		
-		<div class="grid-3">
-			<div class="field-block">
-				<label>회사명</label>
-				<input type="text" placeholder="회사명을 입력해주세요" />
-			</div>
-			<div class="field-block">
-				<label>부서명</label>
-				<input type="text" placeholder="부서명을 입력해주세요" />
-			</div>
-			<div class="field-block">
-				<label>입사년월</label>
-				<input type="text" placeholder="예시) 2025.04" />
-			</div>
+	<section class="section-block" id="section-career">
+		<h2>경력</h2>
+		<div id="career-container">
+			<!-- 동적으로 경력 항목이 추가됨 -->
 		</div>
 		
-		<div class="grid-3">
-			<div class="field-block">
-				<label>퇴사년월</label>
-				<input type="text" placeholder="예시) 2025.04" />
-			</div>
-			<div class="field-block">
-				<label>직급/직책</label>
-				<input type="text" placeholder="직급/직책을 입력해주세요" />
-			</div>
-			<div class="field-block">
-				<label>담당직군</label>
-				<input type="text" placeholder="담당직군를 입력해주세요" />
-			</div>
-		</div>
-		
-		<div class="grid-2">
-			<div class="field-block">
-				<label>담당직무</label>
-				<input type="text" placeholder="담당직무를 입력해주세요" />
-			</div>
-			<div class="field-block">
-				<label>연봉 (만원)</label>
-				<input type="text" placeholder="예시) 2400" />
-			</div>
-		</div>
-		
-		<div class="field-block">
-			<label>담당업무</label>
-			<textarea rows="5" placeholder="담당하신 업무와 성과에 대해 간단명료하게 적어주세요"></textarea>
-		</div>
-				
-	</div>
-	
-	<div class="add-career-btn">
-		<button type="button">＋ 추가</button>
-	</div>
-	</section>
-	
-	<section class="section-block">
-		<h2>교육</h2>
-	
-		<div class="training-entry">
-			<button class="delete-btn">×</button>
-		
-		<div class="grid-4">
-			<div class="field-block">
-				<label>교육명</label>
-				<input type="text" placeholder="교육명을 입력해주세요" />
-			</div>
-			<div class="field-block">
-				<label>교육기관</label>
-				<input type="text" placeholder="교육기관을 입력해주세요" />
-			</div>
-			<div class="field-block">
-				<label>시작년월</label>
-				<input type="text" placeholder="예시) 2025.04" />
-			</div>
-			<div class="field-block">
-				<label>종료년월</label>
-				<input type="text" placeholder="예시) 2025.04" />
-			</div>
-		</div>
-		
-			<div class="field-block">
-			<label>내용</label>
-				<textarea rows="3" placeholder="이수하신 교육과정에 대해 적어주세요"></textarea>
-			</div>
-		</div>
-		
-		<div class="add-education-btn">
+		<div class="add-career-btn">
 			<button type="button">＋ 추가</button>
 		</div>
 	</section>
 	
-	<section class="section-block">
+	<section class="section-block" id="section-training">
+		<h2>교육</h2>
+		<div id="education-container">
+			<!-- 동적으로 교육 항목이 추가됨 -->
+		</div>
+		
+		<div class="add-training-btn">
+			<button type="button">＋ 추가</button>
+		</div>
+	</section>
+	
+	<section class="section-block" id="section-intro">
 		<h2>자기소개서</h2>
 		<div class="field-block">
 			<textarea rows="10" id="selfIntroduction" placeholder="자기소개서 내용을 입력하세요"></textarea>
 		</div>
 	</section>
 	
-	<section class="section-block">
+	<section class="section-block" id="section-license">
 		<h2>자격증</h2>
-		
-		<div class="license-entry">
-			<button class="delete-btn">×</button>
-		
-			<div class="grid-3">
-				<div class="field-block">
-					<label>자격증명</label>
-					<input type="text" placeholder="자격증명을 입력해주세요" />
-				</div>
-				<div class="field-block">
-					<label>발행처</label>
-					<input type="text" placeholder="발행처를 입력해주세요" />
-				</div>
-				<div class="field-block">
-					<label>취득날짜</label>
-					<input type="text" placeholder="예시) 2025.04" />
-				</div>
-			</div>
+		<div id="certificate-container">
+			<!-- 동적으로 자격증 항목이 추가됨 -->
 		</div>
 		
 		<div class="add-license-btn">
@@ -277,15 +189,14 @@
 		</div>
 	</section>
 		
-	<section class="section-block">
+	<section class="section-block" id="section-portfolio">
 		<h2>포트폴리오</h2>
+		<div id="portfolio-container">
+			<!-- 동적으로 포트폴리오 항목이 추가됨 -->
+		</div>
 		
-		<div class="portfolio-upload-box">
-			<label for="portfolioFile">
-				<span class="plus-icon">＋</span>
-					파일추가(최대20MB)
-			</label>
-			<input type="file" id="portfolioFile" style="display: none;" />
+		<div class="add-portfolio-btn">
+			<button type="button">＋ 추가</button>
 		</div>
 	</section>
 		
@@ -295,107 +206,28 @@
 	
 <script>
 
-// daum 주소 API 함수
-function execDaumPostcode() {
-    new daum.Postcode({
-        oncomplete: function(data) {
-            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-            var addr = ''; // 주소 변수
-            var extraAddr = ''; // 참고항목 변수
-
-            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                addr = data.roadAddress;
-            } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                addr = data.jibunAddress;
-            }
-
-            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-            if(data.userSelectedType === 'R'){
-                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                    extraAddr += data.bname;
-                }
-                // 건물명이 있고, 공동주택일 경우 추가한다.
-                if(data.buildingName !== '' && data.apartment === 'Y'){
-                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                }
-                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                if(extraAddr !== ''){
-                    extraAddr = ' (' + extraAddr + ')';
-                }
-                // 조합된 참고항목을 해당 필드에 넣는다.
-                addr += extraAddr;
-            }
-
-            // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('postalCode').value = data.zonecode;
-            document.getElementById("roadAddress").value = addr;
-            // 커서를 상세주소 필드로 이동한다.
-            document.getElementById("detailAddress").focus();
-        }
-    }).open();
-}
-
-// 프로필 이미지 업로드 및 미리보기 기능
+// 전역 변수
 let ignoreNextInput = false;
-
-// 사진 박스를 클릭하면 숨겨진 input[type="file"] 요소를 클릭해서 파일 선택창을 열어줌
-document.getElementById("photoBox").addEventListener("click", function () {
-  document.getElementById("profileImageInput").click();
-});
-
-// 사용자가 프로필 이미지를 선택했을 때
 window.uploadedImageUrl = '';
+let isEditMode = false; // 수정 모드 여부
+let currentResumeId = null; // 현재 수정 중인 이력서 ID
 
-document.getElementById("profileImageInput").addEventListener("change", function () {
-  const file = this.files[0];
-  if (!file) return;
-
-  // FileReader를 사용해서 사용자가 선택한 이미지를 미리보기로 보여줌
-  const reader = new FileReader();
-  reader.onload = function (e) {
-    const preview = document.getElementById("previewImage");
-    preview.src = e.target.result;
-    preview.style.display = "block";
-    
-    window.uploadedImageUrl = e.target.result;
-
-    // "사진추가" 텍스트는 숨김 처리
-    const photoText = document.querySelector(".photo-text");
-    if (photoText) photoText.style.display = "none";
-  };
-  reader.readAsDataURL(file);
-
-  // 서버로 이미지 전송 (FormData 사용)
-  const formData = new FormData();
-  formData.append('profileImage', file);
-
-  fetch('/profile-temp/uploadImage', {
-    method: 'POST',
-    body: formData
-  })
-    .then(res => res.text()) // 서버 응답 텍스트 출력
-    .then(data => {
-    	uploadedImageUrl = data;  // 여기서 저장
-      console.log("업로드 결과:", data);
-    })
-    .catch(err => {
-      console.error("업로드 실패", err);
-    });
-});
-
-
-
-
-
- 	// 희망직무 및 스킬 선택 처리
-
+// DOM 로드 완료 후 실행
 document.addEventListener("DOMContentLoaded", function () {
+  
+  // URL에서 resumeId 파라미터 확인 (수정 모드인지 판단)
+  const urlParams = new URLSearchParams(window.location.search);
+  currentResumeId = urlParams.get('resumeId');
+  
+  if (currentResumeId) {
+    isEditMode = true;
+    console.log('수정 모드:', currentResumeId);
+    loadResumeData(currentResumeId);
+    
+    // 작성완료 버튼 텍스트 변경
+    document.querySelector('.btn-finish').textContent = '수정완료';
+  }
+  
   // 직군, 직무 select와 스킬 컨테이너 요소 캐싱
   const jobGroupSelect = document.getElementById("jobGroupSelect");
   const jobSelect = document.getElementById("jobSelect");
@@ -413,7 +245,16 @@ document.addEventListener("DOMContentLoaded", function () {
         option.textContent = group.jobGroupName;
         jobGroupSelect.appendChild(option);
       });
+      
+      // 수정 모드일 때 이력서 데이터 로드
+      if (isEditMode && currentResumeId) {
+        // 직군 옵션이 로드된 후에 이력서 데이터 로드
+        // loadResumeData는 직군/직무 로드 후에 호출되어야 함
+      }
     });
+
+  // 작성완료 버튼 이벤트 등록
+  document.querySelector('.btn-finish').addEventListener('click', saveResume);
 
   // 직군 선택 시 직무 목록 + 스킬 태그 동시 갱신
   jobGroupSelect.addEventListener("change", function () {
@@ -454,7 +295,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // 스킬 태그 버튼들을 생성하고 클릭시 선택/해제 처리
-   
   function renderSkillTags(tags) {
     skillContainer.innerHTML = "";
     selectedSkills.clear(); // 이전 선택 제거
@@ -482,8 +322,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
   
-  
-  // 학력 학교명,전공 자동완성기능
+  // 학력 관련 기능
   const eduContainer = document.getElementById("edu-dynamic-fields");
   const schoolTypeSelect = document.getElementById("schoolTypeSelect");
 
@@ -510,6 +349,34 @@ document.addEventListener("DOMContentLoaded", function () {
     attachAutocomplete(newEntry, selectedType);
   });
 
+  // 경력 추가 버튼
+  document.querySelector(".add-career-btn button").addEventListener("click", () => {
+    const careerContainer = document.getElementById("career-container");
+    const newCareer = createCareerEntry();
+    careerContainer.appendChild(newCareer);
+  });
+
+  // 교육 추가 버튼
+  document.querySelector(".add-training-btn button").addEventListener("click", () => {
+    const educationContainer = document.getElementById("education-container");
+    const newEducation = createEducationEntry();
+    educationContainer.appendChild(newEducation);
+  });
+
+  // 자격증 추가 버튼
+  document.querySelector(".add-license-btn button").addEventListener("click", () => {
+    const certificateContainer = document.getElementById("certificate-container");
+    const newCertificate = createCertificateEntry();
+    certificateContainer.appendChild(newCertificate);
+  });
+
+  // 포트폴리오 추가 버튼
+  document.querySelector(".add-portfolio-btn button").addEventListener("click", () => {
+    const portfolioContainer = document.getElementById("portfolio-container");
+    const newPortfolio = createPortfolioEntry();
+    portfolioContainer.appendChild(newPortfolio);
+  });
+  
   // 학력 입력 DOM 템플릿 생성 함수
   function createSchoolEntry(type) {
     const wrapper = document.createElement("div");
@@ -577,6 +444,167 @@ document.addEventListener("DOMContentLoaded", function () {
     return wrapper;
   }
 
+  // 경력 엔트리 생성 함수
+  function createCareerEntry() {
+    const wrapper = document.createElement("div");
+    wrapper.className = "career-entry";
+    wrapper.innerHTML = `
+      <button class="delete-btn">×</button>
+      
+      <div class="grid-3">
+        <div class="field-block">
+          <label>회사명</label>
+          <input type="text" name="companyName" placeholder="회사명을 입력해주세요" />
+        </div>
+        <div class="field-block">
+          <label>부서명</label>
+          <input type="text" name="departmentName" placeholder="부서명을 입력해주세요" />
+        </div>
+        <div class="field-block">
+          <label>입사년월</label>
+          <input type="text" name="hireYm" placeholder="예시) 2025.04" />
+        </div>
+      </div>
+      
+      <div class="grid-3">
+        <div class="field-block">
+          <label>퇴사년월</label>
+          <input type="text" name="resignYm" placeholder="예시) 2025.04" />
+        </div>
+        <div class="field-block">
+          <label>직급/직책</label>
+          <input type="text" name="position" placeholder="직급/직책을 입력해주세요" />
+        </div>
+        <div class="field-block">
+          <label>담당직군</label>
+          <input type="text" name="jobTitle" placeholder="담당직군을 입력해주세요" />
+        </div>
+      </div>
+      
+      <div class="grid-2">
+        <div class="field-block">
+          <label>담당직무</label>
+          <input type="text" name="taskRole" placeholder="담당직무를 입력해주세요" />
+        </div>
+        <div class="field-block">
+          <label>연봉 (만원)</label>
+          <input type="text" name="salary" placeholder="예시) 2400" />
+        </div>
+      </div>
+      
+      <div class="field-block">
+        <label>담당업무</label>
+        <textarea rows="5" name="workDescription" placeholder="담당하신 업무와 성과에 대해 간단명료하게 적어주세요"></textarea>
+      </div>
+    `;
+    
+    wrapper.querySelector(".delete-btn").addEventListener("click", () => wrapper.remove());
+    return wrapper;
+  }
+
+  // 교육 엔트리 생성 함수
+  function createEducationEntry() {
+    const wrapper = document.createElement("div");
+    wrapper.className = "education-entry";
+    wrapper.innerHTML = `
+      <button class="delete-btn">×</button>
+    
+      <div class="grid-4">
+        <div class="field-block">
+          <label>교육명</label>
+          <input type="text" name="eduName" placeholder="교육명을 입력해주세요" />
+        </div>
+        <div class="field-block">
+          <label>교육기관</label>
+          <input type="text" name="eduInstitution" placeholder="교육기관을 입력해주세요" />
+        </div>
+        <div class="field-block">
+          <label>시작년월</label>
+          <input type="text" name="startDate" placeholder="예시) 2025.04" />
+        </div>
+        <div class="field-block">
+          <label>종료년월</label>
+          <input type="text" name="endDate" placeholder="예시) 2025.04" />
+        </div>
+      </div>
+      
+      <div class="field-block">
+        <label>내용</label>
+        <textarea rows="3" name="content" placeholder="이수하신 교육과정에 대해 적어주세요"></textarea>
+      </div>
+    `;
+    
+    wrapper.querySelector(".delete-btn").addEventListener("click", () => wrapper.remove());
+    return wrapper;
+  }
+
+  // 자격증 엔트리 생성 함수
+  function createCertificateEntry() {
+    const wrapper = document.createElement("div");
+    wrapper.className = "certificate-entry";
+    wrapper.innerHTML = `
+      <button class="delete-btn">×</button>
+    
+      <div class="grid-3">
+        <div class="field-block">
+          <label>자격증명</label>
+          <input type="text" name="certificateName" placeholder="자격증명을 입력해주세요" />
+        </div>
+        <div class="field-block">
+          <label>발행처</label>
+          <input type="text" name="issuingAuthority" placeholder="발행처를 입력해주세요" />
+        </div>
+        <div class="field-block">
+          <label>취득날짜</label>
+          <input type="text" name="acquisitionDate" placeholder="예시) 2025.04" />
+        </div>
+      </div>
+      <input type="hidden" name="certificateId" value="0" />
+    `;
+    
+    wrapper.querySelector(".delete-btn").addEventListener("click", () => wrapper.remove());
+    return wrapper;
+  }
+
+  // 포트폴리오 엔트리 생성 함수
+  function createPortfolioEntry() {
+    const wrapper = document.createElement("div");
+    wrapper.className = "portfolio-entry";
+    wrapper.innerHTML = `
+      <button class="delete-btn">×</button>
+      <div class="portfolio-upload-box">
+        <label>
+          <span class="plus-icon">＋</span>
+          파일추가(최대20MB)
+          <input type="file" name="portfolioFile" style="display: none;" />
+        </label>
+        <input type="hidden" name="fileName" value="" />
+        <input type="hidden" name="storedFileName" value="" />
+        <input type="hidden" name="fileExtension" value="" />
+      </div>
+    `;
+    
+    const fileInput = wrapper.querySelector('input[type="file"]');
+    const fileNameInput = wrapper.querySelector('input[name="fileName"]');
+    const storedFileNameInput = wrapper.querySelector('input[name="storedFileName"]');
+    const fileExtensionInput = wrapper.querySelector('input[name="fileExtension"]');
+    
+    fileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        fileNameInput.value = file.name;
+        storedFileNameInput.value = 'stored_' + Date.now() + '_' + file.name;
+        fileExtensionInput.value = file.name.split('.').pop().toLowerCase();
+        
+        // 여기서 실제 파일 업로드 로직을 구현할 수 있습니다
+        console.log('파일 업로드:', file.name);
+      }
+    });
+    
+    wrapper.querySelector(".delete-btn").addEventListener("click", () => wrapper.remove());
+    return wrapper;
+  }
+
   // 자동완성 이벤트 연결 (학교명/전공명)
   function attachAutocomplete(wrapper, type) {
     // 학교명
@@ -594,8 +622,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         timer = setTimeout(() => {
           const url = type === "high"
-        	  ? `/api/school/search?keyword=` + encodeURIComponent(keyword)
-        	  : `/api/university/search?keyword=` + encodeURIComponent(keyword) + "&schoolType=" + encodeURIComponent(type);
+            ? `/api/school/search?keyword=` + encodeURIComponent(keyword)
+            : `/api/university/search?keyword=` + encodeURIComponent(keyword) + "&schoolType=" + encodeURIComponent(type);
 
           fetch(url)
             .then(res => res.json())
@@ -634,7 +662,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
           }
           timer = setTimeout(() => {
-        	  fetch("/api/major/search?keyword=" + encodeURIComponent(keyword))
+            fetch("/api/major/search?keyword=" + encodeURIComponent(keyword))
               .then(res => res.json())
               .then(data => {
                 majorList.innerHTML = "";
@@ -659,66 +687,170 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  
-//이력서 저장 함수
-//작성완료 버튼 클릭 시 전체 데이터 수집 → 서버로 전송
-document.querySelector('.btn-finish').addEventListener('click', async function () {
- // 세션 체크 (추가 보안)
- const sessionCheck = await fetch('/api/session/check', { 
-   method: 'GET', 
-   credentials: 'include' 
- }).catch(() => null);
- 
- if (!sessionCheck || !sessionCheck.ok) {
-   alert('세션이 만료되었습니다. 다시 로그인해주세요.');
-   location.href = '/auth/login';
-   return;
- }
-
- const resumeData = {
-   title: document.querySelector('#title')?.value || '제목없는 이력서',
-   name: document.querySelector('#name')?.value || '',
-   birthdate: document.querySelector('#birthdate')?.value || '',
-   phoneNumber: document.querySelector('#phoneNumber')?.value || '',
-   email: document.querySelector('#email')?.value || '',
-   address: (document.querySelector('#roadAddress')?.value || '') + ' ' + (document.querySelector('#detailAddress')?.value || ''),
-   selfIntroduction: document.querySelector('#selfIntroduction')?.value || '',
-   profile: window.uploadedImageUrl || '',
-   postalCodeId: parseInt(document.querySelector('#postalCode')?.value) || 0,
-
-   jobGroupId: document.querySelector('#jobGroupSelect')?.value || '',
-   jobId: document.querySelector('#jobSelect')?.value || '',
-
-   schools: collectSchools(),
-   careers: collectCareers(),
-   educations: collectEducations(),
-   certificateIds: collectCertificates(),
-   tagIds: collectTags(),
-   portfolios: collectPortfolios()
- };
-
- try {
-   const response = await fetch("/api/resume/save", {
-     method: "POST",
-     credentials: "include",
-     headers: { "Content-Type": "application/json" },
-     body: JSON.stringify(resumeData)
-   });
-
-   if (response.ok) {
-     alert("이력서가 저장되었습니다.");
-     location.href = "/resume/management";
-   } else {
-     alert("저장 중 오류가 발생했습니다.");
-   }
- } catch (err) {
-   console.error("전송 오류", err);
-   alert("저장 실패. 콘솔 로그를 확인해주세요.");
- }
 });
 
+// 프로필 이미지 업로드 및 미리보기 기능
+// 사진 박스를 클릭하면 숨겨진 input[type="file"] 요소를 클릭해서 파일 선택창을 열어줌
+document.getElementById("photoBox").addEventListener("click", function () {
+  document.getElementById("profileImageInput").click();
+});
 
-// 입력한 정보를 배열로 수집 추가기능 함수
+// 사용자가 프로필 이미지를 선택했을 때
+document.getElementById("profileImageInput").addEventListener("change", function () {
+  const file = this.files[0];
+  if (!file) return;
+
+  // FileReader를 사용해서 사용자가 선택한 이미지를 미리보기로 보여줌
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const preview = document.getElementById("previewImage");
+    preview.src = e.target.result;
+    preview.style.display = "block";
+    
+    window.uploadedImageUrl = e.target.result;
+
+    // "사진추가" 텍스트는 숨김 처리
+    const photoText = document.querySelector(".photo-text");
+    if (photoText) photoText.style.display = "none";
+  };
+  reader.readAsDataURL(file);
+
+  // 서버로 이미지 전송 (FormData 사용)
+  const formData = new FormData();
+  formData.append('profileImage', file);
+
+  fetch('/profile-temp/uploadImage', {
+    method: 'POST',
+    body: formData
+  })
+    .then(res => res.text()) // 서버 응답 텍스트 출력
+    .then(data => {
+      uploadedImageUrl = data;  // 여기서 저장
+      console.log("업로드 결과:", data);
+    })
+    .catch(err => {
+      console.error("업로드 실패", err);
+    });
+});
+
+// daum 주소 API 함수
+function execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수
+
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
+
+            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if(data.userSelectedType === 'R'){
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraAddr !== ''){
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+                // 조합된 참고항목을 해당 필드에 넣는다.
+                addr += extraAddr;
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('postalCode').value = data.zonecode;
+            document.getElementById("roadAddress").value = addr;
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById("detailAddress").focus();
+        }
+    }).open();
+}
+
+// 이력서 저장 함수
+async function saveResume() {
+  console.log("이력서 저장 함수 실행");
+
+  try {
+    // 이력서 데이터 수집
+    const resumeData = collectResumeData();
+    
+    // 수정 모드인 경우 resumeId 추가
+    if (isEditMode && currentResumeId) {
+      resumeData.resumeId = parseInt(currentResumeId);
+    }
+    
+    console.log("수집된 이력서 데이터:", resumeData);
+
+    // API 엔드포인트 결정
+    const url = isEditMode ? '/api/resume/update' : '/api/resume/save';
+    const method = isEditMode ? 'PUT' : 'POST';
+    
+    // 서버로 전송
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(resumeData),
+      credentials: 'include'
+    });
+
+    const responseText = await response.text();
+
+    if (response.ok) {
+      console.log("이력서 저장 성공:", responseText);
+      alert(isEditMode ? "이력서가 성공적으로 수정되었습니다!" : "이력서가 성공적으로 저장되었습니다!");
+      
+      // 목록 페이지로 이동
+      window.location.href = '/resume/management';
+    } else {
+      console.error("이력서 저장 실패:", responseText);
+      alert("이력서 저장에 실패했습니다: " + responseText);
+    }
+  } catch (error) {
+    console.error("이력서 저장 중 오류:", error);
+    alert("이력서 저장 중 오류가 발생했습니다: " + error.message);
+  }
+}
+
+// 이력서 데이터 수집 함수 (통합)
+function collectResumeData() {
+  return {
+    title: document.querySelector('#title')?.value || '제목없는 이력서',
+    name: document.querySelector('#name')?.value || '',
+    birthdate: document.querySelector('#birthdate')?.value || '',
+    phoneNumber: document.querySelector('#phoneNumber')?.value || '',
+    email: document.querySelector('#email')?.value || '',
+    address: (document.querySelector('#roadAddress')?.value || '') + ' ' + (document.querySelector('#detailAddress')?.value || ''),
+    selfIntroduction: document.querySelector('#selfIntroduction')?.value || '',
+    profile: window.uploadedImageUrl || '',
+    postalCodeId: parseInt(document.querySelector('#postalCode')?.value) || 0,
+
+    jobGroupId: parseInt(document.querySelector('#jobGroupSelect')?.value) || 0,
+    jobId: parseInt(document.querySelector('#jobSelect')?.value) || 0,
+
+    schools: collectSchools(),
+    careers: collectCareers(),
+    educations: collectEducations(),
+    certificateIds: collectCertificates(),
+    portfolios: collectPortfolios()
+  };
+}
+
+// 입력한 정보를 배열로 수집하는 함수들 (ResumeParser와 호환)
 
 // 모든 학력 정보를 배열로 수집
 function collectSchools() {
@@ -726,41 +858,38 @@ function collectSchools() {
   document.querySelectorAll('.school-entry').forEach(entry => {
     const sortation = entry.querySelector('input[name="sortation"]')?.value;
     const schoolName = entry.querySelector('input[name="schoolName"]')?.value;
-    const year = entry.querySelector('input[name="yearOfGraduation"]')?.value;
     const status = entry.querySelector('select[name="status"]')?.value;
 
     if (sortation === "high") {
-      result.push({ sortation, schoolName, yearOfGraduation: year, status });
+      const yearOfGraduation = entry.querySelector('input[name="yearOfGraduation"]')?.value;
+      result.push({ 
+        sortation, 
+        schoolName, 
+        yearOfGraduation, 
+        status,
+        majorName: null,
+        startDate: null,
+        endDate: null
+      });
     } else {
+      const majorName = entry.querySelector('input[name="majorName"]')?.value;
+      const startDate = entry.querySelector('input[name="startDate"]')?.value;
+      const endDate = entry.querySelector('input[name="endDate"]')?.value;
       result.push({
         sortation,
         schoolName,
-        majorName: entry.querySelector('input[name="majorName"]')?.value,
-        startDate: entry.querySelector('input[name="startDate"]')?.value,
-        endDate: entry.querySelector('input[name="endDate"]')?.value,
-        status
+        majorName,
+        startDate,
+        endDate,
+        status,
+        yearOfGraduation: null
       });
     }
   });
   return result;
 }
 
-	//모든 교육 정보를 배열로 수집
-function collectEducations() {
-  const result = [];
-  document.querySelectorAll('.education-entry').forEach(entry => {
-    result.push({
-      eduName: entry.querySelector('input[name="eduName"]')?.value || '',
-      eduInstitution: entry.querySelector('input[name="eduInstitution"]')?.value || '',
-      startDate: entry.querySelector('input[name="startDate"]')?.value || '',
-      endDate: entry.querySelector('input[name="endDate"]')?.value || '',
-      content: entry.querySelector('textarea')?.value || ''
-    });
-  });
-  return result;
-}
-
-	// 모든 경력 정보를 배열로 수집
+// 모든 경력 정보를 배열로 수집
 function collectCareers() {
   const result = [];
   document.querySelectorAll('.career-entry').forEach(entry => {
@@ -779,35 +908,288 @@ function collectCareers() {
   return result;
 }
 
-	
-	//모든 자격증 정보를 배열로 수집
+// 모든 교육 정보를 배열로 수집
+function collectEducations() {
+  const result = [];
+  document.querySelectorAll('.education-entry').forEach(entry => {
+    result.push({
+      eduName: entry.querySelector('input[name="eduName"]')?.value || '',
+      eduInstitution: entry.querySelector('input[name="eduInstitution"]')?.value || '',
+      startDate: entry.querySelector('input[name="startDate"]')?.value || '',
+      endDate: entry.querySelector('input[name="endDate"]')?.value || '',
+      content: entry.querySelector('textarea[name="content"]')?.value || ''
+    });
+  });
+  return result;
+}
+
+// 모든 자격증 정보를 배열로 수집
 function collectCertificates() {
-  return Array.from(document.querySelectorAll('input[name="certificateId"]'))
-    .map(el => parseInt(el.value));
+  const result = [];
+  document.querySelectorAll('.certificate-entry').forEach(entry => {
+    const certificateId = entry.querySelector('input[name="certificateId"]')?.value;
+    if (certificateId && parseInt(certificateId) > 0) {
+      result.push(parseInt(certificateId));
+    }
+  });
+  return result;
 }
 
-
-	//모든 스킬 정보를 배열로 수집
-function collectTags() {
-  return Array.from(document.querySelectorAll('button.tag-button.selected'))
-    .map(btn => parseInt(btn.dataset.tagId));
-}
-
-
-	//모든 포트폴리오 정보를 배열로 수집
+// 모든 포트폴리오 정보를 배열로 수집
 function collectPortfolios() {
-	  const result = [];
-	  document.querySelectorAll('.portfolio-entry').forEach(entry => {
-	    result.push({
-	      fileName: entry.querySelector('input[name="fileName"]')?.value || '',
-	      storedFileName: entry.querySelector('input[name="storedFileName"]')?.value || '',
-	      fileExtension: entry.querySelector('input[name="fileExtension"]')?.value || ''
-	    });
-	  });
-	  return result;
-	}
+  const result = [];
+  document.querySelectorAll('.portfolio-entry').forEach(entry => {
+    const fileName = entry.querySelector('input[name="fileName"]')?.value;
+    if (fileName && fileName.trim() !== '') {
+      result.push({
+        fileName: fileName || '',
+        storedFileName: entry.querySelector('input[name="storedFileName"]')?.value || '',
+        fileExtension: entry.querySelector('input[name="fileExtension"]')?.value || ''
+      });
+    }
+  });
+  return result;
+}
 
-});
+// 이력서 데이터 로드 함수 (수정 모드용)
+async function loadResumeData(resumeId) {
+  try {
+    console.log('이력서 데이터 로드 시작:', resumeId);
+    
+    const response = await fetch(`/api/resume/detail/${resumeId}`, {
+      method: 'GET',
+      credentials: 'include'
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`이력서 조회 실패: ${errorText}`);
+    }
+    
+    const resumeData = await response.json();
+    console.log('로드된 이력서 데이터:', resumeData);
+    
+    // 폼에 데이터 채우기
+    fillFormWithData(resumeData);
+    
+  } catch (error) {
+    console.error('이력서 데이터 로드 실패:', error);
+    alert('이력서 데이터를 불러오는 중 오류가 발생했습니다: ' + error.message);
+  }
+}
+
+// 폼에 데이터 채우는 함수
+function fillFormWithData(data) {
+  console.log('폼 데이터 채우기 시작');
+  
+  // 기본 정보 채우기
+  if (data.memberName) document.getElementById('name').value = data.memberName;
+  if (data.birthDate) {
+    // Date를 YYYY-MM-DD 형식으로 변환
+    const birthDate = new Date(data.birthDate);
+    const formattedDate = birthDate.toISOString().split('T')[0];
+    document.getElementById('birthdate').value = formattedDate;
+  }
+  if (data.phoneNumber) document.getElementById('phoneNumber').value = data.phoneNumber;
+  if (data.email) document.getElementById('email').value = data.email;
+  if (data.address) {
+    // 주소를 상세주소와 기본주소로 분리 (간단한 방법)
+    document.getElementById('roadAddress').value = data.address;
+  }
+  if (data.selfIntroduction) document.getElementById('selfIntroduction').value = data.selfIntroduction;
+  
+  // 프로필 이미지
+  if (data.profile) {
+    window.uploadedImageUrl = data.profile;
+    const preview = document.getElementById("previewImage");
+    preview.src = data.profile;
+    preview.style.display = "block";
+    
+    const photoText = document.querySelector(".photo-text");
+    if (photoText) photoText.style.display = "none";
+  }
+  
+  // 직군/직무 선택
+  if (data.jobGroupId) {
+    document.getElementById('jobGroupSelect').value = data.jobGroupId;
+    // 직군 변경 이벤트 트리거하여 직무 목록 로드
+    document.getElementById('jobGroupSelect').dispatchEvent(new Event('change'));
+    
+    // 직무는 잠시 후에 설정 (비동기)
+    setTimeout(() => {
+      if (data.jobId) {
+        document.getElementById('jobSelect').value = data.jobId;
+      }
+    }, 500);
+  }
+  
+  // 학력 정보 채우기
+  if (data.schoolList && data.schoolList.length > 0) {
+    fillSchoolData(data.schoolList);
+  }
+  
+  // 경력 정보 채우기
+  if (data.careerList && data.careerList.length > 0) {
+    fillCareerData(data.careerList);
+  }
+  
+  // 교육 정보 채우기
+  if (data.educationList && data.educationList.length > 0) {
+    fillEducationData(data.educationList);
+  }
+  
+  // 자격증 정보 채우기
+  if (data.certificateList && data.certificateList.length > 0) {
+    fillCertificateData(data.certificateList);
+  }
+  
+  // 포트폴리오 정보 채우기
+  if (data.portfolioList && data.portfolioList.length > 0) {
+    fillPortfolioData(data.portfolioList);
+  }
+  
+  console.log('폼 데이터 채우기 완료');
+}
+
+// 학력 데이터 채우기
+function fillSchoolData(schoolList) {
+  const eduContainer = document.getElementById('edu-dynamic-fields');
+  const schoolTypeSelect = document.getElementById('schoolTypeSelect');
+  
+  // 첫 번째 학력의 구분으로 타입 설정
+  if (schoolList.length > 0) {
+    const firstSchool = schoolList[0];
+    schoolTypeSelect.value = firstSchool.sortation;
+    schoolTypeSelect.dispatchEvent(new Event('change'));
+    
+    // 기존에 생성된 첫 번째 항목에 데이터 채우기
+    setTimeout(() => {
+      schoolList.forEach((school, index) => {
+        if (index === 0) {
+          // 첫 번째 항목은 이미 생성됨
+          const firstEntry = eduContainer.querySelector('.school-entry');
+          fillSchoolEntry(firstEntry, school);
+        } else {
+          // 추가 항목 생성
+          const newEntry = createSchoolEntry(school.sortation);
+          eduContainer.appendChild(newEntry);
+          attachAutocomplete(newEntry, school.sortation);
+          fillSchoolEntry(newEntry, school);
+        }
+      });
+    }, 100);
+  }
+}
+
+// 개별 학력 항목에 데이터 채우기
+function fillSchoolEntry(entry, schoolData) {
+  if (schoolData.schoolName) {
+    entry.querySelector('input[name="schoolName"]').value = schoolData.schoolName;
+  }
+  if (schoolData.status) {
+    entry.querySelector('select[name="status"]').value = schoolData.status;
+  }
+  
+  if (schoolData.sortation === 'high') {
+    if (schoolData.yearOfGraduation) {
+      entry.querySelector('input[name="yearOfGraduation"]').value = schoolData.yearOfGraduation;
+    }
+  } else {
+    if (schoolData.majorName) {
+      entry.querySelector('input[name="majorName"]').value = schoolData.majorName;
+    }
+    if (schoolData.startDate) {
+      entry.querySelector('input[name="startDate"]').value = schoolData.startDate;
+    }
+    if (schoolData.endDate) {
+      entry.querySelector('input[name="endDate"]').value = schoolData.endDate;
+    }
+  }
+}
+
+// 경력 데이터 채우기
+function fillCareerData(careerList) {
+  const careerContainer = document.getElementById('career-container');
+  
+  careerList.forEach(career => {
+    const newCareer = createCareerEntry();
+    fillCareerEntry(newCareer, career);
+    careerContainer.appendChild(newCareer);
+  });
+}
+
+function fillCareerEntry(entry, careerData) {
+  const fields = ['companyName', 'departmentName', 'hireYm', 'resignYm', 'position', 'jobTitle', 'taskRole', 'salary'];
+  fields.forEach(field => {
+    if (careerData[field]) {
+      const input = entry.querySelector(`input[name="${field}"]`);
+      if (input) input.value = careerData[field];
+    }
+  });
+  
+  if (careerData.workDescription) {
+    entry.querySelector('textarea[name="workDescription"]').value = careerData.workDescription;
+  }
+}
+
+// 교육 데이터 채우기
+function fillEducationData(educationList) {
+  const educationContainer = document.getElementById('education-container');
+  
+  educationList.forEach(education => {
+    const newEducation = createEducationEntry();
+    fillEducationEntry(newEducation, education);
+    educationContainer.appendChild(newEducation);
+  });
+}
+
+function fillEducationEntry(entry, educationData) {
+  const fields = ['eduName', 'eduInstitution', 'startDate', 'endDate'];
+  fields.forEach(field => {
+    if (educationData[field]) {
+      const input = entry.querySelector(`input[name="${field}"]`);
+      if (input) {
+        if (field.includes('Date') && educationData[field]) {
+          // Date 객체를 문자열로 변환
+          const date = new Date(educationData[field]);
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, '0');
+          input.value = `${year}.${month}`;
+        } else {
+          input.value = educationData[field];
+        }
+      }
+    }
+  });
+  
+  if (educationData.content) {
+    entry.querySelector('textarea[name="content"]').value = educationData.content;
+  }
+}
+
+// 자격증 데이터 채우기
+function fillCertificateData(certificateList) {
+  const certificateContainer = document.getElementById('certificate-container');
+  
+  certificateList.forEach(certificate => {
+    const newCertificate = createCertificateEntry();
+    newCertificate.querySelector('input[name="certificateId"]').value = certificate.certificateId;
+    certificateContainer.appendChild(newCertificate);
+  });
+}
+
+// 포트폴리오 데이터 채우기
+function fillPortfolioData(portfolioList) {
+  const portfolioContainer = document.getElementById('portfolio-container');
+  
+  portfolioList.forEach(portfolio => {
+    const newPortfolio = createPortfolioEntry();
+    newPortfolio.querySelector('input[name="fileName"]').value = portfolio.fileName || '';
+    newPortfolio.querySelector('input[name="storedFileName"]').value = portfolio.storedFileName || '';
+    newPortfolio.querySelector('input[name="fileExtension"]').value = portfolio.fileExtension || '';
+    portfolioContainer.appendChild(newPortfolio);
+  });
+}
 
 </script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

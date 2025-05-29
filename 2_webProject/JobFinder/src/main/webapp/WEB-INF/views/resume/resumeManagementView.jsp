@@ -110,7 +110,7 @@
 
 											<%-- 수정 버튼 --%>
 
-											<a href="/resume/update/${resume.resumeId}">
+											<a href="/resume/write?resumeId=${resume.resumeId}">
 												<button class="edit-btn">수정하기</button>
 											</a>
 
