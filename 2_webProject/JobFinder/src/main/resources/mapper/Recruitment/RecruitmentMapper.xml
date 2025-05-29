@@ -89,6 +89,37 @@
         WHERE rnum &gt;= #{startRow}
     </select>
     
+	<!--     메인 용 : 조회수 많은 순 -->
+    <select id="RecruitmentListViews" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo"
+            parameterType="com.joblessfriend.jobfinder.util.SearchVo">
+
+        SELECT *
+        FROM (
+                 SELECT inner_query.*, ROWNUM AS rnum
+                 FROM (
+                          SELECT
+                              jp.job_post_id AS jobPostId,
+                              c.company_id AS companyId,
+                              c.company_name AS companyName,
+                              jp.title AS title,
+                              jp.career_type AS careerType,
+                              jp.education AS education,
+                              jg.job_group_name AS jobGroupName,
+                              j.job_name AS jobName,
+                              jp.end_date AS endDate,
+                              jp.job_img AS jobImg,
+                              jp.views as views
+                          FROM job_post jp
+                                   JOIN company c ON jp.company_id = c.company_id
+                                   JOIN job_group jg ON jp.job_group_id = jg.job_group_id
+                                   JOIN job j ON jp.job_id = j.job_id
+                          ORDER BY jp.views DESC
+                      ) inner_query
+                 WHERE ROWNUM &lt;= #{endRow}
+             )
+        WHERE rnum &gt;= #{startRow}
+    </select>
+    
     
 
     <!-- 스킬리스트  -->

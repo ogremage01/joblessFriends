@@ -53,6 +53,10 @@ public interface RecruitmentDao {
     int getFilteredRecruitmentTotalCount(FilterRequestVo filterRequestVo);
 	void jobPostStop(List<Integer> jobPostIdList);
 	List<RecruitmentVo> selectRecruitmentList(int memberId);
+	
+	//메인용 list
+	List<RecruitmentVo> recruitmentListLatest(SearchVo searchVo);
+	List<RecruitmentVo> recruitmentListViews(SearchVo searchVo);
 
 
 

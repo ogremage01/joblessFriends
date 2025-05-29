@@ -160,6 +160,18 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 	    return recruitment != null && recruitment.getCompanyId() == companyId;
 	}
 
+	@Override
+	public List<RecruitmentVo> recruitmentListLatest(SearchVo searchVo) {
+		// TODO Auto-generated method stub
+		return recruitmentDao.recruitmentListLatest(searchVo);
+	}
+
+	@Override
+	public List<RecruitmentVo> recruitmentListViews(SearchVo searchVo) {
+		// TODO Auto-generated method stub
+		return recruitmentDao.recruitmentListViews(searchVo);
+	}
+
 
 
 
