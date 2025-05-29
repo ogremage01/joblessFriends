@@ -133,4 +133,9 @@ public class MemberDaoImpl implements MemberDao{
 	    paramMap.put("memberId", memberId);
 		return sqlSession.update(namespace + "updateNickname", paramMap);
 	}
+
+	@Override
+	public MemberVo selectByEmail(String email) {
+		return null;
+	}
 }
