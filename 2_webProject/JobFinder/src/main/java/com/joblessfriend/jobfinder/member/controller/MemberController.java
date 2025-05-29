@@ -17,14 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.joblessfriend.jobfinder.auth.controller.AuthController;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import com.joblessfriend.jobfinder.member.service.MemberRecruitmentService;
 import com.joblessfriend.jobfinder.member.service.MemberService;
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
-import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
 import com.joblessfriend.jobfinder.skill.domain.SkillVo;
 import com.joblessfriend.jobfinder.skill.service.SkillService;
 import com.joblessfriend.jobfinder.util.Pagination;
