@@ -13,36 +13,34 @@ $(document).on('click', '.apply-btn', function () {
 $(document).on('click', '.deleteBookmark', function(e){
 	e.stopPropagation();
 	const jobPostId = $(this).data('jobpostid');
-	confirm('찜을 취소하시겠습니까?');
-	if(!confirm){
+	if (!window.confirm('찜을 취소하시겠습니까?')) {
 		return;
-	}else{
-		fetch("/member/bookmark",{
-			method: "DELETE",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(jobPostId)
-		})
-		.then(response => {
-			if(!response.ok){
-				throw new Error("서버 오류: " + response.status);
-			}
-			return response.text();
-		})	
-		.then(data=>{
-			if(data == "찜삭제"){
-				alert("찜 취소가 완료되었습니다.");
-				location.reload();
-			}else{
-				alert("실패")
-			}
-		})
-		.catch(error => {
-			        alert("삭제 실패");
-			        console.error("에러 발생:", error);
-			    });
 	}
+	fetch("/member/bookmark",{
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(jobPostId)
+	})
+	.then(response => {
+		if(!response.ok){
+			throw new Error("서버 오류: " + response.status);
+		}
+		return response.text();
+	})	
+	.then(data=>{
+		if(data == "찜삭제"){
+			alert("찜 취소가 완료되었습니다.");
+			location.reload();
+		}else{
+			alert("실패")
+		}
+	})
+	.catch(error => {
+	        alert("삭제 실패");
+	        console.error("에러 발생:", error);
+	    });
 });
 
 
