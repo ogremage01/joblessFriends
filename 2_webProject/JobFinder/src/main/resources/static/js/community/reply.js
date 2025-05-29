@@ -42,10 +42,10 @@ $(document).ready(function () {
 							<div class="nonReplyBoundary">
 								<span>아직 답글이 없습니다. 첫 답글을 남겨보세요!</span>
 							</div>
-							<div id="inputReplyWrap">
+							<div id="inputReplyWrap" class="maxStyle">
 								<textarea id="inputReplyBox_${commentId}" class="boxStyle" placeholder="답글을 입력해주세요."></textarea>
 								<div id="replyBtnWrap">
-									<p>0/1000자</p>
+									<p class="countReply">0/300자</p>
 									<button type="button" class="inputReplyBtn inputBtn" data-comment-id="${commentId}">등록</button>
 								</div>
 							</div>
@@ -100,9 +100,9 @@ $(document).ready(function () {
 /*답글 작성란*/
 					html += `
 							<div id="inputReplyWrap">
-								<textarea id="inputReplyBox_${commentId}" class="boxStyle" placeholder="답글을 입력해주세요."></textarea>
+								<textarea id="inputReplyBox_${commentId}" class="boxStyle  class="maxStyle"" placeholder="답글을 입력해주세요."></textarea>
 								<div id="replyBtnWrap">
-									<p>0/1000자</p>
+									<p class="countReply">0/300자</p>
 									<button type="button" class="inputReplyBtn inputBtn" data-comment-id="${commentId}">등록</button>
 								</div>
 							</div>
@@ -122,6 +122,11 @@ $(document).ready(function () {
 
 		if (!contentReply.trim()) {
 			alert("답글을 입력해주세요.");
+			return;
+		}
+		
+		if(contentReply.length>300){
+			alert("답글은 최대 300자까지 입력할 수 있습니다.");
 			return;
 		}
 
@@ -157,14 +162,14 @@ $(document).ready(function () {
 //업데이트 폼
 function replyUpdateForm(replyId, currentContent) {
     const replyObj = $("#replylistNo_" + replyId);
-      
+    var replyLength = currentContent.length; 
 	
     const html = `
 
-		<div id="inputModiReplyWrap">
+		<div id="inputModiReplyWrap"  class="maxStyle">
 			<textarea id="editReply_${replyId}" class="boxStyle" placeholder="답글을 입력해주세요.">${currentContent}</textarea>
 			<div id="replyModiBtnWrap">
-				<p>0/1000자</p>
+				<p class="countReply">${replyLength}/300자</p>
 				<button type="button" class="inputReplyBtn inputBtn" style="background-color:lightgray; color:black" 
 						onclick="loadCommentList()">취소</button>
 				<button type="button" class="inputReplyBtn inputBtn" onclick="replyUpdate(${replyId})">등록</button>
@@ -188,6 +193,10 @@ function replyUpdate(replyId){
         alert("수정 답글이 비었습니다!");
         return;
     }
+	if(currentContent.length>300){
+		alert("답글은 최대 300자까지 입력할 수 있습니다.");
+		return;
+	}
     
 	$.ajax({
 		url: urlStr,
@@ -229,4 +238,56 @@ function replyDelete(replyId){
 
 	}
 }
+
+
+	
+	//글자수 세기 로직-inputCommentBox/countComment
+	$(document).on("input",  "[id^='inputReplyBox_']", function(){
+			var inputValue= $(this).val();//공백 포함
+			$(this).val(inputValue);
+			
+			var inputLength = inputValue.length;  // 현재 입력된 글자 수
+			var maxLength = 300;  // 최대 글자 수
+			
+			
+			 // 해당 textarea 주변에서 countComment 찾아서 업데이트
+			 $(this).closest("#inputReplyWrap").find(".countReply").text(inputLength + "/" + maxLength + " 자");
+
+			// 글자 수가 최대에 도달하면 색상 변경
+			if (inputLength >= maxLength) {
+			    $(this).closest("#inputReplyWrap").find(".countReply").addClass("maxReached");
+			} else {
+			    $(this).closest("#inputReplyWrap").find(".countReply").removeClass("maxReached");
+			}
+			
+			// 글자 수 초과하면 전송버튼 함수 막고 알림 보내기
+
+
+		});
+	
+	//수정용 글자세기 로직
+	$(document).on("input",  "[id^='editReply_']", function(){
+			var inputValue= $(this).val();//공백 포함
+			$(this).val(inputValue);
+			
+			var inputLength = inputValue.length;  // 현재 입력된 글자 수
+			var maxLength = 300;  // 최대 글자 수
+			
+			
+			 // 해당 textarea 주변에서 countComment 찾아서 업데이트
+			 $(this).closest("#inputModiReplyWrap").find(".countReply").text(inputLength + "/" + maxLength + " 자");
+
+			// 글자 수가 최대에 도달하면 색상 변경
+			if (inputLength >= maxLength) {
+			    $(this).closest("#inputModiReplyWrap").find(".countReply").addClass("maxReached");
+			} else {
+			    $(this).closest("#inputModiReplyWrap").find(".countReply").removeClass("maxReached");
+			}
+			
+			// 글자 수 초과하면 전송버튼 함수 막고 알림 보내기
+
+
+		});
+		
+	
 

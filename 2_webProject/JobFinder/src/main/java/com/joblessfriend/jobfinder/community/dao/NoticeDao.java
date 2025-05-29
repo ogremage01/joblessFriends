@@ -19,4 +19,6 @@ public interface NoticeDao {
 
 	void noticeViewCount(NoticeVo noticeVo);
 
+	void noticeUpdate(NoticeVo noticeVo);
+
 }

@@ -28,8 +28,8 @@
 						<div id="inputCommentWrap">
 							<p>댓글</p>
 							<textarea id="inputCommentBox" class="boxStyle" placeholder="댓글을 입력해주세요."></textarea>
-							<div id="commentBtnWrap">
-								<p>0/1000자</p>
+							<div id="commentBtnWrap"  class="maxStyle">
+								<p class='countComment'>0/300 자</p>
 								<button type="button" id="inputCommentBtn" class="inputBtn">등록</button>
 							</div>
 						</div>
@@ -46,9 +46,9 @@
 <!-- 기업 회원용 -->				
 						<div id="inputCommentWrap">
 							<p>댓글</p>
-							<textarea id="inputCommentBox" class="boxStyle" placeholder="댓글을 입력해주세요."></textarea>
+							<textarea id="inputCommentBox" class="boxStyle commentInput" placeholder="댓글을 입력해주세요."></textarea>
 							<div id="commentBtnWrap">
-								<p>0/1000자</p>
+								<p class='countComment'>0/300 자</p>
 								<button type="button" class="inputBtn"
 									onclick="alert(' 개인회원 전용 기능입니다. 개인 회원 전용으로 로그인해주세요.')">등록</button>
 							</div>
@@ -66,7 +66,7 @@
 							<textarea id="inputCommentBox" class="boxStyle"
 								placeholder="댓글을 입력해주세요."></textarea>
 							<div id="commentBtnWrap">
-								<p>0/1000자</p>
+								<p class='countComment'>0/300 자</p>
 								<button type="button" id="inputCommentBtn" class="inputBtn"
 									onclick="alert(' 개인회원 전용 기능입니다. 개인 회원 전용으로 로그인해주세요.')">등록</button>
 							</div>
@@ -86,7 +86,7 @@
 					<p style="margin-top: 0px">댓글</p>
 					<textarea id="inputCommentBox" class="boxStyle" placeholder="댓글을 입력해주세요."></textarea>
 					<div id="commentBtnWrap">
-						<p>0/1000자</p>
+						<p class='countComment'>0/1000자</p>
 						<button type="button" id="inputCommentBtn" class="inputBtn"
 									onclick="alert(' 개인회원 전용 기능입니다. 개인 회원 전용으로 로그인해주세요.')">등록</button>
 					</div>

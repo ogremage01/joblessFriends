@@ -50,3 +50,25 @@
 img{	
 	max-width: 100%;
 }
+
+.detailBtnStyle{
+	margin: 0; 
+	height: 32px;
+	align-items:center;
+	
+	background-color: #ffff;
+	
+	border-radius: 5px;
+	
+	border: 2px solid  #D1D5E3;
+	
+}
+
+.detailBtn_BottomStyle{
+	display: flex;
+	gap: 15px;
+	height: 30px;
+	align-items:center;
+	
+	justify-content: flex-end;
+}

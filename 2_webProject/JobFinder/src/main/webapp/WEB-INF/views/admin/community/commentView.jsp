@@ -130,7 +130,6 @@
 	    })
 	    .then(data => {
 	        if (data == "삭제완료") {
-	            alert("삭제 성공");
 	            location.reload();
 	        } else {
 	            alert("삭제 실패: 서버 응답 오류");

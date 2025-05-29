@@ -19,4 +19,6 @@ public interface NoticeService {
 
 	void noticeViewCount(NoticeVo noticeVo);
 
+	void noticeUpdate(NoticeVo noticeVo);
+
 }

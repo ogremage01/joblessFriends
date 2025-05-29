@@ -160,8 +160,6 @@
 		let communityIdInput = divElement.querySelector("input[id='communityNo']");
 		let communityId = communityIdInput.value;
 		
-		console.log(communityId);
-		
 		let communityFormNoObj = document.getElementById('communityFormNo');
 		communityFormNoObj.value = communityId;
 		

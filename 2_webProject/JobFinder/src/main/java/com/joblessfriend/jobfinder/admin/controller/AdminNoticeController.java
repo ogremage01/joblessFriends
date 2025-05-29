@@ -128,7 +128,83 @@ public class AdminNoticeController {
 	/* 관리자: 공지 삭제 end*/
 	
 	/* 관리자: 공지 수정 */
+	//공지 업데이트 화면 생성
+	@GetMapping("/update")
+	public String noticeUpdate(@RequestParam int no, Model model, HttpSession session) {
+		System.out.println("공지 수정 시작(화면)");
+
+		//게시글 불러옴
+		NoticeVo noticeVo = noticeService.noticeDetail(no);		
+		model.addAttribute("notice", noticeVo);
+		
+		//카테고리 정보 전체 리스트로 가져오기
+		List<NoticeCategoryVo> noticeCategoryList = noticeCategoryService.noticeCategoryList();
+		
+		model.addAttribute("noticeCategoryList", noticeCategoryList);
+		
+		String adminCheck = (String)session.getAttribute("userType");
+		
+		if(adminCheck != "admin") {
+			
+			return "error/error";
+		}
+		
+//		//게시글의 파일 리스트 불러옴
+//		List<Map<String, Object>> fileList = noticeService.noticeFileList(no);
+//		//잘 불러와지는지 확인(잘뜸)
+//		for (Map<String, Object> file : fileList) {
+//		    System.out.println("\n열 부적합 확인해보는 file: " + file);
+//		}
+//		//model객체에 저장
+//		model.addAttribute("fileList", fileList);
+		
+		
+		// 이미 세션에 updatedFiles가 있으면 다시 넣지 않음
+//	    if (session.getAttribute("updatedFiles") == null) {
+//	        session.setAttribute("updatedFiles", fileList);
+//	    }
+//	    
+//		session.setAttribute("updatedFiles", fileList);//<<열부적합은 해결했는데 이번엔 영원히 들어간다.
+
+		//글 상세 화면
+		return "admin/community/notice/noticeUpdateView";
+	}
 	
+	//공지 업데이트(저장)
+	@PostMapping("/update")
+	public String noticeUpdate(@ModelAttribute NoticeVo noticeVo, 
+			Model model, HttpSession session) {
+		System.out.println("공지 수정 시작");
+		int noticeId=noticeVo.getNoticeId();
+		System.out.println("수정 시 공지 아이디값: "+noticeId);
+		
+		model.addAttribute("notice", noticeVo);
+		
+		System.out.println("noticeVo 확인용: "+ noticeVo);
+		
+	    //게시글 관련 전부 저장
+		noticeService.noticeUpdate(noticeVo);
+		
+//	    List<Map<String, Object>> updatedFiles = (List<Map<String, Object>>) session.getAttribute("updatedFiles");
+//	    System.out.println("updatedFiles 확인용: "+ updatedFiles);//잘나옴
+	    
+
+//	    //3. 업데이트 전 기존 파일 목록 삭제
+//	    noticeService.noticeFileDelete(noticeId);//파일 전체 삭제- Db
+//	    if (updatedFiles != null && !updatedFiles.isEmpty()) {
+//	    // 2. 파일 정보 세션에서 가져오기(uploadImage에서 저장한 것)
+//    
+//		    //4. 새 파일 저장
+//	        for (Map<String, Object> fileMap : updatedFiles) {
+//	            fileMap.put("COMMUNITYID", noticeId); // 커뮤니티 ID 연결
+//	            noticeService.noticeFileNewInsert(fileMap);//파일 삽입
+//	        }
+//	    }
+//		session.removeAttribute("updatedFiles"); // 사용 후 제거
+		    
+		//글 상세 화면
+		return "redirect:/admin/community/notice";
+	}
 	/* 관리자: 공지 수정 */
 	
 

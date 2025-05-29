@@ -52,6 +52,12 @@ public class NoticeDaoImpl implements NoticeDao{
 		// TODO Auto-generated method stub
 		sqlSession.update(namespace+"noticeViewCount", noticeVo);
 	}
+
+	@Override
+	public void noticeUpdate(NoticeVo noticeVo) {
+		// TODO Auto-generated method stub
+		sqlSession.update(namespace+"noticeUpdate", noticeVo);
+	}
 	
 
 }
