@@ -52,7 +52,7 @@
 			<!-- 1행 -->
 			<div class="field-block">
 				<label>이름</label>
-				<input type="text" id="name" placeholder="예시) 홍길동" />
+				<input type="text" id="memberName" placeholder="예시) 홍길동" />
 			</div>
 			<div class="field-block">
 				<label>생년월일</label>
@@ -210,31 +210,31 @@
 	<section class="section-block">
 		<h2>교육</h2>
 	
-		<div class="training-entry">
+		<div class="training-entry education-entry">
 			<button class="delete-btn">×</button>
 		
 		<div class="grid-4">
 			<div class="field-block">
 				<label>교육명</label>
-				<input type="text" placeholder="교육명을 입력해주세요" />
+				<input type="text" name="eduName" placeholder="교육명을 입력해주세요" />
 			</div>
 			<div class="field-block">
 				<label>교육기관</label>
-				<input type="text" placeholder="교육기관을 입력해주세요" />
+				<input type="text" name="eduInstitution" placeholder="교육기관을 입력해주세요" />
 			</div>
 			<div class="field-block">
 				<label>시작년월</label>
-				<input type="text" placeholder="예시) 2025.04" />
+				<input type="text" name="startDate" placeholder="예시) 2025.04" />
 			</div>
 			<div class="field-block">
 				<label>종료년월</label>
-				<input type="text" placeholder="예시) 2025.04" />
+				<input type="text" name="endDate" placeholder="예시) 2025.04" />
 			</div>
 		</div>
 		
 			<div class="field-block">
 			<label>내용</label>
-				<textarea rows="3" placeholder="이수하신 교육과정에 대해 적어주세요"></textarea>
+				<textarea name="content" rows="3" placeholder="이수하신 교육과정에 대해 적어주세요"></textarea>
 			</div>
 		</div>
 		
@@ -696,8 +696,9 @@ document.querySelector('.btn-finish').addEventListener('click', async function (
  }
 
  const resumeData = {
+
    title: document.querySelector('#title')?.value || '제목없는 이력서',
-   name: document.querySelector('#name')?.value || '',
+   name: document.querySelector('#memberName')?.value || '',
    birthdate: document.querySelector('#birthdate')?.value || '',
    phoneNumber: document.querySelector('#phoneNumber')?.value || '',
    email: document.querySelector('#email')?.value || '',
@@ -736,6 +737,46 @@ document.querySelector('.btn-finish').addEventListener('click', async function (
    alert("저장 실패. 콘솔 로그를 확인해주세요.");
  }
 });
+
+// 미리보기 버튼 클릭 시 이력서 데이터를 세션에 저장 후 미리보기 화면으로 이동
+document.querySelector('.btn-preview').addEventListener('click', async function () {
+  const resumeData = {
+	memberName: document.querySelector('#memberName')?.value || '',
+	birthDate: document.querySelector('#birthdate')?.value || '',
+    phoneNumber: document.querySelector('#phoneNumber')?.value || '',
+    email: document.querySelector('#email')?.value || '',
+    address: document.querySelector('#roadAddress')?.value || '',
+    selfIntroduction: document.querySelector('#selfIntroduction')?.value || '',
+    profile: window.uploadedImageUrl || '',
+
+    jobGroupId: document.querySelector('#jobGroupSelect')?.value || '',
+    jobId: document.querySelector('#jobSelect')?.value || '',
+
+    schools: collectSchools(),
+    careers: collectCareers(),
+    educations: collectEducations(),
+    certificateIds: collectCertificates(),
+    tagIds: collectTags(),
+    portfolios: collectPortfolios()
+  };
+
+  try {
+    const res = await fetch("/api/resume/previewSession", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(resumeData)
+    });
+
+    if (res.ok) {
+      location.href = "/resume/write";
+    } else {
+      alert("미리보기용 세션 저장 실패");
+    }
+  } catch (err) {
+    console.error("미리보기 저장 오류", err);
+  }
+});
+
 
 
 // 입력한 정보를 배열로 수집 추가기능 함수

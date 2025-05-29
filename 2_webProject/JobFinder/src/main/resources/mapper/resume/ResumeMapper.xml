@@ -50,6 +50,7 @@
     
     <!-- 이력서 저장 -->
     <insert id="insertResume" parameterType="com.joblessfriend.jobfinder.resume.domain.ResumeVo">
+
         <selectKey keyProperty="resumeId" resultType="int" order="BEFORE">
             SELECT RESUME_ID_SEQ.NEXTVAL FROM DUAL
         </selectKey>
@@ -104,6 +105,7 @@
 	<!-- 교육정보 저장 -->
 	<insert id="insertEducation" parameterType="com.joblessfriend.jobfinder.resume.domain.EducationVo">
 	    INSERT INTO EDUCATION (
+
 	        EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 	    )
 	    VALUES (
@@ -131,6 +133,7 @@
 	<!-- 경력정보 저장 -->
 	<insert id="insertCareer" parameterType="com.joblessfriend.jobfinder.resume.domain.CareerVo">
 	    INSERT INTO CAREER (
+
 	        CAREER_ID, RESUME_ID, COMPANY_NAME, DEPARTMENT_NAME, HIRE_YM, RESIGN_YM,
 	        POSITION, SALARY, DETAIL
 	    )
@@ -159,6 +162,7 @@
 	<!-- 스킬정보 저장 -->
 	<insert id="insertResumeTag">
 	    INSERT INTO RESUME_TAG (
+
 	        RESUME_TAG_ID, RESUME_ID, TAG_ID, CREATE_AT, MODIFIED_AT
 	    )
 	    VALUES (

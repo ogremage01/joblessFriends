@@ -14,5 +14,5 @@ public class EducationVo {
 	private String eduName;
 	private Date startDate;
 	private Date endDate;
-    
+    private String content;
 }

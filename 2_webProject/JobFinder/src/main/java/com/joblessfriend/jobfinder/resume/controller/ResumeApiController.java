@@ -7,6 +7,7 @@ import com.joblessfriend.jobfinder.resume.service.ResumeService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ import java.security.Principal;
 @RequestMapping("/api/resume")
 @RequiredArgsConstructor
 public class ResumeApiController {
+	
 
     private final ResumeService resumeService;
     private final MemberDao memberDao;
@@ -39,7 +41,18 @@ public class ResumeApiController {
 
         // 저장 로직 호출
         resumeService.saveResume(request, memberId);
+        
+     	// 세션 저장 (미리보기용)
+        session.setAttribute("previewResume", request);
 
         return ResponseEntity.ok("이력서 저장 완료");
+    }
+    
+    // 미리보기용 세션 저장
+    @PostMapping("/previewSession")
+    public ResponseEntity<?> savePreviewSession(@RequestBody ResumeSaveRequestVo request, HttpSession session) {
+    	System.out.println("[세션저장] 미리보기용 resumeVo = " + request);
+        session.setAttribute("resumePreview", request);
+        return ResponseEntity.ok("세션 저장 완료");
     }
 }

@@ -43,6 +43,8 @@ public class ResumeSaveRequestVo {
 
     // 포트폴리오 (파일명 리스트)
     private List<PortfolioVo> portfolios;
+    
+    
 }
 
 

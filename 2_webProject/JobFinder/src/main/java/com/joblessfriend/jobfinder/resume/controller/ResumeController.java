@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
+import com.joblessfriend.jobfinder.resume.domain.ResumeSaveRequestVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 import com.joblessfriend.jobfinder.resume.service.ResumeService;
 import com.joblessfriend.jobfinder.util.file.FileUtils;
@@ -212,7 +213,14 @@ public class ResumeController {
 	    
 	    // 이력서 미리보기 뷰
 	    @GetMapping("/preview")
-	    public String signup() {
-	        return "resume/resumePreview";
+	    public String signup(HttpSession session, Model model) {
+	    	ResumeSaveRequestVo resume = (ResumeSaveRequestVo) session.getAttribute("resumePreview");
+
+	    	if (resume == null) {
+	    		resume = new ResumeSaveRequestVo(); // <-- 빈 객체 생성
+	        }
+
+	        model.addAttribute("resume", resume);
+	        return "resume/resumePreview"; // => resumePreview.jsp
 	    }
 }
