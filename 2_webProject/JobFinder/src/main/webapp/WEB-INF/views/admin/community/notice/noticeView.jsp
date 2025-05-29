@@ -53,6 +53,7 @@
 						<td>제목</td>
 						<td>작성 날짜</td>
 						<td>조회수</td>
+						<td>수정</td>
 						<td>삭제</td>
 					</tr>
 				</thead>
@@ -66,6 +67,7 @@
 							<td><a href="#">${noticeVo.title}</a></td>
 							<td><fmt:formatDate value="${noticeVo.createAt}" pattern="yyyy-MM-dd" /></td>
 							<td>${noticeVo.views}</td>
+							<td><button id="modi_${noticeVo.noticeId}" value="${noticeVo.noticeId}" onclick="moveUpdateNotice(${noticeVo.noticeId})">수정</button></td>
 							<td><button class="delBtn" value="${noticeVo.noticeId}">삭제</button></td>
 						</tr>
 					</c:forEach>
@@ -108,12 +110,25 @@
 			
 		
       <!-- 본문영역  -->
+      
+    <form id="noticeSelectOneForm" action="./notice/update" method="get">
+		<input type="hidden" id="noticeFormNo" name="no" value="">
+	</form>
 </main>
 
 </body>
 
 <script type="text/javascript">
 
+	function moveUpdateNotice(noticeId){
+	    let noticeBtn = $('#modi_' + noticeId); // ID 수정
+	    let noticeNo = noticeBtn.val();         // value 값 추출
+
+	    $('#noticeFormNo').val(noticeNo);       // 올바른 대입
+
+	    document.getElementById('noticeSelectOneForm').submit();
+		
+	}
 	
 	function deleteNotices(noticeIdList) {
 	    if (!confirm("삭제를 진행합니까?")) return;
@@ -133,7 +148,6 @@
 	    })
 	    .then(data => {
 	        if (data == "삭제완료") {
-	            alert("삭제 성공");
 	            location.reload();
 	        } else {
 	            alert("삭제 실패: 서버 응답 오류");

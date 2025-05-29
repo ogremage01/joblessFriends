@@ -45,6 +45,24 @@
 	margin: 0px;
 }
 
+#commentBtnWrap .countComment.maxReached{
+    color: red;
+    font-weight: bold;
+}
+
+#replyModiBtnWrap .countReply.maxReached{
+    color: red;
+    font-weight: bold;
+}
+
+#replyBtnWrap .countReply.maxReached{
+    color: red;
+    font-weight: bold;
+}
+
+
+#inputModiReplyWrap 
+
 .replyBox{
 	width: 860px;
 	

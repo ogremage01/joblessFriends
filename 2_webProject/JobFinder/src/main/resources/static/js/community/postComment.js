@@ -110,6 +110,11 @@ $(document).ready(function () {
 		        alert("댓글을 입력해주세요.");
 		        return;
 		    }
+			
+			if (content.length > 300) {
+			       alert("댓글은 최대 300자까지 입력할 수 있습니다.");
+			       return;
+			   }
 		    
 			$.ajax({
 				url: urlStr,
@@ -125,7 +130,7 @@ $(document).ready(function () {
 					$("#inputCommentBox").val(''); //입력창 비우기
 				},
 				error: function(){
-					alert("댓글 등록에 실패했습니다.");
+					console.log("댓글 등록에 실패했습니다.");
 				}
 			});	
 		}
@@ -137,18 +142,25 @@ $(document).ready(function () {
 	//업데이트 폼
 	function commentUpdateForm(commentId, currentContent) {
 	    const commentObj = $("#commentlistNo_" + commentId);
-	      
+		var commentLength = currentContent.length;
+		
 	    const html = `
-	    	<div id='modifiedWrap'>
+	    	<div id='modifiedWrap' class="modifiedWrap">
 		        <textarea id="editCommentContent_${commentId}" class="boxStyle">${currentContent}</textarea>
 		        <div id="commentBtnWrap">
-		        	<p>0/1000자</p>
-		            <button class="inputBtn" onclick="commentUpdate(${commentId})">저장</button>
+		        	<p id='modifiedComment' class='countComment maxStyle'>${commentLength}/300자</p>
+		            <button class="inputBtn " onclick="commentUpdate(${commentId})">저장</button>
 		            <button class="inputBtn" onclick="window.loadCommentList()" style="background-color:lightgray; color:black">취소</button>
 				</div>
 		    </div>
 	    `;
 	    commentObj.html(html);
+		
+		if (commentLength >= 300) {
+		    $("#modifiedWrap").find(".countComment").addClass("maxReached");
+		} else {
+		    $("#modifiedWrap").find(".countComment").removeClass("maxReached");
+		}
 	
 	}
 	
@@ -201,6 +213,69 @@ $(document).ready(function () {
 			)
 		}
 	}
+	
+	
+	
+	//글자수 세기 로직-inputCommentBox/countComment
+	$("#inputCommentBox").on("input", function(){
+		var inputValue= $(this).val();//공백 포함
+		$(this).val(inputValue);
+		
+		var inputLength = inputValue.length;  // 현재 입력된 글자 수
+		var maxLength = 300;  // 최대 글자 수
+		
+		
+		// 글자 수 표시
+		$(".countComment").text(inputLength + "/" + maxLength + " 자");
+		
+/*		// 비활성화 + 경고
+		if (inputLength > maxLength) {
+		    $("#inputCommentBtn").prop("disabled", true);
+		    if (!alertShown) {
+		        alertShown = true;
+		    }
+		} else {
+		    $("#inputCommentBtn").prop("disabled", false);
+		    alertShown = false;
+		}*/
+
+		// 글자 수가 최대에 도달하면 색상 변경
+		if (inputLength >= maxLength) {
+			$(".countComment").addClass("maxReached");  // 빨간색으로 변경
+		} else {
+			$(".countComment").removeClass("maxReached");  // 색상 원래대로
+		}
+		
+		// 글자 수 초과하면 전송버튼 함수 막고 알림 보내기
+
+
+	});
+	
+	//수정용 글자세기 로직
+	$(document).on("input",  "[id^='editCommentContent_']", function(){
+			var inputValue= $(this).val();//공백 포함
+			$(this).val(inputValue);
+			
+			var inputLength = inputValue.length;  // 현재 입력된 글자 수
+			var maxLength = 300;  // 최대 글자 수
+			
+			
+			 // 해당 textarea 주변에서 countComment 찾아서 업데이트
+			 $(this).closest("#modifiedWrap").find(".countComment").text(inputLength + "/" + maxLength + " 자");
+
+			// 글자 수가 최대에 도달하면 색상 변경
+			if (inputLength >= maxLength) {
+			    $(this).closest("#modifiedWrap").find(".countComment").addClass("maxReached");
+			} else {
+			    $(this).closest("#modifiedWrap").find(".countComment").removeClass("maxReached");
+			}
+			
+			// 글자 수 초과하면 전송버튼 함수 막고 알림 보내기
+
+
+		});
+		
+	
 	
 	
 
