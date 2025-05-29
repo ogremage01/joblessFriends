@@ -41,4 +41,10 @@ public class EducationDaoImpl implements EducationDao {
 		sqlSession.delete(namespace + "educationDeleteOne", map);
 	}
 
+	@Override
+	public void educationUpdateOne(EducationVo educationVo) {
+		// TODO Auto-generated method stub
+		sqlSession.update(namespace + "educationUpdateOne", educationVo);
+	}
+
 }

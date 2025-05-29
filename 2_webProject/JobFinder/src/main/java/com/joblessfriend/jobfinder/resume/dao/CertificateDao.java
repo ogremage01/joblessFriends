@@ -10,6 +10,7 @@ public interface CertificateDao {
 	List<CertificateVo> certificateSelectListByResumeId(int resumeId);
 	void certificateInsertOne(CertificateVo certificateVo);
 	void certificateDeleteOne(int resumeId);
+	List<CertificateVo> certificateSearchList(String certificateName);
 	
 
 }

@@ -32,4 +32,10 @@
 		DELETE FROM CERTIFICATE_RESUME
         WHERE RESUME_ID=#{resumeId}
 	</delete>
+	
+	<select id="certificateSearchList" resultMap="certificateResultMap">
+        SELECT CERTIFICATE_ID, CERTIFICATE_NAME
+        FROM CERTIFICATE
+        WHERE CERTIFICATE_NAME LIKE #{certificateName}
+    </select>
 </mapper>

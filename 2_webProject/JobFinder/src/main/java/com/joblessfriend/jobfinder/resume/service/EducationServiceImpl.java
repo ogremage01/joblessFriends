@@ -30,4 +30,10 @@ public class EducationServiceImpl implements EducationService{
 		educationDao.educationDeleteOne(eduId, resumeId);
 	}
 
+	@Override
+	public void educationUpdateOne(EducationVo educationVo) {
+		// TODO Auto-generated method stub
+		educationDao.educationUpdateOne(educationVo);
+	}
+
 }

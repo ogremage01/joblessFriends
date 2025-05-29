@@ -12,4 +12,6 @@ public interface EducationDao {
 
 	void educationDeleteOne(int eduId, int resumeId);
 
+	void educationUpdateOne(EducationVo educationVo);
+
 }
