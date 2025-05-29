@@ -149,7 +149,7 @@
 			<div class="jobInfoSection section">
 				<button class="slideBtn left views"><div></div></button>
 				<button class="slideBtn right views"><div></div></button>
-				<h2>요즘 많이 보는 공고 👀</h2>
+				<h2>조회수 많은 공고 👀</h2>
 				<div id="viewsList" class="jobInfoContent">
 					<div class="slideWrap translateSlide">
 					
@@ -270,7 +270,7 @@
 			
 			<!-- 			최신공고 			-->
 			<div class="jobInfoSection section">
-				<h2>최신 공고 📌</h2>
+				<h2>최신 등록된 공고 📌</h2>
 				<div class="jobInfoContent">
 					<c:forEach var="rec" items="${recruitmentListLatest}">
                     <c:if test="${now < rec.endDate}"> <%-- 마감기한이 지나면 출력되지 않음 --%>
@@ -332,7 +332,9 @@
 	
 
 	<jsp:include page="common/footer.jsp"/>
-
+	
+	<button class="topBtn" title="맨 위로 가기">TOP</button>
+	
     <!-- 채팅 플로팅 버튼 -->
     <a href="#" class="chat-floating-btn" title="채팅하기" onclick="openChat(event)">
         <i class="bi bi-chat-dots-fill"></i>
