@@ -81,6 +81,14 @@
 		WHERE NOTICE_ID=#{noticeId}
 	</update>
 	
+	<delete id="noticeDelete" parameterType="list">
+		DELETE FROM NOTICE
+		WHERE NOTICE_ID IN
+		<foreach item="noticeId" collection="list" open="(" separator="," close=")">
+			#{noticeId}
+		</foreach>
+	</delete>
+	
 	
 	
 </mapper>

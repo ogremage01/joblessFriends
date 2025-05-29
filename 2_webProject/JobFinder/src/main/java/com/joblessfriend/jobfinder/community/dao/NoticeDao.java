@@ -21,4 +21,6 @@ public interface NoticeDao {
 
 	void noticeUpdate(NoticeVo noticeVo);
 
+	void noticeDelete(List<Integer> noticeIdList);
+
 }

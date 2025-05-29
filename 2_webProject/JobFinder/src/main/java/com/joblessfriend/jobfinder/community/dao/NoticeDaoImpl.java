@@ -58,6 +58,12 @@ public class NoticeDaoImpl implements NoticeDao{
 		// TODO Auto-generated method stub
 		sqlSession.update(namespace+"noticeUpdate", noticeVo);
 	}
+
+	@Override
+	public void noticeDelete(List<Integer> noticeIdList) {
+		// TODO Auto-generated method stub
+		sqlSession.delete(namespace+"noticeDelete", noticeIdList);
+	}
 	
 
 }

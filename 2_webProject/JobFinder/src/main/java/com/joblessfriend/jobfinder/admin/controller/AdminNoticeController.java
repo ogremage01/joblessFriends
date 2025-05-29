@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -124,7 +127,18 @@ public class AdminNoticeController {
 	
 	
 	/* 관리자: 공지 삭제 */
-	
+	@DeleteMapping("/delete")
+	public ResponseEntity<String> communityPostDelete(@RequestBody List<Integer> noticeIdList) {
+		for (Integer i : noticeIdList) {
+			System.out.println("삭제할 게시물 Id " + i);
+
+		}
+		
+		noticeService.noticeDelete(noticeIdList);
+
+		
+		return ResponseEntity.ok("삭제완료"); 
+	}
 	/* 관리자: 공지 삭제 end*/
 	
 	/* 관리자: 공지 수정 */
