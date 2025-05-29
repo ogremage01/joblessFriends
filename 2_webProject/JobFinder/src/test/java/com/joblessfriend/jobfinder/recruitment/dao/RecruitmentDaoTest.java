@@ -33,7 +33,7 @@ public class RecruitmentDaoTest {
         vo.setWorkHours("09:00~18:00");
         vo.setJobGroupId(5);
         vo.setJobId(13);
-        vo.setIsContinuous(false);
+        vo.setIsContinuous(0);
         vo.setMaxApplicants(100);
         LocalDate localDate = LocalDate.of(2025, 5, 20);
         LocalDate localDate2 = LocalDate.of(2025, 5, 30);

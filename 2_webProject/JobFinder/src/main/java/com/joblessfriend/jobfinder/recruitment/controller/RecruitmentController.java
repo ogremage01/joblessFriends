@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @RequestMapping("/Recruitment")
@@ -348,6 +349,7 @@ public class RecruitmentController {
                                     @RequestParam("jobImgFile") MultipartFile jobImgFile,
                                     HttpSession session) {
 
+        System.out.println("복리후생 리스트 ㅁㄴㅇㅁㄴㅇ"+ welfareList);
         // 1. 로그인 체크
         Object loginMember = session.getAttribute("userLogin");
         Object userType = session.getAttribute("userType");
@@ -369,17 +371,25 @@ public class RecruitmentController {
         List<Integer> tagIdList = Arrays.stream(skills.split(","))
                 .filter(s -> !s.isBlank())
                 .map(Integer::parseInt)
+                .distinct() // ✅ 이 한 줄로 중복 태그 방지
                 .collect(Collectors.toList());
 
         // 5. 복리후생 리스트 처리
-        List<WelfareVo> welfareVoList = Arrays.stream(welfareList.split("\\|"))
-                .filter(w -> !w.isBlank())
+        List<WelfareVo> welfareVoList = Arrays.stream(Optional.ofNullable(welfareList).orElse("")
+                        .split("\\|"))
+                .map(String::trim)
+                .filter(w -> !w.isBlank())                     // 공백 제거
+                .filter(w -> !w.equals(","))                   // 쉼표 단독 제거
+                .filter(w -> w.matches(".*[가-힣a-zA-Z0-9].*")) // 내용 없는 특수문자만 필터링
+                .distinct()
                 .map(w -> {
                     WelfareVo vo = new WelfareVo();
                     vo.setBenefitText(w);
                     return vo;
                 })
                 .collect(Collectors.toList());
+
+
 
         try {
             // 6. 서비스 호출
@@ -399,11 +409,16 @@ public class RecruitmentController {
     @PostMapping("/filter/count")
     @ResponseBody
     public int filterCount(@RequestBody Map<String, Object> filterParams) {
-        // 필터 값 꺼내기 (null safe 처리)
         List<Integer> jobIds = (List<Integer>) filterParams.getOrDefault("jobIds", new ArrayList<>());
         List<String> careers = (List<String>) filterParams.getOrDefault("careers", new ArrayList<>());
         List<String> educations = (List<String>) filterParams.getOrDefault("educations", new ArrayList<>());
         List<Integer> skillTags = (List<Integer>) filterParams.getOrDefault("skillTags", new ArrayList<>());
+
+        // 필터가 모두 비어있으면 count 0 또는 전체 조회 방지
+        boolean isAllEmpty = jobIds.isEmpty() && careers.isEmpty() && educations.isEmpty() && skillTags.isEmpty();
+        if (isAllEmpty) {
+            return 0; // 또는 -1 등 프론트에서 구분 가능한 값
+        }
 
         FilterRequestVo filterRequestVo = new FilterRequestVo();
         filterRequestVo.setJobIds(jobIds);
@@ -411,11 +426,9 @@ public class RecruitmentController {
         filterRequestVo.setEducations(educations);
         filterRequestVo.setSkillTags(skillTags);
 
-        // 서비스 계층 호출 (필터 조건 기반 count)
-        int count = recruitmentService.countFilteredPosts(filterRequestVo);
-
-        return count;
+        return recruitmentService.countFilteredPosts(filterRequestVo);
     }
+
 
     @GetMapping("/filter/list")
     @ResponseBody

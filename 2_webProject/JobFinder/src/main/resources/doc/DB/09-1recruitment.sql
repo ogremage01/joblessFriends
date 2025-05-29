@@ -8,7 +8,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 2, 'SK하이닉스 채용공고',
              'SK하이닉스에서 함께 성장할 인재를 채용합니다. 다양한 프로젝트와 협업을 통해 역량을 키울 수 있는 최고의 기회입니다.',
-             '3325', '면접 후 결정', 112, 13,
+             '3325', '면접 후 결정', 81, 6,
              31, '/img/SK.jpg', '5년이상', '대학원 박사졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-21', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -18,9 +18,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자율복장');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 322, 1);
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 324, 1);
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 325, 0);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 177, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 188, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 182, 0);
 
 COMMIT;
 
@@ -31,7 +31,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 2, '미래 반도체 설계 전문가 모집',
              'SK하이닉스에서는 미래 반도체 산업을 선도할 열정적이고 창의적인 인재를 모집합니다. 최첨단 기술력과 협업 중심의 업무 환경에서 경력을 쌓을 수 있습니다. 글로벌 경쟁력을 갖춘 프로젝트에 참여할 기회를 제공합니다.',
-             '4100', '주5일(월~금)', 115, 13,
+             '4100', '주5일(월~금)', 257, 17,
              87, '/img/SK.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-21', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -39,9 +39,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '주4일근무');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자율복장');
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 312, 1);
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 344, 1);
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 367, 0);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 703, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 701, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 680, 0);
 COMMIT;
 
 
@@ -53,7 +53,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 2, 'AI 반도체 연구원 채용',
              'SK하이닉스의 차세대 연구소에서 AI 기반 반도체를 연구할 인재를 찾습니다. 딥러닝 알고리즘을 하드웨어에 효과적으로 연동하는 기술을 개발하며, 차세대 메모리와 시스템 반도체 융합 기술을 선도할 기회를 가집니다. 도전정신과 기술에 대한 깊은 이해를 가진 분들의 많은 지원 바랍니다.',
-             '3900', '주5일(월~금)', 107, 13,
+             '3900', '주5일(월~금)', 81, 6,
              56, '/img/SK.jpg', '3~5년', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-29', 'YYYY-MM-DD'),
              0, 30, 0, SYSDATE
@@ -69,11 +69,11 @@ VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '교육비 지원')
 
 -- 태그 연계 (JOB_GROUP_ID = 13번 태그 예시)
 INSERT INTO JOB_POST_TAG (JOB_POST, TAG_ID, REQUIRED)
-VALUES (JOB_POST_ID_SEQ.CURRVAL, 323, 1);  -- 데이터 분석
+VALUES (JOB_POST_ID_SEQ.CURRVAL, 178, 1);  -- 데이터 분석
 INSERT INTO JOB_POST_TAG (JOB_POST, TAG_ID, REQUIRED)
-VALUES (JOB_POST_ID_SEQ.CURRVAL, 328, 1);  -- 딥러닝
+VALUES (JOB_POST_ID_SEQ.CURRVAL, 202, 1);  -- 딥러닝
 INSERT INTO JOB_POST_TAG (JOB_POST, TAG_ID, REQUIRED)
-VALUES (JOB_POST_ID_SEQ.CURRVAL, 342, 0);  -- 머신러닝 기초
+VALUES (JOB_POST_ID_SEQ.CURRVAL, 182, 0);  -- 머신러닝 기초
 
 COMMIT;
 
@@ -85,7 +85,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 3, '전지 소재 개발 연구원 채용',
              'LG에너지솔루션에서 전고체 배터리 및 차세대 소재 연구를 위한 인재를 모집합니다. 소재 분석, 전해질 개발, 셀 단위의 실험 등 다양한 과제를 수행하게 됩니다. 글로벌 전기차 시장을 선도할 수 있는 기회입니다.',
-             '3783', '면접 후 결정', 141, 14,
+             '3783', '면접 후 결정', 248, 17,
              48, '/img/LG_Solution.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-23', 'YYYY-MM-DD'),
              0, 30, 0, SYSDATE
@@ -97,9 +97,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 501, 1);
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 515, 0);
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 527, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 702, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 698, 0);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 712, 1);
 COMMIT;
 
 
@@ -110,7 +110,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 3, '생산 기술 엔지니어 채용',
              'LG에너지솔루션의 오창/평택 사업장에서 생산 라인 개선, 공정 최적화 및 신규 장비 셋업을 위한 기술 엔지니어를 채용합니다. 배터리 셀 제조 경험이 있거나 자동화 설비 경험이 있는 분을 환영합니다.',
-             '4021', '유연근무제', 142, 14,
+             '4021', '유연근무제', 191, 14,
              53, '/img/LG_Solution.jpg', '3~5년', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 50, 0, SYSDATE
@@ -122,9 +122,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 512, 1);
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 528, 1);
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 535, 0);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 572, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 576, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 585, 0);
 COMMIT;
 
 
@@ -135,7 +135,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 3, '배터리 품질관리 전문가 채용',
              'LG에너지솔루션에서 고객사 대응 품질관리(QA) 전문가를 찾습니다. 주요 업무는 고객 클레임 대응, 품질 기준 수립, 공정 분석 및 개선 활동 등입니다. 품질/신뢰성 관련 경력이 있는 분을 우대합니다.',
-             '3604', '주 5일(월~금)', 143, 14,
+             '3604', '주 5일(월~금)', 138, 10,
              67, '/img/LG_Solution.jpg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-28', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -147,9 +147,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 511, 1);
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 518, 1);
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 530, 0);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 381, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 378, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 379, 0);
 COMMIT;
 
 -- 1. 품질관리(QC) 담당자 채용
@@ -160,16 +160,16 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 4, '품질관리(QC) 담당자 채용',
              '삼성바이오로직스 품질관리팀에서 바이오 의약품의 품질 검사 및 분석을 담당할 인재를 모집합니다. GMP 기준에 따라 정확하고 정밀한 품질 관리를 수행할 수 있는 분을 기다립니다.',
-             '4500', '주 5일(월~금)', 120, 16,
+             '4500', '주 5일(월~금)', 138, 10,
              27, '/img/Samsung_Biologic.jpeg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
          );
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 734, 1); -- 세포배양
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 731, 1); -- 분석기기 활용
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 729, 0); -- 품질 테스트
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 358, 1); -- 세포배양
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 373, 1); -- 분석기기 활용
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 377, 0); -- 품질 테스트
 
 -- 2. 바이오 공정개발 연구원 모집
 INSERT INTO JOB_POST (
@@ -179,16 +179,16 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 4, '바이오 공정개발 연구원 모집',
              '바이오의약품의 공정 개발을 담당할 연구원을 모집합니다. 기술적 기반을 바탕으로 최적의 생산 조건을 확립하고, 효율적인 제조 공정을 설계할 수 있는 분을 기다립니다.',
-             '4700', '주 5일(월~금)', 119, 16,
+             '4700', '주 5일(월~금)', 250, 17,
              33, '/img/Samsung_Biologic.jpeg', '3~5년', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-07', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
          );
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자율복장');
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 727, 1); -- 생명과학
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 728, 1); -- 세포실험
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 735, 0); -- 연구개발
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 703, 1); -- 생명과학
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 694, 1); -- 세포실험
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 696, 0); -- 연구개발
 
 -- 3. GMP 문서관리 및 QA 담당자 채용
 INSERT INTO JOB_POST (
@@ -198,16 +198,16 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 4, 'GMP 문서관리 및 QA 담당자 채용',
              '품질보증(QA) 부서에서 GMP 기준에 따라 제조기록, 시험기록, 변경관리 등 품질 관련 문서들을 관리하고 검토하는 업무를 수행합니다. 꼼꼼하고 책임감 있는 인재를 찾습니다.',
-             '4300', '주 5일(월~금)', 121, 16,
+             '4300', '주 5일(월~금)', 65, 5,
              25, '/img/Samsung_Biologic.jpeg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-03', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
          );
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '식사제공');
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 733, 1); -- MSDS 작성
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 737, 1); -- 기술 문서 작성
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 732, 0); -- 화학 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 150, 1); -- MSDS 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 158, 1); -- 기술 문서 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 163, 0); -- 화학 분석
 
 COMMIT;
 
@@ -219,7 +219,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 5, '배터리 셀 개발 연구원 모집',
              '삼성SDI에서 배터리 셀의 성능 향상을 위한 신소재 및 구조 설계를 주도할 연구원을 모집합니다. 전기차, ESS 등 다양한 분야에 적용될 기술을 함께 개발할 수 있는 분을 기다립니다.',
-             '4200', '주 5일(월~금)', 145, 17,
+             '4200', '주 5일(월~금)', 248, 17,
              41, '/img/Samsung_SDI.png', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-04', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -228,7 +228,7 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 701, 1); -- 고분자
 INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 703, 1); -- 기술연구
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 716, 0); -- 품질 테스트
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 705, 0); -- 품질 테스트
 
 -- 2. 2차전지 생산 공정 엔지니어 채용
 INSERT INTO JOB_POST (
@@ -238,16 +238,16 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 5, '2차전지 생산 공정 엔지니어 채용',
              '삼성SDI의 제조 현장에서 2차전지 생산라인의 공정 개선 및 효율화 작업을 담당할 엔지니어를 모집합니다. 품질 안정성과 수율 향상에 기여할 수 있는 경력자를 우대합니다.',
-             '4600', '주 5일(월~금)', 146, 17,
+             '4600', '주 5일(월~금)', 247, 17,
              29, '/img/Samsung_SDI.png', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-10', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
          );
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '식사제공');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자율복장');
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 712, 1); -- 생산 공정 기술
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 715, 1); -- 기술 문서 작성
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 717, 0); -- 시제품 제작
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 704, 1); -- 생산 공정 기술
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 705, 1); -- 기술 문서 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 691, 0); -- 시제품 제작
 
 -- 3. 환경안전(EHS) 관리 담당자 채용
 INSERT INTO JOB_POST (
@@ -257,16 +257,16 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 5, '환경안전(EHS) 관리 담당자 채용',
              '삼성SDI의 EHS 부서에서 사업장의 환경·안전 규정 준수 및 교육을 담당할 인재를 찾습니다. 안전관리 자격증 보유자 및 환경 관련 법규 지식이 풍부한 분을 환영합니다.',
-             '4000', '주 5일(월~금)', 147, 17,
+             '4000', '주 5일(월~금)', 205, 15,
              34, '/img/Samsung_SDI.png', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-02', 'YYYY-MM-DD'),
              0, 25, 0, SYSDATE
          );
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '기숙사 지원');
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 708, 1); -- 기후변화
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 710, 1); -- 미생물
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 719, 0); -- 양산 전 검토
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 590, 1); -- 기후변화
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 591, 1); -- 미생물
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 598, 0); -- 양산 전 검토
 
 COMMIT;
 
@@ -279,7 +279,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 6, '스마트폰 SoC 설계 엔지니어 채용',
              '삼성전자 모바일 부문에서는 차세대 갤럭시 스마트폰의 두뇌가 될 SoC(System on Chip) 설계 전문가를 모집합니다. RTL 설계, 검증 및 저전력 설계에 대한 풍부한 이해도를 가진 분을 기다립니다.',
-             '4800', '주 5일(월~금)', 157, 11,
+             '4800', '주 5일(월~금)', 84, 6,
              39, '/img/Samsung_Securities.jpg', '5년이상', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -288,9 +288,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내식당');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 711, 1); -- 반도체
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 730, 1); -- 회로 설계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 732, 0); -- 데이터 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 195, 1); -- 반도체
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 190, 1); -- 회로 설계
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 191, 0); -- 데이터 분석
 
 -- 2. 스마트 팩토리 구축 프로젝트 매니저
 INSERT INTO JOB_POST (
@@ -300,7 +300,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 6, '스마트 팩토리 구축 프로젝트 매니저',
              '글로벌 제조 경쟁력 강화를 위한 스마트 팩토리 프로젝트를 리딩할 PM을 찾습니다. 설비 연동, MES/ERP 시스템 통합 및 자동화 설계 경험이 있으신 분의 지원을 환영합니다.',
-             '5500', '주 5일(월~금)', 156, 12,
+             '5500', '주 5일(월~금)', 191, 14,
              58, '/img/Samsung_Securities.jpg', '5년이상', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-10', 'YYYY-MM-DD'),
              0, 5, 0, SYSDATE
@@ -309,9 +309,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '기숙사 지원');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 716, 1); -- 품질 테스트
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 719, 1); -- 양산 전 검토
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 726, 0); -- 자동화 설계
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 582, 1); -- 품질 테스트
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 576, 1); -- 양산 전 검토
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 570, 0); -- 자동화 설계
 
 -- 3. 글로벌 마케팅 전략 담당자 (영어 가능자 우대)
 INSERT INTO JOB_POST (
@@ -321,7 +321,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 6, '글로벌 마케팅 전략 담당자 (영어 가능자 우대)',
              '삼성전자의 글로벌 브랜드 가치를 더욱 향상시키기 위한 마케팅 전략 수립 및 실행을 함께할 전문가를 모집합니다. 다국적 캠페인 경험 및 영어 커뮤니케이션 능력을 갖춘 인재를 환영합니다.',
-             '4300', '주 5일(월~금)', 155, 10,
+             '4300', '주 5일(월~금)', 19, 2,
              48, '/img/Samsung_Securities.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-08', 'YYYY-MM-DD'),
              0, 25, 0, SYSDATE
@@ -330,9 +330,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자율출퇴근제');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내카페');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 409, 1); -- 브랜드 전략
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 411, 1); -- 캠페인 기획
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 413, 0); -- 커뮤니케이션 전략
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 42, 1); -- 브랜드 전략
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 63, 1); -- 캠페인 기획
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 60, 0); -- 커뮤니케이션 전략
 
 COMMIT;
 
@@ -345,7 +345,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 7, 'EV 플랫폼 개발 엔지니어 채용',
              '기아의 전동화 전략을 실현할 EV 플랫폼 개발 엔지니어를 채용합니다. 차세대 플랫폼 구조 설계, 배터리 모듈 연동, EV 제어 알고리즘 설계 경험 보유자를 우대합니다.',
-             '4600', '주 5일(월~금)', 169, 15,
+             '4600', '주 5일(월~금)', 194, 14,
              52, '/img/Kia.jpg', '5년이상', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-10', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -354,9 +354,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내식당');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자율복장');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 735, 1); -- 차량제어 알고리즘
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 736, 1); -- 플랫폼 설계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 703, 0); -- CAD
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 534, 1); -- 차량제어 알고리즘
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 542, 1); -- 플랫폼 설계
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 536, 0); -- CAD
 
 -- 2. 모빌리티 서비스 기획 및 운영 담당자
 INSERT INTO JOB_POST (
@@ -366,7 +366,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 7, '모빌리티 서비스 기획 및 운영 담당자',
              '기아는 단순 자동차 제조사를 넘어 모빌리티 플랫폼 기업으로 도약 중입니다. 차량 공유, 정기 구독, 자율주행 기반 서비스 기획 경험이 있는 분을 기다립니다.',
-             '4200', '주 5일(월~금)', 170, 15,
+             '4200', '주 5일(월~금)', 11, 1,
              41, '/img/Kia.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
              0, 25, 0, SYSDATE
@@ -375,9 +375,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '재택근무');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 741, 1); -- 모빌리티 플랫폼
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 744, 1); -- 서비스 운영
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 749, 0); -- 사용자 경험 기획
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 8, 1); -- 모빌리티 플랫폼
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 11, 1); -- 서비스 운영
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 13, 0); -- 사용자 경험 기획
 
 -- 3. 미래차 UX 디자이너
 INSERT INTO JOB_POST (
@@ -387,7 +387,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 7, '미래차 UX 디자이너',
              '미래형 차량의 내부 사용자 경험을 설계할 UX 디자이너를 채용합니다. HMI 설계 경험과 인터페이스 트렌드에 대한 높은 이해를 갖춘 디자이너 분들의 많은 지원 바랍니다.',
-             '3900', '주 5일(월~금)', 171, 15,
+             '3900', '주 5일(월~금)', 93, 7,
              37, '/img/Kia.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-01', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -396,9 +396,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내카페');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 755, 1); -- HMI
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 756, 1); -- UX 설계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 758, 0); -- 디자인툴 사용
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 237, 1); -- HMI
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 241, 1); -- UX 설계
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 272, 0); -- 디자인툴 사용
 
 COMMIT;
 
@@ -411,7 +411,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 8, '검색 알고리즘 엔지니어 채용',
              '네이버의 검색 품질을 높이기 위해 대규모 데이터 기반 알고리즘을 설계하고 개선할 수 있는 엔지니어를 찾습니다. 정보 검색(IR), 딥러닝, 강화학습 기반 추천시스템 경험자를 우대합니다.',
-             '5500', '주 5일(월~금)', 25, 2,
+             '5500', '주 5일(월~금)', 81, 6,
              73, '/img/Naver.png', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-15', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -420,9 +420,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '유연근무제');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내식당');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 203, 1); -- 딥러닝
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 217, 1); -- 추천 시스템
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 212, 0); -- 데이터 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 177, 1); -- 딥러닝
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 184, 1); -- 추천 시스템
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 189, 0); -- 데이터 분석
 
 -- 2. 프론트엔드 개발자 (Vue.js) 채용
 INSERT INTO JOB_POST (
@@ -432,7 +432,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 8, '프론트엔드 개발자 (Vue.js) 채용',
              '네이버 웹서비스를 위한 프론트엔드 개발을 담당합니다. 사용자 중심의 UI/UX 구현과 퍼포먼스 최적화에 관심 있는 개발자를 모집합니다. Vue, TypeScript 경험자 환영합니다.',
-             '4800', '주 5일(월~금)', 21, 2,
+             '4800', '주 5일(월~금)', 85, 6,
              58, '/img/Naver.png', '1~3년', '대학 졸업(2,3년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-10', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -441,9 +441,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '재택근무');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 116, 1); -- Vue.js
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 118, 1); -- TypeScript
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 105, 0); -- 웹표준
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 206, 1); -- Vue.js
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 216, 1); -- TypeScript
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 228, 0); -- 웹표준
 
 -- 3. 보안 인프라 엔지니어 채용
 INSERT INTO JOB_POST (
@@ -453,7 +453,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 8, '보안 인프라 엔지니어 채용',
              '전사 보안 시스템 인프라를 구축하고 운영할 엔지니어를 찾습니다. 방화벽, IDS/IPS, VPN, 클라우드 보안 아키텍처에 대한 실무 경험이 있는 전문가를 모집합니다.',
-             '5300', '주 5일(월~금)', 45, 3,
+             '5300', '주 5일(월~금)', 82, 6,
              42, '/img/Naver.png', '5년이상', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-20', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -462,9 +462,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내식당');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 352, 1); -- 보안 인프라
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 359, 1); -- VPN
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 360, 0); -- 클라우드 보안
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 190, 1); -- 보안 인프라
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 189, 1); -- VPN
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 191, 0); -- 클라우드 보안
 
 COMMIT;
 
@@ -477,7 +477,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 9, '배터리 소재 연구원 채용',
              'LG화학 첨단소재연구소에서 차세대 배터리 소재를 개발할 연구원을 모집합니다. 고분자, 전해질, 양극재/음극재 연구 경험을 보유한 석박사급 인재를 우대합니다.',
-             '6000', '주 5일(월~금)', 167, 17,
+             '6000', '주 5일(월~금)', 247, 17,
              34, '/img/LG_Chemical.jpg', '신입', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-12', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -486,9 +486,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 701, 1); -- 고분자
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 712, 1); -- 배터리 소재
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 715, 0); -- 실험 설계
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 686, 1); -- 고분자
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 688, 1); -- 배터리 소재
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 691, 0); -- 실험 설계
 
 -- 2. 생산 품질 엔지니어 채용
 INSERT INTO JOB_POST (
@@ -498,7 +498,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 9, '생산 품질 엔지니어 채용',
              'LG화학 오창공장에서 생산 공정 품질관리 및 공정 개선 업무를 수행할 품질 엔지니어를 모집합니다. 제조업 품질관리, ISO, 공정개선 경험을 보유한 인재를 찾습니다.',
-             '4700', '주 5일(월~금)', 168, 15,
+             '4700', '주 5일(월~금)', 191, 15,
              41, '/img/LG_Chemical.jpg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-15', 'YYYY-MM-DD'),
              0, 12, 0, SYSDATE
@@ -507,9 +507,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자율복장');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 727, 1); -- 품질 테스트
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 730, 1); -- 양산 전 검토
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 734, 0); -- 시제품 제작
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 532, 1); -- 품질 테스트
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 552, 1); -- 양산 전 검토
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 580, 0); -- 시제품 제작
 
 -- 3. 환경안전(EHS) 담당자 채용
 INSERT INTO JOB_POST (
@@ -519,7 +519,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 9, '환경안전(EHS) 담당자 채용',
              'LG화학의 환경안전팀에서 공장 내 EHS 제도 운영, 법규 대응, 유해물질 관리 및 안전교육 기획 업무를 수행할 직원을 채용합니다. 산업안전, 화학안전, ISO 인증 관련 경험자 우대.',
-             '5300', '주 5일(월~금)', 169, 15,
+             '5300', '주 5일(월~금)', 197, 14,
              53, '/img/LG_Chemical.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-25', 'YYYY-MM-DD'),
              0, 8, 0, SYSDATE
@@ -528,9 +528,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '유연근무제');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 740, 1); -- MSDS 작성
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 741, 1); -- 환경안전
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 744, 0); -- 품질 관련 문서
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 531, 1); -- MSDS 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 535, 1); -- 환경안전
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 554, 0); -- 품질 관련 문서
 
 COMMIT;
 
@@ -542,7 +542,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 10, '백엔드 서버 개발자 채용',
              '카카오의 다양한 플랫폼(톡, 페이 등)에서 고성능 서버 개발 및 MSA 아키텍처 구현을 담당할 백엔드 개발자를 찾습니다. 대용량 트래픽 처리 및 Spring Framework 경험자를 우대합니다.',
-             '5500', '주 5일(월~금)', 51, 2,
+             '5500', '주 5일(월~금)', 81, 6,
              40, '/img/Kakao.jpg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-28', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -551,9 +551,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '유연근무제');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 123, 1); -- Spring
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 121, 1); -- Java
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 131, 0); -- REST API
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 206, 1); -- Spring
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 211, 1); -- Java
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 209, 0); -- REST API
 
 -- 2. UX/UI 디자이너 채용
 INSERT INTO JOB_POST (
@@ -563,7 +563,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 10, 'UX/UI 디자이너 채용',
              '카카오 서비스의 사용자 경험을 혁신할 UX/UI 디자이너를 모집합니다. Sketch, Figma, 사용자 플로우 설계 경험이 있는 인재를 우대합니다.',
-             '4700', '주 5일(월~금)', 35, 3,
+             '4700', '주 5일(월~금)', 92, 7,
              28, '/img/Kakao.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-18', 'YYYY-MM-DD'),
              0, 8, 0, SYSDATE
@@ -572,9 +572,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 223, 1); -- Figma
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 221, 1); -- Sketch
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 230, 0); -- 사용자 경험 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 272, 1); -- Figma
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 273, 1); -- Sketch
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 275, 0); -- 사용자 경험 분석
 
 -- 3. 데이터 분석가 채용
 INSERT INTO JOB_POST (
@@ -584,7 +584,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 10, '데이터 분석가 채용',
              '카카오의 사용자 데이터를 기반으로 한 인사이트 도출, A/B 테스트 설계 및 리포팅을 담당할 데이터 분석가를 채용합니다. SQL, Python, 통계 모델링 경험자 우대.',
-             '5100', '주 5일(월~금)', 86, 6,
+             '5100', '주 5일(월~금)', 79, 6,
              51, '/img/Kakao.jpg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-30', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -593,9 +593,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 612, 1); -- 데이터 분석
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 615, 1); -- Python
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 613, 0); -- 통계 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 179, 1); -- 데이터 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 180, 1); -- Python
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 181, 0); -- 통계 분석
 
 COMMIT;
 
@@ -617,9 +617,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '기숙사 지원');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 704, 1); -- 건설 장비 이해
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 702, 1); -- 시공 계획서
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 708, 0); -- 안전 관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 585, 1); -- 건설 장비 이해
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 580, 1); -- 시공 계획서
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 579, 0); -- 안전 관리
 
 -- 2. 금속 소재 연구원 채용
 INSERT INTO JOB_POST (
@@ -629,7 +629,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 11, '금속 소재 연구원 채용',
              '포스코 기술연구원에서 차세대 금속 소재의 강도 및 내식성 향상 연구를 수행할 연구원을 채용합니다. 재료공학 석사 이상, 실험설계 및 분석기기 사용 능력 필수입니다.',
-             '5000', '주 5일(월~금)', 177, 17,
+             '5000', '주 5일(월~금)', 248, 17,
              35, '/img/POSCO_Holdings.jpg', '3~5년', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-31', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -638,9 +638,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 655, 1); -- 화학 분석
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 654, 1); -- 생산 공정 기술
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 653, 0); -- 기술검토서 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 698, 1); -- 화학 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 703, 1); -- 생산 공정 기술
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 708, 0); -- 기술검토서 작성
 
 -- 3. ESG 전략기획 담당 채용
 INSERT INTO JOB_POST (
@@ -650,7 +650,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 11, 'ESG 전략기획 담당 채용',
              'POSCO홀딩스의 지속가능경영팀에서 ESG 전략 수립, 리포팅, 대외 커뮤니케이션 업무를 수행할 인재를 모집합니다. 글로벌 ESG 트렌드 및 공시 기준 이해도가 높으신 분을 우대합니다.',
-             '4800', '주 5일(월~금)', 64, 5,
+             '4800', '주 5일(월~금)', 2, 1,
              49, '/img/POSCO_Holdings.jpg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-30', 'YYYY-MM-DD'),
              0, 12, 0, SYSDATE
@@ -659,9 +659,9 @@ INSERT INTO JOB_POST (
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자율복장');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '성과급 지급');
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 411, 1); -- 경영 전략 수립
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 417, 1); -- 보고서 작성
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 412, 0); -- 외부 커뮤니케이션
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 1, 1); -- 경영 전략 수립
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 5, 1); -- 보고서 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 5, 0); -- 외부 커뮤니케이션
 
 COMMIT;
 
@@ -677,7 +677,7 @@ INSERT INTO JOB_POST (
          필수 요건: 건축 관련 전공 학사 이상, 대형 건축 프로젝트 3년 이상 유경험자.
          우대사항: 건축기사 자격증 보유, BIM 설계 경험, 해외 프로젝트 수행 경험.
          지원자는 글로벌 수준의 품질 기준을 충족하는 프로젝트 환경에서 역량을 발휘할 기회를 갖게 됩니다.',
-             '면접 후 협의', '주 5일(월~금)', 182, 15,
+             '면접 후 협의', '주 5일(월~금)', 207, 15,
              62, '/img/Samsung_CT.jpeg', '5년이상', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -693,11 +693,11 @@ VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '리프레시 휴�
 
 -- 태그 연계 INSERT (JOB_GROUP_ID 15: 건설/건축/토목)
 INSERT INTO JOB_POST_TAG (JOB_POST, TAG_ID, REQUIRED)
-VALUES (JOB_POST_ID_SEQ.CURRVAL, 703, 1);
+VALUES (JOB_POST_ID_SEQ.CURRVAL, 590, 1);
 INSERT INTO JOB_POST_TAG (JOB_POST, TAG_ID, REQUIRED)
-VALUES (JOB_POST_ID_SEQ.CURRVAL, 728, 1);
+VALUES (JOB_POST_ID_SEQ.CURRVAL, 592, 1);
 INSERT INTO JOB_POST_TAG (JOB_POST, TAG_ID, REQUIRED)
-VALUES (JOB_POST_ID_SEQ.CURRVAL, 711, 0);
+VALUES (JOB_POST_ID_SEQ.CURRVAL, 597, 0);
 
 COMMIT;
 
@@ -715,7 +715,7 @@ INSERT INTO JOB_POST (
          - GUI 및 프로토타이핑 툴 활용 능력 우대
          - 글로벌 프로젝트 협업 경험 보유자 우대
          디자인이 제품의 가치를 결정짓는 시대, LG전자와 함께 새로운 가치를 창조해보세요.',
-             '3800', '주 5일(월~금)', 74, 11,
+             '3800', '주 5일(월~금)', 98, 7,
              41, '/img/LG_Electro.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -731,11 +731,11 @@ VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 
 -- 태그 연계 INSERT (JOB_GROUP_ID 11: 디자인)
 INSERT INTO JOB_POST_TAG (JOB_POST, TAG_ID, REQUIRED)
-VALUES (JOB_POST_ID_SEQ.CURRVAL, 523, 1); -- UX 디자인
+VALUES (JOB_POST_ID_SEQ.CURRVAL, 280, 1); -- UX 디자인
 INSERT INTO JOB_POST_TAG (JOB_POST, TAG_ID, REQUIRED)
-VALUES (JOB_POST_ID_SEQ.CURRVAL, 529, 1); -- 사용자 인터페이스
+VALUES (JOB_POST_ID_SEQ.CURRVAL, 281, 1); -- 사용자 인터페이스
 INSERT INTO JOB_POST_TAG (JOB_POST, TAG_ID, REQUIRED)
-VALUES (JOB_POST_ID_SEQ.CURRVAL, 534, 0); -- GUI 툴
+VALUES (JOB_POST_ID_SEQ.CURRVAL, 273, 0); -- GUI 툴
 
 COMMIT;
 
@@ -753,7 +753,7 @@ INSERT INTO JOB_POST (
          - Adobe XD, Sketch 등 GUI 툴을 통한 프로토타이핑
          - 디자인 시스템 기반 설계 경험자 우대
          혁신적인 디자인과 실용적인 미학을 함께 구현해나갈 분을 기다립니다.',
-             '3300', '주 5일(월~금)', 76, 11,
+             '3300', '주 5일(월~금)', 96, 7,
              34, '/img/LG_Electro.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-26', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -769,11 +769,11 @@ VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 
 -- 태그 연계
 INSERT INTO JOB_POST_TAG (JOB_POST, TAG_ID, REQUIRED)
-VALUES (JOB_POST_ID_SEQ.CURRVAL, 529, 1);
+VALUES (JOB_POST_ID_SEQ.CURRVAL, 271, 1);
 INSERT INTO JOB_POST_TAG (JOB_POST, TAG_ID, REQUIRED)
-VALUES (JOB_POST_ID_SEQ.CURRVAL, 523, 1);
+VALUES (JOB_POST_ID_SEQ.CURRVAL, 273, 1);
 INSERT INTO JOB_POST_TAG (JOB_POST, TAG_ID, REQUIRED)
-VALUES (JOB_POST_ID_SEQ.CURRVAL, 534, 0);
+VALUES (JOB_POST_ID_SEQ.CURRVAL, 269, 0);
 
 COMMIT;
 
@@ -786,7 +786,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 14, '자율주행 센서 개발자 채용',
              '현대모비스 자율주행 센서팀에서 차량용 라이다, 카메라, 레이더 센서 알고리즘 및 제어 소프트웨어를 개발할 유능한 인재를 채용합니다.
          기계·전자·컴퓨터공학 전공자로서 자율주행 기술 관련 프로젝트 경험이 있는 분을 우대합니다.',
-             '4500', '주 5일(월~금)', 105, 13,
+             '4500', '주 5일(월~금)', 248, 17,
              42, '/img/HyendaeModils.png', '3~5년', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-28', 'YYYY-MM-DD'),
              0, 25, 0, SYSDATE
@@ -798,9 +798,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 
 -- 태그 연계 (기술 연구, 센서 제어, 자율주행)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 752, 1); -- 자율주행
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 743, 1); -- 센서제어
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 733, 0); -- 기술연구
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 700, 1); -- 자율주행
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 699, 1); -- 센서제어
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 698, 0); -- 기술연구
 
 COMMIT;
 -- 채용공고
@@ -812,7 +812,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 14, '차량용 전장 시스템 QA 담당자 모집',
              '현대모비스 전장품 품질관리팀에서 차량 제어 시스템 및 인포테인먼트 기기의 품질 테스트 및 검증을 담당할 QA 담당자를 채용합니다.
          자동차 전장 시스템에 대한 기본 이해와 품질보증(QA) 경력을 보유한 분을 우대합니다.',
-             '4300', '주 5일(월~금)', 108, 13,
+             '4300', '주 5일(월~금)', 189, 14,
              29, '/img/HyendaeModils.png', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -824,9 +824,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '장기근속 포상');
 
 -- 태그 연계 (품질관리, 테스트, 전장시스템)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 741, 1); -- 전장 시스템 QA
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 744, 1); -- 품질 테스트
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 732, 0); -- 기술문서
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 532, 1); -- 전장 시스템 QA
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 548, 1); -- 품질 테스트
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 543, 0); -- 기술문서
 
 COMMIT;
 
@@ -840,7 +840,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 15, '보험 상품 개발 담당자 채용',
              '삼성생명에서 다양한 고객 니즈에 부합하는 혁신적인 보험 상품을 기획하고 개발할 전문가를 모집합니다.
          시장 분석, 경쟁사 분석, 리스크 평가를 통한 상품 설계 경험자 우대합니다.',
-             '4100', '주 5일(월~금)', 122, 20,
+             '4100', '주 5일(월~금)', 298, 20,
              37, '/img/Samsung_Life.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-27', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -852,9 +852,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 857, 1); -- 보험 상품 설명
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 858, 1); -- 해약 업무
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 860, 0); -- 고객 자산관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 819, 1); -- 보험 상품 설명
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 816, 1); -- 해약 업무
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 817, 0); -- 고객 자산관리
 
 COMMIT;
 -- 채용공고
@@ -866,7 +866,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 15, '재무설계 전문가(RM) 채용',
              '고객 맞춤형 재무솔루션 제공 및 자산 포트폴리오 제안을 통해 고객의 재무적 안정을 설계할 RM을 찾습니다.
          금융 상품 이해도 및 세무·상속 설계 경험자 우대합니다.',
-             '4300', '주 5일(월~금)', 123, 20,
+             '4300', '주 5일(월~금)', 304, 20,
              49, '/img/Samsung_Life.jpg', '신입', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -878,8 +878,8 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 859, 1); -- 펀드 이해
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 861, 1); -- 재무설계
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 824, 1); -- 펀드 이해
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 819, 1); -- 재무설계
 INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 864, 0); -- 파생상품 기초
 
 COMMIT;
@@ -892,7 +892,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 16, '리스크 관리 전문가 채용',
              '신한지주에서 전사 리스크를 체계적으로 분석하고 관리할 수 있는 전문가를 찾습니다.
          시장·신용·운영 리스크 전반에 대한 관리 경험이 있으신 분들의 많은 지원 바랍니다.',
-             '4800', '주 5일(월~금)', 124, 20,
+             '4800', '주 5일(월~금)', 304, 20,
              42, '/img/Shinhan_Group.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -904,9 +904,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 848, 1); -- 위험관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 849, 1); -- 위험분석
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 842, 0); -- 외환관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 793, 1); -- 위험관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 801, 1); -- 위험분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 814, 0); -- 외환관리
 
 COMMIT;
 -- 채용공고
@@ -919,7 +919,7 @@ INSERT INTO JOB_POST (
              '신한지주의 기업금융부문에서 기업 여신심사 담당자를 모집합니다.
          재무제표 분석 능력과 다양한 산업에 대한 이해도를 바탕으로
          신용위험을 분석하고 효율적인 여신결정을 내릴 수 있는 인재를 찾습니다.',
-             '5000', '주 5일(월~금)', 125, 20,
+             '5000', '주 5일(월~금)', 301, 20,
              58, '/img/Shinhan_Group.jpg', '5년이상', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-29', 'YYYY-MM-DD'),
              0, 12, 0, SYSDATE
@@ -931,9 +931,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내 금융상품 할인');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 843, 1); -- 여신심사
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 841, 1); -- 신탁
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 840, 0); -- 손해평가
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 804, 1); -- 여신심사
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 807, 1); -- 신탁
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 808, 0); -- 손해평가
 
 COMMIT;
 
@@ -948,7 +948,7 @@ INSERT INTO JOB_POST (
              'KB금융의 미래 디지털 금융 환경을 선도할 전략 기획자를 채용합니다.
              디지털 전환 로드맵 수립, 핀테크 트렌드 분석, 서비스 기획 및 실행 전략 수립 등
              다양한 업무를 경험할 수 있습니다.',
-             '5300', '주 5일(월~금)', 126, 20,
+             '5300', '주 5일(월~금)', 296, 20,
              39, '/img/KB_Finance.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -986,9 +986,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내 식당 운영');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 851, 1); -- 신용 분석
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 853, 1); -- 대출 상담
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 857, 0); -- 보험 설계
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 792, 1); -- 신용 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 794, 1); -- 대출 상담
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 797, 0); -- 보험 설계
 
 COMMIT;
 -- 채용공고
@@ -1000,7 +1000,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 18, '보험금 지급 심사 담당자 채용',
              '삼성화재에서 고객의 보험금 청구를 정확하게 심사하고 처리할 인재를 찾습니다.
              의료 지식 및 손해 사정 지식을 갖춘 분, 꼼꼼한 문서처리와 고객 응대가 가능한 분을 우대합니다.',
-             '3800', '주 5일(월~금)', 144, 20,
+             '3800', '주 5일(월~금)', 296, 20,
              51, '/img/Samsung_Fire.jpg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-25', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -1012,9 +1012,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '명절 상여금');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 839, 1); -- 보험금 청구
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 838, 1); -- 신용카드 업무
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 847, 0); -- 보험 상품 설명
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 794, 1); -- 보험금 청구
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 795, 1); -- 신용카드 업무
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 799, 0); -- 보험 상품 설명
 
 COMMIT;
 -- 채용공고
@@ -1026,7 +1026,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 18, '리스크 평가 및 계약 심사 전문가 채용',
              '보험 계약의 리스크를 체계적으로 분석하고, 효율적인 언더라이팅 전략을 수립할 수 있는 전문가를 채용합니다.
              통계 기반의 분석 경험과 보험상품 이해도가 높은 분들의 많은 지원 바랍니다.',
-             '4200', '주 5일(월~금)', 145, 20,
+             '4200', '주 5일(월~금)', 298, 20,
              37, '/img/Samsung_Fire.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-28', 'YYYY-MM-DD'),
              0, 12, 0, SYSDATE
@@ -1038,9 +1038,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 843, 1); -- 계약 관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 846, 1); -- 리스크 분석
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 849, 0); -- 해약 업무
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 819, 1); -- 계약 관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 824, 1); -- 리스크 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 827, 0); -- 해약 업무
 
 COMMIT;
 -- 채용공고
@@ -1052,7 +1052,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 19, '금융 상담센터 신입 채용',
              '하나금융지주 상담센터에서 고객 문의 응대, 금융상품 안내, 간단한 전산 업무를 수행할 신입 직원을 채용합니다.
              콜센터 경험자 우대하며, 밝고 친절한 상담 응대 능력이 요구됩니다.',
-             '3300', '주 5일(월~금)', 147, 20,
+             '3300', '주 5일(월~금)', 117, 9,
              24, '/img/Hana_Group.jpg', '신입', '고등학교 졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 25, 0, SYSDATE
@@ -1064,9 +1064,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 843, 1); -- 콜센터 상담
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 837, 1); -- 금융 상담
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 849, 0); -- 청약서 접수
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 321, 1); -- 콜센터 상담
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 328, 1); -- 금융 상담
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 339, 0); -- 청약서 접수
 
 COMMIT;
 -- 채용공고
@@ -1078,7 +1078,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 19, '고객 자산관리 컨설턴트 모집',
              '하나금융지주에서 고액 자산가 고객을 대상으로 종합적인 자산관리 상담 및 금융상품 제안을 담당할 컨설턴트를 모집합니다.
              재무 설계, 투자, 세무 지식이 있는 분들의 많은 지원 바랍니다.',
-             '4500', '주 5일(월~금)', 146, 20,
+             '4500', '주 5일(월~금)', 294, 20,
              41, '/img/Hana_Group.jpg', '5년이상', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -1090,9 +1090,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자녀학자금 지원');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 842, 1); -- 고객 자산관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 841, 1); -- 펀드 이해
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 848, 0); -- 세무 지식
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 808, 1); -- 고객 자산관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 824, 1); -- 펀드 이해
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 825, 0); -- 세무 지식
 
 COMMIT;
 -- 채용공고
@@ -1105,7 +1105,7 @@ INSERT INTO JOB_POST (
              'SK이노베이션은 글로벌 에너지 전환에 맞춰 재무 전략을 수립하고 실행할 금융 전략 인재를 모집합니다.
              주요 업무는 금융 시장 분석, 투자 타당성 검토, 자금 조달 전략 수립입니다.
              금융 관련 경력 및 관련 자격증 보유자를 우대합니다.',
-             '5500', '주 5일(월~금)', 146, 20,
+             '5500', '주 5일(월~금)', 2, 1,
              38, '/img/SK_Inovation.png', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -1117,9 +1117,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '기숙사 제공');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 831, 1); -- 기업금융
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 832, 1); -- 기업분석
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 850, 0); -- 위험분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 1, 1); -- 기업금융
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 3, 1); -- 기업분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 35, 0); -- 위험분석
 
 COMMIT;
 -- 채용공고
@@ -1132,7 +1132,7 @@ INSERT INTO JOB_POST (
              '당사는 다양한 산업 현장에서 발생할 수 있는 법적·재무적 리스크를 예방하고
              손해보험, 배상 책임 보험 등 기업 리스크를 종합적으로 관리할 인재를 찾습니다.
              손해보험 또는 보험사고 대응 경험이 있는 분의 많은 지원 바랍니다.',
-             '4800', '주 5일(월~금)', 147, 20,
+             '4800', '주 5일(월~금)', 298, 20,
              26, '/img/SK_Inovation.png', '5년이상', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -1144,9 +1144,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '복지 포인트');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 835, 1); -- 배상책임
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 836, 1); -- 보험사고
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 840, 0); -- 보험청구
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 811, 1); -- 배상책임
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 817, 1); -- 보험사고
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 819, 0); -- 보험청구
 
 COMMIT;
 
@@ -1159,7 +1159,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 21, '고성능 MLCC 개발 엔지니어 채용',
              '삼성전기에서 미래형 전장 제품에 필요한 고성능 MLCC 개발을 함께할 열정적인 엔지니어를 모집합니다. 소재 연구부터 생산 공정 개선까지 다양한 영역에서 기술 혁신을 주도하실 분을 기다립니다.',
-             '면접 후 결정', '주 5일(월~금)', 142, 14,
+             '면접 후 결정', '주 5일(월~금)', 248, 17,
              56, '/img/Samsung_Electro.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-28', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -1171,9 +1171,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자녀 학자금');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 511, 1); -- 세라믹 재료
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 513, 1); -- MLCC 설계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 517, 0); -- 제조 공정 이해
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 698, 1); -- 세라믹 재료
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 701, 1); -- MLCC 설계
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 707, 0); -- 제조 공정 이해
 
 -- 채용공고 INSERT
 INSERT INTO JOB_POST (
@@ -1183,7 +1183,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 21, '전자부품 품질보증 담당자 모집',
              '삼성전기에서 고객 신뢰를 이끌어낼 품질보증 전문가를 찾습니다. 전장/모바일용 부품의 신뢰성 평가, 고객 대응, 인증 지원 업무를 담당하며, 커뮤니케이션 능력과 기술 지식을 겸비한 인재를 우대합니다.',
-             '3200', '유연근무제', 143, 14,
+             '3200', '유연근무제', 216, 15,
              33, '/img/Samsung_Electro.jpg', '1~3년', '대학 졸업(2,3년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-28', 'YYYY-MM-DD'),
              0, 30, 0, SYSDATE
@@ -1195,9 +1195,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 521, 1); -- 품질보증
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 524, 1); -- 신뢰성 평가
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 528, 0); -- 공정 감사
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 615, 1); -- 품질보증
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 617, 1); -- 신뢰성 평가
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 618, 0); -- 공정 감사
 
 
 -- 채용공고 INSERT
@@ -1208,7 +1208,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 22, '디스플레이 공정 자동화 개발자 모집',
              'LG디스플레이의 생산 효율화를 위한 공정 자동화 시스템을 개발할 소프트웨어 인재를 찾습니다. PLC 제어, HMI, 설비 연동 관련 경험 보유자 우대.',
-             '4200', '주 5일(월~금)', 134, 14,
+             '4200', '주 5일(월~금)', 87, 6,
              67, '/img/LG_Displation.png', '5년이상', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-26', 'YYYY-MM-DD'),
              0, 25, 0, SYSDATE
@@ -1220,34 +1220,12 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '종합검진');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 515, 1); -- 자동화 제어
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 522, 1); -- PLC 제어
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 531, 0); -- 설비 유지보수
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 177, 1); -- 자동화 제어
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 178, 1); -- PLC 제어
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 190, 0); -- 설비 유지보수
 
 
 -- 채용공고 INSERT
-INSERT INTO JOB_POST (
-    JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
-    VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
-) VALUES (
-             JOB_POST_ID_SEQ.NEXTVAL, 22, '디스플레이 공정 자동화 개발자 모집',
-             'LG디스플레이의 생산 효율화를 위한 공정 자동화 시스템을 개발할 소프트웨어 인재를 찾습니다. PLC 제어, HMI, 설비 연동 관련 경험 보유자 우대.',
-             '4200', '주 5일(월~금)', 134, 14,
-             67, '/img/LG_Displation.png', '5년이상', '대학교 졸업(4년)', 'default',
-             TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-26', 'YYYY-MM-DD'),
-             0, 25, 0, SYSDATE
-         );
-
--- 복지 연계
-INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내교육');
-INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자녀 학자금');
-INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '종합검진');
-
--- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 515, 1); -- 자동화 제어
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 522, 1); -- PLC 제어
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 531, 0); -- 설비 유지보수
 
 COMMIT;
 
@@ -1259,7 +1237,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 23, 'ESG 전략 기획 담당자 채용',
              'LG는 지속가능한 경영을 위해 ESG 전략을 체계적으로 수립하고 실행할 인재를 모집합니다. ESG 인증, 글로벌 지속가능보고서 경험자를 우대합니다.',
-             '면접 후 협의', '주 5일(월~금)', 41, 8,
+             '면접 후 협의', '주 5일(월~금)', 10, 1,
              61, '/img/LG.jpeg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -1271,9 +1249,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '유연근무제');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 318, 1); -- 계약서 작성
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 324, 1); -- ESG 보고서
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 317, 0); -- 품질 테스트
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 22, 1); -- 계약서 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 20, 1); -- ESG 보고서
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 33, 0); -- 품질 테스트
 
 
 -- 채용공고 INSERT
@@ -1284,7 +1262,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 23, '브랜드 마케팅 전문가 채용',
              'LG의 글로벌 브랜드 가치를 높일 수 있는 마케팅 전문가를 채용합니다. 디지털 마케팅 및 ATL/BTL 기획에 능숙한 분을 환영합니다.',
-             '4200', '주 5일(월~금)', 55, 10,
+             '4200', '주 5일(월~금)', 29, 2,
              44, '/img/LG.jpeg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
              0, 25, 0, SYSDATE
@@ -1296,9 +1274,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 601, 1); -- 디지털 마케팅
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 602, 1); -- 브랜드 전략 수립
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 610, 0); -- 시장 조사
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 42, 1); -- 디지털 마케팅
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 63, 1); -- 브랜드 전략 수립
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 70, 0); -- 시장 조사
 
 COMMIT;
 
@@ -1310,7 +1288,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 24, '제련소 공정 기술 담당 채용',
              '고려아연 온산제련소에서 생산 공정 최적화와 품질 향상을 위한 공정 기술 담당자를 모집합니다. 원료 투입부터 제품 출하까지의 전반적인 공정 이해와 개선 경험이 있는 인재를 우대합니다.',
-             '면접 후 협의', '주 5일(월~금)', 144, 14,
+             '면접 후 협의', '주 5일(월~금)', 190, 14,
              38, '/img/Korea_Zinc.jpeg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -1322,9 +1300,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '기숙사 제공');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 317, 1); -- 품질 테스트
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 318, 1); -- 생산 공정 기술
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 319, 0); -- 설비 유지보수
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 572, 1); -- 품질 테스트
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 575, 1); -- 생산 공정 기술
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 576, 0); -- 설비 유지보수
 
 
 -- 채용공고 INSERT
@@ -1335,7 +1313,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 24, 'EHS 환경안전 관리 담당자 모집',
              '고려아연은 안전과 환경을 최우선으로 생각합니다. 사업장 내 환경 규제 대응, 위험물 관리, 작업장 안전 점검 등을 담당할 EHS 전문가를 찾습니다. 산업안전기사 또는 환경기사 자격 보유자 우대합니다.',
-             '면접 후 협의', '주 5일(월~금)', 145, 14,
+             '면접 후 협의', '주 5일(월~금)', 202, 15,
              27, '/img/Korea_Zinc.jpeg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -1347,9 +1325,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '유연근무제');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 508, 1); -- 환경 안전 관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 509, 1); -- 위험물 관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 511, 0); -- 세라믹 재료
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 608, 1); -- 환경 안전 관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 611, 1); -- 위험물 관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 623, 0); -- 세라믹 재료
 
 
 COMMIT;
@@ -1363,7 +1341,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 25, '바이오의약품 연구원 채용',
              '셀트리온에서 바이오의약품 개발에 함께할 연구원을 채용합니다. 신약개발, 품질 분석, 문서작성 능력을 갖춘 분을 우대합니다.',
-             '면접 후 협의', '주 5일(월~금)', 134, 14,
+             '면접 후 협의', '주 5일(월~금)', 251, 17,
              53, '/img/Celltrion.png', '1~3년', '대학 졸업(2,3년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-27', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -1374,9 +1352,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '연구장려금');
 
 -- 태그 연계 (연구개발 관련)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 803, 1); -- 논문 작성
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 804, 1); -- 특허 작성
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 812, 0); -- 기술검토서 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 695, 1); -- 논문 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 693, 1); -- 특허 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 694, 0); -- 기술검토서 작성
 
 -- [셀트리온] 생산공정 엔지니어 모집
 INSERT INTO JOB_POST (
@@ -1386,7 +1364,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 25, '생산공정 엔지니어 모집',
              '셀트리온에서 바이오의약품의 제조 및 생산 공정을 담당할 엔지니어를 모집합니다. 품질관리와 GMP 운영 경험이 있는 분을 선호합니다.',
-             '3200', '유연근무제', 138, 14,
+             '3200', '유연근무제', 190, 14,
              34, '/img/Celltrion.png', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -1397,9 +1375,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내 헬스장');
 
 -- 태그 연계 (공정/생산)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 318, 1); -- 생산 공정 기술
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 317, 1); -- 품질 테스트
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 320, 0); -- 양산 전 검토
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 571, 1); -- 생산 공정 기술
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 572, 1); -- 품질 테스트
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 570, 0); -- 양산 전 검토
 
 COMMIT;
 
@@ -1411,7 +1389,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 26, '모바일 앱 개발자 모집',
              '카카오뱅크에서 혁신적인 금융 서비스를 함께 개발할 모바일 앱 개발자를 찾습니다. Android/iOS 환경에서의 실무 경험과 모바일 UI/UX에 대한 이해도가 높은 분을 환영합니다.',
-             '면접 후 협의', '유연근무제', 173, 15,
+             '면접 후 협의', '유연근무제', 84, 6,
              47, '/img/KakaoBank.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'),
              TO_DATE('2025-06-30', 'YYYY-MM-DD'),
@@ -1422,9 +1400,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '스톡옵션');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내 카페');
 
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 721, 1); -- Kotlin
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 702, 1); -- Android Studio
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 734, 0); -- iOS 개발 경험
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 182, 1); -- Kotlin
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 226, 1); -- Android Studio
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 207, 0); -- iOS 개발 경험
 
 COMMIT;
 
@@ -1436,7 +1414,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 26, '데이터 분석가 채용',
              '카카오뱅크의 고객 행동 분석 및 금융 서비스 개선을 위한 데이터 분석 전문가를 채용합니다. SQL, Python 기반의 데이터 분석과 모델링 경험이 있는 분을 환영합니다.',
-             '3600', '주 5일(월~금)', 179, 15,
+             '3600', '주 5일(월~금)', 79, 6,
              64, '/img/KakaoBank.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'),
              TO_DATE('2025-07-05', 'YYYY-MM-DD'),
@@ -1447,9 +1425,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '연 1회 워크숍');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '카카오 공동 사내복지몰 이용');
 
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 801, 1); -- Python
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 724, 1); -- SQL
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 732, 0); -- Tableau
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 181, 1); -- Python
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 180, 1); -- SQL
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 179, 0); -- Tableau
 
 COMMIT;
 -- [현대글로비스] 글로벌 물류 운영 전문가 모집
@@ -1486,7 +1464,7 @@ INSERT INTO JOB_POST (
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 27, '물류기획 및 데이터분석 담당자 채용',
              '국내외 물류 데이터를 기반으로 최적의 배송 전략을 설계하고 KPI 관리를 수행할 물류기획 인재를 모집합니다. 데이터 기반의 의사결정을 추구하는 분의 많은 지원 바랍니다.',
-             '면접 후 협의', '유연근무제', 163, 15,
+             '면접 후 협의', '유연근무제', 136, 10,
              33, '/img/Hyundai_Glovis.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-29', 'YYYY-MM-DD'),
              0, 25, 0, SYSDATE
@@ -1498,9 +1476,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '기숙사 제공');
 
 -- 태그 (기획/분석)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 801, 1); -- Python
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 724, 1); -- SQL
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 732, 0); -- Tableau
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 358, 1); -- Python
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 376, 1); -- SQL
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 377, 0); -- Tableau
 
 COMMIT;
 INSERT INTO JOB_POST (
@@ -1512,7 +1490,7 @@ INSERT INTO JOB_POST (
              '전 세계 유저들과 소통하며 커뮤니티를 기획하고 운영할 담당자를 모집합니다.
              게임 내 이슈 관리, 공식 SNS/포럼 관리, 유저 피드백 수집 및 리포트 작성 등
              게임 라이프 사이클에 밀접한 역할을 수행할 수 있는 분의 지원을 기다립니다.',
-             '3200', '유연근무제', 185, 19,
+             '3200', '유연근무제', 18, 2,
              38, '/img/KRAFTON.jpg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-10', 'YYYY-MM-DD'),
              0, 25, 0, SYSDATE
@@ -1524,9 +1502,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자율 복장');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 635, 1); -- 커뮤니티 관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 633, 1); -- 유저 피드백 분석
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 628, 0); -- 이벤트 기획
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 36, 1); -- 커뮤니티 관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 42, 1); -- 유저 피드백 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 47, 0); -- 이벤트 기획
 
 COMMIT;
 
@@ -1539,7 +1517,7 @@ INSERT INTO JOB_POST (
              '한화솔루션 큐셀부문에서 고효율 태양전지 개발을 위한 연구원을 모집합니다.
              태양광 소재 분석, 셀 효율 개선 및 신소재 개발에 관심 있는 석사 이상 연구개발 경력자를 환영합니다.
              세계 최고 수준의 R&D 인프라에서 함께 성장할 인재를 찾습니다.',
-             '면접 후 협의', '주 5일(월~금)', 145, 17,
+             '면접 후 협의', '주 5일(월~금)', 248, 17,
              41, '/img/Hanwha_Solution.jpg', '3~5년', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-12', 'YYYY-MM-DD'),
              0, 25, 0, SYSDATE
@@ -1551,9 +1529,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내식당 운영');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 743, 1); -- 태양광
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 744, 1); -- 화학 분석
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 754, 0); -- 품질 테스트
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 702, 1); -- 태양광
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 701, 1); -- 화학 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 704, 0); -- 품질 테스트
 
 COMMIT;
 INSERT INTO JOB_POST (
@@ -1565,7 +1543,7 @@ INSERT INTO JOB_POST (
              '석유화학 및 에너지 플랜트 설계 경험을 보유한 엔지니어를 모집합니다.
              프로젝트 설계/시공/운영 단계에서 설비 배관, 전기계기, 구조 설계 등 종합 엔지니어링을 수행합니다.
              글로벌 플랜트 사업의 중심에서 성장을 경험할 수 있습니다.',
-             '4100', '주 5일(월~금)', 146, 15,
+             '4100', '주 5일(월~금)', 214, 15,
              59, '/img/Hanwha_Solution.jpg', '5년이상', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-15', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -1577,9 +1555,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '교육비 지원');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 728, 1); -- 플랜트 설계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 729, 1); -- 시공 계획서
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 746, 0); -- 도면 해석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 618, 1); -- 플랜트 설계
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 620, 1); -- 시공 계획서
+
 
 COMMIT;
 INSERT INTO JOB_POST (
@@ -1591,7 +1569,7 @@ INSERT INTO JOB_POST (
              'KT&G 대전 공장에서 생산 품질관리 담당자를 모집합니다.
              원재료 입고부터 생산 전 공정, 완제품 품질 검사 및 개선 활동을 수행하며,
              품질 기준 수립 및 이슈 대응 역량이 중요합니다. 식음료 제조 또는 소비재 품질관리 경험 우대.',
-             '3400', '주 5일(월~금)', 159, 15,
+             '3400', '주 5일(월~금)', 189, 14,
              33, '/img/KT_G.png', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-10', 'YYYY-MM-DD'),
              0, 25, 0, SYSDATE
@@ -1603,9 +1581,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '성과급 지급');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 736, 1); -- 품질 테스트
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 752, 1); -- 시제품 제작
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 727, 0); -- 기초 실험
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 543, 1); -- 품질 테스트
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 572, 1); -- 시제품 제작
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 573, 0); -- 기초 실험
 
 COMMIT;
 
@@ -1618,7 +1596,7 @@ INSERT INTO JOB_POST (
              'KT&G의 글로벌 브랜드 전략을 수립하고 실행할 인재를 찾습니다.
              브랜드 포지셔닝, 시장 조사, 제품 컨셉 기획 등 마케팅 기획 및 실행 경험이 있는 분을 우대합니다.
              소비자 트렌드 분석과 커뮤니케이션에 능한 마케터의 도전을 기다립니다.',
-             '3600', '주 5일(월~금)', 94, 8,
+             '3600', '주 5일(월~금)', 19, 2,
              49, '/img/KT_G.png', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-13', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -1630,9 +1608,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 679, 1); -- 브랜드 전략
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 682, 1); -- 마케팅 기획
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 688, 0); -- 시장 조사
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 57, 1); -- 브랜드 전략
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 42, 1); -- 마케팅 기획
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 55, 0); -- 시장 조사
 
 COMMIT;
 INSERT INTO JOB_POST (
@@ -1645,7 +1623,7 @@ INSERT INTO JOB_POST (
              송전설비 유지보수 인재를 모집합니다.
              고압송전설비의 정기 점검, 이상징후 예측 및 긴급 복구 작업 등
              실무 경험이 요구됩니다. 전기기사 또는 전기산업기사 자격 보유자 우대.',
-             '3300', '주 5일(월~금)', 171, 15,
+             '3300', '주 5일(월~금)', 216, 15,
              41, '/img/한국전력.jpg', '3~5년', '대학 졸업(2,3년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-08', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -1657,9 +1635,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '안전장비 지급');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 725, 1); -- 전기/설비 도면 이해
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 727, 1); -- 기초 실험
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 735, 0); -- 시공 계획서
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 604, 1); -- 전기/설비 도면 이해
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 614, 1); -- 기초 실험
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 612, 0); -- 시공 계획서
 
 COMMIT;
 INSERT INTO JOB_POST (
@@ -1672,7 +1650,7 @@ INSERT INTO JOB_POST (
              주요 에너지 이슈를 분석하고 정책 방향을 기획할 인재를 찾습니다.
              통계적 분석과 정책 리포트 작성 능력을 갖춘 분,
              공공기관 에너지 정책 경력자는 우대합니다.',
-             '3900', '주 5일(월~금)', 107, 13,
+             '3900', '주 5일(월~금)', 13, 1,
              53, '/img/Korea_Electric.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-12', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -1684,9 +1662,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자녀학자금 지원');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 749, 1); -- 데이터 분석
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 757, 1); -- R&D 보고서
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 729, 0); -- 기술 문서 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 1, 1); -- 데이터 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 32, 1); -- R&D 보고서
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 11, 0); -- 기술 문서 작성
 
 COMMIT;
 
@@ -1700,7 +1678,7 @@ INSERT INTO JOB_POST (
              항공기 운항계획 수립, 비행허가 신청, 연료계획 수립, 항로 설정 등
              항공운항 전반을 책임지는 핵심 부서입니다.
              항공관련 학과 졸업자 및 항공안전 관련 자격증 소지자 우대.',
-             '3400', '교대근무(주간/야간)', 189, 19,
+             '3400', '교대근무(주간/야간)', 170, 12,
              29, '/img/Korea_Electric.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -1712,9 +1690,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '숙소 지원');
 
 -- 태그 (운항 관련 태그)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 685, 1); -- 운항 스케줄 관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 684, 1); -- 항공 안전 규정
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 693, 0); -- EMR 사용
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 472, 1); -- 운항 스케줄 관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 473, 1); -- 항공 안전 규정
+
 
 COMMIT;
 INSERT INTO JOB_POST (
@@ -1727,7 +1705,7 @@ INSERT INTO JOB_POST (
              B737, A350 등 주요 기종에 대한 정비경력 보유자를 대상으로 하며,
              기체/엔진/항공전자 등 전문 파트로 나뉘어 실무를 수행하게 됩니다.
              정비사 자격 보유자 및 유관 경력 5년 이상 필수.',
-             '4800', '주 5일(월~금)', 211, 19,
+             '4800', '주 5일(월~금)', 191, 14,
              47, '/img/KoreaAir.jpg', '5년이상', '대학 졸업(2,3년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-10', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -1739,9 +1717,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '항공권 할인');
 
 -- 태그 (정비 관련 태그)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 726, 1); -- 항공기 구조 이해
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 727, 1); -- 기초 실험
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 722, 0); -- 안전 관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 548, 1); -- 항공기 구조 이해
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 585, 1); -- 기초 실험
+
 
 COMMIT;
 
@@ -1754,7 +1732,7 @@ INSERT INTO JOB_POST (
              '우리금융지주의 전국 각 지점에서 근무할 금융상품 전문 상담 직원을 모집합니다.
              예적금, 펀드, 보험 등 다양한 금융상품에 대해 고객 맞춤 상담을 진행하게 되며,
              금융자격증 보유자 및 고객 응대에 자신 있는 인재를 환영합니다.',
-             '3200', '주 5일(월~금)', 185, 20,
+             '3200', '주 5일(월~금)', 293, 20,
              33, '/img/Woori_Group.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
              0, 30, 0, SYSDATE
@@ -1766,9 +1744,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '정기 건강검진');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 860, 1); -- 금융 상담
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 849, 1); -- 계약 관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 853, 0); -- 고객 자산관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 825, 1); -- 금융 상담
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 808, 1); -- 계약 관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 792, 0); -- 고객 자산관리
 
 COMMIT;
 INSERT INTO JOB_POST (
@@ -1780,7 +1758,7 @@ INSERT INTO JOB_POST (
              '우리금융지주 리스크관리팀에서 금융기관 리스크 분석 및 통제업무를 담당할
              경력직 인재를 채용합니다.
              신용/시장/운영 리스크 관리 경험자, 금융공학 기반 분석 툴 사용 가능자 우대.',
-             '5300', '주 5일(월~금)', 188, 20,
+             '5300', '주 5일(월~금)', 294, 20,
              22, '/img/Woori_Group.jpg', '5년이상', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-15', 'YYYY-MM-DD'),
              0, 5, 0, SYSDATE
@@ -1792,9 +1770,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 847, 1); -- 위험 분석
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 846, 1); -- 위험관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 844, 0); -- 외환관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 806, 1); -- 위험 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 807, 1); -- 위험관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 813, 0); -- 외환관리
 
 COMMIT;
 
@@ -1804,14 +1782,15 @@ INSERT INTO JOB_POST (
     IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 34, 'ESG경영 전략기획 신입 채용',
-             'SK는 지속가능한 미래를 위한 ESG 전략을 수립하고 실행할 인재를 찾고 있습니다.
-             환경(E), 사회(S), 지배구조(G)에 대한 이해와 데이터를 바탕으로 한 전략적 사고 능력이 요구됩니다.
-             전공신입하며, 관련 프로젝트 경험이 있는 지원자를 우대합니다.',
-             '3700', '주 5일(월~금)', 204, 12,
+             'SK는 지속가능한 미래를 위한 ESG 전략을 수립하고 실행할 인재를 찾고 있습니다. ' ||
+             '환경(E), 사회(S), 지배구조(G)에 대한 이해와 데이터를 바탕으로 한 전략적 사고 능력이 요구됩니다. ' ||
+             '전공신입하며, 관련 프로젝트 경험이 있는 지원자를 우대합니다.',
+             '3700', '주 5일(월~금)', 6, 1,
              41, '/img/SK.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
          );
+
 
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자율복장');
@@ -1819,9 +1798,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '복지 포인트');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 723, 1); -- ESG 이해
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 716, 1); -- 데이터 분석
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 719, 0); -- 보고서 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 6, 1); -- ESG 이해
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 11, 1); -- 데이터 분석
+
 
 COMMIT;
 INSERT INTO JOB_POST (
@@ -1833,7 +1812,7 @@ INSERT INTO JOB_POST (
              'SK는 글로벌 에너지 전환 흐름에 발맞춰 투자 포트폴리오를 확대하고 있습니다.
              신재생에너지, 배터리, 수소사업 등 다양한 영역에서 재무적 분석과 투자 전략 수립을
              담당할 유경험자를 찾습니다. 회계/재무 자격 보유자 우대.',
-             '6200', '주 5일(월~금)', 205, 12,
+             '6200', '주 5일(월~금)', 6, 1,
              58, '/img/SK.jpg', '5년이상', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-15', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -1845,9 +1824,61 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 727, 1); -- 기업 분석
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 728, 1); -- 투자 전략
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 730, 0); -- 위험 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 19, 1); -- 기업 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 22, 1); -- 투자 전략
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 23, 0); -- 위험 분석
+
+COMMIT;
+INSERT INTO JOB_POST (
+    JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
+    VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+) VALUES (
+             JOB_POST_ID_SEQ.NEXTVAL, 35, '플랜트 운영 엔지니어 신입 채용',
+             'S-Oil 울산 Complex의 안정적인 플랜트 운영을 책임질 신입 엔지니어를 모집합니다.
+             공정운전 및 모니터링, 안전 점검, 설비 점검 및 개선 업무를 수행하게 되며,
+             화공/기계 관련 전공자를 우대합니다.',
+             '3800', '주 5일(월~금)', 191, 14,
+             23, '/img/S_Oil.jpg', '신입', '대학 졸업(2,3년)', 'default',
+             TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
+             0, 25, 0, SYSDATE
+         );
+
+-- 복지
+INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사택 제공');
+INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
+INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '통근버스 운영');
+
+-- 태그
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 572, 1); -- 공정 운영
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 569, 1); -- 안전 관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 568, 0); -- 기계 설비 유지보수
+
+COMMIT;
+INSERT INTO JOB_POST (
+    JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
+    VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+) VALUES (
+             JOB_POST_ID_SEQ.NEXTVAL, 35, '환경안전(EHS) 전문가 경력직 채용',
+             'S-Oil 환경안전팀에서는 플랜트 내 EHS(환경·보건·안전) 업무를 담당할
+             경력직 인재를 채용합니다. 대기·수질 환경 규제 대응, 안전사고 예방 프로그램 기획,
+             외부기관 감사 대응 등의 업무를 수행합니다. 관련 자격증 보유자 및 EHS 실무 경험자 우대.',
+             '5500', '주 5일(월~금)', 181, 15,
+             34, '/img/S_Oil.jpg', '3~5년', '대학교 졸업(4년)', 'default',
+             TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-10', 'YYYY-MM-DD'),
+             0, 15, 0, SYSDATE
+         );
+
+-- 복지
+INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '성과급 지급');
+INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '주택자금 지원');
+INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '리프레시 휴가');
+
+-- 태그
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 203, 1); -- 환경 규제 대응
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 205, 1); -- 산업안전보건관리
+
 
 COMMIT;
 INSERT INTO JOB_POST (
@@ -1885,7 +1916,7 @@ INSERT INTO JOB_POST (
              'S-Oil 환경안전팀에서는 플랜트 내 EHS(환경·보건·안전) 업무를 담당할
              경력직 인재를 채용합니다. 대기·수질 환경 규제 대응, 안전사고 예방 프로그램 기획,
              외부기관 감사 대응 등의 업무를 수행합니다. 관련 자격증 보유자 및 EHS 실무 경험자 우대.',
-             '5500', '주 5일(월~금)', 181, 15,
+             '5500', '주 5일(월~금)', 203, 15,
              34, '/img/S_Oil.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-10', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -1899,59 +1930,7 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 -- 태그
 INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 619, 1); -- 환경 규제 대응
 INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 622, 1); -- 산업안전보건관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 625, 0); -- 위험성 평가
 
-COMMIT;
-INSERT INTO JOB_POST (
-    JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
-    VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
-) VALUES (
-             JOB_POST_ID_SEQ.NEXTVAL, 35, '플랜트 운영 엔지니어 신입 채용',
-             'S-Oil 울산 Complex의 안정적인 플랜트 운영을 책임질 신입 엔지니어를 모집합니다.
-             공정운전 및 모니터링, 안전 점검, 설비 점검 및 개선 업무를 수행하게 되며,
-             화공/기계 관련 전공자를 우대합니다.',
-             '3800', '주 5일(월~금)', 180, 15,
-             23, '/img/S_Oil.jpg', '신입', '대학 졸업(2,3년)', 'default',
-             TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
-             0, 25, 0, SYSDATE
-         );
-
--- 복지
-INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사택 제공');
-INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
-INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '통근버스 운영');
-
--- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 611, 1); -- 공정 운영
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 618, 1); -- 안전 관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 604, 0); -- 기계 설비 유지보수
-
-COMMIT;
-INSERT INTO JOB_POST (
-    JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
-    VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
-) VALUES (
-             JOB_POST_ID_SEQ.NEXTVAL, 35, '환경안전(EHS) 전문가 경력직 채용',
-             'S-Oil 환경안전팀에서는 플랜트 내 EHS(환경·보건·안전) 업무를 담당할
-             경력직 인재를 채용합니다. 대기·수질 환경 규제 대응, 안전사고 예방 프로그램 기획,
-             외부기관 감사 대응 등의 업무를 수행합니다. 관련 자격증 보유자 및 EHS 실무 경험자 우대.',
-             '5500', '주 5일(월~금)', 181, 15,
-             34, '/img/S_Oil.jpg', '3~5년', '대학교 졸업(4년)', 'default',
-             TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-10', 'YYYY-MM-DD'),
-             0, 15, 0, SYSDATE
-         );
-
--- 복지
-INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '성과급 지급');
-INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '주택자금 지원');
-INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '리프레시 휴가');
-
--- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 619, 1); -- 환경 규제 대응
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 622, 1); -- 산업안전보건관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 625, 0); -- 위험성 평가
 
 COMMIT;
 INSERT INTO JOB_POST (
@@ -1963,7 +1942,7 @@ INSERT INTO JOB_POST (
              '삼성SDS의 클라우드 서비스 플랫폼 운영을 함께할 신입 인프라 엔지니어를 모집합니다.
              하이브리드 클라우드 인프라 구축 및 시스템 운영, 보안 정책 적용, 자동화 관리 도구 개발 등 다양한 기술을
              학습하고 실무에 적용할 기회를 제공합니다. 성장 가능성이 높은 인재를 찾습니다.',
-             '연봉 4,200만 원 이상', '주 5일(월~금)', 45, 5,
+             '연봉 4,200만 원 이상', '주 5일(월~금)', 87, 6,
              27, '/img/Samsung_SDS.png', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-27', 'YYYY-MM-DD'),
              0, 30, 0, SYSDATE
@@ -1975,9 +1954,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자율 복장');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 127, 1); -- 클라우드 인프라
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 132, 1); -- 서버 가상화
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 138, 0); -- 시스템 모니터링
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 197, 1); -- 클라우드 인프라
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 195, 1); -- 서버 가상화
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 189, 0); -- 시스템 모니터링
 
 COMMIT;
 INSERT INTO JOB_POST (
@@ -1988,7 +1967,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 36, '빅데이터 분석가 채용',
              '삼성SDS는 제조, 물류, 금융, 헬스케어 등 다양한 산업 영역에서 데이터 기반의 인사이트를 제공합니다.
              본 포지션은 분석 모델 개발, 시각화 대시보드 구현, AI 알고리즘 적용 등 고급 데이터 분석 프로젝트를 수행합니다.',
-             '협의 후 결정', '주 5일(월~금)', 38, 4,
+             '협의 후 결정', '주 5일(월~금)', 81, 6,
              43, '/img/Samsung_SDS.png', '3~5년', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-01', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -2000,9 +1979,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '직원몰 할인');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 603, 1); -- 데이터 분석
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 610, 1); -- AI 기반 예측
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 618, 0); -- 시각화 도구 활용
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 182, 1); -- 데이터 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 191, 1); -- AI 기반 예측
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 189, 0); -- 시각화 도구 활용
 
 COMMIT;
 
@@ -2015,7 +1994,7 @@ INSERT INTO JOB_POST (
              'SK바이오사이언스는 글로벌 수준의 백신 개발을 위해 임상시험 데이터 분석 전문가를 찾고 있습니다.
              통계적 방법론을 활용해 임상 결과를 해석하고, 규제기관 제출을 위한 리포트를 작성하게 됩니다.
              SAS, R, Python 중 1개 이상 사용 가능자를 우대하며, CRO 경험이 있는 분은 환영합니다.',
-             '4200', '주 5일(월~금)', 121, 17,
+             '4200', '주 5일(월~금)', 250, 17,
              26, '/img/SK_Bioscience.jpeg', '3~5년', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -2027,9 +2006,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 754, 1); -- 임상시험
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 755, 1); -- 데이터 분석
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 759, 0); -- 통계 소프트웨어
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 690, 1); -- 임상시험
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 691, 1); -- 데이터 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 694, 0); -- 통계 소프트웨어
 
 COMMIT;
 
@@ -2042,7 +2021,7 @@ INSERT INTO JOB_POST (
              'SK바이오사이언스의 안동 L HOUSE에서는 백신 원액의 생산 공정을 책임질 GMP 운영 직무를 모집합니다.
              의약품 제조 및 품질관리 기준(GMP)에 따라 생산계획 수립, 설비 점검, 공정 기록 등을 수행합니다.
              제약 제조 설비 경험자 우대, 관련 전공(생명과학/화학/바이오공학) 필수.',
-             '3800', '주 5일(월~금)', 122, 17,
+             '3800', '주 5일(월~금)', 252, 17,
              14, '/img/SK_Bioscience.jpeg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-10', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -2054,9 +2033,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 
 -- 태그
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 762, 1); -- GMP
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 765, 1); -- 생산공정 관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 767, 0); -- 제약설비 이해
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 696, 1); -- GMP
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 694, 1); -- 생산공정 관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 695, 0); -- 제약설비 이해
 
 COMMIT;
 
@@ -2070,7 +2049,7 @@ INSERT INTO JOB_POST (
              식품 품질관리 담당자를 채용합니다.
              HACCP 및 ISO 인증 기준에 따른 품질 점검, 위생 관리, 클레임 분석 등을 담당하며,
              식품공학 또는 관련 전공자 우대합니다.',
-             '3600', '주 5일(월~금)', 87, 13,
+             '3600', '주 5일(월~금)', 189, 14,
              41, '/img/CJ_CheilJedang.jpg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -2082,8 +2061,8 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내식당 운영');
 
 -- 태그 (식품안전 및 품질관리 관련)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 698, 1); -- HACCP
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 702, 1); -- 품질관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 703, 1); -- HACCP
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 700, 1); -- 품질관리
 INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 707, 0); -- 식품위생
 
 COMMIT;
@@ -2098,7 +2077,7 @@ INSERT INTO JOB_POST (
              'CJ제일제당 바이오사업부에서는 미래형 친환경 소재 개발을 위한 연구개발 인력을 모집합니다.
              미생물 기반 발효공정 개발, 생분해성 소재의 특성 분석 및 최적화 등
              지속가능한 기술 연구를 함께할 인재를 찾고 있습니다.',
-             '4300', '주 5일(월~금)', 121, 17,
+             '4300', '주 5일(월~금)', 253, 17,
              37, '/img/CJ_CheilJedang.jpg', '3~5년', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-03', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -2110,9 +2089,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내도서관 이용');
 
 -- 태그 (R&D + 바이오 소재 관련)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 744, 1); -- 미생물
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 751, 1); -- 세포배양
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 747, 0); -- 생명과학
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 697, 1); -- 미생물
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 694, 1); -- 세포배양
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 696, 0); -- 생명과학
 
 COMMIT;
 INSERT INTO JOB_POST (
@@ -2124,7 +2103,7 @@ INSERT INTO JOB_POST (
              'IBK기업은행에서 금융 전문성 및 회계 역량을 갖춘 재무회계 담당자를 채용합니다.
              IFRS 기준의 회계처리 및 내부결산, 외부감사 대응을 주도할 수 있으며
              금융기관 재무 관련 경험자 또는 FAT 자격 보유자 우대합니다.',
-             '4200', '주 5일(월~금)', 197, 20,
+             '4200', '주 5일(월~금)', 36, 3,
              33, '/img/IBK.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-01', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -2136,9 +2115,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 
 -- 태그 (재무, 금융 관련)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 782, 1); -- 세무 지식
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 785, 1); -- FAT 자격
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 768, 0); -- 자산운용
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 72, 1); -- 세무 지식
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 81, 1); -- FAT 자격
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 77, 0); -- 자산운용
 
 COMMIT;
 INSERT INTO JOB_POST (
@@ -2150,7 +2129,7 @@ INSERT INTO JOB_POST (
              '기업은행 고객센터에서 고객응대 역량이 우수한 상담사 인재를 모집합니다.
              전화 응대, 계좌 및 상품 안내, 민원 접수 및 처리 업무를 수행하게 됩니다.
              금융상품에 대한 기초 지식과 CS 마인드를 보유한 분을 우대합니다.',
-             '3300', '주 5일(월~금)', 198, 20,
+             '3300', '주 5일(월~금)', 117, 9,
              24, '/img/IBK.jpg', '1~3년', '고등학교 졸업', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-06-28', 'YYYY-MM-DD'),
              0, 50, 0, SYSDATE
@@ -2162,11 +2141,12 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '명절 선물');
 
 -- 태그 (고객응대 및 기초 금융)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 775, 1); -- 콜센터 상담
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 780, 1); -- 금융 상담
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 783, 0); -- 신용카드 업무
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 336, 1); -- 콜센터 상담
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 333, 1); -- 금융 상담
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 321, 0); -- 신용카드 업무
 
 COMMIT;
+
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
@@ -2176,7 +2156,7 @@ INSERT INTO JOB_POST (
              'LG생활건강의 글로벌 브랜드를 성장시킬 브랜드 마케팅 담당자를 찾습니다.
              마케팅 전략 수립, 콘텐츠 기획, 캠페인 실행을 통해 브랜드 인지도를 제고하고,
              소비자 분석을 기반으로 한 퍼포먼스 마케팅 운영 경험을 쌓을 수 있는 기회입니다.',
-             '4300', '주 5일(월~금)', 117, 12,
+             '4300', '주 5일(월~금)', 29, 2,
              37, '/img/LG_Health.png', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -2188,9 +2168,10 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내식당');
 
 -- 태그 (마케팅 관련)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 643, 1); -- 콘텐츠 기획
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 654, 1); -- 브랜드 전략
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 660, 0); -- 마케팅 리서치
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 48, 0); -- 시장조사
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 54, 1); -- 콘텐츠 기획
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 63, 1); -- 캠페인 기획
+
 
 COMMIT;
 INSERT INTO JOB_POST (
@@ -2198,11 +2179,11 @@ INSERT INTO JOB_POST (
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
     IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
 ) VALUES (
-             JOB_POST_ID_SEQ.NEXTVAL, 41, '화장품 R&D 연구원 채용',
+             JOB_POST_ID_SEQ.NEXTVAL, 41, '화장품 R&D    채용',
              'LG생활건강 R&D 센터에서 피부 과학 기반의 화장품 연구를 수행할 인재를 채용합니다.
              원료 분석, 제형 연구, 효능 실험 등 화장품 개발 전반을 경험할 수 있으며,
              화장품 과학, 생명공학 관련 전공자 우대합니다.',
-             '3900', '주 5일(월~금)', 140, 14,
+             '3900', '주 5일(월~금)', 248, 17,
              29, '/img/LG_Health.png', '신입', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-02', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -2214,9 +2195,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내 헬스장');
 
 -- 태그 (화장품/화학/생명 관련)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 518, 1); -- 화학 분석
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 519, 1); -- 생산 공정 기술
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 523, 0); -- MSDS 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 711, 1); -- 화학 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 712, 1); -- 생산 공정 기술
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 714, 0); -- MSDS 작성
 
 COMMIT;
 -- 채용공고
@@ -2229,7 +2210,7 @@ INSERT INTO JOB_POST (
              'SK텔레콤은 초고속·초저지연 5G 서비스를 구현할 인재를 기다립니다.
              기지국 설계, 트래픽 최적화, QoS 향상 등 5G 네트워크 고도화와 관련된 핵심 프로젝트에 참여하며,
              네트워크 해석 및 프로토콜 분석 경험이 있으신 분을 우대합니다.',
-             '4700', '주 5일(월~금)', 172, 15,
+             '4700', '주 5일(월~금)', 80, 6,
              33, '/img/SK_Telecom.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -2241,9 +2222,8 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내식당');
 
 -- 태그 연계 (통신/네트워크)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 749, 1); -- 통신망 설계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 757, 1); -- 네트워크 최적화
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 764, 0); -- 무선 기술 이해
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 178, 1); -- 네트워크
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 190, 1); -- 방화벽
 
 COMMIT;
 -- 채용공고
@@ -2256,7 +2236,7 @@ INSERT INTO JOB_POST (
              'AI 음성 비서, 빅데이터 분석 기반 추천 서비스 등 SK텔레콤의 AI 기술을
              고객 중심 서비스로 실현할 기획자를 모집합니다.
              데이터 기반 기획 경험이 있거나 서비스 UX 설계에 관심 있는 분들의 많은 지원 바랍니다.',
-             '4500', '주 5일(월~금)', 144, 12,
+             '4500', '주 5일(월~금)', 6, 1,
              40, '/img/SK_Telecom.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -2268,9 +2248,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '탄력근무제');
 
 -- 태그 연계 (기획/UX/AI 서비스)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 645, 1); -- 사용자 경험(UX)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 660, 1); -- 데이터 기반 기획
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 664, 0); -- AI 서비스 운영
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 32, 1); -- 비즈니스 모델 설계
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 22, 1); -- 기획서 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 20, 0); -- 비즈니스 분석
 
 COMMIT;
 -- 채용공고
@@ -2283,7 +2263,7 @@ INSERT INTO JOB_POST (
              'KT는 스마트시티 기술을 통해 미래 도시 인프라를 구축하고 있습니다.
              도시 데이터 통합, IoT 연동, 클라우드 기반 시스템 개발 등에 역량 있는 인재를 기다립니다.
              공공 프로젝트나 플랫폼 구축 경험이 있다면 우대합니다.',
-             '4300', '주 5일(월~금)', 122, 13,
+             '4300', '주 5일(월~금)', 81, 6,
              29, '/img/LG.jpeg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-04', 'YYYY-MM-DD'),
              0, 15, 0, SYSDATE
@@ -2295,9 +2275,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '명절선물 지급');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 622, 1); -- IoT 시스템 연동
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 636, 1); -- 공공 데이터 처리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 701, 0); -- 클라우드 인프라 구축
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 193, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 211, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 221, 0);
 
 COMMIT;
 
@@ -2311,7 +2291,7 @@ INSERT INTO JOB_POST (
              'KT는 전국 통신망의 안정적인 운영을 위한 인프라 관리 전문 인재를 찾고 있습니다.
              주요 업무는 교환기, 라우터, 전송 장비 등의 유지보수이며,
              현장 대응력 및 장애 대응 경험이 풍부하신 분을 우대합니다.',
-             '4100', '주 5일(월~금)', 173, 15,
+             '4100', '주 5일(월~금)', 80, 6,
              22, '/img/LG.jpeg', '신입', '대학 졸업(2,3년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-01', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -2323,9 +2303,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '장기근속 포상');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 755, 1); -- 통신 장비 유지보수
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 761, 1); -- 장애 대응
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 765, 0); -- 기술문서 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 178, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 190, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 226, 0);
 
 COMMIT;
 
@@ -2339,7 +2319,7 @@ INSERT INTO JOB_POST (
              '삼성중공업에서 선박 설계 및 구조 해석을 담당할 엔지니어를 모집합니다.
              CAD 기반 설계 경험과 해양플랜트 이해도를 갖춘 지원자를 선호하며,
              조선해양공학 또는 기계/구조 분야 전공자를 우대합니다.',
-             '4600', '주 5일(월~금)', 172, 15,
+             '4600', '주 5일(월~금)', 80, 17,
              41, '/img/Samsung_Heavy_Industries.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-08', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -2351,9 +2331,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '장기근속 포상');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 731, 1); -- CAD
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 728, 1); -- 3D 모델링
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 732, 0); -- 구조 해석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 247, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 248, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 257, 0);
 
 COMMIT;
 -- 채용공고
@@ -2365,7 +2345,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 44, '생산 기술 관리 신입 모집',
              '삼성중공업 거제조선소에서 생산 공정 개선 및 품질 향상 업무를 담당할 신입 엔지니어를 찾습니다.
              제조/생산라인 이해와 함께, 기본적인 품질 관리 지식이 있는 분이면 충분히 도전 가능합니다.',
-             '4000', '주 5일(월~금)', 166, 15,
+             '4000', '주 5일(월~금)', 191, 14,
              38, '/img/Samsung_Heavy_Industries.jpg', '신입', '대학 졸업(2,3년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
              0, 25, 0, SYSDATE
@@ -2377,9 +2357,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '경조사 지원');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 735, 1); -- 공정 관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 738, 1); -- 안전 관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 739, 0); -- 건설재료 이해
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 567, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 572, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 568, 0);
 
 COMMIT;
 -- 채용공고
@@ -2392,7 +2372,7 @@ INSERT INTO JOB_POST (
              '포스코인터내셔널에서 해외 에너지/자원개발 프로젝트 관리를 담당할 경력 직원을 모집합니다.
              LNG, 철광석 등 주요 자원 개발과 수입 계약, 해외 협력사 조율, 문서 작성 및 리스크 관리를 담당합니다.
              해외 파견 및 글로벌 비즈니스 경험을 쌓을 수 있는 기회입니다.',
-             '5200', '주 5일(월~금)', 87, 10,
+             '5200', '주 5일(월~금)', 6, 1,
              67, '/img/POSCO_INTERNATIONAL.jpg', '5년이상', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-10', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -2404,9 +2384,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '연차 자유 사용');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 221, 1); -- 해외영업
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 225, 1); -- 프로젝트 관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 231, 0); -- 자원개발 이해
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 10, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 11, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 34, 0);
 
 COMMIT;
 -- 채용공고
@@ -2418,7 +2398,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 45, '수출입 통관 및 물류 담당자 채용',
              '포스코인터내셔널 본사에서 수출입 통관 및 글로벌 물류 업무를 수행할 인재를 찾습니다.
              원자재 및 철강 제품의 수출입 관련 서류 작성, 관세사 및 운송사와 협업, 전자통관시스템(UNI-PASS) 활용 경험자를 우대합니다.',
-             '4700', '주 5일(월~금)', 91, 10,
+             '4700', '주 5일(월~금)', 128, 10,
              41, '/img/POSCO_INTERNATIONAL.jpg', '3~5년', '대학 졸업(2,3년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -2430,9 +2410,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '탄력근무제');
 
 -- 태그 연계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 218, 1); -- 수출입 관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 219, 1); -- 통관
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 223, 0); -- 전자무역 시스템
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 364, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 365, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 367, 0);
 
 COMMIT;
 -- 채용공고
@@ -2444,7 +2424,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 46, '발전설비 유지보수 엔지니어 채용',
              '두산에너빌리티에서 발전소 및 에너지 설비 유지보수 업무를 담당할 경력직 엔지니어를 모집합니다.
              가스터빈, 증기터빈 등 핵심 설비 점검과 정비, 현장 대응 역량을 보유한 분을 찾습니다.',
-             '5400', '주 5일(월~금)', 126, 14,
+             '5400', '주 5일(월~금)', 201, 15,
              31, '/img/Doosan_Enerbility.jpg', '5년이상', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-15', 'YYYY-MM-DD'),
              0, 12, 0, SYSDATE
@@ -2456,9 +2436,8 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '기숙사 제공');
 
 -- 태그 연계 (기계/설비 유지보수 관련 태그)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 601, 1); -- 설비 점검
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 615, 1); -- 기계 유지보수
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 633, 0); -- 전기 안전 관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 587, 1); -- 설비 점검
+
 
 COMMIT;
 -- 채용공고
@@ -2470,7 +2449,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 46, '플랜트 설계 프로젝트 매니저 채용',
              '두산에너빌리티의 국내외 발전 플랜트 사업 확장을 위한 프로젝트 매니저를 찾습니다.
              설계 검토, 공정 관리, 고객 대응 및 리스크 조정까지 폭넓은 경험과 역량을 갖춘 인재를 우대합니다.',
-             '6000', '주 5일(월~금)', 128, 14,
+             '6000', '주 5일(월~금)', 11, 1,
              45, '/img/Doosan_Enerbility.jpg', '5년이상', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-20', 'YYYY-MM-DD'),
              0, 8, 0, SYSDATE
@@ -2482,11 +2461,12 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 
 -- 태그 연계 (플랜트 설계 및 프로젝트 관리 관련 태그)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 641, 1); -- 플랜트 설계
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 645, 1); -- 프로젝트 관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 659, 0); -- 설계 문서 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 9, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 11, 1);
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 34, 0);
 
 COMMIT;
+
 -- 채용공고
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
@@ -2496,7 +2476,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 47, '고객 자산관리 컨설턴트 채용',
              '삼성증권 WM센터에서는 고액 자산가 대상의 포트폴리오 제안 및 맞춤형 재무설계를 수행할 컨설턴트를 모집합니다.
              고객과의 신뢰를 기반으로 장기적인 자산증식 전략을 함께 설계해 나갈 수 있는 분을 찾습니다.',
-             '협의 후 결정', '주 5일(월~금)', 172, 20,
+             '협의 후 결정', '주 5일(월~금)', 304, 20,
              40, '/img/Samsung_Securities.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -2508,9 +2488,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 
 -- 태그 연계 (자산관리 중심 태그)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 842, 1); -- 고객 자산관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 841, 1); -- 펀드 이해
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 851, 0); -- 보험 약관 이해
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 819, 1); -- 고객 자산관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 825, 1); -- 펀드 이해
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 824, 0); -- 보험 약관 이해
 
 COMMIT;
 -- 채용공고
@@ -2534,9 +2514,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 
 -- 태그 연계 (금융 상담 및 가입업무 관련 태그)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 845, 1); -- 금융 상담
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 850, 1); -- 계약 관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 853, 0); -- 청약서 접수
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 808, 1); -- 금융 상담
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 809, 1); -- 계약 관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 814, 0); -- 청약서 접수
 
 COMMIT;
 -- 채용공고
@@ -2548,7 +2528,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 48, '전기차 부품 생산기술 엔지니어 채용',
              '한온시스템에서는 전기차용 열관리 시스템 생산라인의 공정 안정화와 기술 개선을 담당할 엔지니어를 모집합니다.
              자동화 설비 및 PLC 기반 생산 경험이 있는 분, 품질 개선 활동에 관심 있는 분 환영합니다.',
-             '협의 후 결정', '주 5일(월~금)', 148, 15,
+             '협의 후 결정', '주 5일(월~금)', 191, 14,
              37, '/img/hanonsystem.png', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-01', 'YYYY-MM-DD'),
              0, 10, 0, SYSDATE
@@ -2560,9 +2540,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '성과급');
 
 -- 태그 연계 (생산기술 관련 태그)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 716, 1); -- 시공 계획서
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 722, 1); -- 건설 장비 이해
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 718, 0); -- CAD
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 580, 1); -- 시공 계획서
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 567, 1); -- 건설 장비 이해
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 585, 0); -- CAD
 
 COMMIT;
 -- 채용공고
@@ -2574,7 +2554,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 48, '품질보증(QA) 담당자 채용',
              '차세대 열관리 기술을 이끄는 한온시스템에서 글로벌 고객사를 위한 품질보증 활동을 총괄할 QA 전문가를 찾습니다.
              IATF 16949 인증 대응 및 고객 대응, 공정 FMEA 경험자를 우대합니다.',
-             '3400', '주 5일(월~금)', 153, 15,
+             '3400', '주 5일(월~금)', 192, 14,
              29, '/img/hanonsystem.png', '5년이상', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
              0, 8, 0, SYSDATE
@@ -2586,9 +2566,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 
 -- 태그 연계 (품질보증 관련 태그)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 736, 1); -- 품질 테스트
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 741, 1); -- 양산 전 검토
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 742, 0); -- R&D 보고서
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 582, 1); -- 품질 테스트
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 584, 1); -- 양산 전 검토
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 585, 0); -- R&D 보고서
 
 COMMIT;
 -- 채용공고
@@ -2626,7 +2606,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 49, '산업안전관리 담당자 채용',
              '현대제철의 제철소 안전보건 관리팀에서 현장 안전 점검, 위험성 평가, 근로자 교육 및 산재 예방 활동을 함께할 전문가를 찾습니다.
               산업안전기사 자격 소지자 및 안전관리 업무 경험자 우대합니다.',
-             '3800', '주 5일(월~금)', 157, 15,
+             '3800', '주 5일(월~금)', 189, 14,
              22, '/img/Hyundai_Steel.jpg', '5년이상', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
              0, 8, 0, SYSDATE
@@ -2638,9 +2618,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사택 제공');
 
 -- 태그 연계 (산업안전 관련)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 707, 1); -- 안전 관리
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 725, 1); -- 건설재료 이해
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 715, 0); -- 내역서 작성
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 568, 1); -- 안전 관리
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 579, 1); -- 건설재료 이해
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 577, 0); -- 내역서 작성
 
 COMMIT;
 -- 채용공고
@@ -2652,7 +2632,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 50, '화장품 신소재 연구원 채용',
              '아모레퍼시픽 기술연구원에서는 피부 친화적 신소재 및 고기능성 화장품 원료 개발을 위한 연구원을 모집합니다.
               피부과학, 생명과학, 화학 계열 전공자 우대하며, 바이오 기반 성분에 대한 이해도를 보유한 인재를 찾습니다.',
-             '4200', '주 5일(월~금)', 117, 17,
+             '4200', '주 5일(월~금)', 248, 17,
              27, '/img/Amorepacific.jpg', '3~5년', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-01', 'YYYY-MM-DD'),
              0, 12, 0, SYSDATE
@@ -2664,9 +2644,9 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자녀학자금 지원');
 
 -- 태그 연계 (생명과학/화학 연구)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 723, 1); -- 생명과학
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 724, 1); -- 화학 분석
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 726, 0); -- 세포배양
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 701, 1); -- 생명과학
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 702, 1); -- 화학 분석
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 706, 0); -- 세포배양
 
 COMMIT;
 -- 채용공고
@@ -2678,7 +2658,7 @@ INSERT INTO JOB_POST (
              JOB_POST_ID_SEQ.NEXTVAL, 50, '뷰티 브랜드 제품 패키지 디자이너 채용',
              '아모레퍼시픽 디자인본부에서는 브랜드 감성과 사용자 경험을 고려한 제품 패키징 디자인 전문가를 찾습니다.
               Adobe 디자인 툴 숙련자, 제품 구조 및 재료 이해도가 있는 분을 우대합니다.',
-             '3900', '주 5일(월~금)', 141, 19,
+             '3900', '주 5일(월~금)', 95, 7,
              34, '/img/Amorepacific.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-03', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
@@ -2690,8 +2670,8 @@ INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내식당 운영');
 
 -- 태그 연계 (뷰티 브랜드 디자인)
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 753, 1); -- 포토샵
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 755, 1); -- 포스터 제작
-INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 756, 0); -- 콘텐츠 기획
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 280, 1); -- 포토샵
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 273, 1); -- 포스터 제작
+INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 281, 0); -- 콘텐츠 기획
 
 COMMIT;

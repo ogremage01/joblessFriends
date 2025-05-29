@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.joblessfriend.jobfinder.resume.domain.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 
 import com.joblessfriend.jobfinder.resume.domain.CareerVo;
 import com.joblessfriend.jobfinder.resume.domain.EducationVo;
@@ -14,8 +16,9 @@ import com.joblessfriend.jobfinder.resume.domain.PortfolioVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 import com.joblessfriend.jobfinder.resume.domain.SchoolVo;
 
+
 @Repository
-public class ResumeDaoImpl implements ResumeDao{
+class ResumeDaoImpl implements ResumeDao{
 	
 	private final String namespace = "com.joblessfriend.jobfinder.resume.dao.ResumeDao";
 
@@ -47,6 +50,7 @@ public class ResumeDaoImpl implements ResumeDao{
         sqlSession.update(namespace + ".updateProfileImage", param);
 		
 	}
+
 
 	@Override
 	public ResumeVo getResumeByResumeId(int resumeId) {
@@ -110,4 +114,5 @@ public class ResumeDaoImpl implements ResumeDao{
 		sqlSession.insert(namespace + ".insertPortfolio", portfolio);
 		
 	}
+
 }

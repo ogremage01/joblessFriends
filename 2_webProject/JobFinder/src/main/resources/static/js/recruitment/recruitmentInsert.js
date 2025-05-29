@@ -189,9 +189,19 @@ $("#generateTemplate").on('click',function () {
 
 })
 
+function validateImageFile() {
 
+
+    if (!hasUploadedFile) {
+        loginFailPop("채용공고 대표 이미지를 등록해주세요.");
+        $('#jobImgFile').focus();
+        return false;
+    }
+    return true;
+}
 
 function validateFormInputs() {
+
     const title = $('input[name="title"]').val().trim();
     const startDate = $('input[name="startDate"]').val();
     const endDate = $('input[name="endDate"]').val();
@@ -204,6 +214,9 @@ function validateFormInputs() {
     const selectedSkillIds = $('input[name="tagId"]:checked').map(function () {
         return $(this).val();
     }).get();
+    const hasUploadedFile = $('#jobImgFile')[0].files.length > 0;
+
+
 
     // 제목
     if (!title) {
@@ -212,6 +225,11 @@ function validateFormInputs() {
         return false;
     }
 
+    if (!hasUploadedFile) {
+        loginFailPop("채용공고 대표 이미지를 등록해주세요.");
+        $('#jobImgFile').focus();
+        return false;
+    }
     // 접수기간
     if (!startDate || !endDate) {
         loginFailPop("접수 기간을 모두 입력해주세요.");
@@ -411,3 +429,24 @@ $(document).ready(function () {
 
 
 });
+
+$('#generateTitle').on('click', function () {
+    const file = $('#jobImgFile')[0].files[0];
+
+    if (!file) {
+        loginFailPop("미리볼 이미지를 먼저 업로드해주세요.");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        Swal.fire({
+            title: '이미지 미리보기',
+            imageUrl: e.target.result,
+            imageAlt: '대표 이미지',
+            confirmButtonText: '닫기'
+        });
+    };
+    reader.readAsDataURL(file);
+});
+
