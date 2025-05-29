@@ -15,6 +15,6 @@ public interface ResumeService {
     
     void updateProfileImage(int resumeId, int memberId, String imageUrl);
     
-    void saveResume(ResumeSaveRequestVo request, String username);
+    void saveResume(ResumeSaveRequestVo request, int memberId);
     
 }

@@ -5,7 +5,7 @@
  	<resultMap type="com.joblessfriend.jobfinder.resume.domain.ResumeVo" id="ResumeResultMap">
 
 		<id column="RESUME_ID" property="resumeId" />
-		<result column="MEMBER_NAME" property="memberName" />
+		<result column="NAME" property="memberName" />
 		<result column="BIRTHDATE" property="birthDate" />
 		<result column="PHONENUMBER" property="phoneNumber" />
 		<result column="EMAIL" property="email" />
@@ -18,7 +18,8 @@
 		<result column="MODIFIED_AT" property="modifyDate" javaType="java.util.Date" />
 
 	</resultMap>
-
+	
+	<!-- 조회 -->
 	<select id="findResumesByMemberId" resultMap="ResumeResultMap">
         SELECT RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, ADDRESS, SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT	
         FROM RESUME
@@ -32,12 +33,14 @@
         WHERE RESUME_ID = #{resumeId}
 	</select>
 
+	<!-- 삭제 -->
     <delete id="deleteResumeById">
         DELETE FROM RESUME 
         WHERE RESUME_ID = #{resumeId}
         AND MEMBER_ID = #{memberId}
     </delete>
     
+    <!-- 이력서 사진 -->
     <update id="updateProfileImage">
         UPDATE RESUME
         SET PROFILE = #{imageUrl}
@@ -46,15 +49,24 @@
     </update>
     
     <!-- 이력서 저장 -->
-    <insert id="insertResume" parameterType="com.joblessfriend.jobfinder.resume.domain.ResumeVo" useGeneratedKeys="true" keyProperty="resumeId">
+    <insert id="insertResume" parameterType="com.joblessfriend.jobfinder.resume.domain.ResumeVo">
 	    INSERT INTO RESUME (
+	    	RESUME_ID,
 	        MEMBER_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL,
 	        POSTAL_CODE_ID, ADDRESS, SELF_INTRODUCTION, PROFILE,
 	        CREATE_AT, MODIFIED_AT
 	    )
 	    VALUES (
-	        #{memberId}, #{memberName}, #{birthDate}, #{phoneNumber}, #{email},
-	        #{postalCodeId}, #{address}, #{selfIntroduction}, #{profile},
+	    	RESUME_ID_SEQ.NEXTVAL,
+	        #{memberId, jdbcType=INTEGER},
+	        #{memberName, jdbcType=VARCHAR},
+	        #{birthDate, jdbcType=DATE},
+	        #{phoneNumber, jdbcType=VARCHAR},
+        	#{email, jdbcType=VARCHAR},
+	        #{postalCodeId, jdbcType=INTEGER},
+	        #{address, jdbcType=VARCHAR},
+	        #{selfIntroduction, jdbcType=VARCHAR},
+	        #{profile, jdbcType=VARCHAR},
 	        SYSDATE, SYSDATE
 	    )
 	</insert>
@@ -62,10 +74,20 @@
     <!-- 학력정보 저장 -->
     <insert id="insertSchool" parameterType="com.joblessfriend.jobfinder.resume.domain.SchoolVo">
 	    INSERT INTO SCHOOL (
-	        RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
+	    	SCHOOL_ID,
+	        RESUME_ID, 
+	        SORTATION, 
+	        SCHOOL_NAME, 
+	        YEAR_OF_GRADUATION,
+	        STATUS
 	    )
 	    VALUES (
-	        #{resumeId}, #{sortation}, #{schoolName}, #{yearOfGraduation}, #{status}
+	    	SCHOOL_ID_SEQ.NEXTVAL,
+	        #{resumeId}, 
+	        #{sortation}, 
+	        #{schoolName}, 
+	        TO_DATE(#{yearOfGraduation}, 'YYYY'), 
+	        #{status}
 	    )
 	</insert>
 	
@@ -100,6 +122,16 @@
 	        #{resumeId}, #{tagId}, SYSDATE, SYSDATE
 	    )
 	</insert>
+	
+	<!-- 자격증정보 저장 -->
+	<insert id="insertCertificateResume">
+		INSERT INTO CERTIFICATE_RESUME (
+		RESUME_ID, CERTIFICATE_ID, CREATE_AT, MODIFIED_AT
+		)
+		VALUES (
+		#{resumeId}, #{certificateId}, SYSDATE, SYSDATE
+		)
+	</insert>	
 	
 	<!-- 포트폴리오정보 저장 -->
 	<insert id="insertPortfolio" parameterType="com.joblessfriend.jobfinder.resume.domain.PortfolioVo">

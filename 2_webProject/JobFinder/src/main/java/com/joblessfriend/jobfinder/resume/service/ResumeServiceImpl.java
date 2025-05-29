@@ -54,14 +54,11 @@ public class ResumeServiceImpl implements ResumeService{
 
 	@Override
 	@Transactional
-	public void saveResume(ResumeSaveRequestVo request, String username) {
+	public void saveResume(ResumeSaveRequestVo request, int memberId) {
 		// TODO Auto-generated method stub
-		MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
-	    if (memberVo == null) {
-	        throw new IllegalStateException("로그인된 사용자만 이력서를 저장할 수 있습니다.");
-	    }
-	    
-	    int memberId = memberVo.getMemberId();
+		System.out.println(">>> [ResumeServiceImpl] saveResume 호출됨");
+	    System.out.println(">>> 저장할 memberId = " + memberId);
+
 	    resumeSaveParser.saveAll(request, memberId);
 	}
 }

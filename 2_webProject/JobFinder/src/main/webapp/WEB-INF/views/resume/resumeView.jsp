@@ -50,15 +50,15 @@
 			<!-- 1행 -->
 			<div class="field-block">
 				<label>이름</label>
-				<input type="text" placeholder="예시) 홍길동" />
+				<input type="text" id="name" placeholder="예시) 홍길동" />
 			</div>
 			<div class="field-block">
 				<label>생년월일</label>
-				<input type="text" placeholder="예시) 2025-04-16" />
+				<input type="text" id="birthdate" placeholder="예시) 2025-04-16" />
 			</div>
 			<div class="field-block">
 				<label>전화번호</label>
-				<input type="text" placeholder="예시) 01012349999" />
+				<input type="text" id="phoneNumber" placeholder="예시) 01012349999" />
 			</div>
 			
 			<!-- 2행 -->
@@ -73,7 +73,7 @@
 			</div>
 				<div class="field-block">
 				<label>메일</label>
-				<input type="text" placeholder="예시) test@mail.com" />
+				<input type="text" id="email" placeholder="예시) test@mail.com" />
 			</div>
 			<div class="photo-wrapper">
 				<label class="photo-box" id="photoBox">
@@ -120,6 +120,7 @@
 	</section>
 
 	<section class="section-block">
+		<h2>학력</h2>
 		<div class="edu-row-combined">		   
 			   <!-- 학교 구분 선택 -->
 			<div class="field-block">
@@ -135,10 +136,6 @@
 			<!-- 여기에 동적으로 필드가 채워짐 -->
 			<div id="edu-dynamic-fields"style="display: contents;"></div>
 			
-			<!-- 삭제버튼 -->
-			<div class="add-education-btn">
-				<button type="button" class="delete-btn">×</button>
-			</div>
 		</div>
 		
 		<div class="add-education-btn">
@@ -243,7 +240,7 @@
 	<section class="section-block">
 		<h2>자기소개서</h2>
 		<div class="field-block">
-			<textarea rows="10" placeholder="자기소개서 내용을 입력하세요"></textarea>
+			<textarea rows="10" id="selfIntroduction" placeholder="자기소개서 내용을 입력하세요"></textarea>
 		</div>
 	</section>
 	
@@ -292,75 +289,89 @@
 	
 <script>
 
+// 프로필 이미지 업로드 및 미리보기 기능
 let ignoreNextInput = false;
 
+// 사진 박스를 클릭하면 숨겨진 input[type="file"] 요소를 클릭해서 파일 선택창을 열어줌
 document.getElementById("photoBox").addEventListener("click", function () {
-    document.getElementById("profileImageInput").click();
+  document.getElementById("profileImageInput").click();
 });
 
+// 사용자가 프로필 이미지를 선택했을 때
+window.uploadedImageUrl = '';
+
 document.getElementById("profileImageInput").addEventListener("change", function () {
-    const file = this.files[0];
-    if (!file) return;
+  const file = this.files[0];
+  if (!file) return;
 
-    // 미리보기
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        const preview = document.getElementById("previewImage");
-        preview.src = e.target.result;
-        preview.style.display = "block";
-        
-        //텍스트 숨기기
-        const photoText = document.querySelector(".photo-text");
-        if (photoText) photoText.style.display = "none";
-    };
-    reader.readAsDataURL(file);
+  // FileReader를 사용해서 사용자가 선택한 이미지를 미리보기로 보여줌
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const preview = document.getElementById("previewImage");
+    preview.src = e.target.result;
+    preview.style.display = "block";
+    
+    window.uploadedImageUrl = e.target.result;
 
-    // 서버로 비동기 전송
-    const formData = new FormData();
-    formData.append('profileImage', file);
+    // "사진추가" 텍스트는 숨김 처리
+    const photoText = document.querySelector(".photo-text");
+    if (photoText) photoText.style.display = "none";
+  };
+  reader.readAsDataURL(file);
 
-    fetch('/profile-temp/uploadImage', {
-        method: 'POST',
-        body: formData
-    })
-    .then(res => res.text())
+  // 서버로 이미지 전송 (FormData 사용)
+  const formData = new FormData();
+  formData.append('profileImage', file);
+
+  fetch('/profile-temp/uploadImage', {
+    method: 'POST',
+    body: formData
+  })
+    .then(res => res.text()) // 서버 응답 텍스트 출력
     .then(data => {
-        console.log("업로드 결과:", data);
+    	uploadedImageUrl = data;  // 여기서 저장
+      console.log("업로드 결과:", data);
     })
     .catch(err => {
-        console.error("업로드 실패", err);
+      console.error("업로드 실패", err);
     });
 });
 
-// 주소자동완성
+
+// 주소 자동완성 기능 (행안부 팝업 API)
 function openJusoPopup() {
-	  const confmKey = "${jusoApiKey}";  // properties에서 가져온 값 그대로 넣어도 됨
-	  const returnUrl = "http://localhost:9090/addrCallback.jsp";  // 콜백 JSP의 경로
-	  const resultType = "4"; // 도로명+지번+상세
+  const confmKey = "${jusoApiKey}"; // JSP에서 properties값 읽어오기
+  const returnUrl = location.origin + "/addrCallback.jsp"; // 콜백 처리할 페이지
+  const resultType = "4"; // 도로명 + 지번 + 상세주소 포함
 
-	  const popUrl = "https://business.juso.go.kr/addrlink/addrLinkUrl.do"
-	    + "?confmKey=" + encodeURIComponent(confmKey)
-	    + "&returnUrl=" + encodeURIComponent(returnUrl)
-	    + "&resultType=" + resultType;
+  const popUrl = "https://business.juso.go.kr/addrlink/addrLinkUrl.do"
+    + "?confmKey=" + encodeURIComponent(confmKey)
+    + "&returnUrl=" + encodeURIComponent(returnUrl)
+    + "&resultType=" + resultType;
 
-	  window.open(popUrl, "_blank", "width=570,height=420,scrollbars=yes,resizable=yes");
+  // 팝업창 열기
+  window.open(popUrl, "_blank", "width=570,height=420,scrollbars=yes,resizable=yes");
 }
 
-// 팝업에서 주소 전달받는 함수
+// 팝업에서 주소값을 받아오는 콜백 함수
 function handleJusoCallback(roadAddr, addrDetail) {
   document.getElementById("roadAddress").value = roadAddr || "";
   document.getElementById("jibunAddress").value = addrDetail || "";
 }
 
 
-  document.addEventListener("DOMContentLoaded", function () {
+
+ 	// 희망직무 및 스킬 선택 처리
+
+document.addEventListener("DOMContentLoaded", function () {
+  // 직군, 직무 select와 스킬 컨테이너 요소 캐싱
   const jobGroupSelect = document.getElementById("jobGroupSelect");
   const jobSelect = document.getElementById("jobSelect");
   const skillContainer = document.getElementById("skillContainer");
   const selectedJobGroupLabel = document.getElementById("selectedJobGroupLabel");
-  const selectedSkills = new Set(); // 선택된 스킬 저장용
+  const selectedSkills = new Set(); // 사용자 선택한 스킬 ID 저장
 
-  // 직군 목록 불러오기
+  // 직군 목록 비동기 요청 후 select 옵션 채우기
   fetch("/jobGroup/list")
     .then((res) => res.json())
     .then((data) => {
@@ -372,12 +383,12 @@ function handleJusoCallback(roadAddr, addrDetail) {
       });
     });
 
-  // 직군 선택 시 직무 + 스킬 처리
+  // 직군 선택 시 직무 목록 + 스킬 태그 동시 갱신
   jobGroupSelect.addEventListener("change", function () {
     const jobGroupId = this.value;
     const selectedGroupName = this.options[this.selectedIndex].textContent;
 
-    // 직군 이름 표시
+    // 직군명 표시
     if (jobGroupId) {
       selectedJobGroupLabel.style.display = "block";
       selectedJobGroupLabel.textContent = selectedGroupName;
@@ -385,9 +396,9 @@ function handleJusoCallback(roadAddr, addrDetail) {
       selectedJobGroupLabel.style.display = "none";
     }
 
-    // 직무 초기화 및 가져오기
+    // 직무 목록 초기화 후 다시 불러오기
     jobSelect.innerHTML = '<option value="">직무 선택</option>';
-    fetch('/job/list?jobGroupId=' + jobGroupId)
+    fetch("/job/list?jobGroupId=" + jobGroupId)
       .then(res => res.json())
       .then(data => {
         data.forEach(job => {
@@ -398,9 +409,9 @@ function handleJusoCallback(roadAddr, addrDetail) {
         });
       });
 
-    // 스킬 초기화 및 가져오기
+    // 스킬 목록 초기화 후 다시 불러오기
     skillContainer.innerHTML = "";
-    fetch('/skill/list?jobGroupId=' + jobGroupId)
+    fetch("/skill/list?jobGroupId=" + jobGroupId)
       .then(res => res.json())
       .then(tags => {
         renderSkillTags(tags);
@@ -409,10 +420,12 @@ function handleJusoCallback(roadAddr, addrDetail) {
         console.error("스킬 요청 실패:", err);
       });
   });
-  // 스킬 태그 버튼 생성 및 선택 토글 기능
+
+  // 스킬 태그 버튼들을 생성하고 클릭시 선택/해제 처리
+   
   function renderSkillTags(tags) {
     skillContainer.innerHTML = "";
-    selectedSkills.clear();
+    selectedSkills.clear(); // 이전 선택 제거
 
     tags.forEach(tag => {
       const btn = document.createElement("button");
@@ -420,7 +433,7 @@ function handleJusoCallback(roadAddr, addrDetail) {
       btn.textContent = tag.tagName;
       btn.dataset.tagId = tag.tagId;
 
-      // 버튼 클릭 시 선택/해제 토글
+      // 클릭 시 선택 토글 처리
       btn.addEventListener("click", function () {
         const tagId = this.dataset.tagId;
 
@@ -436,53 +449,42 @@ function handleJusoCallback(roadAddr, addrDetail) {
       skillContainer.appendChild(btn);
     });
   }
-});
   
-//학력 구분(select) 선택에 따라 동적 입력 필드를 생성하는 로직
+  
+  // 학력 학교명,전공 자동완성기능
+  const eduContainer = document.getElementById("edu-dynamic-fields");
+  const schoolTypeSelect = document.getElementById("schoolTypeSelect");
 
-document.addEventListener("DOMContentLoaded", function () {
-  // 학력 입력 영역 컨테이너
-  const container = document.getElementById("edu-dynamic-fields");
-
-  // '구분' 셀렉트 박스
-  const select = document.getElementById("schoolTypeSelect");
-
-  /**
-   * [기능 1] 구분 select 변경 시 첫 번째 입력 필드 생성
-   */
-  select.addEventListener("change", () => {
-    container.innerHTML = ""; // 이전 필드 제거
-    const type = select.value;
+  // 학력 입력 필드 타입 선택 시 초기화 + 필드 생성
+  schoolTypeSelect.addEventListener("change", () => {
+    eduContainer.innerHTML = "";
+    const type = schoolTypeSelect.value;
     if (!type) return;
-    const entry = createSchoolEntry(type); // 필드 생성
-    container.appendChild(entry); // 추가
-    attachAutocomplete(entry, type); // 자동완성 연결
+
+    const firstEntry = createSchoolEntry(type);
+    eduContainer.appendChild(firstEntry);
+    attachAutocomplete(firstEntry, type);
   });
 
-  /**
-   * [기능 2] + 추가 버튼 클릭 시 새로운 학력 항목 추가
-   */
-  document.querySelector(".add-education-btn button").addEventListener("click", function () {
-    const selectedType = select.value;
+  // +추가 버튼 클릭 시 입력 항목 추가
+  document.querySelector(".add-education-btn button").addEventListener("click", () => {
+    const selectedType = schoolTypeSelect.value;
     if (!selectedType) {
       alert("구분을 먼저 선택해주세요.");
       return;
     }
     const newEntry = createSchoolEntry(selectedType);
-    container.appendChild(newEntry);
+    eduContainer.appendChild(newEntry);
     attachAutocomplete(newEntry, selectedType);
   });
 
-  /**
-   * [기능 3] 학력 입력 항목 HTML 템플릿 생성 함수
-   * @param {string} type - "high" | "univ4" | "univ2"
-   */
+  // 학력 입력 DOM 템플릿 생성 함수
   function createSchoolEntry(type) {
     const wrapper = document.createElement("div");
     wrapper.className = "edu-row-combined school-entry";
 
+    // 고등학교
     if (type === "high") {
-      // 고등학교용 입력 필드
       wrapper.innerHTML = `
         <div class="field-block school-autocomplete-block">
           <label>학교명</label>
@@ -505,7 +507,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <button type="button" class="delete-btn">×</button>
       `;
     } else {
-      // 대학교용 입력 필드
+      // 대학교 (2년/4년)
       wrapper.innerHTML = `
         <div class="field-block school-autocomplete-block">
           <label>학교명</label>
@@ -538,20 +540,17 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
     }
 
-    // 삭제 버튼 이벤트 바인딩
+    // 삭제 버튼 기능
     wrapper.querySelector(".delete-btn").addEventListener("click", () => wrapper.remove());
     return wrapper;
   }
 
-  /**
-   * [기능 4] 자동완성 기능 연결 함수 (학교명/전공명)
-   * @param {HTMLElement} wrapper - 입력 항목 루트
-   * @param {string} type - "high", "univ4", "univ2"
-   */
+  // 자동완성 이벤트 연결 (학교명/전공명)
   function attachAutocomplete(wrapper, type) {
-    // 학교명 자동완성
+    // 학교명
     const schoolInput = wrapper.querySelector('input[name="schoolName"]');
-    const schoolList = wrapper.querySelector('.autocomplete-list');
+    const schoolList = wrapper.querySelector('ul.autocomplete-list');
+
     if (schoolInput && schoolList) {
       let timer;
       schoolInput.addEventListener("input", function () {
@@ -561,11 +560,10 @@ document.addEventListener("DOMContentLoaded", function () {
           schoolList.style.display = "none";
           return;
         }
-
         timer = setTimeout(() => {
           const url = type === "high"
-            ? `/api/school/search?keyword=${encodeURIComponent(keyword)}`
-            : `/api/university/search?keyword=${encodeURIComponent(keyword)}&schoolType=${type}`;
+        	  ? `/api/school/search?keyword=` + encodeURIComponent(keyword)
+        	  : `/api/university/search?keyword=` + encodeURIComponent(keyword) + "&schoolType=" + encodeURIComponent(type);
 
           fetch(url)
             .then(res => res.json())
@@ -590,7 +588,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
-    // 전공명 자동완성 (대학교만)
+    // 전공명 (대학교만)
     if (type !== "high") {
       const majorInput = wrapper.querySelector('input[name="majorName"]');
       const majorList = majorInput?.nextElementSibling;
@@ -604,7 +602,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
           }
           timer = setTimeout(() => {
-            fetch(`/api/major/search?keyword=${encodeURIComponent(keyword)}`)
+        	  fetch("/api/major/search?keyword=" + encodeURIComponent(keyword))
               .then(res => res.json())
               .then(data => {
                 majorList.innerHTML = "";
@@ -628,122 +626,142 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   }
-});
 
-
-
-// 이력서 저장 함수
+  
+//이력서 저장 함수
+//작성완료 버튼 클릭 시 전체 데이터 수집 → 서버로 전송
 document.querySelector('.btn-finish').addEventListener('click', async function () {
+ const resumeData = {
+   name: document.querySelector('#name')?.value || '',
+   birthdate: document.querySelector('#birthdate')?.value || '',
+   phoneNumber: document.querySelector('#phoneNumber')?.value || '',
+   email: document.querySelector('#email')?.value || '',
+   address: document.querySelector('#roadAddress')?.value || '',
+   selfIntroduction: document.querySelector('#selfIntroduction')?.value || '',
+   profile: window.uploadedImageUrl || '',
 
-  // 기본 인적사항 등 단일 필드 수집
-  const resumeData = {
-    name: document.querySelector('#name').value,
-    birthdate: document.querySelector('#birthdate').value,
-    phoneNumber: document.querySelector('#phoneNumber').value,
-    email: document.querySelector('#email').value,
-    address: document.querySelector('#address').value,
-    selfIntroduction: document.querySelector('#selfIntroduction').value,
-    profile: uploadedImageUrl || "", // 프로필 이미지
-    jobGroupId: selectedJobGroupId,  // 선택된 직군
-    jobId: selectedJobId,            // 선택된 직무
-  };
+   jobGroupId: document.querySelector('#jobGroupSelect')?.value || '',
+   jobId: document.querySelector('#jobSelect')?.value || '',
 
-  // 반복 가능한 항목들 수집 (각각 별도 함수로 정의됨)
-  resumeData.schools = collectSchools();
-  resumeData.educations = collectEducations();
-  resumeData.careers = collectCareers();
-  resumeData.certificateIds = collectCertificateIds(); // 자격증 (id 배열)
-  resumeData.tagIds = collectTagIds();                 // 태그 (id 배열)
-  resumeData.portfolios = collectPortfolios();         // 포트폴리오 파일 정보들
+   schools: collectSchools(),
+   careers: collectCareers(),
+   educations: collectEducations(),
+   certificateIds: collectCertificates(),
+   tagIds: collectTags(),
+   portfolios: collectPortfolios()
+ };
 
-  // 서버로 비동기 전송
-  const response = await fetch("/api/resume/save", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(resumeData)
-  });
+ try {
+   const response = await fetch("/api/resume/save", {
+     method: "POST",
+     credentials: "include",
+     headers: { "Content-Type": "application/json" },
+     body: JSON.stringify(resumeData)
+   });
 
-  if (response.ok) {
-    alert("이력서가 저장되었습니다.");
-    location.href = "/resume/management";
-  } else {
-    alert("저장 중 오류가 발생했습니다.");
-  }
+   if (response.ok) {
+     alert("이력서가 저장되었습니다.");
+     location.href = "/resume/management";
+   } else {
+     alert("저장 중 오류가 발생했습니다.");
+   }
+ } catch (err) {
+   console.error("전송 오류", err);
+   alert("저장 실패. 콘솔 로그를 확인해주세요.");
+ }
 });
 
- // 입력한 정보를 배열로 수집 추가기능 함수
- 
- // 모든 학력 정보를 배열로 수집
+
+// 입력한 정보를 배열로 수집 추가기능 함수
+
+// 모든 학력 정보를 배열로 수집
 function collectSchools() {
-    const schools = [];
-    document.querySelectorAll('.school-entry').forEach(entry => {
-        schools.push({
-            sortation: entry.querySelector('select[name="sortation"]').value,
-            schoolName: entry.querySelector('input[name="schoolName"]').value,
-            yearOfGraduation: entry.querySelector('input[name="yearOfGraduation"]').value,
-            status: entry.querySelector('select[name="status"]').value
-        });
-    });
-    return schools;
+  const result = [];
+  document.querySelectorAll('.school-entry').forEach(entry => {
+    const sortation = entry.querySelector('input[name="sortation"]')?.value;
+    const schoolName = entry.querySelector('input[name="schoolName"]')?.value;
+    const year = entry.querySelector('input[name="yearOfGraduation"]')?.value;
+    const status = entry.querySelector('select[name="status"]')?.value;
+
+    if (sortation === "high") {
+      result.push({ sortation, schoolName, yearOfGraduation: year, status });
+    } else {
+      result.push({
+        sortation,
+        schoolName,
+        majorName: entry.querySelector('input[name="majorName"]')?.value,
+        startDate: entry.querySelector('input[name="startDate"]')?.value,
+        endDate: entry.querySelector('input[name="endDate"]')?.value,
+        status
+      });
+    }
+  });
+  return result;
 }
+
 	//모든 교육 정보를 배열로 수집
 function collectEducations() {
-    const educations = [];
-    document.querySelectorAll('.education-entry').forEach(entry => {
-        educations.push({
-            eduInstitution: entry.querySelector('input[name="eduInstitution"]').value,
-            eduName: entry.querySelector('input[name="eduName"]').value,
-            startDate: entry.querySelector('input[name="startDate"]').value,
-            endDate: entry.querySelector('input[name="endDate"]').value
-        });
+  const result = [];
+  document.querySelectorAll('.education-entry').forEach(entry => {
+    result.push({
+      eduName: entry.querySelector('input[name="eduName"]')?.value || '',
+      eduInstitution: entry.querySelector('input[name="eduInstitution"]')?.value || '',
+      startDate: entry.querySelector('input[name="startDate"]')?.value || '',
+      endDate: entry.querySelector('input[name="endDate"]')?.value || '',
+      content: entry.querySelector('textarea')?.value || ''
     });
-    return educations;
+  });
+  return result;
 }
+
 	// 모든 경력 정보를 배열로 수집
 function collectCareers() {
-    const careers = [];
-    document.querySelectorAll('.career-entry').forEach(entry => {
-        careers.push({
-            companyName: entry.querySelector('input[name="companyName"]').value,
-            departmentName: entry.querySelector('input[name="departmentName"]').value,
-            hireYm: entry.querySelector('input[name="hireYm"]').value,
-            resignYm: entry.querySelector('input[name="resignYm"]').value,
-            position: entry.querySelector('input[name="position"]').value,
-            jobTitle: entry.querySelector('input[name="jobTitle"]').value,
-            taskRole: entry.querySelector('input[name="taskRole"]').value,
-            workDescription: entry.querySelector('textarea[name="workDescription"]').value,
-            salary: entry.querySelector('input[name="salary"]').value
-        });
+  const result = [];
+  document.querySelectorAll('.career-entry').forEach(entry => {
+    result.push({
+      companyName: entry.querySelector('input[name="companyName"]')?.value || '',
+      departmentName: entry.querySelector('input[name="departmentName"]')?.value || '',
+      hireYm: entry.querySelector('input[name="hireYm"]')?.value || '',
+      resignYm: entry.querySelector('input[name="resignYm"]')?.value || '',
+      position: entry.querySelector('input[name="position"]')?.value || '',
+      jobTitle: entry.querySelector('input[name="jobTitle"]')?.value || '',
+      taskRole: entry.querySelector('input[name="taskRole"]')?.value || '',
+      workDescription: entry.querySelector('textarea[name="workDescription"]')?.value || '',
+      salary: entry.querySelector('input[name="salary"]')?.value || ''
     });
-    return careers;
+  });
+  return result;
 }
+
 	
 	//모든 자격증 정보를 배열로 수집
 function collectCertificates() {
-    return Array.from(document.querySelectorAll('input[name="certificateId"]'))
-        .map(el => parseInt(el.value));
+  return Array.from(document.querySelectorAll('input[name="certificateId"]'))
+    .map(el => parseInt(el.value));
 }
+
 
 	//모든 스킬 정보를 배열로 수집
 function collectTags() {
-    return Array.from(document.querySelectorAll('input[name="tagId"]'))
-        .map(el => parseInt(el.value));
+  return Array.from(document.querySelectorAll('button.tag-button.selected'))
+    .map(btn => parseInt(btn.dataset.tagId));
 }
+
 
 	//모든 포트폴리오 정보를 배열로 수집
 function collectPortfolios() {
-    const portfolios = [];
-    document.querySelectorAll('.portfolio-entry').forEach(entry => {
-        portfolios.push({
-            fileName: entry.querySelector('input[name="fileName"]').value,
-            storedFileName: entry.querySelector('input[name="storedFileName"]').value,
-            fileExtension: entry.querySelector('input[name="fileExtension"]').value
-        });
-    });
-    return portfolios;
-}
+	  const result = [];
+	  document.querySelectorAll('.portfolio-entry').forEach(entry => {
+	    result.push({
+	      fileName: entry.querySelector('input[name="fileName"]')?.value || '',
+	      storedFileName: entry.querySelector('input[name="storedFileName"]')?.value || '',
+	      fileExtension: entry.querySelector('input[name="fileExtension"]')?.value || ''
+	    });
+	  });
+	  return result;
+	}
 
-
+});
 
 </script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-3fp9tS8p9A2Mq7Qz+S8jfwD+xdgu9T+O+NRZz8N5eA8=" crossorigin="anonymous"></script>
