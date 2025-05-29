@@ -83,6 +83,11 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
     }
 
     @Override
+    public void insertQuestion(JobPostQuestionVo questionVo) {
+        sqlSession.insert(namespace+".insertQuestion", questionVo);
+    }
+
+    @Override
     public void updateJobPostIdByTempKey(int jobPostId,String tempKey) {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("tempKey", tempKey);

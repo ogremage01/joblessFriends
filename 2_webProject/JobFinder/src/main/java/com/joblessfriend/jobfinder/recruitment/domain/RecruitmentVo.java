@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -34,4 +35,8 @@ public class RecruitmentVo {
     private int isContinuous;   //마감
     private Integer maxApplicants;
     //상시채용건 추가필요//
+
+    // 🔽 추가: 사전질문 리스트
+    private List<JobPostQuestionVo> questionList;
+
 }

@@ -172,7 +172,9 @@ public class RecruitmentController {
     @PostMapping("/insert")
     public String insertRecruitment(@ModelAttribute RecruitmentVo recruitmentVo,
                                     @RequestParam("skills") String skills, @RequestParam("welfareList") String welfareList
-                                    ,@RequestParam("tempKey") String tempKey,@RequestParam("jobImgFile") MultipartFile jobImgFile,HttpSession session) {
+                                    ,@RequestParam("tempKey") String tempKey,@RequestParam("jobImgFile") MultipartFile jobImgFile,@RequestParam(value = "question1", required = false) String q1,
+                                    @RequestParam(value = "question2", required = false) String q2,
+                                    @RequestParam(value = "question3", required = false) String q3,HttpSession session) {
         System.out.println("📥 컨트롤러 진입");
         String cleanTempKey = tempKey.trim().replaceAll(",", "");
 
@@ -203,9 +205,16 @@ public class RecruitmentController {
                 })
                 .collect(Collectors.toList());
         try {
+            List<JobPostQuestionVo> questionList = new ArrayList<>();
+            if (q1 != null && !q1.isBlank()) questionList.add(new JobPostQuestionVo(null, null, 1, q1));
+            if (q2 != null && !q2.isBlank()) questionList.add(new JobPostQuestionVo(null, null, 2, q2));
+            if (q3 != null && !q3.isBlank()) questionList.add(new JobPostQuestionVo(null, null, 3, q3));
+
+            recruitmentVo.setQuestionList(questionList);
             recruitmentService.insertRecruitment(recruitmentVo, tagIdList,welfareVoList);
             System.out.println("🔥 생성된 jobPostId = " + recruitmentVo.getJobPostId());
             System.out.println("🔥 생성된 tempKey = " + cleanTempKey);
+
             recruitmentService.updateJobPostIdByTempKey(recruitmentVo.getJobPostId(),cleanTempKey);
             System.out.println("insert 성공");
         } catch (Exception e) {

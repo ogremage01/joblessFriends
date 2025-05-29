@@ -26,6 +26,7 @@ public interface RecruitmentDao {
     void insertJobPostTag(RecruitmentVo recruitmentVo, List<Integer> tagIdList);
     void insertJobPostWelfare(WelfareVo Welfarevo);
     void insertJobPostFile(JobPostFileVo fileVo);
+    void insertQuestion(JobPostQuestionVo questionVo);
     void updateJobPostIdByTempKey(@Param("jobPostId") int jobPostId, @Param("tempKey") String tempKey);
 
 

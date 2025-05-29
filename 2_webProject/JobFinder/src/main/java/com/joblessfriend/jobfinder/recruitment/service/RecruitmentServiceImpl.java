@@ -84,10 +84,19 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             vo.setJobPostId(jobPostId);
             recruitmentDao.insertJobPostWelfare(vo); // 단건 삽입
         }
+        if (recruitmentVo.getQuestionList() != null && !recruitmentVo.getQuestionList().isEmpty()) {
+            for (JobPostQuestionVo questionVo : recruitmentVo.getQuestionList()) {
+                questionVo.setJobPostId(jobPostId); // FK 설정
+                recruitmentDao.insertQuestion(questionVo);
+            }
+        }
+
+
         if (recruitmentVo.getTempKey() != null && !recruitmentVo.getTempKey().isBlank()) {
             recruitmentDao.updateJobPostIdByTempKey( recruitmentVo.getJobPostId(), recruitmentVo.getTempKey());
         }
     }
+
     //업데이트라인 //
     @Override
     @Transactional
