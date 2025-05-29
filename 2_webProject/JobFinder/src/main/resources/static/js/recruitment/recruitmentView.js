@@ -48,7 +48,7 @@ $(document).on('click', '.job-group', function (e) {
                                    value="${item.jobName}"
                                    data-id="${item.jobId}"
                                    data-group="${jobGroupName}">
-                            ${item.jobName}
+                            ${item.jobName}&nbsp; <span>(${item.postCount})</span>
                         </label>
                     `;
                     $('#jobList').append(html);
