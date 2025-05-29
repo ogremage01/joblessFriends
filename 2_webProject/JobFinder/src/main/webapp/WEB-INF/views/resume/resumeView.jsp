@@ -50,7 +50,7 @@
 			<!-- 1행 -->
 			<div class="field-block">
 				<label>이름</label>
-				<input type="text" id="name" placeholder="예시) 홍길동" />
+				<input type="text" id="memberName" placeholder="예시) 홍길동" />
 			</div>
 			<div class="field-block">
 				<label>생년월일</label>
@@ -632,13 +632,13 @@ document.addEventListener("DOMContentLoaded", function () {
 //작성완료 버튼 클릭 시 전체 데이터 수집 → 서버로 전송
 document.querySelector('.btn-finish').addEventListener('click', async function () {
  const resumeData = {
-   name: document.querySelector('#name')?.value || '',
-   birthdate: document.querySelector('#birthdate')?.value || '',
-   phoneNumber: document.querySelector('#phoneNumber')?.value || '',
-   email: document.querySelector('#email')?.value || '',
-   address: document.querySelector('#roadAddress')?.value || '',
-   selfIntroduction: document.querySelector('#selfIntroduction')?.value || '',
-   profile: window.uploadedImageUrl || '',
+	memberName: document.querySelector('#memberName')?.value || '',
+	birthDatee: document.querySelector('#birthdate')?.value || '',
+	phoneNumber: document.querySelector('#phoneNumber')?.value || '',
+	email: document.querySelector('#email')?.value || '',
+	address: document.querySelector('#roadAddress')?.value || '',
+	selfIntroduction: document.querySelector('#selfIntroduction')?.value || '',
+	profile: window.uploadedImageUrl || '',
 
    jobGroupId: document.querySelector('#jobGroupSelect')?.value || '',
    jobId: document.querySelector('#jobSelect')?.value || '',
@@ -670,6 +670,46 @@ document.querySelector('.btn-finish').addEventListener('click', async function (
    alert("저장 실패. 콘솔 로그를 확인해주세요.");
  }
 });
+
+// 미리보기 버튼 클릭 시 이력서 데이터를 세션에 저장 후 미리보기 화면으로 이동
+document.querySelector('.btn-preview').addEventListener('click', async function () {
+  const resumeData = {
+	memberName: document.querySelector('#memberName')?.value || '',
+	birthDate: document.querySelector('#birthdate')?.value || '',
+    phoneNumber: document.querySelector('#phoneNumber')?.value || '',
+    email: document.querySelector('#email')?.value || '',
+    address: document.querySelector('#roadAddress')?.value || '',
+    selfIntroduction: document.querySelector('#selfIntroduction')?.value || '',
+    profile: window.uploadedImageUrl || '',
+
+    jobGroupId: document.querySelector('#jobGroupSelect')?.value || '',
+    jobId: document.querySelector('#jobSelect')?.value || '',
+
+    schools: collectSchools(),
+    careers: collectCareers(),
+    educations: collectEducations(),
+    certificateIds: collectCertificates(),
+    tagIds: collectTags(),
+    portfolios: collectPortfolios()
+  };
+
+  try {
+    const res = await fetch("/api/resume/previewSession", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(resumeData)
+    });
+
+    if (res.ok) {
+      location.href = "/resume/write";
+    } else {
+      alert("미리보기용 세션 저장 실패");
+    }
+  } catch (err) {
+    console.error("미리보기 저장 오류", err);
+  }
+});
+
 
 
 // 입력한 정보를 배열로 수집 추가기능 함수

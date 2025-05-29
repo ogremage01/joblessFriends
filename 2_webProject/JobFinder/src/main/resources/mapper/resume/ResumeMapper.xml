@@ -50,6 +50,13 @@
     
     <!-- 이력서 저장 -->
     <insert id="insertResume" parameterType="com.joblessfriend.jobfinder.resume.domain.ResumeVo">
+    
+    	<selectKey keyProperty="resumeId"
+                   resultType="java.lang.Integer"
+                   order="BEFORE">
+            SELECT RESUME_ID_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
+        
 	    INSERT INTO RESUME (
 	    	RESUME_ID,
 	        MEMBER_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL,
@@ -94,7 +101,11 @@
 	<!-- 교육정보 저장 -->
 	<insert id="insertEducation" parameterType="com.joblessfriend.jobfinder.resume.domain.EducationVo">
 	    INSERT INTO EDUCATION (
-	        RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE
+	        RESUME_ID, 
+	        EDU_INSTITUTION, 
+	        EDU_NAME, 
+	        START_DATE, 
+	        END_DATE
 	    )
 	    VALUES (
 	        #{resumeId}, #{eduInstitution}, #{eduName}, #{startDate}, #{endDate}
@@ -104,8 +115,16 @@
 	<!-- 경력정보 저장 -->
 	<insert id="insertCareer" parameterType="com.joblessfriend.jobfinder.resume.domain.CareerVo">
 	    INSERT INTO CAREER (
-	        RESUME_ID, COMPANY_NAME, DEPARTMENT_NAME, HIRE_YM, RESIGN_YM,
-	        POSITION, JOB_TITLE, TASK_ROLE, WORK_DESCRIPTION, SALARY
+	        RESUME_ID, 
+	        COMPANY_NAME, 
+	        DEPARTMENT_NAME, 
+	        HIRE_YM, 
+	        RESIGN_YM,
+	        POSITION, 
+	        JOB_ID, 
+	        JOB_GROUP_ID, 
+	        DETAIL, 
+	        SALARY
 	    )
 	    VALUES (
 	        #{resumeId}, #{companyName}, #{departmentName}, #{hireYm}, #{resignYm},
@@ -116,7 +135,10 @@
 	<!-- 스킬정보 저장 -->
 	<insert id="insertResumeTag">
 	    INSERT INTO RESUME_TAG (
-	        RESUME_ID, TAG_ID, CREATE_AT, MODIFIED_AT
+	        RESUME_ID, 
+	        TAG_ID, 
+	        CREATE_AT, 
+	        MODIFIED_AT
 	    )
 	    VALUES (
 	        #{resumeId}, #{tagId}, SYSDATE, SYSDATE
@@ -126,7 +148,10 @@
 	<!-- 자격증정보 저장 -->
 	<insert id="insertCertificateResume">
 		INSERT INTO CERTIFICATE_RESUME (
-		RESUME_ID, CERTIFICATE_ID, CREATE_AT, MODIFIED_AT
+		RESUME_ID, 
+		CERTIFICATE_ID, 
+		CREATE_AT, 
+		MODIFIED_AT
 		)
 		VALUES (
 		#{resumeId}, #{certificateId}, SYSDATE, SYSDATE
@@ -136,7 +161,12 @@
 	<!-- 포트폴리오정보 저장 -->
 	<insert id="insertPortfolio" parameterType="com.joblessfriend.jobfinder.resume.domain.PortfolioVo">
 	    INSERT INTO PORTFOLIO (
-	        RESUME_ID, FILE_NAME, STORED_FILE_NAME, FILE_EXTENSION, CREATE_AT, MODIFIED_AT
+	        RESUME_ID, 
+	        FILE_NAME, 
+	        STORED_FILE_NAME, 
+	        FILE_EXTENSION, 
+	        CREATE_AT, 
+	        MODIFIED_AT
 	    )
 	    VALUES (
 	        #{resumeId}, #{fileName}, #{storedFileName}, #{fileExtension}, SYSDATE, SYSDATE
