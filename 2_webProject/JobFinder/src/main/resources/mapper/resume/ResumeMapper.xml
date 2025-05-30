@@ -79,40 +79,44 @@
     
     <!-- 학력정보 저장 -->
     <insert id="insertSchool" parameterType="com.joblessfriend.jobfinder.resume.domain.SchoolVo">
-        INSERT INTO SCHOOL (
-            SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, 
-            YEAR_OF_GRADUATION, STATUS, MAJOR_NAME, START_DATE, END_DATE
-        )
-        VALUES (
-            SCHOOL_ID_SEQ.NEXTVAL, #{resumeId}, #{sortation}, #{schoolName}, 
-            <choose>
-                <when test="yearOfGraduation != null and yearOfGraduation != ''">
-                    #{yearOfGraduation}
-                </when>
-                <otherwise>
-                    NULL
-                </otherwise>
-            </choose>,
-            #{status},
-            #{majorName, jdbcType=VARCHAR},
-            <choose>
-                <when test="startDate != null and startDate != ''">
-                    #{startDate}
-                </when>
-                <otherwise>
-                    NULL
-                </otherwise>
-            </choose>,
-            <choose>
-                <when test="endDate != null and endDate != ''">
-                    #{endDate}
-                </when>
-                <otherwise>
-                    NULL
-                </otherwise>
-            </choose>
-        )
-    </insert>
+    INSERT INTO SCHOOL (
+        SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, 
+        YEAR_OF_GRADUATION, STATUS, MAJOR_NAME, START_DATE, END_DATE
+    )
+    VALUES (
+        SCHOOL_ID_SEQ.NEXTVAL,
+        #{resumeId},
+        #{sortation},
+        #{schoolName},
+        <choose>
+            <when test="yearOfGraduation != null and yearOfGraduation != ''">
+                #{yearOfGraduation}
+            </when>
+            <otherwise>
+                NULL
+            </otherwise>
+        </choose>,
+        #{status},
+        #{majorName, jdbcType=VARCHAR},
+        <choose>
+            <when test="startDate != null">
+                #{startDate, jdbcType=DATE}
+            </when>
+            <otherwise>
+                NULL
+            </otherwise>
+        </choose>,
+        <choose>
+            <when test="endDate != null">
+                #{endDate, jdbcType=DATE}
+            </when>
+            <otherwise>
+                NULL
+            </otherwise>
+        </choose>
+    )
+</insert>
+
     
     <!-- 교육정보 저장 -->
     <insert id="insertEducation" parameterType="com.joblessfriend.jobfinder.resume.domain.EducationVo">
@@ -203,7 +207,7 @@
         SELECT CAREER_ID as careerId, RESUME_ID as resumeId, COMPANY_NAME as companyName, 
                DEPARTMENT_NAME as departmentName, HIRE_YM as hireYm, RESIGN_YM as resignYm,
                POSITION as position, JOB_TITLE as jobTitle, TASK_ROLE as taskRole, 
-               WORK_DESCRIPTION as workDescription, SALARY as salary
+               DETAIL as workDescription, SALARY as salary
         FROM CAREER 
         WHERE RESUME_ID = #{resumeId}
         ORDER BY CAREER_ID

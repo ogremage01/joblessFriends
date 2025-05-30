@@ -33,20 +33,27 @@ public class ResumeParser {
     /**
      * JSON 문자열을 ResumeVo 객체로 변환
      */
-    public ResumeVo parseJsonToResumeVo(String jsonString, int memberId) throws Exception {
-        Map<String, Object> jsonMap = objectMapper.readValue(jsonString, Map.class);
-        return parseMapToResumeVo(jsonMap, memberId);
+    public ResumeVo parseJsonToResumeVo(String jsonString, int memberId) {
+        try {
+            Map<String, Object> jsonMap = objectMapper.readValue(jsonString, Map.class);
+            return parseMapToResumeVo(jsonMap, memberId);
+        } catch (Exception e) {
+            System.err.println("JSON 파싱 오류: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
      * Map 객체를 ResumeVo 객체로 변환
      */
     @SuppressWarnings("unchecked")
-    public ResumeVo parseMapToResumeVo(Map<String, Object> requestMap, int memberId) throws Exception {
+    public ResumeVo parseMapToResumeVo(Map<String, Object> requestMap, int memberId) {
         ResumeVo resumeVo = new ResumeVo();
 
         // 기본 정보 파싱
         resumeVo.setResumeId(getIntValue(requestMap, "resumeId"));
+        resumeVo.setTitle(getStringValue(requestMap, "title"));
         resumeVo.setMemberName(getStringValue(requestMap, "name"));
         resumeVo.setBirthDate(parseDate(getStringValue(requestMap, "birthdate")));
         resumeVo.setPhoneNumber(getStringValue(requestMap, "phoneNumber"));
@@ -88,8 +95,8 @@ public class ResumeParser {
                 schoolVo.setYearOfGraduation(getStringValue(schoolData, "yearOfGraduation"));
                 schoolVo.setStatus(getStringValue(schoolData, "status"));
                 schoolVo.setMajorName(getStringValue(schoolData, "majorName"));
-                schoolVo.setStartDate(getStringValue(schoolData, "startDate"));
-                schoolVo.setEndDate(getStringValue(schoolData, "endDate"));
+                schoolVo.setStartDate(parseYearMonthDate(getStringValue(schoolData, "startDate")));
+                schoolVo.setEndDate(parseYearMonthDate(getStringValue(schoolData, "endDate")));	
                 
                 schoolList.add(schoolVo);
             }
@@ -127,7 +134,7 @@ public class ResumeParser {
     /**
      * 교육 리스트 파싱
      */
-    private List<EducationVo> parseEducationList(List<Map<String, Object>> educationDataList) throws ParseException {
+    private List<EducationVo> parseEducationList(List<Map<String, Object>> educationDataList) {
         List<EducationVo> educationList = new ArrayList<>();
         
         if (educationDataList != null) {
@@ -135,17 +142,14 @@ public class ResumeParser {
                 EducationVo educationVo = new EducationVo();
                 educationVo.setEduName(getStringValue(educationData, "eduName"));
                 educationVo.setEduInstitution(getStringValue(educationData, "eduInstitution"));
+                educationVo.setContent(getStringValue(educationData, "content"));
                 
-                // 날짜 파싱 (yyyy.MM 형식)
+                // 날짜 파싱 (yyyy.MM 형식) - 안전한 파싱
                 String startDateStr = getStringValue(educationData, "startDate");
                 String endDateStr = getStringValue(educationData, "endDate");
                 
-                if (startDateStr != null && !startDateStr.isEmpty()) {
-                    educationVo.setStartDate(yearMonthFormat.parse(startDateStr));
-                }
-                if (endDateStr != null && !endDateStr.isEmpty()) {
-                    educationVo.setEndDate(yearMonthFormat.parse(endDateStr));
-                }
+                educationVo.setStartDate(parseYearMonthDate(startDateStr));
+                educationVo.setEndDate(parseYearMonthDate(endDateStr));
                 
                 educationList.add(educationVo);
             }
@@ -227,11 +231,31 @@ public class ResumeParser {
     /**
      * 문자열 날짜를 Date 객체로 변환 (yyyy-MM-dd 형식)
      */
-    private Date parseDate(String dateString) throws ParseException {
+    private Date parseDate(String dateString) {
         if (dateString == null || dateString.trim().isEmpty()) {
             return null;
         }
-        return dateFormat.parse(dateString.trim());
+        try {
+            return dateFormat.parse(dateString.trim());
+        } catch (ParseException e) {
+            System.err.println("날짜 파싱 오류 (yyyy-MM-dd): " + dateString + " - " + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 년월 형식 문자열을 Date 객체로 변환 (yyyy.MM 형식)
+     */
+    private Date parseYearMonthDate(String dateString) {
+        if (dateString == null || dateString.trim().isEmpty()) {
+            return null;
+        }
+        try {
+            return yearMonthFormat.parse(dateString.trim());
+        } catch (ParseException e) {
+            System.err.println("날짜 파싱 오류 (yyyy.MM): " + dateString + " - " + e.getMessage());
+            return null;
+        }
     }
 
     /**

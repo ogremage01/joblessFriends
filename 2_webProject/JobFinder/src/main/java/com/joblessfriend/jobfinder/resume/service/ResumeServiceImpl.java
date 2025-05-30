@@ -46,7 +46,28 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public ResumeVo getResumeWithAllDetails(int resumeId) {
-        return resumeDao.getResumeWithAllDetails(resumeId);
+        System.out.println(">>> [ResumeService] getResumeWithAllDetails 호출, resumeId: " + resumeId);
+        
+        try {
+            ResumeVo resume = resumeDao.getResumeWithAllDetails(resumeId);
+            
+            if (resume != null) {
+                System.out.println(">>> [ResumeService] 이력서 조회 성공, memberName: " + resume.getMemberName());
+                System.out.println(">>> [ResumeService] 학력 수: " + (resume.getSchoolList() != null ? resume.getSchoolList().size() : 0));
+                System.out.println(">>> [ResumeService] 경력 수: " + (resume.getCareerList() != null ? resume.getCareerList().size() : 0));
+                System.out.println(">>> [ResumeService] 교육 수: " + (resume.getEducationList() != null ? resume.getEducationList().size() : 0));
+                System.out.println(">>> [ResumeService] 자격증 수: " + (resume.getCertificateList() != null ? resume.getCertificateList().size() : 0));
+                System.out.println(">>> [ResumeService] 포트폴리오 수: " + (resume.getPortfolioList() != null ? resume.getPortfolioList().size() : 0));
+            } else {
+                System.out.println(">>> [ResumeService] 이력서를 찾을 수 없음");
+            }
+            
+            return resume;
+        } catch (Exception e) {
+            System.err.println(">>> [ResumeService] 이력서 조회 중 오류: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Override

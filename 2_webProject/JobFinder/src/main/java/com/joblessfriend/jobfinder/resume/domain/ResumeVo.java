@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 public class ResumeVo {
 
+		private String title;
 	    private int resumeId;
 	    private String memberName;
 	    private Date birthDate;
