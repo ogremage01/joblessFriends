@@ -12,10 +12,8 @@ public class ResumeSaveRequestVo {
 	private String title;
 	
 	// 인적사항
-	@JsonProperty("name")
 	private String memberName;
 	
-	@JsonProperty("birthdate")
     private Date birthDate;
     private String phoneNumber;
     private String email;

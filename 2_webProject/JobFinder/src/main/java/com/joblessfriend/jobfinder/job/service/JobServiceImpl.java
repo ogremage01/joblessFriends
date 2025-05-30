@@ -31,4 +31,13 @@ public class JobServiceImpl implements JobService{
 	        // TODOAuto-generated method stub
 	        return jobDao.selectJobsByGroupId(jobGroupId);
 	    }
+
+		@Override
+		public String getJobNameById(int jobId) {
+			// TODO Auto-generated method stub
+			System.out.println(">>>>> jobId 전달됨: " + jobId);
+		    String name = jobDao.getJobNameById(jobId);
+		    System.out.println(">>>>> 가져온 직군이름: " + name);
+		    return name;
+		}
 }

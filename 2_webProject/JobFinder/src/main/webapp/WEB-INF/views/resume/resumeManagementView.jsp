@@ -95,7 +95,7 @@
 											<div class="resume-meta resume-skill">
 												<span>스킬</span>
 											</div>
-											<div class="resume-date">최종수정일 ${resume.birthDate}</div>
+											<div class="resume-date">최종수정일 ${resume.modifyDate}</div>
 										</div>
 
 										<div class="button-wrapper">

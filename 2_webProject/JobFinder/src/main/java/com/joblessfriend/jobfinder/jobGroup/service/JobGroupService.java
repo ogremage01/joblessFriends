@@ -18,4 +18,5 @@ public interface JobGroupService {
 	
 	List<JobGroupVo> selectAllJobGroupsForAjax();
 
+	String getJobGroupNameById(int jobGroupId);
 }

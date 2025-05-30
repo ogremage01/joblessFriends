@@ -14,5 +14,11 @@
 		    FROM JOB_GROUP
 		    ORDER BY JOB_GROUP_ID ASC
 		</select>
+		
+		<select id="getJobGroupNameById" parameterType="int" resultType="String">
+			SELECT JOB_GROUP_NAME
+			FROM JOB_GROUP
+			WHERE JOB_GROUP_ID = #{jobGroupId}
+		</select>
 
 	</mapper> 

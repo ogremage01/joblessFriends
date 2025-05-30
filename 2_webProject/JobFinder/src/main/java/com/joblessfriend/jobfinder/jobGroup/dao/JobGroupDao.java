@@ -17,4 +17,5 @@ public interface JobGroupDao {
 	
 	List<JobGroupVo> selectAllJobGroupsForAjax();
 
+	String getJobGroupNameById(int jobGroupId);
 }

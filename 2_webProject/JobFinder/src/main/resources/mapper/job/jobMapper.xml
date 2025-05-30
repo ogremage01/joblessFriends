@@ -21,9 +21,15 @@
 	    </select>
 	    
 	    <select id="getJobById" parameterType="int" resultMap="jobResultMap">
-         SELECT job_id, job_name
+         SELECT JOB_ID, JOB_NAME
          FROM Job
-         WHERE job_id = #{jobPostId}
-      </select>
+         WHERE JOB_ID = #{jobPostId}
+      	</select>
+      
+		<select id="getJobNameById" parameterType="int" resultType="String">
+			SELECT JOB_NAME
+			FROM JOB
+			WHERE JOB_ID = #{jobId}
+		</select>
 
 </mapper>

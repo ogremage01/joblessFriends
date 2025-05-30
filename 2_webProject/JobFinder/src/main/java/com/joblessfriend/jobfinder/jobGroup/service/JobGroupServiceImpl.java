@@ -44,7 +44,15 @@ public class JobGroupServiceImpl implements JobGroupService{
 		// TODO Auto-generated method stub
 		return jobGroupDao.selectAllJobGroupsForAjax();
 	}
-	
+
+	@Override
+	public String getJobGroupNameById(int jobGroupId) {
+		// TODO Auto-generated method stub
+		System.out.println(">>>>> jobGroupId 전달됨: " + jobGroupId);
+	    String name = jobGroupDao.getJobGroupNameById(jobGroupId);
+	    System.out.println(">>>>> 가져온 직군이름: " + name);
+	    return name;
+	}
 
 
 }
