@@ -43,11 +43,7 @@
 		
 	<!-- 	게시글 리스트 부분 -->
 		<div>
-			<div class="moveTo">
-				<div class='selectedPage'>커뮤니티 게시판</div>
-				<span>|</span>
-				<div onclick="moveNotice()">공지 사항</div>
-			</div>
+
 			
 			<!-- 공지사항 항목 뜨는 부분 -->	
 <!-- 			<div id='notice' class='boxStyle ' onclick="moveNoticePage(this)">
@@ -169,9 +165,7 @@
 		
 	}
 	
-	function moveNotice(){
-		location.href='./community/notice';
-	}
+
 </script>
 
 </html>

@@ -80,8 +80,7 @@ blockquote p {
 							</div>
 						</div>
 
-						<div id="contentText">
-							<c:out value="${contentHtml}" escapeXml="false" />
+						<div id="contentText"><c:out value="${contentHtml}" escapeXml="false" />
 						</div>
 
 						<div id="bottomSide">
@@ -115,9 +114,14 @@ blockquote p {
 			</div>
 		</div>
 	</div>
+	
+	<form id='pagingForm' action="/community" method='get'>
+		<input type="hidden" name="page" id="pageInput">
+		<input type="hidden" name="keyword" id="keywordInput">
+	</form>
 
 
-	<jsp:include page="/WEB-INF/views/community/topBar.jsp"/>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script src="/js/community/communityDetail.js"></script>
 </body>

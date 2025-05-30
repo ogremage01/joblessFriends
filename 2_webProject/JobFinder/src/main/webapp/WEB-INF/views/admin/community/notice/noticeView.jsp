@@ -64,7 +64,7 @@
 								class="delPost" name="delete" value="${noticeVo.noticeId}"></td>
 							<td>${noticeVo.noticeId}</td>
 							<td>${noticeVo.noticeCategory.noticeCategoryContent}</td>
-							<td><a href="#">${noticeVo.title}</a></td>
+							<td><a href="/community/notice/detail?no=${noticeVo.noticeId}">${noticeVo.title}</a></td>
 							<td><fmt:formatDate value="${noticeVo.createAt}" pattern="yyyy-MM-dd" /></td>
 							<td>${noticeVo.views}</td>
 							<td><button id="modi_${noticeVo.noticeId}" value="${noticeVo.noticeId}" onclick="moveUpdateNotice(${noticeVo.noticeId})">수정</button></td>
@@ -189,8 +189,12 @@
 	    if(noticeKeywordVal != null || noticeKeywordVal != ""){
 	        
 	        location.href=`/admin/community/notice?keyword=\${noticeKeywordVal}`;
+	        return;
 	        
-	    } 
+	    } else{
+	    	location.href=`/admin/community/notice`;
+	    	return;
+	    }
 	    
 	});
 	

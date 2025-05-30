@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
 	crossorigin="anonymous">
 	
 </script>
+
 <head>
 <link rel="stylesheet" href="/css/community/communityCommonStyle.css">
 <link rel="stylesheet" href="/css/community/communitySideStyle.css">
@@ -71,14 +73,14 @@
 					<div id='boxTextWrap'>
 						<div>
 							<p>관리자님 환영합니다.</p>
-							<button class='moveBtn' onclick="moveAdmin()">
+							<button class='moveBtn' onclick="moveAdminPost()">
 								<svg xmlns="http://www.w3.org/2000/svg" width="200" height="30"
 									fill="currentColor" class="bi bi-pencil-square"
 									viewBox="0 0 100 16">
 								  <text x="2" y="13" font-size="12">게시판 관리 페이지</text>
 								</svg>
 							</button>
-							<button class='moveBtn' onclick="moveAdmin()">
+							<button class='moveBtn' onclick="moveAdminNotice()">
 
 								<svg xmlns="http://www.w3.org/2000/svg" width="200" height="30"
 									fill="currentColor" class="bi bi-pencil-square"
@@ -126,20 +128,57 @@
 		</button>
 	</div>
 </form>
+
+<c:set var="uri" value="${pageContext.request.requestURI}" />
+<c:choose>
+	<c:when test="${fn:contains(uri, '/notice')}">
+		<div style="width: 250px;display: flex;gap: 20px; margin-top: 10px; text-align: center;">
+			<!-- 공지사항이 현재 페이지일 때 -->
+			<div onclick="moveCommunity()">커뮤니티 게시판</div>
+			<span>|</span>
+			<div class="selectedPage">공지 사항</div>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div style="width: 250px;display: flex;gap: 20px; margin-top: 10px; text-align: center;">
+			<!-- 커뮤니티가 현재 페이지일 때 -->
+			<div class="selectedPage">커뮤니티 게시판</div>
+			<span>|</span>
+			<div onclick="moveNotice()">공지 사항</div>
+		</div>
+	</c:otherwise>
+</c:choose>
 <script type="text/javascript">
 	function sendInfo()
 	{
 		const keyword = $('#searchStr').val();
+		if(keyword==null || keyword==""){
+			location.href="/community";
+			return;
+		}
+		
 		$('#pageInput').val(1); // 검색 시 첫 페이지로 초기화
 		$('#keywordInput').val(keyword);
 		$('#pagingForm').submit();
+		
 
 	}
 	function moveLogin(){
 		location.href="/auth/login";
 	}
-	function moveAdmin(){
-		location.href="/admin";
+	function moveAdminPost(){
+		location.href="/admin/community/post";
+	}
+	function moveAdminNotice(){
+		location.href="/admin/community/notice";
+	}
+	
+	function moveNotice(){
+		location.href='./community/notice';
+	}
+	
+	function moveCommunity(){
+		location.href='/community';
 	}
 </script>
 

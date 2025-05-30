@@ -171,7 +171,11 @@
 	    if(communityKeywordVal != null || communityKeywordVal != ""){
 	        
 	        location.href=`/admin/community/post?keyword=\${communityKeywordVal}`;
+	        return;
 	        
+	    }else{
+	    	 location.href=`/admin/community/post`;
+	    	 return;
 	    }
 	    
 	    
