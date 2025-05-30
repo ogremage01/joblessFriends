@@ -15,7 +15,7 @@ public class JobDaoImpl implements JobDao {
     @Autowired
     private SqlSession sqlSession;
     
-    private static final String namespace = "comjoblessfriend.jobfinder.job.dao.JobDao.";
+    private static final String namespace = "com.joblessfriend.jobfinder.job.dao.JobDao.";
 
 
     @Override
