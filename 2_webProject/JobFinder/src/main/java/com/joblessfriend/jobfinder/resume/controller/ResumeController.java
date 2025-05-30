@@ -1,4 +1,3 @@
-
 package com.joblessfriend.jobfinder.resume.controller;
 
 import java.io.File;
@@ -29,6 +28,8 @@ import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 import com.joblessfriend.jobfinder.resume.parser.ResumeParser;
 import com.joblessfriend.jobfinder.resume.service.ResumeService;
+import com.joblessfriend.jobfinder.jobGroup.service.JobGroupService;
+import com.joblessfriend.jobfinder.job.service.JobService;
 import com.joblessfriend.jobfinder.util.file.FileUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,6 +48,15 @@ public class ResumeController {
 	@Autowired
 	private ResumeParser resumeParser;
 	
+	@Autowired
+	private JobGroupService jobGroupService;
+	
+	@Autowired
+	private JobService jobService;
+	
+	@Value("${file.upload.resume.maxSize:10485760}") // 10MB 기본값
+	private long maxFileSize;
+	
 	// ========== JSP 페이지 반환 메서드들 ==========
 	
 	//이력서 폼으로 이동 (신규 작성 & 수정 통합)
@@ -59,6 +69,15 @@ public class ResumeController {
 	    if (loginUser == null) {
 	        return "redirect:/auth/login";
 	    }
+	    
+	    // 직군/직무 목록을 모델에 추가 (신규, 수정 모두)
+	    model.addAttribute("jobGroupList", jobGroupService.selectAllJobGroupsForAjax());
+	    // 모든 직무 목록 추가 (업데이트 시 기존 선택된 직무 표시용)
+	    List<com.joblessfriend.jobfinder.job.domain.JobVo> allJobs = new ArrayList<>();
+	    jobGroupService.selectAllJobGroupsForAjax().forEach(group -> {
+	        allJobs.addAll(jobService.selectJobsByGroupId(group.getJobGroupId()));
+	    });
+	    model.addAttribute("jobList", allJobs);
 	    
 	    // 수정 모드인 경우 이력서 데이터 조회
 	    if (resumeId != null && resumeId > 0) {

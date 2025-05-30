@@ -97,33 +97,13 @@
 	</div>
 
 
-      <!-- 희망직무 -->
-	<section class="section-block" id="section-job">
-		<h2>희망직무</h2>
-		<div class="grid-2">
-			<div class="field-block">
-				<label>직군</label>
-				<select id="jobGroupSelect">
-					<option value="">직군 선택</option>
-				</select>
-			</div>
-				<div class="field-block">
-				<label>직무</label>
-				<select id="jobSelect">
-					<option value="">직무 선택</option>
-				</select>
-			</div>
-		</div>
-	</section>
+
       
      <!-- 스킬 -->
 	<section class="section-block" id="section-skill">
 		<h2 class="section-title">스킬</h2>
-			<p id="selectedJobGroupLabel" class="selected-job-group-label" style="display: none;"></p>
-			
-		<div id="skillContainer" class="tag-select">
-			
-		</div>
+		<p id="selectedJobGroupLabel" class="selected-job-group-label" style="display: none;"></p>
+		<div id="skillContainer" class="tag-select"></div>
 	</section>
 
 	<section class="section-block" id="section-edu">
@@ -234,20 +214,31 @@
 							<label>퇴사년월</label>
 							<input type="text" name="resignYm" placeholder="예시) 2025.04" value="${career.resignYm}" />
 						</div>
-						<div class="field-block">
-							<label>직급/직책</label>
-							<input type="text" name="position" placeholder="직급/직책을 입력해주세요" value="${career.position}" />
-						</div>
+						
 						<div class="field-block">
 							<label>담당직군</label>
-							<input type="text" name="jobTitle" placeholder="담당직군을 입력해주세요" value="${career.jobTitle}" />
+							<select name="careerJobGroupSelect">
+								<option value="">직군 선택</option>
+								<c:forEach var="group" items="${jobGroupList}">
+									<option value="${group.jobGroupId}" <c:if test="${career.jobGroupId == group.jobGroupId}">selected</c:if>>${group.jobGroupName}</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="field-block">
+							<label>담당직무</label>
+							<select name="careerJobSelect">
+								<option value="">직무 선택</option>
+								<c:forEach var="job" items="${jobList}">
+									<option value="${job.jobId}" <c:if test="${career.jobId == job.jobId}">selected</c:if>>${job.jobName}</option>
+								</c:forEach>
+							</select>
 						</div>
 					</div>
 					
 					<div class="grid-2">
-						<div class="field-block">
-							<label>담당직무</label>
-							<input type="text" name="taskRole" placeholder="담당직무를 입력해주세요" value="${career.taskRole}" />
+					<div class="field-block">
+							<label>직급/직책</label>
+							<input type="text" name="position" placeholder="직급/직책을 입력해주세요" value="${career.position}" />
 						</div>
 						<div class="field-block">
 							<label>연봉 (만원)</label>
@@ -337,7 +328,6 @@
 							<input type="text" name="acquisitionDate" placeholder="예시) 2025.04" value="<fmt:formatDate value='${certificate.acquisitionDate}' pattern='yyyy.MM'/>" />
 						</div>
 					</div>
-					<input type="hidden" name="certificateId" value="${certificate.certificateId}" />
 				</div>
 			</c:forEach>
 		</div>
@@ -378,17 +368,13 @@
 	<jsp:include page="../common/footer.jsp" />
 	
 <!-- 서버 데이터를 JavaScript로 전달 -->
-<script>
-// 수정 모드 설정
-window.isEditMode = true;
-window.currentResumeId = ${resumeData.resumeId};
-window.uploadedImageUrl = '${resumeData.profile}' || '';
+<c:set var="jsResumeId" value="${resumeData.resumeId != null ? resumeData.resumeId : 0}"/>
+<c:set var="jsProfile" value="${resumeData.profile != null ? resumeData.profile : ''}"/>
 
-// 기존 이력서 데이터 전달
-window.resumeData = {
-  jobGroupId: ${resumeData.jobGroupId > 0 ? resumeData.jobGroupId : 0},
-  jobId: ${resumeData.jobId > 0 ? resumeData.jobId : 0}
-};
+<script>
+window.isEditMode = true;
+window.currentResumeId = '${jsResumeId}';
+window.uploadedImageUrl = '${jsProfile}';
 
 // 프로필 이미지 초기화
 document.addEventListener('DOMContentLoaded', function() {

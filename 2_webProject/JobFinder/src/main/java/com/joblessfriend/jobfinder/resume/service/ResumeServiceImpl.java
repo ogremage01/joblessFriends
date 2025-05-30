@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.joblessfriend.jobfinder.member.dao.MemberDao;
 import com.joblessfriend.jobfinder.resume.dao.ResumeDao;
 import com.joblessfriend.jobfinder.resume.domain.CareerVo;
+import com.joblessfriend.jobfinder.resume.domain.CertificateResumeVo;
 import com.joblessfriend.jobfinder.resume.domain.CertificateVo;
 import com.joblessfriend.jobfinder.resume.domain.EducationVo;
 import com.joblessfriend.jobfinder.resume.domain.PortfolioVo;
@@ -183,10 +184,10 @@ public class ResumeServiceImpl implements ResumeService {
         
         // 5. 자격증 정보 저장
         if (resumeVo.getCertificateList() != null && !resumeVo.getCertificateList().isEmpty()) {
-            for (CertificateVo certificate : resumeVo.getCertificateList()) {
-                if (certificate.getCertificateId() > 0) {
-                    resumeDao.insertCertificateResume(resumeId, (long) certificate.getCertificateId());
-                    System.out.println(">>> [ResumeService] 자격증 정보 저장: " + certificate.getCertificateId());
+            for (CertificateResumeVo certificate : resumeVo.getCertificateList()) {
+                if (certificate.getCertificateResumeId() > 0) {
+                    resumeDao.insertCertificateResume(certificate);
+                    System.out.println(">>> [ResumeService] 자격증 정보 저장: " + certificate.getCertificateResumeId());
                 }
             }
         }

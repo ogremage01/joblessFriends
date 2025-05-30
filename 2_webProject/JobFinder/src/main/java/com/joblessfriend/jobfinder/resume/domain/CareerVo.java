@@ -9,14 +9,14 @@ import lombok.Setter;
 @Getter
 public class CareerVo {
 	private int resumeId; // 이력서 ID참조용
-    private String companyName;
-    private String departmentName;
-    private String hireYm;
-    private String resignYm;
-    private String position;
-    private String jobTitle;
-    private String taskRole;           // 담당직무 (간략)
+    private String companyName; // 회사명
+    private String departmentName;// 부서명
+    private String hireYm;// 입사일자
+    private String resignYm;// 퇴사일자
+    private String position;// 직급
+    private int jobGroupId; // 직군 ID
+    private int jobId; // 직무 ID            
     private String workDescription;    // textarea 상세
-    private String salary;
+    private String salary;// 연봉
     
 }

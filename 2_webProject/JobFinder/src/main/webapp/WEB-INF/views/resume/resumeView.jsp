@@ -91,26 +91,6 @@
 			</div>
 		</div>
 
-
-		<!-- 희망직무 -->
-		<section class="section-block" id="section-job">
-			<h2>희망직무</h2>
-			<div class="grid-2">
-				<div class="field-block">
-					<label>직군</label>
-					<select id="jobGroupSelect">
-						<option value="">직군 선택</option>
-					</select>
-				</div>
-				<div class="field-block">
-					<label>직무</label>
-					<select id="jobSelect">
-						<option value="">직무 선택</option>
-					</select>
-				</div>
-			</div>
-		</section>
-
 		<!-- 스킬 -->
 		<section class="section-block" id="section-skill">
 			<h2 class="section-title">스킬</h2>

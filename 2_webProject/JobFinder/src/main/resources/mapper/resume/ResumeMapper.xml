@@ -15,14 +15,14 @@
 		<result column="PROFILE" property="profile" />
 		<result column="CREATE_AT" property="createDate" javaType="java.util.Date" />
 		<result column="MODIFIED_AT" property="modifyDate" javaType="java.util.Date" />
-		<result column="JOB_GROUP_ID" property="jobGroupId" />
-		<result column="JOB_ID" property="jobId" />
+	<!-- 	<result column="JOB_GROUP_ID" property="jobGroupId" />
+		<result column="JOB_ID" property="jobId" /> -->
 	</resultMap>
 	
 	<!-- 조회 -->
 	<select id="findResumesByMemberId" resultMap="ResumeResultMap">
         SELECT RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS, 
-               SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT, JOB_GROUP_ID, JOB_ID    
+               SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT    
         FROM RESUME
         WHERE MEMBER_ID = #{memberId}
         ORDER BY RESUME_ID DESC
@@ -30,7 +30,7 @@
 
 	<select id="getResumeByResumeId" resultMap="ResumeResultMap">
         SELECT RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS, 
-               SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT, JOB_GROUP_ID, JOB_ID    
+               SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT    
         FROM RESUME
         WHERE RESUME_ID = #{resumeId}
     </select>
@@ -58,7 +58,7 @@
         INSERT INTO RESUME (
             RESUME_ID, MEMBER_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL,
             POSTAL_CODE_ID, ADDRESS, SELF_INTRODUCTION, PROFILE,
-            JOB_GROUP_ID, JOB_ID, CREATE_AT, MODIFIED_AT
+             CREATE_AT, MODIFIED_AT
         )
         VALUES (
             #{resumeId},
@@ -71,8 +71,6 @@
             #{address, jdbcType=VARCHAR},
             #{selfIntroduction, jdbcType=VARCHAR},
             #{profile, jdbcType=VARCHAR},
-            #{jobGroupId, jdbcType=INTEGER},
-            #{jobId, jdbcType=INTEGER},
             SYSDATE, SYSDATE
         )
     </insert>
@@ -133,13 +131,28 @@
     <insert id="insertCareer" parameterType="com.joblessfriend.jobfinder.resume.domain.CareerVo">
         INSERT INTO CAREER (
             CAREER_ID, RESUME_ID, COMPANY_NAME, DEPARTMENT_NAME, HIRE_YM, RESIGN_YM,
-            POSITION, JOB_TITLE, TASK_ROLE, WORK_DESCRIPTION, SALARY
+            POSITION, JOB_GROUP_ID, JOB_ID, DETAIL, SALARY
         )
         VALUES (
             CAREER_ID_SEQ.NEXTVAL, #{resumeId}, #{companyName}, #{departmentName}, 
-            #{hireYm, jdbcType=VARCHAR}, #{resignYm, jdbcType=VARCHAR},
-            #{position, jdbcType=VARCHAR}, #{jobTitle, jdbcType=VARCHAR}, 
-            #{taskRole, jdbcType=VARCHAR}, #{workDescription, jdbcType=VARCHAR}, 
+            <choose>
+                <when test="hireYm != null and hireYm != ''">
+                    TO_DATE(#{hireYm}, 'YYYY.MM')
+                </when>
+                <otherwise>
+                    NULL
+                </otherwise>
+            </choose>,
+            <choose>
+                <when test="resignYm != null and resignYm != ''">
+                    TO_DATE(#{resignYm}, 'YYYY.MM')
+                </when>
+                <otherwise>
+                    NULL
+                </otherwise>
+            </choose>,
+            #{position, jdbcType=VARCHAR}, #{jobGroupId}, 
+            #{jobId}, #{workDescription, jdbcType=VARCHAR}, 
             #{salary, jdbcType=VARCHAR}
         )
     </insert>
@@ -155,12 +168,12 @@
     </insert>
     
     <!-- 자격증정보 저장 -->
-    <insert id="insertCertificateResume">
+    <insert id="insertCertificateResume" parameterType="com.joblessfriend.jobfinder.resume.domain.CertificateResumeVo">
         INSERT INTO CERTIFICATE_RESUME (
-            CERTIFICATE_RESUME_ID, RESUME_ID, CERTIFICATE_ID, CREATE_AT, MODIFIED_AT
+            CERTIFICATE_RESUME_ID, RESUME_ID, CERTIFICATE_NAME, ISSUING_AUTHORITY, ACQUISITION_DATE
         )
         VALUES (
-            CERTIFICATE_RESUME_ID_SEQ.NEXTVAL, #{resumeId}, #{certificateId}, SYSDATE, SYSDATE
+            CERTIFICATE_RESUME_ID_SEQ.NEXTVAL, #{resumeId}, #{certificateName}, #{issuingAuthority}, #{acquisitionDate}
         )
     </insert>    
     
@@ -186,8 +199,6 @@
             ADDRESS = #{address, jdbcType=VARCHAR},
             SELF_INTRODUCTION = #{selfIntroduction, jdbcType=VARCHAR},
             PROFILE = #{profile, jdbcType=VARCHAR},
-            JOB_GROUP_ID = #{jobGroupId, jdbcType=INTEGER},
-            JOB_ID = #{jobId, jdbcType=INTEGER},
             MODIFIED_AT = SYSDATE
         WHERE RESUME_ID = #{resumeId}
           AND MEMBER_ID = #{memberId}
@@ -205,8 +216,10 @@
     
     <select id="getCareersByResumeId" resultType="com.joblessfriend.jobfinder.resume.domain.CareerVo">
         SELECT CAREER_ID as careerId, RESUME_ID as resumeId, COMPANY_NAME as companyName, 
-               DEPARTMENT_NAME as departmentName, HIRE_YM as hireYm, RESIGN_YM as resignYm,
-               POSITION as position, JOB_TITLE as jobTitle, TASK_ROLE as taskRole, 
+               DEPARTMENT_NAME as departmentName, 
+               TO_CHAR(HIRE_YM, 'YYYY.MM') as hireYm, 
+               TO_CHAR(RESIGN_YM, 'YYYY.MM') as resignYm,
+               POSITION as position, JOB_GROUP_ID as jobGroupId, JOB_ID as jobId, 
                DETAIL as workDescription, SALARY as salary
         FROM CAREER 
         WHERE RESUME_ID = #{resumeId}
@@ -230,9 +243,10 @@
         ORDER BY PORTFOLIO_ID
     </select>
     
-    <select id="getCertificateIdsByResumeId" resultType="Integer">
-        SELECT CERTIFICATE_ID
-        FROM CERTIFICATE_RESUME 
+    <select id="getCertificateByResumeId" resultType="com.joblessfriend.jobfinder.resume.domain.CertificateResumeVo">
+        SELECT CERTIFICATE_NAME as certificateName, ACQUISITION_DATE as acquisitionDate,
+         CERTIFICATE_RESUME_ID as certificateResumeId, ISSUING_AUTHORITY as issuingAuthority
+        FROM CERTIFICATE_RESUME
         WHERE RESUME_ID = #{resumeId}
         ORDER BY CERTIFICATE_RESUME_ID
     </select>

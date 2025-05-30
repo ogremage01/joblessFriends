@@ -9,12 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.joblessfriend.jobfinder.resume.domain.CareerVo;
-import com.joblessfriend.jobfinder.resume.domain.EducationVo;
-import com.joblessfriend.jobfinder.resume.domain.PortfolioVo;
-import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
-import com.joblessfriend.jobfinder.resume.domain.SchoolVo;
-
 @Repository
 class ResumeDaoImpl implements ResumeDao{
 	
@@ -30,12 +24,10 @@ class ResumeDaoImpl implements ResumeDao{
 
     @Override
     public void deleteResumeById(int memberId, int resumeId) {
-        sqlSession.delete(namespace + ".deleteResumeById",
-            new java.util.HashMap<String, Object>() {{
-                put("memberId", memberId);
-                put("resumeId", resumeId);
-            }}
-        );
+    	Map<String, Object> param = new HashMap<>();
+    	param.put("memberId", memberId);
+        param.put("resumeId", resumeId);
+        sqlSession.delete(namespace + ".deleteResumeById", param);
     }
 
 	@Override
@@ -89,13 +81,9 @@ class ResumeDaoImpl implements ResumeDao{
                 
                 // 자격증 ID 리스트를 CertificateVo 리스트로 변환
                 System.out.println(">>> [ResumeDaoImpl] 자격증 정보 조회...");
-                List<Integer> certificateIds = getCertificateIdsByResumeId(resumeId);
-                List<CertificateVo> certificateList = new java.util.ArrayList<>();
-                for (Integer certId : certificateIds) {
-                    CertificateVo certVo = new CertificateVo();
-                    certVo.setCertificateId(certId);
-                    certificateList.add(certVo);
-                }
+                List<CertificateResumeVo> certificateList = getCertificateByResumeId(resumeId);
+                 
+
                 resume.setCertificateList(certificateList);
                 System.out.println(">>> [ResumeDaoImpl] 자격증 정보 " + certificateList.size() + "개 조회 완료");
                 
@@ -133,8 +121,8 @@ class ResumeDaoImpl implements ResumeDao{
     }
 
     @Override
-    public List<Integer> getCertificateIdsByResumeId(int resumeId) {
-        return sqlSession.selectList(namespace + ".getCertificateIdsByResumeId", resumeId);
+    public List<CertificateResumeVo> getCertificateByResumeId(int resumeId) {
+        return sqlSession.selectList(namespace + ".getCertificateByResumeId", resumeId);
     }
 
 	@Override
@@ -197,11 +185,9 @@ class ResumeDaoImpl implements ResumeDao{
     }
 
 	@Override
-	public void insertCertificateResume(int resumeId, Long certificateId) {
-		Map<String, Object> param = new HashMap<>();
-	    param.put("resumeId", resumeId);
-	    param.put("certificateId", certificateId);
-	    sqlSession.insert(namespace + ".insertCertificateResume", param);
+	public void insertCertificateResume(CertificateResumeVo certificateResumeVo) {
+		
+	    sqlSession.insert(namespace + ".insertCertificateResume", certificateResumeVo);
 	}
 
     @Override
