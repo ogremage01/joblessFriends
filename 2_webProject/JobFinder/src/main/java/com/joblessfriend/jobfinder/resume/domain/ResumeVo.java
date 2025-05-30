@@ -1,6 +1,7 @@
 package com.joblessfriend.jobfinder.resume.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +25,8 @@ public class ResumeVo {
 	    private int jobGroupId;
 	    private int jobId;
 	    
+	    
+	    private List<CareerVo> careers;
 	    // getter, setter
 	    
 }

@@ -14,20 +14,28 @@ public class JobDaoImpl implements JobDao {
 
     @Autowired
     private SqlSession sqlSession;
+    
+    private static final String namespace = "comjoblessfriend.jobfinder.job.dao.JobDao.";
+
 
     @Override
     public JobVo getJobById(int jobPostId) {
-        return sqlSession.selectOne("com.joblessfriend.jobfinder.job.dao.JobDao.getJobById", jobPostId);
+        return sqlSession.selectOne(namespace + "getJobById", jobPostId);
 
     }
     @Override
     public JobVo getJobByIdForRecruitment(int jobPostId) {
-        return sqlSession.selectOne("com.joblessfriend.jobfinder.job.dao.JobDao.getJobByIdForRecruitment", jobPostId);
+        return sqlSession.selectOne(namespace + "getJobByIdForRecruitment", jobPostId);
 
     }
     @Override
     public List<JobVo> selectJobsByGroupId(int jobGroupId) {
         // TODOAuto-generated method stub
-        return sqlSession.selectList("com.joblessfriend.jobfinder.job.dao.JobDao.selectJobsByGroupId", jobGroupId);
+        return sqlSession.selectList(namespace + "selectJobsByGroupId", jobGroupId);
     }
+	@Override
+	public String getJobNameById(int jobId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + "getJobNameById", jobId);
+	}
 }

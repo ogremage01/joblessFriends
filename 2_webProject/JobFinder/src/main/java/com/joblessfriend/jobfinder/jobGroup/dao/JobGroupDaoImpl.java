@@ -50,6 +50,12 @@ public class JobGroupDaoImpl implements JobGroupDao {
 	public List<JobGroupVo> selectAllJobGroupsForAjax() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(namespace + "selectAllJobGroupsForAjax");
+	}
+
+	@Override
+	public String getJobGroupNameById(int jobGroupId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + "getJobGroupNameById", jobGroupId);
 	} 
 	
 	

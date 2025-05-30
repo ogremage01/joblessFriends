@@ -721,6 +721,7 @@ document.querySelector('.btn-finish').addEventListener('click', async function (
 // 미리보기 버튼 클릭 시 이력서 데이터를 세션에 저장 후 미리보기 화면으로 이동
 document.querySelector('.btn-preview').addEventListener('click', async function () {
   const resumeData = {
+	title: document.querySelector('#title')?.value || '',
 	memberName: document.querySelector('#memberName')?.value || '',
 	birthDate: document.querySelector('#birthdate')?.value || '',
     phoneNumber: document.querySelector('#phoneNumber')?.value || '',
@@ -729,8 +730,8 @@ document.querySelector('.btn-preview').addEventListener('click', async function 
     selfIntroduction: document.querySelector('#selfIntroduction')?.value || '',
     profile: window.uploadedImageUrl || '',
 
-    jobGroupId: document.querySelector('#jobGroupSelect')?.value || '',
-    jobId: document.querySelector('#jobSelect')?.value || '',
+    jobGroupId: parseInt(document.querySelector('#jobGroupSelect')?.value) || 0,
+    jobId: parseInt(document.querySelector('#jobSelect')?.value) || 0,
 
     schools: collectSchools(),
     careers: collectCareers(),
@@ -748,7 +749,11 @@ document.querySelector('.btn-preview').addEventListener('click', async function 
     });
 
     if (res.ok) {
-      location.href = "/resume/write";
+    	window.open(
+    		      "/resume/preview",        // 팝업에서 열 URL
+    		      "resumePreview",               // 팝업 이름
+    		      "width=1000,height=800,left=200,top=100,resizable=yes,scrollbars=yes"
+    		       );
     } else {
       alert("미리보기용 세션 저장 실패");
     }
@@ -852,7 +857,7 @@ function collectPortfolios() {
 
 </script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-3fp9tS8p9A2Mq7Qz+S8jfwD+xdgu9T+O+NRZz8N5eA8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="/js/resume/resumeView.js"></script>
 </body>
 </html>

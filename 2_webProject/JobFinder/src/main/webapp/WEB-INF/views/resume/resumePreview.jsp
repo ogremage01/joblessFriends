@@ -24,13 +24,16 @@
 	
 	<!-- 	이력서 메인 		-->
 	<div id="container">
-		<h1>이력서 제목이 들어가는 곳</h1>
+		<h1>${resume.title}</h1>
 		
 		<!-- 	프로필 	 -->
 		<div id="profile">
 			<div id="profileTop">
 				<!--	프로필 사진	-->
 				<div id="profileImg">
+					<c:if test="${not empty resume.profile}">
+    					<img src="${resume.profile}" alt="프로필 이미지" style="width:120px;" />
+					</c:if>
 				</div>
 				
 				<!--	인적사항		-->
@@ -49,8 +52,10 @@
 							<td class="infoTableTd" colspan="3">${resume.address}</td>
 						</tr>
 						<tr>
+							<th class="infoTableTh">희망직군</th>
+							<td class="infoTableTd" colspan="3">${jobGroupName}</td>
 							<th class="infoTableTh">희망직무</th>
-							<td class="infoTableTd" colspan="3">직무명</td>
+							<td class="infoTableTd" colspan="3">${jobName}</td>
 						</tr>
 					</table>
 				</div>

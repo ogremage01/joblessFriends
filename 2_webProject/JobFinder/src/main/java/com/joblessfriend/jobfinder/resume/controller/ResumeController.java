@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.joblessfriend.jobfinder.job.service.JobService;
+import com.joblessfriend.jobfinder.jobGroup.service.JobGroupService;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeSaveRequestVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
@@ -29,10 +31,15 @@ import com.joblessfriend.jobfinder.util.file.FileUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/resume")
+@RequiredArgsConstructor
 public class ResumeController {
+	
+	private final JobGroupService jobGroupService; // 직군 서비스
+    private final JobService jobService;           // 직무 서비스
 	
 	@Autowired
 	private ResumeService resumeService;
@@ -213,14 +220,25 @@ public class ResumeController {
 	    
 	    // 이력서 미리보기 뷰
 	    @GetMapping("/preview")
-	    public String signup(HttpSession session, Model model) {
+	    public ResponseEntity<?> getResumePreview(HttpSession session) {
 	    	ResumeSaveRequestVo resume = (ResumeSaveRequestVo) session.getAttribute("resumePreview");
 
 	    	if (resume == null) {
-	    		resume = new ResumeSaveRequestVo(); // <-- 빈 객체 생성
+	            return ResponseEntity.badRequest().body("미리보기 데이터가 없습니다.");
 	        }
+	    	
+	    	String jobGroupName = (resume.getJobGroupId() > 0) ? jobGroupService.getJobGroupNameById(resume.getJobGroupId()) : "";
+	    	String jobName = (resume.getJobId() > 0) ? jobService.getJobNameById(resume.getJobId()) : "";
 
-	        model.addAttribute("resume", resume);
-	        return "resume/resumePreview"; // => resumePreview.jsp
+	    	
+	    	Map<String, Object> result = new HashMap<>();
+	        result.put("resume", resume);
+	        result.put("jobGroupName", (resume.getJobGroupId() > 0) ? jobGroupService.getJobGroupNameById(resume.getJobGroupId()) : "");
+	        result.put("jobName", (resume.getJobId() > 0) ? jobService.getJobNameById(resume.getJobId()) : "");
+	        
+	        System.out.println("직군이름: " + jobGroupName);
+	        System.out.println("직무이름: " + jobName);
+	        
+	        return ResponseEntity.ok(result); // => resumePreview.jsp
 	    }
 }

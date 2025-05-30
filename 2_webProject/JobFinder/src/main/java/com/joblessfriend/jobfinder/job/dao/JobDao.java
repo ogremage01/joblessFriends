@@ -11,4 +11,5 @@ public interface JobDao {
 	JobVo getJobById(int jobPostId);
     JobVo getJobByIdForRecruitment(int jobPostId);
     List<JobVo> selectJobsByGroupId(int jobGroupId);
+    String getJobNameById(int jobId);
 }

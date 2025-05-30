@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -55,4 +56,5 @@ public class ResumeApiController {
         session.setAttribute("resumePreview", request);
         return ResponseEntity.ok("세션 저장 완료");
     }
+    
 }
