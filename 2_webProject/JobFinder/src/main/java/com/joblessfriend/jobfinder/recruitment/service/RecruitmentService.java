@@ -45,7 +45,7 @@ public interface RecruitmentService {
 
     void increaseViews(int jobPostId);
     public int countFilteredPosts(FilterRequestVo filterRequestVo);
-
+    List<JobPostQuestionVo> getRecruitmentQuestion(int jobPostId);
 
     public List<RecruitmentVo> getFilteredRecruitmentList(FilterRequestVo filterRequestVo);
     int getFilteredRecruitmentTotalCount(FilterRequestVo filterRequestVo);

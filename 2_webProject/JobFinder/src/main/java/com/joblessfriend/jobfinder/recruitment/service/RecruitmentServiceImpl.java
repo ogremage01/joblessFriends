@@ -119,6 +119,18 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         if (tempKey != null && !tempKey.isBlank()) {
             recruitmentDao.updateJobPostIdByTempKey(vo.getJobPostId(), tempKey);
         }
+        // 5.
+        recruitmentDao.deleteQuestionsByJobPostId(vo.getJobPostId());
+        for (JobPostQuestionVo question : vo.getQuestionList()) {
+            System.out.println("💬 질문 삽입 시도: "
+                    + "jobPostId=" + vo.getJobPostId()
+                    + ", order=" + question.getQuestionOrder()
+                    + ", text=" + question.getQuestionText());
+
+            question.setJobPostId(vo.getJobPostId());
+            recruitmentDao.insertQuestion(question);
+
+        }
 
     }
 
@@ -151,6 +163,11 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     @Override
     public int countFilteredPosts(FilterRequestVo filterRequestVo) {
         return recruitmentDao.countFilteredPosts(filterRequestVo);
+    }
+
+    @Override
+    public List<JobPostQuestionVo> getRecruitmentQuestion(int jobPostId) {
+        return recruitmentDao.getRecruitmentQuestion(jobPostId);
     }
 
     @Override

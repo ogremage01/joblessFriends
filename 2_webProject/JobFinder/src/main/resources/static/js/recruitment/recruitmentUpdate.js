@@ -270,7 +270,7 @@ $('#btnAddQuestion').on('click', function () {
             if (q3) $list.append(`<li>${q3}</li>`);
 
             // form에 hidden input 삽입 (중복 방지 후 추가)
-            const form = $('#insertForm'); // ← 실제 form id 사용
+            const form = $('#updateForm'); // ← 실제 form id 사용
             form.find('input[name="question1"]').remove();
             form.find('input[name="question2"]').remove();
             form.find('input[name="question3"]').remove();

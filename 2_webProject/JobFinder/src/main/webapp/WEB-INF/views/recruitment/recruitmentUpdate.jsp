@@ -213,7 +213,11 @@
                     <div style="display: flex;">
                         <button id="btnAddQuestion" class="template-btn Question" type="button">사전질문 등록</button>
                         <ul class="Question" >
+                            <c:forEach var="JobPostQuestion" items="${JobPostQuestionList}">
 
+                                    <li>${JobPostQuestion.questionText}</li>
+
+                            </c:forEach>
                         </ul>
                     </div>
                     <!-- 질문 값 전송용 hidden input -->
