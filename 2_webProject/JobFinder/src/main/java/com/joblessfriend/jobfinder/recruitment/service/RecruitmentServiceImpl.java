@@ -84,10 +84,19 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             vo.setJobPostId(jobPostId);
             recruitmentDao.insertJobPostWelfare(vo); // 단건 삽입
         }
+        if (recruitmentVo.getQuestionList() != null && !recruitmentVo.getQuestionList().isEmpty()) {
+            for (JobPostQuestionVo questionVo : recruitmentVo.getQuestionList()) {
+                questionVo.setJobPostId(jobPostId); // FK 설정
+                recruitmentDao.insertQuestion(questionVo);
+            }
+        }
+
+
         if (recruitmentVo.getTempKey() != null && !recruitmentVo.getTempKey().isBlank()) {
             recruitmentDao.updateJobPostIdByTempKey( recruitmentVo.getJobPostId(), recruitmentVo.getTempKey());
         }
     }
+
     //업데이트라인 //
     @Override
     @Transactional
@@ -109,6 +118,18 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         // 4. 이미지가 새로 업로드되어 tempKey가 있는 경우, 파일 테이블 갱신
         if (tempKey != null && !tempKey.isBlank()) {
             recruitmentDao.updateJobPostIdByTempKey(vo.getJobPostId(), tempKey);
+        }
+        // 5.
+        recruitmentDao.deleteQuestionsByJobPostId(vo.getJobPostId());
+        for (JobPostQuestionVo question : vo.getQuestionList()) {
+            System.out.println("💬 질문 삽입 시도: "
+                    + "jobPostId=" + vo.getJobPostId()
+                    + ", order=" + question.getQuestionOrder()
+                    + ", text=" + question.getQuestionText());
+
+            question.setJobPostId(vo.getJobPostId());
+            recruitmentDao.insertQuestion(question);
+
         }
 
     }
@@ -142,6 +163,11 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     @Override
     public int countFilteredPosts(FilterRequestVo filterRequestVo) {
         return recruitmentDao.countFilteredPosts(filterRequestVo);
+    }
+
+    @Override
+    public List<JobPostQuestionVo> getRecruitmentQuestion(int jobPostId) {
+        return recruitmentDao.getRecruitmentQuestion(jobPostId);
     }
 
     @Override

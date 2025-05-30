@@ -83,6 +83,11 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
     }
 
     @Override
+    public void insertQuestion(JobPostQuestionVo questionVo) {
+        sqlSession.insert(namespace+".insertQuestion", questionVo);
+    }
+
+    @Override
     public void updateJobPostIdByTempKey(int jobPostId,String tempKey) {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("tempKey", tempKey);
@@ -95,7 +100,10 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
     public void updateRecruitment(RecruitmentVo recruitmentVo) {
         sqlSession.update(namespace+".updateRecruitment", recruitmentVo);
     }
-
+    @Override
+    public List<JobPostQuestionVo> getRecruitmentQuestion(int jobPostId) {
+        return sqlSession.selectList(namespace+".getRecruitmentQuestion" ,jobPostId);
+    }
     @Override
     public void deleteTagsByJobPostId(int jobPostId) {
         sqlSession.delete(namespace+".deleteTagsByJobPostId", jobPostId);
@@ -110,6 +118,12 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
     public void increaseViews(int jobPostId) {
         sqlSession.update(namespace+".increaseViews", jobPostId);
     }
+
+    @Override
+    public void deleteQuestionsByJobPostId(int jobPostId) {
+        sqlSession.delete(namespace+".deleteQuestionsByJobPostId", jobPostId);
+    }
+
 
     //필터카운팅
     @Override

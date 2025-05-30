@@ -172,7 +172,9 @@ public class RecruitmentController {
     @PostMapping("/insert")
     public String insertRecruitment(@ModelAttribute RecruitmentVo recruitmentVo,
                                     @RequestParam("skills") String skills, @RequestParam("welfareList") String welfareList
-                                    ,@RequestParam("tempKey") String tempKey,@RequestParam("jobImgFile") MultipartFile jobImgFile,HttpSession session) {
+                                    ,@RequestParam("tempKey") String tempKey,@RequestParam("jobImgFile") MultipartFile jobImgFile,@RequestParam(value = "question1", required = false) String q1,
+                                    @RequestParam(value = "question2", required = false) String q2,
+                                    @RequestParam(value = "question3", required = false) String q3,HttpSession session) {
         System.out.println("📥 컨트롤러 진입");
         String cleanTempKey = tempKey.trim().replaceAll(",", "");
 
@@ -203,9 +205,16 @@ public class RecruitmentController {
                 })
                 .collect(Collectors.toList());
         try {
+            List<JobPostQuestionVo> questionList = new ArrayList<>();
+            if (q1 != null && !q1.isBlank()) questionList.add(new JobPostQuestionVo(null, null, 1, q1));
+            if (q2 != null && !q2.isBlank()) questionList.add(new JobPostQuestionVo(null, null, 2, q2));
+            if (q3 != null && !q3.isBlank()) questionList.add(new JobPostQuestionVo(null, null, 3, q3));
+
+            recruitmentVo.setQuestionList(questionList);
             recruitmentService.insertRecruitment(recruitmentVo, tagIdList,welfareVoList);
             System.out.println("🔥 생성된 jobPostId = " + recruitmentVo.getJobPostId());
             System.out.println("🔥 생성된 tempKey = " + cleanTempKey);
+
             recruitmentService.updateJobPostIdByTempKey(recruitmentVo.getJobPostId(),cleanTempKey);
             System.out.println("insert 성공");
         } catch (Exception e) {
@@ -330,13 +339,14 @@ public class RecruitmentController {
                 .map(SkillVo::getTagId)
                 .collect(Collectors.toList());
 
-
+        List<JobPostQuestionVo> JobPostQuestionList = recruitmentService.getRecruitmentQuestion(jobPostId);
         // Model에 데이터 추가
         model.addAttribute("recruitmentVo", recruitmentVo);
         model.addAttribute("jobVo", jobVo);
         model.addAttribute("welfareList", welfareList);
         model.addAttribute("jobGroupList", jobGroupList);
         model.addAttribute("selectedSkills", selectedSkills);
+        model.addAttribute("JobPostQuestionList", JobPostQuestionList);
 
         return "recruitment/recruitmentUpdate"; // JSP 경로
     }
@@ -346,10 +356,12 @@ public class RecruitmentController {
                                     @RequestParam("skills") String skills,
                                     @RequestParam("welfareList") String welfareList,
                                     @RequestParam("tempKey") String tempKey,
-                                    @RequestParam("jobImgFile") MultipartFile jobImgFile,
+                                    @RequestParam("jobImgFile") MultipartFile jobImgFile,@RequestParam(value = "question1", required = false) String q1,
+                                    @RequestParam(value = "question2", required = false) String q2,
+                                    @RequestParam(value = "question3", required = false) String q3,
                                     HttpSession session) {
 
-        System.out.println("복리후생 리스트 ㅁㄴㅇㅁㄴㅇ"+ welfareList);
+
         // 1. 로그인 체크
         Object loginMember = session.getAttribute("userLogin");
         Object userType = session.getAttribute("userType");
@@ -388,11 +400,20 @@ public class RecruitmentController {
                     return vo;
                 })
                 .collect(Collectors.toList());
+        System.out.println("질문지1: " + q1);
+        System.out.println("질문지2: "+ q2);
+        System.out.println("질문지3: "+ q3);
 
 
-
+        List<JobPostQuestionVo> questionList = new ArrayList<>();
+        if (q1 != null && !q1.isBlank()) questionList.add(new JobPostQuestionVo(null, null, 1, q1));
+        if (q2 != null && !q2.isBlank()) questionList.add(new JobPostQuestionVo(null, null, 2, q2));
+        if (q3 != null && !q3.isBlank()) questionList.add(new JobPostQuestionVo(null, null, 3, q3));
+        recruitmentVo.setQuestionList(questionList);
+        System.out.println("❓사전질문 몇 개? => " + questionList.size());
         try {
             // 6. 서비스 호출
+
             recruitmentService.updateRecruitment(recruitmentVo, tagIdList, welfareVoList, tempKey);
             System.out.println("✅ 채용공고 업데이트 성공 - jobPostId: " + recruitmentVo.getJobPostId());
         } catch (Exception e) {

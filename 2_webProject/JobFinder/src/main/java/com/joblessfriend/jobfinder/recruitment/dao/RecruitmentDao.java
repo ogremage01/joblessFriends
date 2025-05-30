@@ -26,6 +26,7 @@ public interface RecruitmentDao {
     void insertJobPostTag(RecruitmentVo recruitmentVo, List<Integer> tagIdList);
     void insertJobPostWelfare(WelfareVo Welfarevo);
     void insertJobPostFile(JobPostFileVo fileVo);
+    void insertQuestion(JobPostQuestionVo questionVo);
     void updateJobPostIdByTempKey(@Param("jobPostId") int jobPostId, @Param("tempKey") String tempKey);
 
 
@@ -43,7 +44,10 @@ public interface RecruitmentDao {
     // 복리후생 재삽입 insertJobPostFile  사용
     // 파일 테이블 연동 (TEMP_KEY → JOB_POST_ID 업데이트)   updateJobPostIdByTempKey 사용
     void increaseViews(int jobPostId);
+    void deleteQuestionsByJobPostId(int jobPostId);
 
+
+    List<JobPostQuestionVo> getRecruitmentQuestion(int jobPostId);
     List<RecruitmentVo> adminRecruitmentList();
 	List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId);
 //    필터

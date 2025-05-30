@@ -429,47 +429,65 @@ $(document).ready(function () {
 
 
 });
-
-$(document).ready(function () {
-    // 사전질문 등록 버튼 클릭 시 모달 표시
-    $('#btnAddQuestion').on('click', function () {
-        Swal.fire({
-            title: '사전질문 등록',
-            html: `
-                <div style="text-align: left;">
-                    <label>질문 1</label>
+//질문 모달 js //
+$('#btnAddQuestion').on('click', function () {
+    Swal.fire({
+        title: '사전질문 등록',
+        html: `
+            <div class="question-modal-form">
+                <div class="swal2-form-group">
+                    <label for="question1" class="swal2-form-label">질문 1</label>
                     <input id="question1" class="swal2-input" placeholder="예: 지원 동기를 말씀해주세요" />
-
-                    <label>질문 2</label>
+                </div>
+                <div class="swal2-form-group">
+                    <label for="question2" class="swal2-form-label">질문 2</label>
                     <input id="question2" class="swal2-input" placeholder="예: 자신의 강점은 무엇인가요?" />
-
-                    <label>질문 3</label>
+                </div>
+                <div class="swal2-form-group">
+                    <label for="question3" class="swal2-form-label">질문 3</label>
                     <input id="question3" class="swal2-input" placeholder="예: 입사 후 포부를 알려주세요" />
                 </div>
-            `,
-            focusConfirm: false,
-            showCancelButton: true,
-            confirmButtonText: '질문 저장',
-            cancelButtonText: '취소',
-            preConfirm: () => {
-                const q1 = $('#question1').val();
-                const q2 = $('#question2').val();
-                const q3 = $('#question3').val();
+            </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: '질문 저장',
+        cancelButtonText: '취소',
+        customClass: {
+            confirmButton: 'swal2-confirm swal2-styled swal2-blue-button',
+            cancelButton: 'swal2-cancel swal2-styled swal2-gray-button'
+        },
+        preConfirm: () => {
+            return {
+                q1: $('#question1').val()?.trim(),
+                q2: $('#question2').val()?.trim(),
+                q3: $('#question3').val()?.trim()
+            };
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const { q1, q2, q3 } = result.value;
 
-                // 지금은 미연결이므로 콘솔 출력만
-                console.log("사전질문1:", q1);
-                console.log("사전질문2:", q2);
-                console.log("사전질문3:", q3);
+            // 리스트 출력
+            const $list = $('ul.Question');
+            $list.empty();
+            if (q1) $list.append(`<li>${q1}</li>`);
+            if (q2) $list.append(`<li>${q2}</li>`);
+            if (q3) $list.append(`<li>${q3}</li>`);
 
-                Swal.fire({
-                    icon: 'success',
-                    title: '사전질문이 임시 저장되었습니다.',
-                    text: '향후 서버 연동 시 함께 전송할 수 있습니다.',
-                });
-            }
-        });
+            // form에 hidden input 삽입 (중복 방지 후 추가)
+            const form = $('#insertForm'); // ← 실제 form id 사용
+            form.find('input[name="question1"]').remove();
+            form.find('input[name="question2"]').remove();
+            form.find('input[name="question3"]').remove();
+
+            form.append(`<input type="hidden" name="question1" value="${q1}"/>`);
+            form.append(`<input type="hidden" name="question2" value="${q2}"/>`);
+            form.append(`<input type="hidden" name="question3" value="${q3}"/>`);
+        }
     });
 });
+
+
 
 
 

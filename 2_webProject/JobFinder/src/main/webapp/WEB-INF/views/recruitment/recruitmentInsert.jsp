@@ -179,7 +179,17 @@
 
             <div class="box-section">
                 <label class="section-title">사전질문 등록하기</label>
-                <button id="btnAddQuestion" class="template-btn" type="button">사전질문 등록</button>
+                <div style="display: flex;">
+                    <button id="btnAddQuestion" class="template-btn Question" type="button">사전질문 등록</button>
+                    <ul class="Question" >
+
+                    </ul>
+                </div>
+                <!-- 질문 값 전송용 hidden input -->
+                <input type="hidden" name="question1" id="questionHidden1">
+                <input type="hidden" name="question2" id="questionHidden2">
+                <input type="hidden" name="question3" id="questionHidden3">
+
             </div>
                 <div class="InsertTemplate box-section">
                     <label class="section-title">🧩 템플릿 생성 도우미</label>

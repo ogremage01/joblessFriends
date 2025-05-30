@@ -265,3 +265,31 @@ textarea {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
+.question-modal-form .swal2-form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.question-modal-form .swal2-form-label {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+/* 버튼 색상 커스터마이징 */
+.swal2-blue-button {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+.swal2-gray-button {
+    background-color: #6b7280 !important;
+    color: white !important;
+}
+
+.Question{
+
+    height: 40px;
+}

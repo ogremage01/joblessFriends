@@ -224,6 +224,63 @@ $("#generateTemplate").on('click',function () {
 
 })
 
+//질문 모달 js //
+$('#btnAddQuestion').on('click', function () {
+    Swal.fire({
+        title: '사전질문 수정하기',
+        html: `
+            <div class="question-modal-form">
+                <div class="swal2-form-group">
+                    <label for="question1" class="swal2-form-label">질문 1</label>
+                    <input id="question1" class="swal2-input" placeholder="예: 지원 동기를 말씀해주세요" />
+                </div>
+                <div class="swal2-form-group">
+                    <label for="question2" class="swal2-form-label">질문 2</label>
+                    <input id="question2" class="swal2-input" placeholder="예: 자신의 강점은 무엇인가요?" />
+                </div>
+                <div class="swal2-form-group">
+                    <label for="question3" class="swal2-form-label">질문 3</label>
+                    <input id="question3" class="swal2-input" placeholder="예: 입사 후 포부를 알려주세요" />
+                </div>
+            </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: '질문 수정',
+        cancelButtonText: '취소',
+        customClass: {
+            confirmButton: 'swal2-confirm swal2-styled swal2-blue-button',
+            cancelButton: 'swal2-cancel swal2-styled swal2-gray-button'
+        },
+        preConfirm: () => {
+            return {
+                q1: $('#question1').val()?.trim(),
+                q2: $('#question2').val()?.trim(),
+                q3: $('#question3').val()?.trim()
+            };
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const { q1, q2, q3 } = result.value;
+
+            // 리스트 출력
+            const $list = $('ul.Question');
+            $list.empty();
+            if (q1) $list.append(`<li>${q1}</li>`);
+            if (q2) $list.append(`<li>${q2}</li>`);
+            if (q3) $list.append(`<li>${q3}</li>`);
+
+            // form에 hidden input 삽입 (중복 방지 후 추가)
+            const form = $('#updateForm'); // ← 실제 form id 사용
+            form.find('input[name="question1"]').remove();
+            form.find('input[name="question2"]').remove();
+            form.find('input[name="question3"]').remove();
+
+            form.append(`<input type="hidden" name="question1" value="${q1}"/>`);
+            form.append(`<input type="hidden" name="question2" value="${q2}"/>`);
+            form.append(`<input type="hidden" name="question3" value="${q3}"/>`);
+        }
+    });
+});
 
 
 function validateFormInputs() {

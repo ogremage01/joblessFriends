@@ -273,6 +273,31 @@
         WHERE TEMP_KEY = #{tempKey}
     </update>
 
+<!--    INSERT사전질문지 -->
+    <insert id="insertQuestion"  parameterType="com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo">
+        <selectKey resultType="int" keyProperty="questionId" order="BEFORE">
+            SELECT JOB_POST_QUESTION_ID_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
+
+        INSERT INTO JOB_POST_QUESTION (
+            QUESTION_ID, JOB_POST_ID, QUESTION_ORDER, QUESTION_TEXT
+        ) VALUES (
+                    #{questionId},
+                     #{jobPostId},
+                     #{questionOrder},
+                     #{questionText}
+                 )
+
+    </insert>
+<!--채용공고 사전질문지 수정 get -->
+    <select id="getRecruitmentQuestion" parameterType="com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo">
+        SELECT QUESTION_ID AS questionId,
+               JOB_POST_ID AS jobPostId,
+               QUESTION_ORDER AS questionOrder,
+               QUESTION_TEXT AS questionText
+            FROM JOB_POST_QUESTION
+        WHERE JOB_POST_ID = #{jobPostId}
+    </select>
 <!--채용공고 업데이트 라인 -->
 
     <update id="updateRecruitment" parameterType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
@@ -315,6 +340,12 @@
                      #{benefitText}
                  )
     </insert>
+
+    <delete id="deleteQuestionsByJobPostId" parameterType="int">
+        DELETE FROM JOB_POST_QUESTION
+        WHERE JOB_POST_ID = #{jobPostId}
+    </delete>
+
 
 
 <!--    필터 카운팅 -->
