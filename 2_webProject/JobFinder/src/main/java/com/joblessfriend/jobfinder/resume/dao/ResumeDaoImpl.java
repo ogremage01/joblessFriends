@@ -22,7 +22,7 @@ class ResumeDaoImpl implements ResumeDao{
 
     @Autowired
     private SqlSession sqlSession;
-
+    //채용공고 지원하기에서 이력서 출력용으로 사용예정 //
     @Override
     public List<ResumeVo> findResumesByMemberId(int memberId) {
         return sqlSession.selectList(namespace + ".findResumesByMemberId", memberId);

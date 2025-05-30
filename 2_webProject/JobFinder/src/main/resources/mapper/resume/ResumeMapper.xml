@@ -7,6 +7,7 @@
 		<result column="NAME" property="memberName" />
 		<result column="BIRTHDATE" property="birthDate" />
 		<result column="PHONENUMBER" property="phoneNumber" />
+        <result column="RESUME_TITLE" property="title" />
 		<result column="EMAIL" property="email" />
 		<result column="POSTAL_CODE_ID" property="postalCodeId" />
 		<result column="ADDRESS" property="address" />
@@ -21,7 +22,7 @@
 	
 	<!-- 조회 -->
 	<select id="findResumesByMemberId" resultMap="ResumeResultMap">
-        SELECT RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS, 
+        SELECT RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS, RESUME_TITLE,
                SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT, JOB_GROUP_ID, JOB_ID    
         FROM RESUME
         WHERE MEMBER_ID = #{memberId}

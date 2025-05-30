@@ -301,9 +301,7 @@ $(document).on('click', '.job', function (e) {
     window.location.href = `detail?companyId=${companyId}&jobPostId=${jobPostId}`;
 });
 
-$(document).on('click', '.apply-btn', function () {
-    alert('처리예정입니다');
-});
+$
 //날짜 포멧 //ajax용 ,
 function formatDateWithDay(dateString) {
     const date = new Date(dateString);
@@ -440,6 +438,40 @@ function renderPagination(pagination) {
     }
 }
 
+// 지원하기 버튼 클릭 시 모달 띄우기
+$(document).on('click', '.apply-btn', function () {
+    if (!resumeList || resumeList.length === 0) {
+        Swal.fire('📭 등록된 이력서가 없습니다.');
+        return;
+    }
+
+    const html = resumeList.map(r => `
+        <label style="display:block; margin: 5px 0;">
+            <input type="radio" name="resumeRadio" value="${r.resumeId}">
+            ${r.title} (작성일: ${r.modifiedAt})
+        </label>
+    `).join('');
+
+    Swal.fire({
+        title: '📄 이력서를 선택하세요',
+        html: `<div style="text-align:left;">${html}</div>`,
+        showCancelButton: true,
+        confirmButtonText: '지원하기',
+        preConfirm: () => {
+            const selected = $('input[name="resumeRadio"]:checked').val();
+            if (!selected) {
+                Swal.showValidationMessage('이력서를 선택해주세요.');
+                return false;
+            }
+            return selected;
+        }
+    }).then(result => {
+        if (result.isConfirmed) {
+            console.log("선택된 resumeId:", result.value);
+            // TODO: 지원 요청 처리
+        }
+    });
+});
 
 
 
