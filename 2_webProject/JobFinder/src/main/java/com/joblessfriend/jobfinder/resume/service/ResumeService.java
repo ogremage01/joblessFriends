@@ -2,7 +2,6 @@ package com.joblessfriend.jobfinder.resume.service;
 
 import java.util.List;
 
-import com.joblessfriend.jobfinder.resume.domain.ResumeSaveRequestVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 
 public interface ResumeService {
@@ -11,10 +10,18 @@ public interface ResumeService {
 	
 	ResumeVo getResumeByResumeId(int resumeId);
 	
+	ResumeVo getResumeWithAllDetails(int resumeId);
+	
     void deleteResume(int memberId, int resumeId);
     
     void updateProfileImage(int resumeId, int memberId, String imageUrl);
+
+	void saveResume(ResumeVo resumeVo);
     
-    void saveResume(ResumeSaveRequestVo request, int memberId);
+    void saveResumeWithDetails(ResumeVo resumeVo);
+    
+    void updateResume(ResumeVo resumeVo);
+    
+    
     
 }

@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 public class ResumeVo {
 
+		private String title;
 	    private int resumeId;
 	    private String memberName;
 	    private Date birthDate;
@@ -25,8 +26,17 @@ public class ResumeVo {
 	    private int jobGroupId;
 	    private int jobId;
 	    
+
 	    
 	    private List<CareerVo> careers;
+
+	    private List<CareerVo> careerList;
+	    private List<CertificateVo> certificateList;
+	    private List<EducationVo> educationList;
+	    private List<PortfolioVo> portfolioList;
+	    private List<SchoolVo> schoolList;
+	    
+
 	    // getter, setter
 	    
 }
