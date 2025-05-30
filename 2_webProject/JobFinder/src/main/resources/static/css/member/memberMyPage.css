@@ -9,17 +9,12 @@ body {
 	justify-content: center;
 }
 
-/* 컨테이너 가로길이 재정의 */
-#container#containerWrap {
-	width: 1000px;
-}
-
 .main {
-	width: 920px;
+	width: 1028px;
 }
 
 .content {
-	width: 800px;
+	width: 900px;
 	margin: auto;
 }
 
