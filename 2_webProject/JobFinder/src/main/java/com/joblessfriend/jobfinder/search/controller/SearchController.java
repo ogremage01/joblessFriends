@@ -32,85 +32,135 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class SearchController {
 
-	private Logger logger = LoggerFactory.getLogger(SearchController.class);
-	
-	@Autowired
-	private SearchService searchService;
-	@Autowired
-	private RecruitmentService recruitmentService;
-	
-	SearchVo searchVo = new SearchVo();
-	
-	// 헤더 검색 기능 (임시) - pcj
-	 @PostMapping("")
-	    public String searchMainList(Model model, @RequestParam(defaultValue = "1") int page, 
-		@RequestParam(defaultValue = "") String keyword) {
-		 	
-		 //채용공고 서비스 사용함 추후 검색기능 완성되면 수정 될 예정
-			searchVo.setKeyword(keyword);
-			searchVo.setPage(1);
-			searchVo.setRecordSize(4);
-	        
-			int totalCount = recruitmentService.getRecruitmentTotalCount(searchVo); // 총 레코드 수 조회
-	        Pagination pagination = new Pagination(totalCount, searchVo);
+    private final CommunityController communityController;
 
-	        // Oracle 11g에 맞게 startRow, endRow 계산
-	        searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
-	        searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
-	        
-	        List<RecruitmentVo> recruitmentList = recruitmentService.recruitmentList(searchVo);
-	        logger.info("메인서치 recruitmentList: "+ recruitmentList);
-	        model.addAttribute("recruitmentList", recruitmentList);
-	        model.addAttribute("pagination", pagination);
-	        model.addAttribute("totalCount", totalCount); // 검색결과 개수
-	        model.addAttribute("keyword", keyword); // 검색어
+   private Logger logger = LoggerFactory.getLogger(SearchController.class);
+   
+   @Autowired
+   private SearchService searchService;
+   @Autowired
+   private RecruitmentService recruitmentService;
 
-	        return "mainSearchView";
-	    }
-	
-	 @GetMapping("/recruitment")
-	    public List<RecruitmentVo> searchRecruitmentList(Model model, @RequestParam(defaultValue = "1") int page, 
-		@RequestParam(defaultValue = "") String keyword) {
-		 	
-			searchVo.setKeyword(keyword);
-			searchVo.setPage(1);
-			searchVo.setRecordSize(4);
-	        
-			int totalCount = searchService.getRecruitmentTotalCount(searchVo); // 총 레코드 수 조회
-	        Pagination pagination = new Pagination(totalCount, searchVo);
 
-	        // Oracle 11g에 맞게 startRow, endRow 계산
-	        searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
-	        searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
+    SearchController(CommunityController communityController) {
+        this.communityController = communityController;
+    }
+   
+  
+   
+	/*
+	 * // 헤더 검색 기능 (임시) - pcj
+	 * 
+	 * @PostMapping("") public String searchMainList(Model
+	 * model, @RequestParam(defaultValue = "1") int page,
+	 * 
+	 * @RequestParam(defaultValue = "") String keyword) { SearchVo searchVo = new
+	 * SearchVo(); //채용공고 서비스 사용함 추후 검색기능 완성되면 수정 될 예정 searchVo.setKeyword(keyword);
+	 * searchVo.setPage(page); searchVo.setRecordSize(4);
+	 * 
+	 * int totalCount = 0; Pagination pagination = null;
+	 * 
+	 * if(keyword != null && !keyword.trim().isEmpty()) { totalCount =
+	 * searchService.getRecruitmentSearchTotalCount(searchVo); // 총 레코드 수 조회
+	 * pagination = new Pagination(totalCount, searchVo);
+	 * 
+	 * 
+	 * // Oracle 11g에 맞게 startRow, endRow 계산
+	 * searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
+	 * searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1); }
+	 * 
+	 * List<RecruitmentVo> recruitmentList =
+	 * searchService.getRecruitmentSearchList(searchVo);
+	 * 
+	 * logger.info("메인서치 recruitmentList: "+ recruitmentList);
+	 * model.addAttribute("recruitmentList", recruitmentList);
+	 * model.addAttribute("pagination", pagination);
+	 * model.addAttribute("totalCount", totalCount); // 검색결과 개수
+	 * model.addAttribute("keyword", keyword); // 검색어
+	 * 
+	 * return "mainSearchView"; }
+	 */
+   @PostMapping("")
+   public String searchMainList(Model model, @RequestParam(defaultValue = "1") int page, 
+		      @RequestParam(defaultValue = "") String keyword) {
 
-	        List<RecruitmentVo> recruitmentList = searchService.recruitmentList(searchVo);
+		    SearchVo searchVo = new SearchVo();
+		    searchVo.setKeyword("%" + keyword + "%");
+		    System.out.println(searchVo.getKeyword());
+		    searchVo.setPage(page); // ★ page 파라미터 사용
+		    searchVo.setRecordSize(4);
 
-	        model.addAttribute("recruitmentList", recruitmentList);
-	        model.addAttribute("pagination", pagination);
+		    int totalCount = 0;
+		    Pagination pagination = null;
 
-	        return null;
-	    }
-	 
-	 @GetMapping("/community")
-	    public List<CommunityVo> searchCommunityList(Model model, @RequestParam(defaultValue = "1") int page, 
-				@RequestParam(defaultValue = "") String keyword) {
-		 	searchVo.setKeyword(keyword);
-			searchVo.setPage(1);
-			searchVo.setRecordSize(4);
-	        
-			int totalCount = searchService.getCommunityTotalCount(searchVo); // 총 레코드 수 조회
-	        Pagination pagination = new Pagination(totalCount, searchVo);
+		    // 검색어가 있든 없든 전체 카운트 및 페이징 처리
+		    
+		    try {
+		    	totalCount = searchService.getRecruitmentSearchTotalCount(searchVo); // 총 레코드 수 조회
+			    pagination = new Pagination(totalCount, searchVo);	
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		    
 
-	        // Oracle 11g에 맞게 startRow, endRow 계산
-	        searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
-	        searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
+		    // Oracle 11g에 맞게 startRow, endRow 계산
+		    searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
+		    searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
 
-	        List<CommunityVo> communityList = searchService.communityList(searchVo);
+		    List<RecruitmentVo> recruitmentList = searchService.getRecruitmentSearchList(searchVo);
 
-	        model.addAttribute("communityList", communityList);
-	        model.addAttribute("pagination", pagination);
+		    logger.info("메인서치 recruitmentList: " + recruitmentList);
+		    model.addAttribute("recruitmentList", recruitmentList);
+		    model.addAttribute("pagination", pagination);
+		    model.addAttribute("totalCount", totalCount); // 검색결과 개수
+		    model.addAttribute("keyword", keyword); // 검색어
 
-	        return null;
-	    }
-	
+		    return "mainSearchView";
+		}
+
+		/*
+		 * @GetMapping("/recruitment") public List<RecruitmentVo>
+		 * searchRecruitmentList(Model model, @RequestParam(defaultValue = "1") int
+		 * page,
+		 * 
+		 * @RequestParam(defaultValue = "") String keyword) {
+		 * 
+		 * searchVo.setKeyword(keyword); searchVo.setPage(1); searchVo.setRecordSize(4);
+		 * 
+		 * int totalCount = searchService.getRecruitmentSearchTotalCount(searchVo); // 총
+		 * 레코드 수 조회 Pagination pagination = new Pagination(totalCount, searchVo);
+		 * 
+		 * // Oracle 11g에 맞게 startRow, endRow 계산
+		 * searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
+		 * searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
+		 * 
+		 * List<RecruitmentVo> recruitmentList =
+		 * searchService.recruitmentList(searchVo);
+		 * 
+		 * model.addAttribute("recruitmentList", recruitmentList);
+		 * model.addAttribute("pagination", pagination);
+		 * 
+		 * return null; }
+		 * 
+		 * @GetMapping("/community") public List<CommunityVo> searchCommunityList(Model
+		 * model, @RequestParam(defaultValue = "1") int page,
+		 * 
+		 * @RequestParam(defaultValue = "") String keyword) {
+		 * searchVo.setKeyword(keyword); searchVo.setPage(1); searchVo.setRecordSize(4);
+		 * 
+		 * int totalCount = searchService.getCommunityTotalCount(searchVo); // 총 레코드 수
+		 * 조회 Pagination pagination = new Pagination(totalCount, searchVo);
+		 * 
+		 * // Oracle 11g에 맞게 startRow, endRow 계산
+		 * searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
+		 * searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
+		 * 
+		 * List<CommunityVo> communityList = searchService.communityList(searchVo);
+		 * 
+		 * model.addAttribute("communityList", communityList);
+		 * model.addAttribute("pagination", pagination);
+		 * 
+		 * return null; }
+		 */
 }

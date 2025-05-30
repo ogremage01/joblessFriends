@@ -8,12 +8,9 @@ import com.joblessfriend.jobfinder.util.SearchVo;
 
 public interface SearchDao {
 
-	int getRecruitmentTotalCount(SearchVo searchVo);
+	int getRecruitmentSearchTotalCount(SearchVo searchVo);
 
-	List<RecruitmentVo> recruitmentList(SearchVo searchVo);
+	List<RecruitmentVo> getRecruitmentSearchList(SearchVo searchVo);
 
-	int getCommunityTotalCount(SearchVo searchVo);
-
-	List<CommunityVo> communityList(SearchVo searchVo);
 
 }

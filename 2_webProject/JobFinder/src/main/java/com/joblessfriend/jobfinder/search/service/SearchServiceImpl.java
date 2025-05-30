@@ -17,27 +17,15 @@ public class SearchServiceImpl implements SearchService {
 	private SearchDao searchDao;
 	
 	@Override
-	public int getRecruitmentTotalCount(SearchVo searchVo) {
+	public int getRecruitmentSearchTotalCount(SearchVo searchVo) {
 		// TODO Auto-generated method stub
-		return searchDao.getRecruitmentTotalCount(searchVo);
+		return searchDao.getRecruitmentSearchTotalCount(searchVo);
 	}
 
 	@Override
-	public List<RecruitmentVo> recruitmentList(SearchVo searchVo) {
+	public List<RecruitmentVo> getRecruitmentSearchList(SearchVo searchVo) {
 		// TODO Auto-generated method stub
-		return searchDao.recruitmentList(searchVo);
-	}
-
-	@Override
-	public int getCommunityTotalCount(SearchVo searchVo) {
-		// TODO Auto-generated method stub
-		return searchDao.getCommunityTotalCount(searchVo);
-	}
-
-	@Override
-	public List<CommunityVo> communityList(SearchVo searchVo) {
-		// TODO Auto-generated method stub
-		return searchDao.communityList(searchVo);
+		return searchDao.getRecruitmentSearchList(searchVo);
 	}
 
 }
