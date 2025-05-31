@@ -60,10 +60,6 @@ public class CompanyRecruitmentController {
 	public ResponseEntity<String> recruitmentDelete(@RequestBody List<Integer> jobPostIdList) {
 		// logger.info("공고삭제메서드");
 
-		for (Integer i : jobPostIdList) {
-			System.out.println("삭제할 공고 Id" + i);
-
-		}
 
 		recruitmentService.jobPostDelete(jobPostIdList);
 
@@ -75,10 +71,7 @@ public class CompanyRecruitmentController {
 	public ResponseEntity<String> recruitmentStop(@RequestBody List<Integer> jobPostIdList) {
 		// logger.info("공고삭제메서드");
 
-		for (Integer i : jobPostIdList) {
-			System.out.println("마감할 공고 Id" + i);
 
-		}
 
 		recruitmentService.jobPostStop(jobPostIdList);
 

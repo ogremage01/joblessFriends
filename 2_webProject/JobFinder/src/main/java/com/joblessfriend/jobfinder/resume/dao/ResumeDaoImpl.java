@@ -50,55 +50,42 @@ class ResumeDaoImpl implements ResumeDao{
         
         try {
             // 메인 이력서 정보 조회
-            System.out.println(">>> [ResumeDaoImpl] 메인 이력서 정보 조회 시작...");
+            
             ResumeVo resume = sqlSession.selectOne(namespace + ".getResumeByResumeId", resumeId);
             
             if (resume != null) {
-                System.out.println(">>> [ResumeDaoImpl] 메인 이력서 조회 성공: " + resume.getMemberName());
+               
                 
                 // 하위 데이터들 조회하여 설정
-                System.out.println(">>> [ResumeDaoImpl] 하위 데이터 조회 시작...");
                 
-                System.out.println(">>> [ResumeDaoImpl] 학력 정보 조회...");
                 List<SchoolVo> schools = getSchoolsByResumeId(resumeId);
                 resume.setSchoolList(schools);
-                System.out.println(">>> [ResumeDaoImpl] 학력 정보 " + schools.size() + "개 조회 완료");
-                
-                System.out.println(">>> [ResumeDaoImpl] 경력 정보 조회...");
+               
                 List<CareerVo> careers = getCareersByResumeId(resumeId);
                 resume.setCareerList(careers);
-                System.out.println(">>> [ResumeDaoImpl] 경력 정보 " + careers.size() + "개 조회 완료");
-                
-                System.out.println(">>> [ResumeDaoImpl] 교육 정보 조회...");
+               
                 List<EducationVo> educations = getEducationsByResumeId(resumeId);
                 resume.setEducationList(educations);
-                System.out.println(">>> [ResumeDaoImpl] 교육 정보 " + educations.size() + "개 조회 완료");
-                
-                System.out.println(">>> [ResumeDaoImpl] 포트폴리오 정보 조회...");
+               
                 List<PortfolioVo> portfolios = getPortfoliosByResumeId(resumeId);
                 resume.setPortfolioList(portfolios);
-                System.out.println(">>> [ResumeDaoImpl] 포트폴리오 정보 " + portfolios.size() + "개 조회 완료");
                 
                 // 자격증 ID 리스트를 CertificateVo 리스트로 변환
-                System.out.println(">>> [ResumeDaoImpl] 자격증 정보 조회...");
+                
                 List<CertificateResumeVo> certificateList = getCertificateByResumeId(resumeId);
                 resume.setCertificateList(certificateList);
-                System.out.println(">>> [ResumeDaoImpl] 자격증 정보 " + certificateList.size() + "개 조회 완료");
-                
-                System.out.println(">>> [ResumeDaoImpl] 태그 정보 조회...");
+               
                 List<Long> tagIds = getTagIdsByResumeId(resumeId);
                 // ResumeVo에는 skillList가 있지만 현재는 tagIds만 저장
                 // 필요에 따라 SkillService를 통해 전체 SkillVo 리스트로 변환할 수 있음
-                System.out.println(">>> [ResumeDaoImpl] 태그 정보 " + tagIds.size() + "개 조회 완료");
-                
-                System.out.println(">>> [ResumeDaoImpl] 모든 하위 데이터 조회 완료");
+               
             } else {
-                System.out.println(">>> [ResumeDaoImpl] 메인 이력서 정보를 찾을 수 없음, resumeId: " + resumeId);
+                
             }
             
             return resume;
         } catch (Exception e) {
-            System.err.println(">>> [ResumeDaoImpl] 이력서 조회 중 오류 발생: " + e.getMessage());
+            
             e.printStackTrace();
             throw e;
         }
@@ -136,16 +123,16 @@ class ResumeDaoImpl implements ResumeDao{
 
 	@Override
 	public void insertResume(ResumeVo resumeVo) {
-		System.out.println(">>> [ResumeDaoImpl] insertResume 호출됨");
+		
 		sqlSession.insert(namespace + ".insertResume", resumeVo);
-		System.out.println(">>> [ResumeDaoImpl] insertResume SQL 실행 완료");
+		
 	}
 
     @Override
     public void updateResume(ResumeVo resumeVo) {
         System.out.println(">>> [ResumeDaoImpl] updateResume 호출됨, resumeId: " + resumeVo.getResumeId());
         sqlSession.update(namespace + ".updateResume", resumeVo);
-        System.out.println(">>> [ResumeDaoImpl] updateResume SQL 실행 완료");
+        
     }
 
 	@Override

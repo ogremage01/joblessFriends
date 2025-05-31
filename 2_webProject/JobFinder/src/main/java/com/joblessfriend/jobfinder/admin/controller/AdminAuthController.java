@@ -56,13 +56,11 @@ public class AdminAuthController {
 
 		// 입력된 ID와 비밀번호로 어드민 존재 여부 확인
 		AdminVo adminVo = adminService.adminExist(adminId, password);
-		System.out.println("admininfo" + adminVo.toString());
 
 		if (adminVo != null) {
 			// 로그인 성공 → 세션에 어드민 정보 저장 후 메인으로 이동
 			session.setAttribute("userLogin", adminVo);
 			session.setAttribute("userType", "admin");
-			System.out.println("어드민 로그인 성공");
 			return "redirect:/admin/main";
 		} else {
 			// 로그인 실패 → 실패 페이지로 이동

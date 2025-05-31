@@ -87,20 +87,20 @@ public class ResumeController {
 	    // 수정 모드인 경우 이력서 데이터 조회
 	    if (resumeId != null && resumeId > 0) {
 	        try {
-	            System.out.println(">>> [ResumeController] 수정 모드 - resumeId: " + resumeId);
+	            
 	            
 	            // 이력서 전체 정보 조회
 	            ResumeVo resumeVo = resumeService.getResumeWithAllDetails(resumeId);
 	            
 	            if (resumeVo == null) {
-	                System.out.println(">>> [ResumeController] 이력서를 찾을 수 없음");
+	                
 	                model.addAttribute("errorMessage", "이력서를 찾을 수 없습니다.");
 	                return "resume/resumeView";
 	            }
 	            
 	            // 본인 이력서인지 확인
 	            if (resumeVo.getMemberId() != loginUser.getMemberId()) {
-	                System.out.println(">>> [ResumeController] 권한 없음");
+	               
 	                model.addAttribute("errorMessage", "본인의 이력서만 수정할 수 있습니다.");
 	                return "resume/resumeView";
 	            }
@@ -119,7 +119,7 @@ public class ResumeController {
 	                model.addAttribute("skillList", new ArrayList<>());
 	            }
 	            
-	            System.out.println(">>> [ResumeController] 이력서 데이터 모델에 추가 완료");
+	            
 	            
 	            // 수정용 JSP 반환
 	            return "resume/resumeUpdateView";
@@ -133,7 +133,7 @@ public class ResumeController {
 	    } else {
 	        // 신규 작성 모드
 	        model.addAttribute("isEditMode", false);
-	        System.out.println(">>> [ResumeController] 신규 작성 모드");
+	        
 	    }
 	    
 	    return "resume/resumeView";
@@ -146,7 +146,7 @@ public class ResumeController {
         if (memberVo == null) return "redirect:/auth/login";
         
         int memberId = memberVo.getMemberId();
-        System.out.println(">>> memberId = " + memberId);
+        
 
         List<ResumeVo> resumes = resumeService.getResumesByMemberId(memberId);
         model.addAttribute("resumes", resumes);
@@ -190,7 +190,7 @@ public class ResumeController {
             // 수정 모드인지 확인 (resumeId가 있고 0보다 큰 경우)
             if (resumeVo.getResumeId() != 0 && resumeVo.getResumeId() > 0) {
                 // 수정 모드
-                System.out.println(">>> [ResumeController] 이력서 수정 모드 - resumeId: " + resumeVo.getResumeId());
+                
                 
                 // 기존 이력서 조회하여 권한 확인
                 ResumeVo existingResume = resumeService.getResumeByResumeId(resumeVo.getResumeId());
@@ -204,13 +204,13 @@ public class ResumeController {
                 
                 // 이력서 수정
                 resumeService.updateResume(resumeVo);
-                System.out.println(">>> [ResumeController] 이력서 수정 완료");
+                
                 
             } else {
                 // 신규 작성 모드
-                System.out.println(">>> [ResumeController] 이력서 신규 저장 모드");
+                
                 resumeService.saveResumeWithDetails(resumeVo);
-                System.out.println(">>> [ResumeController] 이력서 저장 완료");
+                
             }
             
             return ResponseEntity.ok("이력서가 성공적으로 저장되었습니다.");

@@ -32,12 +32,12 @@ public class SkillServiceImpl implements SkillService{
 	@Override
 	public List<SkillVo> getSkillsByKeyword(String keyword) {
 		try {
-			System.out.println(">>> [SkillService] 키워드 검색 시작: " + keyword);
+			
 			List<SkillVo> result = skillDao.getSkillsByKeyword(keyword);
-			System.out.println(">>> [SkillService] 검색 결과 개수: " + (result != null ? result.size() : 0));
+			
 			return result;
 		} catch (Exception e) {
-			System.err.println(">>> [SkillService] 키워드 검색 실패: " + e.getMessage());
+			
 			e.printStackTrace();
 			throw e;
 		}

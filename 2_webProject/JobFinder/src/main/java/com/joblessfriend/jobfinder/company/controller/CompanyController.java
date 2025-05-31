@@ -63,7 +63,7 @@ public class CompanyController {
 	public ResponseEntity<Integer> companyUpdate(@RequestBody CompanyVo companyVo){
 		
 		logger.info("기업회원 정보 수정-어드민");
-		System.out.println("입력정보확인: " + companyVo.toString());
+		
 
 		// 기존 데이터 조회
 		CompanyVo existCompanyVo = companyService.companySelectOne(companyVo.getCompanyId());
@@ -101,7 +101,7 @@ public class CompanyController {
 		}
 		
 
-		System.out.println("바꾼 후 정보: " + existCompanyVo.toString());
+		
 
 		// 수정 처리
 		int result = companyService.companyUpdateOne(existCompanyVo);
@@ -114,7 +114,7 @@ public class CompanyController {
 	@DeleteMapping("/info/{companyId}")
 	public ResponseEntity<Integer> companyDelete(@PathVariable int companyId, HttpSession session){
 		logger.info("기업회원 탈퇴프로세스 진행-기업회원");
-		System.out.println(companyId); // 디버깅 출력
+		
 
 		int result = companyService.companyDeleteOne(companyId);
 

@@ -94,7 +94,7 @@ public class ResumeParser {
                 }
             }
             resumeVo.setTagIds(tagIds);
-            System.out.println(">>> [ResumeParser] 태그 ID " + tagIds.size() + "개 파싱 완료");
+            
         }
 
         return resumeVo;

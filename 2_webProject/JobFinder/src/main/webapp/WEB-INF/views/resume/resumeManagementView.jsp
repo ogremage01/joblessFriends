@@ -30,7 +30,7 @@
 					
 					<div class="item">
 
-						<button class="write-btn" onclick="location.href='/resume/write'">
+						<button class="write-btn">
 							이력서 작성하기
 						</button>
 
@@ -67,18 +67,15 @@
 										<div class="button-wrapper">
 											<%-- 삭제 버튼 --%>
 
-											<form action="/resume/delete" method="post">
-												<input type="hidden" name="resumeId"
-													value="${resume.resumeId}" />
-												<button type="submit" class="delete-btn">x</button>
-											</form>
+											<button class="delete-btn" data-resume-id="${resume.resumeId}">x</button>
+
 
 
 											<%-- 수정 버튼 --%>
 
-											<a href="/resume/write?resumeId=${resume.resumeId}">
-												<button class="edit-btn">수정하기</button>
-											</a>
+											
+												<button data-resume-id="${resume.resumeId}" class="edit-btn">수정하기</button>
+											
 
 										</div>
 									</div>
@@ -94,4 +91,6 @@
 
 	<jsp:include page="../common/footer.jsp" />
 </body>
+
+<script src="/js/resume/resumeManagement.js"></script>
 </html>

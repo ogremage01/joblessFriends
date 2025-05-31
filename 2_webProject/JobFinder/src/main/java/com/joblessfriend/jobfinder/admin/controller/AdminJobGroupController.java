@@ -41,9 +41,7 @@ public class AdminJobGroupController {
 		searchVo.setKeyword(keyword);
 		searchVo.setPage(page);
 		
-		System.out.println();
-		System.out.println(searchVo.toString());
-		System.out.println();
+
 		
 		int totalPage = jobGroupService.jobGroupCount(searchVo);
 		Pagination pagination = new Pagination(totalPage, searchVo);
