@@ -1,5 +1,6 @@
 package com.joblessfriend.jobfinder.resume.dao;
 
+import com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo;
 import com.joblessfriend.jobfinder.resume.domain.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,11 @@ public class ResumeApplyDaoImpl implements ResumeApplyDao {
     @Override
     public void insertResumeManage(ResumeManageVo manageVo) {
         sqlSession.insert(namespace + ".insertResumeManage", manageVo);
+    }
+
+    @Override
+    public List<JobPostQuestionVo> findQuestionsByJobPostId(int jobPostId) {
+        return sqlSession.selectList(namespace + ".findQuestionsByJobPostId", jobPostId);
     }
 
     // getResumeWithAllDetails, getSchoolsByResumeId 등 조회 메서드는 필요 시 유지

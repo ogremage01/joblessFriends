@@ -1,5 +1,6 @@
 package com.joblessfriend.jobfinder.resume.service;
 
+import com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo;
 import com.joblessfriend.jobfinder.resume.dao.ResumeApplyDao;
 import com.joblessfriend.jobfinder.resume.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,4 +102,10 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
         resumeApplyDao.insertResumeManage(manageVo);
         return applyId;
     }
+
+
+    public List<JobPostQuestionVo> getQuestionsByJobPostId(int jobPostId) {
+        return resumeApplyDao.findQuestionsByJobPostId(jobPostId);
+    }
+
 }

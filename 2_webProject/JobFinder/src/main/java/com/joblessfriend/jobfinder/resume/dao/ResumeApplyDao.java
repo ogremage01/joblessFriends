@@ -1,5 +1,6 @@
 package com.joblessfriend.jobfinder.resume.dao;
 
+import com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo;
 import com.joblessfriend.jobfinder.resume.domain.*;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface ResumeApplyDao {
     void insertResumeTagCopy(int resumeId, int tagId);
 
     void insertResumeManage(ResumeManageVo manageVo);
+
+    List<JobPostQuestionVo> findQuestionsByJobPostId(int jobPostId);
 }

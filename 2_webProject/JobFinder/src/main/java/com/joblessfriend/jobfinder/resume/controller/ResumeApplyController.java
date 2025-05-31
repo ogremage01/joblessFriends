@@ -1,12 +1,15 @@
 package com.joblessfriend.jobfinder.resume.controller;
 
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
+import com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo;
 import com.joblessfriend.jobfinder.resume.service.ResumeApplyService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/resume/apply")
@@ -42,4 +45,22 @@ public class ResumeApplyController {
             return ResponseEntity.status(500).body("지원 실패: " + e.getMessage());
         }
     }
+
+    @GetMapping("/questions")
+    @ResponseBody
+    public ResponseEntity<?> getQuestions(@RequestParam("jobPostId") int jobPostId) {
+        try {
+            List<JobPostQuestionVo> questions = resumeApplyService.getQuestionsByJobPostId(jobPostId);
+
+            if (questions == null || questions.isEmpty()) {
+                return ResponseEntity.ok().body(List.of()); // 빈 리스트 반환
+            }
+
+            return ResponseEntity.ok(questions);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("질문 조회 실패");
+        }
+    }
+
 }
