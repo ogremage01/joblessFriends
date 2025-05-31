@@ -436,13 +436,14 @@ function renderPagination(pagination) {
             <button class="page-btn" data-page="${pagination.endPage + 1}">»</button>
         `);
     }
-}$(document).on('click', '.apply-btn', function () {
+}
+
+$(document).on('click', '.apply-btn', function () {
     if (!resumeList || resumeList.length === 0) {
         Swal.fire('📭 등록된 이력서가 없습니다.');
         return;
     }
 
-    // 이력서 목록 렌더링
     const html = resumeList.map(r => `
         <label class="resume-item">
             <div class="resume-radio-row">
@@ -470,9 +471,6 @@ function renderPagination(pagination) {
         showCancelButton: true,
         confirmButtonText: '지원하기',
         cancelButtonText: '취소',
-        customClass: {
-            popup: 'resume-modal',
-        },
         preConfirm: () => {
             const selected = $('input[name="resumeRadio"]:checked').val();
             if (!selected) {
@@ -484,21 +482,17 @@ function renderPagination(pagination) {
     }).then(result => {
         if (result.isConfirmed) {
             const selectedResumeId = result.value;
-
-            // ✅ 실제 지원 처리 (예시: Ajax 또는 form 전송 가능)
-            console.log("🔥 최종 선택된 resumeId:", selectedResumeId);
-
-            // ✅ 입사지원 완료 알림
-            Swal.fire({
-                icon: 'success',
-                title: '🎉 입사지원 완료!',
-                text: '해당 이력서로 정상적으로 지원이 완료되었습니다.',
-                confirmButtonText: '확인'
+            $.ajax({
+                url: "/resume/apply",
+                method: "POST",
+                data: { resumeId: selectedResumeId },
+                success: function (response) {
+                    Swal.fire('🎉 지원 완료', response, 'success');
+                },
+                error: function (xhr) {
+                    Swal.fire('❌ 오류 발생', xhr.responseText || '서버 오류입니다.', 'error');
+                }
             });
-
-            // 실제 처리 로직 예시:
-            // $.post('/Recruitment/apply', { resumeId: selectedResumeId, jobPostId: xxx }, ...)
         }
     });
 });
-
