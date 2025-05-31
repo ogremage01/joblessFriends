@@ -436,27 +436,43 @@ function renderPagination(pagination) {
             <button class="page-btn" data-page="${pagination.endPage + 1}">»</button>
         `);
     }
-}
-
-// 지원하기 버튼 클릭 시 모달 띄우기
-$(document).on('click', '.apply-btn', function () {
+}$(document).on('click', '.apply-btn', function () {
     if (!resumeList || resumeList.length === 0) {
         Swal.fire('📭 등록된 이력서가 없습니다.');
         return;
     }
 
+    // 이력서 목록 렌더링
     const html = resumeList.map(r => `
-        <label style="display:block; margin: 5px 0;">
-            <input type="radio" name="resumeRadio" value="${r.resumeId}">
-            ${r.title} (작성일: ${r.modifiedAt})
+        <label class="resume-item">
+            <div class="resume-radio-row">
+                <div class="resume-left">
+                    <input type="radio" name="resumeRadio" value="${r.resumeId}">
+                    <div>
+                        <div class="resume-title">${r.title}</div>
+                        <div class="resume-meta">🗓 작성일: ${r.modifiedAt}</div>
+                    </div>
+                </div>
+                <div class="resume-match">적합도 90%</div>
+            </div>
         </label>
     `).join('');
 
     Swal.fire({
         title: '📄 이력서를 선택하세요',
-        html: `<div style="text-align:left;">${html}</div>`,
+        html: `
+            <div class="resume-list">${html}</div>
+            <p style="font-size: 13px; color: red; margin-top: 10px;">
+                ⚠️ 지원한 이력서는 <b>수정은 가능하지만 재지원은 불가능합니다.</b>
+            </p>
+        `,
+        width: '650px',
         showCancelButton: true,
         confirmButtonText: '지원하기',
+        cancelButtonText: '취소',
+        customClass: {
+            popup: 'resume-modal',
+        },
         preConfirm: () => {
             const selected = $('input[name="resumeRadio"]:checked').val();
             if (!selected) {
@@ -467,11 +483,22 @@ $(document).on('click', '.apply-btn', function () {
         }
     }).then(result => {
         if (result.isConfirmed) {
-            console.log("선택된 resumeId:", result.value);
-            // TODO: 지원 요청 처리
+            const selectedResumeId = result.value;
+
+            // ✅ 실제 지원 처리 (예시: Ajax 또는 form 전송 가능)
+            console.log("🔥 최종 선택된 resumeId:", selectedResumeId);
+
+            // ✅ 입사지원 완료 알림
+            Swal.fire({
+                icon: 'success',
+                title: '🎉 입사지원 완료!',
+                text: '해당 이력서로 정상적으로 지원이 완료되었습니다.',
+                confirmButtonText: '확인'
+            });
+
+            // 실제 처리 로직 예시:
+            // $.post('/Recruitment/apply', { resumeId: selectedResumeId, jobPostId: xxx }, ...)
         }
     });
 });
-
-
 
