@@ -82,10 +82,14 @@ class ResumeDaoImpl implements ResumeDao{
                 // 자격증 ID 리스트를 CertificateVo 리스트로 변환
                 System.out.println(">>> [ResumeDaoImpl] 자격증 정보 조회...");
                 List<CertificateResumeVo> certificateList = getCertificateByResumeId(resumeId);
-                 
-
                 resume.setCertificateList(certificateList);
                 System.out.println(">>> [ResumeDaoImpl] 자격증 정보 " + certificateList.size() + "개 조회 완료");
+                
+                System.out.println(">>> [ResumeDaoImpl] 태그 정보 조회...");
+                List<Long> tagIds = getTagIdsByResumeId(resumeId);
+                // ResumeVo에는 skillList가 있지만 현재는 tagIds만 저장
+                // 필요에 따라 SkillService를 통해 전체 SkillVo 리스트로 변환할 수 있음
+                System.out.println(">>> [ResumeDaoImpl] 태그 정보 " + tagIds.size() + "개 조회 완료");
                 
                 System.out.println(">>> [ResumeDaoImpl] 모든 하위 데이터 조회 완료");
             } else {
@@ -123,6 +127,11 @@ class ResumeDaoImpl implements ResumeDao{
     @Override
     public List<CertificateResumeVo> getCertificateByResumeId(int resumeId) {
         return sqlSession.selectList(namespace + ".getCertificateByResumeId", resumeId);
+    }
+
+    @Override
+    public List<Long> getTagIdsByResumeId(int resumeId) {
+        return sqlSession.selectList(namespace + ".getTagIdsByResumeId", resumeId);
     }
 
 	@Override

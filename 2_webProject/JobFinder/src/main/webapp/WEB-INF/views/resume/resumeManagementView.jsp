@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmf" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
@@ -15,40 +16,7 @@
 
 	<jsp:include page="../common/header.jsp" />
 
-<%--<<<<<<< HEAD--%>
-<%--	<!-- 테이블 헤더 -->--%>
-<%--    <div class="table-header">--%>
-<%--      <div>이력서</div>--%>
-<%--      <div>관리</div>--%>
-<%--    </div>--%>
-<%--	--%>
-<%--	<!-- 내용 분기처리 (이력서 없을때 또는 있을때) -->--%>
-<%--    <c:choose>--%>
-<%--    --%>
-<%--	&lt;%&ndash; 이력서가 없을때 &ndash;%&gt;--%>
-<%--      <c:when test="${fn:length(resumes) == 0}">--%>
-<%--        <div class="resume-empty">--%>
-<%--          아직 등록한 이력서가 없습니다.<br />--%>
-<%--          <a href="/resume/write" class="resume-write-link">이력서 작성하러 가기 →</a>--%>
-<%--        </div>--%>
-<%--      </c:when>--%>
-<%--      --%>
-<%--      &lt;%&ndash; 이력서가 있을때 &ndash;%&gt;--%>
-<%--      <c:otherwise>--%>
-<%--        <c:forEach var="resume" items="${resumes}">--%>
-<%--          <div class="resume-card">--%>
-<%--            <div class="resume-content">--%>
-<%--              <div class="resume-title">${resume.memberName}</div>--%>
-<%--              <div class="resume-meta">--%>
-<%--                <span>경력</span>--%>
-<%--                <span>${resume.profile}</span>--%>
-<%--              </div>--%>
-<%--              <div class="resume-meta resume-skill">--%>
-<%--                <span>스킬</span>--%>
-<%--              </div>--%>
-<%--              <div class="resume-date">최종수정일 ${resume.birthDate}</div>--%>
-<%--            </div>--%>
-<%--=======--%>
+
 	<div id="container">
 		<div id="containerWrap">
 			<!-- 사이드바 -->
@@ -88,14 +56,12 @@
 								<c:forEach var="resume" items="${resumes}">
 									<div class="resume-card">
 										<div class="resume-content">
-											<div class="resume-title">${resume.memberName}</div>
+											<div class="resume-title">${resume.title}</div>
 											<div class="resume-meta">
-												<span>경력</span> <span>${resume.profile}</span>
+												
 											</div>
-											<div class="resume-meta resume-skill">
-												<span>스킬</span>
-											</div>
-											<div class="resume-date">최종수정일 ${resume.modifyDate}</div>
+											<div class="resume-date">최초작성일 <fmf:formatDate value="${resume.createDate}"/> </div>
+											<div class="resume-date">최종수정일 <fmf:formatDate value="${resume.modifyDate}"/> </div>
 										</div>
 
 										<div class="button-wrapper">

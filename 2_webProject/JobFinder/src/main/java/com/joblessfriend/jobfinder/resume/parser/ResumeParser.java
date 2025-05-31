@@ -78,6 +78,24 @@ public class ResumeParser {
         resumeVo.setEducationList(parseEducationList((List<Map<String, Object>>) requestMap.get("educations")));
         resumeVo.setCertificateList(parseCertificateList((List<Map<String, Object>>) requestMap.get("certificates")));
         resumeVo.setPortfolioList(parsePortfolioList((List<Map<String, Object>>) requestMap.get("portfolios")));
+        
+        // 태그 ID 리스트 저장 (임시 속성 추가)
+        List<Object> tagIdsRaw = (List<Object>) requestMap.get("tagIds");
+        if (tagIdsRaw != null) {
+            List<Long> tagIds = new ArrayList<>();
+            for (Object tagIdObj : tagIdsRaw) {
+                if (tagIdObj != null) {
+                    try {
+                        Long tagId = Long.parseLong(tagIdObj.toString());
+                        tagIds.add(tagId);
+                    } catch (NumberFormatException e) {
+                        System.err.println("태그 ID 파싱 오류: " + tagIdObj);
+                    }
+                }
+            }
+            resumeVo.setTagIds(tagIds);
+            System.out.println(">>> [ResumeParser] 태그 ID " + tagIds.size() + "개 파싱 완료");
+        }
 
         return resumeVo;
     }

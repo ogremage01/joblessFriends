@@ -34,6 +34,9 @@ public class ResumeVo {
 	private List<EducationVo> educationList;
 	private List<PortfolioVo> portfolioList;
 	private List<SchoolVo> schoolList;
+	
+	// 태그 ID 임시 저장용 (파싱 시 사용)
+	private List<Long> tagIds;
 
 	// getter, setter
 

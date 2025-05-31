@@ -663,3 +663,131 @@ textarea::placeholder {
   width: 100%;
   text-align: center;
 }
+
+/* 포트폴리오 미리보기 */
+.portfolio-preview-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.portfolio-preview-icon {
+  color: #28a745;
+  font-size: 16px;
+}
+
+.portfolio-preview-text {
+  color: #666;
+  font-size: 14px;
+}
+
+/* 스킬 해시태그 UI 스타일 */
+.skill-hashtag-box {
+  position: relative;
+  width: 100%;
+}
+
+.selected-skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+  min-height: 40px;
+  padding: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+}
+
+.skill-hashtag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  padding: 4px 8px;
+  color: #F69800;
+  background-color: #fff3e0;
+  border:1px solid #f69800;
+  border-radius: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 150px;
+  overflow: hidden;
+}
+
+.remove-skill-tag {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.remove-skill-tag:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+#skillInput {
+  width: 95%;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+#skillInput:focus {
+  border-color: #F69800;
+  box-shadow: 0 0 0 2px rgba(246, 152, 0, 0.1);
+}
+
+.autocomplete-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete-list li {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s;
+}
+
+.autocomplete-list li:hover {
+  background-color: #f5f5f5;
+}
+
+.autocomplete-list li:last-child {
+  border-bottom: none;
+}
+
+/* 스킬 태그가 비어있을 때 */
+.selected-skill-tags:empty::before {
+  content: "선택된 스킬이 없습니다. 아래 입력창에서 스킬을 추가해보세요.";
+  color: #999;
+  font-size: 14px;
+  font-style: italic;
+}

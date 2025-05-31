@@ -27,6 +27,7 @@ public interface ResumeDao {
     List<EducationVo> getEducationsByResumeId(int resumeId);
     List<PortfolioVo> getPortfoliosByResumeId(int resumeId);
     List<CertificateResumeVo> getCertificateByResumeId(int resumeId);
+    List<Long> getTagIdsByResumeId(int resumeId);
 	
 	// 이력서 메인 정보 저장/수정
     void insertResume(ResumeVo resume);

@@ -375,105 +375,74 @@ window.isEditMode = true;
 window.currentResumeId = '${jsResumeId}';
 window.uploadedImageUrl = '${jsProfile}';
 
+// 기존 스킬 데이터 - 안전하게 초기화
+window.existingSkills = [];
+
 // 프로필 이미지 초기화
 document.addEventListener('DOMContentLoaded', function() {
   if (typeof window.initProfileImage === 'function') {
     window.initProfileImage();
   }
   
+  // 기존 스킬 데이터 로드 (서버에서 안전하게 처리됨)
+  if (window.existingSkills && window.existingSkills.length > 0) {
+    window.existingSkills.forEach(function(skill) {
+      selectedSkills.add(String(skill.tagId));
+    });
+    
+    // 스킬 UI 초기화 후 기존 스킬 표시
+    setTimeout(function() {
+      const selectedSkillTags = document.getElementById("selectedSkillTags");
+      if (selectedSkillTags) {
+        window.existingSkills.forEach(function(skill) {
+          const tagElem = document.createElement("span");
+          tagElem.className = "skill-hashtag";
+          tagElem.textContent = "#" + skill.tagName;
+          tagElem.dataset.tagId = skill.tagId;
+          
+          const xBtn = document.createElement("button");
+          xBtn.type = "button";
+          xBtn.className = "remove-skill-tag";
+          xBtn.textContent = "×";
+          xBtn.addEventListener("click", function() {
+            selectedSkills.delete(String(skill.tagId));
+            tagElem.remove();
+          });
+          tagElem.appendChild(xBtn);
+          selectedSkillTags.appendChild(tagElem);
+        });
+      }
+    }, 100);
+  }
+  
   // 기존 학력 데이터에 자동완성 기능 연결
-  document.querySelectorAll('.school-entry').forEach(entry => {
+  document.querySelectorAll('.school-entry').forEach(function(entry) {
     const sortationSelect = entry.querySelector('select[name="sortation"]');
-    const fieldsContainer = entry.querySelector('.grid-3, .grid-2').parentElement;
+    const fieldsContainer = entry.querySelector('.grid-3, .grid-2');
     
     if (sortationSelect && fieldsContainer) {
       const sortation = sortationSelect.value;
       if (sortation) {
-        attachAutocomplete(fieldsContainer, sortation);
+        attachAutocomplete(fieldsContainer.parentElement, sortation);
       }
-      
-      // 구분 변경 시 필드 업데이트
-      sortationSelect.addEventListener('change', function() {
-        const newSortation = this.value;
-        const schoolFieldsContainer = entry.querySelector('.grid-3, .grid-2').parentElement;
-        
-        // 기존 필드 정보 저장
-        const currentData = {
-          schoolName: entry.querySelector('input[name="schoolName"]')?.value || '',
-          status: entry.querySelector('select[name="status"]')?.value || '졸업예정'
-        };
-        
-        // 필드 재생성
-        if (newSortation === 'high') {
-          schoolFieldsContainer.innerHTML = `
-            <div class="grid-3">
-              <div class="field-block school-autocomplete-block">
-                <label>학교명</label>
-                <input type="text" name="schoolName" placeholder="학교명을 입력해주세요" value="\${currentData.schoolName}" autocomplete="off" />
-                <ul class="autocomplete-list" style="display: none;"></ul>
-              </div>
-              <div class="field-block">
-                <label>졸업년도</label>
-                <input type="text" name="yearOfGraduation" placeholder="예시) 2025" />
-              </div>
-              <div class="field-block">
-                <label>졸업상태</label>
-                <select name="status">
-                  <option value="졸업예정">졸업예정</option>
-                  <option value="졸업">졸업</option>
-                  <option value="재학중">재학중</option>
-                </select>
-              </div>
-            </div>
-          `;
-        } else {
-          schoolFieldsContainer.innerHTML = `
-            <div class="grid-2">
-              <div class="field-block school-autocomplete-block">
-                <label>학교명</label>
-                <input type="text" name="schoolName" placeholder="대학교명을 입력해주세요" value="\${currentData.schoolName}" autocomplete="off" />
-                <ul class="autocomplete-list" style="display: none;"></ul>
-              </div>
-              <div class="field-block">
-                <label>전공명</label>
-                <input type="text" name="majorName" placeholder="전공명을 입력해주세요" autocomplete="off" />
-                <ul class="autocomplete-list" style="display: none;"></ul>
-              </div>
-            </div>
-            <div class="grid-3">
-              <div class="field-block">
-                <label>입학년월</label>
-                <input type="text" name="startDate" placeholder="예시) 2020.03" />
-              </div>
-              <div class="field-block">
-                <label>졸업년월</label>
-                <input type="text" name="endDate" placeholder="예시) 2024.02" />
-              </div>
-              <div class="field-block">
-                <label>졸업상태</label>
-                <select name="status">
-                  <option value="졸업예정">졸업예정</option>
-                  <option value="졸업">졸업</option>
-                  <option value="재학중">재학중</option>
-                </select>
-              </div>
-            </div>
-          `;
-        }
-        
-        // 상태 선택 복원
-        const statusSelect = schoolFieldsContainer.querySelector('select[name="status"]');
-        if (statusSelect && currentData.status) {
-          statusSelect.value = currentData.status;
-        }
-        
-        // 자동완성 기능 재연결
-        attachAutocomplete(schoolFieldsContainer, newSortation);
-      });
     }
   });
 });
 </script>
+
+<!-- 기존 스킬 데이터를 JavaScript로 안전하게 추가 -->
+<c:if test="${not empty skillList}">
+<c:forEach var="skill" items="${skillList}">
+<script>
+if (window.existingSkills) {
+  window.existingSkills.push({
+    tagId: ${skill.tagId},
+    tagName: '${fn:replace(skill.tagName, "'", "\\'")}'
+  });
+}
+</script>
+</c:forEach>
+</c:if>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-3fp9tS8p9A2Mq7Qz+S8jfwD+xdgu9T+O+NRZz8N5eA8=" crossorigin="anonymous"></script>

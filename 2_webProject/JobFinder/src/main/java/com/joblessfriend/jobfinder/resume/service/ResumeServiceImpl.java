@@ -203,6 +203,16 @@ public class ResumeServiceImpl implements ResumeService {
                 }
             }
         }
+        
+        // 7. 태그 정보 저장
+        if (resumeVo.getTagIds() != null && !resumeVo.getTagIds().isEmpty()) {
+            for (Long tagId : resumeVo.getTagIds()) {
+                if (tagId != null && tagId > 0) {
+                    resumeDao.insertResumeTag(resumeId, tagId);
+                    System.out.println(">>> [ResumeService] 태그 정보 저장: " + tagId);
+                }
+            }
+        }
     }
     
     // 이력서 하위 데이터 삭제 공통 메서드
@@ -214,6 +224,7 @@ public class ResumeServiceImpl implements ResumeService {
         resumeDao.deleteEducationsByResumeId(resumeId);
         resumeDao.deleteCertificatesByResumeId(resumeId);
         resumeDao.deletePortfoliosByResumeId(resumeId);
+        resumeDao.deleteTagsByResumeId(resumeId);
         
         System.out.println(">>> [ResumeService] 기존 하위 데이터 삭제 완료");
     }

@@ -1,9 +1,14 @@
+// 전역 변수들
+let addressFullText = '';
+
+// 선택된 스킬들을 추적하는 Set
+let selectedSkills = new Set();
+
 // 전역 변수 (JSP에서 설정되지 않았을 경우 기본값 사용)
 let ignoreNextInput = false;
 if (typeof window.uploadedImageUrl === 'undefined') window.uploadedImageUrl = '';
 if (typeof window.isEditMode === 'undefined') window.isEditMode = false;
 if (typeof window.currentResumeId === 'undefined') window.currentResumeId = null;
-const selectedSkills = new Set(); // 사용자 선택한 스킬 ID 저장
 
 // DOM 로드 완료 후 실행
 document.addEventListener("DOMContentLoaded", function () {
@@ -14,95 +19,20 @@ document.addEventListener("DOMContentLoaded", function () {
   const skillContainer = document.getElementById("skillContainer");
   const selectedJobGroupLabel = document.getElementById("selectedJobGroupLabel");
 
+  // 스킬 해시태그 UI 초기화
+  renderSkillHashtagInput();
+
   // 작성완료 버튼 이벤트 등록
   const finishBtn = document.querySelector('.btn-finish');
   if (finishBtn) {
     finishBtn.addEventListener('click', saveResume);
   }
 
-  // 스킬 해시태그+자동완성 UI 렌더링 함수
-  function renderSkillHashtagInput() {
-    const skillContainer = document.getElementById("skillContainer");
-    skillContainer.innerHTML = `
-      <div class="skill-hashtag-box">
-        <div id="selectedSkillTags" class="selected-skill-tags"></div>
-        <input type="text" id="skillInput" placeholder="#스킬 입력" autocomplete="off" />
-        <ul id="skillAutocompleteList" class="autocomplete-list" style="display:none;"></ul>
-      </div>
-    `;
-
-    const skillInput = document.getElementById("skillInput");
-    const autocompleteList = document.getElementById("skillAutocompleteList");
-    const selectedSkillTags = document.getElementById("selectedSkillTags");
-
-    // 입력 시 자동완성
-    let timer;
-    skillInput.addEventListener("input", function () {
-      const keyword = this.value.trim();
-      clearTimeout(timer);
-      if (keyword.length < 2) {
-        autocompleteList.style.display = "none";
-        return;
-      }
-      timer = setTimeout(() => {
-        fetch("/skill/autocomplete?keyword=" + encodeURIComponent(keyword))
-          .then(res => res.json())
-          .then(data => {
-            autocompleteList.innerHTML = "";
-            if (data.length > 0) {
-              autocompleteList.style.display = "block";
-              data.forEach(tag => {
-                // 이미 선택된 태그는 표시하지 않음
-                if (selectedSkills.has(String(tag.tagId))) return;
-                const li = document.createElement("li");
-                li.textContent = tag.tagName;
-                li.dataset.tagId = tag.tagId;
-                li.addEventListener("mousedown", function () {
-                  addSkillTag(tag.tagId, tag.tagName);
-                  skillInput.value = "";
-                  autocompleteList.style.display = "none";
-                });
-                autocompleteList.appendChild(li);
-              });
-            } else {
-              autocompleteList.style.display = "none";
-            }
-          });
-      }, 150);
-    });
-
-    // 엔터/쉼표 입력 시 자동완성 첫번째 선택
-    skillInput.addEventListener("keydown", function(e) {
-      if ((e.key === "Enter" || e.key === ",") && autocompleteList.style.display === "block") {
-        const first = autocompleteList.querySelector("li");
-        if (first) {
-          first.dispatchEvent(new Event("mousedown"));
-          e.preventDefault();
-        }
-      }
-    });
-
-    // 태그 추가 함수
-    function addSkillTag(tagId, tagName) {
-      if (selectedSkills.has(String(tagId))) return;
-      selectedSkills.add(String(tagId));
-      const tagElem = document.createElement("span");
-      tagElem.className = "skill-hashtag";
-      tagElem.textContent = `#${tagName}`;
-      tagElem.dataset.tagId = tagId;
-      // X버튼
-      const xBtn = document.createElement("button");
-      xBtn.type = "button";
-      xBtn.className = "remove-skill-tag";
-      xBtn.textContent = "×";
-      xBtn.addEventListener("click", function() {
-        selectedSkills.delete(String(tagId));
-        tagElem.remove();
-      });
-      tagElem.appendChild(xBtn);
-      selectedSkillTags.appendChild(tagElem);
-    }
-  }
+  
+  const cancelBtn = document.querySelector('.btn-cancel');
+  cancelBtn.addEventListener('click', function(){ 
+	confirm("작성 중인 이력서가 있습니다. 정말로 취소하시겠습니까?") ? window.location.href = '/resume/management' : null;
+	    });
   
   // 학력 관련 기능 - 더 이상 사용하지 않음
   // const eduContainer = document.getElementById("edu-dynamic-fields");
@@ -156,6 +86,90 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 });
+
+// 스킬 해시태그+자동완성 UI 렌더링 함수
+function renderSkillHashtagInput() {
+  const skillContainer = document.getElementById("skillContainer");
+  skillContainer.innerHTML = `
+    <div class="skill-hashtag-box">
+      <div id="selectedSkillTags" class="selected-skill-tags"></div>
+      <input type="text" id="skillInput" placeholder="#스킬 입력" autocomplete="off" />
+      <ul id="skillAutocompleteList" class="autocomplete-list" style="display:none;"></ul>
+    </div>
+  `;
+
+  const skillInput = document.getElementById("skillInput");
+  const autocompleteList = document.getElementById("skillAutocompleteList");
+  const selectedSkillTags = document.getElementById("selectedSkillTags");
+
+  // 입력 시 자동완성
+  let timer;
+  skillInput.addEventListener("input", function () {
+    const keyword = this.value.trim();
+    clearTimeout(timer);
+    if (keyword.length < 2) {
+      autocompleteList.style.display = "none";
+      return;
+    }
+    timer = setTimeout(() => {
+      fetch("/skill/autocomplete?keyword=" + encodeURIComponent(keyword))
+        .then(res => res.json())
+        .then(data => {
+          autocompleteList.innerHTML = "";
+          if (data.length > 0) {
+            autocompleteList.style.display = "block";
+            data.forEach(tag => {
+              // 이미 선택된 태그는 표시하지 않음
+              if (selectedSkills.has(String(tag.tagId))) return;
+              const li = document.createElement("li");
+              li.textContent = tag.tagName;
+              li.dataset.tagId = tag.tagId;
+              li.addEventListener("mousedown", function () {
+                addSkillTag(tag.tagId, tag.tagName);
+                skillInput.value = "";
+                autocompleteList.style.display = "none";
+              });
+              autocompleteList.appendChild(li);
+            });
+          } else {
+            autocompleteList.style.display = "none";
+          }
+        });
+    }, 150);
+  });
+
+  // 엔터/쉼표 입력 시 자동완성 첫번째 선택
+  skillInput.addEventListener("keydown", function(e) {
+    if ((e.key === "Enter" || e.key === ",") && autocompleteList.style.display === "block") {
+      const first = autocompleteList.querySelector("li");
+      if (first) {
+        first.dispatchEvent(new Event("mousedown"));
+        e.preventDefault();
+      }
+    }
+  });
+
+  // 태그 추가 함수
+  function addSkillTag(tagId, tagName) {
+    if (selectedSkills.has(String(tagId))) return;
+    selectedSkills.add(String(tagId));
+    const tagElem = document.createElement("span");
+    tagElem.className = "skill-hashtag";
+    tagElem.textContent = `#${tagName}`;
+    tagElem.dataset.tagId = tagId;
+    // X버튼
+    const xBtn = document.createElement("button");
+    xBtn.type = "button";
+    xBtn.className = "remove-skill-tag";
+    xBtn.textContent = "×";
+    xBtn.addEventListener("click", function() {
+      selectedSkills.delete(String(tagId));
+      tagElem.remove();
+    });
+    tagElem.appendChild(xBtn);
+    selectedSkillTags.appendChild(tagElem);
+  }
+}
 
 // 학력 엔트리 생성 함수 (이름 변경: createEducationEntry -> createSchoolEntry)
 function createSchoolEntry() {

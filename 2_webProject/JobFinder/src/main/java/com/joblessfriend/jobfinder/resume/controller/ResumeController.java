@@ -31,6 +31,8 @@ import com.joblessfriend.jobfinder.resume.service.ResumeService;
 import com.joblessfriend.jobfinder.jobGroup.service.JobGroupService;
 import com.joblessfriend.jobfinder.job.service.JobService;
 import com.joblessfriend.jobfinder.util.file.FileUtils;
+import com.joblessfriend.jobfinder.skill.domain.SkillVo;
+import com.joblessfriend.jobfinder.skill.service.SkillService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -53,6 +55,9 @@ public class ResumeController {
 	
 	@Autowired
 	private JobService jobService;
+	
+	@Autowired
+	private SkillService skillService;
 	
 	@Value("${file.upload.resume.maxSize:10485760}") // 10MB 기본값
 	private long maxFileSize;
@@ -104,6 +109,15 @@ public class ResumeController {
 	            model.addAttribute("resumeData", resumeVo);
 	            model.addAttribute("isEditMode", true);
 	            model.addAttribute("currentResumeId", resumeId);
+	            
+	            // 스킬 데이터 추가
+	            try {
+	                List<SkillVo> skillList = skillService.resumeTagList(resumeId);
+	                model.addAttribute("skillList", skillList != null ? skillList : new ArrayList<>());
+	            } catch (Exception e) {
+	                System.err.println(">>> [ResumeController] 스킬 데이터 조회 실패: " + e.getMessage());
+	                model.addAttribute("skillList", new ArrayList<>());
+	            }
 	            
 	            System.out.println(">>> [ResumeController] 이력서 데이터 모델에 추가 완료");
 	            
