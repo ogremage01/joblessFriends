@@ -9,7 +9,7 @@ $(document).ready(function () {
 		console.log("commentId:", commentId);
 
 		if (!memberId) {
-			alert("개인회원 전용 기능입니다. 개인 회원 전용으로 로그인해주세요.");
+			askConfirmLogin();
 			return;
 		}
 
@@ -120,13 +120,14 @@ $(document).ready(function () {
 		const contentReply = $('#inputReplyBox_' + commentId).val();
 		const urlStr = "/community/detail/replyUpload/" + commentId;
 
+
 		if (!contentReply.trim()) {
-			alert("답글을 입력해주세요.");
+			askConfirm("답글을");
 			return;
 		}
 		
 		if(contentReply.length>300){
-			alert("답글은 최대 300자까지 입력할 수 있습니다.");
+			askConfirmMax("답글");
 			return;
 		}
 
@@ -190,11 +191,11 @@ function replyUpdate(replyId){
 
 	console.log(currentContent);
     if (!currentContent.trim()) {
-        alert("수정 답글이 비었습니다!");
-        return;
-    }
+		askConfirm("답글을");
+		return;
+	}
 	if(currentContent.length>300){
-		alert("답글은 최대 300자까지 입력할 수 있습니다.");
+		askConfirmMax("답글");
 		return;
 	}
     

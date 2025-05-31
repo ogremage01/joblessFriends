@@ -12,7 +12,9 @@
 }
 
 .boxListOne:hover {
-	background-color: #F4F5F8;
+	/* background-color: #F4F5F8; */
+	box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
 }
 
 .boxListOne div {

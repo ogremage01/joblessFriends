@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="/css/community/communityCommonStyle.css">
 <link rel="stylesheet" href="/css/community/comment/commentStyle.css">
 <link rel="stylesheet" href="/css/community/comment/commentWrapStyle.css">
+<link rel="stylesheet" href="/css/community/toastPopup.css"> 
+
 <link rel="stylesheet"
 	href="/css/community/comment/commentWrapStyle.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -50,7 +52,7 @@
 							<div id="commentBtnWrap">
 								<p class='countComment'>0/300 자</p>
 								<button type="button" class="inputBtn"
-									onclick="alert(' 개인회원 전용 기능입니다. 개인 회원 전용으로 로그인해주세요.')">등록</button>
+									onclick="askConfirmLogin()">등록</button>
 							</div>
 						</div>
 						<!-- 댓글 입력시 정보부분: 오류 안나게 일단은 지정 -->
@@ -68,7 +70,7 @@
 							<div id="commentBtnWrap">
 								<p class='countComment'>0/300 자</p>
 								<button type="button" id="inputCommentBtn" class="inputBtn"
-									onclick="alert(' 개인회원 전용 기능입니다. 개인 회원 전용으로 로그인해주세요.')">등록</button>
+									onclick="askConfirmLogin()">등록</button>
 							</div>
 						</div>
 						
@@ -88,7 +90,7 @@
 					<div id="commentBtnWrap">
 						<p class='countComment'>0/1000자</p>
 						<button type="button" id="inputCommentBtn" class="inputBtn"
-									onclick="alert(' 개인회원 전용 기능입니다. 개인 회원 전용으로 로그인해주세요.')">등록</button>
+									onclick="askConfirmLogin()">등록</button>
 					</div>
 				</div>
 					<input type="hidden" id="communityNo" value="${community.communityId}" />
@@ -113,7 +115,13 @@
 		</c:choose>
 		<!-- 댓글 리스트가 여기에 들어옴 -->
 		<div id="commentContainer"></div>
+		<div id="askConfirm">
+		</div>
 	</div>
+	
+
+
+<script src="/js/community/toastPopup.js"></script>
 <script src="/js/community/postComment.js"></script>
 <script src="/js/community/reply.js"></script>
 

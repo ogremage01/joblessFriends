@@ -52,8 +52,7 @@ blockquote p {
 					<input type="hidden" name="no" value="${notice.noticeId}">
 
 					<div class="boxStyle contentBox">
-						<div id='noticeType'>
-							${notice.noticeCategory.noticeCategoryContent}</div>
+						<div id='noticeType'>${notice.noticeCategory.noticeCategoryContent}</div>
 						<h2 class="detailTitle">${notice.title}</h2>
 
 						<div id='infoContent'>
@@ -70,28 +69,26 @@ blockquote p {
 							<div style="width: 400px">
 								<svg xmlns="http://www.w3.org/2000/svg" width="400" height="24"
 									fill="#a2a6b1" class="bi bi-chat-left" viewBox="0 0 340 16">
-						  	<text x="0" y="12" font-size="12">
-									<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss"
-										value="${notice.createAt}" /> 작성</text>
-						  	<c:if test="${notice.modifiedAt ne null}">
-							  	<text x="143" y="12" font-size="12">|</text>
-							  	<text x="150" y="12" font-size="12">
-										<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss"
-											value="${notice.modifiedAt}" /> 수정</text>
-						  	</c:if>
-						</svg>
+								  	<text x="0" y="12" font-size="12">
+											<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss"
+												value="${notice.createAt}" /> 작성</text>
+								  	<c:if test="${notice.modifiedAt ne null}">
+									  	<text x="143" y="12" font-size="12">|</text>
+									  	<text x="150" y="12" font-size="12">
+												<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss"
+													value="${notice.modifiedAt}" /> 수정</text>
+								  	</c:if>
+								</svg>
 							</div>
 						</div>
 
-						<div id="contentText">
-							<c:out value="${contentHtml}" escapeXml="false" />
-						</div>
+						<div id="contentText"><c:out value="${contentHtml}" escapeXml="false" /></div>
 
 						<div id="bottomSide">
 							<p style="margin: 0px;"></p>
 							<c:if test="${sessionScope.userType eq 'admin'}">
 								<div id="aTags">
-									<a href="./update?no=${notice.noticeId}">수정</a> <a
+									<a href="/admin/community/notice/update?no=${notice.noticeId}">수정</a> <a
 										onclick="deleteNotice(${notice.noticeId})">삭제</a>
 								</div>
 							</c:if>
