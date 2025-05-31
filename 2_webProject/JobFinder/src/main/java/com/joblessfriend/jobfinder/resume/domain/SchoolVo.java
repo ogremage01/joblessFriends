@@ -1,5 +1,7 @@
 package com.joblessfriend.jobfinder.resume.domain;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data

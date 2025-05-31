@@ -103,21 +103,8 @@
 
 		<section class="section-block" id="section-edu">
 			<h2>학력</h2>
-			<div class="edu-row-combined">
-				<!-- 학교 구분 선택 -->
-				<div class="field-block">
-					<label>구분</label>
-					<select id="schoolTypeSelect">
-						<option value="">선택</option>
-						<option value="high">고등학교</option>
-						<option value="univ4">대학교(4년)</option>
-						<option value="univ2">대학교(2,3년)</option>
-					</select>
-				</div>
-
-				<!-- 여기에 동적으로 필드가 채워짐 -->
-				<div id="edu-dynamic-fields" style="display: contents;"></div>
-
+			<div id="school-container">
+				<!-- 동적으로 학력 항목이 추가됨 -->
 			</div>
 
 			<div class="add-education-btn">
@@ -138,7 +125,7 @@
 
 		<section class="section-block" id="section-training">
 			<h2>교육</h2>
-			<div id="education-container">
+			<div id="training-container">
 				<!-- 동적으로 교육 항목이 추가됨 -->
 			</div>
 

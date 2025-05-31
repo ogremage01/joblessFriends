@@ -349,7 +349,7 @@ textarea::placeholder {
 /* 구분 + 동적 필드 전체를 감싸는 행 */
 .edu-row-combined {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 16px;
   align-items: end;
   margin-top: 20px;
@@ -360,7 +360,7 @@ textarea::placeholder {
 .edu-row-combined .field-block {
   display: flex;
   flex-direction: column;
-  min-width: 160px;
+  min-width: 130px;
   position: relative;
 }
 
@@ -440,7 +440,7 @@ textarea::placeholder {
 
 .grid-2 {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
@@ -452,25 +452,6 @@ textarea::placeholder {
   box-sizing: border-box;
   border: 1px solid #ddd;
   height: 120px;
-}
-
-.career-entry {
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  position: relative; /* 삭제 버튼 절대 위치 기준 */
-  border-bottom: 1px solid #ddd;
-}
-
-.delete-btn {
-  position: absolute;
-  top: -50px;
-  right: 10px;
-  border: none;
-  background: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: #999;
 }
 
 .add-career-btn {
@@ -487,35 +468,12 @@ textarea::placeholder {
   font-weight: 700;
 }
 
-/* 교육 */
-.training-entry {
-  position: relative;
-  padding: 20px 0 30px 0;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 30px;
-}
-
 .grid-4 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 10px;
   margin-bottom: 15px;
 }
-
-.field-block {
-  width: 100%;
-  box-sizing: border-box;
-  margin-bottom: 40px;
-}
-
-.field-block textarea {
-  width: 100%;
-  resize: none;
-  font-family: inherit;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
 
 .add-education-btn {
   text-align: center;
@@ -528,17 +486,6 @@ textarea::placeholder {
   color: #333;
   font-size: 16px;
   cursor: pointer;
-}
-
-.delete-btn {
-  position: absolute;
-  top: -30px; /* 좀 더 위로 올림 */
-  right: 10px;
-  border: none;
-  background: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: #999;
 }
 
 /* 자기소개서 */
@@ -558,54 +505,20 @@ textarea::placeholder {
   font-style: italic;
 }
 
-/* 자격증 */
-.license-entry {
-  position: relative;
-  padding: 20px 0;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 30px;
+.add-license-btn {
+  text-align: center;
+  margin-top: 10px;
 }
 
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.field-block {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.field-block label {
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 5px;
-  color: #6D707B;
-}
-
-.field-block input {
-  height: 40px;
-  border-radius: 5px;
-  border: 1px solid #D1D5E3;
-  padding-left: 10px;
-  font-size: 14px;
-  font-weight: 700;
-  color: #36383F;
-}
-
-.delete-btn {
-  position: absolute;
-  top: -5px;
-  right: 10px;
+.add-license-btn button {
   border: none;
   background: none;
-  font-size: 20px;
+  color: #333;
+  font-size: 16px;
   cursor: pointer;
-  color: #999;
 }
+
+/* 자격증 (기존 스타일 제거) */
 
 .add-license-btn {
   text-align: center;
@@ -617,7 +530,6 @@ textarea::placeholder {
   background: none;
   color: #333;
   font-size: 16px;
-  font-weight: 700;
   cursor: pointer;
 }
 
@@ -659,17 +571,14 @@ textarea::placeholder {
 }
 
 .resumeTitle>#title{
-	
-		border-radius: 5px;
-		border: 1px solid #D1D5E3;
-		width: 97.7%; 
-		height: 50px; 
-		padding: 10px; 
-		font-size: 20px;
-		font-weight: 700;
-	
+	border-radius: 5px;
+	border: 1px solid #D1D5E3;
+	width: 97.7%; 
+	height: 50px; 
+	padding: 10px; 
+	font-size: 20px;
+	font-weight: 700;
 }
-
 
 .add-training-btn {
   text-align: center;
@@ -697,4 +606,60 @@ textarea::placeholder {
   font-size: 16px;
   cursor: pointer;
   font-weight: 700;
+}
+
+/* 공통 엔트리 스타일 */
+.school-entry,
+.training-entry,
+.certificate-entry,
+.portfolio-entry,
+.career-entry {
+  position: relative;
+  padding: 20px;
+  /* border: 1px solid #E0E0E0; */
+  border-radius: 8px;
+  margin-bottom: 20px;
+  /* background: #fafafa; */
+}
+
+/* 공통 삭제 버튼 스타일 */
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #999;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+  background-color: #f5f5f5;
+  color: #e74c3c;
+}
+
+/* 학력 엔트리 */
+.school-entry .school-fields-container {
+  margin-top: 20px;
+}
+
+/* 포트폴리오 엔트리 */
+.portfolio-entry {
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.portfolio-entry .portfolio-upload-box {
+  width: 100%;
+  text-align: center;
 }

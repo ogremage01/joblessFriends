@@ -117,8 +117,8 @@ public class ResumeParser {
                 CareerVo careerVo = new CareerVo();
                 careerVo.setCompanyName(getStringValue(careerData, "companyName"));
                 careerVo.setDepartmentName(getStringValue(careerData, "departmentName"));
-                careerVo.setHireYm(getStringValue(careerData, "hireYm"));
-                careerVo.setResignYm(getStringValue(careerData, "resignYm"));
+                careerVo.setHireYm(parseYearMonthDate(getStringValue(careerData, "hireYm")));
+                careerVo.setResignYm(parseYearMonthDate(getStringValue(careerData, "resignYm")));
                 careerVo.setPosition(getStringValue(careerData, "position"));
                 careerVo.setJobGroupId(getIntValue(careerData, "jobGroupId"));
                 careerVo.setJobId(getIntValue(careerData, "jobId"));

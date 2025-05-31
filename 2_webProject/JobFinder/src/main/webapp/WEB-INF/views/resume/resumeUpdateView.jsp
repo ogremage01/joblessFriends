@@ -108,24 +108,23 @@
 
 	<section class="section-block" id="section-edu">
 		<h2>학력</h2>
-		<div class="edu-row-combined">		   
-			   <!-- 학교 구분 선택 -->
-			<div class="field-block">
-				<label>구분</label>
-				<select id="schoolTypeSelect">
-					<option value="">선택</option>
-					<option value="high">고등학교</option>
-					<option value="univ4">대학교(4년)</option>
-					<option value="univ2">대학교(2,3년)</option>
-				</select>
-			</div>
-			
-			<!-- 여기에 동적으로 필드가 채워짐 -->
-			<div id="edu-dynamic-fields" style="display: contents;">
-				<!-- 기존 학력 데이터 표시 -->
-				<c:forEach var="school" items="${resumeData.schoolList}" varStatus="status">
-					<div class="edu-row-combined school-entry">
-						<c:if test="${school.sortation == 'high'}">
+		<div id="school-container">
+			<!-- 기존 학력 데이터 표시 -->
+			<c:forEach var="school" items="${resumeData.schoolList}" varStatus="status">
+				<div class="school-entry">
+					<button type="button" class="delete-btn">×</button>
+					
+					<div class="field-block">
+						<label>구분</label>
+						<select name="sortation">
+							<option value="high" <c:if test="${school.sortation == 'high'}">selected</c:if>>고등학교</option>
+							<option value="univ4" <c:if test="${school.sortation == 'univ4'}">selected</c:if>>대학교(4년)</option>
+							<option value="univ2" <c:if test="${school.sortation == 'univ2'}">selected</c:if>>대학교(2,3년)</option>
+						</select>
+					</div>
+					
+					<c:if test="${school.sortation == 'high'}">
+						<div class="grid-3">
 							<div class="field-block school-autocomplete-block">
 								<label>학교명</label>
 								<input type="text" name="schoolName" placeholder="학교명을 입력해주세요" value="${school.schoolName}" autocomplete="off" />
@@ -143,9 +142,10 @@
 									<option value="재학중" <c:if test="${school.status == '재학중'}">selected</c:if>>재학중</option>
 								</select>
 							</div>
-							<input type="hidden" name="sortation" value="high" />
-						</c:if>
-						<c:if test="${school.sortation != 'high'}">
+						</div>
+					</c:if>
+					<c:if test="${school.sortation != 'high'}">
+						<div class="grid-2">
 							<div class="field-block school-autocomplete-block">
 								<label>학교명</label>
 								<input type="text" name="schoolName" placeholder="대학교명을 입력해주세요" value="${school.schoolName}" autocomplete="off" />
@@ -156,6 +156,8 @@
 								<input type="text" name="majorName" placeholder="전공명을 입력해주세요" value="${school.majorName}" autocomplete="off" />
 								<ul class="autocomplete-list" style="display: none;"></ul>
 							</div>
+						</div>
+						<div class="grid-3">
 							<div class="field-block">
 								<label>입학년월</label>
 								<input type="text" name="startDate" placeholder="예시) 2020.03" value="<fmt:formatDate value="${school.startDate}" pattern='yyyy.MM'/>"/>
@@ -172,13 +174,10 @@
 									<option value="재학중" <c:if test="${school.status == '재학중'}">selected</c:if>>재학중</option>
 								</select>
 							</div>
-							<input type="hidden" name="sortation" value="${school.sortation}" />
-						</c:if>
-						<button type="button" class="delete-btn">×</button>
-					</div>
-				</c:forEach>
-			</div>
-			
+						</div>
+					</c:if>
+				</div>
+			</c:forEach>
 		</div>
 		
 		<div class="add-education-btn">
@@ -205,14 +204,14 @@
 						</div>
 						<div class="field-block">
 							<label>입사년월</label>
-							<input type="text" name="hireYm" placeholder="예시) 2025.04" value="${career.hireYm}" />
+							<input type="text" name="hireYm" placeholder="예시) 2025.04" value="<fmt:formatDate value="${career.hireYm}" pattern='yyyy.MM'/>" />
 						</div>
 					</div>
 					
 					<div class="grid-3">
 						<div class="field-block">
 							<label>퇴사년월</label>
-							<input type="text" name="resignYm" placeholder="예시) 2025.04" value="${career.resignYm}" />
+							<input type="text" name="resignYm" placeholder="예시) 2025.04" value="<fmt:formatDate value="${career.resignYm}" pattern='yyyy.MM'/>" />
 						</div>
 						
 						<div class="field-block">
@@ -261,10 +260,10 @@
 	
 	<section class="section-block" id="section-training">
 		<h2>교육</h2>
-		<div id="education-container">
+		<div id="training-container">
 			<!-- 기존 교육 데이터 표시 -->
 			<c:forEach var="education" items="${resumeData.educationList}">
-				<div class="education-entry">
+				<div class="training-entry">
 					<button class="delete-btn">×</button>
 				
 					<div class="grid-4">
@@ -343,10 +342,10 @@
 			<!-- 기존 포트폴리오 데이터 표시 -->
 			<c:forEach var="portfolio" items="${resumeData.portfolioList}">
 				<div class="portfolio-entry">
-					<button class="delete-btn">×</button>
+					<button type="button" class="delete-btn">×</button>
 					<div class="portfolio-upload-box">
 						<label>
-							<span class="plus-icon">＋</span>
+							<span class="plus-icon">✓</span>
 							파일: ${portfolio.fileName}
 							<input type="file" name="portfolioFile" style="display: none;" />
 						</label>
@@ -381,6 +380,98 @@ document.addEventListener('DOMContentLoaded', function() {
   if (typeof window.initProfileImage === 'function') {
     window.initProfileImage();
   }
+  
+  // 기존 학력 데이터에 자동완성 기능 연결
+  document.querySelectorAll('.school-entry').forEach(entry => {
+    const sortationSelect = entry.querySelector('select[name="sortation"]');
+    const fieldsContainer = entry.querySelector('.grid-3, .grid-2').parentElement;
+    
+    if (sortationSelect && fieldsContainer) {
+      const sortation = sortationSelect.value;
+      if (sortation) {
+        attachAutocomplete(fieldsContainer, sortation);
+      }
+      
+      // 구분 변경 시 필드 업데이트
+      sortationSelect.addEventListener('change', function() {
+        const newSortation = this.value;
+        const schoolFieldsContainer = entry.querySelector('.grid-3, .grid-2').parentElement;
+        
+        // 기존 필드 정보 저장
+        const currentData = {
+          schoolName: entry.querySelector('input[name="schoolName"]')?.value || '',
+          status: entry.querySelector('select[name="status"]')?.value || '졸업예정'
+        };
+        
+        // 필드 재생성
+        if (newSortation === 'high') {
+          schoolFieldsContainer.innerHTML = `
+            <div class="grid-3">
+              <div class="field-block school-autocomplete-block">
+                <label>학교명</label>
+                <input type="text" name="schoolName" placeholder="학교명을 입력해주세요" value="\${currentData.schoolName}" autocomplete="off" />
+                <ul class="autocomplete-list" style="display: none;"></ul>
+              </div>
+              <div class="field-block">
+                <label>졸업년도</label>
+                <input type="text" name="yearOfGraduation" placeholder="예시) 2025" />
+              </div>
+              <div class="field-block">
+                <label>졸업상태</label>
+                <select name="status">
+                  <option value="졸업예정">졸업예정</option>
+                  <option value="졸업">졸업</option>
+                  <option value="재학중">재학중</option>
+                </select>
+              </div>
+            </div>
+          `;
+        } else {
+          schoolFieldsContainer.innerHTML = `
+            <div class="grid-2">
+              <div class="field-block school-autocomplete-block">
+                <label>학교명</label>
+                <input type="text" name="schoolName" placeholder="대학교명을 입력해주세요" value="\${currentData.schoolName}" autocomplete="off" />
+                <ul class="autocomplete-list" style="display: none;"></ul>
+              </div>
+              <div class="field-block">
+                <label>전공명</label>
+                <input type="text" name="majorName" placeholder="전공명을 입력해주세요" autocomplete="off" />
+                <ul class="autocomplete-list" style="display: none;"></ul>
+              </div>
+            </div>
+            <div class="grid-3">
+              <div class="field-block">
+                <label>입학년월</label>
+                <input type="text" name="startDate" placeholder="예시) 2020.03" />
+              </div>
+              <div class="field-block">
+                <label>졸업년월</label>
+                <input type="text" name="endDate" placeholder="예시) 2024.02" />
+              </div>
+              <div class="field-block">
+                <label>졸업상태</label>
+                <select name="status">
+                  <option value="졸업예정">졸업예정</option>
+                  <option value="졸업">졸업</option>
+                  <option value="재학중">재학중</option>
+                </select>
+              </div>
+            </div>
+          `;
+        }
+        
+        // 상태 선택 복원
+        const statusSelect = schoolFieldsContainer.querySelector('select[name="status"]');
+        if (statusSelect && currentData.status) {
+          statusSelect.value = currentData.status;
+        }
+        
+        // 자동완성 기능 재연결
+        attachAutocomplete(schoolFieldsContainer, newSortation);
+      });
+    }
+  });
 });
 </script>
 
