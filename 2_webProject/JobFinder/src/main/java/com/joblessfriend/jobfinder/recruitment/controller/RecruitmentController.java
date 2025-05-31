@@ -7,8 +7,11 @@ import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 import com.joblessfriend.jobfinder.company.service.CompanyService;
 import com.joblessfriend.jobfinder.job.domain.JobVo;
 import com.joblessfriend.jobfinder.job.service.JobService;
+import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import com.joblessfriend.jobfinder.recruitment.domain.*;
 import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
+import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
+import com.joblessfriend.jobfinder.resume.service.ResumeService;
 import com.joblessfriend.jobfinder.skill.domain.SkillVo;
 import com.joblessfriend.jobfinder.skill.service.SkillService;
 import com.joblessfriend.jobfinder.util.Pagination;
@@ -43,9 +46,11 @@ public class RecruitmentController {
 
     @Autowired
     private SkillService skillService;
+    @Autowired
+    private ResumeService resumeService;
 
     @GetMapping("/list")
-    public String getAllList(@ModelAttribute SearchVo searchVo, Model model) {
+    public String getAllList(@ModelAttribute SearchVo searchVo, Model model,HttpSession session) {
         searchVo.setRecordSize(4);
         int totalCount = recruitmentService.getRecruitmentTotalCount(searchVo); // 총 레코드 수 조회
         Pagination pagination = new Pagination(totalCount, searchVo);
@@ -63,6 +68,30 @@ public class RecruitmentController {
             List<SkillVo> skillList = skillService.postTagList(jobPostId);
             skillMap.put(jobPostId, skillList);
         }
+        // 로그인 사용자 확인
+        // 또는 "loginUser"로 통일
+
+        // 세션에서 로그인 정보 가져오기
+        MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
+        String userType = (String) session.getAttribute("userType");
+
+        System.out.println("🔍 userType: " + userType);
+        System.out.println("🔍 loginMember: " + memberVo);
+
+// ✅ 개인회원(member)인 경우에만 이력서 조회
+        if (memberVo != null && "member".equals(userType)) {
+            int memberId = memberVo.getMemberId();
+            System.out.println("✅ 개인회원 ID: " + memberId);
+
+            List<ResumeVo> myResumeList = resumeService.getResumesByMemberId(memberId);
+            model.addAttribute("resumeList", myResumeList);
+        }
+
+
+
+
+
+
 
         model.addAttribute("jobGroupList", jobGroupList);
         model.addAttribute("recruitmentList", recruitmentList);

@@ -301,9 +301,7 @@ $(document).on('click', '.job', function (e) {
     window.location.href = `detail?companyId=${companyId}&jobPostId=${jobPostId}`;
 });
 
-$(document).on('click', '.apply-btn', function () {
-    alert('처리예정입니다');
-});
+$
 //날짜 포멧 //ajax용 ,
 function formatDateWithDay(dateString) {
     const date = new Date(dateString);
@@ -440,6 +438,61 @@ function renderPagination(pagination) {
     }
 }
 
+$(document).on('click', '.apply-btn', function () {
+    if (!resumeList || resumeList.length === 0) {
+        Swal.fire('📭 등록된 이력서가 없습니다.');
+        return;
+    }
 
+    const html = resumeList.map(r => `
+        <label class="resume-item">
+            <div class="resume-radio-row">
+                <div class="resume-left">
+                    <input type="radio" name="resumeRadio" value="${r.resumeId}">
+                    <div>
+                        <div class="resume-title">${r.title}</div>
+                        <div class="resume-meta">🗓 작성일: ${r.modifiedAt}</div>
+                    </div>
+                </div>
+                <div class="resume-match">적합도 90%</div>
+            </div>
+        </label>
+    `).join('');
 
-
+    Swal.fire({
+        title: '📄 이력서를 선택하세요',
+        html: `
+            <div class="resume-list">${html}</div>
+            <p style="font-size: 13px; color: red; margin-top: 10px;">
+                ⚠️ 지원한 이력서는 <b>수정은 가능하지만 재지원은 불가능합니다.</b>
+            </p>
+        `,
+        width: '650px',
+        showCancelButton: true,
+        confirmButtonText: '지원하기',
+        cancelButtonText: '취소',
+        preConfirm: () => {
+            const selected = $('input[name="resumeRadio"]:checked').val();
+            if (!selected) {
+                Swal.showValidationMessage('이력서를 선택해주세요.');
+                return false;
+            }
+            return selected;
+        }
+    }).then(result => {
+        if (result.isConfirmed) {
+            const selectedResumeId = result.value;
+            $.ajax({
+                url: "/resume/apply",
+                method: "POST",
+                data: { resumeId: selectedResumeId },
+                success: function (response) {
+                    Swal.fire('🎉 지원 완료', response, 'success');
+                },
+                error: function (xhr) {
+                    Swal.fire('❌ 오류 발생', xhr.responseText || '서버 오류입니다.', 'error');
+                }
+            });
+        }
+    });
+});

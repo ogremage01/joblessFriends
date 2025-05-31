@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="/css/common/common.css">
     <link rel="stylesheet" href="/css/recruitment/recruitmentView.css">
     <link rel="stylesheet" href="/css/recruitment/recruitmentNav.css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 
@@ -204,6 +205,30 @@
 
 
 </script>
+
+<%-- 이후 js에서 처리  --%>
+    <script>
+        const resumeList =
+                <c:choose>
+                <c:when test="${not empty resumeList}">
+                [
+                    <c:forEach var="r" items="${resumeList}" varStatus="i">
+                    {
+                        resumeId: '${r.resumeId}',
+                        title: '${r.title}',
+                        modifiedAt: '<fmt:formatDate value="${r.modifyDate}" pattern="MM/dd(E)" />'
+                    }<c:if test="${!i.last}">,</c:if>
+                    </c:forEach>
+                ]
+                    </c:when>
+                    <c:otherwise>
+                    []
+            </c:otherwise>
+            </c:choose>;
+    </script>
+
+
+
 <script src="/js/recruitment/recruitmentView.js"></script>
 
 <div id="askConfirm" class="toast-popup"></div>
