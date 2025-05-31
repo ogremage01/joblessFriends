@@ -60,7 +60,7 @@ public class CompanyController {
 	
 	
 	@PatchMapping("/info")
-	public ResponseEntity<Integer> companyUpdate(@RequestBody CompanyVo companyVo){
+	public ResponseEntity<Integer> companyUpdate(@RequestBody CompanyVo companyVo, HttpSession session){
 		
 		logger.info("기업회원 정보 수정-어드민");
 		
@@ -105,7 +105,9 @@ public class CompanyController {
 
 		// 수정 처리
 		int result = companyService.companyUpdateOne(existCompanyVo);
-
+		// 세션 회원정보 다시 담기
+		session.setAttribute("userLogin", existCompanyVo);
+		
 		// 성공 여부를 HTTP 응답으로 반환
 		return ResponseEntity.ok(result);
 				

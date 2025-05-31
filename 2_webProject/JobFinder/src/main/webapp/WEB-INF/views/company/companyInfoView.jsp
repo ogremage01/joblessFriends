@@ -31,12 +31,7 @@
 						<h2>계정 정보</h2>
 						<input type="hidden" id="companyData" value="${companyVo.companyId}">
 						<form class="formStyle mt-4" id="companyInforSubmitForm">
-							<div class="row">
-								<label for="companyId" class="col-form-label">ID</label>
-								<div class="col-sm-9">
-									<input id="companyId" name="companyId" class="form-control-plaintext" value="${companyVo.companyId}" readonly>
-								</div>
-							</div>
+							<input id="companyId" name="companyId" type="hidden" class="form-control-plaintext" value="${companyVo.companyId}" readonly>
 	
 							<div class="row">
 								<label for="companyName"
@@ -49,14 +44,15 @@
 							<div class="row">
 								<label for="email" class="col-form-label">이메일</label>
 								<div class="col-sm-9">
-									<input id="email" name="email" type="email" class="form-control" value="${companyVo.email}">
+									<input id="email" name="email" type="email" class="form-control valiInput" oninput="valiCheckEmail();" value="${companyVo.email}">
+									<div id="emailStatus" class="valiCheckText"></div> <!-- 이메일 중복 여부 메시지가 표시될 곳 -->
 								</div>
 							</div>
 	
 							<div class="row">
 								<label for="password" class="col-form-label">비밀번호</label>
 								<div class="col-sm-9">
-									<input type="password" id="password" name="password" class="form-control" onblur="valiCheckPwd();" onkeyup="sameCheckPwd();">
+									<input type="password" id="password" name="password" class="form-control valiInput" onblur="valiCheckPwd();" onkeyup="sameCheckPwd();">
 									<div id="pwdStatus" class="valiCheckText"></div>
 									<!-- 비밀번호 확인 메시지가 표시될 곳 -->
 								</div>
@@ -65,7 +61,7 @@
 							<div class="row">
 								<label for="passwordCheck" class="col-form-label">비밀번호확인</label>
 								<div class="col-sm-9">
-									<input type="password" id="passwordCheck" name="passwordCheck" class="form-control" onblur="sameCheckPwd();">
+									<input type="password" id="passwordCheck" name="passwordCheck" class="form-control valiInput" onblur="sameCheckPwd();">
 									<div id="pwdStatus2" class="valiCheckText"></div>
 									<!-- 비밀번호 확인 메시지가 표시될 곳 -->
 								</div>
@@ -74,7 +70,8 @@
 							<div class="row">
 								<label for="brn" class="col-form-label">사업자번호</label>
 								<div class="col-sm-9">
-									<input id="brn" name="brn" class="form-control" value="${companyVo.brn}">
+									<input id="brn" name="brn" class="form-control valiInput" onblur="brnCheckFnc();" value="${companyVo.brn}">
+									<div id="brnStatus" class="valiCheckText"></div>
 								</div>
 							</div>
 	
@@ -118,7 +115,7 @@
 							<div class="row">
 								<div class="buttonWrap">
 									<button type="submit" id="submitBtn" class="btn btn-primary">수정</button>
-									<button type="reset" class="btn btn-secondary">초기화</button>
+									<button type="reset" onclick="resetStatus();" class="btn btn-secondary">초기화</button>
 									<button type="button" class="btn btn-danger" id="delete">탈퇴</button>
 								</div>
 							</div>

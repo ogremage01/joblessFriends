@@ -77,9 +77,9 @@ public class AuthController {
 		CompanyVo companyVo = companyService.companyEmailExist(email);
 		String checkStr = "";
 		if (companyVo == null) {
-			checkStr = "사용가능";
+			checkStr = "없음";
 		}else {
-			checkStr = "중복";
+			checkStr = "존재";
 		}
 		
 		return ResponseEntity.ok(checkStr);
