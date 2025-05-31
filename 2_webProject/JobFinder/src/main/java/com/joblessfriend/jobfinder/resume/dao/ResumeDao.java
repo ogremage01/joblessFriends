@@ -3,6 +3,7 @@ package com.joblessfriend.jobfinder.resume.dao;
 import java.util.List;
 
 import com.joblessfriend.jobfinder.resume.domain.CareerVo;
+import com.joblessfriend.jobfinder.resume.domain.CertificateResumeVo;
 import com.joblessfriend.jobfinder.resume.domain.EducationVo;
 import com.joblessfriend.jobfinder.resume.domain.PortfolioVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
@@ -25,7 +26,8 @@ public interface ResumeDao {
     List<CareerVo> getCareersByResumeId(int resumeId);
     List<EducationVo> getEducationsByResumeId(int resumeId);
     List<PortfolioVo> getPortfoliosByResumeId(int resumeId);
-    List<Integer> getCertificateIdsByResumeId(int resumeId);
+    List<CertificateResumeVo> getCertificateByResumeId(int resumeId);
+    List<Long> getTagIdsByResumeId(int resumeId);
 	
 	// 이력서 메인 정보 저장/수정
     void insertResume(ResumeVo resume);
@@ -47,7 +49,7 @@ public interface ResumeDao {
     void deleteCareersByResumeId(int resumeId);
 
     // 자격증 연결 정보 저장/수정
-    void insertCertificateResume(int resumeId, Long certificateId);
+    void insertCertificateResume(CertificateResumeVo certificateResumeVo);
     void deleteCertificatesByResumeId(int resumeId);
 
     // 태그 연결 정보 저장/수정

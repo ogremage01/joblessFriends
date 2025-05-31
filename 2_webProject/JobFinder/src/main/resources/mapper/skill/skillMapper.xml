@@ -39,4 +39,14 @@
         WHERE RESUME_ID = #{resumeId}
     </select>
 
+    <select id="getSkillsByKeyword" parameterType="String" resultType="com.joblessfriend.jobfinder.skill.domain.SkillVo">
+        SELECT
+            T.TAG_ID AS tagId,
+            T.TAG_NAME AS tagName,
+            T.JOB_GROUP_ID AS jobGroupId
+        FROM TAG T
+        WHERE UPPER(T.TAG_NAME) LIKE UPPER('%' || #{keyword} || '%')
+        ORDER BY T.TAG_NAME
+    </select>
+
 </mapper>

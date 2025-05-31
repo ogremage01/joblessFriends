@@ -91,26 +91,6 @@
 			</div>
 		</div>
 
-
-		<!-- 희망직무 -->
-		<section class="section-block" id="section-job">
-			<h2>희망직무</h2>
-			<div class="grid-2">
-				<div class="field-block">
-					<label>직군</label>
-					<select id="jobGroupSelect">
-						<option value="">직군 선택</option>
-					</select>
-				</div>
-				<div class="field-block">
-					<label>직무</label>
-					<select id="jobSelect">
-						<option value="">직무 선택</option>
-					</select>
-				</div>
-			</div>
-		</section>
-
 		<!-- 스킬 -->
 		<section class="section-block" id="section-skill">
 			<h2 class="section-title">스킬</h2>
@@ -123,21 +103,8 @@
 
 		<section class="section-block" id="section-edu">
 			<h2>학력</h2>
-			<div class="edu-row-combined">
-				<!-- 학교 구분 선택 -->
-				<div class="field-block">
-					<label>구분</label>
-					<select id="schoolTypeSelect">
-						<option value="">선택</option>
-						<option value="high">고등학교</option>
-						<option value="univ4">대학교(4년)</option>
-						<option value="univ2">대학교(2,3년)</option>
-					</select>
-				</div>
-
-				<!-- 여기에 동적으로 필드가 채워짐 -->
-				<div id="edu-dynamic-fields" style="display: contents;"></div>
-
+			<div id="school-container">
+				<!-- 동적으로 학력 항목이 추가됨 -->
 			</div>
 
 			<div class="add-education-btn">
@@ -158,7 +125,7 @@
 
 		<section class="section-block" id="section-training">
 			<h2>교육</h2>
-			<div id="education-container">
+			<div id="training-container">
 				<!-- 동적으로 교육 항목이 추가됨 -->
 			</div>
 

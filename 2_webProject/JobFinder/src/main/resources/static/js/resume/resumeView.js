@@ -1,9 +1,14 @@
+// 전역 변수들
+let addressFullText = '';
+
+// 선택된 스킬들을 추적하는 Set
+let selectedSkills = new Set();
+
 // 전역 변수 (JSP에서 설정되지 않았을 경우 기본값 사용)
 let ignoreNextInput = false;
 if (typeof window.uploadedImageUrl === 'undefined') window.uploadedImageUrl = '';
 if (typeof window.isEditMode === 'undefined') window.isEditMode = false;
 if (typeof window.currentResumeId === 'undefined') window.currentResumeId = null;
-const selectedSkills = new Set(); // 사용자 선택한 스킬 ID 저장
 
 // DOM 로드 완료 후 실행
 document.addEventListener("DOMContentLoaded", function () {
@@ -14,30 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const skillContainer = document.getElementById("skillContainer");
   const selectedJobGroupLabel = document.getElementById("selectedJobGroupLabel");
 
-  // 직군 목록 비동기 요청 후 select 옵션 채우기
-  fetch("/jobGroup/list")
-    .then((res) => res.json())
-    .then((data) => {
-      data.forEach((group) => {
-        const option = document.createElement("option");
-        option.value = group.jobGroupId;
-        option.textContent = group.jobGroupName;
-        jobGroupSelect.appendChild(option);
-      });
-      
-      // 수정 모드일 때 기존 데이터로 설정 (window.resumeData가 있을 때)
-      if (window.resumeData && window.resumeData.jobGroupId > 0) {
-        jobGroupSelect.value = window.resumeData.jobGroupId;
-        jobGroupSelect.dispatchEvent(new Event('change'));
-        
-        // 직무는 잠시 후에 설정
-        setTimeout(() => {
-          if (window.resumeData.jobId > 0) {
-            jobSelect.value = window.resumeData.jobId;
-          }
-        }, 500);
-      }
-    });
+  // 스킬 해시태그 UI 초기화
+  renderSkillHashtagInput();
 
   // 작성완료 버튼 이벤트 등록
   const finishBtn = document.querySelector('.btn-finish');
@@ -45,150 +28,56 @@ document.addEventListener("DOMContentLoaded", function () {
     finishBtn.addEventListener('click', saveResume);
   }
 
-  // 직군 선택 시 직무 목록 + 스킬 태그 동시 갱신
-  jobGroupSelect.addEventListener("change", function () {
-    const jobGroupId = this.value;
-    const selectedGroupName = this.options[this.selectedIndex].textContent;
-
-    // 직군명 표시
-    if (jobGroupId) {
-      selectedJobGroupLabel.style.display = "block";
-      selectedJobGroupLabel.textContent = selectedGroupName;
-    } else {
-      selectedJobGroupLabel.style.display = "none";
-    }
-
-    // 직무 목록 초기화 후 다시 불러오기
-    jobSelect.innerHTML = '<option value="">직무 선택</option>';
-    fetch("/job/list?jobGroupId=" + jobGroupId)
-      .then(res => res.json())
-      .then(data => {
-        data.forEach(job => {
-          const option = document.createElement("option");
-          option.value = job.jobId;
-          option.textContent = job.jobName;
-          jobSelect.appendChild(option);
-        });
-      });
-
-    // 스킬 목록 초기화 후 다시 불러오기
-    skillContainer.innerHTML = "";
-    fetch("/skill/list?jobGroupId=" + jobGroupId)
-      .then(res => res.json())
-      .then(tags => {
-        renderSkillTags(tags);
-      })
-      .catch(err => {
-        console.error("스킬 요청 실패:", err);
-      });
-  });
-
-  // 스킬 태그 버튼들을 생성하고 클릭시 선택/해제 처리
-  function renderSkillTags(tags) {
-    skillContainer.innerHTML = "";
-    selectedSkills.clear(); // 이전 선택 제거
-
-    tags.forEach(tag => {
-      const btn = document.createElement("button");
-      btn.className = "tag-button";
-      btn.textContent = tag.tagName;
-      btn.dataset.tagId = tag.tagId;
-
-      // 클릭 시 선택 토글 처리
-      btn.addEventListener("click", function () {
-        const tagId = this.dataset.tagId;
-
-        if (selectedSkills.has(tagId)) {
-          selectedSkills.delete(tagId);
-          this.classList.remove("selected");
-        } else {
-          selectedSkills.add(tagId);
-          this.classList.add("selected");
-        }
-      });
-
-      skillContainer.appendChild(btn);
-    });
-  }
   
-  // 학력 관련 기능
-  const eduContainer = document.getElementById("edu-dynamic-fields");
-  const schoolTypeSelect = document.getElementById("schoolTypeSelect");
+  const cancelBtn = document.querySelector('.btn-cancel');
+  cancelBtn.addEventListener('click', function(){ 
+	confirm("작성 중인 이력서가 있습니다. 정말로 취소하시겠습니까?") ? window.location.href = '/resume/management' : null;
+	    });
+  
+  // 학력 관련 기능 - 더 이상 사용하지 않음
+  // const eduContainer = document.getElementById("edu-dynamic-fields");
+  // const schoolTypeSelect = document.getElementById("schoolTypeSelect");
 
-  // 학력 입력 필드 타입 선택 시 초기화 + 필드 생성
-  if (schoolTypeSelect) {
-    schoolTypeSelect.addEventListener("change", () => {
-      eduContainer.innerHTML = "";
-      const type = schoolTypeSelect.value;
-      if (!type) return;
-
-      const firstEntry = createSchoolEntry(type);
-      eduContainer.appendChild(firstEntry);
-      attachAutocomplete(firstEntry, type);
-    });
-  }
-
-  // +추가 버튼들 이벤트 등록
-  const addEducationBtn = document.querySelector(".add-education-btn button");
-  if (addEducationBtn) {
-    addEducationBtn.addEventListener("click", () => {
-      const selectedType = schoolTypeSelect.value;
-      if (!selectedType) {
-        alert("구분을 먼저 선택해주세요.");
-        return;
-      }
-      const newEntry = createSchoolEntry(selectedType);
-      eduContainer.appendChild(newEntry);
-      attachAutocomplete(newEntry, selectedType);
-    });
-  }
-
-  // 경력 추가 버튼
-  const addCareerBtn = document.querySelector(".add-career-btn button");
-  if (addCareerBtn) {
-    addCareerBtn.addEventListener("click", () => {
+  // +추가 버튼들 이벤트 위임 방식으로 등록
+  document.addEventListener("click", function(e) {
+    // 학력 추가 - school 관련
+    if (e.target.closest('.add-education-btn button')) {
+      const schoolContainer = document.getElementById("school-container");
+      const newSchool = createSchoolEntry();
+      schoolContainer.appendChild(newSchool);
+    }
+    // 경력 추가
+    if (e.target.closest('.add-career-btn button')) {
       const careerContainer = document.getElementById("career-container");
       const newCareer = createCareerEntry();
       careerContainer.appendChild(newCareer);
-    });
-  }
-
-  // 교육 추가 버튼
-  const addTrainingBtn = document.querySelector(".add-training-btn button");
-  if (addTrainingBtn) {
-    addTrainingBtn.addEventListener("click", () => {
-      const educationContainer = document.getElementById("education-container");
-      const newEducation = createEducationEntry();
-      educationContainer.appendChild(newEducation);
-    });
-  }
-
-  // 자격증 추가 버튼
-  const addLicenseBtn = document.querySelector(".add-license-btn button");
-  if (addLicenseBtn) {
-    addLicenseBtn.addEventListener("click", () => {
+    }
+    // 교육/훈련 추가
+    if (e.target.closest('.add-training-btn button')) {
+      const trainingContainer = document.getElementById("training-container");
+      const newTraining = createTrainingEntry();
+      trainingContainer.appendChild(newTraining);
+    }
+    // 자격증 추가
+    if (e.target.closest('.add-license-btn button')) {
       const certificateContainer = document.getElementById("certificate-container");
       const newCertificate = createCertificateEntry();
       certificateContainer.appendChild(newCertificate);
-    });
-  }
-
-  // 포트폴리오 추가 버튼
-  const addPortfolioBtn = document.querySelector(".add-portfolio-btn button");
-  if (addPortfolioBtn) {
-    addPortfolioBtn.addEventListener("click", () => {
+    }
+    // 포트폴리오 추가
+    if (e.target.closest('.add-portfolio-btn button')) {
       const portfolioContainer = document.getElementById("portfolio-container");
       const newPortfolio = createPortfolioEntry();
       portfolioContainer.appendChild(newPortfolio);
-    });
-  }
+    }
+  });
 
   // 수정 모드에서 기존 삭제 버튼들에 이벤트 추가
   if (window.isEditMode) {
     // 기존 항목들의 삭제 버튼 이벤트 추가
     document.querySelectorAll('.delete-btn').forEach(btn => {
       btn.addEventListener('click', function() {
-        const entry = this.closest('.school-entry, .career-entry, .education-entry, .certificate-entry, .portfolio-entry');
+        const entry = this.closest('.school-entry, .career-entry, .training-entry, .certificate-entry, .portfolio-entry');
         if (entry) {
           entry.remove();
         }
@@ -198,67 +87,185 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// 학력 입력 DOM 템플릿 생성 함수
-function createSchoolEntry(type) {
-  const wrapper = document.createElement("div");
-  wrapper.className = "edu-row-combined school-entry";
+// 스킬 해시태그+자동완성 UI 렌더링 함수
+function renderSkillHashtagInput() {
+  const skillContainer = document.getElementById("skillContainer");
+  skillContainer.innerHTML = `
+    <div class="skill-hashtag-box">
+      <div id="selectedSkillTags" class="selected-skill-tags"></div>
+      <input type="text" id="skillInput" placeholder="#스킬 입력" autocomplete="off" />
+      <ul id="skillAutocompleteList" class="autocomplete-list" style="display:none;"></ul>
+    </div>
+  `;
 
-  // 고등학교
-  if (type === "high") {
-    wrapper.innerHTML = `
-      <div class="field-block school-autocomplete-block">
-        <label>학교명</label>
-        <input type="text" name="schoolName" placeholder="학교명을 입력해주세요" autocomplete="off" />
-        <ul class="autocomplete-list" style="display: none;"></ul>
-      </div>
-      <div class="field-block">
-        <label>졸업년도</label>
-        <input type="text" name="yearOfGraduation" placeholder="예시) 2025" />
-      </div>
-      <div class="field-block">
-        <label>졸업상태</label>
-        <select name="status">
-          <option>졸업예정</option>
-          <option>졸업</option>
-          <option>재학중</option>
-        </select>
-      </div>
-      <input type="hidden" name="sortation" value="high" />
-      <button type="button" class="delete-btn">×</button>
-    `;
-  } else {
-    // 대학교 (2년/4년)
-    wrapper.innerHTML = `
-      <div class="field-block school-autocomplete-block">
-        <label>학교명</label>
-        <input type="text" name="schoolName" placeholder="대학교명을 입력해주세요" autocomplete="off" />
-        <ul class="autocomplete-list" style="display: none;"></ul>
-      </div>
-      <div class="field-block">
-        <label>전공명</label>
-        <input type="text" name="majorName" placeholder="전공명을 입력해주세요" autocomplete="off" />
-        <ul class="autocomplete-list" style="display: none;"></ul>
-      </div>
-      <div class="field-block">
-        <label>입학년월</label>
-        <input type="text" name="startDate" placeholder="예시) 2020.03" />
-      </div>
-      <div class="field-block">
-        <label>졸업년월</label>
-        <input type="text" name="endDate" placeholder="예시) 2024.02" />
-      </div>
-      <div class="field-block">
-        <label>졸업상태</label>
-        <select name="status">
-          <option>졸업예정</option>
-          <option>졸업</option>
-          <option>재학중</option>
-        </select>
-      </div>
-      <input type="hidden" name="sortation" value="${type}" />
-      <button type="button" class="delete-btn">×</button>
-    `;
+  const skillInput = document.getElementById("skillInput");
+  const autocompleteList = document.getElementById("skillAutocompleteList");
+  const selectedSkillTags = document.getElementById("selectedSkillTags");
+
+  // 입력 시 자동완성
+  let timer;
+  skillInput.addEventListener("input", function () {
+    const keyword = this.value.trim();
+    clearTimeout(timer);
+    if (keyword.length < 2) {
+      autocompleteList.style.display = "none";
+      return;
+    }
+    timer = setTimeout(() => {
+      fetch("/skill/autocomplete?keyword=" + encodeURIComponent(keyword))
+        .then(res => res.json())
+        .then(data => {
+          autocompleteList.innerHTML = "";
+          if (data.length > 0) {
+            autocompleteList.style.display = "block";
+            data.forEach(tag => {
+              // 이미 선택된 태그는 표시하지 않음
+              if (selectedSkills.has(String(tag.tagId))) return;
+              const li = document.createElement("li");
+              li.textContent = tag.tagName;
+              li.dataset.tagId = tag.tagId;
+              li.addEventListener("mousedown", function () {
+                addSkillTag(tag.tagId, tag.tagName);
+                skillInput.value = "";
+                autocompleteList.style.display = "none";
+              });
+              autocompleteList.appendChild(li);
+            });
+          } else {
+            autocompleteList.style.display = "none";
+          }
+        });
+    }, 150);
+  });
+
+  // 엔터/쉼표 입력 시 자동완성 첫번째 선택
+  skillInput.addEventListener("keydown", function(e) {
+    if ((e.key === "Enter" || e.key === ",") && autocompleteList.style.display === "block") {
+      const first = autocompleteList.querySelector("li");
+      if (first) {
+        first.dispatchEvent(new Event("mousedown"));
+        e.preventDefault();
+      }
+    }
+  });
+
+  // 태그 추가 함수
+  function addSkillTag(tagId, tagName) {
+    if (selectedSkills.has(String(tagId))) return;
+    selectedSkills.add(String(tagId));
+    const tagElem = document.createElement("span");
+    tagElem.className = "skill-hashtag";
+    tagElem.textContent = `#${tagName}`;
+    tagElem.dataset.tagId = tagId;
+    // X버튼
+    const xBtn = document.createElement("button");
+    xBtn.type = "button";
+    xBtn.className = "remove-skill-tag";
+    xBtn.textContent = "×";
+    xBtn.addEventListener("click", function() {
+      selectedSkills.delete(String(tagId));
+      tagElem.remove();
+    });
+    tagElem.appendChild(xBtn);
+    selectedSkillTags.appendChild(tagElem);
   }
+}
+
+// 학력 엔트리 생성 함수 (이름 변경: createEducationEntry -> createSchoolEntry)
+function createSchoolEntry() {
+  const wrapper = document.createElement("div");
+  wrapper.className = "school-entry";
+  wrapper.innerHTML = `
+    <button type="button" class="delete-btn">×</button>
+    
+    <div class="field-block">
+      <label>구분</label>
+      <select name="sortation" class="school-type-select">
+        <option value="">선택</option>
+        <option value="high">고등학교</option>
+        <option value="univ4">대학교(4년)</option>
+        <option value="univ2">대학교(2,3년)</option>
+      </select>
+    </div>
+    
+    <div class="school-fields-container" style="display: none;">
+      <!-- 선택한 구분에 따라 동적으로 필드가 추가됨 -->
+    </div>
+  `;
+
+  const sortationSelect = wrapper.querySelector('select[name="sortation"]');
+  const fieldsContainer = wrapper.querySelector('.school-fields-container');
+
+  // 구분 선택 시 필드 생성
+  sortationSelect.addEventListener('change', function() {
+    const type = this.value;
+    fieldsContainer.style.display = type ? 'block' : 'none';
+    
+    if (!type) {
+      fieldsContainer.innerHTML = '';
+      return;
+    }
+
+    if (type === 'high') {
+      fieldsContainer.innerHTML = `
+        <div class="grid-3">
+          <div class="field-block school-autocomplete-block">
+            <label>학교명</label>
+            <input type="text" name="schoolName" placeholder="학교명을 입력해주세요" autocomplete="off" />
+            <ul class="autocomplete-list" style="display: none;"></ul>
+          </div>
+          <div class="field-block">
+            <label>졸업년도</label>
+            <input type="text" name="yearOfGraduation" placeholder="예시) 2025" />
+          </div>
+          <div class="field-block">
+            <label>졸업상태</label>
+            <select name="status">
+              <option value="졸업예정">졸업예정</option>
+              <option value="졸업">졸업</option>
+              <option value="재학중">재학중</option>
+            </select>
+          </div>
+        </div>
+      `;
+    } else {
+      fieldsContainer.innerHTML = `
+        <div class="grid-2">
+          <div class="field-block school-autocomplete-block">
+            <label>학교명</label>
+            <input type="text" name="schoolName" placeholder="대학교명을 입력해주세요" autocomplete="off" />
+            <ul class="autocomplete-list" style="display: none;"></ul>
+          </div>
+          <div class="field-block">
+            <label>전공명</label>
+            <input type="text" name="majorName" placeholder="전공명을 입력해주세요" autocomplete="off" />
+            <ul class="autocomplete-list" style="display: none;"></ul>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="field-block">
+            <label>입학년월</label>
+            <input type="text" name="startDate" placeholder="예시) 2020.03" />
+          </div>
+          <div class="field-block">
+            <label>졸업년월</label>
+            <input type="text" name="endDate" placeholder="예시) 2024.02" />
+          </div>
+          <div class="field-block">
+            <label>졸업상태</label>
+            <select name="status">
+              <option value="졸업예정">졸업예정</option>
+              <option value="졸업">졸업</option>
+              <option value="재학중">재학중</option>
+            </select>
+          </div>
+        </div>
+      `;
+    }
+    
+    // 자동완성 기능 연결
+    attachAutocomplete(fieldsContainer, type);
+  });
 
   // 삭제 버튼 기능
   wrapper.querySelector(".delete-btn").addEventListener("click", () => wrapper.remove());
@@ -293,20 +300,25 @@ function createCareerEntry() {
         <input type="text" name="resignYm" placeholder="예시) 2025.04" />
       </div>
       <div class="field-block">
-        <label>직급/직책</label>
-        <input type="text" name="position" placeholder="직급/직책을 입력해주세요" />
-      </div>
-      <div class="field-block">
         <label>담당직군</label>
-        <input type="text" name="jobTitle" placeholder="담당직군을 입력해주세요" />
+        <select name="careerJobGroupSelect">
+          <option value="">직군 선택</option>
+        </select>
       </div>
+	  <div class="field-block">
+	    <label>담당직무</label>
+	    <select name="careerJobSelect">
+	      <option value="">직무 선택</option>
+	    </select>
+	  </div>
     </div>
     
     <div class="grid-2">
-      <div class="field-block">
-        <label>담당직무</label>
-        <input type="text" name="taskRole" placeholder="담당직무를 입력해주세요" />
-      </div>
+	<div class="field-block">
+	  <label>직급/직책</label>
+	  <input type="text" name="position" placeholder="직급/직책을 입력해주세요" />
+	</div>
+
       <div class="field-block">
         <label>연봉 (만원)</label>
         <input type="text" name="salary" placeholder="예시) 2400" />
@@ -319,16 +331,51 @@ function createCareerEntry() {
     </div>
   `;
   
+  // 삭제 버튼 기능
   wrapper.querySelector(".delete-btn").addEventListener("click", () => wrapper.remove());
+
+  // 담당직군/직무 셀렉트 박스 동적 로딩
+  const jobGroupSelect = wrapper.querySelector('select[name="careerJobGroupSelect"]');
+  const jobSelect = wrapper.querySelector('select[name="careerJobSelect"]');
+
+  // 직군 목록 불러오기
+  fetch("/jobGroup/list")
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(group => {
+        const option = document.createElement("option");
+        option.value = group.jobGroupId;
+        option.textContent = group.jobGroupName;
+        jobGroupSelect.appendChild(option);
+      });
+    });
+
+  // 직군 선택 시 직무 목록 갱신
+  jobGroupSelect.addEventListener("change", function () {
+    const jobGroupId = this.value;
+    jobSelect.innerHTML = '<option value="">직무 선택</option>';
+    if (!jobGroupId) return;
+    fetch("/job/list?jobGroupId=" + jobGroupId)
+      .then(res => res.json())
+      .then(data => {
+        data.forEach(job => {
+          const option = document.createElement("option");
+          option.value = job.jobId;
+          option.textContent = job.jobName;
+          jobSelect.appendChild(option);
+        });
+      });
+  });
+
   return wrapper;
 }
 
-// 교육 엔트리 생성 함수
-function createEducationEntry() {
+// 교육/훈련 엔트리 생성 함수 (기존 이름 변경)
+function createTrainingEntry() {
   const wrapper = document.createElement("div");
-  wrapper.className = "education-entry";
+  wrapper.className = "training-entry";
   wrapper.innerHTML = `
-    <button class="delete-btn">×</button>
+    <button type="button" class="delete-btn">×</button>
   
     <div class="grid-4">
       <div class="field-block">
@@ -364,7 +411,7 @@ function createCertificateEntry() {
   const wrapper = document.createElement("div");
   wrapper.className = "certificate-entry";
   wrapper.innerHTML = `
-    <button class="delete-btn">×</button>
+    <button type="button" class="delete-btn">×</button>
   
     <div class="grid-3">
       <div class="field-block">
@@ -380,7 +427,6 @@ function createCertificateEntry() {
         <input type="text" name="acquisitionDate" placeholder="예시) 2025.04" />
       </div>
     </div>
-    <input type="hidden" name="certificateId" value="0" />
   `;
   
   wrapper.querySelector(".delete-btn").addEventListener("click", () => wrapper.remove());
@@ -392,7 +438,7 @@ function createPortfolioEntry() {
   const wrapper = document.createElement("div");
   wrapper.className = "portfolio-entry";
   wrapper.innerHTML = `
-    <button class="delete-btn">×</button>
+    <button type="button" class="delete-btn">×</button>
     <div class="portfolio-upload-box">
       <label>
         <span class="plus-icon">＋</span>
@@ -409,6 +455,7 @@ function createPortfolioEntry() {
   const fileNameInput = wrapper.querySelector('input[name="fileName"]');
   const storedFileNameInput = wrapper.querySelector('input[name="storedFileName"]');
   const fileExtensionInput = wrapper.querySelector('input[name="fileExtension"]');
+  const label = wrapper.querySelector('label');
   
   fileInput.addEventListener('change', function(e) {
     const file = e.target.files[0];
@@ -417,12 +464,26 @@ function createPortfolioEntry() {
       storedFileNameInput.value = 'stored_' + Date.now() + '_' + file.name;
       fileExtensionInput.value = file.name.split('.').pop().toLowerCase();
       
-      // 여기서 실제 파일 업로드 로직을 구현할 수 있습니다
+      // 라벨 텍스트 업데이트
+      label.innerHTML = `
+        <span class="plus-icon">✓</span>
+        파일: ${file.name}
+      `;
+      
       console.log('파일 업로드:', file.name);
     }
   });
   
-  wrapper.querySelector(".delete-btn").addEventListener("click", () => wrapper.remove());
+  wrapper.querySelector(".delete-btn").addEventListener("click", () => {
+    // 포트폴리오 파일 삭제 처리
+    const storedFileName = wrapper.querySelector('input[name="storedFileName"]').value;
+    if (storedFileName && window.currentResumeId) {
+      // 서버에서 파일 삭제 요청 (선택적)
+      console.log('포트폴리오 파일 삭제:', storedFileName);
+    }
+    wrapper.remove();
+  });
+  
   return wrapper;
 }
 
@@ -603,29 +664,30 @@ async function saveResume() {
   }
 }
 
-// 이력서 데이터 수집 함수 (통합)
+// 전체 이력서 데이터 수집 및 전송 함수
 function collectResumeData() {
+  const skills = Array.from(selectedSkills);
+  
   return {
-    title: document.querySelector('#title')?.value || '제목없는 이력서',
-    name: document.querySelector('#name')?.value || '',
-    birthdate: document.querySelector('#birthdate')?.value || '',
-    phoneNumber: document.querySelector('#phoneNumber')?.value || '',
-    email: document.querySelector('#email')?.value || '',
-    address: (document.querySelector('#roadAddress')?.value || '') + ' ' + (document.querySelector('#detailAddress')?.value || ''),
-    selfIntroduction: document.querySelector('#selfIntroduction')?.value || '',
+    resumeId: window.currentResumeId || 0,
+    title: document.getElementById("title")?.value || '',
+    name: document.getElementById("name")?.value || '',
+    birthdate: document.getElementById("birthdate")?.value || '',
+    phoneNumber: document.getElementById("phoneNumber")?.value || '',
+    email: document.getElementById("email")?.value || '',
+    address: document.getElementById("roadAddress")?.value || '',
+    postalCodeId: parseInt(document.getElementById("postalCodeId")?.value) || 0,
+    selfIntroduction: document.getElementById("selfIntroduction")?.value || '',
     profile: window.uploadedImageUrl || '',
-    postalCodeId: parseInt(document.querySelector('#postalCodeId')?.value || document.querySelector('#postalCode')?.value) || 0,
-
-    jobGroupId: parseInt(document.querySelector('#jobGroupSelect')?.value) || 0,
-    jobId: parseInt(document.querySelector('#jobSelect')?.value) || 0,
     
-    // 선택된 스킬 태그 ID 배열 추가
-    skillTagIds: Array.from(selectedSkills).map(id => parseInt(id)),
-
+    // 스킬 ID 배열
+    tagIds: skills,
+    
+    // 각 섹션별 데이터 수집
     schools: collectSchools(),
     careers: collectCareers(),
     educations: collectEducations(),
-    certificateIds: collectCertificates(),
+    certificates: collectCertificates(),  // certificateIds에서 certificates로 변경
     portfolios: collectPortfolios()
   };
 }
@@ -636,9 +698,11 @@ function collectResumeData() {
 function collectSchools() {
   const result = [];
   document.querySelectorAll('.school-entry').forEach(entry => {
-    const sortation = entry.querySelector('input[name="sortation"]')?.value;
+    const sortation = entry.querySelector('select[name="sortation"]')?.value;
     const schoolName = entry.querySelector('input[name="schoolName"]')?.value;
     const status = entry.querySelector('select[name="status"]')?.value;
+
+    if (!sortation || !schoolName) return; // 필수 필드가 없으면 건너뛰기
 
     if (sortation === "high") {
       const yearOfGraduation = entry.querySelector('input[name="yearOfGraduation"]')?.value;
@@ -679,8 +743,8 @@ function collectCareers() {
       hireYm: entry.querySelector('input[name="hireYm"]')?.value || '',
       resignYm: entry.querySelector('input[name="resignYm"]')?.value || '',
       position: entry.querySelector('input[name="position"]')?.value || '',
-      jobTitle: entry.querySelector('input[name="jobTitle"]')?.value || '',
-      taskRole: entry.querySelector('input[name="taskRole"]')?.value || '',
+      jobGroupId: parseInt(entry.querySelector('select[name="careerJobGroupSelect"]')?.value) || 0,
+      jobId: parseInt(entry.querySelector('select[name="careerJobSelect"]')?.value) || 0,
       workDescription: entry.querySelector('textarea[name="workDescription"]')?.value || '',
       salary: entry.querySelector('input[name="salary"]')?.value || ''
     });
@@ -688,17 +752,20 @@ function collectCareers() {
   return result;
 }
 
-// 모든 교육 정보를 배열로 수집
+// 모든 교육/훈련 정보를 배열로 수집
 function collectEducations() {
   const result = [];
-  document.querySelectorAll('.education-entry').forEach(entry => {
-    result.push({
-      eduName: entry.querySelector('input[name="eduName"]')?.value || '',
-      eduInstitution: entry.querySelector('input[name="eduInstitution"]')?.value || '',
-      startDate: entry.querySelector('input[name="startDate"]')?.value || '',
-      endDate: entry.querySelector('input[name="endDate"]')?.value || '',
-      content: entry.querySelector('textarea[name="content"]')?.value || ''
-    });
+  document.querySelectorAll('.training-entry').forEach(entry => {
+    const eduName = entry.querySelector('input[name="eduName"]')?.value;
+    if (eduName && eduName.trim() !== '') { // 교육명이 있는 경우만 수집
+      result.push({
+        eduName: eduName || '',
+        eduInstitution: entry.querySelector('input[name="eduInstitution"]')?.value || '',
+        startDate: entry.querySelector('input[name="startDate"]')?.value || '',
+        endDate: entry.querySelector('input[name="endDate"]')?.value || '',
+        content: entry.querySelector('textarea[name="content"]')?.value || ''
+      });
+    }
   });
   return result;
 }
@@ -707,10 +774,11 @@ function collectEducations() {
 function collectCertificates() {
   const result = [];
   document.querySelectorAll('.certificate-entry').forEach(entry => {
-    const certificateId = entry.querySelector('input[name="certificateId"]')?.value;
-    if (certificateId && parseInt(certificateId) > 0) {
-      result.push(parseInt(certificateId));
-    }
+    result.push({
+      certificateName: entry.querySelector('input[name="certificateName"]')?.value || '',
+      issuingAuthority: entry.querySelector('input[name="issuingAuthority"]')?.value || '',
+      acquisitionDate: entry.querySelector('input[name="acquisitionDate"]')?.value || ''
+    });
   });
   return result;
 }
@@ -813,8 +881,11 @@ function execDaumPostcode() {
                 postalCodeField.value = data.zonecode;
             }
             document.getElementById("roadAddress").value = addr;
-            // 커서를 상세주소 필드로 이동한다.
-            document.getElementById("detailAddress").focus();
+            // 커서를 다음 필드로 이동 (상세주소 필드가 있다면)
+            const detailAddressField = document.getElementById("detailAddress");
+            if (detailAddressField) {
+                detailAddressField.focus();
+            }
         }
     }).open();
 }

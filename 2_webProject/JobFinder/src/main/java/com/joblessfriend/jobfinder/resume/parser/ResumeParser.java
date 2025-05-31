@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joblessfriend.jobfinder.resume.domain.CareerVo;
+import com.joblessfriend.jobfinder.resume.domain.CertificateResumeVo;
 import com.joblessfriend.jobfinder.resume.domain.CertificateVo;
 import com.joblessfriend.jobfinder.resume.domain.EducationVo;
 import com.joblessfriend.jobfinder.resume.domain.PortfolioVo;
@@ -63,8 +64,8 @@ public class ResumeParser {
         resumeVo.setProfile(getStringValue(requestMap, "profile"));
         resumeVo.setMemberId(memberId);
         resumeVo.setPostalCodeId(getIntValue(requestMap, "postalCodeId"));
-        resumeVo.setJobGroupId(getIntValue(requestMap, "jobGroupId"));
-        resumeVo.setJobId(getIntValue(requestMap, "jobId"));
+        //resumeVo.setJobGroupId(getIntValue(requestMap, "jobGroupId"));// deprecated.
+        //resumeVo.setJobId(getIntValue(requestMap, "jobId"));// deprecated.
 
         // 현재 시간으로 생성/수정 날짜 설정
         Date now = new Date();
@@ -75,8 +76,26 @@ public class ResumeParser {
         resumeVo.setSchoolList(parseSchoolList((List<Map<String, Object>>) requestMap.get("schools")));
         resumeVo.setCareerList(parseCareerList((List<Map<String, Object>>) requestMap.get("careers")));
         resumeVo.setEducationList(parseEducationList((List<Map<String, Object>>) requestMap.get("educations")));
-        resumeVo.setCertificateList(parseCertificateList((List<Integer>) requestMap.get("certificateIds")));
+        resumeVo.setCertificateList(parseCertificateList((List<Map<String, Object>>) requestMap.get("certificates")));
         resumeVo.setPortfolioList(parsePortfolioList((List<Map<String, Object>>) requestMap.get("portfolios")));
+        
+        // 태그 ID 리스트 저장 (임시 속성 추가)
+        List<Object> tagIdsRaw = (List<Object>) requestMap.get("tagIds");
+        if (tagIdsRaw != null) {
+            List<Long> tagIds = new ArrayList<>();
+            for (Object tagIdObj : tagIdsRaw) {
+                if (tagIdObj != null) {
+                    try {
+                        Long tagId = Long.parseLong(tagIdObj.toString());
+                        tagIds.add(tagId);
+                    } catch (NumberFormatException e) {
+                        System.err.println("태그 ID 파싱 오류: " + tagIdObj);
+                    }
+                }
+            }
+            resumeVo.setTagIds(tagIds);
+            
+        }
 
         return resumeVo;
     }
@@ -116,11 +135,11 @@ public class ResumeParser {
                 CareerVo careerVo = new CareerVo();
                 careerVo.setCompanyName(getStringValue(careerData, "companyName"));
                 careerVo.setDepartmentName(getStringValue(careerData, "departmentName"));
-                careerVo.setHireYm(getStringValue(careerData, "hireYm"));
-                careerVo.setResignYm(getStringValue(careerData, "resignYm"));
+                careerVo.setHireYm(parseYearMonthDate(getStringValue(careerData, "hireYm")));
+                careerVo.setResignYm(parseYearMonthDate(getStringValue(careerData, "resignYm")));
                 careerVo.setPosition(getStringValue(careerData, "position"));
-                careerVo.setJobTitle(getStringValue(careerData, "jobTitle"));
-                careerVo.setTaskRole(getStringValue(careerData, "taskRole"));
+                careerVo.setJobGroupId(getIntValue(careerData, "jobGroupId"));
+                careerVo.setJobId(getIntValue(careerData, "jobId"));
                 careerVo.setWorkDescription(getStringValue(careerData, "workDescription"));
                 careerVo.setSalary(getStringValue(careerData, "salary"));
                 
@@ -159,18 +178,18 @@ public class ResumeParser {
     }
 
     /**
-     * 자격증 리스트 파싱 (ID 리스트를 받아서 CertificateVo 객체 생성)
+     * 자격증 리스트 파싱 (자격증 데이터를 받아서 CertificateResumeVo 객체 생성)
      */
-    private List<CertificateVo> parseCertificateList(List<Integer> certificateIds) {
-        List<CertificateVo> certificateList = new ArrayList<>();
+    private List<CertificateResumeVo> parseCertificateList(List<Map<String, Object>> certificateDataList) {
+        List<CertificateResumeVo> certificateList = new ArrayList<>();
         
-        if (certificateIds != null) {
-            for (Integer certificateId : certificateIds) {
-                if (certificateId != null && certificateId > 0) {
-                    CertificateVo certificateVo = new CertificateVo();
-                    certificateVo.setCertificateId(certificateId);
-                    certificateList.add(certificateVo);
-                }
+        if (certificateDataList != null) {
+            for (Map<String, Object> certificateData : certificateDataList) {
+                CertificateResumeVo certificateVo = new CertificateResumeVo();
+                certificateVo.setCertificateName(getStringValue(certificateData, "certificateName"));
+                certificateVo.setIssuingAuthority(getStringValue(certificateData, "issuingAuthority"));
+                certificateVo.setAcquisitionDate(parseYearMonthDate(getStringValue(certificateData, "acquisitionDate")));
+                certificateList.add(certificateVo);
             }
         }
         

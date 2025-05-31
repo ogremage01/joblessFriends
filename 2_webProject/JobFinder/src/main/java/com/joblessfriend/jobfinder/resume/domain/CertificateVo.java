@@ -9,9 +9,9 @@ import lombok.Setter;
 @Setter
 public class CertificateVo {
 
-	private int certificateId;
-	private String certificateName;
-	private String issuingAuthority;
-	private int isActive;
+	private int certificateId;// 자격증 ID
+	private String certificateName;// 자격증명
+	private String issuingAuthority;//  발급기관
+	private int isActive;// 활성화 여부
 	
 }

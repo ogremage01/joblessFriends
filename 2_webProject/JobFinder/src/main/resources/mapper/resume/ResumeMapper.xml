@@ -4,6 +4,7 @@
 
 	<resultMap type="com.joblessfriend.jobfinder.resume.domain.ResumeVo" id="ResumeResultMap">
 		<id column="RESUME_ID" property="resumeId" />
+		<result column="RESUME_TITLE" property="title" />
 		<result column="NAME" property="memberName" />
 		<result column="BIRTHDATE" property="birthDate" />
 		<result column="PHONENUMBER" property="phoneNumber" />
@@ -16,22 +17,23 @@
 		<result column="PROFILE" property="profile" />
 		<result column="CREATE_AT" property="createDate" javaType="java.util.Date" />
 		<result column="MODIFIED_AT" property="modifyDate" javaType="java.util.Date" />
-		<result column="JOB_GROUP_ID" property="jobGroupId" />
-		<result column="JOB_ID" property="jobId" />
+	<!-- 	<result column="JOB_GROUP_ID" property="jobGroupId" />
+		<result column="JOB_ID" property="jobId" /> -->
 	</resultMap>
 	
 	<!-- 조회 -->
 	<select id="findResumesByMemberId" resultMap="ResumeResultMap">
-        SELECT RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS, RESUME_TITLE,
-               SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT, JOB_GROUP_ID, JOB_ID    
+        SELECT RESUME_ID, RESUME_TITLE, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS, 
+               SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT    
+
         FROM RESUME
         WHERE MEMBER_ID = #{memberId}
         ORDER BY RESUME_ID DESC
 	</select>
 
 	<select id="getResumeByResumeId" resultMap="ResumeResultMap">
-        SELECT RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS, 
-               SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT, JOB_GROUP_ID, JOB_ID    
+        SELECT RESUME_ID, RESUME_TITLE, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS, 
+               SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT    
         FROM RESUME
         WHERE RESUME_ID = #{resumeId}
     </select>
@@ -57,11 +59,12 @@
             SELECT RESUME_ID_SEQ.NEXTVAL FROM DUAL
         </selectKey>
         INSERT INTO RESUME (
-            RESUME_ID, MEMBER_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL,
+            RESUME_TITLE,RESUME_ID, MEMBER_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL,
             POSTAL_CODE_ID, ADDRESS, SELF_INTRODUCTION, PROFILE,
-            JOB_GROUP_ID, JOB_ID, CREATE_AT, MODIFIED_AT
+             CREATE_AT, MODIFIED_AT
         )
         VALUES (
+        	#{title},
             #{resumeId},
             #{memberId, jdbcType=INTEGER},
             #{memberName, jdbcType=VARCHAR},
@@ -72,8 +75,6 @@
             #{address, jdbcType=VARCHAR},
             #{selfIntroduction, jdbcType=VARCHAR},
             #{profile, jdbcType=VARCHAR},
-            #{jobGroupId, jdbcType=INTEGER},
-            #{jobId, jdbcType=INTEGER},
             SYSDATE, SYSDATE
         )
     </insert>
@@ -122,11 +123,11 @@
     <!-- 교육정보 저장 -->
     <insert id="insertEducation" parameterType="com.joblessfriend.jobfinder.resume.domain.EducationVo">
         INSERT INTO EDUCATION (
-            EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE
+            EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
         )
         VALUES (
             EDU_ID_SEQ.NEXTVAL, #{resumeId}, #{eduInstitution}, #{eduName}, 
-            #{startDate, jdbcType=DATE}, #{endDate, jdbcType=DATE}
+            #{startDate, jdbcType=DATE}, #{endDate, jdbcType=DATE}, #{content, jdbcType=VARCHAR}
         )
     </insert>
     
@@ -134,13 +135,13 @@
     <insert id="insertCareer" parameterType="com.joblessfriend.jobfinder.resume.domain.CareerVo">
         INSERT INTO CAREER (
             CAREER_ID, RESUME_ID, COMPANY_NAME, DEPARTMENT_NAME, HIRE_YM, RESIGN_YM,
-            POSITION, JOB_TITLE, TASK_ROLE, WORK_DESCRIPTION, SALARY
+            POSITION, JOB_GROUP_ID, JOB_ID, DETAIL, SALARY
         )
         VALUES (
             CAREER_ID_SEQ.NEXTVAL, #{resumeId}, #{companyName}, #{departmentName}, 
-            #{hireYm, jdbcType=VARCHAR}, #{resignYm, jdbcType=VARCHAR},
-            #{position, jdbcType=VARCHAR}, #{jobTitle, jdbcType=VARCHAR}, 
-            #{taskRole, jdbcType=VARCHAR}, #{workDescription, jdbcType=VARCHAR}, 
+            #{hireYm, jdbcType=DATE}, #{resignYm, jdbcType=DATE},
+            #{position, jdbcType=VARCHAR}, #{jobGroupId}, 
+            #{jobId}, #{workDescription, jdbcType=VARCHAR}, 
             #{salary, jdbcType=VARCHAR}
         )
     </insert>
@@ -156,12 +157,12 @@
     </insert>
     
     <!-- 자격증정보 저장 -->
-    <insert id="insertCertificateResume">
+    <insert id="insertCertificateResume" parameterType="com.joblessfriend.jobfinder.resume.domain.CertificateResumeVo">
         INSERT INTO CERTIFICATE_RESUME (
-            CERTIFICATE_RESUME_ID, RESUME_ID, CERTIFICATE_ID, CREATE_AT, MODIFIED_AT
+            CERTIFICATE_RESUME_ID, RESUME_ID, CERTIFICATE_NAME, ACQUISITION_DATE, ISSUING_AUTHORITY
         )
         VALUES (
-            CERTIFICATE_RESUME_ID_SEQ.NEXTVAL, #{resumeId}, #{certificateId}, SYSDATE, SYSDATE
+            CERTIFICATE_RESUME_ID_SEQ.NEXTVAL, #{resumeId}, #{certificateName}, #{acquisitionDate}, #{issuingAuthority}
         )
     </insert>    
     
@@ -179,6 +180,7 @@
     <!-- 이력서 업데이트 -->
     <update id="updateResume" parameterType="com.joblessfriend.jobfinder.resume.domain.ResumeVo">
         UPDATE RESUME SET 
+            RESUME_TITLE = #{title, jdbcType=VARCHAR},
             NAME = #{memberName, jdbcType=VARCHAR},
             BIRTHDATE = #{birthDate, jdbcType=DATE},
             PHONENUMBER = #{phoneNumber, jdbcType=VARCHAR},
@@ -187,11 +189,72 @@
             ADDRESS = #{address, jdbcType=VARCHAR},
             SELF_INTRODUCTION = #{selfIntroduction, jdbcType=VARCHAR},
             PROFILE = #{profile, jdbcType=VARCHAR},
-            JOB_GROUP_ID = #{jobGroupId, jdbcType=INTEGER},
-            JOB_ID = #{jobId, jdbcType=INTEGER},
             MODIFIED_AT = SYSDATE
         WHERE RESUME_ID = #{resumeId}
           AND MEMBER_ID = #{memberId}
+    </update>
+    
+    <!-- 학력 업데이트 -->
+    <update id="updateSchool" parameterType="com.joblessfriend.jobfinder.resume.domain.SchoolVo">
+        UPDATE SCHOOL SET 
+            SORTATION = #{sortation},
+            SCHOOL_NAME = #{schoolName},
+            YEAR_OF_GRADUATION = #{yearOfGraduation, jdbcType=VARCHAR},
+            STATUS = #{status},
+            MAJOR_NAME = #{majorName, jdbcType=VARCHAR},
+            START_DATE = #{startDate, jdbcType=DATE},
+            END_DATE = #{endDate, jdbcType=DATE}
+        WHERE SCHOOL_ID = #{schoolId}
+          AND RESUME_ID = #{resumeId}
+    </update>
+    
+    <!-- 경력 업데이트 -->
+    <update id="updateCareer" parameterType="com.joblessfriend.jobfinder.resume.domain.CareerVo">
+        UPDATE CAREER SET 
+            COMPANY_NAME = #{companyName},
+            DEPARTMENT_NAME = #{departmentName},
+            HIRE_YM = #{hireYm, jdbcType=DATE},
+            RESIGN_YM = #{resignYm, jdbcType=DATE},
+            POSITION = #{position, jdbcType=VARCHAR},
+            JOB_GROUP_ID = #{jobGroupId},
+            JOB_ID = #{jobId},
+            DETAIL = #{workDescription, jdbcType=VARCHAR},
+            SALARY = #{salary, jdbcType=VARCHAR}
+        WHERE CAREER_ID = #{careerId}
+          AND RESUME_ID = #{resumeId}
+    </update>
+    
+    <!-- 교육 업데이트 -->
+    <update id="updateEducation" parameterType="com.joblessfriend.jobfinder.resume.domain.EducationVo">
+        UPDATE EDUCATION SET 
+            EDU_INSTITUTION = #{eduInstitution},
+            EDU_NAME = #{eduName},
+            START_DATE = #{startDate, jdbcType=DATE},
+            END_DATE = #{endDate, jdbcType=DATE},
+            CONTENT = #{content, jdbcType=VARCHAR}
+        WHERE EDU_ID = #{eduId}
+          AND RESUME_ID = #{resumeId}
+    </update>
+    
+    <!-- 자격증 업데이트 -->
+    <update id="updateCertificateResume" parameterType="com.joblessfriend.jobfinder.resume.domain.CertificateResumeVo">
+        UPDATE CERTIFICATE_RESUME SET 
+            CERTIFICATE_NAME = #{certificateName},
+            ACQUISITION_DATE = #{acquisitionDate, jdbcType=DATE},
+            ISSUING_AUTHORITY = #{issuingAuthority}
+        WHERE CERTIFICATE_RESUME_ID = #{certificateResumeId}
+          AND RESUME_ID = #{resumeId}
+    </update>
+    
+    <!-- 포트폴리오 업데이트 -->
+    <update id="updatePortfolio" parameterType="com.joblessfriend.jobfinder.resume.domain.PortfolioVo">
+        UPDATE PORTFOLIO SET 
+            FILE_NAME = #{fileName},
+            STORED_FILE_NAME = #{storedFileName},
+            FILE_EXTENSION = #{fileExtension},
+            MODIFIED_AT = SYSDATE
+        WHERE PORTFOLIO_ID = #{portfolioId}
+          AND RESUME_ID = #{resumeId}
     </update>
     
     <!-- 하위 데이터 조회 쿼리들 -->
@@ -207,7 +270,7 @@
     <select id="getCareersByResumeId" resultType="com.joblessfriend.jobfinder.resume.domain.CareerVo">
         SELECT CAREER_ID as careerId, RESUME_ID as resumeId, COMPANY_NAME as companyName, 
                DEPARTMENT_NAME as departmentName, HIRE_YM as hireYm, RESIGN_YM as resignYm,
-               POSITION as position, JOB_TITLE as jobTitle, TASK_ROLE as taskRole, 
+               POSITION as position, JOB_GROUP_ID as jobGroupId, JOB_ID as jobId, 
                DETAIL as workDescription, SALARY as salary
         FROM CAREER 
         WHERE RESUME_ID = #{resumeId}
@@ -216,7 +279,7 @@
     
     <select id="getEducationsByResumeId" resultType="com.joblessfriend.jobfinder.resume.domain.EducationVo">
         SELECT EDU_ID as eduId, RESUME_ID as resumeId, EDU_INSTITUTION as eduInstitution, 
-               EDU_NAME as eduName, START_DATE as startDate, END_DATE as endDate
+               EDU_NAME as eduName, START_DATE as startDate, END_DATE as endDate, CONTENT as content
         FROM EDUCATION 
         WHERE RESUME_ID = #{resumeId}
         ORDER BY EDU_ID
@@ -231,11 +294,20 @@
         ORDER BY PORTFOLIO_ID
     </select>
     
-    <select id="getCertificateIdsByResumeId" resultType="Integer">
-        SELECT CERTIFICATE_ID
+    <select id="getCertificateByResumeId" resultType="com.joblessfriend.jobfinder.resume.domain.CertificateResumeVo">
+        SELECT CERTIFICATE_RESUME_ID as certificateResumeId, RESUME_ID as resumeId, 
+               CERTIFICATE_NAME as certificateName, ACQUISITION_DATE as acquisitionDate,
+               ISSUING_AUTHORITY as issuingAuthority
         FROM CERTIFICATE_RESUME 
         WHERE RESUME_ID = #{resumeId}
         ORDER BY CERTIFICATE_RESUME_ID
+    </select>
+    
+    <select id="getTagIdsByResumeId" resultType="java.lang.Long">
+        SELECT TAG_ID
+        FROM RESUME_TAG 
+        WHERE RESUME_ID = #{resumeId}
+        ORDER BY RESUME_TAG_ID
     </select>
     
     <!-- 하위 데이터 삭제 쿼리들 -->

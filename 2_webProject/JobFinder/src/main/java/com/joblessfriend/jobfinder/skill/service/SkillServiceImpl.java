@@ -28,4 +28,18 @@ public class SkillServiceImpl implements SkillService{
 		// TODO Auto-generated method stub
 		return skillDao.resumeTagList(resumeId);
 	}
+	
+	@Override
+	public List<SkillVo> getSkillsByKeyword(String keyword) {
+		try {
+			
+			List<SkillVo> result = skillDao.getSkillsByKeyword(keyword);
+			
+			return result;
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			throw e;
+		}
+	}
 }

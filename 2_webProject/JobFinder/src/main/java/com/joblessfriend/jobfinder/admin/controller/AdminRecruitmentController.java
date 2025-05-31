@@ -34,17 +34,12 @@ public class AdminRecruitmentController {
 
 		logger.info("공고목록으로 이동");
 		
-		System.out.println();
-		System.out.println("검색어 내용: " + keyword);
-		System.out.println();
+		
 		
 		SearchVo searchVo = new SearchVo();
 		searchVo.setKeyword(keyword);
 		searchVo.setPage(page);
-		System.out.println();
-		System.out.println("searchVo 내용: " + searchVo.getKeyword() + searchVo.getPage());
-		System.out.println();
-		
+
 		int totalPage = adminRecruitmentService.getRecruitmentTotalCount(searchVo);
 		Pagination pagination = new Pagination(totalPage, searchVo);
 		
@@ -65,10 +60,7 @@ public class AdminRecruitmentController {
 	public ResponseEntity<String> recruitmentDelete(@RequestBody List<Integer> jobPostIdList) {
 		logger.info("공고삭제메서드");
 
-		for (Integer i : jobPostIdList) {
-			System.out.println("삭제할 공고 Id" + i);
 
-		}
 		
 		adminRecruitmentService.jobPostDelete(jobPostIdList);
 

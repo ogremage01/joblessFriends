@@ -97,55 +97,34 @@
 	</div>
 
 
-      <!-- 희망직무 -->
-	<section class="section-block" id="section-job">
-		<h2>희망직무</h2>
-		<div class="grid-2">
-			<div class="field-block">
-				<label>직군</label>
-				<select id="jobGroupSelect">
-					<option value="">직군 선택</option>
-				</select>
-			</div>
-				<div class="field-block">
-				<label>직무</label>
-				<select id="jobSelect">
-					<option value="">직무 선택</option>
-				</select>
-			</div>
-		</div>
-	</section>
+
       
      <!-- 스킬 -->
 	<section class="section-block" id="section-skill">
 		<h2 class="section-title">스킬</h2>
-			<p id="selectedJobGroupLabel" class="selected-job-group-label" style="display: none;"></p>
-			
-		<div id="skillContainer" class="tag-select">
-			
-		</div>
+		<p id="selectedJobGroupLabel" class="selected-job-group-label" style="display: none;"></p>
+		<div id="skillContainer" class="tag-select"></div>
 	</section>
 
 	<section class="section-block" id="section-edu">
 		<h2>학력</h2>
-		<div class="edu-row-combined">		   
-			   <!-- 학교 구분 선택 -->
-			<div class="field-block">
-				<label>구분</label>
-				<select id="schoolTypeSelect">
-					<option value="">선택</option>
-					<option value="high">고등학교</option>
-					<option value="univ4">대학교(4년)</option>
-					<option value="univ2">대학교(2,3년)</option>
-				</select>
-			</div>
-			
-			<!-- 여기에 동적으로 필드가 채워짐 -->
-			<div id="edu-dynamic-fields" style="display: contents;">
-				<!-- 기존 학력 데이터 표시 -->
-				<c:forEach var="school" items="${resumeData.schoolList}" varStatus="status">
-					<div class="edu-row-combined school-entry">
-						<c:if test="${school.sortation == 'high'}">
+		<div id="school-container">
+			<!-- 기존 학력 데이터 표시 -->
+			<c:forEach var="school" items="${resumeData.schoolList}" varStatus="status">
+				<div class="school-entry">
+					<button type="button" class="delete-btn">×</button>
+					
+					<div class="field-block">
+						<label>구분</label>
+						<select name="sortation">
+							<option value="high" <c:if test="${school.sortation == 'high'}">selected</c:if>>고등학교</option>
+							<option value="univ4" <c:if test="${school.sortation == 'univ4'}">selected</c:if>>대학교(4년)</option>
+							<option value="univ2" <c:if test="${school.sortation == 'univ2'}">selected</c:if>>대학교(2,3년)</option>
+						</select>
+					</div>
+					
+					<c:if test="${school.sortation == 'high'}">
+						<div class="grid-3">
 							<div class="field-block school-autocomplete-block">
 								<label>학교명</label>
 								<input type="text" name="schoolName" placeholder="학교명을 입력해주세요" value="${school.schoolName}" autocomplete="off" />
@@ -163,9 +142,10 @@
 									<option value="재학중" <c:if test="${school.status == '재학중'}">selected</c:if>>재학중</option>
 								</select>
 							</div>
-							<input type="hidden" name="sortation" value="high" />
-						</c:if>
-						<c:if test="${school.sortation != 'high'}">
+						</div>
+					</c:if>
+					<c:if test="${school.sortation != 'high'}">
+						<div class="grid-2">
 							<div class="field-block school-autocomplete-block">
 								<label>학교명</label>
 								<input type="text" name="schoolName" placeholder="대학교명을 입력해주세요" value="${school.schoolName}" autocomplete="off" />
@@ -176,6 +156,8 @@
 								<input type="text" name="majorName" placeholder="전공명을 입력해주세요" value="${school.majorName}" autocomplete="off" />
 								<ul class="autocomplete-list" style="display: none;"></ul>
 							</div>
+						</div>
+						<div class="grid-3">
 							<div class="field-block">
 								<label>입학년월</label>
 								<input type="text" name="startDate" placeholder="예시) 2020.03" value="<fmt:formatDate value="${school.startDate}" pattern='yyyy.MM'/>"/>
@@ -192,13 +174,10 @@
 									<option value="재학중" <c:if test="${school.status == '재학중'}">selected</c:if>>재학중</option>
 								</select>
 							</div>
-							<input type="hidden" name="sortation" value="${school.sortation}" />
-						</c:if>
-						<button type="button" class="delete-btn">×</button>
-					</div>
-				</c:forEach>
-			</div>
-			
+						</div>
+					</c:if>
+				</div>
+			</c:forEach>
 		</div>
 		
 		<div class="add-education-btn">
@@ -225,29 +204,40 @@
 						</div>
 						<div class="field-block">
 							<label>입사년월</label>
-							<input type="text" name="hireYm" placeholder="예시) 2025.04" value="${career.hireYm}" />
+							<input type="text" name="hireYm" placeholder="예시) 2025.04" value="<fmt:formatDate value="${career.hireYm}" pattern='yyyy.MM'/>" />
 						</div>
 					</div>
 					
 					<div class="grid-3">
 						<div class="field-block">
 							<label>퇴사년월</label>
-							<input type="text" name="resignYm" placeholder="예시) 2025.04" value="${career.resignYm}" />
+							<input type="text" name="resignYm" placeholder="예시) 2025.04" value="<fmt:formatDate value="${career.resignYm}" pattern='yyyy.MM'/>" />
 						</div>
-						<div class="field-block">
-							<label>직급/직책</label>
-							<input type="text" name="position" placeholder="직급/직책을 입력해주세요" value="${career.position}" />
-						</div>
+						
 						<div class="field-block">
 							<label>담당직군</label>
-							<input type="text" name="jobTitle" placeholder="담당직군을 입력해주세요" value="${career.jobTitle}" />
+							<select name="careerJobGroupSelect">
+								<option value="">직군 선택</option>
+								<c:forEach var="group" items="${jobGroupList}">
+									<option value="${group.jobGroupId}" <c:if test="${career.jobGroupId == group.jobGroupId}">selected</c:if>>${group.jobGroupName}</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="field-block">
+							<label>담당직무</label>
+							<select name="careerJobSelect">
+								<option value="">직무 선택</option>
+								<c:forEach var="job" items="${jobList}">
+									<option value="${job.jobId}" <c:if test="${career.jobId == job.jobId}">selected</c:if>>${job.jobName}</option>
+								</c:forEach>
+							</select>
 						</div>
 					</div>
 					
 					<div class="grid-2">
-						<div class="field-block">
-							<label>담당직무</label>
-							<input type="text" name="taskRole" placeholder="담당직무를 입력해주세요" value="${career.taskRole}" />
+					<div class="field-block">
+							<label>직급/직책</label>
+							<input type="text" name="position" placeholder="직급/직책을 입력해주세요" value="${career.position}" />
 						</div>
 						<div class="field-block">
 							<label>연봉 (만원)</label>
@@ -270,10 +260,10 @@
 	
 	<section class="section-block" id="section-training">
 		<h2>교육</h2>
-		<div id="education-container">
+		<div id="training-container">
 			<!-- 기존 교육 데이터 표시 -->
 			<c:forEach var="education" items="${resumeData.educationList}">
-				<div class="education-entry">
+				<div class="training-entry">
 					<button class="delete-btn">×</button>
 				
 					<div class="grid-4">
@@ -337,7 +327,6 @@
 							<input type="text" name="acquisitionDate" placeholder="예시) 2025.04" value="<fmt:formatDate value='${certificate.acquisitionDate}' pattern='yyyy.MM'/>" />
 						</div>
 					</div>
-					<input type="hidden" name="certificateId" value="${certificate.certificateId}" />
 				</div>
 			</c:forEach>
 		</div>
@@ -353,10 +342,10 @@
 			<!-- 기존 포트폴리오 데이터 표시 -->
 			<c:forEach var="portfolio" items="${resumeData.portfolioList}">
 				<div class="portfolio-entry">
-					<button class="delete-btn">×</button>
+					<button type="button" class="delete-btn">×</button>
 					<div class="portfolio-upload-box">
 						<label>
-							<span class="plus-icon">＋</span>
+							<span class="plus-icon">✓</span>
 							파일: ${portfolio.fileName}
 							<input type="file" name="portfolioFile" style="display: none;" />
 						</label>
@@ -378,25 +367,82 @@
 	<jsp:include page="../common/footer.jsp" />
 	
 <!-- 서버 데이터를 JavaScript로 전달 -->
-<script>
-// 수정 모드 설정
-window.isEditMode = true;
-window.currentResumeId = ${resumeData.resumeId};
-window.uploadedImageUrl = '${resumeData.profile}' || '';
+<c:set var="jsResumeId" value="${resumeData.resumeId != null ? resumeData.resumeId : 0}"/>
+<c:set var="jsProfile" value="${resumeData.profile != null ? resumeData.profile : ''}"/>
 
-// 기존 이력서 데이터 전달
-window.resumeData = {
-  jobGroupId: ${resumeData.jobGroupId > 0 ? resumeData.jobGroupId : 0},
-  jobId: ${resumeData.jobId > 0 ? resumeData.jobId : 0}
-};
+<script>
+window.isEditMode = true;
+window.currentResumeId = '${jsResumeId}';
+window.uploadedImageUrl = '${jsProfile}';
+
+// 기존 스킬 데이터 - 안전하게 초기화
+window.existingSkills = [];
 
 // 프로필 이미지 초기화
 document.addEventListener('DOMContentLoaded', function() {
   if (typeof window.initProfileImage === 'function') {
     window.initProfileImage();
   }
+  
+  // 기존 스킬 데이터 로드 (서버에서 안전하게 처리됨)
+  if (window.existingSkills && window.existingSkills.length > 0) {
+    window.existingSkills.forEach(function(skill) {
+      selectedSkills.add(String(skill.tagId));
+    });
+    
+    // 스킬 UI 초기화 후 기존 스킬 표시
+    setTimeout(function() {
+      const selectedSkillTags = document.getElementById("selectedSkillTags");
+      if (selectedSkillTags) {
+        window.existingSkills.forEach(function(skill) {
+          const tagElem = document.createElement("span");
+          tagElem.className = "skill-hashtag";
+          tagElem.textContent = "#" + skill.tagName;
+          tagElem.dataset.tagId = skill.tagId;
+          
+          const xBtn = document.createElement("button");
+          xBtn.type = "button";
+          xBtn.className = "remove-skill-tag";
+          xBtn.textContent = "×";
+          xBtn.addEventListener("click", function() {
+            selectedSkills.delete(String(skill.tagId));
+            tagElem.remove();
+          });
+          tagElem.appendChild(xBtn);
+          selectedSkillTags.appendChild(tagElem);
+        });
+      }
+    }, 100);
+  }
+  
+  // 기존 학력 데이터에 자동완성 기능 연결
+  document.querySelectorAll('.school-entry').forEach(function(entry) {
+    const sortationSelect = entry.querySelector('select[name="sortation"]');
+    const fieldsContainer = entry.querySelector('.grid-3, .grid-2');
+    
+    if (sortationSelect && fieldsContainer) {
+      const sortation = sortationSelect.value;
+      if (sortation) {
+        attachAutocomplete(fieldsContainer.parentElement, sortation);
+      }
+    }
+  });
 });
 </script>
+
+<!-- 기존 스킬 데이터를 JavaScript로 안전하게 추가 -->
+<c:if test="${not empty skillList}">
+<c:forEach var="skill" items="${skillList}">
+<script>
+if (window.existingSkills) {
+  window.existingSkills.push({
+    tagId: ${skill.tagId},
+    tagName: '${fn:replace(skill.tagName, "'", "\\'")}'
+  });
+}
+</script>
+</c:forEach>
+</c:if>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-3fp9tS8p9A2Mq7Qz+S8jfwD+xdgu9T+O+NRZz8N5eA8=" crossorigin="anonymous"></script>

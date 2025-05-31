@@ -8,4 +8,5 @@ public interface SkillDao {
     List<SkillVo> tagList(int jobGroupId);
     List<SkillVo> postTagList(int jobPostId);
 	List<SkillVo> resumeTagList(int resumeId);
+	List<SkillVo> getSkillsByKeyword(String keyword);
 }

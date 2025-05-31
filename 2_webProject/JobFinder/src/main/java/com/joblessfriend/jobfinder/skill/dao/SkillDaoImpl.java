@@ -30,4 +30,9 @@ public class SkillDaoImpl implements SkillDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("com.joblessfriend.jobfinder.skill.dao.SkillDao.resumeTagList", resumeId);
 	}
+	
+	@Override
+	public List<SkillVo> getSkillsByKeyword(String keyword) {
+		return sqlSession.selectList("com.joblessfriend.jobfinder.skill.dao.SkillDao.getSkillsByKeyword", keyword);
+	}
 }
