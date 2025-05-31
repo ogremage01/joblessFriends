@@ -106,13 +106,14 @@ $(document).ready(function () {
 			
 		    const content = $("#inputCommentBox").val();//작성한 글의 내용
 		
+				
 		    if (!content.trim()) {
-		        alert("댓글을 입력해주세요.");
+		        askConfirm("댓글을");
 		        return;
 		    }
 			
 			if (content.length > 300) {
-			       alert("댓글은 최대 300자까지 입력할 수 있습니다.");
+			       askConfirmMax("댓글");
 			       return;
 			   }
 		    
@@ -172,11 +173,15 @@ $(document).ready(function () {
 		
 	    const content = $("#editCommentContent_"+postCommentId).val();//작성항 글의 내용
 	
-	    if (!content.trim()) {
-	        alert("수정 댓글이 비었습니다!");
-	        return;
-	    }
-	    
+		if (!content.trim()) {
+		    askConfirm("수정 댓글을");
+		    return;
+		}
+
+		if (content.length > 300) {
+		       askConfirmMax("수정 댓글");
+		       return;
+		 }
 		$.ajax({
 			url: urlStr,
 			type: "POST",

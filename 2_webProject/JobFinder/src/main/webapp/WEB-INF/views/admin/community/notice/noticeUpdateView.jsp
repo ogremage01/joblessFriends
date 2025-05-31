@@ -23,6 +23,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
 	rel="stylesheet">
+	<link rel="stylesheet" href="/css/community/toastPopup.css"> 
 
 <link rel="stylesheet" href="/css/admin/common.css">
 <link rel="stylesheet" href="/css/admin/tableStyle.css">
@@ -202,6 +203,11 @@ margin: auto;
 		    </script>`
 		</div>
 		<!-- 본문영역  -->
+		
+		<div id="askConfirm">
+		</div>
+		
+		<script src="/js/community/toastPopup.js"></script>
 	</main>
 
 </body>

@@ -27,6 +27,7 @@
 <link rel="stylesheet" href="/css/admin/common.css">
 <link rel="stylesheet" href="/css/admin/tableStyle.css">
 <link rel="stylesheet" href="/css/admin/notice/noticeStyle.css">
+<link rel="stylesheet" href="/css/community/toastPopup.css"> 
 <link rel="stylesheet"
 	href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <link rel="stylesheet"
@@ -49,6 +50,16 @@ width: 1000px;
 
 margin: auto;
 }
+
+.toastui-editor-contents:empty::before {
+    background-color: white !important;
+}
+
+#title{
+	width: 1000px;
+	margin-bottom: 20px;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -70,43 +81,43 @@ margin: auto;
 			<input type="hidden" name="writer"
 				value="${sessionScope.userLogin.adminId}" />
 
-				<!-- 제목 입력 -->
-				<div id='titleWrap'>
-					<p>공지 제목</p>
-					<input id='title' name='title' type="text" class='boxStyle'
-						placeholder="제목을 입력해주세요." />
-				</div>
+			<!-- 제목 입력 -->
+			<div id='titleWrap'>
+				<p>공지 제목</p>
+				<input id='title' name='title' type="text" class='boxStyle'
+					placeholder="제목을 입력해주세요." />
+			</div>
 				
-				<div id="noticeCategory">
-					<label for="lang">유형</label>
-					<select name="noticeCategoryId" id="lang">
-					<c:forEach var="category" items="${noticeCategoryList}">
-						  <option value="${category.noticeCategoryId}">${category.noticeCategoryContent}</option>
-					</c:forEach>
-					</select>
-				</div>
+			<div id="noticeCategory">
+				<label for="lang">유형</label>
+				<select name="noticeCategoryId" id="lang">
+				<c:forEach var="category" items="${noticeCategoryList}">
+					  <option value="${category.noticeCategoryId}">${category.noticeCategoryContent}</option>
+				</c:forEach>
+				</select>
+			</div>
 
-				<!-- 에디터 입력 -->
-				<div id='contentWriteWrap'>
-					<p>내용</p>
-					<div id="noticeContent" class="contentBox"></div>
-					<textarea name="content" id="hiddenContent" style="display: none;"></textarea>
-				</div>
+			<!-- 에디터 입력 -->
+			<div id='contentWriteWrap'>
+				<p>내용</p>
+				<div id="noticeContent" class="contentBox"></div>
+				<textarea name="content" id="hiddenContent" style="display: none;"></textarea>
+			</div>
 
-				<!-- 업로드된 파일 목록 표시 -->
-				<div id="fileUploadWrap">
-					<p>첨부된 이미지 목록</p>
-					<div id="uploadedFileList"></div>
-				</div>
+			<!-- 업로드된 파일 목록 표시 -->
+			<div id="fileUploadWrap">
+				<p>첨부된 이미지 목록</p>
+				<div id="uploadedFileList"></div>
+			</div>
 
-				<!-- 등록/취소 버튼 -->
-				<div id="btnWrap">
-					<button id='cancleBtn' class='inputBtn' type="button"
-						onclick="history.back()">취소</button>
-					<button type="submit" id='uploadBtn' class='inputBtn'
-						onsubmit="submitEditor()">등록</button>
-				</div>
-			</form>
+			<!-- 등록/취소 버튼 -->
+			<div id="btnWrap">
+				<button id='cancleBtn' class='inputBtn' type="button"
+					onclick="history.back()">취소</button>
+				<button type="submit" id='uploadBtn' class='inputBtn'
+					onsubmit="submitEditor()">등록</button>
+			</div>
+		</form>
 
 			<!-- 에디터 초기화 및 이미지 업로드 처리 -->
 			<script>
@@ -200,7 +211,14 @@ margin: auto;
     </script>
 		</div>
 		<!-- 본문영역  -->
+		
+		<div id="askConfirm">
+		</div>
+		
+		<script src="/js/community/toastPopup.js"></script>
 	</main>
+
+
 
 </body>
 
