@@ -32,8 +32,7 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
         applyCopy.setEmail(origin.getEmail());
         applyCopy.setSelfIntroduction(origin.getSelfIntroduction());
         applyCopy.setProfile(origin.getProfile());
-        applyCopy.setJobGroupId(origin.getJobGroupId());
-        applyCopy.setJobId(origin.getJobId());
+
 
         applyCopy.setSchoolList(origin.getSchoolList());
         applyCopy.setCareerList(origin.getCareerList());
@@ -70,12 +69,12 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
             }
         }
 
-        List<CertificateVo> certificates = applyCopy.getCertificateList();
-        if (certificates != null) {
-            for (CertificateVo cert : certificates) {
-                resumeApplyDao.insertCertificateResume(applyId, cert.getCertificateId());
-            }
-        }
+//        List<CertificateResumeVo> certificates = applyCopy.getCertificateList();
+//        if (certificates != null) {
+//            for (CertificateResumeVo cert : certificates) {
+//                resumeApplyDao.insertCertificateResume(applyId, cert.getCertificateId());
+//            }
+//        }
 
         List<PortfolioVo> portfolios = applyCopy.getPortfolioList();
         if (portfolios != null) {
