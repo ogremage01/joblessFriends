@@ -180,7 +180,9 @@ public class RecruitmentController {
         model.addAttribute("recruitmentDetailVo", recruitmentDetailVo);
         
         /* 추가사항(찜했는지 구분하는 model)(찜 구분) */
+
 	    MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
+	    
 	    if(memberVo != null) {
 			int memberId = memberVo.getMemberId();//로그인 중인 멤버 아이디 가져옴
 			
@@ -188,6 +190,7 @@ public class RecruitmentController {
 			
 			model.addAttribute("bookMarked_JobPostId", bookMarked_JobPostId);//조회한 jobId정보 넣음(null, 혹은 존재하는 값)
         }
+        
         /* 찜 구분 end*/
 
         return "recruitment/recruitmentDetail";

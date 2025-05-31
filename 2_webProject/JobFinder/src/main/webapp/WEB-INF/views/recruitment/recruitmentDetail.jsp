@@ -54,7 +54,8 @@
 	                <c:choose>
 						<c:when test="${bookMarked_JobPostId == null}">
 							<div id="bookmark-Container">
-		                    	<button class="btn-NonBookmark" data-jobpostid="${recruitmentDetailVo.recruitment.jobPostId}">★ 공고 찜하기</button>
+		                    	<button class="btn-NonBookmark" data-jobpostid="${recruitmentDetailVo.recruitment.jobPostId}"
+		                    									data-usertype="${sessionScope.userType}">★ 공고 찜하기</button>
 		                    </div>
 						</c:when>
 						<c:otherwise>
