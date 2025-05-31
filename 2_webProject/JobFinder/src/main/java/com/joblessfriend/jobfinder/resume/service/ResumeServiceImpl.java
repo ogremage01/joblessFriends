@@ -185,9 +185,10 @@ public class ResumeServiceImpl implements ResumeService {
         // 5. 자격증 정보 저장
         if (resumeVo.getCertificateList() != null && !resumeVo.getCertificateList().isEmpty()) {
             for (CertificateResumeVo certificate : resumeVo.getCertificateList()) {
-                if (certificate.getCertificateResumeId() > 0) {
+                if (isValidCertificate(certificate)) {
+                    certificate.setResumeId(resumeId);
                     resumeDao.insertCertificateResume(certificate);
-                    System.out.println(">>> [ResumeService] 자격증 정보 저장: " + certificate.getCertificateResumeId());
+                    System.out.println(">>> [ResumeService] 자격증 정보 저장: " + certificate.getCertificateName());
                 }
             }
         }
@@ -240,5 +241,11 @@ public class ResumeServiceImpl implements ResumeService {
         return portfolio != null && 
                portfolio.getFileName() != null && 
                !portfolio.getFileName().trim().isEmpty();
+    }
+    
+    private boolean isValidCertificate(CertificateResumeVo certificate) {
+        return certificate != null && 
+               certificate.getCertificateName() != null && 
+               !certificate.getCertificateName().trim().isEmpty();
     }
 }

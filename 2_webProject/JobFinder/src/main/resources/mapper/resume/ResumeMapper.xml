@@ -155,7 +155,7 @@
     </insert>
     
     <!-- 자격증정보 저장 -->
-    <insert id="insertCertificateResume">
+    <insert id="insertCertificateResume" parameterType="com.joblessfriend.jobfinder.resume.domain.CertificateResumeVo">
         INSERT INTO CERTIFICATE_RESUME (
             CERTIFICATE_RESUME_ID, RESUME_ID, CERTIFICATE_NAME, ACQUISITION_DATE, ISSUING_AUTHORITY
         )
