@@ -3,8 +3,6 @@ DROP TABLE RESUME_COPY CASCADE CONSTRAINTS;
 CREATE TABLE RESUME_COPY (
                              RESUME_ID NUMBER(5),
                              RESUME_TITLE VARCHAR2(3000),
-                             JOB_ID NUMBER(5),
-                             JOB_GROUP_ID NUMBER(5),
                              NAME VARCHAR2(3000),
                              BIRTHDATE DATE,
                              PHONENUMBER VARCHAR2(3000),
@@ -19,9 +17,8 @@ CREATE TABLE RESUME_COPY (
                              IS_PUBLIC NUMBER(1),
 
                              CONSTRAINT PK_RESUME_COPY PRIMARY KEY (RESUME_ID),
-                             CONSTRAINT FK_MEMBER_TO_RESUME_COPY FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER(MEMBER_ID) ON DELETE CASCADE,
-                             CONSTRAINT FK_JOB_TO_RESUME_COPY FOREIGN KEY (JOB_ID) REFERENCES JOB(JOB_ID),
-                             CONSTRAINT FK_JOB_GROUP_TO_RESUME_COPY FOREIGN KEY (JOB_GROUP_ID) REFERENCES JOB_GROUP(JOB_GROUP_ID)
+                             CONSTRAINT FK_MEMBER_TO_RESUME_COPY FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER(MEMBER_ID) ON DELETE CASCADE
+
 );
 
 -- Resume_Tag
@@ -33,12 +30,10 @@ CREATE TABLE RESUME_TAG_COPY (
                                  TAG_ID NUMBER(5),
                                  CREATE_AT DATE,
                                  MODIFIED_AT DATE,
-
                                  CONSTRAINT PK_RESUME_TAG_COPY PRIMARY KEY (RESUME_TAG_ID),
                                  CONSTRAINT FK_RES_TAG_COPY_RESUME FOREIGN KEY (RESUME_ID) REFERENCES RESUME_COPY(RESUME_ID) ON DELETE CASCADE,
                                  CONSTRAINT FK_RES_TAG_COPY_TAG FOREIGN KEY (TAG_ID) REFERENCES TAG(TAG_ID) ON DELETE CASCADE
 );
-
 
 
 -- Career
@@ -56,7 +51,6 @@ CREATE TABLE CAREER_COPY (
                              JOB_GROUP_ID NUMBER(5),
                              SALARY NUMBER(6),
                              DETAIL VARCHAR2(3000),
-                             TASK_ROLE VARCHAR2(3000),
 
                              CONSTRAINT PK_CAREER_COPY PRIMARY KEY (CAREER_ID),
                              CONSTRAINT FK_RESUME_COPY_TO_CAREER_COPY FOREIGN KEY (RESUME_ID) REFERENCES RESUME_COPY(RESUME_ID) ON DELETE CASCADE,
@@ -70,7 +64,7 @@ DROP TABLE EDUCATION_COPY CASCADE CONSTRAINTS;
 
 CREATE TABLE EDUCATION_COPY (
                                 EDU_ID NUMBER(5),
-                                RESUME_ID NUMBER(5),
+                                Resume_ID NUMBER(5),
                                 EDU_INSTITUTION VARCHAR2(3000),
                                 EDU_NAME VARCHAR2(3000),
                                 START_DATE DATE,
@@ -78,8 +72,9 @@ CREATE TABLE EDUCATION_COPY (
                                 CONTENT VARCHAR2(3000),
 
                                 CONSTRAINT PK_EDU_COPY PRIMARY KEY (EDU_ID),
-                                CONSTRAINT FK_EDU_COPY_RESUME FOREIGN KEY (RESUME_ID) REFERENCES RESUME_COPY(RESUME_ID) ON DELETE CASCADE
+                                CONSTRAINT FK_EDU_COPY_RESUME FOREIGN KEY (Resume_ID) REFERENCES RESUME_COPY(RESUME_ID) ON DELETE CASCADE
 );
+
 
 -- School
 DROP TABLE SCHOOL_COPY CASCADE CONSTRAINTS;
@@ -89,7 +84,7 @@ CREATE TABLE SCHOOL_COPY (
                              RESUME_ID NUMBER(5),
                              SORTATION VARCHAR2(3000),
                              SCHOOL_NAME VARCHAR2(3000),
-                             YEAR_OF_GRADUATION DATE,
+                             YEAR_OF_GRADUATION VARCHAR2(3000), -- 수정됨 (원본과 동일하게)
                              START_DATE DATE,
                              END_DATE DATE,
                              MAJOR_NAME VARCHAR2(3000),
@@ -122,13 +117,14 @@ DROP TABLE CERTIFICATE_RESUME_COPY CASCADE CONSTRAINTS;
 CREATE TABLE CERTIFICATE_RESUME_COPY (
                                          CERTIFICATE_RESUME_ID NUMBER(5),
                                          RESUME_ID        NUMBER(5),
-                                         CERTIFICATE_ID   NUMBER(5),
+                                         CERTIFICATE_NAME VARCHAR2(3000),
                                          ACQUISITION_DATE DATE,
+                                         ISSUING_AUTHORITY VARCHAR2(3000),
 
-                                         CONSTRAINT PK_CERT_RESUME_COPY PRIMARY KEY (CERTIFICATE_RESUME_ID),
-                                         CONSTRAINT FK_CERT_RESUME_RESUME FOREIGN KEY (RESUME_ID) REFERENCES RESUME_COPY(RESUME_ID) ON DELETE CASCADE,
-                                         CONSTRAINT FK_CERT_RESUME_CERT FOREIGN KEY (CERTIFICATE_ID) REFERENCES CERTIFICATE(CERTIFICATE_ID) ON DELETE CASCADE
+                                         CONSTRAINT PK_CERTIFICATE_RESUME_COPY PRIMARY KEY (CERTIFICATE_RESUME_ID),
+                                         CONSTRAINT FK_CERT_RESUME_COPY_RESUME FOREIGN KEY (RESUME_ID) REFERENCES RESUME_COPY(RESUME_ID) ON DELETE CASCADE
 );
+
 
 -- RESUME_COPY
 DROP SEQUENCE SEQ_RESUME_COPY_ID;
@@ -157,3 +153,4 @@ CREATE SEQUENCE SEQ_PORTFOLIO_COPY_ID START WITH 1 INCREMENT BY 1 NOCACHE NOCYCL
 -- CERTIFICATE_RESUME_COPY
 DROP SEQUENCE SEQ_CERTIFICATE_RESUME_COPY_ID;
 CREATE SEQUENCE SEQ_CERTIFICATE_RESUME_COPY_ID START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
+

@@ -443,7 +443,7 @@ $(document).on('click', '.apply-btn', function () {
         Swal.fire('📭 등록된 이력서가 없습니다.');
         return;
     }
-
+    const jobPostId = $(this).closest('.job').data('jobpostid');
     const html = resumeList.map(r => `
         <label class="resume-item">
             <div class="resume-radio-row">
@@ -485,12 +485,30 @@ $(document).on('click', '.apply-btn', function () {
             $.ajax({
                 url: "/resume/apply",
                 method: "POST",
-                data: { resumeId: selectedResumeId },
+                data: { resumeId: selectedResumeId,jobPostId: jobPostId },
                 success: function (response) {
-                    Swal.fire('🎉 지원 완료', response, 'success');
+                    Swal.fire({
+                        title: '지원 완료 🎉',
+                        html: `
+                                입사지원 완료<br>
+                                <span style="font-size: 13px; color: #555;">
+                                    (지원내역은 마이페이지 → 구직내역 활동 조회에서 확인 가능합니다.)
+                                </span>
+                            `,
+                        icon: 'success'
+                    });
                 },
                 error: function (xhr) {
-                    Swal.fire('❌ 오류 발생', xhr.responseText || '서버 오류입니다.', 'error');
+                    Swal.fire({
+                        title: '이미 지원 하신 공고 입니다.',
+                        html: `
+                                
+                                <span style="font-size: 13px; color: #555;">
+                                    (지원내역은 마이페이지 → 구직내역 활동 조회에서 확인 가능합니다.)
+                                </span>
+                            `,
+                        icon: 'success'
+                    });
                 }
             });
         }

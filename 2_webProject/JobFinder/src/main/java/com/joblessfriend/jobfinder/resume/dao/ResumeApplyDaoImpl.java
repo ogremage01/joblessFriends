@@ -17,8 +17,8 @@ public class ResumeApplyDaoImpl implements ResumeApplyDao {
     private final String namespace = "com.joblessfriend.jobfinder.resume.dao.ResumeApplyDao";
 
     @Override
-    public void insertResumeApply(ResumeVo resumeVo) {
-        sqlSession.insert(namespace + ".insertResumeApply", resumeVo);
+    public void insertResumeCopy(ResumeVo resumeVo) {
+        sqlSession.insert(namespace + ".insertResumeCopy", resumeVo);
     }
 
     @Override
@@ -59,6 +59,11 @@ public class ResumeApplyDaoImpl implements ResumeApplyDao {
                 "resumeId", resumeId,
                 "tagId", tagId
         ));
+    }
+
+    @Override
+    public void insertResumeManage(ResumeManageVo manageVo) {
+        sqlSession.insert(namespace + ".insertResumeManage", manageVo);
     }
 
     // getResumeWithAllDetails, getSchoolsByResumeId 등 조회 메서드는 필요 시 유지

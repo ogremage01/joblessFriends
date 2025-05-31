@@ -23,7 +23,7 @@ public class ResumeApplyController {
      */
     @PostMapping
     @ResponseBody
-    public ResponseEntity<?> applyResume(@RequestParam("resumeId") int resumeId, HttpSession session) {
+    public ResponseEntity<?> applyResume(@RequestParam("resumeId") int resumeId,@RequestParam("jobPostId") int jobPostId, HttpSession session) {
 
         MemberVo loginUser = (MemberVo) session.getAttribute("userLogin");
 
@@ -32,8 +32,11 @@ public class ResumeApplyController {
         }
 
         try {
-            int copiedResumeId = resumeApplyService.applyResumeWithCopy(resumeId, loginUser.getMemberId());
-            return ResponseEntity.ok("지원 이력서 생성 완료 (복사본 ID: " + copiedResumeId + ")");
+            int copiedResumeId = resumeApplyService.applyResumeWithCopy(resumeId, jobPostId, loginUser.getMemberId());
+            String message = "입사지원 완료";
+            return ResponseEntity.ok(message);
+
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("지원 실패: " + e.getMessage());
