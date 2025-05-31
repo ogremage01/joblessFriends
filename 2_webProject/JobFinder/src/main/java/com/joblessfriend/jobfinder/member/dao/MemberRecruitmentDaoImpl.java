@@ -61,4 +61,16 @@ public class MemberRecruitmentDaoImpl implements MemberRecruitmentDao {
 		return sqlSession.selectOne(namespace + ".bookmarkCount", bookmark);
 	}
 
+//북마크 추가(찜 저장)
+	@Override
+	public void bookMarkInsertOne(int memberId, int jobPostId) {
+		// TODO Auto-generated method stub
+		Map<String, Object> queryMap = new HashMap<>();
+		
+		queryMap.put("memberId", memberId);
+		queryMap.put("jobPostId", jobPostId);
+		
+		sqlSession.selectList(namespace+".bookMarkInsertOne",queryMap);
+	}
+
 }

@@ -197,6 +197,13 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 		// TODO Auto-generated method stub
 		return recruitmentDao.recruitmentListViews(searchVo);
 	}
+	
+	//(찜했는지 확인용)(찜 구분)
+	@Override
+	public Integer selectBookMark(int memberId, int jobPostId) {
+		// TODO Auto-generated method stub
+		return recruitmentDao.selectBookMark(memberId, jobPostId);
+	}
 
 
 

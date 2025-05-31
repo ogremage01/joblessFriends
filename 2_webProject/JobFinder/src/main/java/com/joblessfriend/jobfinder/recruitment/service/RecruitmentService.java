@@ -54,5 +54,8 @@ public interface RecruitmentService {
 	//메인용 list
 	public List<RecruitmentVo> recruitmentListLatest(SearchVo searchVo);
 	public List<RecruitmentVo> recruitmentListViews(SearchVo searchVo);
+	
+	//memberId 중 jobPostId에 사용중인 북마크 찾기(찜 구분)
+	public Integer selectBookMark(int memberId, int jobPostId);
 
 }

@@ -174,7 +174,7 @@
 	}
 	
 	function moveNotice(){
-		location.href='./community/notice';
+		location.href='/community/notice';
 	}
 	
 	function moveCommunity(){

@@ -38,4 +38,11 @@ public class MemberRecruitmentServiceImpl implements MemberRecruitmentService {
 		return recruitmentDao.bookmarkCount(memberId, searchVo);
 	}
 
+	//찜 저장
+	@Override
+	public void bookMarkInsertOne(int memberId, int jobPostId) {
+		// TODO Auto-generated method stub
+		recruitmentDao.bookMarkInsertOne(memberId, jobPostId);
+	}
+
 }
