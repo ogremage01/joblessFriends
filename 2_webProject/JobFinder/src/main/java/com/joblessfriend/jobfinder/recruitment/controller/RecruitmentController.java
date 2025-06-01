@@ -72,8 +72,11 @@ public class RecruitmentController {
         // 또는 "loginUser"로 통일
 
         // 세션에서 로그인 정보 가져오기
-        MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
         String userType = (String) session.getAttribute("userType");
+        MemberVo memberVo = null;
+        if(userType =="member") {
+        	memberVo = (MemberVo) session.getAttribute("userLogin");
+        }
 
         System.out.println("🔍 userType: " + userType);
         System.out.println("🔍 loginMember: " + memberVo);

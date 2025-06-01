@@ -33,6 +33,19 @@ $("#navCompany").click(function(event) {
 
 }); // navCompany end
 
+// 사업자번호 숫자만 입력, 하이픈 자동 삽입
+$(document).on('input', '#brn', function() {
+	let value = $(this).val().replace(/\D/g, ''); // 숫자만 추출
+
+	if (value.length > 3 && value.length <= 5) {
+		value = value.slice(0, 3) + '-' + value.slice(3);
+	} else if (value.length > 5) {
+		value = value.slice(0, 3) + '-' + value.slice(3, 5) + '-' + value.slice(5, 10);
+	}
+
+	$(this).val(value);
+});
+
 //기업회원 입력정보 공백 체크
 function companyBlankCheck(){
 	if ($("#representative").val() == "") {

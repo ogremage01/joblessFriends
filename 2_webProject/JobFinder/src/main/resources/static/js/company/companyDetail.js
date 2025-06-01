@@ -9,14 +9,23 @@ console.log("companyId: "+ companyId);
 // 기업 정보 수정 폼이 제출될 때 실행
 companyInforSubmitFormObj.addEventListener("submit", function(e) {
     e.preventDefault(); // 기본 폼 제출 동작 막기 (페이지 새로고침 방지)
-
-	const passwordVal = document.getElementById("password").value;
-	const passwordCheckVal = document.getElementById("passwordCheck").value;
 	
-/*	if(passwordVal!==passwordCheckVal){
-		return alert("비밀번호를 다시확인해주세요");
+	if(!emailPass){
+		$("#email").focus();
+		return false;
 	}
-	*/
+	if(!pwdPass){
+		$("#password").focus();
+		return false;
+	}
+	if(!pwdCheckPass){
+		$("#passwordCheck").focus();
+		return false;
+	}
+	if(!brnPass){
+		$("#brn").focus();
+		return false;
+	}
 	
     // 폼 데이터 FormData 객체로 수집
     const formData = new FormData(companyInforSubmitFormObj);
@@ -136,9 +145,8 @@ deleteBtn.addEventListener("click", function(e) {
     }
 	
 	/*비밀번호 동일여부 체크*/
-	var pwdPass = false;
-	var pwdCheckPass = false;
-	
+	var pwdPass = true;
+	var pwdCheckPass = true;
 	
 	// 비밀번호 유효성 검사
 	function valiCheckPwd(){
@@ -188,4 +196,113 @@ deleteBtn.addEventListener("click", function(e) {
 			pwdCheckPass = true;
 		}
 		
+	}
+	
+	// 이메일 유효성 검사
+	var emailPass = true;
+	var originEmail =  $("#email").val();
+	function valiCheckEmail(){
+		
+		emailPass=false;
+		
+		var email = $("#email").val();
+		var emailStatus = "";
+		
+		// 이전과 값이 같으면 통과
+		if(email == originEmail){
+			emailPass = true;
+			$("#emailStatus").html("");
+			$("#email").removeAttr("style");
+			return;
+		}
+		
+		// 이메일 형식 체크
+		if(!/^[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z]{2,}$/.test(email)){
+			emailStatus = "이메일 형식을 다시 확인해주세요. <br>(예시: test@email.com)"
+			$("#emailStatus").html(emailStatus);
+			$("#email").css("border", "1px solid red");
+			return;
+		}
+		// 중복확인
+		var url = '/auth/check/company/email';
+		
+		$.ajax({
+			type: 'post',
+			url: url,
+			data: { email: email },
+			dataType: 'text',
+			success: function(data) {
+				console.log("이메일 중복확인 성공");
+				
+				// data --> 존재 or 없음
+				if(data === "존재"){
+					emailStatusStr = "이미 가입된 이메일입니다.";
+					$("#emailStatus").html(emailStatusStr);
+					$("#email").css("border", "1px solid red");
+				}else{
+					$("#emailStatus").html("");
+					$("#email").removeAttr("style");
+					emailPass = true;
+				}
+				
+			},
+			error: function(xhr, status, error) {
+				console.log("error");
+			}
+		}); // ajax end
+		
+	};
+	
+	// 사업자번호 숫자만 입력, 하이픈 자동 삽입
+	$(document).on('input', '#brn', function() {
+		let value = $(this).val().replace(/\D/g, ''); // 숫자만 추출
+
+		if (value.length > 3 && value.length <= 5) {
+			value = value.slice(0, 3) + '-' + value.slice(3);
+		} else if (value.length > 5) {
+			value = value.slice(0, 3) + '-' + value.slice(3, 5) + '-' + value.slice(5, 10);
+		}
+
+		$(this).val(value);
+	});
+	
+	// 사업자번호 유효성 검사 // onblur
+	var brnPass = true;
+	var originBrn =  $("#brn").val();
+	function brnCheckFnc() {
+		brnPass = false;
+		
+		var value = $("#brn").val();
+		
+		// 이전과 값이 같으면 통과
+		if(value == originBrn){
+			brnPass = true;
+			$("#brnStatus").html("");
+			$("#brn").removeAttr("style");
+			return;
+		}
+		
+		// 형식체크
+		const isValid = /^\d{3}-\d{2}-\d{5}$/.test(value);
+		if (!isValid) {
+			brnPass = false;
+			var brnStatusStr = "형식이 올바르지 않습니다. xxx-xx-xxxxx 형식으로 입력하세요.";
+			$("#brnStatus").html(brnStatusStr);
+			$("#brn").css("border", "1px solid red");
+			return;
+		} else {
+			$("#brnStatus").html("");
+			$("#brn").removeAttr("style");
+			brnPass = true;
+		}
+	}
+	
+	// 리셋버튼 클릭 시 유효성 검사 초기화
+	function resetStatus(){
+		$(".valiCheckText").html("");
+		$(".valiInput").removeAttr("style");
+		emailPass = true;
+		pwdPass = true;
+		pwdCheckPass = true;
+		brnPass = true;
 	}
