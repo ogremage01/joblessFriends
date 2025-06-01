@@ -87,12 +87,7 @@
 }
 
 
-body {
-  margin: 0;
-  font-family: 'NanumGothic', sans-serif;
-  background: white;
-  position: relative;
-}
+
 
 .wrapper-container {
   display: flex;

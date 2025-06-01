@@ -21,7 +21,6 @@
 	  <div class="sidebar-title">▲ TOP</div>
 	  <ul class="sidebar-links">
 	    <li><a href="#section-personal">인적사항</a></li>
-	    <li><a href="#section-job">희망직무</a></li>
 	    <li><a href="#section-skill">스킬</a></li>
 	    <li><a href="#section-edu">학력</a></li>
 	    <li><a href="#section-career">경력</a></li>
