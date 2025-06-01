@@ -26,12 +26,7 @@
 	
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script>
 
-<style>
-/*기본값(default)이 이미 "text/css"로 되어 있어서 자동인식한다하여 뺐음 */
-#container {
-	margin: auto;
-}
-</style>
+<link href="/css/admin/common.css" rel="stylesheet">
 
 <script type="text/javascript">
 	
@@ -73,21 +68,21 @@
 			</table>
 
 			<div id='pageNation'>
-				<c:if test="${totalPage > 0}">
+				<c:if test="${pagination.totalPageCount > 0}">
 					<nav aria-label="...">
 
 						<ul class="pagination justify-content-center">
-							<li class="page-item ${curPage==0?'disabled':''}"><a
-								class="page-link" href="./individual?page=${curPage-1}&keyword=${param.keyword}">Previous</a>
+							<li class="page-item ${searchVo.page==1?'disabled':''}"><a
+								class="page-link" href="./individual?page=${searchVo.page-1}&keyword=${searchVo.keyword}">Previous</a>
 							</li>
-							<c:forEach begin="0" var="i" end="${totalPage-1}">
-								<li class="page-item ${curPage==i?'active':''}"><a
-									class="page-link" href="./individual?page=${i}&keyword=${param.keyword}">${i+1}</a></li>
+							<c:forEach begin="${pagination.startPage}" var="i" end="${pagination.endPage}">
+								<li class="page-item ${searchVo.page==i?'active':''}">
+								<a class="page-link" href="./individual?page=${i}&keyword=${searchVo.keyword}">${i}</a></li>
 							</c:forEach>
 
 							<li class="page-item"><a
-								class="page-link ${curPage==totalPage-1? 'disabled':''}"
-								href="./individual?page=${curPage+1}&keyword=${param.keyword}">Next</a></li>
+								class="page-link ${searchVo.page==pagination.totalPageCount? 'disabled':''}"
+								href="./individual?page=${searchVo.page+1}&keyword=${searchVo.keyword}">Next</a></li>
 						</ul>
 
 					</nav>

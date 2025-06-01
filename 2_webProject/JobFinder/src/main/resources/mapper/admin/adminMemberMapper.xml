@@ -14,46 +14,31 @@
         <result column="PROVIDER" property="provider" />
     </resultMap>
 
-    <select id="memberSelectList" parameterType="int" resultMap="memberResultMap">
+    <select id="memberSelectList" parameterType="com.joblessfriend.jobfinder.util.SearchVo" resultMap="memberResultMap">
         SELECT * 
         FROM (
             SELECT ROWNUM AS RN, INNERTABLE.*
             FROM (
                 SELECT MEMBER_ID, EMAIL, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER
                 FROM MEMBER
-                ORDER BY MEMBER_ID DESC
+                	<if test="keyword != null and keyword != ''">
+						WHERE UPPER(EMAIL) LIKE UPPER('%' || #{keyword} || '%')
+                		OR UPPER(NICKNAME) LIKE UPPER('%' || #{keyword} || '%')
+					</if>
+               		ORDER BY MEMBER_ID DESC
             ) INNERTABLE
-            WHERE ROWNUM &lt;= (#{page} + 1) * 10
+            WHERE ROWNUM &lt;= #{endRow}
         )
-        WHERE RN &gt;= #{page} * 10
+        WHERE RN &gt;= #{startRow}
     </select>
 
     <select id="memberCount" resultType="int">
         SELECT COUNT(MEMBER_ID)
         FROM MEMBER
-    </select>
-
-    <select id="memberSelectListByKeyword" parameterType="map" resultMap="memberResultMap">
-        SELECT * 
-        FROM (
-            SELECT ROWNUM AS RN, INNERTABLE.*
-            FROM (
-                SELECT MEMBER_ID, EMAIL, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER
-                FROM MEMBER
-                WHERE UPPER(EMAIL) LIKE UPPER('%' || #{keyword} || '%')
-                OR UPPER(NICKNAME) LIKE UPPER('%' || #{keyword} || '%')
-                ORDER BY MEMBER_ID DESC
-            ) INNERTABLE
-            WHERE ROWNUM &lt;= (#{page} + 1) * 10
-        )
-        WHERE RN &gt;= #{page} * 10
-    </select>
-
-    <select id="memberCountByKeyword" parameterType="string" resultType="int">
-        SELECT COUNT(*)
-        FROM MEMBER
-        WHERE UPPER(EMAIL) LIKE UPPER('%' || #{keyword} || '%')
-        OR UPPER(NICKNAME) LIKE UPPER('%' || #{keyword} || '%')
+        <if test="keyword != null and keyword != ''">
+			WHERE UPPER(EMAIL) LIKE UPPER('%' || #{keyword} || '%')
+        	OR UPPER(NICKNAME) LIKE UPPER('%' || #{keyword} || '%')
+		</if>
     </select>
 
     <select id="memberSelectOne" parameterType="int" resultMap="memberResultMap">

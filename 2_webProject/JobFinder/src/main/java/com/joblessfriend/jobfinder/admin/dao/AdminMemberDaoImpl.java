@@ -14,6 +14,7 @@ import com.joblessfriend.jobfinder.admin.controller.AdminMemberController;
 import com.joblessfriend.jobfinder.auth.controller.AuthController;
 import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
+import com.joblessfriend.jobfinder.util.SearchVo;
 
 @Repository
 public class AdminMemberDaoImpl implements AdminMemberDao {
@@ -28,32 +29,15 @@ public class AdminMemberDaoImpl implements AdminMemberDao {
 	
 
 	@Override
-	public List<MemberVo> memberSelectList(int page) {
+	public List<MemberVo> memberSelectList(SearchVo searchVo) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace + "memberSelectList", page);
+		return sqlSession.selectList(namespace + "memberSelectList", searchVo);
 	}
 
 	@Override
-	public int memberCount() {
+	public int memberCount(SearchVo searchVo) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace + "memberCount");
-	}
-
-	@Override
-	public List<MemberVo> memberSelectList(int page, String keyword) {
-		// TODO Auto-generated method stub
-
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("page", page);
-		paramMap.put("keyword", keyword);
-
-		return sqlSession.selectList(namespace + "memberSelectListByKeyword", paramMap);
-	}
-
-	@Override
-	public int memberCount(String keyword) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace + "memberCountByKeyword", keyword);
+		return sqlSession.selectOne(namespace + "memberCount", searchVo);
 	}
 
 	@Override
