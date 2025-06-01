@@ -19,6 +19,20 @@ body {
 </style>
 </head>
 
+<script>
+$(document).ready(function() {
+    $('.page-btn').click(function() {
+        // 비활성화된 버튼은 동작하지 않게
+        if ($(this).is(':disabled')) return;
+
+        var page = $(this).data('page');
+        var keyword = '${keyword}';
+        // GET 방식으로 페이지 이동
+        location.href = '?page=' + page + '&keyword=' + encodeURIComponent(keyword);
+    });
+});
+</script>
+
 <script
 	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script
@@ -92,20 +106,22 @@ body {
 
 
 				<div id="pagination">
-					<c:if test="${pagination.existPrevPage}">
-						<button class="page-btn" data-page="${pagination.startPage - 1}">«</button>
-					</c:if>
-
-					<c:forEach var="i" begin="${pagination.startPage}"
-						end="${pagination.endPage}">
-						<button class="page-btn" data-page="${i}"
-							${i == page ? 'disabled' : ''}>${i}</button>
-					</c:forEach>
-
-					<c:if test="${pagination.existNextPage}">
-						<button class="page-btn" data-page="${pagination.endPage + 1}">»</button>
-					</c:if>
-				</div>
+					<div id="pagination">
+					    <c:if test="${pagination.existPrevPage}">
+					        <button class="page-btn" type="button" data-page="${pagination.startPage - 1}">«</button>
+					    </c:if>
+					    
+					    <c:forEach var="i" begin="${pagination.startPage}" end="${pagination.endPage}">
+					        <button class="page-btn" type="button" data-page="${i}" ${i == page ? 'disabled' : ''}
+					            style="${i == page ? 'pointer-events:none;opacity:0.5;' : ''}">
+					            ${i}
+					        </button>
+					    </c:forEach>
+					    
+					    <c:if test="${pagination.existNextPage}">
+					        <button class="page-btn" type="button" data-page="${pagination.endPage + 1}">»</button>
+					    </c:if>
+					</div>
 				
 			</c:if>
 			
