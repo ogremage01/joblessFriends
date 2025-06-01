@@ -446,29 +446,28 @@ $(document).on('click', '.apply-btn', function () {
 
     const jobPostId = $(this).closest('.job').data('jobpostid');
 
-    // 사전질문 존재 여부 먼저 조회
+
+
+
+
+
+    // 2. 사전질문 여부 확인 후 진행 (기본 흐름)
     $.ajax({
         url: '/resume/apply/questions',
         method: 'GET',
         data: { jobPostId },
         success: function (questionList) {
             if (questionList.length > 0) {
-                console.log("✅ 사전질문 있음", questionList);
-
-                // 질문 존재할 경우, 질문 입력 모달 띄우는 로직을 여기에 향후 구성
-                // 지금은 그냥 안내만 띄워보자
                 Swal.fire({
                     icon: 'info',
                     title: '사전질문 포함',
                     html: `<b>${questionList.length}개의 사전질문</b>이 등록된 공고입니다.<br>이력서 선택 후 답변을 입력해주세요.`,
                     confirmButtonText: '이력서 선택으로 이동'
                 }).then(() => {
-                    showResumeSelectModal(jobPostId); // 아래 함수 참고
+                    showResumeSelectModal(jobPostId); // 이력서 선택창으로 이동
                 });
-
             } else {
-                console.log("❌ 질문 없음");
-                showResumeSelectModal(jobPostId); // 질문 없으면 바로 이력서 선택
+                showResumeSelectModal(jobPostId); // 질문 없으면 바로 진행
             }
         },
         error: function () {
@@ -476,7 +475,8 @@ $(document).on('click', '.apply-btn', function () {
         }
     });
 });
-//  이력서 선택 모달 함수
+
+
 function showResumeSelectModal(jobPostId) {
     const html = resumeList.map(r => `
         <label class="resume-item">
@@ -517,15 +517,16 @@ function showResumeSelectModal(jobPostId) {
         if (result.isConfirmed) {
             const selectedResumeId = result.value;
 
-            // 질문 조회 후 분기
             $.ajax({
                 url: '/resume/apply/questions',
                 method: 'GET',
                 data: { jobPostId },
                 success: function (questionList) {
                     if (questionList.length > 0) {
-                        openQuestionsModal(jobPostId).then(() => {
-                            applyResumeAjax(selectedResumeId, jobPostId);
+                        openQuestionsModal(jobPostId).then(questionResult => {
+                            if (questionResult.isConfirmed) {
+                                applyResumeAjax(selectedResumeId, jobPostId);
+                            }
                         });
                     } else {
                         applyResumeAjax(selectedResumeId, jobPostId);
@@ -538,6 +539,7 @@ function showResumeSelectModal(jobPostId) {
         }
     });
 }
+
 function openQuestionsModal(jobPostId) {
     return $.ajax({
         url: '/resume/apply/questions',
@@ -547,6 +549,8 @@ function openQuestionsModal(jobPostId) {
         const questionHtml = questionList.map((q, idx) => `
             <div style="text-align: left; margin-bottom: 10px;">
                 <b>Q${idx + 1}.</b> ${q.questionText}
+             <textarea name="answer${idx + 1}" data-question-id="${q.questionId}" rows="4" style="width:100%; margin-top:5px;" placeholder="답변을 입력하세요."></textarea>
+
             </div>
         `).join('');
 
@@ -554,41 +558,62 @@ function openQuestionsModal(jobPostId) {
             title: '📋 사전질문 확인',
             html: `
                 <div style="text-align: left;">
-                    아래는 이 공고에 대한 사전질문입니다.
+                       <p style="margin-bottom: 12px;">
+                      아래 사전질문은 <strong style="color: #3366ff;">선택사항</strong>입니다.<br/>
+                      답변을 작성하지 않아도 지원이 가능합니다.
+                    </p>
                 </div>
                 <br>
                 ${questionHtml}
             `,
             confirmButtonText: '확인',
+            cancelButtonText: '지원 취소',
+            showCancelButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
             width: 600
         });
     });
 }
-//성공실패 ajax
+
 function applyResumeAjax(resumeId, jobPostId) {
+    const seen = new Set();
+    const answerList = [];
+
+    $('textarea[name^=answer]').each(function () {
+        const questionId = $(this).data('question-id');
+        const answerText = $(this).val().trim();
+
+        if (!questionId || seen.has(questionId)) return; // 중복 방지
+        if (answerText) {
+            answerList.push({ questionId, answerText });
+            seen.add(questionId);
+        }
+    });
+
+
+
     $.ajax({
         url: "/resume/apply",
         method: "POST",
-        data: { resumeId, jobPostId },
+        contentType: "application/json",
+        data: JSON.stringify({
+            resumeId,
+            jobPostId,
+            answerList
+        }),
         success: function () {
             Swal.fire({
                 title: '지원 완료 🎉',
-                html: `
-                    입사지원 완료<br>
-                    <span style="font-size: 13px; color: #555;">
-                        (지원내역은 마이페이지 → 구직내역 활동 조회에서 확인 가능합니다.)
-                    </span>
-                `,
+                html: `입사지원 완료<br><span style="font-size: 13px; color: #555;">(지원내역은 마이페이지에서 확인 가능합니다)</span>`,
                 icon: 'success'
             });
         },
         error: function () {
             Swal.fire({
                 title: '이미 지원 하신 공고입니다.',
-                html: `<span style="font-size: 13px; color: #555;">(지원내역은 마이페이지 → 구직내역 활동 조회에서 확인 가능합니다.)</span>`,
-                icon: 'success'
+                icon: 'warning'
             });
         }
     });
 }
-

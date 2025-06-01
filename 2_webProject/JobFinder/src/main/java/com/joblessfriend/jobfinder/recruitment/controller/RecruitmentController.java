@@ -184,16 +184,16 @@ public class RecruitmentController {
         
         /* 추가사항(찜했는지 구분하는 model)(찜 구분) */
 
-	    MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
-	    
-	    if(memberVo != null) {
-			int memberId = memberVo.getMemberId();//로그인 중인 멤버 아이디 가져옴
-			
-			Integer bookMarked_JobPostId = recruitmentService.selectBookMark(memberId, jobPostId);//로그인 한 사람의 북마크 중 jobId 정보 조회
-			
-			model.addAttribute("bookMarked_JobPostId", bookMarked_JobPostId);//조회한 jobId정보 넣음(null, 혹은 존재하는 값)
+        Object loginUser = session.getAttribute("userLogin");
+        String userType = (String) session.getAttribute("userType");  // 이미 login 체크할 때 사용한 값
+
+        if ("member".equals(userType) && loginUser instanceof MemberVo) {
+            MemberVo memberVo = (MemberVo) loginUser;
+            int memberId = memberVo.getMemberId();
+            Integer bookMarked_JobPostId = recruitmentService.selectBookMark(memberId, jobPostId);
+            model.addAttribute("bookMarked_JobPostId", bookMarked_JobPostId);
         }
-        
+
         /* 찜 구분 end*/
 
         return "recruitment/recruitmentDetail";

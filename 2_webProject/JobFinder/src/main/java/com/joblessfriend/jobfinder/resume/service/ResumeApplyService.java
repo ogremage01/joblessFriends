@@ -1,5 +1,6 @@
 package com.joblessfriend.jobfinder.resume.service;
 
+import com.joblessfriend.jobfinder.recruitment.domain.JobPostAnswerVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo;
 
 import java.util.List;
@@ -12,6 +13,14 @@ public interface ResumeApplyService {
      * @param memberId 현재 로그인된 사용자 ID
      * @return 생성된 복사 이력서의 ID (resume_apply_id)
      */
-    int applyResumeWithCopy(int resumeId,int jobPostId, int memberId);
+    int applyResumeWithCopy(int resumeId, int jobPostId, int memberId, List<JobPostAnswerVo> answerList);
     public List<JobPostQuestionVo> getQuestionsByJobPostId(int jobPostId);
+
+    // 그대로 유지
+    //답변갯수만큼시퀀스미리뽑기//
+    void insertAnswersWithGeneratedIds(List<JobPostAnswerVo> answerList);
+    //지원 중복체크//
+    int hasAlreadyApplied(int memberId, int jobPostId);
+
+    void insertAnswers(List<JobPostAnswerVo> answerList);
 }
