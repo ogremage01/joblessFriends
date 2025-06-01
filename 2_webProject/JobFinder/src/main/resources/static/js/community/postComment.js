@@ -115,7 +115,11 @@ $(document).ready(function () {
 			if (content.length > 300) {
 			       askConfirmMax("댓글");
 			       return;
-			   }
+			}
+			 
+			if(!confirm("댓글을 저장하시겠습니까?")){
+				return;
+			} 
 		    
 			$.ajax({
 				url: urlStr,
@@ -181,7 +185,12 @@ $(document).ready(function () {
 		if (content.length > 300) {
 		       askConfirmMax("수정 댓글");
 		       return;
-		 }
+		}
+		
+		if(!confirm("댓글을 수정하시겠습니까?")){
+			return;
+		}
+		
 		$.ajax({
 			url: urlStr,
 			type: "POST",
@@ -190,7 +199,6 @@ $(document).ready(function () {
 						content: content
 			}),
 			success: function (){
-				alert("댓글이 수정되었습니다.");
 				window.loadCommentList();
 			},
 			error: function(){

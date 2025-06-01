@@ -130,6 +130,10 @@ $(document).ready(function () {
 			askConfirmMax("답글");
 			return;
 		}
+		
+		if(!confirm("답글을 저장하시겠습니까?")){
+			return;
+		}
 
 		$.ajax({
 			url: urlStr,
@@ -198,6 +202,10 @@ function replyUpdate(replyId){
 		askConfirmMax("답글");
 		return;
 	}
+	
+	if(!confirm("답글을 수정하시겠습니까?")){
+		return;
+	}
     
 	$.ajax({
 		url: urlStr,
@@ -207,7 +215,6 @@ function replyUpdate(replyId){
 				commentContent: currentContent
 		}),
 		success: function (){
-			alert("답글이 수정되었습니다.");
 			window.loadCommentList();
 		},
 		error: function(){

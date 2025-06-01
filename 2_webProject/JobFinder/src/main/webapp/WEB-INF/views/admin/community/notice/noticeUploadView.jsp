@@ -182,6 +182,10 @@ margin: auto;
         		return false;
         	}
         	
+        	if(!confirm("공지 사항을 저장하시겠습니까?")){
+    			return;
+    		}
+        	
             return true;
         }
 

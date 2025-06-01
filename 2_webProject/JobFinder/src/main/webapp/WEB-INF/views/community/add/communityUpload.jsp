@@ -143,6 +143,10 @@
         		return false;
         	}
         	
+    		if(!confirm("게시물을 저장하시겠습니까?")){
+    			return;
+    		}
+        	
             return true;
         }
 
