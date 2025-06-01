@@ -32,7 +32,7 @@
 							<textarea id="inputCommentBox" class="boxStyle" placeholder="댓글을 입력해주세요."></textarea>
 							<div id="commentBtnWrap"  class="maxStyle">
 								<p class='countComment'>0/300 자</p>
-								<button type="button" id="inputCommentBtn" class="inputBtn">등록</button>
+								<button type="button" id="inputCommentBtn" class="inputBtn" data-usertype='${sessionScope.userType}'>등록</button>
 							</div>
 						</div>
 						<!-- 댓글 입력시 정보부분 -->
@@ -51,8 +51,7 @@
 							<textarea id="inputCommentBox" class="boxStyle commentInput" placeholder="댓글을 입력해주세요."></textarea>
 							<div id="commentBtnWrap">
 								<p class='countComment'>0/300 자</p>
-								<button type="button" class="inputBtn"
-									onclick="askConfirmLogin()">등록</button>
+								<button type="button" class="inputBtn" data-usertype='${sessionScope.userType}'>등록</button>
 							</div>
 						</div>
 						<!-- 댓글 입력시 정보부분: 오류 안나게 일단은 지정 -->
@@ -89,8 +88,7 @@
 					<textarea id="inputCommentBox" class="boxStyle" placeholder="댓글을 입력해주세요."></textarea>
 					<div id="commentBtnWrap">
 						<p class='countComment'>0/1000자</p>
-						<button type="button" id="inputCommentBtn" class="inputBtn"
-									onclick="askConfirmLogin()">등록</button>
+						<button type="button" id="inputCommentBtn" class="inputBtn" data-usertype='${sessionScope.userType}'>등록</button>
 					</div>
 				</div>
 					<input type="hidden" id="communityNo" value="${community.communityId}" />

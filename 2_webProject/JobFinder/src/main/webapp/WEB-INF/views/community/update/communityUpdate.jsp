@@ -132,7 +132,7 @@
                             fileListContainer.appendChild(fileItem);
                         },
                         error: function() {
-                            alert('이미지 업로드 실패');
+                        	alermPopup('이미지 업로드 실패');
                         }
                     });
 
@@ -181,7 +181,7 @@
                     fileItem.remove();
                 },
                 error: function() {
-                    alert("파일 삭제 실패");
+                	alermPopup("파일 삭제 실패");
                 }
             });
         }

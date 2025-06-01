@@ -149,11 +149,11 @@ $(document).ready(function () {
 				$('#inputReplyBox_' + commentId).val(''); // 입력창 초기화
 			},
 			error: function () {
-				alert("댓글 등록에 실패했습니다.");
+				alermPopup("답글 등록에 실패했습니다.");
 			}
 		});
 
-		alert("댓글이 저장되었습니다.");
+		alermPopup("답글이 저장되었습니다.");
 		// 리댓 목록 새로 불러오기
 		loadReplyList(commentId);
 	}
@@ -215,10 +215,11 @@ function replyUpdate(replyId){
 				commentContent: currentContent
 		}),
 		success: function (){
+			alermPopup("답글이 수정되었습니다.");
 			window.loadCommentList();
 		},
 		error: function(){
-			alert("답글 등록에 실패했습니다.");
+			alermPopup("답글 등록에 실패했습니다.");
 		}
 	});
 }

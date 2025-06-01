@@ -101,11 +101,16 @@ $(document).ready(function () {
 		window.loadCommentList = loadCommentList;//전역 참조용으로 생성(댓글 리스트 로드)
 		
 		//댓글 등록 버튼 클릭 시 댓글 작성 요청
-		function uploadComment(communityId, memberId){
+		function uploadComment(communityId, memberId, ){
 			const urlStr = "/community/detail/commentUpload/" + communityId;
-			
+	
 		    const content = $("#inputCommentBox").val();//작성한 글의 내용
 		
+			console.log(userType);
+			if(userType != 'member'){
+				askConfirmLogin();
+				return;
+			}
 				
 		    if (!content.trim()) {
 		        askConfirm("댓글을");
@@ -199,10 +204,11 @@ $(document).ready(function () {
 						content: content
 			}),
 			success: function (){
+				alermPopup("댓글이 수정되었습니다.");
 				window.loadCommentList();
 			},
 			error: function(){
-				alert("댓글 등록에 실패했습니다.");
+				alermPopup("댓글 등록에 실패했습니다.");
 			}
 		});
 	}
@@ -218,7 +224,7 @@ $(document).ready(function () {
 			}).then(
 				function(response){
 					if(response.ok){
-						alert("댓글이 삭제되었습니다.");
+						alermPopup("댓글이 삭제되었습니다.");
 						
 						window.loadCommentList();//전역용 댓글리스트 함수 불러오기
 					}

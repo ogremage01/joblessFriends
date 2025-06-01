@@ -26,6 +26,15 @@ function askConfirmLogin() {
 	}, 1500);
 }
 
+function alermPopup(Str) {
+
+	$('#askConfirm').html(Str)
+	$('#askConfirm').attr('class', 'active');
+	setTimeout(function() {
+		$('#askConfirm').removeClass("active");
+	}, 1500);
+}
+
 /*
 if ($("#title").val().trim() === "") {
         		askConfirm("제목을");
