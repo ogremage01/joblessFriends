@@ -74,8 +74,8 @@
 				                    <div class="job-action">
 				                        <button class="apply-btn" type="button" onclick="">지원하기</button>
 				                        <div class="deadline">~<fmt:formatDate value="${item.endDate}" pattern="MM/dd(E)" /></div>
-				                        <c:if test="${item.isContinuous eq true}"><span>마감</span></c:if>
-				                        <c:if test="${item.isContinuous eq false}"><span>채용중</span></c:if>
+				                        <c:if test="${item.isContinuous eq 1}"><span>마감</span></c:if>
+				                        <c:if test="${item.isContinuous eq 0}"><span>채용중</span></c:if>
 				                    </div>
 				                </div>
 				            </c:forEach>

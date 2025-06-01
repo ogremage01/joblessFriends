@@ -163,6 +163,7 @@ public class RecruitmentController {
         CompanyVo companyVo = companyService.companySelectOne(companyId);
         List<SkillVo> skillList = skillService.postTagList(jobPostId);
         List<WelfareVo> welfare = recruitmentService.selectWelfareByJobPostId(jobPostId);
+        
         if (recruitmentVo.getCompanyId() != companyVo.getCompanyId()) {
             throw new IllegalArgumentException("회사 정보가 일치하지 않습니다.");
         }
@@ -180,6 +181,20 @@ public class RecruitmentController {
         System.out.println(recruitmentDetailVo.getRecruitment());
 
         model.addAttribute("recruitmentDetailVo", recruitmentDetailVo);
+        
+        /* 추가사항(찜했는지 구분하는 model)(찜 구분) */
+
+	    MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
+	    
+	    if(memberVo != null) {
+			int memberId = memberVo.getMemberId();//로그인 중인 멤버 아이디 가져옴
+			
+			Integer bookMarked_JobPostId = recruitmentService.selectBookMark(memberId, jobPostId);//로그인 한 사람의 북마크 중 jobId 정보 조회
+			
+			model.addAttribute("bookMarked_JobPostId", bookMarked_JobPostId);//조회한 jobId정보 넣음(null, 혹은 존재하는 값)
+        }
+        
+        /* 찜 구분 end*/
 
         return "recruitment/recruitmentDetail";
     }

@@ -43,22 +43,28 @@
 		WHERE MEMBER_ID = #{memberId} AND JOB_POST_ID = #{jobPostId}
 	</delete>
 	
-		<select id="bookmarkCount" parameterType="map" resultType="int">
-		SELECT COUNT(*)
-		FROM (
-			SELECT
-				jp.job_post_id
-			FROM JOB_POST jp
-			JOIN COMPANY c ON jp.company_id = c.company_id
-			JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
-			JOIN JOB j ON jp.job_id = j.job_id
-			JOIN BOOKMARK bk ON jp.job_post_id = bk.job_post_id
-			WHERE bk.member_id = #{memberId}
-			<if test="searchVo.keyword != null and searchVo.keyword != ''">
-				AND jp.title LIKE '%' || #{searchVo.keyword} || '%'
-			</if>
-			)
-		</select>
+	<select id="bookmarkCount" parameterType="map" resultType="int">
+	SELECT COUNT(*)
+	FROM (
+		SELECT
+			jp.job_post_id
+		FROM JOB_POST jp
+		JOIN COMPANY c ON jp.company_id = c.company_id
+		JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
+		JOIN JOB j ON jp.job_id = j.job_id
+		JOIN BOOKMARK bk ON jp.job_post_id = bk.job_post_id
+		WHERE bk.member_id = #{memberId}
+		<if test="searchVo.keyword != null and searchVo.keyword != ''">
+			AND jp.title LIKE '%' || #{searchVo.keyword} || '%'
+		</if>
+		)
+	</select>
+	
+	<!-- 북마크 추가 맵퍼(찜 추가) -->
+	<insert id="bookMarkInsertOne" parameterType="map">
+		INSERT INTO BOOKMARK (MEMBER_ID, JOB_POST_ID)
+		VALUES (#{memberId}, #{jobPostId})		
+	</insert>
 
 
 </mapper>

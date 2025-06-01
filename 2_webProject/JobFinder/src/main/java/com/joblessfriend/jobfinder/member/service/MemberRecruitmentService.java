@@ -16,6 +16,9 @@ public interface MemberRecruitmentService {
 
 	public int bookmarkCount(int memberId, SearchVo searchVo);
 
+	//찜 저장
+	public void bookMarkInsertOne(int memberId, int jobPostId);
+
 	
 	
 

@@ -82,6 +82,7 @@ public class MemberController {
 		return ResponseEntity.ok(result); // 삭제 결과 반환
 	}
 
+	//북마크 리스트
 	@GetMapping("/bookmark")
 	public String bookmark(Model model, HttpSession session,
 			@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "") String keyword) {
@@ -120,7 +121,23 @@ public class MemberController {
 
 		return "member/bookmark/bookmarkView";
 	}
+	
+	//북마크 추가(찜 저장)
+	@PostMapping("/bookmarkCheck")
+	public ResponseEntity<String> bookmarkInsert(HttpSession session, @RequestBody int jobPostId) {
 
+		MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
+		if (memberVo == null) {
+			return ResponseEntity.ok("찜 실패");
+		}
+		int memberId = memberVo.getMemberId();//저장할 북마크 멤버 아이디
+
+		recruitmentService.bookMarkInsertOne(memberId, jobPostId);
+
+		return ResponseEntity.ok("찜 저장");
+	}
+
+	//북마크 삭제
 	@DeleteMapping("/bookmark")
 	public ResponseEntity<String> bookmarkDelete(HttpSession session, @RequestBody int jobPostId) {
 

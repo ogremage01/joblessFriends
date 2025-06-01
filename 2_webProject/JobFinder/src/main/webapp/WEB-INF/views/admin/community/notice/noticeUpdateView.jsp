@@ -174,6 +174,10 @@ margin: auto;
 		        		return false;
 		        	}
 		        	
+		    		if(!confirm("공지 사항을 수정하시겠습니까?")){
+		    			return;
+		    		}
+		        	
 		            return true;
 		        }
 		

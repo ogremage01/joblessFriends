@@ -71,6 +71,11 @@
     color: #F69800;
 }
 
+.btn-NonBookmark{
+	background-color: #F69800;
+	color: white;
+}
+
 .btn-apply {
     background-color: #F69800;
     color: white;

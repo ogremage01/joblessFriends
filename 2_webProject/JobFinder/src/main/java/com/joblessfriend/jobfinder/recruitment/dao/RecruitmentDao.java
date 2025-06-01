@@ -61,6 +61,9 @@ public interface RecruitmentDao {
 	//메인용 list
 	List<RecruitmentVo> recruitmentListLatest(SearchVo searchVo);
 	List<RecruitmentVo> recruitmentListViews(SearchVo searchVo);
+	
+	//(찜 구분)
+	Integer selectBookMark(int memberId, int jobPostId);
 
 
 
