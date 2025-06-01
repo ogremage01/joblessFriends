@@ -1,5 +1,6 @@
 package com.joblessfriend.jobfinder.resume.service;
 
+import com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo;
 import com.joblessfriend.jobfinder.resume.dao.ResumeApplyDao;
 import com.joblessfriend.jobfinder.resume.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
 
     @Override
     @Transactional
-    public int applyResumeWithCopy(int resumeId, int memberId) {
+    public int applyResumeWithCopy(int resumeId,int jobPostId,int memberId) {
         // 1. 원본 이력서 전체 조회
         ResumeVo origin = resumeService.getResumeWithAllDetails(resumeId);
 
@@ -41,7 +42,7 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
         applyCopy.setPortfolioList(origin.getPortfolioList());
 
         // 3. 메인 resume apply insert
-        resumeApplyDao.insertResumeApply(applyCopy);
+        resumeApplyDao.insertResumeCopy(applyCopy);
         int applyId = applyCopy.getResumeId();
 
         // 4. 하위 테이블 insert
@@ -69,11 +70,11 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
             }
         }
 
-//        List<CertificateResumeVo> certificates = applyCopy.getCertificateList();
+//       List<CertificateResumeVo> certificates = applyCopy.getCertificateList();
 //        if (certificates != null) {
-//            for (CertificateResumeVo cert : certificates) {
-//                resumeApplyDao.insertCertificateResume(applyId, cert.getCertificateId());
-//            }
+//           for (CertificateResumeVo cert : certificates) {
+//               resumeApplyDao.insertCertificateResume(applyId, cert.getCertificateId());
+//           }
 //        }
 
         List<PortfolioVo> portfolios = applyCopy.getPortfolioList();
@@ -91,7 +92,20 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
             }
         }
 
+        // ✅ 6. 지원 관리 테이블에 insert (복사된 이력서 기준으로)
+        ResumeManageVo manageVo = new ResumeManageVo();
+        manageVo.setJobPostId(jobPostId);
+        manageVo.setMemberId(memberId);
+        manageVo.setResumeFile(String.valueOf(applyId)); // 또는 applyId 자체로 처리
+        manageVo.setStateId(1); // 지원 완료 상태
 
+        resumeApplyDao.insertResumeManage(manageVo);
         return applyId;
     }
+
+
+    public List<JobPostQuestionVo> getQuestionsByJobPostId(int jobPostId) {
+        return resumeApplyDao.findQuestionsByJobPostId(jobPostId);
+    }
+
 }

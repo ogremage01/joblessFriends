@@ -444,6 +444,40 @@ $(document).on('click', '.apply-btn', function () {
         return;
     }
 
+    const jobPostId = $(this).closest('.job').data('jobpostid');
+
+    // 사전질문 존재 여부 먼저 조회
+    $.ajax({
+        url: '/resume/apply/questions',
+        method: 'GET',
+        data: { jobPostId },
+        success: function (questionList) {
+            if (questionList.length > 0) {
+                console.log("✅ 사전질문 있음", questionList);
+
+                // 질문 존재할 경우, 질문 입력 모달 띄우는 로직을 여기에 향후 구성
+                // 지금은 그냥 안내만 띄워보자
+                Swal.fire({
+                    icon: 'info',
+                    title: '사전질문 포함',
+                    html: `<b>${questionList.length}개의 사전질문</b>이 등록된 공고입니다.<br>이력서 선택 후 답변을 입력해주세요.`,
+                    confirmButtonText: '이력서 선택으로 이동'
+                }).then(() => {
+                    showResumeSelectModal(jobPostId); // 아래 함수 참고
+                });
+
+            } else {
+                console.log("❌ 질문 없음");
+                showResumeSelectModal(jobPostId); // 질문 없으면 바로 이력서 선택
+            }
+        },
+        error: function () {
+            Swal.fire("🚨 질문 조회 실패");
+        }
+    });
+});
+//  이력서 선택 모달 함수
+function showResumeSelectModal(jobPostId) {
     const html = resumeList.map(r => `
         <label class="resume-item">
             <div class="resume-radio-row">
@@ -482,17 +516,79 @@ $(document).on('click', '.apply-btn', function () {
     }).then(result => {
         if (result.isConfirmed) {
             const selectedResumeId = result.value;
+
+            // 질문 조회 후 분기
             $.ajax({
-                url: "/resume/apply",
-                method: "POST",
-                data: { resumeId: selectedResumeId },
-                success: function (response) {
-                    Swal.fire('🎉 지원 완료', response, 'success');
+                url: '/resume/apply/questions',
+                method: 'GET',
+                data: { jobPostId },
+                success: function (questionList) {
+                    if (questionList.length > 0) {
+                        openQuestionsModal(jobPostId).then(() => {
+                            applyResumeAjax(selectedResumeId, jobPostId);
+                        });
+                    } else {
+                        applyResumeAjax(selectedResumeId, jobPostId);
+                    }
                 },
-                error: function (xhr) {
-                    Swal.fire('❌ 오류 발생', xhr.responseText || '서버 오류입니다.', 'error');
+                error: function () {
+                    Swal.fire("❌ 질문 조회 실패");
                 }
             });
         }
     });
-});
+}
+function openQuestionsModal(jobPostId) {
+    return $.ajax({
+        url: '/resume/apply/questions',
+        method: 'GET',
+        data: { jobPostId }
+    }).then(questionList => {
+        const questionHtml = questionList.map((q, idx) => `
+            <div style="text-align: left; margin-bottom: 10px;">
+                <b>Q${idx + 1}.</b> ${q.questionText}
+            </div>
+        `).join('');
+
+        return Swal.fire({
+            title: '📋 사전질문 확인',
+            html: `
+                <div style="text-align: left;">
+                    아래는 이 공고에 대한 사전질문입니다.
+                </div>
+                <br>
+                ${questionHtml}
+            `,
+            confirmButtonText: '확인',
+            width: 600
+        });
+    });
+}
+//성공실패 ajax
+function applyResumeAjax(resumeId, jobPostId) {
+    $.ajax({
+        url: "/resume/apply",
+        method: "POST",
+        data: { resumeId, jobPostId },
+        success: function () {
+            Swal.fire({
+                title: '지원 완료 🎉',
+                html: `
+                    입사지원 완료<br>
+                    <span style="font-size: 13px; color: #555;">
+                        (지원내역은 마이페이지 → 구직내역 활동 조회에서 확인 가능합니다.)
+                    </span>
+                `,
+                icon: 'success'
+            });
+        },
+        error: function () {
+            Swal.fire({
+                title: '이미 지원 하신 공고입니다.',
+                html: `<span style="font-size: 13px; color: #555;">(지원내역은 마이페이지 → 구직내역 활동 조회에서 확인 가능합니다.)</span>`,
+                icon: 'success'
+            });
+        }
+    });
+}
+

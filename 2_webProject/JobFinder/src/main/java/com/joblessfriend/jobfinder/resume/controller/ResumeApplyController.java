@@ -1,12 +1,15 @@
 package com.joblessfriend.jobfinder.resume.controller;
 
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
+import com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo;
 import com.joblessfriend.jobfinder.resume.service.ResumeApplyService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/resume/apply")
@@ -23,7 +26,7 @@ public class ResumeApplyController {
      */
     @PostMapping
     @ResponseBody
-    public ResponseEntity<?> applyResume(@RequestParam("resumeId") int resumeId, HttpSession session) {
+    public ResponseEntity<?> applyResume(@RequestParam("resumeId") int resumeId,@RequestParam("jobPostId") int jobPostId, HttpSession session) {
 
         MemberVo loginUser = (MemberVo) session.getAttribute("userLogin");
 
@@ -32,11 +35,32 @@ public class ResumeApplyController {
         }
 
         try {
-            int copiedResumeId = resumeApplyService.applyResumeWithCopy(resumeId, loginUser.getMemberId());
-            return ResponseEntity.ok("지원 이력서 생성 완료 (복사본 ID: " + copiedResumeId + ")");
+            int copiedResumeId = resumeApplyService.applyResumeWithCopy(resumeId, jobPostId, loginUser.getMemberId());
+            String message = "입사지원 완료";
+            return ResponseEntity.ok(message);
+
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("지원 실패: " + e.getMessage());
         }
     }
+
+    @GetMapping("/questions")
+    @ResponseBody
+    public ResponseEntity<?> getQuestions(@RequestParam("jobPostId") int jobPostId) {
+        try {
+            List<JobPostQuestionVo> questions = resumeApplyService.getQuestionsByJobPostId(jobPostId);
+
+            if (questions == null || questions.isEmpty()) {
+                return ResponseEntity.ok().body(List.of()); // 빈 리스트 반환
+            }
+
+            return ResponseEntity.ok(questions);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("질문 조회 실패");
+        }
+    }
+
 }
