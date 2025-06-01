@@ -60,7 +60,8 @@
 						</c:when>
 						<c:otherwise>
 							<div id="bookmark-Container">
-		                    	<button class="btn-bookmark" data-jobpostid="${recruitmentDetailVo.recruitment.jobPostId}">★ 공고 찜하기</button>
+		                    	<button class="btn-bookmark" data-jobpostid="${recruitmentDetailVo.recruitment.jobPostId}"
+		                    								data-usertype="${sessionScope.userType}">★ 공고 찜하기</button>
 		                    </div>
 						</c:otherwise>
 					</c:choose>
@@ -145,7 +146,8 @@
         </div>
 
 
-
+		<div id="askConfirm">
+		</div>
 
     </div>
 </div>
