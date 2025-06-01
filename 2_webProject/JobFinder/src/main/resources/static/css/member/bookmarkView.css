@@ -226,3 +226,13 @@ h2 {
     flex-direction: row;
     margin: auto;
 }
+
+.no-bookmark{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 18px;
+    color: #888;
+    font-weight: bold;	
+    }
