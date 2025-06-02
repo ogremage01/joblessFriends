@@ -3,73 +3,55 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 	<mapper namespace="com.joblessfriend.jobfinder.company.dao.CompanyApplyDao">
-	<resultMap id="companyApplyResultMap" type="com.joblessfriend.jobfinder.company.domain.CompanyApplyVo">
-
-		<!-- 기본 필드 -->
-		<result property="stateId" column="STATE_ID"/>
+	<resultMap id="applySummaryResultMap" type="com.joblessfriend.jobfinder.company.domain.ApplySummaryVo">
+		<result property="resumeId" column="RESUME_ID"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="resumeTitle" column="RESUME_TITLE"/>
+		<result property="applyDate" column="APPLY_DATE"/>
 		<result property="stateName" column="STATE_NAME"/>
-
-		<!-- member -->
-		<association property="member" javaType="com.joblessfriend.jobfinder.member.domain.MemberVo">
-			<result property="memberId" column="MEMBER_ID"/>
-			<result property="nickname" column="NICKNAME"/>
-			<result property="email" column="EMAIL"/>
-		</association>
-
-		<!-- company -->
-		<association property="company" javaType="com.joblessfriend.jobfinder.company.domain.CompanyVo">
-			<result property="companyId" column="COMPANY_ID"/>
-			<result property="companyName" column="COMPANY_NAME"/>
-			<result property="email" column="COMPANY_EMAIL"/>
-		</association>
-
-		<!-- resumeVo -->
-		<association property="resumeVo" javaType="com.joblessfriend.jobfinder.resume.domain.ResumeVo">
-			<result property="resumeId" column="RESUME_ID"/>
-			<result property="memberName" column="RC_MEMBER_NAME" javaType="java.lang.String"/>
-			<result property="resumeFile" column="RESUME_FILE"/>
-		</association>
-
-		<!-- answerList 매핑 -->
-		<collection property="answerList" ofType="com.joblessfriend.jobfinder.recruitment.domain.JobPostAnswerVo">
-			<result property="answerId" column="ANSWER_ID"/>
-			<result property="answerText" column="ANSWER_TEXT"/>
-		</collection>
-
-		<!-- questionList 매핑 -->
-		<collection property="questionList" ofType="com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo">
-			<result property="questionId" column="QUESTION_ID"/>
-			<result property="questionText" column="QUESTION_TEXT"/>
-		</collection>
 	</resultMap>
 
-	<select id="getApplyMemberList" resultMap="companyApplyResultMap" parameterType="com.joblessfriend.jobfinder.util.SearchVo">
-		SELECT *
-		FROM (
-				 SELECT inner_query.*, ROWNUM AS rnum
-				 FROM (
-						  SELECT
-							  m.MEMBER_ID,
-							  rc.RESUME_ID,
-							  rc.NAME AS RC_MEMBER_NAME,
-							  rm.APPLY_DATE
-						  FROM RESUME_MANAGE rm
-								   JOIN RESUME_COPY rc ON rm.RM_ID = rc.RESUME_ID
-								   JOIN MEMBER m ON rc.MEMBER_ID = m.MEMBER_ID
-								   JOIN JOB_POST jp ON rm.JOB_POST_ID = jp.JOB_POST_ID
-								   JOIN COMPANY c ON jp.COMPANY_ID = c.COMPANY_ID
-						  WHERE c.COMPANY_ID = #{companyId}
-							AND jp.JOB_POST_ID = #{jobPostId}
-						  ORDER BY rm.APPLY_DATE DESC
-					  ) inner_query
-				 WHERE ROWNUM &lt;= #{endRow}
-			 )
-		WHERE rnum &gt;= #{startRow}
+	<select id="getApplyListByCompany" parameterType="map" resultMap="applySummaryResultMap">
+		SELECT
+			rc.RESUME_ID,
+			rc.NAME AS MEMBER_NAME,
+			rc.RESUME_TITLE,
+			rm.APPLY_DATE,
+			s.STATE_NAME
+		FROM RESUME_MANAGE rm
+				 JOIN RESUME_COPY rc ON rm.RM_ID = rc.RESUME_ID
+				 JOIN JOB_POST jp ON rm.JOB_POST_ID = jp.JOB_POST_ID
+				 JOIN COMPANY c ON jp.COMPANY_ID = c.COMPANY_ID
+				 JOIN STATE s ON rm.STATE_ID = s.STATE_ID
+		WHERE c.COMPANY_ID = #{companyId}
+		  AND jp.JOB_POST_ID = #{jobPostId}
+		ORDER BY rm.APPLY_DATE DESC
 	</select>
+
+
+	<select id="getPagedApplyList" parameterType="map" resultMap="applySummaryResultMap">
+		SELECT
+			rc.RESUME_ID,
+			rc.NAME AS MEMBER_NAME,
+			rc.RESUME_TITLE,
+			rm.APPLY_DATE,
+			s.STATE_NAME
+		FROM RESUME_MANAGE rm
+				 JOIN RESUME_COPY rc ON rm.RM_ID = rc.RESUME_ID
+				 JOIN JOB_POST jp ON rm.JOB_POST_ID = jp.JOB_POST_ID
+				 JOIN COMPANY c ON jp.COMPANY_ID = c.COMPANY_ID
+				 JOIN STATE s ON rm.STATE_ID = s.STATE_ID
+		WHERE c.COMPANY_ID = #{companyId}
+		  AND jp.JOB_POST_ID = #{jobPostId}
+		ORDER BY rm.APPLY_DATE DESC
+	</select>
+
+
+
 <!--	지원자수 카운트 -->
-	<select id="getApplyMemberCount"
+	<select id="countApplyByCompany"
 			resultType="int"
-			parameterType="com.joblessfriend.jobfinder.util.SearchVo">
+			parameterType="map">
 		SELECT COUNT(*)
 		FROM RESUME_MANAGE rm
 				 JOIN JOB_POST jp ON rm.JOB_POST_ID = jp.JOB_POST_ID

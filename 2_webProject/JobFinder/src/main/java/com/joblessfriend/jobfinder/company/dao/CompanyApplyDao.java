@@ -1,12 +1,11 @@
 package com.joblessfriend.jobfinder.company.dao;
 
-import com.joblessfriend.jobfinder.company.domain.CompanyApplyVo;
-import com.joblessfriend.jobfinder.util.SearchVo;
-
+import com.joblessfriend.jobfinder.company.domain.ApplySummaryVo;
 import java.util.List;
+import java.util.Map;
 
 public interface CompanyApplyDao {
-    //지원자수 카운트와 리스트조회//
-    List<CompanyApplyVo> getApplyMemberList(SearchVo vo);
-    int getApplyMemberCount(SearchVo vo);
+    List<ApplySummaryVo> getApplyListByCompany(Map<String, Object> paramMap);
+    int countApplyByCompany(Map<String, Object> paramMap);
+    List<ApplySummaryVo> getPagedApplyList(Map<String, Object> paramMap);
 }

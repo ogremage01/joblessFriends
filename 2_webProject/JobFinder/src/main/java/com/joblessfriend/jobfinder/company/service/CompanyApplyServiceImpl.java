@@ -1,27 +1,33 @@
+
+// ✅ ServiceImpl
 package com.joblessfriend.jobfinder.company.service;
 
 import com.joblessfriend.jobfinder.company.dao.CompanyApplyDao;
-import com.joblessfriend.jobfinder.company.domain.CompanyApplyVo;
-import com.joblessfriend.jobfinder.util.SearchVo;
+import com.joblessfriend.jobfinder.company.domain.ApplySummaryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
-public class CompanyApplyServiceImpl implements CompanyApplyService{
+public class CompanyApplyServiceImpl implements CompanyApplyService {
 
     @Autowired
     private CompanyApplyDao companyApplyDao;
 
-    //전체리스트조회 //
     @Override
-    public List<CompanyApplyVo> getApplyMemberList(SearchVo vo) {
-        return companyApplyDao.getApplyMemberList(vo);
+    public List<ApplySummaryVo> getApplyListByCompany(Map<String, Object> paramMap) {
+        return companyApplyDao.getApplyListByCompany(paramMap);
     }
 
     @Override
-    public int getApplyMemberCount(SearchVo vo) {
-        return companyApplyDao.getApplyMemberCount(vo);
+    public int countApplyByCompany(Map<String, Object> paramMap) {
+        return companyApplyDao.countApplyByCompany(paramMap);
+    }
+
+    @Override
+    public List<ApplySummaryVo> getPagedApplyList(Map<String, Object> paramMap) {
+        return companyApplyDao.getPagedApplyList(paramMap);
     }
 }
