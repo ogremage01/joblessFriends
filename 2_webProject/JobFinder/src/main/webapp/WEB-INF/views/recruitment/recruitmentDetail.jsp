@@ -12,6 +12,16 @@
     <link rel="stylesheet" href="/css/common/common.css">
     <link rel="stylesheet" href="/css/recruitment/recruitmentDetail.css">
 
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+
+
 </head>
 
 
@@ -66,7 +76,9 @@
 						</c:otherwise>
 					</c:choose>
 
-                    <button class="btn-apply">지원하기</button>
+                    <div class="job" data-jobpostid="${recruitmentDetailVo.recruitment.jobPostId}">
+                        <button class="btn-apply">지원하기</button>
+                    </div>
                 </div>
             </div>
 
@@ -153,6 +165,26 @@
 </div>
 
 <jsp:include page="../common/footer.jsp"/>
+<%-- 이후 js에서 처리  --%>
+<script>
+    const resumeList =
+            <c:choose>
+            <c:when test="${not empty resumeList}">
+            [
+                <c:forEach var="r" items="${resumeList}" varStatus="i">
+                {
+                    resumeId: '${r.resumeId}',
+                    title: '${r.title}',
+                    modifiedAt: '<fmt:formatDate value="${r.modifyDate}" pattern="MM/dd(E)" />'
+                }<c:if test="${!i.last}">,</c:if>
+                </c:forEach>
+            ]
+                </c:when>
+                <c:otherwise>
+                []
+        </c:otherwise>
+        </c:choose>;
+</script>
 
 <script src="/js/recruitment/recruitmentDetail.js"></script>
 <script src="/js/recruitment/recruitmentBookMark.js"></script>

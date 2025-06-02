@@ -190,6 +190,8 @@ public class RecruitmentController {
         if ("member".equals(userType) && loginUser instanceof MemberVo) {
             MemberVo memberVo = (MemberVo) loginUser;
             int memberId = memberVo.getMemberId();
+            List<ResumeVo> myResumeList = resumeService.getResumesByMemberId(memberId);
+            model.addAttribute("resumeList", myResumeList);
             Integer bookMarked_JobPostId = recruitmentService.selectBookMark(memberId, jobPostId);
             model.addAttribute("bookMarked_JobPostId", bookMarked_JobPostId);
         }

@@ -590,9 +590,62 @@ function applyResumeAjax(resumeId, jobPostId) {
             seen.add(questionId);
         }
     });
+    const totalQuestions = $('textarea[name^=answer]').length;
+    const answeredCount = answerList.length;
+    // 전체 미답변
+    if (answeredCount === 0 && totalQuestions > 0) {
+        Swal.fire({
+            icon: 'question',
+            title: '모든 질문이 미응답입니다',
+            html: `답변을 작성하지 않아도 지원이 가능하지만,<br><strong>정말 그대로 지원하시겠습니까?</strong>`,
+            showDenyButton: true,
+            confirmButtonText: '지원하기',
+            denyButtonText: '답변하러 가기'
+        }).then(result => {
+            if (result.isConfirmed) {
+                sendApplyAjax(resumeId, jobPostId, answerList);
+            } else if (result.isDenied) {
+                // 👉 다시 질문 모달로
+                openQuestionsModal(jobPostId).then(questionResult => {
+                    if (questionResult.isConfirmed) {
+                        applyResumeAjax(resumeId, jobPostId);  // 다시 확인하고 진행
+                    }
+                });
+            }
+        });
+        return;
+    }
 
 
+// 일부 미답변
+    if (answeredCount > 0 && answeredCount < totalQuestions) {
+        Swal.fire({
+            icon: 'question',
+            title: '일부 질문 미답변',
+            html: `총 ${totalQuestions}개 중 ${answeredCount}개만 답변했습니다.<br>계속 진행하시겠습니까?`,
+            showDenyButton: true,
+            confirmButtonText: '지원하기',
+            denyButtonText: '답변하러 가기'
+        }).then(result => {
+            if (result.isConfirmed) {
+                sendApplyAjax(resumeId, jobPostId, answerList);
+            } else if (result.isDenied) {
+                // 👉 다시 질문 모달로
+                openQuestionsModal(jobPostId).then(questionResult => {
+                    if (questionResult.isConfirmed) {
+                        applyResumeAjax(resumeId, jobPostId);  // 답변 재확인 후 재진입
+                    }
+                });
+            }
+        });
+        return;
+    }
 
+// 모두 답변했을 경우엔 바로 진행
+    sendApplyAjax(resumeId, jobPostId, answerList);
+}
+//분기처리 ,미응답 답변 함수 //
+function sendApplyAjax(resumeId, jobPostId, answerList) {
     $.ajax({
         url: "/resume/apply",
         method: "POST",
