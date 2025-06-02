@@ -41,7 +41,20 @@
 					    <c:choose>
 					        <c:when test="${sessionScope.userLogin ne null}">
 					            <c:choose>
+					                <c:when test="${sessionScope.userType eq 'admin'}">
+					                    <li class="userNavItem myPage">
+					                        <a href="/admin/main">
+					                        	관리자 화면으로
+					                        </a>
+					                    </li>
+					                    <li class="userNavItem logout">
+					                        <a href="/auth/logout">로그아웃</a>
+					                    </li>
+					                </c:when>
 					                <c:when test="${sessionScope.userType eq 'member'}">
+					                	<li class="userNavItem userNickname">
+					                        <a href="javascript:void(0);">${sessionScope.userLogin.nickname} 님</a>
+					                    </li>
 					                    <li class="userNavItem myPage">
 					                        <a href="/resume/management">
 					                            <span class="material-symbols-rounded account_circle">account_circle</span>
@@ -54,7 +67,7 @@
 					                </c:when>
 					                <c:when test="${sessionScope.userType eq 'company'}">
 					                    <li class="userNavItem corpMgr">
-					                        <a href="">${sessionScope.userLogin.companyName} 담당자님</a>
+					                        <a href="javascript:void(0);">${sessionScope.userLogin.companyName} 담당자님</a>
 					                    </li>
 					                    <li class="userNavItem logout">
 					                        <a href="/auth/logout">로그아웃</a>

@@ -55,7 +55,7 @@
 		padding: 5px 15px;
 		border: 1px solid #E0E0E0;
 		outline: none;
-		border-radius: 8px;
+		border-radius: 5px;
 		font-size: 16px;
 	}
 	
@@ -83,7 +83,7 @@
 	
 	#loginBtn {
 		height: 50px;
-		border-radius: 8px;
+		border-radius: 5px;
 		font-size: 18px;
 		font-weight: bold;
 		cursor: pointer;
@@ -135,7 +135,7 @@
 	}
 	.socialIcon {
 		width: 300px;
-		margin-top: 15px;
+		margin-top: 10px;
 	}
 
 	/* 유효성검사 토스트 팝업 */

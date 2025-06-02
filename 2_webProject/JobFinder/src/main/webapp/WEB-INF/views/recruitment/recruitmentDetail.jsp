@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="/css/common/common.css">
     <link rel="stylesheet" href="/css/recruitment/recruitmentDetail.css">
+    <link rel="stylesheet" href="/css/recruitment/recruitmentNav.css">
 
 </head>
 

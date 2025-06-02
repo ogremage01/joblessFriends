@@ -357,14 +357,14 @@ function renderJobList(recruitmentList, skillMap) {
               <div class="job-info">
                 <div class="job-title">${item.title} <span class="star">★</span></div>
                 <div class="job-meta">
-                  <span>🧑‍💻 지원자격: ${item.education}</span>
-                  <span>🎓 경력: ${item.careerType}</span>
-                  <span>💼 채용직: ${item.jobName}</span>
+                  <span>🎓 ${item.education}</span>
+                  <span>🧑‍ ${item.careerType}</span>
+                  <span>💼 ${item.jobName}</span>
                 </div>
                 <div class="job-meta-skill">
-                  🧩 스킬: ${
+                  🧩 ${
             (skillMap[item.jobPostId] || [])
-                .map(skill => `<span class="tag"> ${skill.tagName}</span>`)
+                .map(skill => `<div><span class="tag"> ${skill.tagName}</span></div>`)
                 .join('')
         }
                 </div>
