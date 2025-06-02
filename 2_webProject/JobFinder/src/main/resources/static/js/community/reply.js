@@ -83,8 +83,8 @@ $(document).ready(function () {
 						
 						if(userType=='member' && memberId ==reply.memberId){
 							html += `	
-												<a onclick='replyUpdateForm(${reply.replyId}, "${reply.commentContent}")'>수정</a>
-												<a onclick='replyDelete(${reply.replyId})' >삭제</a>`;
+												<a onclick='replyUpdateForm(${reply.replyId}, "${reply.commentContent}",${commentId})'>수정</a>
+												<a onclick='replyDelete(${reply.replyId},${commentId})' >삭제</a>`;
 						}else if(userType=='admin'){
 							html += `	
 												<a onclick='replyDelete(${reply.replyId})' >삭제</a>`;
@@ -131,9 +131,6 @@ $(document).ready(function () {
 			return;
 		}
 		
-		if(!confirm("답글을 저장하시겠습니까?")){
-			return;
-		}
 
 		$.ajax({
 			url: urlStr,
@@ -145,17 +142,20 @@ $(document).ready(function () {
 				memberId: memberId
 			}),
 			success: function () {
-				loadCommentList(); // 전체 댓글 다시 불러오기
+				alermPopup("답글이 저장되었습니다.");
+				// 리댓 목록 새로 불러오기
+
 				$('#inputReplyBox_' + commentId).val(''); // 입력창 초기화
 			},
 			error: function () {
 				alermPopup("답글 등록에 실패했습니다.");
 			}
 		});
+		window.loadCommentList();
+		setTimeout(function () {
+			loadReplyList(commentId);
+		}, 50); 
 
-		alermPopup("답글이 저장되었습니다.");
-		// 리댓 목록 새로 불러오기
-		loadReplyList(commentId);
 	}
 	
 });
@@ -165,7 +165,7 @@ $(document).ready(function () {
 
 
 //업데이트 폼
-function replyUpdateForm(replyId, currentContent) {
+function replyUpdateForm(replyId, currentContent, commentId) {
     const replyObj = $("#replylistNo_" + replyId);
     var replyLength = currentContent.length; 
 	
@@ -177,7 +177,7 @@ function replyUpdateForm(replyId, currentContent) {
 				<p class="countReply">${replyLength}/300자</p>
 				<button type="button" class="inputReplyBtn inputBtn" style="background-color:lightgray; color:black" 
 						onclick="loadCommentList()">취소</button>
-				<button type="button" class="inputReplyBtn inputBtn" onclick="replyUpdate(${replyId})">등록</button>
+				<button type="button" class="inputReplyBtn inputBtn" onclick="replyUpdate(${replyId},${commentId})">등록</button>
 			</div>
 		</div>
     `;
@@ -187,7 +187,7 @@ function replyUpdateForm(replyId, currentContent) {
 
 
 //업데이트 데이터 전송
-function replyUpdate(replyId){
+function replyUpdate(replyId, commentId){
 //	const commentObj = $('#commentNo_'+postCommentId);
 	const urlStr = "/community/detail/replyUpdate/" + replyId;
 	
@@ -202,11 +202,7 @@ function replyUpdate(replyId){
 		askConfirmMax("답글");
 		return;
 	}
-	
-	if(!confirm("답글을 수정하시겠습니까?")){
-		return;
-	}
-    
+
 	$.ajax({
 		url: urlStr,
 		type: "POST",
@@ -217,6 +213,10 @@ function replyUpdate(replyId){
 		success: function (){
 			alermPopup("답글이 수정되었습니다.");
 			window.loadCommentList();
+			setTimeout(function () {
+				loadReplyList(commentId);
+			}, 50); 
+			
 		},
 		error: function(){
 			alermPopup("답글 등록에 실패했습니다.");
@@ -229,23 +229,26 @@ function replyUpdate(replyId){
 
 
 //삭제 로직
-function replyDelete(replyId){
+function replyDelete(replyId, commentId){
 	let url = "/community/detail/replyDelete/"+replyId;
 
-	if(confirm('답글을 삭제하시겠습니까?')){
-	
+
 		fetch(url, {
 			method: 'DELETE'
 		}).then(
 			function(response){
 				if(response.ok){
-					loadCommentList();
+					alermPopup("답글이 삭제되었습니다.");
+					window.loadCommentList();
+					setTimeout(function () {
+						loadReplyList(commentId);
+					}, 50); 
 					
 				}
 			}
 		)
 
-	}
+	
 }
 
 

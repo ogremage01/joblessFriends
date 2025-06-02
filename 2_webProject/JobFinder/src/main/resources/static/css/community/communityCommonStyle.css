@@ -46,8 +46,17 @@ button{
 }
 
 .selectedPage{
-	
-	border: 1px solid  #F69800;
-	background: #fff3e0;
+	font-weight: bold;
+	color: #F69800;
+/* 	background: #fff3e0;
+	 */
+}
+.switchNotiComm{
+	width: 250px;
+	display: flex;
+	gap: 15px; 
+	margin-top: 10px; 
+	justify-content: center;
+	cursor: pointer;
 	
 }

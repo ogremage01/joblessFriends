@@ -35,14 +35,12 @@
 	<c:when test="${sessionScope.userLogin ne null}">
 		<c:choose>
 			<c:when test="${sessionScope.userType eq 'member'}">
-				<div id='boxWrap' class="boxStyle sideBarBoxStyle">
-					<div id='boxTextWrap'>
-						<div>
+				<div id='boxWrap' class="boxStyle sideBarBoxStyle"  style="height: 120px">
+					<div id='boxTextWrap' >
+						<div style="height: 50px">
 							<p class="nameBox"><span class="nickName">${sessionScope.userLogin.nickname}</span></p>
-							<p>작성한 글 (-)개</p>
-							<p>작성한 댓글 (-)개</p>
 						</div>
-						<a href="./member/info">프로필 변경</a>
+						<a style="height: 50px" href="./member/info">프로필 변경</a>
 					</div>
 					<button id='writeBtn' onclick="moveUpload()">
 						<svg xmlns="http://www.w3.org/2000/svg" width="100" height="50"
@@ -58,12 +56,11 @@
 				</div>
 			</c:when>
 			<c:when test="${sessionScope.userType eq 'company'}">
-				<div id='boxWrap' class="boxStyle sideBarBoxStyle">
+				<div id='boxWrap' class="boxStyle sideBarBoxStyle" style="height: 120px">
 					<div id='boxTextWrap'>
-						<div>
+						<div style="height: 50px">
 							<p class="nameBox"><span class="nickName">${sessionScope.userLogin.companyName}</span> 님</p>
-							<p>(작성 고민부분)</p>
-							<p>(작성 고민부분)</p>
+							<p style="margin-top: 30px; color: #6D707B;">커뮤니티 작성은 개인 회원 전용 기능입니다.</p>
 						</div>
 					</div>
 				</div>
@@ -132,18 +129,18 @@
 <c:set var="uri" value="${pageContext.request.requestURI}" />
 <c:choose>
 	<c:when test="${fn:contains(uri, '/notice')}">
-		<div style="width: 250px;display: flex;gap: 20px; margin-top: 10px; text-align: center;">
+		<div class="switchNotiComm">
 			<!-- 공지사항이 현재 페이지일 때 -->
-			<div onclick="moveCommunity()">커뮤니티 게시판</div>
-			<span>|</span>
+			<div onclick="moveCommunity()">자유 게시판</div>
+			<span style="color: lightgray">|</span>
 			<div class="selectedPage">공지 사항</div>
 		</div>
 	</c:when>
 	<c:otherwise>
-		<div style="width: 250px;display: flex;gap: 20px; margin-top: 10px; text-align: center;">
+		<div class="switchNotiComm">
 			<!-- 커뮤니티가 현재 페이지일 때 -->
-			<div class="selectedPage">커뮤니티 게시판</div>
-			<span>|</span>
+			<div class="selectedPage">자유 게시판</div>
+			<span style="color: lightgray">|</span>
 			<div onclick="moveNotice()">공지 사항</div>
 		</div>
 	</c:otherwise>
