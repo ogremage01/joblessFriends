@@ -9,6 +9,7 @@
 	<meta charset="UTF-8">
 	<title>이력서 폼</title>
 	<link rel="stylesheet" href="/css/resume/resumeStyle.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
@@ -66,7 +67,7 @@
 				<div class="field-block">
 					<label>우편번호</label>
 					<input type="text" id="postalCodeId" placeholder="우편번호" readonly />
-					<button type="button" class="address-search-btn" onclick="execDaumPostcode()">🔍</button>
+					<button type="button" class="address-search-btn" onclick="execDaumPostcode()"><i class="bi bi-search"></i></button>
 				</div>
 				<div class="field-block">
 					<label>주소</label>
@@ -188,6 +189,7 @@
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-3fp9tS8p9A2Mq7Qz+S8jfwD+xdgu9T+O+NRZz8N5eA8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/js/resume/resumeView.js"></script>
 </body>
 </html>
