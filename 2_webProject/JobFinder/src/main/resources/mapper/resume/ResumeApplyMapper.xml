@@ -266,13 +266,14 @@
             RESUME_FILE,
             STATE_ID
         ) VALUES (
-                    RM_ID_SEQ.NEXTVAL,
+                     #{rmId},
                      #{jobPostId},
                      #{memberId},
                      #{resumeFile},
                      #{stateId}
                  )
     </insert>
+
 <!--사전질문지 -->
     <select id="findQuestionsByJobPostId" resultType="com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo">
         SELECT

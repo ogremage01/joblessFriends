@@ -75,6 +75,7 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
 
         // 4. 지원 이력 등록
         ResumeManageVo manageVo = new ResumeManageVo();
+        manageVo.setRmId(applyId);
         manageVo.setJobPostId(jobPostId);
         manageVo.setMemberId(memberId);
         manageVo.setResumeFile(String.valueOf(applyId));
