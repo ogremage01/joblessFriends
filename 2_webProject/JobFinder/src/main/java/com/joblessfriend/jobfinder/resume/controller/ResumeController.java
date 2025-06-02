@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
+import com.joblessfriend.jobfinder.resume.domain.CareerVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 import com.joblessfriend.jobfinder.resume.parser.ResumeParser;
 import com.joblessfriend.jobfinder.resume.service.ResumeService;
@@ -114,6 +115,9 @@ public class ResumeController {
 	            // 스킬 데이터 추가
 	            try {
 	                List<SkillVo> skillList = skillService.resumeTagList(resumeId);
+	                
+	                resumeVo.setSkillList(skillList != null ? skillList : new ArrayList<>());
+	                
 	                model.addAttribute("skillList", skillList != null ? skillList : new ArrayList<>());
 	            } catch (Exception e) {
 	                System.err.println(">>> [ResumeController] 스킬 데이터 조회 실패: " + e.getMessage());
@@ -390,14 +394,39 @@ public class ResumeController {
 
 	    ResumeVo resumeVo = resumeParser.parseMapToResumeVo(requestMap, loginUser.getMemberId());
 	    session.setAttribute("resumePreviewData", resumeVo);
+	    
 	    return ResponseEntity.ok("success");
 	}
 	
 	@GetMapping("/viewPreview")
 	public String showPreview(HttpSession session, Model model) {
 	    ResumeVo resume = (ResumeVo) session.getAttribute("resumePreviewData");
+	    
 	    model.addAttribute("resume", resume);
 	    
+	    // 직무직군 id값을 네이밍으로 변환
+	    List<Map<String, String>> jobTitles = new ArrayList<>();
+	    for (CareerVo career : resume.getCareerList()) {
+	        Map<String, String> map = new HashMap<>();
+	        map.put("jobGroupName", jobGroupService.getJobGroupNameById(career.getJobGroupId()));
+	        map.put("jobName", jobService.getJobNameById(career.getJobId()));
+	        jobTitles.add(map);
+	    }
+	 // tagIds → skillList 변환
+	    List<SkillVo> skillList = new ArrayList<>();
+	    System.out.println(">>> skillList in preview: ");
+	    if (resume.getTagIds() != null) {
+	        for (Long tagId : resume.getTagIds()) {
+	            SkillVo skill = skillService.getSkillById(tagId.intValue());
+	            if (skill != null) {
+	            	System.out.println(" - tagId: " + skill.getTagId() + ", tagName: " + skill.getTagName());
+	                skillList.add(skill);
+	            }
+	        }
+	    }
+	    resume.setSkillList(skillList);
+	    
+	    model.addAttribute("jobTitles", jobTitles);
 	    
 	    return "resume/resumePreview"; // /WEB-INF/views/resume/resumePreview.jsp
 	}

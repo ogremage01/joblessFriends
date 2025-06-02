@@ -35,4 +35,10 @@ public class SkillDaoImpl implements SkillDao{
 	public List<SkillVo> getSkillsByKeyword(String keyword) {
 		return sqlSession.selectList("com.joblessfriend.jobfinder.skill.dao.SkillDao.getSkillsByKeyword", keyword);
 	}
+
+	@Override
+	public SkillVo getSkillById(int tagId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("com.joblessfriend.jobfinder.skill.dao.SkillDao.getSkillById", tagId);
+	}
 }

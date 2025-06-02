@@ -17,6 +17,7 @@ import com.joblessfriend.jobfinder.resume.domain.EducationVo;
 import com.joblessfriend.jobfinder.resume.domain.PortfolioVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 import com.joblessfriend.jobfinder.resume.domain.SchoolVo;
+import com.joblessfriend.jobfinder.skill.domain.SkillVo;
 
 @Component
 public class ResumeParser {
@@ -54,6 +55,10 @@ public class ResumeParser {
 
         // 기본 정보 파싱
         resumeVo.setResumeId(getIntValue(requestMap, "resumeId"));
+        
+        System.out.println(">>>> requestMap.get(\"resumeId\"): " + requestMap.get("resumeId"));
+        System.out.println(">>>> 파싱된 resumeId: " + resumeVo.getResumeId());
+        
         resumeVo.setTitle(getStringValue(requestMap, "title"));
         resumeVo.setMemberName(getStringValue(requestMap, "name"));
         resumeVo.setBirthDate(parseDate(getStringValue(requestMap, "birthdate")));
@@ -95,6 +100,14 @@ public class ResumeParser {
             }
             resumeVo.setTagIds(tagIds);
             
+         // skillList도 만들어서 넣기
+            List<SkillVo> skillList = new ArrayList<>();
+            for (Long tagId : tagIds) {
+                SkillVo skill = new SkillVo();
+                skill.setTagId(tagId.intValue());
+                skillList.add(skill);
+            }
+            resumeVo.setSkillList(skillList);
         }
 
         return resumeVo;
@@ -285,5 +298,7 @@ public class ResumeParser {
     public String parseResumeVoToJson(ResumeVo resumeVo) throws Exception {
         return objectMapper.writeValueAsString(resumeVo);
     }
+    
+
     
 } 

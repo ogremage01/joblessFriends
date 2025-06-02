@@ -42,4 +42,10 @@ public class SkillServiceImpl implements SkillService{
 			throw e;
 		}
 	}
+
+	@Override
+	public SkillVo getSkillById(int tagId) {
+		// TODO Auto-generated method stub
+		return skillDao.getSkillById(tagId);
+	}
 }
