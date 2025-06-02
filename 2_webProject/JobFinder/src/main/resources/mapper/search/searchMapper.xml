@@ -39,6 +39,7 @@
                                    JOIN job j ON jp.job_id = j.job_id
                           WHERE jp.TITLE LIKE #{keyword}
         				  OR jp.CONTENT LIKE #{keyword}
+        				  OR c.COMPANY_NAME LIKE #{keyword}
                           ORDER BY jp.end_date ASC
                       ) inner_query
                  WHERE ROWNUM &lt;= #{endRow}

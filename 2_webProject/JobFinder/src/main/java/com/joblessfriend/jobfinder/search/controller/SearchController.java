@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.joblessfriend.jobfinder.community.controller.CommunityController;
@@ -80,7 +81,7 @@ public class SearchController {
 	 * 
 	 * return "mainSearchView"; }
 	 */
-   @PostMapping("")
+   @RequestMapping(value="", method={RequestMethod.GET, RequestMethod.POST})
    public String searchMainList(Model model, @RequestParam(defaultValue = "1") int page, 
 		      @RequestParam(defaultValue = "") String keyword) {
 
@@ -97,7 +98,9 @@ public class SearchController {
 		    
 		    try {
 		    	totalCount = searchService.getRecruitmentSearchTotalCount(searchVo); // 총 레코드 수 조회
-			    pagination = new Pagination(totalCount, searchVo);	
+			    pagination = new Pagination(totalCount, searchVo);
+			    
+			    System.out.println(pagination.getStartPage());
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
