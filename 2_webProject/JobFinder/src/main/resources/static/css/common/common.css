@@ -2,11 +2,15 @@
    	body {
 		margin: 0;
 	}
+	
+	*::selection {
+		background-color: #F69800;
+		color: white;
+	}
    
     #container {
 		min-width: 1280px;
 		width: 100%;
-
 	}
 	
 	#containerWrap {

@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.joblessfriend.jobfinder.admin.service.AdminMemberService;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
-import com.joblessfriend.jobfinder.member.service.MemberService;
+import com.joblessfriend.jobfinder.util.Pagination;
+import com.joblessfriend.jobfinder.util.SearchVo;
 
 @RequestMapping("/admin/member/individual")
 @Controller
@@ -36,32 +37,27 @@ public class AdminMemberController {
 	
 	//목록 view
 	@GetMapping("")
-	public String memberIndividual(Model model, @RequestParam(defaultValue = "0") int page,
-			@RequestParam(value = "keyword", required = false) String keyword) {
+	public String memberIndividual(Model model, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "") String keyword) {
 		logger.info("개인회원 목록으로 이동");
+		
+		SearchVo searchVo = new SearchVo();
+		searchVo.setKeyword(keyword);
+		searchVo.setPage(page);
+		
+		int totalPage = memberService.memberCount(searchVo);
+		Pagination pagination = new Pagination(totalPage, searchVo);
 
+		// Oracle 11g에 맞게 startRow, endRow 계산
+		searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
+		searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
 		List<MemberVo> memberList = new ArrayList<>();
-		int memberCount = 0;
-		int totalPage = 0;
-		if (keyword != null && !keyword.trim().isEmpty()) {
-			memberList = memberService.memberSelectList(page, keyword);
-			logger.info("memberSelectList page:{} keyword:{}", page, keyword);
-			memberCount = memberService.memberCount(keyword);
-			logger.info("memberService keyword:{}", keyword);
-			totalPage = memberCount / 10 + (memberCount % 10 == 0 ? 0 : 1);
+		
+		memberList = memberService.memberSelectList(searchVo);
 
-		} else {
-			memberList = memberService.memberSelectList(page);
-			logger.info("memberSelectList page:{}", page);
-			memberCount = memberService.memberCount();
-			System.out.println(memberCount);
-			totalPage = memberCount / 10 + (memberCount % 10 == 0 ? 0 : 1);
-		}
-
-		int curPage = page;
+		model.addAttribute("searchVo", searchVo);
 		model.addAttribute("memberList", memberList);
-		model.addAttribute("totalPage", totalPage);
-		model.addAttribute("curPage", curPage);
+		model.addAttribute("pagination", pagination);
 
 		return "admin/member/memberIndividualView";
 	}

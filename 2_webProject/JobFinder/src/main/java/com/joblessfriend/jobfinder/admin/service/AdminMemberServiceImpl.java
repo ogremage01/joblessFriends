@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.joblessfriend.jobfinder.admin.dao.AdminMemberDao;
 import com.joblessfriend.jobfinder.auth.controller.AuthController;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
+import com.joblessfriend.jobfinder.util.SearchVo;
 
 @Service
 public class AdminMemberServiceImpl implements AdminMemberService{
@@ -22,27 +23,15 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 
 	
 	@Override//관리자용
-	public List<MemberVo> memberSelectList(int page) {
+	public List<MemberVo> memberSelectList(SearchVo searchVo) {
 		// TODO Auto-generated method stub
-		return memberDao.memberSelectList(page);
+		return memberDao.memberSelectList(searchVo);
 	}
 	
 	@Override//관리자용
-	public int memberCount() {
+	public int memberCount(SearchVo searchVo) {
 		// TODO Auto-generated method stub
-		return memberDao.memberCount();
-	}
-
-	@Override//관리자용
-	public List<MemberVo> memberSelectList(int page, String keyword) {
-		// TODO Auto-generated method stub
-		return memberDao.memberSelectList(page, keyword);
-	}
-
-	@Override//관리자용
-	public int memberCount(String keyword) {
-		// TODO Auto-generated method stub
-		return memberDao.memberCount(keyword);
+		return memberDao.memberCount(searchVo);
 	}
 
 	@Override//관리자용
