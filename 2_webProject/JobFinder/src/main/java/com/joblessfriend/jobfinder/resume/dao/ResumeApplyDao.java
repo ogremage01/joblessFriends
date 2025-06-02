@@ -1,7 +1,9 @@
 package com.joblessfriend.jobfinder.resume.dao;
 
+import com.joblessfriend.jobfinder.recruitment.domain.JobPostAnswerVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo;
 import com.joblessfriend.jobfinder.resume.domain.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -27,4 +29,10 @@ public interface ResumeApplyDao {
     void insertResumeManage(ResumeManageVo manageVo);
 
     List<JobPostQuestionVo> findQuestionsByJobPostId(int jobPostId);
+    int insertAnswers(@Param("answerList") List<JobPostAnswerVo> answerList);
+    int selectNextAnswerId();
+    List<Integer> selectNextAnswerIds(int count);
+
+
+    int countByMemberAndJobPost(int memberId, int jobPostId);
 }

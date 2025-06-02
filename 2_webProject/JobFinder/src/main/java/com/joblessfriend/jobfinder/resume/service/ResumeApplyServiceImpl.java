@@ -1,5 +1,6 @@
 package com.joblessfriend.jobfinder.resume.service;
 
+import com.joblessfriend.jobfinder.recruitment.domain.JobPostAnswerVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo;
 import com.joblessfriend.jobfinder.resume.dao.ResumeApplyDao;
 import com.joblessfriend.jobfinder.resume.domain.*;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,11 +22,9 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
 
     @Override
     @Transactional
-    public int applyResumeWithCopy(int resumeId,int jobPostId,int memberId) {
-        // 1. 원본 이력서 전체 조회
+    public int applyResumeWithCopy(int resumeId, int jobPostId, int memberId, List<JobPostAnswerVo> answerList) {
         ResumeVo origin = resumeService.getResumeWithAllDetails(resumeId);
 
-        // 2. 복사용 ResumeVo 생성 및 값 복사
         ResumeVo applyCopy = new ResumeVo();
         applyCopy.setMemberId(memberId);
         applyCopy.setMemberName(origin.getMemberName());
@@ -33,79 +33,94 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
         applyCopy.setEmail(origin.getEmail());
         applyCopy.setSelfIntroduction(origin.getSelfIntroduction());
         applyCopy.setProfile(origin.getProfile());
-
-
         applyCopy.setSchoolList(origin.getSchoolList());
         applyCopy.setCareerList(origin.getCareerList());
         applyCopy.setEducationList(origin.getEducationList());
         applyCopy.setCertificateList(origin.getCertificateList());
         applyCopy.setPortfolioList(origin.getPortfolioList());
 
-        // 3. 메인 resume apply insert
+        // 1. 이력서 복사
         resumeApplyDao.insertResumeCopy(applyCopy);
         int applyId = applyCopy.getResumeId();
 
-        // 4. 하위 테이블 insert
-        List<SchoolVo> schools = applyCopy.getSchoolList();
-        if (schools != null) {
-            for (SchoolVo s : schools) {
+        // 2. 하위 항목 복사
+        if (origin.getSchoolList() != null)
+            origin.getSchoolList().forEach(s -> {
                 s.setResumeId(applyId);
                 resumeApplyDao.insertSchool(s);
-            }
-        }
+            });
 
-        List<CareerVo> careers = applyCopy.getCareerList();
-        if (careers != null) {
-            for (CareerVo c : careers) {
+        if (origin.getCareerList() != null)
+            origin.getCareerList().forEach(c -> {
                 c.setResumeId(applyId);
                 resumeApplyDao.insertCareer(c);
-            }
-        }
+            });
 
-        List<EducationVo> educations = applyCopy.getEducationList();
-        if (educations != null) {
-            for (EducationVo e : educations) {
+        if (origin.getEducationList() != null)
+            origin.getEducationList().forEach(e -> {
                 e.setResumeId(applyId);
                 resumeApplyDao.insertEducation(e);
-            }
-        }
+            });
 
-//       List<CertificateResumeVo> certificates = applyCopy.getCertificateList();
-//        if (certificates != null) {
-//           for (CertificateResumeVo cert : certificates) {
-//               resumeApplyDao.insertCertificateResume(applyId, cert.getCertificateId());
-//           }
-//        }
-
-        List<PortfolioVo> portfolios = applyCopy.getPortfolioList();
-        if (portfolios != null) {
-            for (PortfolioVo p : portfolios) {
+        if (origin.getPortfolioList() != null)
+            origin.getPortfolioList().forEach(p -> {
                 p.setResumeId(applyId);
                 resumeApplyDao.insertPortfolio(p);
-            }
-        }
-        //  스킬 태그 복사 추가
-        List<Integer> tagIds = resumeApplyDao.getTagIdsByResumeId(resumeId);
-        if (tagIds != null) {
-            for (Integer tagId : tagIds) {
-                resumeApplyDao.insertResumeTagCopy(applyId, tagId);
-            }
-        }
+            });
 
-        // ✅ 6. 지원 관리 테이블에 insert (복사된 이력서 기준으로)
+        // 3. 스킬 태그 복사
+        List<Integer> tagIds = resumeApplyDao.getTagIdsByResumeId(resumeId);
+        if (tagIds != null)
+            tagIds.forEach(tagId -> resumeApplyDao.insertResumeTagCopy(applyId, tagId));
+
+        // 4. 지원 이력 등록
         ResumeManageVo manageVo = new ResumeManageVo();
         manageVo.setJobPostId(jobPostId);
         manageVo.setMemberId(memberId);
-        manageVo.setResumeFile(String.valueOf(applyId)); // 또는 applyId 자체로 처리
-        manageVo.setStateId(1); // 지원 완료 상태
+        manageVo.setResumeFile(String.valueOf(applyId));
+        manageVo.setStateId(1);
 
         resumeApplyDao.insertResumeManage(manageVo);
+
+         // 🚀 한 번에 여러 개 받아옴
+        List<Integer> newAnswerIds = resumeApplyDao.selectNextAnswerIds(answerList.size());  // 🚀 한 번에 여러 개 받아옴
+
+        for (int i = 0; i < answerList.size(); i++) {
+            JobPostAnswerVo answer = answerList.get(i);
+            answer.setAnswerId(newAnswerIds.get(i)); // 시퀀스 미리 할당
+            answer.setJobPostId(jobPostId);
+            answer.setMemberId(memberId);
+        }
+
+        resumeApplyDao.insertAnswers(answerList);
+
+
         return applyId;
     }
 
 
+
+
+
+    @Override
     public List<JobPostQuestionVo> getQuestionsByJobPostId(int jobPostId) {
         return resumeApplyDao.findQuestionsByJobPostId(jobPostId);
+    }
+
+    @Override
+    public void insertAnswersWithGeneratedIds(List<JobPostAnswerVo> answerList) {
+
+    }
+
+
+    @Override
+    public int hasAlreadyApplied(int memberId, int jobPostId) {
+        return resumeApplyDao.countByMemberAndJobPost(memberId, jobPostId);
+    }
+
+    @Override
+    public void insertAnswers(List<JobPostAnswerVo> answerList) {
+        resumeApplyDao.insertAnswers(answerList);
     }
 
 }

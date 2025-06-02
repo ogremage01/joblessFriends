@@ -288,6 +288,53 @@
             QUESTION_ORDER
     </select>
 
+<!--사전 질문지 답변 -->
+    <!-- ResumeApplyMapper.xml -->
+    <insert id="insertAnswers" parameterType="map">
+        INSERT ALL
+        <foreach collection="answerList" item="answer">
+            INTO JOB_POST_ANSWER (
+            ANSWER_ID, QUESTION_ID, JOB_POST_ID, MEMBER_ID, ANSWER_TEXT
+            ) VALUES (
+            #{answer.answerId},
+            #{answer.questionId},
+            #{answer.jobPostId},
+            #{answer.memberId},
+            #{answer.answerText}
+            )
+        </foreach>
+        SELECT * FROM DUAL
+    </insert>
+
+
+
+    <select id="selectNextAnswerId" resultType="int">
+        SELECT JOB_POST_ANSWER_ID_SEQ.NEXTVAL FROM DUAL
+    </select>
+
+
+    <select id="selectNextAnswerIds" resultType="int" parameterType="int">
+        SELECT JOB_POST_ANSWER_ID_SEQ.NEXTVAL
+        FROM DUAL
+            CONNECT BY LEVEL &lt;= #{count}
+    </select>
+
+
+
+
+
+
+
+
+    <!--지원중복체크 -->
+    <select id="countByMemberAndJobPost" resultType="int">
+        SELECT COUNT(*)
+        FROM RESUME_MANAGE
+        WHERE MEMBER_ID = #{memberId}
+          AND JOB_POST_ID = #{jobPostId}
+    </select>
+
+
 
     <!-- 하위 데이터 삭제 쿼리들 -->
     <delete id="deleteSchoolsByResumeId">

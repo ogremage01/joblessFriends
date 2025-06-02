@@ -1,11 +1,13 @@
 package com.joblessfriend.jobfinder.resume.dao;
 
+import com.joblessfriend.jobfinder.recruitment.domain.JobPostAnswerVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo;
 import com.joblessfriend.jobfinder.resume.domain.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -71,6 +73,33 @@ public class ResumeApplyDaoImpl implements ResumeApplyDao {
     public List<JobPostQuestionVo> findQuestionsByJobPostId(int jobPostId) {
         return sqlSession.selectList(namespace + ".findQuestionsByJobPostId", jobPostId);
     }
+
+    @Override
+    public int insertAnswers(List<JobPostAnswerVo> answerList) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("answerList", answerList);  // 이름 일치
+        return sqlSession.insert(namespace + ".insertAnswers", paramMap);
+    }
+
+    @Override
+    public int selectNextAnswerId() {
+        return sqlSession.selectOne(namespace + ".selectNextAnswerId");
+    }
+
+    @Override
+    public List<Integer> selectNextAnswerIds(int count) {
+        return sqlSession.selectList(namespace + ".selectNextAnswerIds", count);
+    }
+
+    @Override
+    public int countByMemberAndJobPost(int memberId, int jobPostId) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("memberId", memberId);
+        param.put("jobPostId", jobPostId);
+        return sqlSession.selectOne(namespace + ".countByMemberAndJobPost", param);
+    }
+
+
 
     // getResumeWithAllDetails, getSchoolsByResumeId 등 조회 메서드는 필요 시 유지
 }
