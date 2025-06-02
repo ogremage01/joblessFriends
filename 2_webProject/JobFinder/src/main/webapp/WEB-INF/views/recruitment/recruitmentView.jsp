@@ -126,19 +126,7 @@
                     <!-- 가운데: 공고 정보 -->
                     <div class="job-info">
                         <div class="job-title">
-                                ${item.title} 
-                                <c:choose>
-								    <c:when test="${bookMarkedMap[item.jobPostId]}">
-								        <div id="bookmarkList-Container_${item.jobPostId}">
-								            <button class="star" type="button" data-usertype="${sessionScope.userType}">★</button>
-								        </div>
-								    </c:when>
-								    <c:otherwise>
-								        <div id="bookmarkList-Container_${item.jobPostId}">
-								            <button class="noStar" type="button" data-usertype="${sessionScope.userType}">☆</button>
-								        </div>
-								    </c:otherwise>
-								</c:choose>
+                                ${item.title}
                         </div>
                         <div class="job-meta">
 

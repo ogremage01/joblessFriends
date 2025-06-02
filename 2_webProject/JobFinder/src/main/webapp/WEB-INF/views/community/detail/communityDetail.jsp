@@ -16,6 +16,9 @@
 <link rel="stylesheet" href="/css/common/common.css">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
 
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <style type="text/css">
 
 /* 블록 인용 스타일 */
