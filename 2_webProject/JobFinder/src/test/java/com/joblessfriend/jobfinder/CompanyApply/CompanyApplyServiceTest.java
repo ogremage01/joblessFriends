@@ -1,4 +1,4 @@
-package com.joblessfriend.jobfinder.company.service;
+package com.joblessfriend.jobfinder.CompanyApply;
 
 import com.joblessfriend.jobfinder.company.domain.CompanyApplyVo;
 import com.joblessfriend.jobfinder.company.service.CompanyApplyService;
@@ -16,6 +16,7 @@ public class CompanyApplyServiceTest {
 
     @Autowired
     private CompanyApplyService companyApplyService;
+
 
     @Test
     public void 지원자_목록_조회_테스트() {
