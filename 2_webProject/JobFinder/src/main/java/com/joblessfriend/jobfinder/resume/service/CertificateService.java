@@ -14,4 +14,5 @@ public interface CertificateService {
 	public void certificateDeleteOne(int resumeId);
 	
 	public List<CertificateVo> certificateSearchList(String certificateName);
+	
 }
