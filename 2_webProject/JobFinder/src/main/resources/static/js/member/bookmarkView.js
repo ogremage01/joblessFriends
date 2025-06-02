@@ -28,13 +28,18 @@ function goToPage(page, keyWord) {
 
 function cancelBookmark(jobPostId) {
 	Swal.fire({
-		title: "확인",
-		text: "정말로 찜을 취소하시겠습니까?",
+		title: "찜 삭제",
+		text: "정말로 찜을 삭제하시겠습니까?",
 		icon: "warning",
 		showCancelButton: true,
-		confirmButtonColor: "#3085d6",
-		cancelButtonColor: "#d33",
-		confirmButtonText: "네, 찜 취소",
+		confirmButtonText: '찜 삭제',
+	    cancelButtonText: '취소',
+		customClass: {
+			confirmButton: "swalConfirmBtn",
+			cancelButton: "swalCancelBtn",
+		},
+		reverseButtons: true, // 버튼 순서 거꾸로
+		
 	}).then((result) => {
 		if (result.isConfirmed) {
 			// 찜 취소 요청

@@ -155,12 +155,13 @@
 .job-meta-skill div{
 	
 	/* 	스타일 1 */
-/* 	border: 1px solid #F69800; */
-/* 	background-color: white; */
+	border: 1px solid #F69800;
+	background-color: rgb(255, 249, 238);
+	color:  #F69800;
 
 	/* 	스타일 2 */
-	background-color: #F69800;
-	color: white;
+/* 	background-color: #F69800; */
+/* 	color: white; */
 	
 	border-radius: 15px;
 	padding: 3px 10px;

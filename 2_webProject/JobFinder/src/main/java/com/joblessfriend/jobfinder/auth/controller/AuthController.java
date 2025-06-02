@@ -42,10 +42,12 @@ public class AuthController {
 	
 	// 회원가입 뷰
 	@GetMapping("/signup")
-	public String signup() {
+	public String signup(HttpSession session) {
 		logger.info(logTitleMsg);
 		logger.info("==signup==");
-		
+		if(session.getAttribute("userLogin") != null) {
+			return "redirect:/";
+		}
 		return "auth/signUpForm";
 	}
 	
@@ -109,11 +111,15 @@ public class AuthController {
 	
 	// 로그인 뷰
 	@GetMapping("/login")
-	public String login(Authentication authentication) {
+	public String login(Authentication authentication, HttpSession session) {
 		logger.info(logTitleMsg);
 		logger.info("==login==");
-		if (authentication != null && authentication.isAuthenticated()) {
-			//.isAuthenticated()는 사용자가 인증된 상태임을 확인하는 조건식 (익명이 아니면 true 리턴)
+		/*
+		 * if (authentication != null && authentication.isAuthenticated()) {
+		 * //.isAuthenticated()는 사용자가 인증된 상태임을 확인하는 조건식 (익명이 아니면 true 리턴) return
+		 * "redirect:/"; }
+		 */
+		if(session.getAttribute("userLogin") != null) {
 			return "redirect:/";
 		}
 		
@@ -181,10 +187,12 @@ public class AuthController {
 	
 	// 계정찾기 뷰
 	@GetMapping("/find")
-	public String find() {
+	public String find(HttpSession session) {
 		logger.info(logTitleMsg);
 		logger.info("==find==");
-		
+		if(session.getAttribute("userLogin") != null) {
+			return "redirect:/";
+		}
 		return "auth/findAccountForm";
 	}
 	

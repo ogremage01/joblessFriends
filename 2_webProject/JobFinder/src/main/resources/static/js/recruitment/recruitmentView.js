@@ -440,7 +440,13 @@ function renderPagination(pagination) {
 
 $(document).on('click', '.apply-btn', function () {
     if (!resumeList || resumeList.length === 0) {
-        Swal.fire('📭 등록된 이력서가 없습니다.');
+        Swal.fire({
+			title:'📭 등록된 이력서가 없습니다.',
+			confirmButtonText: '확인',
+			customClass: {
+				confirmButton: "swalConfirmBtn",
+			},
+		});
         return;
     }
 
@@ -462,7 +468,13 @@ $(document).on('click', '.apply-btn', function () {
                     icon: 'info',
                     title: '사전질문 포함',
                     html: `<b>${questionList.length}개의 사전질문</b>이 등록된 공고입니다.<br>이력서 선택 후 답변을 입력해주세요.`,
-                    confirmButtonText: '이력서 선택으로 이동'
+                    confirmButtonText: '이력서 선택으로 이동',
+					customClass: {
+						confirmButton: "swalConfirmBtn",
+						cancelButton: "swalCancelBtn",
+					},
+					reverseButtons: true, // 버튼 순서 거꾸로
+					
                 }).then(() => {
                     showResumeSelectModal(jobPostId); // 이력서 선택창으로 이동
                 });
@@ -471,7 +483,13 @@ $(document).on('click', '.apply-btn', function () {
             }
         },
         error: function () {
-            Swal.fire("🚨 질문 조회 실패");
+            Swal.fire({
+				title:"🚨 질문 조회 실패",
+				confirmButtonText: '확인',
+				customClass: {
+					confirmButton: "swalConfirmBtn",
+				},
+			});
         }
     });
 });
@@ -505,6 +523,11 @@ function showResumeSelectModal(jobPostId) {
         showCancelButton: true,
         confirmButtonText: '지원하기',
         cancelButtonText: '취소',
+		customClass: {
+			confirmButton: "swalConfirmBtn",
+			cancelButton: "swalCancelBtn",
+		},
+		reverseButtons: true, // 버튼 순서 거꾸로
         preConfirm: () => {
             const selected = $('input[name="resumeRadio"]:checked').val();
             if (!selected) {
@@ -533,7 +556,13 @@ function showResumeSelectModal(jobPostId) {
                     }
                 },
                 error: function () {
-                    Swal.fire("❌ 질문 조회 실패");
+                    Swal.fire({
+						title: "❌ 질문 조회 실패",
+						confirmButtonText: '확인',
+						customClass: {
+							confirmButton: "swalConfirmBtn",
+						},
+					});
                 }
             });
         }
@@ -566,11 +595,16 @@ function openQuestionsModal(jobPostId) {
                 <br>
                 ${questionHtml}
             `,
-            confirmButtonText: '확인',
-            cancelButtonText: '지원 취소',
+            confirmButtonText: '지원하기',
+            cancelButtonText: '취소',
             showCancelButton: true,
             allowOutsideClick: false,
             allowEscapeKey: false,
+			customClass: {
+				confirmButton: "swalConfirmBtn",
+				cancelButton: "swalCancelBtn",
+			},
+			reverseButtons: true, // 버튼 순서 거꾸로
             width: 600
         });
     });
@@ -606,13 +640,21 @@ function applyResumeAjax(resumeId, jobPostId) {
             Swal.fire({
                 title: '지원 완료 🎉',
                 html: `입사지원 완료<br><span style="font-size: 13px; color: #555;">(지원내역은 마이페이지에서 확인 가능합니다)</span>`,
-                icon: 'success'
+                icon: 'success',
+				confirmButtonText: '확인',
+				customClass: {
+								confirmButton: "swalConfirmBtn",
+				},
             });
         },
         error: function () {
             Swal.fire({
                 title: '이미 지원 하신 공고입니다.',
-                icon: 'warning'
+                icon: 'warning',
+				confirmButtonText: '확인',
+				customClass: {
+								confirmButton: "swalConfirmBtn",
+				},
             });
         }
     });

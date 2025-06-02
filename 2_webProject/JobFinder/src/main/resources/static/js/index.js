@@ -261,7 +261,11 @@ function showLoginAlert() {
 		icon: "error",
 		title: "죄송합니다.",
 		text: "로그인 후 이용해주세요.",
-		footer: '<a href="/auth/login">지금 로그인하시겠어요?</a>'
+		footer: '<a href="/auth/login">지금 로그인하시겠어요?</a>',
+		confirmButtonText: '확인',
+		customClass: {
+			confirmButton: "swalConfirmBtn",
+		},
 	});
 	
 
