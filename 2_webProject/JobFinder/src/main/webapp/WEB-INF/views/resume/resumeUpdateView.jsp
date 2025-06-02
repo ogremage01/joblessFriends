@@ -119,6 +119,9 @@
 							<option value="high" <c:if test="${school.sortation == 'high'}">selected</c:if>>고등학교</option>
 							<option value="univ4" <c:if test="${school.sortation == 'univ4'}">selected</c:if>>대학교(4년)</option>
 							<option value="univ2" <c:if test="${school.sortation == 'univ2'}">selected</c:if>>대학교(2,3년)</option>
+							<option value="master" <c:if test="${school.sortation == 'master'}">selected</c:if>>석사</option>
+							<option value="doctor" <c:if test="${school.sortation == 'doctor'}">selected</c:if>>박사</option>
+							
 						</select>
 					</div>
 					

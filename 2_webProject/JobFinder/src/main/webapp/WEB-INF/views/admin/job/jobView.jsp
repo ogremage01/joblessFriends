@@ -1,4 +1,3 @@
-<!-- 관리자 로그인 여부를 묻는 자바구문이 들어가야 할 부분 -->
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page language="java" contentType="text/html;charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -8,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>기업회원관리 - 어디보잡 관리자</title>
+	<title>직무관리 - 어디보잡 관리자</title>
 	<meta charset="UTF-8">
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -38,16 +37,31 @@
 			<div class="admin-main">
 				<div class="admin-header">
 					<h1>
-						<i class="bi bi-building-fill" style="color: #F69800;"></i>
-						기업회원 관리
+						<i class="bi bi-gear-fill" style="color: #F69800;"></i>
+						직무 관리
 					</h1>
 				</div>
 				
 				<div class="admin-content">
 					<div class="admin-table-header">
-						<h2><i class="bi bi-list-ul"></i> 기업 목록</h2>
-						<button id="massDelCom" class="mass-delete-btn">
+						<h2><i class="bi bi-list-ul"></i> 직무 목록</h2>
+						<button id="massDelJob" class="mass-delete-btn">
 							<i class="bi bi-trash"></i> 선택 삭제
+						</button>
+					</div>
+					
+					<!-- 직무 추가 섹션 -->
+					<div class="add-section">
+						<input type="text" name="newJobName" id="jobInsert" class="add-input" 
+							   placeholder="새 직무명을 입력하세요">
+						<select id="jobGroupSelect" class="add-input" style="max-width: 200px;">
+							<option value="">직군 선택</option>
+							<c:forEach var="jobGroup" items="${jobGroupList}">
+								<option value="${jobGroup.jobGroupId}">${jobGroup.jobGroupName}</option>
+							</c:forEach>
+						</select>
+						<button id="jobInsertBtn" class="add-btn">
+							<i class="bi bi-plus-circle"></i> 추가
 						</button>
 					</div>
 					
@@ -55,27 +69,27 @@
 						<thead>
 							<tr>
 								<th scope="col">선택</th>
-								<th scope="col">기업 ID</th>
-								<th scope="col">회사명</th>
-								<th scope="col">이메일</th>
-								<th scope="col">연락처</th>
+								<th scope="col">직무 ID</th>
+								<th scope="col">직무명</th>
+								<th scope="col">직군</th>
+								<th scope="col">삭제</th>
 							</tr>
 						</thead>
-						<tbody>
-							<c:forEach var="companyVo" items="${companyList}">
+						<tbody id="jobContent">
+							<c:forEach var="job" items="${jobList}">
 								<tr>
 									<td class="checkbox-container">
-										<input type="checkbox" class="delCompany admin-checkbox" 
-											   name="delete" value="${companyVo.companyId}">
+										<input type="checkbox" class="delJob admin-checkbox" 
+											   name="delete" value="${job.jobId}">
 									</td>
-									<td><strong>${companyVo.companyId}</strong></td>
+									<td><strong>${job.jobId}</strong></td>
+									<td class="job-name">${job.jobName}</td>
+									<td class="job-group">${job.jobGroupName}</td>
 									<td>
-										<a href="./company/${companyVo.companyId}" class="company-name-link">
-											${companyVo.companyName}
-										</a>
+										<button class="delBtn delete-btn" value="${job.jobId}">
+											삭제
+										</button>
 									</td>
-									<td>${companyVo.email}</td>
-									<td>${companyVo.tel}</td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -87,17 +101,17 @@
 							<nav aria-label="페이지 네비게이션">
 								<ul class="pagination">
 									<li class="page-item ${searchVo.page==1?'disabled':''}">
-										<a class="page-link" href="./company?page=${searchVo.page-1}&keyword=${searchVo.keyword}">
+										<a class="page-link" href="/admin/job/job?page=${searchVo.page-1}&keyword=${searchVo.keyword}">
 											<i class="bi bi-chevron-left"></i> 이전
 										</a>
 									</li>
 									<c:forEach begin="${pagination.startPage}" var="i" end="${pagination.endPage}">
 										<li class="page-item ${searchVo.page==i?'active':''}">
-											<a class="page-link" href="./company?page=${i}&keyword=${searchVo.keyword}">${i}</a>
+											<a class="page-link" href="/admin/job/job?page=${i}&keyword=${searchVo.keyword}">${i}</a>
 										</li>
 									</c:forEach>
 									<li class="page-item ${searchVo.page==pagination.totalPageCount? 'disabled':''}">
-										<a class="page-link" href="./company?page=${searchVo.page+1}&keyword=${searchVo.keyword}">
+										<a class="page-link" href="/admin/job/job?page=${searchVo.page+1}&keyword=${searchVo.keyword}">
 											다음 <i class="bi bi-chevron-right"></i>
 										</a>
 									</li>
@@ -108,9 +122,9 @@
 
 					<!-- 검색 영역 -->
 					<div class="search-container">
-						<input id="companyKeyword" type="text" class="search-input" 
-							   placeholder="기업명으로 검색" value="${searchVo.keyword}">
-						<button id="companySearchBtn" class="search-btn">
+						<input id="jobKeyword" type="text" class="search-input" 
+							   placeholder="직무명으로 검색" value="${searchVo.keyword}">
+						<button id="jobSearchBtn" class="search-btn">
 							<i class="bi bi-search"></i> 검색
 						</button>
 					</div>
@@ -120,6 +134,7 @@
 	</div>
 </div>
 
-<script src="/js/admin/member/company.js"></script>
+<script src="/js/admin/job/jobManagement.js"></script>
+
 </body>
-</html>
+</html> 

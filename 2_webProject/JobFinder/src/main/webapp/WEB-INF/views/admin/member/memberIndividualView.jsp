@@ -8,96 +8,124 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>개인회원관리</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
-	rel="stylesheet" crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-	integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js"
-	integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+"
-	crossorigin="anonymous"></script>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-	rel="stylesheet">
+	<title>개인회원관리 - 어디보잡 관리자</title>
+	<meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
+		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js" 
+		integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 	
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script>
-
-<link href="/css/admin/common.css" rel="stylesheet">
-
-<script type="text/javascript">
+	<!-- 공통 스타일 적용 -->
+	<link rel="stylesheet" href="/css/common/common.css">
+	<link href="/css/admin/common.css" rel="stylesheet">
+	<link href="/css/admin/adminStyle.css" rel="stylesheet">
 	
-</script>
 </head>
 <body>
-	<main class="d-flex flex-nowrap">
 
-		<jsp:include page="/WEB-INF/views/admin/sideBar.jsp"></jsp:include>
-
-		<!-- 본문영역 -->
-
-		<div id="container">
-			<h1 style="text-align: center;">개인 회원 목록</h1>
-			<table class="table table-striped">
-				<thead class="table-dark" style="margin: auto;">
-					<tr>
-						<td><button id="massDelMem">탈퇴</button></td>
-						<td>ID</td>
-						<td>이메일</td>
-						<td>닉네임</td>
-						<td>생성일</td>
-						<td>수정일</td>
-					</tr>
-				</thead>
-				<tbody class="table-group-divider">
-					<c:forEach var="memberVo" items="${memberList}">
-						<tr>
-							<td style="text-align: center;"><input type="checkbox"
-								class="delMember" name="delete" value="${memberVo.memberId}"></td>
-							<td>${memberVo.memberId}</td>
-							<td><a href="./individual/${memberVo.memberId}">${memberVo.email}</a></td>
-							<td>${memberVo.nickname}</td>
-							<td><fmt:formatDate value="${memberVo.createAt}" pattern="yyyy-MM-dd" /></td>
-							<td><fmt:formatDate value="${memberVo.modifiedAt}" pattern="yyyy-MM-dd" /></td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-
-			<div id='pageNation'>
-				<c:if test="${pagination.totalPageCount > 0}">
-					<nav aria-label="...">
-
-						<ul class="pagination justify-content-center">
-							<li class="page-item ${searchVo.page==1?'disabled':''}"><a
-								class="page-link" href="./individual?page=${searchVo.page-1}&keyword=${searchVo.keyword}">Previous</a>
-							</li>
-							<c:forEach begin="${pagination.startPage}" var="i" end="${pagination.endPage}">
-								<li class="page-item ${searchVo.page==i?'active':''}">
-								<a class="page-link" href="./individual?page=${i}&keyword=${searchVo.keyword}">${i}</a></li>
-							</c:forEach>
-
-							<li class="page-item"><a
-								class="page-link ${searchVo.page==pagination.totalPageCount? 'disabled':''}"
-								href="./individual?page=${searchVo.page+1}&keyword=${searchVo.keyword}">Next</a></li>
-						</ul>
-
-					</nav>
-				</c:if>
+<div id="container">
+	<div id="containerWrap">
+		<div class="admin-container">
+			<!-- 사이드바 영역 -->
+			<div class="admin-sidebar">
+				<jsp:include page="/WEB-INF/views/admin/sideBar.jsp"></jsp:include>
 			</div>
+			
+			<!-- 메인 컨텐츠 영역 -->
+			<div class="admin-main">
+				<div class="admin-header">
+					<h1>
+						<i class="bi bi-people-fill" style="color: #F69800;"></i>
+						개인회원 관리
+					</h1>
+				</div>
+				
+				<div class="admin-content">
+					<div class="admin-table-header">
+						<h2><i class="bi bi-list-ul"></i> 회원 목록</h2>
+						<button id="massDelMem" class="mass-delete-btn">
+							<i class="bi bi-trash"></i> 선택 삭제
+						</button>
+					</div>
+					
+					<table class="table admin-table">
+						<thead>
+							<tr>
+								<th scope="col">선택</th>
+								<th scope="col">회원 ID</th>
+								<th scope="col">이메일</th>
+								<th scope="col">닉네임</th>
+								<th scope="col">가입일</th>
+								<th scope="col">최근 수정일</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="memberVo" items="${memberList}">
+								<tr>
+									<td class="checkbox-container">
+										<input type="checkbox" class="delMember admin-checkbox" 
+											   name="delete" value="${memberVo.memberId}">
+									</td>
+									<td><strong>${memberVo.memberId}</strong></td>
+									<td>
+										<a href="./individual/${memberVo.memberId}" class="member-email-link">
+											${memberVo.email}
+										</a>
+									</td>
+									<td>${memberVo.nickname}</td>
+									<td>
+										<fmt:formatDate value="${memberVo.createAt}" pattern="yyyy-MM-dd" />
+									</td>
+									<td>
+										<fmt:formatDate value="${memberVo.modifiedAt}" pattern="yyyy-MM-dd" />
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
 
-			<div id="searchContainer" class="d-flex justify-content-center my-4">
-				<input id="memberKeyword" type="text" placeholder="이메일, 닉네임">
-				<button id="memberSearchBtn" class="btn btn-light">검색</button>
+					<!-- 페이지네이션 -->
+					<div class="pagination-container">
+						<c:if test="${pagination.totalPageCount > 0}">
+							<nav aria-label="페이지 네비게이션">
+								<ul class="pagination">
+									<li class="page-item ${searchVo.page==1?'disabled':''}">
+										<a class="page-link" href="./individual?page=${searchVo.page-1}&keyword=${searchVo.keyword}">
+											<i class="bi bi-chevron-left"></i> 이전
+										</a>
+									</li>
+									<c:forEach begin="${pagination.startPage}" var="i" end="${pagination.endPage}">
+										<li class="page-item ${searchVo.page==i?'active':''}">
+											<a class="page-link" href="./individual?page=${i}&keyword=${searchVo.keyword}">${i}</a>
+										</li>
+									</c:forEach>
+									<li class="page-item ${searchVo.page==pagination.totalPageCount? 'disabled':''}">
+										<a class="page-link" href="./individual?page=${searchVo.page+1}&keyword=${searchVo.keyword}">
+											다음 <i class="bi bi-chevron-right"></i>
+										</a>
+									</li>
+								</ul>
+							</nav>
+						</c:if>
+					</div>
+
+					<!-- 검색 영역 -->
+					<div class="search-container">
+						<input id="memberKeyword" type="text" class="search-input" 
+							   placeholder="이메일 또는 닉네임으로 검색" value="${searchVo.keyword}">
+						<button id="memberSearchBtn" class="search-btn">
+							<i class="bi bi-search"></i> 검색
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
+	</div>
+</div>
 
-		<!-- 본문영역 -->
-
-	</main>
-</body>
 <script src="/js/admin/member/individual.js"></script>
+</body>
 </html>

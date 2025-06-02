@@ -185,6 +185,8 @@ function createSchoolEntry() {
         <option value="high">고등학교</option>
         <option value="univ4">대학교(4년)</option>
         <option value="univ2">대학교(2,3년)</option>
+		<option value="master">석사</option>
+		<option value="doctor">박사</option>
       </select>
     </div>
     

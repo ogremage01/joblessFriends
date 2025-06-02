@@ -1,4 +1,3 @@
-
 /* 세로 스크롤 항상 보이게 */
 body {
 	overflow-y: scroll;
@@ -24,6 +23,10 @@ body {
 	font-weight: bold;
 	margin: 0px;
 	margin-bottom: 30px;
+}
+
+.mainTitle i {
+	margin-right: 10px;
 }
 
 /* 내용부분. 해당 스타일 삭제해도 무방 */

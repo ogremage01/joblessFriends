@@ -34,7 +34,10 @@
 			<div class="main">
 
 				<div class="content">
-					<h1 class="mainTitle">내가 찜한 공고</h1>
+					<h1 class="mainTitle">
+						<i class="bi bi-star-fill" style="color: #F69800;"></i>
+						내가 찜한 공고
+					</h1>
 
 					<!-- 채용공고 리스트 -->
 					<div id="jobListings">

@@ -1,9 +1,3 @@
-	/* 사이드바 카테고리 선택 색상 */
-	.sidebar .infoMng {
-		color: #F69800;
-		font-weight: bold;	
-	}
-	
 	.content {
 		user-select: none;
 	}
