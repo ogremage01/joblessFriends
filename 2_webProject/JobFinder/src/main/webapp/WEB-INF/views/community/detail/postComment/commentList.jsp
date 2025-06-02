@@ -93,7 +93,7 @@ function testfnc(commentId, nickname, content, createAt) {
 	<div id="commentBtnWrap">
 		<p>0/1000자</p>
 		<button type="button" class="inputBtn"
-			onclick="alert(' 개인회원 전용 기능입니다. 개인 회원 전용으로 로그인해주세요.')">등록</button>
+			onclick="alermPopup(' 개인회원 전용 기능입니다. 개인 회원 전용으로 로그인해주세요.')">등록</button>
 	</div>
 </div>
 </div>
