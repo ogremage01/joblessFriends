@@ -1,5 +1,6 @@
 package com.joblessfriend.jobfinder.resume.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import com.joblessfriend.jobfinder.resume.domain.EducationVo;
 import com.joblessfriend.jobfinder.resume.domain.PortfolioVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 import com.joblessfriend.jobfinder.resume.domain.SchoolVo;
+import com.joblessfriend.jobfinder.skill.domain.SkillVo;
+import com.joblessfriend.jobfinder.skill.service.SkillService;
 
 @Service
 public class ResumeServiceImpl implements ResumeService {
@@ -24,6 +27,9 @@ public class ResumeServiceImpl implements ResumeService {
 
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private SkillService skillService; // 또는 SkillDao
 
 	@Override
 	public List<ResumeVo> getResumesByMemberId(int memberId) {
@@ -238,4 +244,39 @@ public class ResumeServiceImpl implements ResumeService {
 		return certificate != null && certificate.getCertificateName() != null
 				&& !certificate.getCertificateName().trim().isEmpty();
 	}
+	
+	
+
+	@Override
+	public List<ResumeVo> getResumeListWithSummaryByMemberId(int memberId) {
+	    List<ResumeVo> resumeList = resumeDao.findResumesByMemberId(memberId);
+	    System.out.println(">>> 총 이력서 개수: " + resumeList.size());
+
+	    for (ResumeVo resume : resumeList) {
+	        int resumeId = resume.getResumeId();
+	        System.out.println(">>> 이력서 ID: " + resumeId);
+
+	        // 하위 정보 불러오기 (resumeId 기준)
+	        List<CareerVo> careers = resumeDao.getCareersByResumeId(resumeId);
+	        System.out.println(">>> 경력 개수: " + careers.size());
+	        List<SchoolVo> schools = resumeDao.getSchoolsByResumeId(resumeId);
+	        System.out.println(">>> 학력 개수: " + schools.size());
+	        List<Long> tagIds = resumeDao.getTagIdsByResumeId(resumeId);
+	        System.out.println(">>> 스킬 ID 개수: " + tagIds.size());
+
+	        // 태그 ID → 태그명 포함된 SkillVo 리스트로 변환
+	        List<SkillVo> skills = new ArrayList<>();
+	        for (Long tagId : tagIds) {
+	            SkillVo skill = skillService.getSkillById(tagId.intValue()); // 또는 skillDao
+	            if (skill != null) skills.add(skill);
+	        }
+
+	        resume.setCareerList(careers);
+	        resume.setSchoolList(schools);
+	        resume.setSkillList(skills);
+	    }
+
+	    return resumeList;
+	}
+
 }

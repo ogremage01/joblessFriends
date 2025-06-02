@@ -147,16 +147,23 @@ public class ResumeController {
 	//이력서 목록에서 이력서 출력 controller(데이터가 없으면 빈화면 출력)
 	@GetMapping("/management")
 	public String resumeManagement(HttpSession session, Model model) {
-        MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
-        if (memberVo == null) return "redirect:/auth/login";
-        
-        int memberId = memberVo.getMemberId();
-        
+	    // 세션에서 로그인 사용자 확인
+	    MemberVo loginUser = (MemberVo) session.getAttribute("userLogin");
+	    if (loginUser == null) {
+	        return "redirect:/login"; // 로그인 안 된 경우
+	    }
 
-        List<ResumeVo> resumes = resumeService.getResumesByMemberId(memberId);
-        model.addAttribute("resumes", resumes);
-        return "resume/resumeManagementView";
-    }
+	    int memberId = loginUser.getMemberId();
+
+	    // 이력서 + 요약 정보 조회
+	    List<ResumeVo> resumes = resumeService.getResumeListWithSummaryByMemberId(memberId);
+	    
+	    System.out.println(">>>> 이력서 개수 = " + resumes.size());
+
+	    model.addAttribute("resumes", resumes);
+
+	    return "resume/resumeManagementView"; // -> /WEB-INF/views/resume/resumeManagementView.jsp
+	}
 
 	//이력서 목록에서 이력서 삭제
     @PostMapping("/delete")
@@ -430,6 +437,6 @@ public class ResumeController {
 	    
 	    return "resume/resumePreview"; // /WEB-INF/views/resume/resumePreview.jsp
 	}
-
+	
 }
 

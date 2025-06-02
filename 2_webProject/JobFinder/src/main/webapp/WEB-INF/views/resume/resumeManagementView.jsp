@@ -51,43 +51,60 @@
 								</div>
 							</c:when>
 
-							<%-- 이력서가 있을때 --%>
-							<c:otherwise>
-								<c:forEach var="resume" items="${resumes}">
-									<div class="resume-card">
-										<div class="resume-content">
-											<div class="resume-title">${resume.title}</div>
-											<div class="resume-meta">
-												
-											</div>
-											<div class="resume-date">최초작성일 <fmf:formatDate value="${resume.createDate}"/> </div>
-											<div class="resume-date">최종수정일 <fmf:formatDate value="${resume.modifyDate}"/> </div>
-										</div>
+			<%-- 이력서가 있을때 --%>
+            <c:otherwise>
+              <c:forEach var="resume" items="${resumes}">
+                <div class="resume-card">
+                  <div class="resume-content">
+                    <div class="resume-title">${resume.title}</div>
 
-										<div class="button-wrapper">
-											<%-- 삭제 버튼 --%>
+                    <%-- 경력 요약 --%>
+                    <c:if test="${not empty resume.careerList}">
+                      <div class="resume-career">
+                        <c:set var="career" value="${resume.careerList[0]}" />
+                        <span>회사: ${career.companyName} / ${career.departmentName} / ${career.position}</span>
+                      </div>
+                    </c:if>
 
-											<button class="delete-btn" data-resume-id="${resume.resumeId}">x</button>
+                    <%-- 학력 요약 --%>
+                    <c:if test="${not empty resume.schoolList}">
+                      <div class="resume-education">
+                        <c:forEach var="school" items="${resume.schoolList}">
+                          <span>
+                            ${school.sortation} / ${school.schoolName}
+                            <c:if test="${not empty school.majorName}"> / ${school.majorName}</c:if>
+                            / ${school.status}
+                          </span><br/>
+                        </c:forEach>
+                      </div>
+                    </c:if>
 
+                    <%-- 스킬 요약 --%>
+                    <div class="resume-skills">
+                      <c:forEach var="tag" items="${resume.skillList}">
+                        <span class="tag">${tag.tagName}</span>
+                      </c:forEach>
+                    </div>
 
+                    <%-- 최종수정일 --%>
+                    <div class="resume-date">최종수정일 <fmf:formatDate value="${resume.modifyDate}" /></div>
+                  </div>
 
-											<%-- 수정 버튼 --%>
-
-											
-												<button data-resume-id="${resume.resumeId}" class="edit-btn">수정하기</button>
-											
-
-										</div>
-									</div>
-								</c:forEach>
-							</c:otherwise>
-						</c:choose>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-	</div>
+                  <div class="button-wrapper">
+                  	<%-- 삭제 버튼 --%>
+                    <button class="delete-btn" data-resume-id="${resume.resumeId}">x</button>
+                    <%-- 수정 버튼 --%>
+                    <button class="edit-btn" data-resume-id="${resume.resumeId}">수정하기</button>
+                  </div>
+                </div>
+              </c:forEach>
+            </c:otherwise>
+          </c:choose>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 	<jsp:include page="../common/footer.jsp" />
 </body>
