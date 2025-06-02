@@ -800,13 +800,24 @@ function collectPortfolios() {
 }
 
 // 이력서 미리보기 팝업창 열기
-$(".btn-preview").click(function(){
+$(".btn-preview").click(async function(){
+	const resumeData = collectResumeData();
 	
 	//window.open('문서 주소', '윈도우 이름', '옵션=값, 옵션=값, 옵션=값, …');
+	try {
+	   const response = await fetch("/resume/preview", {
+	     method: "POST",
+	     headers: {
+	       "Content-Type": "application/json"
+	     },
+	     body: JSON.stringify(resumeData)
+	   });
 	
-	var url = "/resume/preview";
+	var url = "/resume/viewPreview";
 	var windowName = "resumePreview"
 	
+	const result = await response.text();
+	if (result === "success") {
 	// 팝업 가로 사이즈
 	const popupWidth = 980;
 	// 팝업 세로사이즈 : 스크린 높이 사이즈 가져옴
@@ -821,7 +832,14 @@ $(".btn-preview").click(function(){
 	var popupOption = `width=${popupWidth}, height=${screenHeight},left=${left}`;
 	
 	// 팝업 열기	
-	var preview = window.open(url, windowName, popupOption);
+	window.open(url, windowName, popupOption);
+	} else {
+	      alert("미리보기 실패: 서버 오류");
+	    }
+	  } catch (err) {
+	    console.error("미리보기 오류:", err);
+	    alert("미리보기 중 오류 발생: " + err.message);
+	  }
 	
 	/*
 	// 자식 창에 데이터 보내기

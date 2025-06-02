@@ -29,6 +29,7 @@ import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 import com.joblessfriend.jobfinder.resume.parser.ResumeParser;
 import com.joblessfriend.jobfinder.resume.service.ResumeService;
 import com.joblessfriend.jobfinder.jobGroup.service.JobGroupService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joblessfriend.jobfinder.job.service.JobService;
 import com.joblessfriend.jobfinder.util.file.FileUtils;
 import com.joblessfriend.jobfinder.skill.domain.SkillVo;
@@ -376,5 +377,30 @@ public class ResumeController {
 
 	    return ResponseEntity.ok("삭제 성공");
 	}
+	
+	//미리보기
+	// 미리보기 세션저장용
+	@PostMapping("/preview")
+	@ResponseBody
+	public ResponseEntity<String> preparePreview(@RequestBody Map<String, Object> requestMap, HttpSession session) {
+	    MemberVo loginUser = (MemberVo) session.getAttribute("userLogin");
+	    if (loginUser == null) {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+	    }
+
+	    ResumeVo resumeVo = resumeParser.parseMapToResumeVo(requestMap, loginUser.getMemberId());
+	    session.setAttribute("resumePreviewData", resumeVo);
+	    return ResponseEntity.ok("success");
+	}
+	
+	@GetMapping("/viewPreview")
+	public String showPreview(HttpSession session, Model model) {
+	    ResumeVo resume = (ResumeVo) session.getAttribute("resumePreviewData");
+	    model.addAttribute("resume", resume);
+	    
+	    
+	    return "resume/resumePreview"; // /WEB-INF/views/resume/resumePreview.jsp
+	}
+
 }
 

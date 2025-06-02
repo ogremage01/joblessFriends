@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.joblessfriend.jobfinder.resume.dao.CertificateDao;
 import com.joblessfriend.jobfinder.resume.domain.CertificateVo;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
 public class CertificateServiceImpl implements CertificateService{
 

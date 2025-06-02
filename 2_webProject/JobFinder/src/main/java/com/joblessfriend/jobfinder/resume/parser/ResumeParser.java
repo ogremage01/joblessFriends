@@ -128,12 +128,14 @@ public class ResumeParser {
      * 경력 리스트 파싱
      */
     private List<CareerVo> parseCareerList(List<Map<String, Object>> careerDataList) {
+    	System.out.println(">>>>> careerDataList: " + careerDataList);
         List<CareerVo> careerList = new ArrayList<>();
         
         if (careerDataList != null) {
             for (Map<String, Object> careerData : careerDataList) {
                 CareerVo careerVo = new CareerVo();
                 careerVo.setCompanyName(getStringValue(careerData, "companyName"));
+                System.out.println(">>>>> companyName: " + careerVo.getCompanyName());
                 careerVo.setDepartmentName(getStringValue(careerData, "departmentName"));
                 careerVo.setHireYm(parseYearMonthDate(getStringValue(careerData, "hireYm")));
                 careerVo.setResignYm(parseYearMonthDate(getStringValue(careerData, "resignYm")));
@@ -283,4 +285,5 @@ public class ResumeParser {
     public String parseResumeVoToJson(ResumeVo resumeVo) throws Exception {
         return objectMapper.writeValueAsString(resumeVo);
     }
+    
 } 
