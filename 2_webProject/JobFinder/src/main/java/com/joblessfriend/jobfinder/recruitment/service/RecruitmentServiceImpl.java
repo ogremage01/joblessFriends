@@ -205,6 +205,13 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 		return recruitmentDao.selectBookMark(memberId, jobPostId);
 	}
 
+	//memberId 중 jobPostId에 사용중인 북마크 찾기(찜 구분)-리스트에서 사용
+	@Override
+	public List<Integer> bookMarkedJobPostIdList(int memberId) {
+		// TODO Auto-generated method stub
+		return recruitmentDao.bookMarkedJobPostIdList(memberId);
+	}
+
 
 
 

@@ -61,26 +61,43 @@ public class RecruitmentController {
 
         List<JobGroupVo> jobGroupList = recruitmentService.jobGroupList();
         List<RecruitmentVo> recruitmentList = recruitmentService.recruitmentList(searchVo);
+        
+        // 세션에서 로그인 정보 가져오기
+        String userType = (String) session.getAttribute("userType");
+        MemberVo memberVo = null;
+        if(userType =="member") {
+        	memberVo = (MemberVo) session.getAttribute("userLogin");
+        	
+        	//찜 확인 시작
+            if (memberVo != null) {
+                int memberId = memberVo.getMemberId();
+                List<Integer> bookMarkedList = recruitmentService.bookMarkedJobPostIdList(memberId); // 전체 찜 리스트
+                
+                Map<Integer, Boolean> bookMarkedMap = new HashMap<>();
+                for (RecruitmentVo r : recruitmentList) {
+                    bookMarkedMap.put(r.getJobPostId(), bookMarkedList.contains(r.getJobPostId()));
+                }
+                model.addAttribute("bookMarkedMap", bookMarkedMap);
+            }
+    	        
+    	//찜 확인 완료
+        }
+
+        System.out.println("🔍 userType: " + userType);
+        System.out.println("🔍 loginMember: " + memberVo);
+
 
         Map<Integer, List<SkillVo>> skillMap = new HashMap<>();
         for (RecruitmentVo r : recruitmentList) {
             int jobPostId = r.getJobPostId();
             List<SkillVo> skillList = skillService.postTagList(jobPostId);
             skillMap.put(jobPostId, skillList);
+            
         }
         // 로그인 사용자 확인
         // 또는 "loginUser"로 통일
 
-        // 세션에서 로그인 정보 가져오기
-        String userType = (String) session.getAttribute("userType");
-        MemberVo memberVo = null;
-        if(userType =="member") {
-        	memberVo = (MemberVo) session.getAttribute("userLogin");
-        }
-
-        System.out.println("🔍 userType: " + userType);
-        System.out.println("🔍 loginMember: " + memberVo);
-
+       
 // ✅ 개인회원(member)인 경우에만 이력서 조회
         if (memberVo != null && "member".equals(userType)) {
             int memberId = memberVo.getMemberId();
