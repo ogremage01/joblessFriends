@@ -30,9 +30,11 @@
 }
 
 .page-btn.active {
-    background-color: #2e7d32;
+    background-color: #ffff;
     color: white;
+    color: #F69800;
     font-weight: bold;
     border: none;
+    outline: 1px solid #F69800;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
