@@ -14,15 +14,10 @@ public class ResumeMatchServiceImpl implements ResumeMatchService{
 	ResumeMatchDao resumeMatchDao;
 
 	@Override
-	public ResumeVo selectResume(int resumeId) {
+	public int selectCareerGradeScore(int careerJobYear) {
 		// TODO Auto-generated method stub
-		return resumeMatchDao.selectResume(resumeId);
+		return resumeMatchDao.selectCareerGradeScore(careerJobYear);
 	}
-
-	@Override
-	public RecruitmentVo selectRecruitment(int jobPostId) {
-		// TODO Auto-generated method stub
-		return resumeMatchDao.selectRecruitment(jobPostId);
-	}
+	
 
 }
