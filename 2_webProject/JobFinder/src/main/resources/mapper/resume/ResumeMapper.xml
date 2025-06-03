@@ -303,11 +303,11 @@
         ORDER BY CERTIFICATE_RESUME_ID
     </select>
     
-    <select id="getTagIdsByResumeId" resultType="java.lang.Long">
-        SELECT TAG_ID
-        FROM RESUME_TAG 
-        WHERE RESUME_ID = #{resumeId}
-        ORDER BY RESUME_TAG_ID
+    <select id="getTagIdsByResumeId" resultType="com.joblessfriend.jobfinder.skill.domain.SkillVo">
+        SELECT RT.TAG_ID, T.TAG_NAME
+        FROM RESUME_TAG RT JOIN TAG T ON RT.TAG_ID = T.TAG_ID
+        WHERE RT.RESUME_ID = #{resumeId}
+        ORDER BY RT.RESUME_TAG_ID
     </select>
     
     <!-- 하위 데이터 삭제 쿼리들 -->
