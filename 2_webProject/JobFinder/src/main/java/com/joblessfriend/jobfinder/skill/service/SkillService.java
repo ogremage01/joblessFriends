@@ -9,4 +9,5 @@ public interface SkillService {
     List<SkillVo> postTagList(int jobPostId);
     List<SkillVo> resumeTagList(int resumeId);
     List<SkillVo> getSkillsByKeyword(String keyword);
+    SkillVo getSkillById(int tagId);
 }

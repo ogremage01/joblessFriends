@@ -48,5 +48,15 @@
         WHERE UPPER(T.TAG_NAME) LIKE UPPER('%' || #{keyword} || '%')
         ORDER BY T.TAG_NAME
     </select>
+    
+    <select id="getSkillById" parameterType="int" resultType="com.joblessfriend.jobfinder.skill.domain.SkillVo">
+	    SELECT 
+		    TAG_ID AS tagId,
+		    TAG_NAME AS tagName,
+		    CREATE_AT AS createDate,
+		    MODIFIED_AT AS modifiedDate
+	    FROM TAG
+	    WHERE TAG_ID = #{tagId}
+	</select>
 
 </mapper>
