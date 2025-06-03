@@ -8,6 +8,7 @@ import com.joblessfriend.jobfinder.resume.domain.EducationVo;
 import com.joblessfriend.jobfinder.resume.domain.PortfolioVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 import com.joblessfriend.jobfinder.resume.domain.SchoolVo;
+import com.joblessfriend.jobfinder.skill.domain.SkillVo;
 
 public interface ResumeDao {
 	List<ResumeVo> findResumesByMemberId(int memberId);
@@ -27,7 +28,7 @@ public interface ResumeDao {
     List<EducationVo> getEducationsByResumeId(int resumeId);
     List<PortfolioVo> getPortfoliosByResumeId(int resumeId);
     List<CertificateResumeVo> getCertificateByResumeId(int resumeId);
-    List<Long> getTagIdsByResumeId(int resumeId);
+    List<SkillVo> getTagIdsByResumeId(int resumeId);
 	
 	// 이력서 메인 정보 저장/수정
     void insertResume(ResumeVo resume);

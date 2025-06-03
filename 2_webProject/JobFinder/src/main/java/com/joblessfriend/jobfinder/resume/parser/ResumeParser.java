@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joblessfriend.jobfinder.resume.domain.CareerVo;
 import com.joblessfriend.jobfinder.resume.domain.CertificateResumeVo;
-import com.joblessfriend.jobfinder.resume.domain.CertificateVo;
 import com.joblessfriend.jobfinder.resume.domain.EducationVo;
 import com.joblessfriend.jobfinder.resume.domain.PortfolioVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
@@ -83,32 +82,7 @@ public class ResumeParser {
         resumeVo.setEducationList(parseEducationList((List<Map<String, Object>>) requestMap.get("educations")));
         resumeVo.setCertificateList(parseCertificateList((List<Map<String, Object>>) requestMap.get("certificates")));
         resumeVo.setPortfolioList(parsePortfolioList((List<Map<String, Object>>) requestMap.get("portfolios")));
-        
-        // 태그 ID 리스트 저장 (임시 속성 추가)
-        List<Object> tagIdsRaw = (List<Object>) requestMap.get("tagIds");
-        if (tagIdsRaw != null) {
-            List<Long> tagIds = new ArrayList<>();
-            for (Object tagIdObj : tagIdsRaw) {
-                if (tagIdObj != null) {
-                    try {
-                        Long tagId = Long.parseLong(tagIdObj.toString());
-                        tagIds.add(tagId);
-                    } catch (NumberFormatException e) {
-                        System.err.println("태그 ID 파싱 오류: " + tagIdObj);
-                    }
-                }
-            }
-            resumeVo.setTagIds(tagIds);
-            
-         // skillList도 만들어서 넣기
-            List<SkillVo> skillList = new ArrayList<>();
-            for (Long tagId : tagIds) {
-                SkillVo skill = new SkillVo();
-                skill.setTagId(tagId.intValue());
-                skillList.add(skill);
-            }
-            resumeVo.setSkillList(skillList);
-        }
+        resumeVo.setSkillList(parseSkillList((List<Map<String, Object>>) requestMap.get("tagIds")));
 
         return resumeVo;
     }
@@ -234,6 +208,25 @@ public class ResumeParser {
         }
         
         return portfolioList;
+    }
+
+    /**
+     * 스킬 리스트 파싱
+     */
+    private List<SkillVo> parseSkillList(List<Map<String, Object>> tagIdList) {
+        List<SkillVo> skillList = new ArrayList<>();
+        
+        if (tagIdList != null) {
+            for (Map<String, Object> tagData : tagIdList) {
+                if (tagData != null) {
+                    SkillVo skill = new SkillVo();
+                    skill.setTagId(getIntValue(tagData, "tagId"));
+                    skillList.add(skill);
+                }
+            }
+        }
+        
+        return skillList;
     }
 
     /**
