@@ -419,19 +419,21 @@ public class ResumeController {
 	        map.put("jobName", jobService.getJobNameById(career.getJobId()));
 	        jobTitles.add(map);
 	    }
-	 // tagIds → skillList 변환
-	    List<SkillVo> skillList = new ArrayList<>();
+	 // skillList에서 태그명 정보 보완
+	    List<SkillVo> skillList = resume.getSkillList();
 	    System.out.println(">>> skillList in preview: ");
-	    if (resume.getTagIds() != null) {
-	        for (Long tagId : resume.getTagIds()) {
-	            SkillVo skill = skillService.getSkillById(tagId.intValue());
-	            if (skill != null) {
-	            	System.out.println(" - tagId: " + skill.getTagId() + ", tagName: " + skill.getTagName());
-	                skillList.add(skill);
+	    if (skillList != null) {
+	        for (SkillVo skill : skillList) {
+	            // 태그명이 없는 경우 서비스에서 조회하여 보완
+	            if (skill.getTagName() == null || skill.getTagName().isEmpty()) {
+	                SkillVo fullSkill = skillService.getSkillById(skill.getTagId());
+	                if (fullSkill != null) {
+	                    skill.setTagName(fullSkill.getTagName());
+	                }
 	            }
+	            System.out.println(" - tagId: " + skill.getTagId() + ", tagName: " + skill.getTagName());
 	        }
 	    }
-	    resume.setSkillList(skillList);
 	    
 	    model.addAttribute("jobTitles", jobTitles);
 	    

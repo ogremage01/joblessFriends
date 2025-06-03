@@ -199,11 +199,10 @@ public class ResumeServiceImpl implements ResumeService {
 		}
 
 		// 7. 태그 정보 저장
-		if (resumeVo.getTagIds() != null && !resumeVo.getTagIds().isEmpty()) {
-			for (Long tagId : resumeVo.getTagIds()) {
-				if (tagId != null && tagId > 0) {
-					resumeDao.insertResumeTag(resumeId, tagId);
-					
+		if (resumeVo.getSkillList() != null && !resumeVo.getSkillList().isEmpty()) {
+			for (SkillVo skill : resumeVo.getSkillList()) {
+				if (skill != null && skill.getTagId() > 0) {
+					resumeDao.insertResumeTag(resumeId, (long) skill.getTagId());
 				}
 			}
 		}
@@ -261,15 +260,11 @@ public class ResumeServiceImpl implements ResumeService {
 	        System.out.println(">>> 경력 개수: " + careers.size());
 	        List<SchoolVo> schools = resumeDao.getSchoolsByResumeId(resumeId);
 	        System.out.println(">>> 학력 개수: " + schools.size());
-	        List<Long> tagIds = resumeDao.getTagIdsByResumeId(resumeId);
-	        System.out.println(">>> 스킬 ID 개수: " + tagIds.size());
+	        List<SkillVo> skills = resumeDao.getTagIdsByResumeId(resumeId);
+	        System.out.println(">>> 스킬 ID 개수: " + skills.size());
 
 	        // 태그 ID → 태그명 포함된 SkillVo 리스트로 변환
-	        List<SkillVo> skills = new ArrayList<>();
-	        for (Long tagId : tagIds) {
-	            SkillVo skill = skillService.getSkillById(tagId.intValue()); // 또는 skillDao
-	            if (skill != null) skills.add(skill);
-	        }
+
 
 	        resume.setCareerList(careers);
 	        resume.setSchoolList(schools);
