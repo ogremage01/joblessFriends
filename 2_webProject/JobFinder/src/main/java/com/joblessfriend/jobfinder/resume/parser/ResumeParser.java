@@ -82,7 +82,7 @@ public class ResumeParser {
         resumeVo.setEducationList(parseEducationList((List<Map<String, Object>>) requestMap.get("educations")));
         resumeVo.setCertificateList(parseCertificateList((List<Map<String, Object>>) requestMap.get("certificates")));
         resumeVo.setPortfolioList(parsePortfolioList((List<Map<String, Object>>) requestMap.get("portfolios")));
-        resumeVo.setSkillList(parseSkillList((List<Map<String, Object>>) requestMap.get("tagIds")));
+        resumeVo.setSkillList(parseSkillList((List<Object>) requestMap.get("tagIds")));
 
         return resumeVo;
     }
@@ -213,15 +213,26 @@ public class ResumeParser {
     /**
      * 스킬 리스트 파싱
      */
-    private List<SkillVo> parseSkillList(List<Map<String, Object>> tagIdList) {
+    private List<SkillVo> parseSkillList(List<Object> tagIdList) {
         List<SkillVo> skillList = new ArrayList<>();
         
         if (tagIdList != null) {
-            for (Map<String, Object> tagData : tagIdList) {
-                if (tagData != null) {
-                    SkillVo skill = new SkillVo();
-                    skill.setTagId(getIntValue(tagData, "tagId"));
-                    skillList.add(skill);
+            for (Object tagIdObj : tagIdList) {
+                if (tagIdObj != null) {
+                    try {
+                        int tagId;
+                        if (tagIdObj instanceof Number) {
+                            tagId = ((Number) tagIdObj).intValue();
+                        } else {
+                            tagId = Integer.parseInt(tagIdObj.toString());
+                        }
+                        
+                        SkillVo skill = new SkillVo();
+                        skill.setTagId(tagId);
+                        skillList.add(skill);
+                    } catch (NumberFormatException e) {
+                        System.err.println("태그 ID 파싱 오류: " + tagIdObj);
+                    }
                 }
             }
         }
