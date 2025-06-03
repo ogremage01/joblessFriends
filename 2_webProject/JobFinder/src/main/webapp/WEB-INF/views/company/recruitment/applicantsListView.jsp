@@ -47,7 +47,7 @@
                         <td>${apply.resumeTitle}</td>
 
                         <td><fmt:formatDate value="${apply.applyDate}" pattern="yyyy-MM-dd" /></td>
-                        <td>이력서열람</td>
+                        <td><button class="btn-resume" onclick="">이력서 열람</button></td>
                         <td>
                             <button class="btn-question"
                                     data-member-id="${apply.memberId}"

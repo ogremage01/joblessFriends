@@ -18,7 +18,7 @@
 	<div class="sidebar">
 		<!-- 사이드바 메뉴 -->
 		<div class="sidebar-menu">
-			<div class="sidebar-title">▲ TOP</div>
+			<div class="sidebar-title" id="btnTop">▲ TOP</div>
 			<ul class="sidebar-links">
 				<li><a href="#section-personal">인적사항</a></li>
 				<li><a href="#section-skill">스킬</a></li>
@@ -53,6 +53,7 @@
 				<div class="field-block">
 					<label>이름</label>
 					<input type="text" id="name" placeholder="예시) 홍길동" />
+					
 				</div>
 				<div class="field-block">
 					<label>생년월일</label>
