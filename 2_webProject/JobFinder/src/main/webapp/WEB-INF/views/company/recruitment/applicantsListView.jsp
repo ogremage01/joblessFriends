@@ -21,6 +21,8 @@
                     <th>지원자 이름</th>
                     <th>이력서 제목</th>
                     <th>지원일</th>
+                    <th>이력서보기</th>
+                    <th>사전질문</th>
                     <th>적합도</th>
                     <th>관리</th>
                 </tr>
@@ -31,6 +33,8 @@
                         <td>${apply.memberName}</td>
                         <td>${apply.resumeTitle}</td>
                         <td><fmt:formatDate value="${apply.applyDate}" pattern="yyyy-MM-dd" /></td>
+                        <td>이력서열람</td>
+                        <td>질문보기</td>
                         <td>80%</td>
                         <td>${apply.stateName}</td>
                     </tr>

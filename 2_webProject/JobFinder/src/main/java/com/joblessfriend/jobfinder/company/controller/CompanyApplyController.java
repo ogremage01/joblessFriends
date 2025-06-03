@@ -3,6 +3,7 @@ package com.joblessfriend.jobfinder.company.controller;
 import com.joblessfriend.jobfinder.company.domain.ApplySummaryVo;
 import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 import com.joblessfriend.jobfinder.company.service.CompanyApplyService;
+import com.joblessfriend.jobfinder.util.Pagination;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +26,7 @@ public class CompanyApplyController {
 
     @GetMapping("/{jobPostId}/applicants")
     public String getApplicants(@PathVariable int jobPostId,
+                                @RequestParam(defaultValue = "1") int page,
                                 HttpSession session,
                                 Model model) {
 
@@ -32,20 +35,31 @@ public class CompanyApplyController {
             return "redirect:/auth/login";
         }
 
+        int recordSize = 5;
+        int pageSize = 10;
+
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("companyId", loginCompany.getCompanyId());
         paramMap.put("jobPostId", jobPostId);
-        paramMap.put("startRow", 1);
-        paramMap.put("endRow", 5);
 
         // 전체 지원자 수
-        int count = companyApplyService.countApplyByCompany(paramMap);
-        model.addAttribute("applyCount", count);
+        int totalCount = companyApplyService.countApplyByCompany(paramMap);
 
-        // 지원자 목록
+        // Pagination 객체 생성
+        Pagination pagination = new Pagination(totalCount, page, recordSize, pageSize);
+
+        // 페이징 범위 설정
+        paramMap.put("startRow", pagination.getLimitStart() + 1); // Oracle은 1부터
+        paramMap.put("endRow", pagination.getLimitStart() + recordSize);
+
+        // 지원자 목록 조회
         List<ApplySummaryVo> applyList = companyApplyService.getPagedApplyList(paramMap);
+
+        // 뷰에 데이터 전달
         model.addAttribute("applyList", applyList);
+        model.addAttribute("pagination", pagination);
 
         return "company/recruitment/applicantsListView";
     }
+
 }
