@@ -142,3 +142,74 @@
     display: flex;
     align-items: center;
 }
+
+
+/* SweetAlert2 커스텀 모달 전체 */
+.swal2-popup.resume-modal {
+    padding: 30px 40px;
+    font-size: 15px;
+}
+
+/* 이력서 리스트 전체 영역 (스크롤 포함) */
+.resume-list {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-top: 10px;
+}
+
+/* 각 이력서 항목 */
+.resume-item {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 10px;
+    margin-bottom: 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #fafafa;
+    transition: all 0.2s ease;
+}
+
+.resume-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* 라디오 + 텍스트 정렬 */
+.resume-radio-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.resume-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.resume-match {
+    font-weight: bold;
+    color: #0B9E43; /* 초록색 */
+    white-space: nowrap;
+}
+/* 이력서 제목 (굵게) */
+.resume-item .resume-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+/* 이력서 작성일 등 부가정보 */
+.resume-item .resume-meta {
+    font-size: 13px;
+    color: #666;
+}
+
+/* 라디오 버튼 간격 조정 */
+.resume-item input[type="radio"] {
+    margin-right: 8px;
+}
+

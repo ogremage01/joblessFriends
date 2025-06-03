@@ -24,7 +24,16 @@ public class Pagination {
 				calculation(params.getPage(), params.getRecordSize(), 10); // 또는 params.getPageSize()가 있으면 그걸 사용
 			}
 		}
-	    private void calculation(SearchVo params) {
+	//06.02 지원자 페이지네이션 //
+	public Pagination(int totalRecordCount, int page, int recordSize, int pageSize) {
+		if (totalRecordCount > 0) {
+			this.totalRecordCount = totalRecordCount;
+			calculation(page, recordSize, pageSize);
+			this.page = page;
+		}
+	}
+
+	private void calculation(SearchVo params) {
 
 	        // 전체 페이지 수 계산
 	        totalPageCount = ((totalRecordCount - 1) / params.getRecordSize()) + 1;

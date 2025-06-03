@@ -78,10 +78,9 @@
 										href="/Recruitment/update?jobPostId=${recruitment.jobPostId}"
 										class="btn btn-light mb-2"> <i class="bi bi-pencil-square"></i>
 											수정하기
-									</a><br> <a
-										href="./recruitment/${recruitment.jobPostId}/applicants"
-										class="btn btn-light mb-2"> <i class="bi bi-file-person"></i>
-											지원자 보기
+									</a><br> <a href="/company/apply/${recruitment.jobPostId}/applicants"
+												class="btn btn-light mb-2">
+										<i class="bi bi-file-person"></i> 지원자 보기
 									</a><br>
 	
 										<button id="stopBtn${recruitment.jobPostId}"

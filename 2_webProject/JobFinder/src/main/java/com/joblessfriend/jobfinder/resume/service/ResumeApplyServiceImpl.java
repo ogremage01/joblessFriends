@@ -75,6 +75,7 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
 
         // 4. 지원 이력 등록
         ResumeManageVo manageVo = new ResumeManageVo();
+        manageVo.setRmId(applyId);
         manageVo.setJobPostId(jobPostId);
         manageVo.setMemberId(memberId);
         manageVo.setResumeFile(String.valueOf(applyId));
@@ -83,17 +84,19 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
         resumeApplyDao.insertResumeManage(manageVo);
 
          // 🚀 한 번에 여러 개 받아옴
-        List<Integer> newAnswerIds = resumeApplyDao.selectNextAnswerIds(answerList.size());  // 🚀 한 번에 여러 개 받아옴
+        //리스트가없을경우 그냥 지원 //
+        if (answerList != null && !answerList.isEmpty()) {
+            List<Integer> newAnswerIds = resumeApplyDao.selectNextAnswerIds(answerList.size());
 
-        for (int i = 0; i < answerList.size(); i++) {
-            JobPostAnswerVo answer = answerList.get(i);
-            answer.setAnswerId(newAnswerIds.get(i)); // 시퀀스 미리 할당
-            answer.setJobPostId(jobPostId);
-            answer.setMemberId(memberId);
+            for (int i = 0; i < answerList.size(); i++) {
+                JobPostAnswerVo answer = answerList.get(i);
+                answer.setAnswerId(newAnswerIds.get(i));
+                answer.setJobPostId(jobPostId);
+                answer.setMemberId(memberId);
+            }
+
+            resumeApplyDao.insertAnswers(answerList);
         }
-
-        resumeApplyDao.insertAnswers(answerList);
-
 
         return applyId;
     }

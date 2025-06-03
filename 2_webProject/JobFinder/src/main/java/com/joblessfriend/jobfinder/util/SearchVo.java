@@ -8,7 +8,8 @@ public class SearchVo {
 	private String searchType; // 검색 유형
 	private int startRow;
 	private int endRow;
-
+	private int companyId;
+	private int jobPostId;
 	// Getter/Setter 추가
 	public int getStartRow() {
 		return startRow;
@@ -68,6 +69,21 @@ public class SearchVo {
 	public void setSearchType(String searchType) {
 		this.searchType = searchType;
 	}
-	
-	
+
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
+    public int getJobPostId() {
+        return jobPostId;
+    }
+
+    public void setJobPostId(int jobPostId) {
+        this.jobPostId = jobPostId;
+    }
 }
