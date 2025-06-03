@@ -6,10 +6,10 @@
 	
 	.content {
 		user-select: none;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		width: 100%;
+/* 		display: flex; */
+/* 		flex-direction: column; */
+/* 		align-items: center; */
+/* 		width: 100%; */
 	}
 	
 	/* 계정 정보*/
@@ -17,8 +17,8 @@
 		display: flex;
 		flex-direction: column;
 		gap: 25px;
-		width: 100%;
-		max-width: 600px;
+/* 		width: 100%; */
+/* 		max-width: 600px; */
 	}
 	
 	.accountInfo h2 {
@@ -34,20 +34,21 @@
 	
 	/* 폼 */
 	.formStyle {
-		width: 100%;
-		max-width: 500px;
+		width: 400px;
+/* 		width: 100%; */
+/* 		max-width: 500px; */
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
-		margin: 0 auto;
+/* 		margin: 0 auto; */
 	}
 	
-	.formStyle .row {
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
-		margin-bottom: 15px;
-	}
+/* 	.formStyle .row { */
+/* 		display: flex; */
+/* 		flex-direction: column; */
+/* 		gap: 8px; */
+/* 		margin-bottom: 15px; */
+/* 	} */
 	
 	.formStyle label{
 		color:#6D707B;
@@ -57,7 +58,8 @@
 	}
 	
 	.formStyle .form-control, .formStyle .form-control-plaintext {
-		width: 100%;
+		width: 230px;
+/* 		width: 100%; */
 		height: 14px;
 		padding: 13px 10px;
 		border: 1px solid #D1D5E3;
@@ -103,11 +105,11 @@
 		background-color: #F3F4F8;
 	}
 	
-	.buttonWrap {
-		display: flex;
-		gap: 10px;
-		justify-content: center;
-		margin-top: 20px;
-		width: 100%;
-	}
+/* 	.buttonWrap { */
+/* 		display: flex; */
+/* 		gap: 10px; */
+/* 		justify-content: center; */
+/* 		margin-top: 20px; */
+/* 		width: 100%; */
+/* 	} */
 	
