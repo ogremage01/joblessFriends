@@ -151,9 +151,13 @@
                 text: "게시물을 저장하시겠습니까?",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "저장"
+                confirmButtonText: "저장",
+                cancelButtonText: '취소',
+                customClass: {
+        			confirmButton: "swalConfirmBtn",
+        			cancelButton: "swalCancelBtn",
+        		},
+        		reverseButtons: true, // 버튼 순서 거꾸로
             });
 
             if (result.isConfirmed) {
@@ -175,7 +179,6 @@
         }
 
         function deleteFile(fileName,fileStoredName, btn) {
-            if (!confirm("정말 삭제하시겠습니까?")) return;
 
             const fileItem = btn.parentElement;
             const imageUrl = fileItem.getAttribute('data-url');

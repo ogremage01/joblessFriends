@@ -1,5 +1,6 @@
 package com.joblessfriend.jobfinder.resume.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,8 @@ import com.joblessfriend.jobfinder.resume.domain.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.joblessfriend.jobfinder.skill.domain.SkillVo;
 
 @Repository
 class ResumeDaoImpl implements ResumeDao{
@@ -70,14 +73,12 @@ class ResumeDaoImpl implements ResumeDao{
                 List<PortfolioVo> portfolios = getPortfoliosByResumeId(resumeId);
                 resume.setPortfolioList(portfolios);
                 
-                // 자격증 ID 리스트를 CertificateVo 리스트로 변환
-                
                 List<CertificateResumeVo> certificateList = getCertificateByResumeId(resumeId);
                 resume.setCertificateList(certificateList);
                
-                List<Long> tagIds = getTagIdsByResumeId(resumeId);
-                // ResumeVo에는 skillList가 있지만 현재는 tagIds만 저장
-                // 필요에 따라 SkillService를 통해 전체 SkillVo 리스트로 변환할 수 있음
+                List<SkillVo> skillList = getTagIdsByResumeId(resumeId);
+                resume.setSkillList(skillList);
+                
                
             } else {
                 
@@ -117,7 +118,7 @@ class ResumeDaoImpl implements ResumeDao{
     }
 
     @Override
-    public List<Long> getTagIdsByResumeId(int resumeId) {
+    public List<SkillVo> getTagIdsByResumeId(int resumeId) {
         return sqlSession.selectList(namespace + ".getTagIdsByResumeId", resumeId);
     }
 
