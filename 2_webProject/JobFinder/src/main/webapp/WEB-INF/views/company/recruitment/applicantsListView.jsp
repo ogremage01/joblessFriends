@@ -6,10 +6,22 @@
 <head>
     <title>지원자 목록</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/common/common.css">
+    <link rel="stylesheet" href="/css/company/applicantsListView.css">
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+
 </head>
 <body>
 <jsp:include page="../../common/header.jsp"/>
-
+<div class="container">
+    <div id="containerWrap">
+        <div class="main">
 <div class="container mt-4">
     <h3>지원자 목록</h3>
 
@@ -34,7 +46,13 @@
                         <td>${apply.resumeTitle}</td>
                         <td><fmt:formatDate value="${apply.applyDate}" pattern="yyyy-MM-dd" /></td>
                         <td>이력서열람</td>
-                        <td>질문보기</td>
+                        <td>
+                            <button class="btn-question"
+                                    data-member-id="${apply.memberId}"
+                                    data-jobpost-id="${jobPostId}">
+                                질문보기
+                            </button>
+                        </td>
                         <td>80%</td>
                         <td>${apply.stateName}</td>
                     </tr>
@@ -70,7 +88,10 @@
         </ul>
     </nav>
 </div>
-
+        </div>
+    </div>
+</div>
+<script src="/js/company/applicantsListView.js"></script>
 <jsp:include page="../../common/footer.jsp" />
 </body>
 </html>

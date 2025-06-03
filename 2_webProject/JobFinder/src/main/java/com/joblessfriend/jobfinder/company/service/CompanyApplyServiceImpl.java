@@ -4,6 +4,7 @@ package com.joblessfriend.jobfinder.company.service;
 
 import com.joblessfriend.jobfinder.company.dao.CompanyApplyDao;
 import com.joblessfriend.jobfinder.company.domain.ApplySummaryVo;
+import com.joblessfriend.jobfinder.company.domain.QuestionAnswerVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +30,10 @@ public class CompanyApplyServiceImpl implements CompanyApplyService {
     @Override
     public List<ApplySummaryVo> getPagedApplyList(Map<String, Object> paramMap) {
         return companyApplyDao.getPagedApplyList(paramMap);
+    }
+
+    @Override
+    public List<QuestionAnswerVo> getQuestionAnswersByJobPostAndMember(int jobPostId, int memberId) {
+        return companyApplyDao.getQuestionAnswersByJobPostAndMember(jobPostId, memberId);
     }
 }

@@ -13,5 +13,6 @@ public class ApplySummaryVo {
     private String resumeTitle;
     private Date applyDate;
     private String stateName;
+    private int memberId;
     private int matchRate;
 }

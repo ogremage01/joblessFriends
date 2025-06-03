@@ -67,6 +67,13 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
                 p.setResumeId(applyId);
                 resumeApplyDao.insertPortfolio(p);
             });
+        if (origin.getCertificateList() != null) {
+            origin.getCertificateList().forEach(cert -> {
+                cert.setResumeId(applyId); // 복사 대상 resumeId 설정
+                resumeApplyDao.insertCertificateResume(cert);
+            });
+        }
+
 
         // 3. 스킬 태그 복사
         List<Integer> tagIds = resumeApplyDao.getTagIdsByResumeId(resumeId);

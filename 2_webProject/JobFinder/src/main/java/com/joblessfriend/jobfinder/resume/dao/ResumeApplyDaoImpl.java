@@ -40,12 +40,11 @@ public class ResumeApplyDaoImpl implements ResumeApplyDao {
     }
 
     @Override
-    public void insertCertificateResume(int resumeId, int certificateId) {
-        var param = new java.util.HashMap<String, Object>();
-        param.put("resumeId", resumeId);
-        param.put("certificateId", certificateId);
-        sqlSession.insert(namespace + ".insertCertificateResume", param);
+    public void insertCertificateResume(CertificateResumeVo certificateVo) {
+        sqlSession.insert(namespace + ".insertCertificateResume", certificateVo);
     }
+
+
 
     @Override
     public void insertPortfolio(PortfolioVo portfolioVo) {

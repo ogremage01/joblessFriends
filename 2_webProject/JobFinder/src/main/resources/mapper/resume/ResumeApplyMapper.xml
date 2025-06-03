@@ -168,15 +168,24 @@
     </insert>
     
     <!-- 자격증정보 저장 -->
-    <insert id="insertCertificateResume">
+    <insert id="insertCertificateResume" parameterType="com.joblessfriend.jobfinder.resume.domain.CertificateResumeVo">
         INSERT INTO CERTIFICATE_RESUME_COPY (
-            CERTIFICATE_RESUME_ID, RESUME_ID, CERTIFICATE_ID, CREATE_AT, MODIFIED_AT
-        )
-        VALUES (
-                   SEQ_CERTIFICATE_RESUME_COPY_ID.NEXTVAL, #{resumeId}, #{certificateId}, SYSDATE, SYSDATE
-        )
-    </insert>    
-    
+            CERTIFICATE_RESUME_ID,
+            RESUME_ID,
+            CERTIFICATE_NAME,
+            ACQUISITION_DATE,
+            ISSUING_AUTHORITY
+        ) VALUES (
+                     SEQ_CERTIFICATE_RESUME_COPY_ID.NEXTVAL,
+                     #{resumeId},
+                     #{certificateName},
+                     #{acquisitionDate},
+                     #{issuingAuthority, jdbcType=VARCHAR}
+                         )
+    </insert>
+
+
+
     <!-- 포트폴리오정보 저장 -->
     <insert id="insertPortfolio" parameterType="com.joblessfriend.jobfinder.resume.domain.PortfolioVo">
         INSERT INTO PORTFOLIO_COPY (
