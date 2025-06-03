@@ -438,5 +438,50 @@ public class ResumeController {
 	    return "resume/resumePreview"; // /WEB-INF/views/resume/resumePreview.jsp
 	}
 	
+	// 이력서 관리페이지에서 미력서미리보기
+	@GetMapping("/view/{resumeId}")
+	public String showResumePreviewFromDatabase(@PathVariable("resumeId") int resumeId,
+	                                            HttpSession session,
+	                                            Model model) {
+	    // 로그인 여부 확인
+	    MemberVo loginUser = (MemberVo) session.getAttribute("userLogin");
+	    if (loginUser == null) {
+	        return "redirect:/auth/login";
+	    }
+
+	    // 이력서 전체 정보 조회 (career, school, skill 포함)
+	    ResumeVo resume = resumeService.getResumeWithAllDetails(resumeId);
+	    if (resume == null || resume.getMemberId() != loginUser.getMemberId()) {
+	        model.addAttribute("errorMessage", "이력서를 조회할 수 없습니다.");
+	        return "resume/resumeView";  // 기본 에러 페이지
+	    }
+
+	    // 직무직군명 변환
+	    List<Map<String, String>> jobTitles = new ArrayList<>();
+	    for (CareerVo career : resume.getCareerList()) {
+	        Map<String, String> map = new HashMap<>();
+	        map.put("jobGroupName", jobGroupService.getJobGroupNameById(career.getJobGroupId()));
+	        map.put("jobName", jobService.getJobNameById(career.getJobId()));
+	        jobTitles.add(map);
+	    }
+	    model.addAttribute("jobTitles", jobTitles);
+
+	    // tagIds → skillList로 변환
+	    List<SkillVo> skillList = new ArrayList<>();
+	    if (resume.getTagIds() != null) {
+	        for (Long tagId : resume.getTagIds()) {
+	            SkillVo skill = skillService.getSkillById(tagId.intValue());
+	            if (skill != null) skillList.add(skill);
+	        }
+	    }
+	    resume.setSkillList(skillList);
+
+	    // 모델에 이력서 객체 바인딩
+	    model.addAttribute("resume", resume);
+
+	    return "resume/resumePreview";
+	}
+
+	
 }
 

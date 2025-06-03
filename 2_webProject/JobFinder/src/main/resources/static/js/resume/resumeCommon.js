@@ -877,4 +877,9 @@ $(".btn-preview").click(async function() {
 		console.error("미리보기 오류:", err);
 		alert("미리보기 중 오류 발생: " + err.message);
 	}
-}); 
+});
+
+// 사이드바 top버튼
+document.getElementById("btnTop").addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
