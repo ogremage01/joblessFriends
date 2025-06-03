@@ -40,7 +40,10 @@
 				<!--	인적사항		-->
 				<div id="infoTableBox">
 					<span class="infoTableName">${resume.memberName}</span>
-					<span class="infoTableAge" colspan="3">${resume.birthDate}</span>
+					<span class="infoTableAge" colspan="3">
+						<fmt:formatDate value="${resume.birthDate}" pattern="yyyy" />
+						( 세)
+					</span>
 					<table>
 						<tr>
 							<th class="infoTableTh">이메일</th>
@@ -172,183 +175,154 @@
 			</div>
 		</div>
 		
-		<!-- 	추가 내용		-->
+		<!-------------------- 추가 내용 -------------------->
+        <div id="resumeContent">
+
 		<!-- 스킬 섹션 -->
+		<c:if test="${not empty resume.skillList}">
 		<div class="borderBox">
-			<p>스킬</p>
-				<c:choose>
-					<c:when test="${not empty resume.skillList}">
-						<c:forEach var="skill" items="${resume.skillList}">
-						<span class="sumItem">${skill.tagName}</span>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<span class="sumItem">선택된 스킬 없음</span>
-					</c:otherwise>
-				</c:choose>
+			<p class="contentTitle">스킬</p>
+			<c:forEach var="skill" items="${resume.skillList}">
+			<span class="contentItem skill">${skill.tagName}</span>
+			</c:forEach>
 		</div>
+		</c:if>
+		<!-- 스킬 섹션 end -->
 			
+		<!-- 학력 섹션 -->
+		<c:if test="${not empty resume.schoolList}">
 		<div class="borderBox">
-		<p>학력</p>
-			<c:choose>
-				<c:when test="${empty resume.schoolList}">
-					<span class="sumItem">-</span>
-				</c:when>
-					<c:otherwise>
-						<div class="detailSection">
-						    <c:forEach var="school" items="${resume.schoolList}">
-								<div class="detailRow">
-									<div>
-										<strong>${school.schoolName}</strong>
-											(
-										<c:choose>
-											<c:when test="${school.sortation == 'high'}">고등학교</c:when>
-											<c:when test="${school.sortation == 'univ4'}">대학교(4년)</c:when>
-											<c:when test="${school.sortation == 'univ2'}">대학교(2,3년)</c:when>
-											<c:otherwise>기타</c:otherwise>
-										</c:choose>
-											)
-									</div>
-									<div>
-										<c:choose>
-											<c:when test="${school.sortation == 'high'}">
-												졸업년도: ${school.yearOfGraduation}
-											</c:when>
-											
-											<c:when test="${school.sortation == 'univ4' || school.sortation == 'univ2'}">
-												전공: ${school.majorName} <br />
-												입학: <fmt:formatDate value="${school.startDate}" pattern="yyyy.MM" /> ~
-												졸업: <fmt:formatDate value="${school.endDate}" pattern="yyyy.MM" />
-											</c:when>
-										</c:choose>
-									</div>
-									<div>상태: ${school.status}</div>
-								</div>
-							</c:forEach>
-						</div>
-					</c:otherwise>
-			</c:choose>
-		</div>
-			
-		<div class="borderBox">
-		<p>경력</p>
-			<c:choose>
-				<c:when test="${empty resume.careerList}">
-					<span class="sumItem">신입</span>
-				</c:when>
-					<c:otherwise>
-						<div class="detailSection">
-							<c:forEach var="career" items="${resume.careerList}" varStatus="loop">
-								<div class="detailRow">
-									<div>
-										<strong>${career.companyName}</strong> | ${career.departmentName} | ${career.position}
-									</div>
-									<div>
-										<fmt:formatDate value="${career.hireYm}" pattern="yyyy.MM" /> ~
-										<c:choose>
-											<c:when test="${career.resignYm != null}">
-												<fmt:formatDate value="${career.resignYm}" pattern="yyyy.MM" />
-											</c:when>
-												<c:otherwise>재직중</c:otherwise>
-										</c:choose>
-									</div>
-									
-									<!-- ✅ 직군/직무명 -->
-									<div>
-										직군/직무: ${jobTitles[loop.index].jobGroupName} / ${jobTitles[loop.index].jobName}
-									</div>
-									
-									<div>연봉: ${career.salary} 만원</div>
-									<div>담당업무: ${career.workDescription}</div>
-								</div>
-							</c:forEach>
-						</div>
-					</c:otherwise>
-			</c:choose>
-		</div>
-			
-		<div class="borderBox">
-		<p>교육</p>
-			<c:choose>
-				<c:when test="${empty resume.educationList}">
-					<span class="sumItem">-</span>
-				</c:when>
-					<c:otherwise>
-						<div class="detailSection">
-							<c:forEach var="edu" items="${resume.educationList}">
-								<div class="detailRow">
-									<div><strong>${edu.eduName}</strong></div>
-									<div>기관: ${edu.eduInstitution}</div>
-									<div>
-										기간:
-										<fmt:formatDate value="${edu.startDate}" pattern="yyyy.MM" />
-										~
-										<fmt:formatDate value="${edu.endDate}" pattern="yyyy.MM" />
-									</div>
-									<div>내용: ${edu.content}</div>
-								</div>
-							</c:forEach>
-						</div>
-					</c:otherwise>
-			</c:choose>
-		</div>
-			
-		<div class="borderBox">
-		<p>자기소개서</p>
-			<div class="detailSection">
-				<div class="detailRow">
-					<pre style="white-space: pre-wrap; font-size: 14px;">${resume.selfIntroduction}</pre>
+			<p class="contentTitle">학력</p>
+		    <c:forEach var="school" items="${resume.schoolList}">
+				<div class="contentBox">
+					<span>
+					<c:choose>
+						<c:when test="${school.sortation == 'high'}">고등학교</c:when>
+						<c:when test="${school.sortation == 'univ4'}">대학교(4년)</c:when>
+						<c:when test="${school.sortation == 'univ2'}">대학교(2,3년)</c:when>
+						<c:otherwise>기타</c:otherwise>
+					</c:choose>
+					</span>
+					
+					<span>${school.schoolName}</span>
+					
+					<c:choose>
+						<c:when test="${school.sortation == 'high'}">
+							<span>${school.yearOfGraduation}</span>
+						</c:when>
+						
+						<c:when test="${school.sortation == 'univ4' || school.sortation == 'univ2'}">
+							<span>${school.majorName} 전공</span>
+							<span>
+								<fmt:formatDate value="${school.startDate}" pattern="yyyy.MM" /> ~
+								<fmt:formatDate value="${school.endDate}" pattern="yyyy.MM" />
+							</span>
+						</c:when>
+					</c:choose>
+					<span>${school.status}</span>
 				</div>
+			</c:forEach>
+		</div>
+		</c:if>
+		<!-- 학력 섹션 end -->
+		
+		<!-- 경력 섹션 -->	
+		<c:if test="${not empty resume.schoolList}">
+		<div class="borderBox">
+			<p class="contentTitle">경력</p>
+			<c:forEach var="career" items="${resume.careerList}" varStatus="loop">
+				<div class="contentBox">
+					<div>
+						<strong>${career.companyName}</strong> | ${career.departmentName} | ${career.position}
+					</div>
+					<div>
+						<fmt:formatDate value="${career.hireYm}" pattern="yyyy.MM" /> ~
+						<c:choose>
+							<c:when test="${career.resignYm != null}">
+								<fmt:formatDate value="${career.resignYm}" pattern="yyyy.MM" />
+							</c:when>
+								<c:otherwise>재직중</c:otherwise>
+						</c:choose>
+					</div>
+					
+					<!-- ✅ 직군/직무명 -->
+					<div>
+						직군/직무: ${jobTitles[loop.index].jobGroupName} / ${jobTitles[loop.index].jobName}
+					</div>
+					
+					<div>연봉: ${career.salary} 만원</div>
+					<div>담당업무: ${career.workDescription}</div>
+				</div>
+			</c:forEach>
+		</div>
+		</c:if>
+		<!-- 경력 섹션 end -->
+			
+		<!-- 교육 섹션 -->
+		<c:if test="${not empty resume.educationList}">
+		<div class="borderBox">
+			<p class="contentTitle">교육</p>
+			<c:forEach var="edu" items="${resume.educationList}">
+				<div class="contentBox">
+					<span>${edu.eduName}</span>
+					<span>
+						<fmt:formatDate value="${edu.startDate}" pattern="yyyy.MM" />
+						~
+						<fmt:formatDate value="${edu.endDate}" pattern="yyyy.MM" />
+					</span>
+					<span>${edu.eduInstitution}</span>
+					<br/>
+					<span>${edu.content}</span>
+				</div>
+			</c:forEach>
+		</div>
+		</c:if>
+		<!-- 교육 섹션 end -->
+			
+		<div class="borderBox">
+		<p class="contentTitle">자기소개서</p>
+			<div class="contentBox">
+				<pre>${resume.selfIntroduction}</pre>
 			</div>
 		</div>
-			
-		<div class="borderBox">
-		<p>자격증</p>
-			<c:choose>
-				<c:when test="${empty resume.certificateList}">
-					<span class="sumItem">-</span>
-				</c:when>
-				<c:otherwise>
-					<div class="detailSection">
-						<c:forEach var="cert" items="${resume.certificateList}">
-							<div class="detailRow">
-								<div><strong>${cert.certificateName}</strong></div>
-								<div>발행처: ${cert.issuingAuthority}</div>
-								<div>
-									취득일자:
-									<fmt:formatDate value="${cert.acquisitionDate}" pattern="yyyy.MM.dd" />
-								</div>
-							</div>
-						</c:forEach>
-					</div>
-				</c:otherwise>
-			</c:choose>
-		</div>
-			
-		<div class="borderBox">
-		<p>포트폴리오</p>
-			<c:choose>
-				<c:when test="${empty resume.portfolioList}">
-					<span class="sumItem">-</span>
-				</c:when>
-				<c:otherwise>
-					<div class="detailSection">
-						<ul style="padding-left: 20px;">
-							<c:forEach var="file" items="${resume.portfolioList}">
-								<li style="margin-bottom: 6px;">
-									<a href="/uploads/portfolio/${file.storedFileName}" target="_blank">
-										${file.fileName}
-									</a>
-								</li>
-							</c:forEach>
-						</ul>
-					</div>
-				</c:otherwise>
-			</c:choose>
-		</div>
-			
-	</div>
 		
+		<!-- 자격증 섹션 -->
+		<c:if test="${not empty resume.certificateList}">
+		<div class="borderBox">
+			<p class="contentTitle">자격증</p>
+			<c:forEach var="cert" items="${resume.certificateList}">
+				<div class="contentBox">
+					<span>
+						<fmt:formatDate value="${cert.acquisitionDate}" pattern="yyyy.MM.dd" />
+					</span>
+					<span>${cert.certificateName}</span>
+					<span>${cert.issuingAuthority}</span>
+				</div>
+			</c:forEach>
+		</div>
+		</c:if>
+		<!-- 자격증 섹션 end -->
+		
+		<!-- 포트폴리오 섹션 -->
+		<c:if test="${not empty resume.portfolioList}">
+		<div class="borderBox">
+			<p class="contentTitle">포트폴리오</p>
+			<div class="contentBox">
+				<ul style="padding-left: 20px;">
+					<c:forEach var="file" items="${resume.portfolioList}">
+						<li style="margin-bottom: 6px;">
+							<a href="/uploads/portfolio/${file.storedFileName}" target="_blank">
+								${file.fileName}
+							</a>
+						</li>
+					</c:forEach>
+				</ul>
+			</div>
+		</div>
+		</c:if>
+		<!-- 포트폴리오 섹션 end-->
+		
+	</div>
 </div>
 
 </body>
