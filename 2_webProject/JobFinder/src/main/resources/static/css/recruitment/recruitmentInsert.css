@@ -293,3 +293,25 @@ textarea {
 
     height: 40px;
 }
+.skill-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    margin: 4px;
+    border: 2px solid #ffa726;
+    border-radius: 20px;
+    background-color: #fff8e1;
+    font-size: 14px;
+    color: #f57c00;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+
+
+.skill-tag.checked {
+    background-color: #ffe0b2;
+    border-color: #f57c00;
+    color: #e65100;
+}

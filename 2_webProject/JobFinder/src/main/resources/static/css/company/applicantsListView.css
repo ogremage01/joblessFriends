@@ -49,3 +49,21 @@ td:nth-child(2) {
 	outline: 1px solid #F69800;
 }
 
+/* 질문 버튼 */
+.btn-resume {
+	width: 100px;
+	background-color: #F69800;
+	color: #fff;
+	border: none;
+	padding: 6px 5px;
+	border-radius: 6px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.2s;
+}
+
+.btn-resume:hover {
+	background-color: white;
+	color: #FF6600;
+	outline: 1px solid #F69800;
+}
