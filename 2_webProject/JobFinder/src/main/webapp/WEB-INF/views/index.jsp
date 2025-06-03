@@ -13,10 +13,131 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js"
  integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+Cfch+3qOVUtJn3QNZOtciWLP4=" crossorigin="anonymous"></script>
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/common/index.css">
     <link rel="stylesheet" href="/css/common/common.css">
+    
+    <!-- 채팅 관련 스크립트 -->
+    <script type="text/javascript">
+        function openChat(event) {
+            event.preventDefault();
+            
+            var loginType = "${sessionScope.userType}";
+            var isLoggedIn = "${not empty sessionScope.userLogin}";
+            
+            if (isLoggedIn === "false") {
+                alert("로그인이 필요한 서비스입니다.");
+                location.href = "auth/login";
+                return;
+            }
+            
+            var chatUrl = "";
+            var popupWidth = 450;  // 약 12cm
+            var popupHeight = 800; // 약 21cm
+            var left = (window.innerWidth - popupWidth) / 2;
+            var top = (window.innerHeight - popupHeight) / 2;
+            
+            switch(loginType) {
+                case "member":
+                    chatUrl = "member/chat/room";
+                    break;
+                case "company":
+                    chatUrl = "company/chat/room";
+                    break;
+                default:
+                    alert("잘못된 접근입니다.");
+                    return;
+            }
+            
+            var popupOptions = "width=" + popupWidth + 
+                             ",height=" + popupHeight + 
+                             ",left=" + left + 
+                             ",top=" + top + 
+                             ",scrollbars=yes" +
+                             ",resizable=yes" +
+                             ",status=no" +
+                             ",location=no" +
+                             ",toolbar=no" +
+                             ",menubar=no";
+            
+            window.open(chatUrl, "채팅", popupOptions);
+        }
+
+        // 안읽은 메시지 확인 함수
+        function checkUnreadMessages() {
+            var loginType = "${sessionScope.userType}";
+            var isLoggedIn = "${not empty sessionScope.userLogin}";
+            
+            // 로그인하지 않았거나 관리자인 경우 확인하지 않음
+            if (isLoggedIn === "false" || loginType === "admin") {
+                return;
+            }
+            
+            var apiUrl = "";
+            switch(loginType) {
+                case "member":
+                    apiUrl = "/member/chat/unread-count";
+                    break;
+                case "company":
+                    apiUrl = "/company/chat/unread-count";
+                    break;
+                default:
+                    return;
+            }
+            
+            fetch(apiUrl, {
+                method: 'GET',
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok');
+            })
+            .then(unreadCount => {
+                updateChatIcon(unreadCount);
+            })
+            .catch(error => {
+                console.log('안읽은 메시지 확인 중 오류:', error);
+            });
+        }
+
+        // 채팅 아이콘 업데이트 함수
+        function updateChatIcon(unreadCount) {
+            var chatBtn = document.querySelector('.chat-floating-btn');
+            var existingBadge = chatBtn.querySelector('.unread-badge');
+            
+            if (unreadCount > 0) {
+                // 안읽은 메시지가 있으면 느낌표 배지 표시
+                if (!existingBadge) {
+                    var badge = document.createElement('div');
+                    badge.className = 'unread-badge';
+                    badge.innerHTML = '!';
+                    chatBtn.appendChild(badge);
+                }
+            } else {
+                // 안읽은 메시지가 없으면 배지 제거
+                if (existingBadge) {
+                    existingBadge.remove();
+                }
+            }
+        }
+
+        // 페이지 로드 시 초기 확인 및 주기적 확인 설정
+        document.addEventListener('DOMContentLoaded', function() {
+            var loginType = "${sessionScope.userType}";
+            var isLoggedIn = "${not empty sessionScope.userLogin}";
+            
+            if (isLoggedIn === "true" && (loginType === "member" || loginType === "company")) {
+                // 초기 확인
+                checkUnreadMessages();
+                
+                // 30초마다 확인
+                setInterval(checkUnreadMessages, 30000);
+            }
+        });
+    </script>
 </head>
 <body>
 	<jsp:include page="common/header.jsp"/>
@@ -205,23 +326,16 @@
 			</div>
 		</div>
 	</div>	
-	
-	<div>
-	
-	
+
 
 	<jsp:include page="common/footer.jsp"/>
 	
 	<button class="topBtn" title="맨 위로 가기">TOP</button>
 	
     <!-- 채팅 플로팅 버튼 -->
-    <a href="#" id="session-data" class="chat-floating-btn" data-user-id="${sessionScope.userType}" title="채팅하기" onclick="openChat(event)">
+    <a href="#" class="chat-floating-btn" title="채팅하기" onclick="openChat(event)">
         <i class="bi bi-chat-dots-fill"></i>
     </a>
 </body>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- CDN 사용 -->
 <script src="/js/index.js"></script>
-
-
 </html>

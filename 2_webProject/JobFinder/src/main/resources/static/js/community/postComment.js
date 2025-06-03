@@ -121,11 +121,7 @@ $(document).ready(function () {
 			       askConfirmMax("댓글");
 			       return;
 			}
-			 
-			if(!confirm("댓글을 저장하시겠습니까?")){
-				return;
-			} 
-		    
+
 			$.ajax({
 				url: urlStr,
 				type: "POST",
@@ -191,10 +187,7 @@ $(document).ready(function () {
 		       askConfirmMax("수정 댓글");
 		       return;
 		}
-		
-		if(!confirm("댓글을 수정하시겠습니까?")){
-			return;
-		}
+
 		
 		$.ajax({
 			url: urlStr,
@@ -217,7 +210,7 @@ $(document).ready(function () {
 	function commentDelete(postCommentId){
 		let url = "/community/detail/delete/"+postCommentId;
 	
-		if(confirm('댓글을 삭제하시겠습니까?')){
+
 		
 			fetch(url, {
 				method: 'DELETE'
@@ -230,7 +223,7 @@ $(document).ready(function () {
 					}
 				}
 			)
-		}
+		
 	}
 	
 	

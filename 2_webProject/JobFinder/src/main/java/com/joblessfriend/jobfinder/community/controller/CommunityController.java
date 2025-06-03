@@ -280,7 +280,7 @@ public class CommunityController {
 		
 		communityService.communityFileDelete(communityId);
 		communityService.communityDelete(communityId);
-		return ResponseEntity.ok("게시물이 삭제되었습니다.");
+		return ResponseEntity.ok("게시물 삭제");
 	}
 	
 	//------------------------------

@@ -7,11 +7,15 @@ import java.util.Map;
 
 import com.joblessfriend.jobfinder.util.Pagination;
 import com.joblessfriend.jobfinder.util.SearchVo;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
 import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
 import com.joblessfriend.jobfinder.skill.domain.SkillVo;
@@ -27,7 +31,7 @@ public class IndexController {
 	    private SkillService skillService;
 
 	@GetMapping("/")
-	public String index(Model model) {
+	public String index(Model model, HttpSession session) {
 		
 		
 		// 1. 기본 SearchVo 생성 (recordSize = 8 기본값)
@@ -57,13 +61,14 @@ public class IndexController {
 		List<RecruitmentVo> recruitmentListEndDate = recruitmentService.recruitmentList(searchVoSlide); // 마감임박 순
 
 		// 5. 스킬 맵핑 처리
-		
+	    
 		// 최신 순
 		Map<Integer, List<SkillVo>> skillMapLatest = new HashMap<>();
 		for (RecruitmentVo r : recruitmentListLatest) {
 			int jobPostId = r.getJobPostId();
 			List<SkillVo> skillList = skillService.postTagList(jobPostId);
 			skillMapLatest.put(jobPostId, skillList);
+			
 		}
 		
 		// 조회수 순
@@ -72,6 +77,7 @@ public class IndexController {
 			int jobPostId = r.getJobPostId();
 			List<SkillVo> skillList = skillService.postTagList(jobPostId);
 			skillMapViews.put(jobPostId, skillList);
+			
 		}
 		
 		// 마감임박 순
@@ -80,6 +86,7 @@ public class IndexController {
 			int jobPostId = r.getJobPostId();
 			List<SkillVo> skillList = skillService.postTagList(jobPostId);
 			skillMapEndDate.put(jobPostId, skillList);
+			
 		}
 
 		// 6. 전달
@@ -97,6 +104,7 @@ public class IndexController {
 		
 		model.addAttribute("pagination", pagination); // 필요 시 index.jsp에서 사용 가능
 
+		
 		return "index";
 	}
 

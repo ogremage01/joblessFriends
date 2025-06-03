@@ -487,6 +487,13 @@
 		WHERE MEMBER_ID = #{memberId}
 		AND JOB_POST_ID = #{jobPostId}
 	</select>
+	
+	<!-- 찜했는지 구분하기 위한 select문(찜 구분) 리스트용 -->
+	<select id="bookMarkedJobPostIdList" parameterType="map" resultType="java.lang.Integer">
+		SELECT JOB_POST_ID
+		FROM BOOKMARK
+		WHERE MEMBER_ID = #{memberId}
+	</select>
 
  
 

@@ -126,7 +126,7 @@
                     <!-- 가운데: 공고 정보 -->
                     <div class="job-info">
                         <div class="job-title">
-                                ${item.title} <span class="star">★</span>
+                                ${item.title}
                         </div>
                         <div class="job-meta">
 
@@ -230,6 +230,7 @@
 
 
 <script src="/js/recruitment/recruitmentView.js"></script>
+<script src="/js/recruitment/recruitmentBookMark.js"></script>
 
 <div id="askConfirm" class="toast-popup"></div>
 

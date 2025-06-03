@@ -388,3 +388,14 @@ button[disabled] {
     margin-right: 8px;
 }
 
+/* 찜 추가기능 */
+.star{
+	border: 0px;
+	outline: 0px;
+}
+
+.noStar{
+	border: 0px;
+	outline: 0px;
+}
+

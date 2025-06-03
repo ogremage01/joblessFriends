@@ -17,6 +17,8 @@
 <!-- 에디터 및 jQuery -->
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
     #uploadedFileList {
@@ -51,7 +53,7 @@
 <div id='containerWrap' class="wrap">
     <h2>글쓰기</h2>
 
-    <form action="/community/upload" method="post" enctype="multipart/form-data"  onsubmit="return submitEditor()">
+    <form action="/community/upload" method="post" enctype="multipart/form-data"  id="uploadForm">
         <input type="hidden" name="writer" value="${sessionScope.userLogin.memberId}" />
 
         <!-- 제목 입력 -->
@@ -76,7 +78,7 @@
         <!-- 등록/취소 버튼 -->
         <div id="btnWrap">
             <button id='cancleBtn' class='inputBtn' type="button" onclick="history.back()">취소</button>
-            <button type="submit" id='uploadBtn' class='inputBtn' onsubmit="submitEditor()">등록</button>
+            <button type="button" id='uploadBtn' class='inputBtn' onclick="submitEditor()">등록</button>
         </div>
     </form>
 
@@ -128,26 +130,48 @@
             }
         });
 
-        function submitEditor() {
+        async function submitEditor() {
 
         	
             const markdown = editor.getMarkdown();
             document.getElementById('hiddenContent').value = markdown;
-            
-        	if ($("#title").val().trim() === "") {
-        		askConfirm("제목을");
-        		return false;
-        	}
-        	if ($("#hiddenContent").val().trim() === "") {
-        		askConfirm("내용을");
-        		return false;
-        	}
-        	
-    		if(!confirm("게시물을 저장하시겠습니까?")){
-    			return;
-    		}
-        	
-            return true;
+
+            if ($("#title").val().trim() === "") {
+                askConfirm("제목을");
+                return;
+            }
+
+            if ($("#hiddenContent").val().trim() === "") {
+                askConfirm("내용을");
+                return;
+            }
+
+            const result = await Swal.fire({
+                title: "확인",
+                text: "게시물을 저장하시겠습니까?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "저장"
+            });
+
+            if (result.isConfirmed) {
+                await Swal.fire({
+                    title: "업로드 완료",
+                    text: "게시물이 정상적으로 저장되었습니다.",
+                    icon: "success",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+                $("#uploadForm").submit(); // 수동 제출
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "수정이 취소되었습니다.",
+                    text: "다시 시도하거나 변경사항을 확인하세요."
+                });
+            }
         }
 
         function deleteFile(fileName,fileStoredName, btn) {

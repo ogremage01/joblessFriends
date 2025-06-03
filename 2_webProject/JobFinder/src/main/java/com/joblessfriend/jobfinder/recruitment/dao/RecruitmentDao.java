@@ -64,6 +64,9 @@ public interface RecruitmentDao {
 	
 	//(찜 구분)
 	Integer selectBookMark(int memberId, int jobPostId);
+	
+	//memberId 중 jobPostId에 사용중인 북마크 찾기(찜 구분)-리스트에서 사용
+	List<Integer> bookMarkedJobPostIdList(int memberId);
 
 
 

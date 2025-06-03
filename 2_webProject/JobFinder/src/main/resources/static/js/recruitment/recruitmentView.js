@@ -355,7 +355,7 @@ function renderJobList(recruitmentList, skillMap) {
             <div class="job" data-jobpostid="${item.jobPostId}" data-companyid="${item.companyId}">
               <div class="company-name">${item.companyName}</div>
               <div class="job-info">
-                <div class="job-title">${item.title} <span class="star">★</span></div>
+                <div class="job-title">${item.title}</div>
                 <div class="job-meta">
                   <span>🧑‍💻 지원자격: ${item.education}</span>
                   <span>🎓 경력: ${item.careerType}</span>

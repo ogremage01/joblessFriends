@@ -206,6 +206,17 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
 		
 		return sqlSession.selectOne(namespace+".selectBookMark", queryMap);
 	}
+
+	//memberId 중 jobPostId에 사용중인 북마크 찾기(찜 구분)-리스트에서 사용
+	@Override
+	public List<Integer> bookMarkedJobPostIdList(int memberId) {
+		// TODO Auto-generated method stub
+		Map<String, Object> queryMap = new HashMap<>();
+		
+		queryMap.put("memberId", memberId);
+		
+		return sqlSession.selectList(namespace+".bookMarkedJobPostIdList", queryMap);
+	}
 	
 
 }
