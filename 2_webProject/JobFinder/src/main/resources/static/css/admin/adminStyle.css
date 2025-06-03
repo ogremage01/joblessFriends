@@ -208,84 +208,81 @@ body {
 	background-color: #e68900;
 }
 
-/* ========== 폼 스타일 ========== */
-/* 검색 영역 */
+/* ========== 검색 및 추가 영역 ========== */
 .search-container {
-	padding: 20px;
-	background-color: #f8f9fa;
-	border-top: 1px solid #dee2e6;
-	text-align: center;
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	margin-bottom: 20px;
 }
 
-/* 입력 필드 (마이페이지 formStyle 패턴) */
 .search-input, .add-input {
-	padding: 13px 10px;
-	border: 1px solid #D1D5E3;
+	padding: 8px 12px;
+	border: 1px solid #afb2bd;
 	border-radius: 5px;
 	font-size: 14px;
 	outline: none;
 }
 
 .search-input {
-	width: 300px;
-	margin-right: 10px;
+	flex: 1;
 }
 
 .add-input {
-	min-width: 150px;
+	min-width: 200px;
 }
 
 .search-input::placeholder, .add-input::placeholder {
-	color: #BABECA;
+	color: #afb2bd;
 }
 
 .search-input:hover, .add-input:hover {
-	border: 1px solid #C9C9C9;
+	border-color: #F69800;
 }
 
 .search-input:focus, .add-input:focus {
-	border: 1px solid #F69800;
-	box-shadow: none;
+	border-color: #F69800;
+	box-shadow: 0 0 0 2px rgba(246, 152, 0, 0.2);
 }
 
-/* 추가 영역 */
+/* ========== 추가 섹션 ========== */
 .add-section {
-	padding: 15px 20px;
-	background-color: #f8f9fa;
-	border-bottom: 1px solid #dee2e6;
 	display: flex;
 	gap: 10px;
 	align-items: center;
+	margin-bottom: 20px;
+	padding: 15px;
+	background-color: #f8f9fa;
+	border-radius: 5px;
+	border: 1px solid #dee2e6;
 }
 
 /* ========== 페이지네이션 ========== */
 .pagination-container {
-	padding: 20px;
-	text-align: center;
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	margin-top: 20px;
+	padding: 20px;
+	border-top: 1px solid #dee2e6;
 }
 
 .pagination {
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	gap: 5px;
+	display: flex;
+	list-style: none;
 	margin: 0;
+	padding: 0;
+	gap: 5px;
 }
 
 .pagination .page-link {
-	color: #F69800;
-	border: 1px solid #D8D9E3;
+	display: block;
 	padding: 8px 12px;
-	margin: 0;
 	text-decoration: none;
+	color: #6D707B;
+	border: 1px solid #dee2e6;
 	border-radius: 5px;
-	font-size: 14px;
-	display: inline-block;
-	min-width: 40px;
-	text-align: center;
+	background-color: white;
+	transition: all 0.2s;
 }
 
 .pagination .page-item.active .page-link {
@@ -295,20 +292,21 @@ body {
 }
 
 .pagination .page-link:hover {
-	background-color: #fff3e0;
+	background-color: #f8f9fa;
 	border-color: #F69800;
-	text-decoration: none;
+	color: #F69800;
 }
 
 /* ========== 체크박스 ========== */
 .admin-checkbox {
 	width: 16px;
 	height: 16px;
+	accent-color: #F69800;
 }
 
 /* ========== 링크 스타일 ========== */
 .post-title-link, .recruitment-link, .member-email-link, .jobgroup-link , .company-name-link {
-	color: #F69800;
+	color: #1B202F;
 	text-decoration: none;
 }
 
@@ -317,7 +315,7 @@ body {
 }
 
 .company-link {
-	color: #6f42c1;
+	color: #F69800;
 	text-decoration: none;
 }
 
@@ -325,130 +323,131 @@ body {
 	text-decoration: underline;
 }
 
-/* ========== 대시보드 카드 ========== */
-/* 웰컴 카드 */
+/* ========== 관리자 메인 페이지 ========== */
 .admin-welcome {
-	background-color: #F69800;
+	background: #F69800;
 	color: white;
-	padding: 30px;
-	border: 1px solid #D8D9E3;
-	border-radius: 5px;
-	margin-bottom: 20px;
+	border: none;
+	padding: 40px;
+	margin-bottom: 30px;
+	text-align: center;
+	border-radius: 10px;
 }
 
 .admin-welcome h1 {
-	margin: 0 0 10px 0;
-	font-size: 24px;
-	font-weight: bold;
+	color: white;
+	margin-bottom: 15px;
+	font-size: 32px;
 }
 
 .admin-welcome p {
+	color: rgba(255, 255, 255, 0.9);
 	margin: 0;
-	font-size: 16px;
+	font-size: 18px;
 }
 
-/* 통계 카드 */
+/* ========== 통계 카드 ========== */
 .admin-stats {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 	gap: 20px;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 }
 
 .stat-card {
-	background-color: #fff;
-	padding: 20px;
+	background: white;
 	border: 1px solid #D8D9E3;
 	border-radius: 5px;
-	border-left: 4px solid #F69800;
+	padding: 25px;
+	text-align: center;
 }
 
 .stat-card h3 {
+	color: #6D707B;
 	margin: 0 0 10px 0;
-	color: #F69800;
-	font-size: 16px;
-	font-weight: bold;
+	font-size: 14px;
+	font-weight: normal;
 }
 
 .stat-number {
-	font-size: 24px;
+	color: #F69800;
+	font-size: 32px;
 	font-weight: bold;
-	color: #1B202F;
 	margin: 10px 0;
 }
 
 .stat-description {
-	color: #6D707B;
-	font-size: 14px;
+	color: #AFB2BD;
+	font-size: 12px;
+	margin: 0;
 }
 
-/* 빠른 액션 */
+/* ========== 빠른 작업 ========== */
 .quick-actions {
-	background-color: #fff;
+	background: white;
 	border: 1px solid #D8D9E3;
 	border-radius: 5px;
-	padding: 20px;
-	margin-bottom: 20px;
+	padding: 30px;
+	margin-bottom: 30px;
 }
 
 .quick-actions h3 {
-	margin: 0 0 15px 0;
 	color: #1B202F;
-	font-size: 18px;
-	font-weight: bold;
+	margin-bottom: 20px;
+	font-size: 20px;
+	text-align: center;
 }
 
 .action-buttons {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-	gap: 10px;
+	gap: 15px;
 }
 
 .action-btn {
-	display: flex;
-	align-items: center;
-	gap: 5px;
-	padding: 10px 15px;
-	background-color: #F69800;
+	background: #F69800;
 	color: white;
 	text-decoration: none;
+	padding: 15px 20px;
 	border-radius: 5px;
-	justify-content: center;
-	font-size: 14px;
+	text-align: center;
+	font-weight: bold;
+	transition: background-color 0.2s;
+	display: block;
 }
 
 .action-btn:hover {
-	background-color: #e68900;
+	background: #e68900;
 	color: white;
 	text-decoration: none;
 }
 
-/* 뒤로가기 버튼 */
+/* ========== 뒤로가기 버튼 ========== */
 .back-btn {
-	display: inline-flex;
-	align-items: center;
-	gap: 5px;
+	background-color: white;
+	border: 1px solid #afb2bd;
+	color: #4e5366;
 	padding: 8px 15px;
-	background-color: #6D707B;
-	color: white;
-	text-decoration: none;
 	border-radius: 5px;
-	
+	cursor: pointer;
 	font-size: 14px;
+	text-decoration: none;
+	display: inline-block;
+	margin-bottom: 20px;
 }
 
 .back-btn:hover {
-	background-color: #5a6268;
-	color: white;
+	background-color: #f3f4f8;
+	color: #4e5366;
 	text-decoration: none;
 }
 
-/* ========== Coming Soon 영역 ========== */
+/* ========== 준비중 카드 ========== */
 .coming-soon-card {
-	background-color: #fff;
-	padding: 40px;
+	background: white;
 	border: 1px solid #D8D9E3;
 	border-radius: 5px;
+	padding: 40px;
 	text-align: center;
 }
 
@@ -459,41 +458,39 @@ body {
 }
 
 .coming-soon-title {
-	font-size: 24px;
 	color: #1B202F;
-	margin: 20px 0 10px 0;
+	font-size: 24px;
+	margin-bottom: 15px;
 	font-weight: bold;
 }
 
 .coming-soon-description {
 	color: #6D707B;
 	font-size: 16px;
+	margin-bottom: 30px;
 }
 
-/* 기능 목록 */
+/* ========== 기능 목록 ========== */
 .feature-list {
-	background-color: #f8f9fa;
-	border: 1px solid #D8D9E3;
-	border-radius: 5px;
-	padding: 20px;
+	text-align: left;
+	max-width: 400px;
+	margin: 0 auto;
 }
 
 .feature-list h3 {
-	margin: 0 0 15px 0;
 	color: #1B202F;
 	font-size: 18px;
-	font-weight: bold;
+	margin-bottom: 15px;
 	text-align: center;
+	font-weight: bold;
 }
 
 .feature-item {
 	display: flex;
 	align-items: center;
-	gap: 10px;
 	padding: 10px 0;
-	border-bottom: 1px solid #D8D9E3;
-	font-size: 15px;
-	color: #1B202F;
+	border-bottom: 1px solid #eee;
+	color: #6D707B;
 }
 
 .feature-item:last-child {
@@ -502,37 +499,39 @@ body {
 
 .feature-item i {
 	color: #F69800;
-	font-size: 16px;
+	margin-right: 10px;
+	width: 20px;
 }
 
-/* ========== 콘텐츠 스타일 ========== */
+/* ========== 조회수 및 기타 스타일 ========== */
 .views-count {
-	font-weight: 600;
 	color: #6D707B;
+	font-size: 12px;
 }
 
 .skill-name, .jobgroup-name, .job-name, .job-group {
-	font-weight: 500;
 	color: #1B202F;
+	font-weight: 500;
 }
 
 .skill-category {
 	color: #6D707B;
+	font-size: 12px;
 }
 
 .comment-content {
-	max-width: 250px;
+	max-width: 300px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	display: inline-block;
+	vertical-align: top;
+	text-align: left;
 }
 
-/* ========== 애니메이션 제거 ========== */
-/* 모든 애니메이션 효과 완전 제거 */
+/* ========== 글로벌 스타일 리셋 ========== */
 *, *::before, *::after {
-	transition: none !important;
-	animation: none !important;
-	transform: none !important;
+	box-sizing: border-box;
 }
 
 /* ========== 반응형 디자인 ========== */
@@ -540,175 +539,158 @@ body {
 	.admin-container {
 		flex-direction: column;
 		padding: 10px;
-		gap: 10px;
+		position: relative;
 	}
-	
+
 	.admin-sidebar {
 		width: 100%;
-		min-width: auto;
+		position: relative;
+		height: auto;
+		margin-bottom: 20px;
 	}
-	
+
 	.admin-main {
 		width: 100%;
+		margin-left: 0;
+		height: auto;
 	}
-	
+
 	.content {
 		width: 100%;
+		padding: 0 10px;
 	}
-	
+
 	.admin-stats {
 		grid-template-columns: 1fr;
 	}
-	
+
 	.action-buttons {
 		grid-template-columns: 1fr;
 	}
-	
+
 	.search-container {
-		text-align: left;
+		flex-direction: column;
+		align-items: stretch;
 	}
-	
+
 	.search-input {
-		width: 100%;
 		margin-bottom: 10px;
-		margin-right: 0;
 	}
-	
+
 	.add-section {
 		flex-direction: column;
 		align-items: stretch;
 	}
-	
+
 	.add-input {
-		width: 100%;
+		min-width: 100%;
 		margin-bottom: 10px;
 	}
 }
 
-/* ========== 관리자 메인 페이지 스타일 ========== */
-/* adminMainView.jsp에서 이동된 스타일들 */
-
-/* 관리자 컨테이너 오버라이드 (메인 페이지용) */
+/* ========== 메인 페이지 레이아웃 ========== */
 .admin-main-container {
 	display: flex;
 	min-height: 100vh;
+	background-color: #f8f9fa;
 }
 
 .admin-main-sidebar {
-	background-color: #f8f9fa;
-	border-right: 1px solid #dee2e6;
+	/* 사이드바 스타일은 기존 admin-sidebar와 동일 */
 }
 
 .admin-main-content {
 	flex: 1;
-	padding: 30px;
-	background-color: #ffffff;
+	padding: 20px;
+	margin-left: 200px;
+	min-width: 0;
 }
 
-/* 웰컴 섹션 */
-.admin-welcome {
-	background: linear-gradient(135deg, #F69800 0%, #ff9500 100%);
-	color: white;
-	padding: 40px;
-	border-radius: 15px;
-	margin-bottom: 30px;
-	box-shadow: 0 4px 15px rgba(246, 152, 0, 0.2);
-}
-
-.admin-welcome h1 {
-	margin: 0 0 10px 0;
-	font-size: 2.5rem;
-	font-weight: 700;
-}
-
-.admin-welcome p {
-	margin: 0;
-	font-size: 1.1rem;
-	opacity: 0.9;
-}
-
-/* 통계 카드 그리드 */
+/* ========== 메인 페이지 통계 카드 ========== */
 .admin-main-stats {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	gap: 15px;
+	gap: 25px;
 	margin-bottom: 30px;
 }
 
 .admin-main-stat-card {
 	background: white;
-	padding: 20px;
-	border-radius: 8px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-	border: 1px solid #f0f0f0;
-	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	border: none;
+	border-radius: 10px;
+	padding: 30px;
 	text-align: center;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .admin-main-stat-card:hover {
-	transform: translateY(-1px);
-	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	transform: translateY(-5px);
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .admin-main-stat-card h3 {
-	margin: 0 0 8px 0;
-	color: #F69800;
-	font-size: 1.1rem;
+	color: #6D707B;
+	margin: 0 0 15px 0;
+	font-size: 16px;
 	font-weight: 600;
 }
 
 .admin-main-stat-number {
-	font-size: 2rem;
-	font-weight: 700;
-	color: #333;
-	margin: 8px 0;
+	color: #F69800;
+	font-size: 36px;
+	font-weight: bold;
+	margin: 15px 0;
 }
 
 .admin-main-stat-description {
-	color: #666;
-	font-size: 0.85rem;
+	color: #AFB2BD;
+	font-size: 14px;
+	margin: 0;
 }
 
-/* 빠른 작업 섹션 */
+/* ========== 메인 페이지 빠른 작업 ========== */
 .admin-main-quick-actions {
 	background: white;
-	padding: 25px;
-	border-radius: 12px;
-	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-	border: 1px solid #f0f0f0;
+	border: none;
+	border-radius: 10px;
+	padding: 35px;
+	margin-bottom: 30px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .admin-main-quick-actions h3 {
-	margin: 0 0 20px 0;
-	color: #333;
-	font-size: 1.3rem;
+	color: #1B202F;
+	margin-bottom: 25px;
+	font-size: 22px;
+	text-align: center;
 	font-weight: 600;
 }
 
 .admin-main-action-buttons {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-	gap: 15px;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 20px;
 }
 
 .admin-main-action-btn {
-	padding: 15px 20px;
-	border: 2px solid #F69800;
-	background: white;
-	color: #F69800;
+	background: linear-gradient(135deg, #F69800 0%, #e68900 100%);
+	color: white;
 	text-decoration: none;
+	padding: 20px 25px;
 	border-radius: 8px;
 	text-align: center;
 	font-weight: 600;
-	transition: all 0.2s ease;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 8px;
+	transition: all 0.3s ease;
+	display: block;
+	box-shadow: 0 4px 15px rgba(246, 152, 0, 0.3);
+	font-size: 15px;
 }
 
 .admin-main-action-btn:hover {
-	background: #F69800;
+	background: linear-gradient(135deg, #e68900 0%, #d17800 100%);
 	color: white;
 	text-decoration: none;
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(246, 152, 0, 0.4);
 } 
