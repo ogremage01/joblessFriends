@@ -1,5 +1,6 @@
 package com.joblessfriend.jobfinder.member.dao;
 
+import com.joblessfriend.jobfinder.member.domain.ApplyPostVo;
 import com.joblessfriend.jobfinder.recruitment.domain.*;
 import com.joblessfriend.jobfinder.util.SearchVo;
 
@@ -85,7 +86,7 @@ public class MemberRecruitmentDaoImpl implements MemberRecruitmentDao {
 
 
 	@Override
-	public List<RecruitmentVo> selectApplicationList(int memberId, SearchVo searchVo) {
+	public List<ApplyPostVo> selectApplicationList(int memberId, SearchVo searchVo) {
 		// TODO Auto-generated method stub
 		Map<String, Object> queryMap = new HashMap<>();
 		queryMap.put("memberId", memberId);

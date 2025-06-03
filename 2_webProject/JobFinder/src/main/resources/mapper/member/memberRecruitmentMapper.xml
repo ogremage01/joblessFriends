@@ -92,5 +92,37 @@
         )
 	    </select>
 
+<select id="selectApplicationList" 
+        parameterType="map"
+        resultType="com.joblessfriend.jobfinder.member.domain.ApplyPostVo">
+
+    SELECT *
+    FROM (
+        SELECT ORITABLE.*, ROWNUM AS RN
+        FROM (
+            SELECT 
+                c.company_name AS companyName,
+                jp.title AS title,
+                rm.apply_date AS applyDate,
+                s.state_name AS state,
+                jp.job_post_id AS jobPostId,
+                c.company_id AS companyId
+            FROM JOB_POST jp
+            JOIN COMPANY c ON jp.company_id = c.company_id
+            JOIN RESUME_MANAGE rm ON jp.job_post_id = rm.job_post_id
+            JOIN STATE s ON rm.state_id = s.state_id
+            WHERE rm.member_id = #{memberId}
+
+            <if test="searchVo.keyword != null and searchVo.keyword != ''">
+                AND jp.title LIKE '%' || #{searchVo.keyword} || '%'
+            </if>
+
+            ORDER BY RM.APPLY_DATE ASC
+        ) ORITABLE
+        WHERE ROWNUM &lt;= #{searchVo.endRow}
+    )
+    WHERE RN &gt;= #{searchVo.startRow}
+
+</select>
 
 </mapper>

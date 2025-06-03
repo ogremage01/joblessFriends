@@ -75,11 +75,9 @@
 								</div>
 
 								<!-- 오른쪽: 버튼 및 마감일 -->
-								<span class="deleteBookmark" data-jobpostid="${item.jobPostId}">
-									<i class="bi bi-trash"></i>
-								</span>
+
 								<div class="job-action">
-									<button class="apply-btn" type="button" onclick="">지원하기</button>
+									<button class="deleteBookmark" type="button" data-jobpostid="${item.jobPostId}"><i class="bi bi-trash"></i>취소하기</button>
 									<div class="deadline">
 										~
 										<fmt:formatDate value="${item.endDate}" pattern="MM/dd(E)" />

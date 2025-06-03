@@ -150,7 +150,7 @@ public class ResumeController {
 	    // 세션에서 로그인 사용자 확인
 	    MemberVo loginUser = (MemberVo) session.getAttribute("userLogin");
 	    if (loginUser == null) {
-	        return "redirect:/login"; // 로그인 안 된 경우
+	        return "redirect:/auth/login"; // 로그인 안 된 경우
 	    }
 
 	    int memberId = loginUser.getMemberId();

@@ -134,21 +134,10 @@ function connectWebSocket(roomId) {
 					// 해당 채팅방을 목록의 맨 위로 이동
 					moveRoomToTop(data.roomId);
 				}
-
-				// 채팅방 목록 갱신 (TALK 메시지 수신 시)
-				if (data.type === 'TALK' && data.roomId !== currentRoomId) {
-					// loadChatRooms(); // 기존 호출 주석 처리 또는 삭제
-					// 대신, 특정 채팅방의 정보만 업데이트하거나, UI에서 해당 채팅방을 상단으로 이동시키는 등의 로직 추가 가능
-					// 예를 들어, 새로운 메시지를 받은 채팅방을 목록 상단으로 옮기고 싶다면:
-					// moveRoomToTop(data.roomId);
-				}
 			} catch (err) {
 				console.error('메시지 처리 중 오류:', err);
 			}
-			
-			
 		};
-
 
 		// 연결 종료 시
 		ws.onclose = function(event) {
@@ -305,7 +294,6 @@ function selectRoom(roomId, roomName) {
 	console.log(`[selectRoom] Resetting unread count for room ${roomId} to 0.`);
 	unreadCounts[roomId] = 0;
 	updateRoomBadge(roomId, 0); // 뱃지 즉시 업데이트
-	// loadChatRooms(); // 기존 호출 주석 처리 또는 삭제
 }
 
 /**
@@ -331,8 +319,6 @@ function updateRoomList(rooms, listId) {
 	roomList.innerHTML = validRooms.map(room => {
 		const roomId = room.roomId.trim();
 		let displayName = room.name ? room.name.trim() : roomId;
-
-		
 
 		// 서버에서 제공하는 unreadCount 사용, 없으면 0으로 초기화
 		const unread = room.unreadCount !== undefined ? room.unreadCount : 0;
@@ -392,11 +378,8 @@ function loadPreviousMessages(roomId) {
 		.then(data => {
 			if (Array.isArray(data)) {
 				// 메시지를 timestamp 기준으로 오름차순 정렬 (오래된 메시지가 먼저)
-				// 메시지 객체에 'timestamp' 필드가 있다고 가정합니다. 실제 필드명에 따라 수정 필요.
 				data.sort((a, b) => {
-					// a.timestamp와 b.timestamp가 숫자 또는 Date 객체라고 가정합니다.
-					// 실제 데이터 타입에 맞춰 비교 로직 조정이 필요할 수 있습니다.
-					if (!a.timestamp || !b.timestamp) return 0; // timestamp 없는 경우 순서 변경 안함
+					if (!a.timestamp || !b.timestamp) return 0;
 					return new Date(a.timestamp) - new Date(b.timestamp);
 				});
 				console.log("[loadPreviousMessages] Sorted messages:", data);
@@ -426,20 +409,14 @@ function updateRoomBadge(roomId, count) {
     if (badge) {
         badge.textContent = count;
         if (count > 0) {
-            badge.style.display = ''; // 보이도록 설정
+            badge.style.display = '';
             console.log(`[updateRoomBadge] Badge for room ${roomId} updated to ${count} and shown.`);
         } else {
-            badge.style.display = 'none'; // 숨김 처리
+            badge.style.display = 'none';
             console.log(`[updateRoomBadge] Badge for room ${roomId} updated to ${count} and hidden.`);
         }
     } else {
-        // 뱃지가 없는 경우 (채팅방 목록이 아직 완전히 로드되지 않았거나, 해당 채팅방이 목록에 없을 때)
-        // loadChatRooms()를 호출하여 전체 목록을 다시 그리도록 할 수 있으나,
-        // 이는 성능에 영향을 줄 수 있으므로, 상황에 맞게 조정 필요.
-        // 여기서는 일단 콘솔에 로그만 남김.
         console.warn(`[updateRoomBadge] Badge for room ${roomId} not found. Current unreadCounts:`, unreadCounts);
-        // 필요하다면 loadChatRooms(); 호출
-        // loadChatRooms(); // 주석 처리 - 필요시 활성화
     }
 }
 
@@ -456,11 +433,6 @@ function moveRoomToTop(roomId) {
         }
     } else {
         console.warn(`Room element for roomId ${roomId} not found. Cannot move to top.`);
-        // 만약 방이 동적으로 추가되는 경우 (초기 로드에 없었던 방),
-        // 여기서 loadChatRooms() 또는 특정 타입의 fetchRooms를 호출하여 목록을 갱신할 수 있습니다.
-        // 예: 해당 방의 타입을 안다면 특정 목록만 갱신
-        // if (isMemberRoom(roomId)) fetchRooms('member', 'memberRoomList');
-        // else if (isCompanyRoom(roomId)) fetchRooms('company', 'companyRoomList');
     }
 }
 
@@ -494,6 +466,29 @@ function removeInactivityMessage() {
 }
 
 // =========================================
+// 디버깅 및 상태 확인 함수들
+// =========================================
+
+/**
+ * WebSocket 연결 상태 확인 (디버깅용)
+ */
+function checkWebSocketStatus() {
+	console.log('=== WebSocket 연결 상태 ===');
+	console.log('채팅 WebSocket:', ws ? ws.readyState : 'null');
+	console.log('현재 선택된 채팅방:', currentRoomId);
+	console.log('안읽은 메시지 카운트:', unreadCounts);
+	
+	if (ws) {
+		const states = ['CONNECTING', 'OPEN', 'CLOSING', 'CLOSED'];
+		console.log('채팅 WebSocket 상태:', states[ws.readyState] || 'UNKNOWN');
+	}
+	console.log('==========================');
+}
+
+// 전역 함수로 등록 (브라우저 콘솔에서 호출 가능)
+window.checkWebSocketStatus = checkWebSocketStatus;
+
+// =========================================
 // 초기 실행 설정
 // =========================================
 
@@ -511,6 +506,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		updateLastActivityTime();
 		sendMessage();
 	});
+});
+
+// 페이지 언로드 시 정리
+window.addEventListener('beforeunload', () => {
+	if (ws) {
+		ws.close();
+	}
 });
 
 

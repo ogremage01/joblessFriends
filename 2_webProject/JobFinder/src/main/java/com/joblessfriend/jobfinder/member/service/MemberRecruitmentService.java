@@ -1,6 +1,7 @@
 package com.joblessfriend.jobfinder.member.service;
 
 import com.joblessfriend.jobfinder.job.domain.JobVo;
+import com.joblessfriend.jobfinder.member.domain.ApplyPostVo;
 import com.joblessfriend.jobfinder.recruitment.domain.*;
 import com.joblessfriend.jobfinder.util.SearchVo;
 
@@ -21,7 +22,7 @@ public interface MemberRecruitmentService {
 
 	public int applicationCount(int memberId, SearchVo searchVo);
 
-	public List<RecruitmentVo> selectApplicationList(int memberId, SearchVo searchVo);
+	public List<ApplyPostVo> selectApplicationList(int memberId, SearchVo searchVo);
 
 	
 	
