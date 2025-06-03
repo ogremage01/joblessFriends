@@ -71,8 +71,8 @@
                             <div class="chat-input-form" style="padding: 15px 20px; border-top: 1px solid #dee2e6; background-color: #f8f9fa;">
                                 <form id="chatForm" class="d-flex gap-2" onsubmit="return false;">
                                     <input type="text" id="chatInput" class="form-control" 
-                                        placeholder="메시지를 입력하세요" autocomplete="off" disabled />
-                                    <button type="submit" class="add-btn" disabled>
+                                        placeholder="메시지를 입력하세요" autocomplete="off" />
+                                    <button type="submit" class="add-btn">
                                         전송
                                     </button>
                                 </form>

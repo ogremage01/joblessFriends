@@ -82,7 +82,7 @@ public class CompanyRecruitmentController {
 	public String jobPostApplicantsList(HttpSession session, @PathVariable int jobPostId) {
 		CompanyVo companyVo = (CompanyVo) session.getAttribute("userLogin");
 		if (companyVo == null) {
-			return "redirect:/login";
+			return "redirect:/auth/login";
 		}
 
 		return "company/recruitment/applicantsListView";

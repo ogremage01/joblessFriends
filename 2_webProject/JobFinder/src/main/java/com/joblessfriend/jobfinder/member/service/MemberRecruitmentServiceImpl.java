@@ -1,6 +1,7 @@
 package com.joblessfriend.jobfinder.member.service;
 
 import com.joblessfriend.jobfinder.member.dao.MemberRecruitmentDao;
+import com.joblessfriend.jobfinder.member.domain.ApplyPostVo;
 import com.joblessfriend.jobfinder.recruitment.domain.*;
 import com.joblessfriend.jobfinder.util.SearchVo;
 
@@ -54,7 +55,7 @@ public class MemberRecruitmentServiceImpl implements MemberRecruitmentService {
 
 
 	@Override
-	public List<RecruitmentVo> selectApplicationList(int memberId, SearchVo searchVo) {
+	public List<ApplyPostVo> selectApplicationList(int memberId, SearchVo searchVo) {
 		// TODO Auto-generated method stub
 		return recruitmentDao.selectApplicationList(memberId, searchVo);
 	}

@@ -1,5 +1,6 @@
 package com.joblessfriend.jobfinder.member.dao;
 
+import com.joblessfriend.jobfinder.member.domain.ApplyPostVo;
 import com.joblessfriend.jobfinder.recruitment.domain.*;
 import com.joblessfriend.jobfinder.util.SearchVo;
 
@@ -23,7 +24,7 @@ public interface MemberRecruitmentDao {
 
 	int applicationCount(int memberId, SearchVo searchVo);
 
-	List<RecruitmentVo> selectApplicationList(int memberId, SearchVo searchVo);
+	List<ApplyPostVo> selectApplicationList(int memberId, SearchVo searchVo);
 
 
 }

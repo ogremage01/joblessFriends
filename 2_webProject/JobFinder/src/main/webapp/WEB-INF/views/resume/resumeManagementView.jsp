@@ -75,7 +75,7 @@
                       <div class="resume-education">
                         <c:forEach var="school" items="${resume.schoolList}">
                           <span>
-                            ${school.sortation} / ${school.schoolName}
+                             ${school.schoolName}
                             <c:if test="${not empty school.majorName}"> / ${school.majorName}</c:if>
                             / ${school.status}
                           </span><br/>

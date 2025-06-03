@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.joblessfriend.jobfinder.auth.controller.AuthController;
+import com.joblessfriend.jobfinder.member.domain.ApplyPostVo;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import com.joblessfriend.jobfinder.member.service.MemberRecruitmentService;
 import com.joblessfriend.jobfinder.member.service.MemberService;
@@ -117,7 +118,7 @@ public class MemberController {
 		model.addAttribute("searchVo", searchVo);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("recruitmentList", recruitmentList);
-		//model.addAttribute("skillMap", skillMap);
+		model.addAttribute("skillMap", skillMap);
 
 		return "member/bookmark/bookmarkView";
 	}
@@ -179,11 +180,11 @@ public class MemberController {
 		  recruitmentService.applicationCount(memberId, searchVo); Pagination
 		  pagination = new Pagination(totalPage, searchVo); // Oracle 11g에 맞게 startRow, endRow 계산 searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
 		  searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
-		  //List<RecruitmentVo> recruitmentList = recruitmentService.selectApplicationList(memberId, searchVo);
+		  List<ApplyPostVo> applicationList = recruitmentService.selectApplicationList(memberId, searchVo);
 		  
 		  model.addAttribute("searchVo", searchVo); 
 		  model.addAttribute("pagination", pagination); 
-		  //model.addAttribute("recruitmentList", recruitmentList);
+		  model.addAttribute("applicationList", applicationList);
 		 
 		
 		return "member/application/applicationView";

@@ -158,7 +158,7 @@ $(".right").click(function() {
 function openChat(event) {
 	event.preventDefault();
 
-	var loginType = document.getElementById("session-data").dataset.userId;
+	var loginType = event.currentTarget.dataset.userType;
 
 
 	var chatUrl = "";
