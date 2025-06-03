@@ -307,12 +307,12 @@ body {
 }
 
 /* ========== 링크 스타일 ========== */
-.post-title-link, .recruitment-link, .member-email-link, .jobgroup-link {
+.post-title-link, .recruitment-link, .member-email-link, .jobgroup-link , .company-name-link {
 	color: #F69800;
 	text-decoration: none;
 }
 
-.post-title-link:hover, .recruitment-link:hover, .member-email-link:hover, .jobgroup-link:hover {
+.post-title-link:hover, .recruitment-link:hover, .member-email-link:hover, .jobgroup-link:hover, .company-name-link:hover {
 	text-decoration: underline;
 }
 
@@ -433,7 +433,7 @@ body {
 	color: white;
 	text-decoration: none;
 	border-radius: 5px;
-	margin-bottom: 15px;
+	
 	font-size: 14px;
 }
 
@@ -518,7 +518,6 @@ body {
 
 .skill-category {
 	color: #6D707B;
-	font-style: italic;
 }
 
 .comment-content {

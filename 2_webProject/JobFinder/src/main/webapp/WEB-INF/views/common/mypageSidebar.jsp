@@ -21,7 +21,7 @@
 				</a>
 			</li>
 			<li>
-				<i class="bi bi-briefcase"></i> 구직활동 내역
+				<a href="/member/application"><i class="bi bi-briefcase"></i> 구직활동 내역</a>
 			</li>
 			<li>
 				<a href="/member/info" style="text-decoration: none;">
@@ -30,7 +30,7 @@
 			</li>
 			<li>
 				<a href="/member/bookmark" style="text-decoration: none;">
-					<i class="bi bi-star-fill"></i> 내가 찜한 공고
+					<i class="bi bi-star"></i> 내가 찜한 공고
 				</a>
 			</li>
 		</ul>

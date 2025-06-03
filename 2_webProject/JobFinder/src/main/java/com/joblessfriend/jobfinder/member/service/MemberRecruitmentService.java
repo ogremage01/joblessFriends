@@ -19,6 +19,10 @@ public interface MemberRecruitmentService {
 	//찜 저장
 	public void bookMarkInsertOne(int memberId, int jobPostId);
 
+	public int applicationCount(int memberId, SearchVo searchVo);
+
+	public List<RecruitmentVo> selectApplicationList(int memberId, SearchVo searchVo);
+
 	
 	
 

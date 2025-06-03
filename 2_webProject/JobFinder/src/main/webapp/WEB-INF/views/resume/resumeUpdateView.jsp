@@ -21,6 +21,7 @@
 	  <div class="sidebar-title">▲ TOP</div>
 	  <ul class="sidebar-links">
 	    <li><a href="#section-personal">인적사항</a></li>
+	    <li><a href="#section-job">희망직무</a></li>
 	    <li><a href="#section-skill">스킬</a></li>
 	    <li><a href="#section-edu">학력</a></li>
 	    <li><a href="#section-career">경력</a></li>
@@ -107,26 +108,24 @@
 
 	<section class="section-block" id="section-edu">
 		<h2>학력</h2>
-		<div id="school-container">
-			<!-- 기존 학력 데이터 표시 -->
-			<c:forEach var="school" items="${resumeData.schoolList}" varStatus="status">
-				<div class="school-entry">
-					<button type="button" class="delete-btn">×</button>
-					
-					<div class="field-block">
-						<label>구분</label>
-						<select name="sortation">
-							<option value="high" <c:if test="${school.sortation == 'high'}">selected</c:if>>고등학교</option>
-							<option value="univ4" <c:if test="${school.sortation == 'univ4'}">selected</c:if>>대학교(4년)</option>
-							<option value="univ2" <c:if test="${school.sortation == 'univ2'}">selected</c:if>>대학교(2,3년)</option>
-							<option value="master" <c:if test="${school.sortation == 'master'}">selected</c:if>>석사</option>
-							<option value="doctor" <c:if test="${school.sortation == 'doctor'}">selected</c:if>>박사</option>
-							
-						</select>
-					</div>
-					
-					<c:if test="${school.sortation == 'high'}">
-						<div class="grid-3">
+		<div class="edu-row-combined">		   
+			   <!-- 학교 구분 선택 -->
+			<div class="field-block">
+				<label>구분</label>
+				<select id="schoolTypeSelect">
+					<option value="">선택</option>
+					<option value="high">고등학교</option>
+					<option value="univ4">대학교(4년)</option>
+					<option value="univ2">대학교(2,3년)</option>
+				</select>
+			</div>
+			
+			<!-- 여기에 동적으로 필드가 채워짐 -->
+			<div id="edu-dynamic-fields" style="display: contents;">
+				<!-- 기존 학력 데이터 표시 -->
+				<c:forEach var="school" items="${resumeData.schoolList}" varStatus="status">
+					<div class="edu-row-combined school-entry">
+						<c:if test="${school.sortation == 'high'}">
 							<div class="field-block school-autocomplete-block">
 								<label>학교명</label>
 								<input type="text" name="schoolName" placeholder="학교명을 입력해주세요" value="${school.schoolName}" autocomplete="off" />
@@ -144,10 +143,9 @@
 									<option value="재학중" <c:if test="${school.status == '재학중'}">selected</c:if>>재학중</option>
 								</select>
 							</div>
-						</div>
-					</c:if>
-					<c:if test="${school.sortation != 'high'}">
-						<div class="grid-2">
+							<input type="hidden" name="sortation" value="high" />
+						</c:if>
+						<c:if test="${school.sortation != 'high'}">
 							<div class="field-block school-autocomplete-block">
 								<label>학교명</label>
 								<input type="text" name="schoolName" placeholder="대학교명을 입력해주세요" value="${school.schoolName}" autocomplete="off" />
@@ -158,8 +156,6 @@
 								<input type="text" name="majorName" placeholder="전공명을 입력해주세요" value="${school.majorName}" autocomplete="off" />
 								<ul class="autocomplete-list" style="display: none;"></ul>
 							</div>
-						</div>
-						<div class="grid-3">
 							<div class="field-block">
 								<label>입학년월</label>
 								<input type="text" name="startDate" placeholder="예시) 2020.03" value="<fmt:formatDate value="${school.startDate}" pattern='yyyy.MM'/>"/>
@@ -176,10 +172,13 @@
 									<option value="재학중" <c:if test="${school.status == '재학중'}">selected</c:if>>재학중</option>
 								</select>
 							</div>
-						</div>
-					</c:if>
-				</div>
-			</c:forEach>
+							<input type="hidden" name="sortation" value="${school.sortation}" />
+						</c:if>
+						<button type="button" class="delete-btn">×</button>
+					</div>
+				</c:forEach>
+			</div>
+			
 		</div>
 		
 		<div class="add-education-btn">
@@ -206,14 +205,14 @@
 						</div>
 						<div class="field-block">
 							<label>입사년월</label>
-							<input type="text" name="hireYm" placeholder="예시) 2025.04" value="<fmt:formatDate value="${career.hireYm}" pattern='yyyy.MM'/>" />
+							<input type="text" name="hireYm" placeholder="예시) 2025.04" value="${career.hireYm}" />
 						</div>
 					</div>
 					
 					<div class="grid-3">
 						<div class="field-block">
 							<label>퇴사년월</label>
-							<input type="text" name="resignYm" placeholder="예시) 2025.04" value="<fmt:formatDate value="${career.resignYm}" pattern='yyyy.MM'/>" />
+							<input type="text" name="resignYm" placeholder="예시) 2025.04" value="${career.resignYm}" />
 						</div>
 						
 						<div class="field-block">
@@ -262,10 +261,10 @@
 	
 	<section class="section-block" id="section-training">
 		<h2>교육</h2>
-		<div id="training-container">
+		<div id="education-container">
 			<!-- 기존 교육 데이터 표시 -->
 			<c:forEach var="education" items="${resumeData.educationList}">
-				<div class="training-entry">
+				<div class="education-entry">
 					<button class="delete-btn">×</button>
 				
 					<div class="grid-4">
@@ -344,10 +343,10 @@
 			<!-- 기존 포트폴리오 데이터 표시 -->
 			<c:forEach var="portfolio" items="${resumeData.portfolioList}">
 				<div class="portfolio-entry">
-					<button type="button" class="delete-btn">×</button>
+					<button class="delete-btn">×</button>
 					<div class="portfolio-upload-box">
 						<label>
-							<span class="plus-icon">✓</span>
+							<span class="plus-icon">＋</span>
 							파일: ${portfolio.fileName}
 							<input type="file" name="portfolioFile" style="display: none;" />
 						</label>
@@ -377,78 +376,16 @@ window.isEditMode = true;
 window.currentResumeId = '${jsResumeId}';
 window.uploadedImageUrl = '${jsProfile}';
 
-// 기존 스킬 데이터 - 안전하게 초기화
-window.existingSkills = [];
-
 // 프로필 이미지 초기화
 document.addEventListener('DOMContentLoaded', function() {
   if (typeof window.initProfileImage === 'function') {
     window.initProfileImage();
   }
-  
-  // 기존 스킬 데이터 로드 (서버에서 안전하게 처리됨)
-  if (window.existingSkills && window.existingSkills.length > 0) {
-    window.existingSkills.forEach(function(skill) {
-      selectedSkills.add(String(skill.tagId));
-    });
-    
-    // 스킬 UI 초기화 후 기존 스킬 표시
-    setTimeout(function() {
-      const selectedSkillTags = document.getElementById("selectedSkillTags");
-      if (selectedSkillTags) {
-        window.existingSkills.forEach(function(skill) {
-          const tagElem = document.createElement("span");
-          tagElem.className = "skill-hashtag";
-          tagElem.textContent = "#" + skill.tagName;
-          tagElem.dataset.tagId = skill.tagId;
-          
-          const xBtn = document.createElement("button");
-          xBtn.type = "button";
-          xBtn.className = "remove-skill-tag";
-          xBtn.textContent = "×";
-          xBtn.addEventListener("click", function() {
-            selectedSkills.delete(String(skill.tagId));
-            tagElem.remove();
-          });
-          tagElem.appendChild(xBtn);
-          selectedSkillTags.appendChild(tagElem);
-        });
-      }
-    }, 100);
-  }
-  
-  // 기존 학력 데이터에 자동완성 기능 연결
-  document.querySelectorAll('.school-entry').forEach(function(entry) {
-    const sortationSelect = entry.querySelector('select[name="sortation"]');
-    const fieldsContainer = entry.querySelector('.grid-3, .grid-2');
-    
-    if (sortationSelect && fieldsContainer) {
-      const sortation = sortationSelect.value;
-      if (sortation) {
-        attachAutocomplete(fieldsContainer.parentElement, sortation);
-      }
-    }
-  });
 });
 </script>
 
-<!-- 기존 스킬 데이터를 JavaScript로 안전하게 추가 -->
-<c:if test="${not empty skillList}">
-<c:forEach var="skill" items="${skillList}">
-<script>
-if (window.existingSkills) {
-  window.existingSkills.push({
-    tagId: ${skill.tagId},
-    tagName: '${fn:replace(skill.tagName, "'", "\\'")}'
-  });
-}
-</script>
-</c:forEach>
-</c:if>
-
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-3fp9tS8p9A2Mq7Qz+S8jfwD+xdgu9T+O+NRZz8N5eA8=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/js/resume/resumeView.js"></script>
 </body>
 </html> 

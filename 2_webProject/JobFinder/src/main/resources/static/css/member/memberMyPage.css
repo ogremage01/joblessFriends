@@ -34,3 +34,18 @@ body {
 	border: 1px solid black;
 	height: 500px;
 }
+
+
+.applicationTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.applicationTable>thead {
+   background-color: #f5f6fa;;
+   border-top: 1px solid #737789;
+   font-weight: bold;;
+   font-size: 14px;
+   color: #2d2d41;
+   height: 45px;;
+}
