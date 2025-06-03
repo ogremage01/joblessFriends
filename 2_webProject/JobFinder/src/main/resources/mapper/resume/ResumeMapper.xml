@@ -335,4 +335,11 @@
         DELETE FROM PORTFOLIO WHERE RESUME_ID = #{resumeId}
     </delete>
     
+    <select id="selectCareerGradeScore" resultType="int" parameterType="int">
+    	SELECT SCORE
+		FROM CAREER_GRADE
+		WHERE LOW_YEAR &lt;= #{careerJobYear}
+		AND HIGH_YEAR > #{careerJobYear}
+    </select>
+    
 </mapper>

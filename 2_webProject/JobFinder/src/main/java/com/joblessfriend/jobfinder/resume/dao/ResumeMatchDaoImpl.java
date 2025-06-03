@@ -13,18 +13,13 @@ public class ResumeMatchDaoImpl implements ResumeMatchDao{
 	@Autowired
 	private SqlSession sqlSession;
 	
-	String namespace = "com.joblessfreind.jobfinder.";
+	String namespace = "com.joblessfreind.jobfinder.resume.";
 	
 	@Override
-	public ResumeVo selectResume(int resumeId) {
+	public int selectCareerGradeScore(int careerJobYear) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace + "resume.selectResume", resumeId);
-	}
+		return sqlSession.selectOne(namespace + "selectCareerGradeScore", careerJobYear);
 
-	@Override
-	public RecruitmentVo selectRecruitment(int jobPostId) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace + "recruitment.dao.RecruitmentDao.selectRecruitment", jobPostId);
 	}
 
 }
