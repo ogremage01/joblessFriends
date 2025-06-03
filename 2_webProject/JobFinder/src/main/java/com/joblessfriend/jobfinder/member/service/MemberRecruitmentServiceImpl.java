@@ -45,4 +45,18 @@ public class MemberRecruitmentServiceImpl implements MemberRecruitmentService {
 		recruitmentDao.bookMarkInsertOne(memberId, jobPostId);
 	}
 
+
+	@Override
+	public int applicationCount(int memberId, SearchVo searchVo) {
+		// TODO Auto-generated method stub
+		return recruitmentDao.applicationCount(memberId, searchVo);
+	}
+
+
+	@Override
+	public List<RecruitmentVo> selectApplicationList(int memberId, SearchVo searchVo) {
+		// TODO Auto-generated method stub
+		return recruitmentDao.selectApplicationList(memberId, searchVo);
+	}
+
 }

@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="/css/common/common.css">
 <link rel="stylesheet" href="/css/member/memberMyPage.css" />
 <link rel="stylesheet" href="/css/member/myPageInfoView.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
 
@@ -21,7 +22,10 @@
 		    <div class="main">
 		    
 		    	<div class="content">
-			    	<h1 class="mainTitle">개인정보 관리</h1>
+			    	<h1 class="mainTitle">
+			    		<i class="bi bi-person-gear" style="color: #F69800;"></i>
+			    		개인정보 관리
+			    	</h1>
 	    			<input id="memberId" type="hidden" value="${sessionScope.userLogin.memberId}"/>
 	    			<input id="provider" type="hidden" value="${sessionScope.userLogin.provider}"/>
 			    	<div class="accountInfo">

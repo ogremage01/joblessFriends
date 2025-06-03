@@ -133,7 +133,6 @@
 input::placeholder,
 textarea::placeholder {
   color: #bbb; /* ← 연한 회색 */
-  font-style: italic; /* 선택사항 */
 }
 
 /* 인적사항 */
@@ -189,7 +188,6 @@ textarea::placeholder {
   width: 100%;
   box-sizing: border-box;
   position: relative; /* 버튼 절대 위치의 기준 */
-  
 }
 
 .field-block label {
@@ -210,20 +208,35 @@ textarea::placeholder {
   font-weight: 700;
   color: #36383F;
 }
-/* 돋보기 아이콘 */
+
+/* 돋보기 아이콘 - 고정 위치 */
 .address-search-btn {
   position: absolute;
   right: 10px;
-  bottom: 8px;
+  top: 35px; /* label 높이 고려하여 고정 위치 */
   background: none;
   border: none;
   cursor: pointer;
   font-size: 16px;
   color: #6D707B;
+  z-index: 10;
+  height: 24px;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .address-search-btn:hover {
   color: #000;
+}
+
+/* 에러 메시지 스타일 */
+.error-msg {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
 }
 
 .photo-wrapper {
@@ -339,7 +352,6 @@ textarea::placeholder {
 }
 
 
-/* 학력 */
 
 /* 구분 + 동적 필드 전체를 감싸는 행 */
 .edu-row-combined {
@@ -513,7 +525,7 @@ textarea::placeholder {
   cursor: pointer;
 }
 
-/* 자격증 (기존 스타일 제거) */
+/* 자격증 */
 
 .add-license-btn {
   text-align: center;
@@ -611,10 +623,8 @@ textarea::placeholder {
 .career-entry {
   position: relative;
   padding: 20px;
-  /* border: 1px solid #E0E0E0; */
   border-radius: 8px;
   margin-bottom: 20px;
-  /* background: #fafafa; */
 }
 
 /* 공통 삭제 버튼 스타일 */

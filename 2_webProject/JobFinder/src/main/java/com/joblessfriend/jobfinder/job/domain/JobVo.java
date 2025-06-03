@@ -9,4 +9,5 @@ public class JobVo {
     private int jobId;
     private int jobGroupId;
     private String jobName;
+    private String jobGroupName;
 }

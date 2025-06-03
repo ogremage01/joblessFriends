@@ -11,6 +11,7 @@
 <title>이력서 관리</title>
 <link rel="stylesheet" href="/css/common/common.css">
 <link rel="stylesheet" href="/css/resume/resumeManagementStyle.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
 
@@ -26,7 +27,10 @@
 			<!-- 메인 -->
 			<div class="main">
 				<div class="content">
-					<h1 class="mainTitle">이력서 관리</h1>
+					<h1 class="mainTitle">
+						<i class="bi bi-file-text" style="color: #F69800;"></i>
+						이력서 관리
+					</h1>
 					
 					<div class="item">
 

@@ -13,6 +13,7 @@ public class SkillVo {
     private Date createDate;
     private Date modifiedDate;
     private int jobGroupId;
+    private String category;
     private int resumeTag;
 
 }

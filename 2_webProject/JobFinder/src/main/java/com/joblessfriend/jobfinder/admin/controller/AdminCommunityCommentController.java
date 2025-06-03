@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.joblessfriend.jobfinder.admin.service.AdminCommunityCommentService;
-import com.joblessfriend.jobfinder.community.domain.CommunityVo;
 import com.joblessfriend.jobfinder.community.domain.PostCommentVo;
 import com.joblessfriend.jobfinder.util.Pagination;
 import com.joblessfriend.jobfinder.util.SearchVo;

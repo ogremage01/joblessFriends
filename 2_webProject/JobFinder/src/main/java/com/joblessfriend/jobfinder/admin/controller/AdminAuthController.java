@@ -1,5 +1,7 @@
 package com.joblessfriend.jobfinder.admin.controller;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.joblessfriend.jobfinder.admin.domain.AdminVo;
 import com.joblessfriend.jobfinder.admin.service.AdminAuthService;
+import com.joblessfriend.jobfinder.admin.service.AdminDashboardService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -23,6 +26,9 @@ public class AdminAuthController {
 
 	@Autowired
 	private AdminAuthService adminService; // 어드민 인증 서비스 주입
+	
+	@Autowired
+	private AdminDashboardService adminDashboardService; // 어드민 대시보드 서비스 주입
 
 	/**
 	 * /admin 기본 경로 접근 시 세션 확인 후 main 또는 login 페이지로 리다이렉트
@@ -88,6 +94,11 @@ public class AdminAuthController {
 	@GetMapping("/main")
 	public String main(Model model) {
 		logger.info("go to admin main");
+		
+		// 대시보드 통계 데이터 조회 및 모델에 추가
+		Map<String, Object> dashboardStats = adminDashboardService.getDashboardStatistics();
+		model.addAllAttributes(dashboardStats);
+		
 		return "admin/adminMainView"; // 어드민 메인 뷰 반환
 	}
 }

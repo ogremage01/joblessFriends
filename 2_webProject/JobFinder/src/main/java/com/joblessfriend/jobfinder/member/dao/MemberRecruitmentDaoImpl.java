@@ -73,4 +73,24 @@ public class MemberRecruitmentDaoImpl implements MemberRecruitmentDao {
 		sqlSession.selectList(namespace+".bookMarkInsertOne",queryMap);
 	}
 
+
+	@Override
+	public int applicationCount(int memberId, SearchVo searchVo) {
+		// TODO Auto-generated method stub
+		Map<String, Object> queryMap = new HashMap<>();
+		queryMap.put("memberId", memberId);
+		queryMap.put("searchVo", searchVo);
+		return sqlSession.selectOne(namespace + ".applicationCount", queryMap);
+	}
+
+
+	@Override
+	public List<RecruitmentVo> selectApplicationList(int memberId, SearchVo searchVo) {
+		// TODO Auto-generated method stub
+		Map<String, Object> queryMap = new HashMap<>();
+		queryMap.put("memberId", memberId);
+		queryMap.put("searchVo", searchVo);
+		return sqlSession.selectList(namespace + ".selectApplicationList", queryMap);
+	}
+
 }

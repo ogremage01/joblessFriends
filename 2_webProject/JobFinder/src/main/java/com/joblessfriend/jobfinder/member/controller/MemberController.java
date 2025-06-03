@@ -165,4 +165,29 @@ public class MemberController {
 		}
 		return ResponseEntity.ok(result);
 	}
+	
+	
+	
+	@GetMapping("/application")
+	public String applicationView(Model model, HttpSession session,
+			@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "") String keyword) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
+		int memberId = memberVo.getMemberId();
+		
+		  SearchVo searchVo = new SearchVo(); searchVo.setKeyword(keyword);
+		  searchVo.setPage(page); int totalPage =
+		  recruitmentService.applicationCount(memberId, searchVo); Pagination
+		  pagination = new Pagination(totalPage, searchVo); // Oracle 11g에 맞게 startRow, endRow 계산 searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
+		  searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
+		  //List<RecruitmentVo> recruitmentList = recruitmentService.selectApplicationList(memberId, searchVo);
+		  
+		  model.addAttribute("searchVo", searchVo); 
+		  model.addAttribute("pagination", pagination); 
+		  //model.addAttribute("recruitmentList", recruitmentList);
+		 
+		
+		return "member/application/applicationView";
+	}
+	
+	
 }

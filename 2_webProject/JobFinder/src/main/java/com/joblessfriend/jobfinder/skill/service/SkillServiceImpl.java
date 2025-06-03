@@ -1,3 +1,4 @@
+
 package com.joblessfriend.jobfinder.skill.service;
 
 import com.joblessfriend.jobfinder.skill.dao.SkillDao;

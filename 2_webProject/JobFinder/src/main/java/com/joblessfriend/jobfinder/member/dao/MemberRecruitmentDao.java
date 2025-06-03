@@ -21,5 +21,9 @@ public interface MemberRecruitmentDao {
 	//찜 저장
 	void bookMarkInsertOne(int memberId, int jobPostId);
 
+	int applicationCount(int memberId, SearchVo searchVo);
+
+	List<RecruitmentVo> selectApplicationList(int memberId, SearchVo searchVo);
+
 
 }
