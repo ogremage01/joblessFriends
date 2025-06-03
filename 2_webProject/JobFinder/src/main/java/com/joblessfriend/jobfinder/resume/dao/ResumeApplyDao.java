@@ -18,7 +18,9 @@ public interface ResumeApplyDao {
     void insertEducation(EducationVo educationVo);
 
     // 자격증 복사는 이름, 발급처, 취득일이 아닌 기존 CERTIFICATE_ID만 참조
-    void insertCertificateResume(int resumeId, int certificateId);
+    void insertCertificateResume(CertificateResumeVo certificateVo);
+
+
 
     void insertPortfolio(PortfolioVo portfolioVo);
 

@@ -2,16 +2,16 @@ package com.joblessfriend.jobfinder.company.controller;
 
 import com.joblessfriend.jobfinder.company.domain.ApplySummaryVo;
 import com.joblessfriend.jobfinder.company.domain.CompanyVo;
+import com.joblessfriend.jobfinder.company.domain.QuestionAnswerVo;
 import com.joblessfriend.jobfinder.company.service.CompanyApplyService;
 import com.joblessfriend.jobfinder.util.Pagination;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -61,5 +61,26 @@ public class CompanyApplyController {
 
         return "company/recruitment/applicantsListView";
     }
+    @GetMapping("/question-answer")
+    @ResponseBody
+    public List<QuestionAnswerVo> getQuestionAnswers(@RequestParam int jobPostId,
+                                                     @RequestParam int memberId) {
+        return companyApplyService.getQuestionAnswersByJobPostAndMember(jobPostId, memberId);
+    }
+
+    @PostMapping("/updateState")
+    @ResponseBody
+    public ResponseEntity<String> updateResumeState(@RequestParam int jobPostId,
+                                                    @RequestParam int memberId,
+                                                    @RequestParam int stateId) {
+        try {
+            companyApplyService.updateResumeState(jobPostId, memberId, stateId);
+            return ResponseEntity.ok("상태가 성공적으로 업데이트되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("상태 업데이트 중 오류가 발생했습니다.");
+        }
+    }
+
 
 }

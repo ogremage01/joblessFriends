@@ -9,6 +9,7 @@
 		<result property="resumeTitle" column="RESUME_TITLE"/>
 		<result property="applyDate" column="APPLY_DATE"/>
 		<result property="stateName" column="STATE_NAME"/>
+		<result property="memberId" column="MEMBER_ID"/>
 	</resultMap>
 
 	<select id="getApplyListByCompany" parameterType="map" resultMap="applySummaryResultMap">
@@ -17,7 +18,8 @@
 			rc.NAME AS MEMBER_NAME,
 			rc.RESUME_TITLE,
 			rm.APPLY_DATE,
-			s.STATE_NAME
+			s.STATE_NAME,
+			rm.MEMBER_ID
 		FROM RESUME_MANAGE rm
 				 JOIN RESUME_COPY rc ON rm.RM_ID = rc.RESUME_ID
 				 JOIN JOB_POST jp ON rm.JOB_POST_ID = jp.JOB_POST_ID
@@ -30,20 +32,28 @@
 
 
 	<select id="getPagedApplyList" parameterType="map" resultMap="applySummaryResultMap">
-		SELECT
-			rc.RESUME_ID,
-			rc.NAME AS MEMBER_NAME,
-			rc.RESUME_TITLE,
-			rm.APPLY_DATE,
-			s.STATE_NAME
-		FROM RESUME_MANAGE rm
-				 JOIN RESUME_COPY rc ON rm.RM_ID = rc.RESUME_ID
-				 JOIN JOB_POST jp ON rm.JOB_POST_ID = jp.JOB_POST_ID
-				 JOIN COMPANY c ON jp.COMPANY_ID = c.COMPANY_ID
-				 JOIN STATE s ON rm.STATE_ID = s.STATE_ID
-		WHERE c.COMPANY_ID = #{companyId}
-		  AND jp.JOB_POST_ID = #{jobPostId}
-		ORDER BY rm.APPLY_DATE DESC
+		SELECT * FROM (
+						  SELECT inner_query.*, ROWNUM AS rn
+						  FROM (
+								   SELECT
+									   rc.RESUME_ID,
+									   rc.NAME AS MEMBER_NAME,
+									   rc.RESUME_TITLE,
+									   rm.APPLY_DATE,
+									   s.STATE_NAME,
+									   rm.MEMBER_ID
+								   FROM RESUME_MANAGE rm
+											JOIN RESUME_COPY rc ON rm.RM_ID = rc.RESUME_ID
+											JOIN JOB_POST jp ON rm.JOB_POST_ID = jp.JOB_POST_ID
+											JOIN COMPANY c ON jp.COMPANY_ID = c.COMPANY_ID
+											JOIN STATE s ON rm.STATE_ID = s.STATE_ID
+								   WHERE c.COMPANY_ID = #{companyId}
+									 AND jp.JOB_POST_ID = #{jobPostId}
+								   ORDER BY rm.APPLY_DATE DESC
+							   ) inner_query
+						  WHERE ROWNUM &lt;= #{endRow}
+					  )
+		WHERE rn &gt;= #{startRow}
 	</select>
 
 
@@ -60,4 +70,32 @@
 		  AND jp.JOB_POST_ID = #{jobPostId}
 	</select>
 
+
+	<select id="getQuestionAnswersByJobPostAndMember"
+			parameterType="map"
+			resultType="com.joblessfriend.jobfinder.company.domain.QuestionAnswerVo">
+
+		SELECT
+			q.QUESTION_ORDER AS questionOrder,
+			q.QUESTION_TEXT AS questionText,
+			a.ANSWER_TEXT AS answerText
+		FROM
+			JOB_POST_QUESTION q
+				LEFT JOIN
+			JOB_POST_ANSWER a
+			ON q.QUESTION_ID = a.QUESTION_ID
+				AND a.MEMBER_ID = #{memberId}
+		WHERE
+			q.JOB_POST_ID = #{jobPostId}
+		ORDER BY
+			q.QUESTION_ORDER
+
+	</select>
+
+	<update id="updateResumeState" parameterType="map">
+		UPDATE RESUME_MANAGE
+		SET STATE_ID = #{stateId}
+		WHERE JOB_POST_ID = #{jobPostId}
+		  AND MEMBER_ID = #{memberId}
+	</update>
 </mapper>
