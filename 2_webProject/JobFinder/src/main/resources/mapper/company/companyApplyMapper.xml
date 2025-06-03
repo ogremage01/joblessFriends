@@ -92,5 +92,10 @@
 
 	</select>
 
-
+	<update id="updateResumeState" parameterType="map">
+		UPDATE RESUME_MANAGE
+		SET STATE_ID = #{stateId}
+		WHERE JOB_POST_ID = #{jobPostId}
+		  AND MEMBER_ID = #{memberId}
+	</update>
 </mapper>

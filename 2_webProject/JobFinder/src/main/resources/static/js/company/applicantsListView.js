@@ -59,8 +59,7 @@ function showApplicantQnA(questionAnswerList, memberName) {
         }
     });
 }
-
-// 버튼 클릭 이벤트 바인딩
+// 질문/답변 버튼 클릭 이벤트
 $(".btn-question").on("click", function () {
     const memberId = $(this).data("member-id");
     const jobPostId = $(this).data("jobpost-id");
@@ -75,6 +74,68 @@ $(".btn-question").on("click", function () {
         },
         error: function () {
             Swal.fire("에러", "질문/답변을 불러오는 데 실패했습니다.", "error");
+        }
+    });
+});
+
+
+// 지원 상태 변경 모달 열기
+function openStateChangeModal(jobPostId, memberId) {
+    Swal.fire({
+        title: '지원 상태 변경',
+        html: `
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <button class="swal2-confirm swal2-styled" onclick="changeState(1, ${jobPostId}, ${memberId})">지원</button>
+            <button class="swal2-confirm swal2-styled" onclick="changeState(2, ${jobPostId}, ${memberId})">서류합격</button>
+            <button class="swal2-confirm swal2-styled" onclick="changeState(3, ${jobPostId}, ${memberId})">최종합격</button>
+            <button class="swal2-cancel swal2-styled" onclick="changeState(0, ${jobPostId}, ${memberId})">불합격</button>
+          </div>
+        `,
+        showConfirmButton: false
+    });
+}
+
+
+// 상태 변경 로직 (ajax)
+function changeState(stateId, jobPostId, memberId) {
+    $.ajax({
+        url: "/company/apply/updateState",
+        method: "POST",
+        data: {
+            jobPostId: jobPostId,
+            memberId: memberId,
+            stateId: stateId
+        },
+        success: function () {
+            Swal.fire("변경 완료", "이력서의 지원 상태가 변경되었습니다.", "success")
+                .then(() => location.reload());
+        },
+        error: function () {
+            Swal.fire("오류", "상태 변경에 실패했습니다.", "error");
+        }
+    });
+}
+
+
+// 개별 버튼으로 상태 변경 (선택적 구현)
+$(".btn-change-state").on("click", function () {
+    const jobPostId = $(this).data("jobpost-id");
+    const memberId = $(this).data("member-id");
+    const newState = $(this).data("state-id");
+
+    $.ajax({
+        url: "/company/apply/updateState",
+        method: "POST",
+        data: {
+            jobPostId: jobPostId,
+            memberId: memberId,
+            stateId: newState
+        },
+        success: function () {
+            Swal.fire("성공", "지원 상태가 변경되었습니다.", "success").then(() => location.reload());
+        },
+        error: function () {
+            Swal.fire("실패", "변경 중 오류가 발생했습니다.", "error");
         }
     });
 });

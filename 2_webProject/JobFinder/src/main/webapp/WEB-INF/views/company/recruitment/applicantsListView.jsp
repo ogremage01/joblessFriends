@@ -36,6 +36,7 @@
                     <th>이력서보기</th>
                     <th>사전질문</th>
                     <th>적합도</th>
+                    <th>상태</th>
                     <th>관리</th>
                 </tr>
                 </thead>
@@ -44,6 +45,7 @@
                     <tr>
                         <td>${apply.memberName}</td>
                         <td>${apply.resumeTitle}</td>
+
                         <td><fmt:formatDate value="${apply.applyDate}" pattern="yyyy-MM-dd" /></td>
                         <td>이력서열람</td>
                         <td>
@@ -55,6 +57,8 @@
                         </td>
                         <td>80%</td>
                         <td>${apply.stateName}</td>
+                        <td><button class="btn-state" onclick="openStateChangeModal(${jobPostId}, ${apply.memberId})">상태 변경</button>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

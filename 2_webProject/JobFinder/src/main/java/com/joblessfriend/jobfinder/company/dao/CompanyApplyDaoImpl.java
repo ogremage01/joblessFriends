@@ -40,4 +40,10 @@ public class CompanyApplyDaoImpl implements CompanyApplyDao {
         param.put("memberId", memberId);
         return sqlSession.selectList(NAMESPACE + ".getQuestionAnswersByJobPostAndMember", param);
     }
+
+    @Override
+    public void updateResumeState(Map<String, Object> param) {
+        sqlSession.update(NAMESPACE + ".updateResumeState", param);
+    }
+
 }

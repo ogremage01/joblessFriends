@@ -14,5 +14,5 @@ public interface CompanyApplyService {
     List<ApplySummaryVo> getPagedApplyList(Map<String, Object> paramMap);
 
     List<QuestionAnswerVo> getQuestionAnswersByJobPostAndMember(int jobPostId, int memberId);
-
+    void updateResumeState(int jobPostId, int memberId, int stateId);
 }

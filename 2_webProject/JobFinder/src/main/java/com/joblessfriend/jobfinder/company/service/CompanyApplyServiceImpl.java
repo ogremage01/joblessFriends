@@ -8,6 +8,7 @@ import com.joblessfriend.jobfinder.company.domain.QuestionAnswerVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,4 +37,17 @@ public class CompanyApplyServiceImpl implements CompanyApplyService {
     public List<QuestionAnswerVo> getQuestionAnswersByJobPostAndMember(int jobPostId, int memberId) {
         return companyApplyDao.getQuestionAnswersByJobPostAndMember(jobPostId, memberId);
     }
+
+
+    @Override
+    public void updateResumeState(int jobPostId, int memberId, int stateId) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("jobPostId", jobPostId);
+        param.put("memberId", memberId);
+        param.put("stateId", stateId);
+
+        companyApplyDao.updateResumeState(param);
+    }
+
+
 }
