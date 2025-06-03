@@ -145,6 +145,26 @@
 /*     margin-top: 6px; */
     font-size: 14px;
     color: #555;
+    
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+/* 태그 스타일 */
+.job-meta-skill div{
+	
+	/* 	스타일 1 */
+	border: 1px solid #F69800;
+	background-color: rgb(255, 249, 238);
+	color:  #F69800;
+
+	/* 	스타일 2 */
+/* 	background-color: #F69800; */
+/* 	color: white; */
+	
+	border-radius: 15px;
+	padding: 3px 10px;
 }
 
 .job-action {
@@ -290,7 +310,8 @@ h2 {
     justify-content: center;
     align-items: center;
     background-color: white;
-    border: 1px solid #ccc;
+    border: none;
+    outline: 1px solid #ccc;
     color: #333;
     padding: 6px 12px;
     margin: 0 2px;
@@ -304,10 +325,10 @@ h2 {
 }
 
 .page-btn.active {
-    background-color: #2e7d32;
-    color: white;
+    color: #F69800;
     font-weight: bold;
     border: none;
+    outline: 1px solid #F69800;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 button[disabled] {
@@ -388,6 +409,7 @@ button[disabled] {
     margin-right: 8px;
 }
 
+
 /* 찜 추가기능 */
 .star{
 	border: 0px;
@@ -398,4 +420,5 @@ button[disabled] {
 	border: 0px;
 	outline: 0px;
 }
+
 

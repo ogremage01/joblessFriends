@@ -42,3 +42,20 @@
 		top: 30px;
 	}
 	
+	
+	/* 	모달팝업 api 스타일 */
+	.swalConfirmBtn {
+		background: #F69800;
+		color: white;
+	}
+	.swalConfirmBtn:hover {
+		background-color: rgb(227, 142, 0);
+	}
+	
+	.swalCancelBtn {
+		background-color: #f0f0f0;
+		color: black;
+	}
+	.swalCancelBtn:hover {
+		background-color: rgb(233, 233, 233);
+	}

@@ -1624,7 +1624,7 @@ INSERT INTO JOB_POST (
              고압송전설비의 정기 점검, 이상징후 예측 및 긴급 복구 작업 등
              실무 경험이 요구됩니다. 전기기사 또는 전기산업기사 자격 보유자 우대.',
              '3300', '주 5일(월~금)', 216, 15,
-             41, '/img/한국전력.jpg', '3~5년', '대학 졸업(2,3년)', 'default',
+             41, '/img/Korea_Electric.jpg', '3~5년', '대학 졸업(2,3년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-08', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
          );
@@ -1679,7 +1679,7 @@ INSERT INTO JOB_POST (
              항공운항 전반을 책임지는 핵심 부서입니다.
              항공관련 학과 졸업자 및 항공안전 관련 자격증 소지자 우대.',
              '3400', '교대근무(주간/야간)', 170, 12,
-             29, '/img/Korea_Electric.jpg', '신입', '대학교 졸업(4년)', 'default',
+             29, '/img/KoreaAir.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
              0, 20, 0, SYSDATE
          );

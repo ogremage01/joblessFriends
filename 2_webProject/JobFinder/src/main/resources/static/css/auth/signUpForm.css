@@ -55,7 +55,7 @@
 		padding: 5px 15px;
 		border: 1px solid #E0E0E0;
 		outline: none;
-		border-radius: 8px;
+		border-radius: 5px;
 		font-size: 16px;
 	}
 	
@@ -90,7 +90,7 @@
 	
 	#signUpBtn {
 		height: 50px;
-		border-radius: 8px;
+		border-radius: 5px;
 		font-size: 18px;
 		font-weight: bold;
 		cursor: pointer;
@@ -120,6 +120,15 @@
 		text-decoration: none;
 		font-weight: bold;
 		color: #898989;
+	}
+	
+	/* 	소셜로그인  */
+	#socialLogin {
+		text-align: center;
+	}
+	.socialIcon {
+		width: 300px;
+		margin-top: 10px;
 	}
 	
 	/* 유효성검사 토스트 팝업 */

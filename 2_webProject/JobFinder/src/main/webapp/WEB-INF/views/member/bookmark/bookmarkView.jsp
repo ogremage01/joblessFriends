@@ -61,14 +61,15 @@
 									</div>
 									<div class="job-meta">
 
-										<span>🧑‍💻 지원자격:${item.education} </span> <span>🎓 경력:
-											${item.careerType}</span> <span>💼 채용직: ${item.jobName}</span>
+										<span>🎓 ${item.education} </span>
+										<span>🧑 ${item.careerType}</span>
+										<span>💼 ${item.jobName}</span>
 
 									</div>
 									<div class="job-meta-skill">
-										🧩 스킬:
+										🧩
 										<c:forEach var="skill" items="${skillMap[item.jobPostId]}">
-											<span class="tag">${skill.tagName}</span>
+											<div><span class="tag">${skill.tagName}</span></div>
 										</c:forEach>
 									</div>
 								</div>
