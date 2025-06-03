@@ -22,7 +22,7 @@
                               j.job_name AS jobName,
                               jp.start_date AS startDate,
                               jp.end_date AS endDate,
-                              jp.job_img AS jobImg
+                              jp.VIEWS AS views
                           FROM job_post jp
                                    JOIN company c ON jp.company_id = c.company_id
                                    JOIN job_group jg ON jp.job_group_id = jg.job_group_id
