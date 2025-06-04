@@ -55,7 +55,9 @@
                                 질문보기
                             </button>
                         </td>
-                        <td>80%</td>
+                        <td>
+                                ${apply.matchScore}%
+                        </td>
                         <td>${apply.stateName}</td>
                         <td><button class="btn-state" onclick="openStateChangeModal(${jobPostId}, ${apply.memberId})">상태 변경</button>
                         </td>

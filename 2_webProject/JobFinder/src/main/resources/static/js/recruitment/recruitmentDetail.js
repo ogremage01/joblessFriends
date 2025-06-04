@@ -40,33 +40,44 @@ $(document).on('click', '.btn-apply', function () {
 
 
 
-    // 2. 사전질문 여부 확인 후 진행 (기본 흐름)
-    $.ajax({
-        url: '/resume/apply/questions',
-        method: 'GET',
-        data: { jobPostId },
-        success: function (questionList) {
-            if (questionList.length > 0) {
+    fetchMatchScores(jobPostId, () => {
+        // ❗ 이 안에 사전질문 여부 확인까지 포함시켜도 됨
+        $.ajax({
+            url: '/resume/apply/questions',
+            method: 'GET',
+            data: { jobPostId },
+            success: function (questionList) {
+                if (questionList.length > 0) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: '사전질문 포함',
+                        html: `<b>${questionList.length}개의 사전질문</b>이 등록된 공고입니다.<br>이력서 선택 후 답변을 입력해주세요.`,
+                        confirmButtonText: '이력서 선택으로 이동',
+                    }).then(() => {
+                        showResumeSelectModal(jobPostId);
+                    });
+                } else {
+                    showResumeSelectModal(jobPostId);
+                }
+            },
+            error: function () {
                 Swal.fire({
-                    icon: 'info',
-                    title: '사전질문 포함',
-                    html: `<b>${questionList.length}개의 사전질문</b>이 등록된 공고입니다.<br>이력서 선택 후 답변을 입력해주세요.`,
-                    confirmButtonText: '이력서 선택으로 이동'
-                }).then(() => {
-                    showResumeSelectModal(jobPostId); // 이력서 선택창으로 이동
+                    title:"🚨 질문 조회 실패",
+                    confirmButtonText: '확인',
+                    customClass: {
+                        confirmButton: "swalConfirmBtn",
+                    },
                 });
-            } else {
-                showResumeSelectModal(jobPostId); // 질문 없으면 바로 진행
             }
-        },
-        error: function () {
-            Swal.fire("🚨 질문 조회 실패");
-        }
+        });
     });
 });
 
 
 function showResumeSelectModal(jobPostId) {
+
+
+
     const html = resumeList.map(r => `
     <label class="resume-item">
         <div class="resume-radio-row">
@@ -82,6 +93,7 @@ function showResumeSelectModal(jobPostId) {
     </label>
 `).join('');
 
+
     Swal.fire({
         title: '📄 이력서를 선택하세요',
         html: `
@@ -94,6 +106,11 @@ function showResumeSelectModal(jobPostId) {
         showCancelButton: true,
         confirmButtonText: '지원하기',
         cancelButtonText: '취소',
+        customClass: {
+            confirmButton: "swalConfirmBtn",
+            cancelButton: "swalCancelBtn",
+        },
+        reverseButtons: true, // 버튼 순서 거꾸로
         preConfirm: () => {
             const selected = $('input[name="resumeRadio"]:checked').val();
             if (!selected) {
@@ -122,7 +139,13 @@ function showResumeSelectModal(jobPostId) {
                     }
                 },
                 error: function () {
-                    Swal.fire("❌ 질문 조회 실패");
+                    Swal.fire({
+                        title: "❌ 질문 조회 실패",
+                        confirmButtonText: '확인',
+                        customClass: {
+                            confirmButton: "swalConfirmBtn",
+                        },
+                    });
                 }
             });
         }
@@ -256,6 +279,37 @@ function sendApplyAjax(resumeId, jobPostId, answerList) {
                 title: '이미 지원 하신 공고입니다.',
                 icon: 'warning'
             });
+        }
+    });
+}
+
+
+
+function fetchMatchScores(jobPostId, callback) {
+    const resumeIds = resumeList.map(r => r.resumeId);
+
+    if (resumeIds.length === 0) {
+        callback(); // 이력서 없음
+        return;
+    }
+
+    $.ajax({
+        url: '/resume/matchScore',
+        method: 'GET',
+        traditional: true, // 배열 전송을 위해 필수
+        data: {
+            jobPostId,
+            resumeIds
+        },
+        success: function (scoreMap) {
+            resumeList.forEach(r => {
+                r.matchScore = scoreMap[r.resumeId] ?? null;
+            });
+            callback(); // 점수 적용 후 후속 처리 실행
+        },
+        error: function () {
+            console.error("❌ 적합도 점수 불러오기 실패");
+            callback(); // 실패해도 흐름은 이어감
         }
     });
 }
