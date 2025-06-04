@@ -37,7 +37,7 @@ public class AdminCommunityCommentController {
 		SearchVo searchVo = new SearchVo();
 		searchVo.setKeyword(keyword);
 		searchVo.setPage(page);
-		searchVo.setRecordSize(10);	
+		searchVo.setRecordSize(8);	
 		
 	    int totalCount = commentService.getCommentTotalCount(searchVo);//전체 데이터 수
 	    Pagination pagination = new Pagination(totalCount, searchVo);

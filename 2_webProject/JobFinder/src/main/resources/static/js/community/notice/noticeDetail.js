@@ -19,7 +19,7 @@ function deleteNotice(noticeIdList){
 				    })
 				    .then(data => {
 				        if (data == "삭제완료") {
-				            location.href="/community/notice/";
+				            location.href="/community/notice";
 				        } else {
 				            alert("삭제 실패: 서버 응답 오류");
 				        }
