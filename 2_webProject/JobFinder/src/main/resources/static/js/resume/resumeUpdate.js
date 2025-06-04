@@ -121,6 +121,19 @@ document.addEventListener("DOMContentLoaded", function() {
 			window.attachPortfolioEvents(entry);
 		});
 	}
+
+	// 기존 학력 데이터에 자동완성 기능 연결
+	document.querySelectorAll('.school-entry').forEach(function(entry) {
+		const sortationSelect = entry.querySelector('select[name="sortation"]');
+		const fieldsContainer = entry.querySelector('.grid-3, .grid-2');
+		
+		if (sortationSelect && fieldsContainer) {
+			const sortation = sortationSelect.value;
+			if (sortation) {
+				attachAutocomplete(fieldsContainer.parentElement, sortation);
+			}
+		}
+	});
 });
 
 // ==================== 기존 항목들의 이벤트 연결을 위한 헬퍼 함수들 ====================
@@ -299,4 +312,4 @@ function updateJobSelectForCareer(jobSelect, jobGroupId) {
 				jobSelect.appendChild(option);
 			});
 		});
-} 
+}

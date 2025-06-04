@@ -438,7 +438,7 @@ public class ResumeController {
 		return "resume/resumePreview"; // /WEB-INF/views/resume/resumePreview.jsp
 	}
 
-	// 이력서 관리페이지에서 미력서미리보기
+	// 이력서 관리페이지에서 이력서미리보기
 	@GetMapping("/view/{resumeId}")
 	public String showResumePreviewFromDatabase(@PathVariable("resumeId") int resumeId, HttpSession session,
 			Model model) {
@@ -452,7 +452,7 @@ public class ResumeController {
 		ResumeVo resume = resumeService.getResumeWithAllDetails(resumeId);
 		if (resume == null || resume.getMemberId() != loginUser.getMemberId()) {
 			model.addAttribute("errorMessage", "이력서를 조회할 수 없습니다.");
-			return "resume/resumeView"; // 기본 에러 페이지
+			return "resume/resumeView";
 		}
 
 		// 직무직군명 변환

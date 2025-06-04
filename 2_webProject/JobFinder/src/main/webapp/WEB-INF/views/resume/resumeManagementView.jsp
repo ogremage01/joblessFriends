@@ -86,7 +86,7 @@
                     <%-- 스킬 요약 --%>
                     <div class="resume-skills">
                       <c:forEach var="tag" items="${resume.skillList}">
-                        <span class="tag">스킬: ${tag.tagName}</span>
+                        <span class="tag"> ${tag.tagName} </span>
                       </c:forEach>
                     </div>
 

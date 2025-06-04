@@ -758,7 +758,7 @@ function validateResume() {
 		result = false;
 	}
 	if (!phoneNumber || !/^\d{3}-\d{3,4}-\d{4}$/.test(phoneNumber)) {
-		showError(document.getElementById("phoneNumber"), "전화번호는 XXXXXXXXXXX 형식으로 입력해주세요.");
+		showError(document.getElementById("phoneNumber"), "전화번호는 XXX-XXXX-XXXX 형식으로 입력해주세요.");
 		result = false;
 	}
 	if (!email || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
@@ -879,7 +879,4 @@ $(".btn-preview").click(async function() {
 	}
 });
 
-// 사이드바 top버튼
-document.getElementById("btnTop").addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+
