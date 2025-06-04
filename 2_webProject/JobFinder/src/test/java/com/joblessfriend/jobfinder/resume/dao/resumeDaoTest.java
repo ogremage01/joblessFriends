@@ -1,6 +1,8 @@
 package com.joblessfriend.jobfinder.resume.dao;
 
 import com.joblessfriend.jobfinder.recruitment.domain.JobPostAnswerVo;
+import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
+import com.joblessfriend.jobfinder.resume.service.ResumeService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @Transactional
@@ -19,7 +22,8 @@ public class resumeDaoTest {
 
     @Autowired
     ResumeApplyDao resumeApplyDao;
-
+    @Autowired
+    ResumeService resumeService;
     @Test
     @DisplayName("사전질문 답변지 인서트확인")
     void insertResumeApply() {
@@ -49,4 +53,19 @@ public class resumeDaoTest {
         //then
 //            assertEquals(1, insertTed);
     }
+
+
+    @Test
+    public void testResumeWithAllDetails() {
+        ResumeVo resume = resumeService.getResumeWithAllDetails(3);
+
+
+        System.out.println("주소값" + resume);
+        System.out.println("학교 수: " + resume.getSchoolList().size());
+        System.out.println("스킬 수: " + resume.getSkillList().size());
+        System.out.println();
+
+
+    }
+
 }

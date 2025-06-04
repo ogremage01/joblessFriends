@@ -29,13 +29,15 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 
     @Override
     public int calculateMatchScore(ResumeVo resumeVo, RecruitmentVo recruitmentVo) {
+        System.out.println("계산기 입장");
         int skillTotalScore = 30;
         int schoolTotalScore = 30;
         int careerTotalScore = 40;
 
         int resumeId = resumeVo.getResumeId();
+        System.out.println("RESUME_ID: " + resumeId);
         int jobPostId = recruitmentVo.getJobPostId();
-
+        System.out.println("스킬직전");
         // 1. 스킬 점수
         List<SkillVo> resumeSkillList = skillService.resumeTagList(resumeId);
         List<SkillVo> recruitmentSkillList = skillService.postTagList(jobPostId);
@@ -50,14 +52,15 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
                 matchCnt++;
             }
         }
-
+        System.out.println("스킬직전");
         int skillScore = recruitmentSkillList.isEmpty() ? 0 :
                 matchCnt * (skillTotalScore / recruitmentSkillList.size());
 
         skillScore = Math.min(skillScore, skillTotalScore);
         skillScore = Math.max(skillScore, 0);
-
+        System.out.println("skillScore = " + skillScore);
         // 2. 학력 점수
+        System.out.println("skillTotalScore = " + resumeVo.getSchoolList());
         List<SchoolVo> resumeSchoolList = resumeVo.getSchoolList();
         String schoolType = recruitmentVo.getEducation();
         int schoolScore = 0;
@@ -89,14 +92,16 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
                     schoolScore -= (int) Math.floor(schoolTotalScore * 0.15);
                 }
             }
+
         }
 
         schoolScore = Math.min(schoolScore, schoolTotalScore);
         schoolScore = Math.max(schoolScore, 0);
-
+        System.out.println("schoolScore = " + schoolScore);
         // 3. 경력 점수
         List<CareerVo> resumeCareerList = resumeVo.getCareerList();
         String careerType = recruitmentVo.getCareerType();
+        System.out.println("careerType = " + recruitmentVo.getCareerType());
         int careerScore = 0;
 
         switch (careerType) {
@@ -110,14 +115,16 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
                 careerScore = (int) Math.floor(careerTotalScore * 0.375);
                 break;
         }
-
+        System.out.println("careerScore = " + careerScore);
         int careerAll = 0;
         int careerJobGroup = 0;
         int careerJob = 0;
 
-        int recJobGroupId = recruitmentVo.getJobGroupId();
+//        int recJobGroupId = recruitmentVo.getJobGroupId();
         int recJobId = recruitmentVo.getJobId();
 
+//        System.out.println("recJobGroupId = " + recJobGroupId);
+        System.out.println("recJobId = " + recJobId);
         for (CareerVo resumeCareerVo : resumeCareerList) {
             LocalDate hireYm = resumeCareerVo.getHireYm().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate resignYm = resumeCareerVo.getResignYm().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -127,11 +134,11 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
             int careerMonth = (int) ChronoUnit.MONTHS.between(hireYm, resignYm);
 
             if (resumeCareerVo.getJobId() == recJobId) {
-                careerJob += careerMonth;
-            } else if (resumeCareerVo.getJobGroupId() == recJobGroupId) {
-                careerJobGroup += careerMonth;
-            } else {
-                careerAll += careerMonth;
+                careerJob += careerMonth; }
+//            else if (resumeCareerVo.getJobGroupId() == recJobGroupId) {
+//                careerJobGroup += careerMonth;
+//            }
+                else {careerAll += careerMonth;
             }
         }
 
@@ -143,8 +150,12 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 
         careerScore = Math.min(careerScore, careerTotalScore);
         careerScore = Math.max(careerScore, 0);
-
-        return skillScore + schoolScore + careerScore;
+        System.out.println("▶ 스킬 점수 = " + skillScore);
+        System.out.println("▶ 학력 점수 = " + schoolScore);
+        System.out.println("▶ 경력 점수 = " + careerScore);
+        System.out.println("▶ 총점 = " + (skillScore + schoolScore + careerScore));
+        Integer total = (skillScore + schoolScore + careerScore);
+        return total;
     }
 
     @Override

@@ -3,10 +3,13 @@ package com.joblessfriend.jobfinder.resume.controller;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +26,8 @@ import com.joblessfriend.jobfinder.skill.domain.SkillVo;
 import com.joblessfriend.jobfinder.skill.service.SkillService;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ResumeMatchController {
@@ -42,7 +47,28 @@ public class ResumeMatchController {
 	@Autowired
 	private ResumeMatchService resumeMatchService;
 
-	
+	@GetMapping("/resume/matchScore")
+	@ResponseBody
+	public Map<Integer, Integer> getMatchScores(
+			@RequestParam int jobPostId,
+			@RequestParam List<Integer> resumeIds, HttpSession session) {
+
+
+
+		RecruitmentVo recruitmentVo = recruitmentService.getRecruitmentId(jobPostId); // 공고 상세 조회
+		Map<Integer, Integer> scoreMap = new HashMap<>();
+
+		for (Integer resumeId : resumeIds) {
+			ResumeVo resumeVo = resumeService.getResumeWithAllDetails(resumeId);// 이력서 전체 항목 포함
+			System.out.println("전체 항목 포함 = " + resumeVo);
+			Integer score = resumeMatchService.calculateMatchScore(resumeVo, recruitmentVo);
+
+			scoreMap.put(resumeId, score);
+		}
+
+		return scoreMap;
+	}
+
 	/*
 	 * @GetMapping("/match") public String resumeManagement(int resumeId, int
 	 * jobPostId, HttpSession session, Model model) { // null 체크 필요
