@@ -29,15 +29,23 @@ $(document).on('click', '.job-group', function (e) {
     const jobGroupId = $(this).data('code');
     const jobGroupName = $(this).data('name');
 
-    $(this).siblings().removeClass('selected');
+    // ✅ 기존에 선택된 직군 해제
+    $('.job-group').removeClass('selected');
+
+    // ✅ 선택한 직군만 active 표시
     $(this).addClass('selected');
 
+    // ✅ 기존 직무 선택 초기화
+    $('input[name="job"]:checked').prop('checked', false);
+    $('#divSelectedCon').empty();
+    checkedJobs = {}; // 전역 변수 초기화
+
+    // ✅ 직무 + 스킬 Ajax 호출
     $.ajax({
         url: '/Recruitment/searchJob',
         method: 'GET',
-        data: { jobGroupId: jobGroupId },
+        data: { jobGroupId },
         success: function (response) {
-            console.log("응답:", response);
             $('#jobList').empty();
             if (Array.isArray(response.jobList)) {
                 response.jobList.forEach(function (item) {
@@ -53,8 +61,6 @@ $(document).on('click', '.job-group', function (e) {
                     `;
                     $('#jobList').append(html);
                 });
-            } else {
-                console.warn("jobList가 배열이 아닙니다.");
             }
             $('.skillList').empty();
             if (Array.isArray(response.skillList)) {
@@ -71,16 +77,14 @@ $(document).on('click', '.job-group', function (e) {
                     `;
                     $('.skillList').append(skillArr);
                 });
-
-
             }
-
         },
         error: function (error) {
             console.error('에러 발생:', error);
         }
     });
 });
+
 
 // 체크박스 선택/해제 처리 및 하단 리스트 출력
 $(document).on('change', '.chk', function () {
