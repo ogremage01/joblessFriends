@@ -86,7 +86,7 @@ public class SearchController {
 		      @RequestParam(defaultValue = "") String keyword) {
 
 		    SearchVo searchVo = new SearchVo();
-		    searchVo.setKeyword("%" + keyword + "%");
+		    searchVo.setKeyword(keyword);
 		    System.out.println(searchVo.getKeyword());
 		    searchVo.setPage(page); // ★ page 파라미터 사용
 		    searchVo.setRecordSize(4);
@@ -97,7 +97,8 @@ public class SearchController {
 		    // 검색어가 있든 없든 전체 카운트 및 페이징 처리
 		    
 		    try {
-		    	totalCount = searchService.getRecruitmentSearchTotalCount(searchVo); // 총 레코드 수 조회
+		    	String keywordStr = "%" + searchVo.getKeyword() + "%"; 
+		    	totalCount = searchService.getRecruitmentSearchTotalCount(keyword); // 총 레코드 수 조회
 			    pagination = new Pagination(totalCount, searchVo);
 			    
 			    System.out.println(pagination.getStartPage());

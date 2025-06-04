@@ -23,10 +23,11 @@
 				</div>
 				<div id="searchDiv">
 				
-					<form id="searchForm" name="searchForm" method="post" action="/search">
+					<form id="searchForm" name="searchForm" method="get" action="/search">
 						<fieldset>
 							<legend>검색</legend>
 							<input id="keyword" name="keyword" type="text" value="" placeholder="자신에게 맞는 채용정보를 찾아보세요" autocomplete="off">
+							<input type="hidden" name="page" value="1">
 							<button type="submit" id="btnMainSearch" class="btnSearch">
 								<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#F69800" class="bi bi-search" viewBox="0 0 16 16">
  								<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
