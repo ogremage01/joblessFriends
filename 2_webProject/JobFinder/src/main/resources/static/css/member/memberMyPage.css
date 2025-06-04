@@ -1,3 +1,4 @@
+
 /* 세로 스크롤 항상 보이게 */
 body {
 	overflow-y: scroll;
@@ -25,27 +26,8 @@ body {
 	margin-bottom: 30px;
 }
 
-.mainTitle i {
-	margin-right: 10px;
-}
-
 /* 내용부분. 해당 스타일 삭제해도 무방 */
 .item {
 	border: 1px solid black;
 	height: 500px;
-}
-
-
-.applicationTable {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.applicationTable>thead {
-   background-color: #f5f6fa;;
-   border-top: 1px solid #737789;
-   font-weight: bold;;
-   font-size: 14px;
-   color: #2d2d41;
-   height: 45px;;
 }
