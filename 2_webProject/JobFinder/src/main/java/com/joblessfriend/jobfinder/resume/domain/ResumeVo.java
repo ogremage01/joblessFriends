@@ -25,6 +25,7 @@ public class ResumeVo {
 	private int postalCodeId;
 	private Date createDate;
 	private Date modifyDate;
+	private int matchScore;
 	//private int jobGroupId;//deprecated.
 	//private int jobId;//deprecated.
 

@@ -10,7 +10,9 @@ import com.joblessfriend.jobfinder.job.service.JobService;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import com.joblessfriend.jobfinder.recruitment.domain.*;
 import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
+import com.joblessfriend.jobfinder.resume.domain.ResumeMatchVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
+import com.joblessfriend.jobfinder.resume.service.ResumeMatchService;
 import com.joblessfriend.jobfinder.resume.service.ResumeService;
 import com.joblessfriend.jobfinder.skill.domain.SkillVo;
 import com.joblessfriend.jobfinder.skill.service.SkillService;
@@ -48,9 +50,13 @@ public class RecruitmentController {
     private SkillService skillService;
     @Autowired
     private ResumeService resumeService;
+    private ResumeMatchService resumeMatchService;
 
     @GetMapping("/list")
-    public String getAllList(@ModelAttribute SearchVo searchVo, Model model,HttpSession session) {
+    public String getAllList(@ModelAttribute SearchVo searchVo,
+                             @RequestParam(value = "jobPostId", required = false) Integer jobPostId,
+                             Model model,
+                             HttpSession session) {
         searchVo.setRecordSize(4);
         int totalCount = recruitmentService.getRecruitmentTotalCount(searchVo); // 총 레코드 수 조회
         Pagination pagination = new Pagination(totalCount, searchVo);
@@ -89,9 +95,9 @@ public class RecruitmentController {
 
         Map<Integer, List<SkillVo>> skillMap = new HashMap<>();
         for (RecruitmentVo r : recruitmentList) {
-            int jobPostId = r.getJobPostId();
-            List<SkillVo> skillList = skillService.postTagList(jobPostId);
-            skillMap.put(jobPostId, skillList);
+            int jobPostId2 = r.getJobPostId();
+            List<SkillVo> skillList = skillService.postTagList(jobPostId2);
+            skillMap.put(jobPostId2, skillList);
             
         }
         // 로그인 사용자 확인
@@ -101,12 +107,16 @@ public class RecruitmentController {
 // ✅ 개인회원(member)인 경우에만 이력서 조회
         if (memberVo != null && "member".equals(userType)) {
             int memberId = memberVo.getMemberId();
-            System.out.println("✅ 개인회원 ID: " + memberId);
+            List<ResumeVo> myResumeList;
 
-            List<ResumeVo> myResumeList = resumeService.getResumesByMemberId(memberId);
+            if (jobPostId != null) {
+                myResumeList = resumeService.getResumesByMemberId(memberId, jobPostId); // 적합도 포함
+            } else {
+                myResumeList = resumeService.getResumesByMemberId(memberId); // 기본
+            }
+
             model.addAttribute("resumeList", myResumeList);
         }
-
 
 
 

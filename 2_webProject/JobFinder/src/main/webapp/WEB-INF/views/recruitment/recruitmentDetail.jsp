@@ -176,7 +176,8 @@
                 {
                     resumeId: '${r.resumeId}',
                     title: '${r.title}',
-                    modifiedAt: '<fmt:formatDate value="${r.modifyDate}" pattern="MM/dd(E)" />'
+                    modifiedAt: '<fmt:formatDate value="${r.modifyDate}" pattern="MM/dd(E)" />',
+                    matchScore: ${r.matchScore}
                 }<c:if test="${!i.last}">,</c:if>
                 </c:forEach>
             ]

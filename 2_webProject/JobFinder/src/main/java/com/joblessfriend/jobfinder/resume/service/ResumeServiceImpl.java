@@ -3,6 +3,8 @@ package com.joblessfriend.jobfinder.resume.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
+import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +32,26 @@ public class ResumeServiceImpl implements ResumeService {
 	
 	@Autowired
 	private SkillService skillService; // 또는 SkillDao
+
+	@Autowired
+	private ResumeMatchService resumeMatchService;
+
+	@Autowired
+	private RecruitmentService recruitmentService;
+
+	@Override
+	public List<ResumeVo> getResumesByMemberId(int memberId, int jobPostId) {
+		List<ResumeVo> resumeList = resumeDao.findResumesByMemberId(memberId);
+		RecruitmentVo recruitmentVo = recruitmentService.getRecruitmentId(jobPostId);
+
+		for (ResumeVo resume : resumeList) {
+			int score = resumeMatchService.calculateMatchScore(resume, recruitmentVo);
+			resume.setMatchScore(score); // ResumeVo에 matchScore 필드가 있어야 함
+		}
+
+		return resumeList;
+	}
+
 
 	@Override
 	public List<ResumeVo> getResumesByMemberId(int memberId) {

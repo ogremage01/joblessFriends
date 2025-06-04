@@ -439,6 +439,7 @@ function renderPagination(pagination) {
 }
 
 $(document).on('click', '.apply-btn', function () {
+    console.log(resumeList);
     if (!resumeList || resumeList.length === 0) {
         Swal.fire({
 			title:'📭 등록된 이력서가 없습니다.',
@@ -497,19 +498,20 @@ $(document).on('click', '.apply-btn', function () {
 
 function showResumeSelectModal(jobPostId) {
     const html = resumeList.map(r => `
-        <label class="resume-item">
-            <div class="resume-radio-row">
-                <div class="resume-left">
-                    <input type="radio" name="resumeRadio" value="${r.resumeId}">
-                    <div>
-                        <div class="resume-title">${r.title}</div>
-                        <div class="resume-meta">🗓 작성일: ${r.modifiedAt}</div>
-                    </div>
+    <label class="resume-item">
+        <div class="resume-radio-row">
+            <div class="resume-left">
+                <input type="radio" name="resumeRadio" value="${r.resumeId}">
+                <div>
+                    <div class="resume-title">${r.title}</div>
+                    <div class="resume-meta">🗓 작성일: ${r.modifiedAt}</div>
                 </div>
-                <div class="resume-match">적합도 90%</div>
             </div>
-        </label>
-    `).join('');
+            <div class="resume-match">적합도 ${r.matchScore != null ? r.matchScore + '%' : '-'}</div>
+        </div>
+    </label>
+`).join('');
+
 
     Swal.fire({
         title: '📄 이력서를 선택하세요',

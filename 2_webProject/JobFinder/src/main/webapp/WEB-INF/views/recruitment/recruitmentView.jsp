@@ -207,25 +207,26 @@
 </script>
 
 <%-- 이후 js에서 처리  --%>
-    <script>
-        const resumeList =
-                <c:choose>
-                <c:when test="${not empty resumeList}">
-                [
-                    <c:forEach var="r" items="${resumeList}" varStatus="i">
-                    {
-                        resumeId: '${r.resumeId}',
-                        title: '${r.title}',
-                        modifiedAt: '<fmt:formatDate value="${r.modifyDate}" pattern="MM/dd(E)" />'
-                    }<c:if test="${!i.last}">,</c:if>
-                    </c:forEach>
-                ]
-                    </c:when>
-                    <c:otherwise>
-                    []
-            </c:otherwise>
-            </c:choose>;
-    </script>
+<script>
+    const resumeList =
+            <c:choose>
+            <c:when test="${not empty resumeList}">
+            [
+                <c:forEach var="r" items="${resumeList}" varStatus="i">
+                {
+                    resumeId: '${r.resumeId}',
+                    title: '${r.title}',
+                    modifiedAt: '<fmt:formatDate value="${r.modifyDate}" pattern="MM/dd(E)" />',
+                    matchScore: ${r.matchScore}
+                }<c:if test="${!i.last}">,</c:if>
+                </c:forEach>
+            ]
+                </c:when>
+                <c:otherwise>
+                []
+        </c:otherwise>
+        </c:choose>;
+</script>
 
 
 

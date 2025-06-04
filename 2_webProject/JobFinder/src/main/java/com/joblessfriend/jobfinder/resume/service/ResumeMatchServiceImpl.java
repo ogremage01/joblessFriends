@@ -11,13 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
-import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
 import com.joblessfriend.jobfinder.resume.dao.ResumeMatchDao;
 import com.joblessfriend.jobfinder.resume.domain.CareerVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 import com.joblessfriend.jobfinder.resume.domain.SchoolVo;
-import com.joblessfriend.jobfinder.resume.service.ResumeMatchService;
-import com.joblessfriend.jobfinder.resume.service.ResumeService;
 import com.joblessfriend.jobfinder.skill.domain.SkillVo;
 import com.joblessfriend.jobfinder.skill.service.SkillService;
 
@@ -25,25 +22,19 @@ import com.joblessfriend.jobfinder.skill.service.SkillService;
 public class ResumeMatchServiceImpl implements ResumeMatchService {
 
     @Autowired
-    private ResumeService resumeService;
-    
-    @Autowired
-    private RecruitmentService recruitmentService;
-    
-    @Autowired
-    private SkillService skillService;
-    
-    @Autowired
     private ResumeMatchDao resumeMatchDao;
 
+    @Autowired
+    private SkillService skillService;
+
     @Override
-    public int calculateMatchScore(int resumeId, int jobPostId) {
+    public int calculateMatchScore(ResumeVo resumeVo, RecruitmentVo recruitmentVo) {
         int skillTotalScore = 30;
         int schoolTotalScore = 30;
         int careerTotalScore = 40;
 
-        ResumeVo resumeVo = resumeService.getResumeByResumeId(resumeId);
-        RecruitmentVo recruitmentVo = recruitmentService.getRecruitmentId(jobPostId);
+        int resumeId = resumeVo.getResumeId();
+        int jobPostId = recruitmentVo.getJobPostId();
 
         // 1. 스킬 점수
         List<SkillVo> resumeSkillList = skillService.resumeTagList(resumeId);
@@ -60,9 +51,11 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
             }
         }
 
-        int skillScore = matchCnt * (skillTotalScore / recruitmentSkillList.size());
-        if (skillScore > skillTotalScore) skillScore = skillTotalScore;
-        if (skillScore < 0) skillScore = 0;
+        int skillScore = recruitmentSkillList.isEmpty() ? 0 :
+                matchCnt * (skillTotalScore / recruitmentSkillList.size());
+
+        skillScore = Math.min(skillScore, skillTotalScore);
+        skillScore = Math.max(skillScore, 0);
 
         // 2. 학력 점수
         List<SchoolVo> resumeSchoolList = resumeVo.getSchoolList();
@@ -89,17 +82,17 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 
         for (SchoolVo resumeSchoolVo : resumeSchoolList) {
             String status = resumeSchoolVo.getStatus();
-            if (!status.equals("졸업")) {
-                if (status.equals("졸업 예정")) {
+            if (!"졸업".equals(status)) {
+                if ("졸업 예정".equals(status)) {
                     schoolScore -= (int) Math.floor(schoolTotalScore * 0.05);
-                } else if (status.equals("재학 중")) {
+                } else if ("재학 중".equals(status)) {
                     schoolScore -= (int) Math.floor(schoolTotalScore * 0.15);
                 }
             }
         }
 
-        if (schoolScore > schoolTotalScore) schoolScore = schoolTotalScore;
-        if (schoolScore < 0) schoolScore = 0;
+        schoolScore = Math.min(schoolScore, schoolTotalScore);
+        schoolScore = Math.max(schoolScore, 0);
 
         // 3. 경력 점수
         List<CareerVo> resumeCareerList = resumeVo.getCareerList();
@@ -148,15 +141,14 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
         careerScore += (int) Math.floor(careerJobGroup / 12) * 3;
         careerScore += selectCareerGradeScore(careerJobYear);
 
-        if (careerScore > careerTotalScore) careerScore = careerTotalScore;
-        if (careerScore < 0) careerScore = 0;
+        careerScore = Math.min(careerScore, careerTotalScore);
+        careerScore = Math.max(careerScore, 0);
 
         return skillScore + schoolScore + careerScore;
     }
 
     @Override
-	public int selectCareerGradeScore(int careerJobYear) {
-		// TODO Auto-generated method stub
-		return resumeMatchDao.selectCareerGradeScore(careerJobYear);
-	}
+    public int selectCareerGradeScore(int careerJobYear) {
+        return resumeMatchDao.selectCareerGradeScore(careerJobYear);
+    }
 }

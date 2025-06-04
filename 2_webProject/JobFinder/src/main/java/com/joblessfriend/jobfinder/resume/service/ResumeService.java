@@ -6,8 +6,9 @@ import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 
 public interface ResumeService {
 
-	List<ResumeVo> getResumesByMemberId(int memberId);
-	
+// 기존
+    List<ResumeVo> getResumesByMemberId(int memberId, int jobPostId);
+    List<ResumeVo> getResumesByMemberId(int memberId);
 	ResumeVo getResumeByResumeId(int resumeId);
 	
 	ResumeVo getResumeWithAllDetails(int resumeId);
