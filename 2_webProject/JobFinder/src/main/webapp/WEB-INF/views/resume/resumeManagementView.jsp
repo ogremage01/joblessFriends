@@ -58,7 +58,7 @@
 			<%-- 이력서가 있을때 --%>
             <c:otherwise>
               <c:forEach var="resume" items="${resumes}">
-                <div class="resume-card">
+                <div class="resume-card" onclick="location.href='/resume/view/${resume.resumeId}'">
                   <div class="resume-content">
                     <div class="resume-title">${resume.title}</div>
 
@@ -75,7 +75,7 @@
                       <div class="resume-education">
                         <c:forEach var="school" items="${resume.schoolList}">
                           <span>
-                             ${school.schoolName}
+                            학력: ${school.schoolName}
                             <c:if test="${not empty school.majorName}"> / ${school.majorName}</c:if>
                             / ${school.status}
                           </span><br/>
@@ -86,7 +86,7 @@
                     <%-- 스킬 요약 --%>
                     <div class="resume-skills">
                       <c:forEach var="tag" items="${resume.skillList}">
-                        <span class="tag">${tag.tagName}</span>
+                        <span class="tag">스킬: ${tag.tagName}</span>
                       </c:forEach>
                     </div>
 
@@ -96,9 +96,9 @@
 
                   <div class="button-wrapper">
                   	<%-- 삭제 버튼 --%>
-                    <button class="delete-btn" data-resume-id="${resume.resumeId}">x</button>
+                    <button class="delete-btn" data-resume-id="${resume.resumeId}" onclick="event.stopPropagation()">x</button>
                     <%-- 수정 버튼 --%>
-                    <button class="edit-btn" data-resume-id="${resume.resumeId}">수정하기</button>
+                    <button class="edit-btn" data-resume-id="${resume.resumeId}" onclick="event.stopPropagation()">수정하기</button>
                   </div>
                 </div>
               </c:forEach>

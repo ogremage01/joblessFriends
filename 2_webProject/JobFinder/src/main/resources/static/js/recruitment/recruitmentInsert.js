@@ -412,6 +412,7 @@ $(function () {
     });
 });
 $(document).ready(function () {
+
     $(".cancel-btn").on("click", function () {
         Swal.fire({
             title: '작성을 취소하시겠습니까?',
