@@ -7,11 +7,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.joblessfriend.jobfinder.resume.dao.ResumeDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
-import com.joblessfriend.jobfinder.resume.dao.ResumeMatchDao;
+
 import com.joblessfriend.jobfinder.resume.domain.CareerVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 import com.joblessfriend.jobfinder.resume.domain.SchoolVo;
@@ -21,8 +22,9 @@ import com.joblessfriend.jobfinder.skill.service.SkillService;
 @Service
 public class ResumeMatchServiceImpl implements ResumeMatchService {
 
+
     @Autowired
-    private ResumeMatchDao resumeMatchDao;
+    ResumeDao resumeDao;
 
     @Autowired
     private SkillService skillService;
@@ -100,6 +102,7 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
         System.out.println("schoolScore = " + schoolScore);
         // 3. 경력 점수
         List<CareerVo> resumeCareerList = resumeVo.getCareerList();
+        System.out.println(resumeCareerList+"??????????????");
         String careerType = recruitmentVo.getCareerType();
         System.out.println("careerType = " + recruitmentVo.getCareerType());
         int careerScore = 0;
@@ -114,6 +117,9 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
             case "3~5년":
                 careerScore = (int) Math.floor(careerTotalScore * 0.375);
                 break;
+            case "5년이상":
+                careerScore = (int) Math.floor(careerTotalScore * 0.375);
+                break;
         }
         System.out.println("careerScore = " + careerScore);
         int careerAll = 0;
@@ -125,31 +131,31 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 
 //        System.out.println("recJobGroupId = " + recJobGroupId);
         System.out.println("recJobId = " + recJobId);
-        for (CareerVo resumeCareerVo : resumeCareerList) {
-            LocalDate hireYm = resumeCareerVo.getHireYm().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate resignYm = resumeCareerVo.getResignYm().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            if (resignYm.isAfter(LocalDate.now())) {
-                resignYm = LocalDate.now();
-            }
-            int careerMonth = (int) ChronoUnit.MONTHS.between(hireYm, resignYm);
-
-            if (resumeCareerVo.getJobId() == recJobId) {
-                careerJob += careerMonth; }
-//            else if (resumeCareerVo.getJobGroupId() == recJobGroupId) {
-//                careerJobGroup += careerMonth;
+//        for (CareerVo resumeCareerVo : resumeCareerList) {
+//            LocalDate hireYm = resumeCareerVo.getHireYm().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//            LocalDate resignYm = resumeCareerVo.getResignYm().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//            if (resignYm.isAfter(LocalDate.now())) {
+//                resignYm = LocalDate.now();
 //            }
-                else {careerAll += careerMonth;
-            }
-        }
+//            int careerMonth = (int) ChronoUnit.MONTHS.between(hireYm, resignYm);
+//
+//            if (resumeCareerVo.getJobId() == recJobId) {
+//                careerJob += careerMonth; }
+////            else if (resumeCareerVo.getJobGroupId() == recJobGroupId) {
+////                careerJobGroup += careerMonth;
+////            }
+//                else {careerAll += careerMonth;
+//            }
+//        }
 
-        int careerJobYear = (int) Math.floor(careerJob / 12);
-
-        careerScore += (int) Math.floor(careerAll / 12) * 1;
-        careerScore += (int) Math.floor(careerJobGroup / 12) * 3;
-        careerScore += selectCareerGradeScore(careerJobYear);
-
-        careerScore = Math.min(careerScore, careerTotalScore);
-        careerScore = Math.max(careerScore, 0);
+//        int careerJobYear = (int) Math.floor(careerJob / 12);
+//
+//        careerScore += (int) Math.floor(careerAll / 12) * 1;
+//        careerScore += (int) Math.floor(careerJobGroup / 12) * 3;
+//        careerScore += selectCareerGradeScore(careerJobYear);
+//
+//        careerScore = Math.min(careerScore, careerTotalScore);
+//        careerScore = Math.max(careerScore, 0);
         System.out.println("▶ 스킬 점수 = " + skillScore);
         System.out.println("▶ 학력 점수 = " + schoolScore);
         System.out.println("▶ 경력 점수 = " + careerScore);
@@ -160,6 +166,6 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 
     @Override
     public int selectCareerGradeScore(int careerJobYear) {
-        return resumeMatchDao.selectCareerGradeScore(careerJobYear);
+        return resumeDao.selectCareerGradeScore(careerJobYear);
     }
 }

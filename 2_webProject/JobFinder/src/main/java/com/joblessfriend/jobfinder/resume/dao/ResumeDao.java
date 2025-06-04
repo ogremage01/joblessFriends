@@ -62,4 +62,9 @@ public interface ResumeDao {
     void updatePortfolio(PortfolioVo portfolio);
     void deletePortfoliosByResumeId(int resumeId);
 
+
+    int selectCareerGradeScore(int careerJobYear);
+
 }
+
+
