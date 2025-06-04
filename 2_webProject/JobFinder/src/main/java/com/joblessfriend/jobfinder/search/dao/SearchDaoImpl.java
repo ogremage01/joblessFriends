@@ -20,9 +20,9 @@ public class SearchDaoImpl implements SearchDao {
 	
 	
 	@Override
-	public int getRecruitmentSearchTotalCount(SearchVo searchVo) {
+	public int getRecruitmentSearchTotalCount(String keyword) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace + "getRecruitmentSearchTotalCount", searchVo);
+		return sqlSession.selectOne(namespace + "getRecruitmentSearchTotalCount", keyword);
 	}
 
 	@Override

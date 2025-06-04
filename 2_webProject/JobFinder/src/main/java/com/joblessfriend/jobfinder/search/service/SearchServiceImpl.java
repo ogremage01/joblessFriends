@@ -17,9 +17,9 @@ public class SearchServiceImpl implements SearchService {
 	private SearchDao searchDao;
 	
 	@Override
-	public int getRecruitmentSearchTotalCount(SearchVo searchVo) {
+	public int getRecruitmentSearchTotalCount(String keyword) {
 		// TODO Auto-generated method stub
-		return searchDao.getRecruitmentSearchTotalCount(searchVo);
+		return searchDao.getRecruitmentSearchTotalCount(keyword);
 	}
 
 	@Override
