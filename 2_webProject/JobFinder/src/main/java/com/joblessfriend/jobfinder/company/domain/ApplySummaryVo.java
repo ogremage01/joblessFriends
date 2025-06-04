@@ -15,4 +15,5 @@ public class ApplySummaryVo {
     private String stateName;
     private int memberId;
     private int matchRate;
+    private int matchScore;
 }

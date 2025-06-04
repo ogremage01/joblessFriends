@@ -220,4 +220,14 @@ class ResumeDaoImpl implements ResumeDao{
         sqlSession.delete(namespace + ".deletePortfoliosByResumeId", resumeId);
     }
 
+
+
+    @Override
+    public int selectCareerGradeScore(int careerJobYear) {
+        // TODO Auto-generated method stub
+        return sqlSession.selectOne(namespace + "selectCareerGradeScore", careerJobYear);
+
+    }
+
+
 }

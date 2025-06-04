@@ -4,6 +4,11 @@ import com.joblessfriend.jobfinder.company.domain.ApplySummaryVo;
 import com.joblessfriend.jobfinder.company.domain.CompanyVo;
 import com.joblessfriend.jobfinder.company.domain.QuestionAnswerVo;
 import com.joblessfriend.jobfinder.company.service.CompanyApplyService;
+import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
+import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
+import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
+import com.joblessfriend.jobfinder.resume.service.ResumeMatchService;
+import com.joblessfriend.jobfinder.resume.service.ResumeService;
 import com.joblessfriend.jobfinder.util.Pagination;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +28,14 @@ public class CompanyApplyController {
 
     @Autowired
     private CompanyApplyService companyApplyService;
+
+    @Autowired
+    private RecruitmentService recruitmentService;
+    @Autowired
+    private ResumeService resumeService;
+
+    @Autowired
+    private ResumeMatchService resumeMatchService;
 
     @GetMapping("/{jobPostId}/applicants")
     public String getApplicants(@PathVariable int jobPostId,
@@ -54,7 +67,15 @@ public class CompanyApplyController {
 
         // 지원자 목록 조회
         List<ApplySummaryVo> applyList = companyApplyService.getPagedApplyList(paramMap);
+        RecruitmentVo recruitmentVo = recruitmentService.getRecruitmentId(jobPostId);
 
+        // ✅ 적합도 점수 계산 및 주입
+        for (ApplySummaryVo apply : applyList) {
+            int resumeId = apply.getResumeId(); // getter 확인 필요
+            ResumeVo resumeVo = resumeService.getResumeWithAllDetails(resumeId);
+            int score = resumeMatchService.calculateMatchScore(resumeVo, recruitmentVo);
+            apply.setMatchScore(score); // 필드 없으면 추가해야 함
+        }
         // 뷰에 데이터 전달
         model.addAttribute("applyList", applyList);
         model.addAttribute("pagination", pagination);
