@@ -242,6 +242,8 @@ textarea::placeholder {
   font-size: 12px;
   margin-top: 4px;
   display: block;
+  position: absolute;
+  top: 100%;
 }
 
 .photo-wrapper {
