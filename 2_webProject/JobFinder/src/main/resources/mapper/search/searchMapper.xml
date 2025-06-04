@@ -4,18 +4,21 @@
 
 <mapper namespace="com.joblessfriend.jobfinder.search">
 
-	<select id="getRecruitmentSearchTotalCount" resultType="int" parameterType="com.joblessfriend.jobfinder.util.SearchVo">
+	<select id="getRecruitmentSearchTotalCount" resultType="int" parameterType="java.lang.String">
         SELECT COUNT(*)
         FROM job_post jp
                  JOIN company c ON jp.company_id = c.company_id
                  JOIN job_group jg ON jp.job_group_id = jg.job_group_id
                  JOIN job j ON jp.job_id = j.job_id
-        WHERE TITLE LIKE #{keyword}
-        OR CONTENT LIKE #{keyword}
+      <if test="keyword != null or keyword != ''">
+       WHERE (UPPER(jp.TITLE) LIKE '%' || #{keyword} || '%') OR (LOWER(jp.TITLE) LIKE '%' || #{keyword} || '%')
+        				  OR (UPPER(jp.CONTENT) LIKE '%' || #{keyword} || '%') OR (LOWER(jp.CONTENT) LIKE '%' || #{keyword} || '%')
+        				  OR (UPPER(c.COMPANY_NAME) LIKE '%' || #{keyword} || '%') OR (LOWER(c.COMPANY_NAME) LIKE '%' || #{keyword} || '%')
+      </if>   
     </select>
 
 	<select id="getRecruitmentSearchList" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo"
-           parameterType="java.lang.String">
+        parameterType="com.joblessfriend.jobfinder.util.SearchVo">
         SELECT *
         FROM (
                  SELECT inner_query.*, ROWNUM AS rnum
@@ -36,9 +39,11 @@
                                    JOIN company c ON jp.company_id = c.company_id
                                    JOIN job_group jg ON jp.job_group_id = jg.job_group_id
                                    JOIN job j ON jp.job_id = j.job_id
-                          WHERE UPPER(jp.TITLE) LIKE #{keyword} OR LOWER(jp.TITLE) LIKE #{keyword}
-        				  OR UPPER(jp.CONTENT) LIKE #{keyword} OR LOWER(jp.CONTENT) LIKE #{keyword}
-        				  OR UPPER(c.COMPANY_NAME) LIKE #{keyword} OR LOWER(c.COMPANY_NAME) LIKE #{keyword}  
+                         <if test="keyword != null or keyword != ''">
+	                          WHERE (UPPER(jp.TITLE) LIKE '%' || #{keyword} || '%') OR (LOWER(jp.TITLE) LIKE '%' || #{keyword} || '%')
+	        				  OR (UPPER(jp.CONTENT) LIKE '%' || #{keyword} || '%') OR (LOWER(jp.CONTENT) LIKE '%' || #{keyword} || '%')
+	        				  OR (UPPER(c.COMPANY_NAME) LIKE '%' || #{keyword} || '%') OR (LOWER(c.COMPANY_NAME) LIKE '%' || #{keyword} || '%')
+        				  </if>  
                           ORDER BY jp.end_date ASC
                       ) inner_query
                  WHERE ROWNUM &lt;= #{endRow}

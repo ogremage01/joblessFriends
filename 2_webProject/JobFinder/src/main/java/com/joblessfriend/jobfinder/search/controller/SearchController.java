@@ -81,7 +81,7 @@ public class SearchController {
 	 * 
 	 * return "mainSearchView"; }
 	 */
-   @RequestMapping(value="", method={RequestMethod.GET, RequestMethod.POST})
+   @GetMapping(value="")
    public String searchMainList(Model model, @RequestParam(defaultValue = "1") int page, 
 		      @RequestParam(defaultValue = "") String keyword) {
 
@@ -96,8 +96,7 @@ public class SearchController {
 
 		    // 검색어가 있든 없든 전체 카운트 및 페이징 처리
 		    
-		    try {
-		    	String keywordStr = "%" + searchVo.getKeyword() + "%"; 
+		    try { 
 		    	totalCount = searchService.getRecruitmentSearchTotalCount(keyword); // 총 레코드 수 조회
 			    pagination = new Pagination(totalCount, searchVo);
 			    
@@ -113,6 +112,7 @@ public class SearchController {
 		    searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
 
 		    List<RecruitmentVo> recruitmentList = searchService.getRecruitmentSearchList(searchVo);
+		    //스킬 목록 불러오기 해야 됨
 
 		    logger.info("메인서치 recruitmentList: " + recruitmentList);
 		    model.addAttribute("recruitmentList", recruitmentList);
