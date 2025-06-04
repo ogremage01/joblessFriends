@@ -37,4 +37,16 @@ public interface ResumeApplyDao {
 
 
     int countByMemberAndJobPost(int memberId, int jobPostId);
+
+	ResumeVo getResumeWithAllDetails(int resumeId);
+
+	List<SchoolVo> getSchoolsByResumeId(int resumeId);
+
+	List<CareerVo> getCareersByResumeId(int resumeId);
+
+	List<EducationVo> getEducationsByResumeId(int resumeId);
+
+	List<PortfolioVo> getPortfoliosByResumeId(int resumeId);
+
+	List<CertificateResumeVo> getCertificateByResumeId(int resumeId);
 }

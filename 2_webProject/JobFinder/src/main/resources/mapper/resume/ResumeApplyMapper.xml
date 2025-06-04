@@ -23,16 +23,16 @@
 	<!-- 조회 -->
 	<select id="findResumesByMemberId" resultMap="ResumeResultMap">
         SELECT RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS, RESUME_TITLE,
-               SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT, JOB_GROUP_ID, JOB_ID    
-        FROM RESUME
+               SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT    
+        FROM RESUME_COPY
         WHERE MEMBER_ID = #{memberId}
         ORDER BY RESUME_ID DESC
 	</select>
 
 	<select id="getResumeByResumeId" resultMap="ResumeResultMap">
         SELECT RESUME_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS, 
-               SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT, JOB_GROUP_ID, JOB_ID    
-        FROM RESUME
+               SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT    
+        FROM RESUME_COPY
         WHERE RESUME_ID = #{resumeId}
     </select>
 
@@ -215,12 +215,12 @@
           AND MEMBER_ID = #{memberId}
     </update>
     
-    <!-- 하위 데이터 조회 쿼리들 -->
+        <!-- 하위 데이터 조회 쿼리들 -->
     <select id="getSchoolsByResumeId" resultType="com.joblessfriend.jobfinder.resume.domain.SchoolVo">
         SELECT SCHOOL_ID as schoolId, RESUME_ID as resumeId, SORTATION as sortation, 
                SCHOOL_NAME as schoolName, YEAR_OF_GRADUATION as yearOfGraduation, 
                STATUS as status, MAJOR_NAME as majorName, START_DATE as startDate, END_DATE as endDate
-        FROM SCHOOL 
+        FROM SCHOOL_COPY 
         WHERE RESUME_ID = #{resumeId}
         ORDER BY SCHOOL_ID
     </select>
@@ -228,17 +228,17 @@
     <select id="getCareersByResumeId" resultType="com.joblessfriend.jobfinder.resume.domain.CareerVo">
         SELECT CAREER_ID as careerId, RESUME_ID as resumeId, COMPANY_NAME as companyName, 
                DEPARTMENT_NAME as departmentName, HIRE_YM as hireYm, RESIGN_YM as resignYm,
-               POSITION as position, JOB_TITLE as jobTitle, TASK_ROLE as taskRole, 
+               POSITION as position, JOB_GROUP_ID as jobGroupId, JOB_ID as jobId, 
                DETAIL as workDescription, SALARY as salary
-        FROM CAREER 
+        FROM CAREER_COPY 
         WHERE RESUME_ID = #{resumeId}
         ORDER BY CAREER_ID
     </select>
     
     <select id="getEducationsByResumeId" resultType="com.joblessfriend.jobfinder.resume.domain.EducationVo">
         SELECT EDU_ID as eduId, RESUME_ID as resumeId, EDU_INSTITUTION as eduInstitution, 
-               EDU_NAME as eduName, START_DATE as startDate, END_DATE as endDate
-        FROM EDUCATION 
+               EDU_NAME as eduName, START_DATE as startDate, END_DATE as endDate, CONTENT as content
+        FROM EDUCATION_COPY 
         WHERE RESUME_ID = #{resumeId}
         ORDER BY EDU_ID
     </select>
@@ -247,25 +247,33 @@
         SELECT PORTFOLIO_ID as portfolioId, RESUME_ID as resumeId, FILE_NAME as fileName, 
                STORED_FILE_NAME as storedFileName, FILE_EXTENSION as fileExtension,
                CREATE_AT as createAt, MODIFIED_AT as modifiedAt
-        FROM PORTFOLIO 
+        FROM PORTFOLIO_COPY 
         WHERE RESUME_ID = #{resumeId}
         ORDER BY PORTFOLIO_ID
     </select>
     
-    <select id="getCertificateIdsByResumeId" resultType="Integer">
-        SELECT CERTIFICATE_ID
-        FROM CERTIFICATE_RESUME 
+    <select id="getCertificateByResumeId" resultType="com.joblessfriend.jobfinder.resume.domain.CertificateResumeVo">
+        SELECT CERTIFICATE_RESUME_ID as certificateResumeId, RESUME_ID as resumeId, 
+               CERTIFICATE_NAME as certificateName, ACQUISITION_DATE as acquisitionDate,
+               ISSUING_AUTHORITY as issuingAuthority
+        FROM CERTIFICATE_RESUME_COPY 
         WHERE RESUME_ID = #{resumeId}
         ORDER BY CERTIFICATE_RESUME_ID
     </select>
+    
 
     <select id="getTagIdsByResumeId" resultType="Integer">
         SELECT TAG_ID
-        FROM RESUME_TAG
+        FROM RESUME_TAG_COPY
         WHERE RESUME_ID = #{resumeId}
     </select>
 
-<!-- 지원하기 로직들 -->
+    <select id="getTagListByResumeId" resultType="com.joblessfriend.jobfinder.skill.domain.SkillVo">
+        SELECT RT.TAG_ID, T.TAG_NAME
+        FROM RESUME_TAG_COPY RT JOIN TAG T ON RT.TAG_ID = T.TAG_ID
+        WHERE RT.RESUME_ID = #{resumeId}
+        ORDER BY RT.RESUME_TAG_ID
+    </select><!-- 지원하기 로직들 -->
 
     <insert id="insertResumeManage" parameterType="com.joblessfriend.jobfinder.resume.domain.ResumeManageVo">
         INSERT INTO RESUME_MANAGE (
