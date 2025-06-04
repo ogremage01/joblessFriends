@@ -188,6 +188,31 @@ $("#generateTemplate").on('click',function () {
     $("#templatePreview").html(html);
 
 })
+//클릭이벤트추가 //
+$(document).on('click', '#templatePreview', function () {
+    const previewHtml = $(this).html(); // 현재 미리보기 내용 전체 복사
+
+    Swal.fire({
+        title: '📄 전체 템플릿 미리보기',
+        html: `
+        <div id="swalTemplatePreview" style="
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 10px;
+            text-align: left;">
+            ${$('#templatePreview').html()}
+        </div>
+    `,
+        width: '1000px',  // ✅ 넓게
+        showCloseButton: true,
+        confirmButtonText: '닫기',
+        customClass: {
+            popup: 'swal-template-popup',
+            confirmButton: 'swalConfirmBtn',
+        }
+    });
+
+});
 
 function validateImageFile() {
 
