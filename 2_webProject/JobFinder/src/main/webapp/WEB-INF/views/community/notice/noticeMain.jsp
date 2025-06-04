@@ -132,7 +132,7 @@
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 
-	<form id='pagingForm' action="/notice/notice" method='get'>
+	<form id='pagingForm' action="/community/notice" method='get'>
 		<input type="hidden" name="page" id="pageInput"> 
 		<input type="hidden" name="keyword" id="keywordInput">
 	</form>
