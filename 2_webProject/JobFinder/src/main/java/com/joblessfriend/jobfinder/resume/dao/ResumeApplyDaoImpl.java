@@ -3,6 +3,8 @@ package com.joblessfriend.jobfinder.resume.dao;
 import com.joblessfriend.jobfinder.recruitment.domain.JobPostAnswerVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo;
 import com.joblessfriend.jobfinder.resume.domain.*;
+import com.joblessfriend.jobfinder.skill.domain.SkillVo;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -96,6 +98,83 @@ public class ResumeApplyDaoImpl implements ResumeApplyDao {
         param.put("memberId", memberId);
         param.put("jobPostId", jobPostId);
         return sqlSession.selectOne(namespace + ".countByMemberAndJobPost", param);
+    }
+
+
+	
+    @Override
+    public ResumeVo getResumeWithAllDetails(int resumeId) {
+        System.out.println(">>> [ResumeDaoImpl] getResumeWithAllDetails 시작, resumeId: " + resumeId);
+        
+        try {
+            // 메인 이력서 정보 조회
+            
+            ResumeVo resume = sqlSession.selectOne(namespace + ".getResumeByResumeId", resumeId);
+            
+            if (resume != null) {
+               
+                
+                // 하위 데이터들 조회하여 설정
+                
+                List<SchoolVo> schools = getSchoolsByResumeId(resumeId);
+                resume.setSchoolList(schools);
+               
+                List<CareerVo> careers = getCareersByResumeId(resumeId);
+                resume.setCareerList(careers);
+               
+                List<EducationVo> educations = getEducationsByResumeId(resumeId);
+                resume.setEducationList(educations);
+               
+                List<PortfolioVo> portfolios = getPortfoliosByResumeId(resumeId);
+                resume.setPortfolioList(portfolios);
+                
+                List<CertificateResumeVo> certificateList = getCertificateByResumeId(resumeId);
+                resume.setCertificateList(certificateList);
+               
+                List<SkillVo> skillList = getTagListByResumeId(resumeId);
+                resume.setSkillList(skillList);
+                
+               
+            } else {
+                
+            }
+            
+            return resume;
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    private List<SkillVo> getTagListByResumeId(int resumeId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace + ".getTagListByResumeId", resumeId);
+	}
+
+	@Override
+    public List<SchoolVo> getSchoolsByResumeId(int resumeId) {
+        return sqlSession.selectList(namespace + ".getSchoolsByResumeId", resumeId);
+    }
+
+    @Override
+    public List<CareerVo> getCareersByResumeId(int resumeId) {
+        return sqlSession.selectList(namespace + ".getCareersByResumeId", resumeId);
+    }
+
+    @Override
+    public List<EducationVo> getEducationsByResumeId(int resumeId) {
+        return sqlSession.selectList(namespace + ".getEducationsByResumeId", resumeId);
+    }
+
+    @Override
+    public List<PortfolioVo> getPortfoliosByResumeId(int resumeId) {
+        return sqlSession.selectList(namespace + ".getPortfoliosByResumeId", resumeId);
+    }
+
+    @Override
+    public List<CertificateResumeVo> getCertificateByResumeId(int resumeId) {
+        return sqlSession.selectList(namespace + ".getCertificateByResumeId", resumeId);
     }
 
 

@@ -2,6 +2,7 @@ package com.joblessfriend.jobfinder.resume.service;
 
 import com.joblessfriend.jobfinder.recruitment.domain.JobPostAnswerVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo;
+import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 
 import java.util.List;
 
@@ -23,4 +24,5 @@ public interface ResumeApplyService {
     int hasAlreadyApplied(int memberId, int jobPostId);
 
     void insertAnswers(List<JobPostAnswerVo> answerList);
+	ResumeVo getResumeWithAllDetails(int resumeId);
 }

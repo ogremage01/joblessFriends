@@ -102,40 +102,33 @@ public class ResumeApplyController {
         checkNum = resumeApplyService.hasAlreadyApplied(user.getMemberId(), jobPostId);
         return checkNum;
     }
-//
-//    @GetMapping("/view/{resumeId}")
-//    public String showResumeView(@PathVariable int resumeId, Model model) {
-//        ResumeVo resume = resumeApplyService.getResumeWithAllDetails(resumeId); // DB 기반
-//
-//        if (resume == null) {
-//            throw new IllegalArgumentException("존재하지 않는 이력서입니다.");
-//        }
-//
-//        // 직무 직군 네이밍 매핑
-//        List<Map<String, String>> jobTitles = new ArrayList<>();
-//        for (CareerVo career : resume.getCareerList()) {
-//            Map<String, String> map = new HashMap<>();
-//            map.put("jobGroupName", jobGroupService.getJobGroupNameById(career.getJobGroupId()));
-//            map.put("jobName", jobService.getJobNameById(career.getJobId()));
-//            jobTitles.add(map);
-//        }
-//
-//        // 스킬 태그명 보완
-//        List<SkillVo> skillList = resume.getSkillList();
-//        for (SkillVo skill : skillList) {
-//            if (skill.getTagName() == null || skill.getTagName().isEmpty()) {
-//                SkillVo fullSkill = skillService.getSkillById(skill.getTagId());
-//                if (fullSkill != null) {
-//                    skill.setTagName(fullSkill.getTagName());
-//                }
-//            }
-//        }
-//
-//        model.addAttribute("resume", resume);
-//        model.addAttribute("jobTitles", jobTitles);
-//
-//        return "resume/resumePreview";
-//    }
+    
+    @PostMapping("/store")
+    @ResponseBody
+    public String storeResume(@RequestParam("resumeId") int resumeId, HttpSession session) {
+	
+    session.setAttribute("resumeId", resumeId); // 세션에 resumeId 저장
+    
+    return "ok"; // 성공 응답
+    }
+    
+    @GetMapping("/view")
+    public String showResumeView(HttpSession session,  Model model) {
+    	
+    	Integer resumeId = (Integer) session.getAttribute("resumeId"); // 세션에서 resumeId 가져오기
+    	
+        ResumeVo resume = resumeApplyService.getResumeWithAllDetails(resumeId); // DB 기반
+
+        if (resume == null) {
+            throw new IllegalArgumentException("존재하지 않는 이력서입니다.");
+        }
+        
+
+        model.addAttribute("resume", resume);
+
+        session.removeAttribute("resumeId"); // 세션에서 resumeId 제거
+        return "resume/resumePreview";
+    }
 
 
 }

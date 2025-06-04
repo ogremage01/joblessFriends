@@ -133,4 +133,14 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
         resumeApplyDao.insertAnswers(answerList);
     }
 
+
+
+
+
+	@Override
+	public ResumeVo getResumeWithAllDetails(int resumeId) {
+		// TODO Auto-generated method stub
+		return resumeApplyDao.getResumeWithAllDetails(resumeId);
+	}
+
 }
