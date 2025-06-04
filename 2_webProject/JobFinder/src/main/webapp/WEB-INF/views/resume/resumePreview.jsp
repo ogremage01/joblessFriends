@@ -33,27 +33,59 @@
 				<!--	프로필 사진	-->
 				<div id="profileImg">
 					<c:if test="${not empty resume.profile}">
-    					<img src="${resume.profile}" alt="프로필 이미지" style="width:120px;" />
+    					<img src="${resume.profile}" alt="프로필 이미지" />
 					</c:if>
 				</div>
 				
 				<!--	인적사항		-->
 				<div id="infoTableBox">
 					<span class="infoTableName">${resume.memberName}</span>
-					<span class="infoTableAge" colspan="3">
-						<fmt:formatDate value="${resume.birthDate}" pattern="yyyy" />
-						( 세)
+					
+					<!-- 나이 표시를 위한 스크립트 -->
+					<%@ page import="java.util.Date, java.time.*" %>
+					<%
+					    // 먼저 resume 객체를 꺼내서
+					    Object resumeObj = request.getAttribute("resume");
+					    
+					    Date birthDate = null;
+					    int age = 0;
+					
+					    if (resumeObj != null) {
+					        // resume가 자바빈이라고 가정하고 getBirthDate() 호출
+					        try {
+					            java.lang.reflect.Method m = resumeObj.getClass().getMethod("getBirthDate");
+					            Object birthDateObj = m.invoke(resumeObj);
+					            if (birthDateObj != null && birthDateObj instanceof java.util.Date) {
+					                birthDate = (Date) birthDateObj;
+					                
+					                LocalDate birth = birthDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+					                LocalDate today = LocalDate.now();
+					                age = Period.between(birth, today).getYears();
+					            }
+					        } catch(Exception e) {
+					            out.println("Error accessing birthDate: " + e.getMessage());
+					        }
+					    }
+					
+					    request.setAttribute("calculatedAge", age);
+					%>
+					<span class="infoTableAge">
+					    <fmt:formatDate value="${resume.birthDate}" pattern="yyyy" />
+					    (만 ${calculatedAge}세)
 					</span>
+					
 					<table>
 						<tr>
 							<th class="infoTableTh">이메일</th>
 							<td class="infoTableTd">${resume.email}</td>
+						</tr>
+						<tr>
 							<th class="infoTableTh">전화번호</th>
 							<td class="infoTableTd">${resume.phoneNumber}</td>
 						</tr>
 						<tr>
 							<th class="infoTableTh">주소</th>
-							<td class="infoTableTd" colspan="3">${resume.address}</td>
+							<td class="infoTableTd">${resume.address}</td>
 						</tr>
 					</table>
 				</div>
@@ -61,6 +93,7 @@
 			
 			<!-- 	이력서 요약	 -->
 			<div id="profileBottom" class="borderBox">
+				<c:set var="visibleLimit" value="1" />
 				<div class="resumeSum education">
 				<span class="sumTitle">학력</span>
 				<div class="sumContent">
@@ -69,20 +102,52 @@
 							<span class="sumItem">-</span>
 						</c:when>
 						<c:otherwise>
+						
+							<!-- 학력 우선순위 지정 -->
+							<c:set var="finalEducation" value="" />
+							<c:set var="maxPriority" value="0" />
+							
 							<c:forEach var="school" items="${resume.schoolList}">
-								<div class="edu-summary-line">
-									<span class="sumItem">${school.schoolName}</span>
-									<span class="sumContent">
-										<c:choose>
-											<c:when test="${school.sortation == 'high'}">고등학교</c:when>
-											<c:when test="${school.sortation == 'univ4'}">대학교(4년)</c:when>
-											<c:when test="${school.sortation == 'univ2'}">대학교(2,3년)</c:when>
-											<c:otherwise>기타</c:otherwise>
-										</c:choose>
-									</span>
-									<span class="sumAddEx">${school.status}</span>
-								</div>
+							    <c:set var="priority" value="0" />
+							    <c:choose>
+							        <c:when test="${school.sortation == 'doctor'}">
+							            <c:set var="priority" value="5" />
+							        </c:when>
+							        <c:when test="${school.sortation == 'master'}">
+							            <c:set var="priority" value="4" />
+							        </c:when>
+							        <c:when test="${school.sortation == 'univ4'}">
+							            <c:set var="priority" value="3" />
+							        </c:when>
+							        <c:when test="${school.sortation == 'univ2'}">
+							            <c:set var="priority" value="2" />
+							        </c:when>
+							        <c:when test="${school.sortation == 'high'}">
+							            <c:set var="priority" value="1" />
+							        </c:when>
+							    </c:choose>
+							
+							    <c:if test="${priority > maxPriority}">
+							        <c:set var="finalEducation" value="${school}" />
+							        <c:set var="maxPriority" value="${priority}" />
+							    </c:if>
 							</c:forEach>
+							
+							<!-- 출력 -->
+							<c:if test="${not empty finalEducation}">
+							    <span class="sumItem">${finalEducation.schoolName}</span>
+							    <span class="sumAddEx">
+							        <c:choose>
+							            <c:when test="${finalEducation.sortation == 'high'}">고등학교</c:when>
+							            <c:when test="${finalEducation.sortation == 'univ2'}">대학교(2,3년)</c:when>
+							            <c:when test="${finalEducation.sortation == 'univ4'}">대학교(4년)</c:when>
+							            <c:when test="${finalEducation.sortation == 'master'}">석사</c:when>
+							            <c:when test="${finalEducation.sortation == 'doctor'}">박사</c:when>
+							        </c:choose>
+							    </span>
+							    <span class="sumAddEx">${finalEducation.status}</span>
+							</c:if>
+						
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -95,22 +160,28 @@
 						<span class="sumItem">신입</span>
 					</c:when>
 						<c:otherwise>
-							<c:set var="visibleLimit" value="2" />
 							<c:set var="totalSize" value="${fn:length(resume.careerList)}" />
 							
 								<c:forEach var="career" items="${resume.careerList}" varStatus="status">
 									<c:if test="${status.index lt visibleLimit}">
 										<div class="career-summary-line">
 											<span class="sumItem">${career.companyName}</span>
-											<c:if test="${not empty career.hireYm and not empty career.resignYm}">
-												<c:set var="hire" value="${career.hireYm.time}" />
-												<c:set var="resign" value="${career.resignYm.time}" />
-												<c:set var="months" value="${(resign - hire) / (1000*60*60*24*30)}" />
-												<c:set var="years" value="${months / 12}" />
-												<span class="sumAddEx">
-													(<c:out value="${fn:split(years, '.')[0]}" />년)
-												</span>
-											</c:if>
+											<c:choose>
+												<c:when test="${not empty career.hireYm and not empty career.resignYm}">
+													<c:set var="hire" value="${career.hireYm.time}" />
+													<c:set var="resign" value="${career.resignYm.time}" />
+													<c:set var="months" value="${(resign - hire) / (1000*60*60*24*30)}" />
+													<c:set var="years" value="${months / 12}" />
+													<span class="sumAddEx">
+														(<c:out value="${fn:split(years, '.')[0]}" />년)
+													</span>
+												</c:when>
+												<c:otherwise>
+													<span class="sumAddEx">
+														(재직중)
+													</span>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</c:if>
 								</c:forEach>
@@ -130,7 +201,6 @@
 						<span class="sumItem">-</span>
 					</c:when>
 					<c:otherwise>
-						<c:set var="visibleLimit" value="2" />
 						<c:set var="totalSize" value="${fn:length(resume.educationList)}" />
 						
 						<c:forEach var="edu" items="${resume.educationList}" varStatus="status">
@@ -156,7 +226,6 @@
 						<span class="sumItem">-</span>
 					</c:when>
 					<c:otherwise>
-						<c:set var="visibleLimit" value="3" />
 						<c:set var="totalSize" value="${fn:length(resume.certificateList)}" />
 						
 						<c:forEach var="cert" items="${resume.certificateList}" varStatus="status">
@@ -178,64 +247,64 @@
 		<!-------------------- 추가 내용 -------------------->
         <div id="resumeContent">
 
-		<!-- 스킬 섹션 -->
 		<c:if test="${not empty resume.skillList}">
+		<!-- 스킬 섹션 -->
 		<div class="borderBox">
 			<p class="contentTitle">스킬</p>
-			<c:forEach var="skill" items="${resume.skillList}">
-			<span class="contentItem skill">${skill.tagName}</span>
-			</c:forEach>
+			<div class="skillBox">
+				<c:forEach var="skill" items="${resume.skillList}">
+					<div class="skillWrap"><span class="contentItem skill">${skill.tagName}</span></div>
+				</c:forEach>
+			</div>
 		</div>
-		</c:if>
 		<!-- 스킬 섹션 end -->
+		</c:if>
 			
-		<!-- 학력 섹션 -->
 		<c:if test="${not empty resume.schoolList}">
+		<!-- 학력 섹션 -->
 		<div class="borderBox">
 			<p class="contentTitle">학력</p>
 		    <c:forEach var="school" items="${resume.schoolList}">
 				<div class="contentBox">
-					<span>
+					<span class="contentText textWeak">
 					<c:choose>
 						<c:when test="${school.sortation == 'high'}">고등학교</c:when>
 						<c:when test="${school.sortation == 'univ4'}">대학교(4년)</c:when>
 						<c:when test="${school.sortation == 'univ2'}">대학교(2,3년)</c:when>
-						<c:otherwise>기타</c:otherwise>
+						<c:when test="${school.sortation == 'master'}">석사</c:when>
+						<c:when test="${school.sortation == 'doctor'}">박사</c:when>
 					</c:choose>
 					</span>
 					
-					<span>${school.schoolName}</span>
+					<span class="contentText textStrong">${school.schoolName}</span>
 					
 					<c:choose>
 						<c:when test="${school.sortation == 'high'}">
-							<span>${school.yearOfGraduation}</span>
+							<span class="contentText ">${school.yearOfGraduation}년도</span>
 						</c:when>
 						
-						<c:when test="${school.sortation == 'univ4' || school.sortation == 'univ2'}">
-							<span>${school.majorName} 전공</span>
-							<span>
+						<c:when test="${school.sortation == 'univ4' || school.sortation == 'univ2' || school.sortation == 'master' || school.sortation == 'doctor' }">
+							<span class="contentText">${school.majorName}</span>
+							<span class="contentText textWeak ">
 								<fmt:formatDate value="${school.startDate}" pattern="yyyy.MM" /> ~
 								<fmt:formatDate value="${school.endDate}" pattern="yyyy.MM" />
 							</span>
 						</c:when>
 					</c:choose>
-					<span>${school.status}</span>
+					<span class="contentText textWeak ">${school.status}</span>
 				</div>
 			</c:forEach>
 		</div>
-		</c:if>
 		<!-- 학력 섹션 end -->
+		</c:if>
 		
+		<c:if test="${not empty resume.careerList}">
 		<!-- 경력 섹션 -->	
-		<c:if test="${not empty resume.schoolList}">
 		<div class="borderBox">
 			<p class="contentTitle">경력</p>
 			<c:forEach var="career" items="${resume.careerList}" varStatus="loop">
 				<div class="contentBox">
-					<div>
-						<strong>${career.companyName}</strong> | ${career.departmentName} | ${career.position}
-					</div>
-					<div>
+					<span class="contentText textWeak marginRight">
 						<fmt:formatDate value="${career.hireYm}" pattern="yyyy.MM" /> ~
 						<c:choose>
 							<c:when test="${career.resignYm != null}">
@@ -243,75 +312,84 @@
 							</c:when>
 								<c:otherwise>재직중</c:otherwise>
 						</c:choose>
-					</div>
-					
-					<!-- ✅ 직군/직무명 -->
-					<div>
-						직군/직무: ${jobTitles[loop.index].jobGroupName} / ${jobTitles[loop.index].jobName}
-					</div>
-					
-					<div>연봉: ${career.salary} 만원</div>
-					<div>담당업무: ${career.workDescription}</div>
+					</span>
+					<span class="contentText textStrong companyName">${career.companyName}</span>
+					<span class="contentText textWeak">|</span>
+					<span class="contentText textWeak">${career.departmentName},</span>
+					<span class="contentText textWeak">${career.position}</span>
+<%-- 					<span class="contentText">${jobTitles[loop.index].jobGroupName} / ${jobTitles[loop.index].jobName}</span> --%>
+					<span class="contentText textWeak">|</span>
+					<span class="contentText textWeak">연봉
+					<fmt:formatNumber value="${career.salary}" type="number" groupingUsed="true" />
+					만원</span>
+					<br/>
+					<span>${career.workDescription}</span>
 				</div>
 			</c:forEach>
 		</div>
-		</c:if>
 		<!-- 경력 섹션 end -->
+		</c:if>
 			
-		<!-- 교육 섹션 -->
 		<c:if test="${not empty resume.educationList}">
+		<!-- 교육 섹션 -->
 		<div class="borderBox">
 			<p class="contentTitle">교육</p>
 			<c:forEach var="edu" items="${resume.educationList}">
 				<div class="contentBox">
-					<span>${edu.eduName}</span>
-					<span>
+					<span class="contentText textWeak marginRight">
 						<fmt:formatDate value="${edu.startDate}" pattern="yyyy.MM" />
 						~
 						<fmt:formatDate value="${edu.endDate}" pattern="yyyy.MM" />
 					</span>
-					<span>${edu.eduInstitution}</span>
+					<span class="contentText textStrong">${edu.eduName}</span>
+					<span class="contentText textWeak">${edu.eduInstitution}</span>
 					<br/>
-					<span>${edu.content}</span>
+<!-- 					<span class="contentText textWeak">내용 </span> -->
+<%-- 					<span>${edu.content}</span> --%>
 				</div>
 			</c:forEach>
 		</div>
-		</c:if>
 		<!-- 교육 섹션 end -->
-			
-		<div class="borderBox">
-		<p class="contentTitle">자기소개서</p>
-			<div class="contentBox">
-				<pre>${resume.selfIntroduction}</pre>
-			</div>
-		</div>
+		</c:if>
 		
-		<!-- 자격증 섹션 -->
 		<c:if test="${not empty resume.certificateList}">
+		<!-- 자격증 섹션 -->
 		<div class="borderBox">
 			<p class="contentTitle">자격증</p>
 			<c:forEach var="cert" items="${resume.certificateList}">
 				<div class="contentBox">
-					<span>
+					<span class="contentText textWeak marginRight">
 						<fmt:formatDate value="${cert.acquisitionDate}" pattern="yyyy.MM.dd" />
 					</span>
-					<span>${cert.certificateName}</span>
-					<span>${cert.issuingAuthority}</span>
+					<span class="contentText textStrong">${cert.certificateName}</span>
+					<span class="contentText textWeak">${cert.issuingAuthority}</span>
 				</div>
 			</c:forEach>
 		</div>
-		</c:if>
 		<!-- 자격증 섹션 end -->
+		</c:if>
 		
-		<!-- 포트폴리오 섹션 -->
+		<c:if test="${not empty resume.selfIntroduction}">
+		<!-- 자기소개서 섹션 -->	
+		<div class="borderBox">
+		<p class="contentTitle">자기소개서</p>
+			<div class="contentBox">
+				<pre class="selfIntro">${resume.selfIntroduction}</pre>
+			</div>
+		</div>
+		<!-- 자기소개서 섹션 end -->
+		</c:if>
+		
+		
 		<c:if test="${not empty resume.portfolioList}">
+		<!-- 포트폴리오 섹션 -->
 		<div class="borderBox">
 			<p class="contentTitle">포트폴리오</p>
 			<div class="contentBox">
 				<ul style="padding-left: 20px;">
 					<c:forEach var="file" items="${resume.portfolioList}">
 						<li style="margin-bottom: 6px;">
-							<a href="/uploads/portfolio/${file.storedFileName}" target="_blank">
+							<a href="/uploads/portfolio/${file.storedFileName}" target="_blank" class="fileName">
 								${file.fileName}
 							</a>
 						</li>
@@ -319,8 +397,8 @@
 				</ul>
 			</div>
 		</div>
-		</c:if>
 		<!-- 포트폴리오 섹션 end-->
+		</c:if>
 		
 	</div>
 </div>
