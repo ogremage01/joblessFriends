@@ -453,7 +453,7 @@ $(document).on('click', '.apply-btn', function () {
 
     const jobPostId = $(this).closest('.job').data('jobpostid');
 
-
+    console.log("선택된 공고 ID:", jobPostId);
 
 
 
@@ -497,6 +497,9 @@ $(document).on('click', '.apply-btn', function () {
 
 
 function showResumeSelectModal(jobPostId) {
+
+   $.ajax()
+
     const html = resumeList.map(r => `
     <label class="resume-item">
         <div class="resume-radio-row">

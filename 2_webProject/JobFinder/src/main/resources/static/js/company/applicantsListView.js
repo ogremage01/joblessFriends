@@ -142,7 +142,7 @@ $(".btn-change-state").on("click", function () {
 
 $(".btn-resume").on("click", function () {
     window.open(
-        '/auth/login',
+        '/resume/viewPreview',
         '_blank',
         'width=1200,height=800,top=200,left=700,scrollbars=yes,resizable=yes'
     );

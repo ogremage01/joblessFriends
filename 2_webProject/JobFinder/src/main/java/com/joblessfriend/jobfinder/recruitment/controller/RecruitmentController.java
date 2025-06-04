@@ -108,11 +108,13 @@ public class RecruitmentController {
         if (memberVo != null && "member".equals(userType)) {
             int memberId = memberVo.getMemberId();
             List<ResumeVo> myResumeList;
-
+            System.out.println("리스트"+ jobPostId);
             if (jobPostId != null) {
-                myResumeList = resumeService.getResumesByMemberId(memberId, jobPostId); // 적합도 포함
+                myResumeList = resumeService.getResumesByMemberId(memberId, jobPostId);
+                System.out.println("이력서리스트"+ myResumeList);// 적합도 포함
             } else {
-                myResumeList = resumeService.getResumesByMemberId(memberId); // 기본
+                myResumeList = resumeService.getResumesByMemberId(memberId);
+                System.out.println("이력서리스트2"+ myResumeList);// 기본
             }
 
             model.addAttribute("resumeList", myResumeList);

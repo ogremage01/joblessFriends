@@ -3,15 +3,22 @@ package com.joblessfriend.jobfinder.resume.controller;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobPostAnswerVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo;
+import com.joblessfriend.jobfinder.resume.domain.CareerVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeApplyRequestVo;
+import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 import com.joblessfriend.jobfinder.resume.service.ResumeApplyService;
+import com.joblessfriend.jobfinder.skill.domain.SkillVo;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/resume/apply")
@@ -95,4 +102,40 @@ public class ResumeApplyController {
         checkNum = resumeApplyService.hasAlreadyApplied(user.getMemberId(), jobPostId);
         return checkNum;
     }
+//
+//    @GetMapping("/view/{resumeId}")
+//    public String showResumeView(@PathVariable int resumeId, Model model) {
+//        ResumeVo resume = resumeApplyService.getResumeWithAllDetails(resumeId); // DB 기반
+//
+//        if (resume == null) {
+//            throw new IllegalArgumentException("존재하지 않는 이력서입니다.");
+//        }
+//
+//        // 직무 직군 네이밍 매핑
+//        List<Map<String, String>> jobTitles = new ArrayList<>();
+//        for (CareerVo career : resume.getCareerList()) {
+//            Map<String, String> map = new HashMap<>();
+//            map.put("jobGroupName", jobGroupService.getJobGroupNameById(career.getJobGroupId()));
+//            map.put("jobName", jobService.getJobNameById(career.getJobId()));
+//            jobTitles.add(map);
+//        }
+//
+//        // 스킬 태그명 보완
+//        List<SkillVo> skillList = resume.getSkillList();
+//        for (SkillVo skill : skillList) {
+//            if (skill.getTagName() == null || skill.getTagName().isEmpty()) {
+//                SkillVo fullSkill = skillService.getSkillById(skill.getTagId());
+//                if (fullSkill != null) {
+//                    skill.setTagName(fullSkill.getTagName());
+//                }
+//            }
+//        }
+//
+//        model.addAttribute("resume", resume);
+//        model.addAttribute("jobTitles", jobTitles);
+//
+//        return "resume/resumePreview";
+//    }
+
+
 }

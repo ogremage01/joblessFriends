@@ -45,6 +45,13 @@ public class ResumeServiceImpl implements ResumeService {
 		RecruitmentVo recruitmentVo = recruitmentService.getRecruitmentId(jobPostId);
 
 		for (ResumeVo resume : resumeList) {
+			int resumeId = resume.getResumeId();
+			resume.setSchoolList(resumeDao.getSchoolsByResumeId(resumeId));
+			resume.setCareerList(resumeDao.getCareersByResumeId(resumeId));
+			resume.setEducationList(resumeDao.getEducationsByResumeId(resumeId));
+			resume.setPortfolioList(resumeDao.getPortfoliosByResumeId(resumeId));
+			resume.setCertificateList(resumeDao.getCertificateByResumeId(resumeId));
+			resume.setSkillList(resumeDao.getTagIdsByResumeId(resumeId));
 			int score = resumeMatchService.calculateMatchScore(resume, recruitmentVo);
 			resume.setMatchScore(score); // ResumeVo에 matchScore 필드가 있어야 함
 		}
