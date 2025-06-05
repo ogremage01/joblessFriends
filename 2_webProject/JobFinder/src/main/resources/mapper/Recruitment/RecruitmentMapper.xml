@@ -206,7 +206,8 @@
         END_DATE,
         IS_CONTINUOUS,
         MAX_APPLICANTS,
-        CURRENT_APPLICANTS
+        CURRENT_APPLICANTS,
+        CREATE_DATE
         ) VALUES (
         #{jobPostId},
         #{companyId},
@@ -225,7 +226,8 @@
         #{endDate},
         0,
         0,
-        0
+        0,
+        SYSDATE
         )
 
     </insert>

@@ -27,7 +27,7 @@ public class RecruitmentVo {
     private String templateType;    //템플릿타입
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
-
+    private Date CreateDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endDate;       // 접수 마감일
     private String jobName;         // 직업이름
