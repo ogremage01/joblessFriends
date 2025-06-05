@@ -229,5 +229,4 @@ class ResumeDaoImpl implements ResumeDao{
 
     }
 
-
 }

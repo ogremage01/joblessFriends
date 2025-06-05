@@ -24,6 +24,5 @@ public interface ResumeService {
     void updateResume(ResumeVo resumeVo);
     
     List<ResumeVo> getResumeListWithSummaryByMemberId(int memberId);
-
     
 }
