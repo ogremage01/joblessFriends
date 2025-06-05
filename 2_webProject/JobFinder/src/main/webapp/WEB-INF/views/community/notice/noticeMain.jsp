@@ -97,9 +97,11 @@
 			</div>
 			<div id="pageWrap" style="width: 1210px;">
 				<div id="pagination">
-					<!-- 이전 페이지 -->
-					<button class="page-btn" ${searchVo.page == 1 ? 'disabled' : ''}
-						onclick="goToPage(${searchVo.page - 1}, '${searchVo.keyword}')">«</button>
+										<!-- 이전 페이지 -->
+					<c:if test="${pagination.existPrevPage}">
+		                <button class="page-btn" ${searchVo.page == 1 ? 'disabled' : ''}
+								onclick="goToPage(${searchVo.page - 1}, '${searchVo.keyword}')">«</button>
+            		</c:if>
 
 					<!-- 페이지 번호 -->
 					<c:forEach begin="${pagination.startPage}"
@@ -110,9 +112,11 @@
 					</c:forEach>
 
 					<!-- 다음 페이지 -->
-					<button class="page-btn"
-						${searchVo.page == pagination.totalPageCount ? 'disabled' : ''}
-						onclick="goToPage(${searchVo.page + 1}, '${searchVo.keyword}')">»</button>
+					<c:if test="${pagination.existNextPage}">
+						<button class="page-btn"
+							${searchVo.page == pagination.totalPageCount ? 'disabled' : ''}
+							onclick="goToPage(${searchVo.page + 1}, '${searchVo.keyword}')">»</button>
+					</c:if>
 				</div>
 			</div>
 		</div>

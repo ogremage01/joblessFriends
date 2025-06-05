@@ -45,24 +45,7 @@
 
 <style>
 /*기본값(default)이 이미 "text/css"로 되어 있어서 자동인식한다하여 뺐음 */
-#container {
-	margin: auto;
-}
 
-#noticeUploadContainer{
-width: 1000px;
-
-margin: auto;
-}
-
-.toastui-editor-contents:empty::before {
-    background-color: white !important;
-}
-
-#title{
-	width: 1000px;
-	margin-bottom: 20px;
-}
 
 </style>
 
