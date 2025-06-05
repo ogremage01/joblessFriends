@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -84,10 +87,11 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             vo.setJobPostId(jobPostId);
             recruitmentDao.insertJobPostWelfare(vo); // 단건 삽입
         }
+
         if (recruitmentVo.getQuestionList() != null && !recruitmentVo.getQuestionList().isEmpty()) {
             for (JobPostQuestionVo questionVo : recruitmentVo.getQuestionList()) {
                 questionVo.setJobPostId(jobPostId); // FK 설정
-                recruitmentDao.insertQuestion(questionVo);
+                recruitmentDao.updateQuestionTextByOrder(questionVo);
             }
         }
 
@@ -119,26 +123,52 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         if (tempKey != null && !tempKey.isBlank()) {
             recruitmentDao.updateJobPostIdByTempKey(vo.getJobPostId(), tempKey);
         }
-        // 5.
-        recruitmentDao.deleteQuestionsByJobPostId(vo.getJobPostId());
-        for (JobPostQuestionVo question : vo.getQuestionList()) {
-            System.out.println("💬 질문 삽입 시도: "
-                    + "jobPostId=" + vo.getJobPostId()
-                    + ", order=" + question.getQuestionOrder()
-                    + ", text=" + question.getQuestionText());
 
+        List<JobPostQuestionVo> existingList = recruitmentDao.getRecruitmentQuestion(vo.getJobPostId());
+        List<JobPostQuestionVo> newList = vo.getQuestionList();
+
+// 1~3번 순회
+        // 기존 질문에서 newList에 없는 ORDER는 모두 제거
+        Set<Integer> newOrderSet = newList.stream()
+                .map(JobPostQuestionVo::getQuestionOrder)
+                .collect(Collectors.toSet());
+
+
+
+// 그다음, insert or update
+        for (JobPostQuestionVo question : newList) {
             question.setJobPostId(vo.getJobPostId());
-            recruitmentDao.insertQuestion(question);
+            Optional<JobPostQuestionVo> match = existingList.stream()
+                    .filter(e -> e.getQuestionOrder() == question.getQuestionOrder())
+                    .findFirst();
+            if (match.isPresent()) {
+                recruitmentDao.updateQuestionTextByOrder(question);
+            } else {
+                recruitmentDao.insertQuestion(question);
+            }
+        }
 
+
+        if (tempKey != null && !tempKey.isBlank()) {
+            recruitmentDao.updateJobPostIdByTempKey(vo.getJobPostId(), tempKey);
         }
 
     }
 
+    @Override
+    public void updateQuestionTextByOrder(JobPostQuestionVo questionVo) {
+        recruitmentDao.updateQuestionTextByOrder(questionVo);
+    }
 
 
     @Override
     public void deleteTagsByJobPostId(int jobPostId) {
         recruitmentDao.deleteTagsByJobPostId(jobPostId);
+    }
+
+    @Override
+    public void deleteAnswersByJobPostId(int jobPostId) {
+        recruitmentDao.deleteAnswersByJobPostId(jobPostId);
     }
 
     @Override

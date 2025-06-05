@@ -12,7 +12,25 @@ $(document).ready(function () {
             $('#fileInfoBox').hide();
         }
     });
+    $('#generateTitle').on('click', function () {
+        const file = $('#jobImgFile')[0].files[0];
 
+        if (!file) {
+            loginFailPop("미리볼 이미지를 먼저 업로드해주세요.");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            Swal.fire({
+                title: '이미지 미리보기',
+                imageUrl: e.target.result,
+                imageAlt: '대표 이미지',
+                confirmButtonText: '닫기'
+            });
+        };
+        reader.readAsDataURL(file);
+    });
 
     $('#removeFileBtn').on('click', function () {
         $('#jobImgFile').val('');
@@ -454,7 +472,7 @@ function syncWelfareTagsFromDOM() {
 
 function addWelfareItem() {
     const value = $('#welfareInput').val().trim();
-
+    if (!value) return;
     let isDuplicate = false;
     $('#welfareList .welfare-item span').each(function () {
         if ($(this).text().trim() === value) {
@@ -554,5 +572,31 @@ $(document).ready(function () {
     });
 
 
+
+});
+
+
+$(document).on('click', '#templatePreview', function () {
+    const previewHtml = $(this).html(); // 현재 미리보기 내용 전체 복사
+
+    Swal.fire({
+        title: '📄 전체 템플릿 미리보기',
+        html: `
+        <div id="swalTemplatePreview" style="
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 10px;
+            text-align: left;">
+            ${$('#templatePreview').html()}
+        </div>
+    `,
+        width: '1000px',  // ✅ 넓게
+        showCloseButton: true,
+        confirmButtonText: '닫기',
+        customClass: {
+            popup: 'swal-template-popup',
+            confirmButton: 'swalConfirmBtn',
+        }
+    });
 
 });

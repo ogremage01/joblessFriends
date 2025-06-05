@@ -460,6 +460,14 @@ $('#btnAddQuestion').on('click', function () {
     Swal.fire({
         title: '사전질문 등록',
         html: `
+                <div style="text-align:left; margin-bottom:10px; font-size:13px; color:#555;">
+            ※ 질문은 최대 3개까지 등록할 수 있으며,<br/>
+            <span style="color:#d32f2f;">
+                ※ <b>기존 질문 삭제는 제한됩니다.</b>
+            </span><br/>
+            ※ 질문 순서 건너뛰기(예: 2번만 입력)는 권장하지 않습니다.<br/>
+            ※ 기존 질문이 있을 경우 <b>수정만 가능</b>합니다.
+        </div>
             <div class="question-modal-form">
                 <div class="swal2-form-group">
                     <label for="question1" class="swal2-form-label">질문 1</label>

@@ -46,7 +46,9 @@ public interface RecruitmentDao {
     void increaseViews(int jobPostId);
     void deleteQuestionsByJobPostId(int jobPostId);
 
-
+    //질문지//
+    void deleteAnswersByJobPostId(int jobPostId);
+    void updateQuestionTextByOrder(JobPostQuestionVo questionVo);
     List<JobPostQuestionVo> getRecruitmentQuestion(int jobPostId);
     List<RecruitmentVo> adminRecruitmentList();
 	List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId);
@@ -69,5 +71,5 @@ public interface RecruitmentDao {
 	List<Integer> bookMarkedJobPostIdList(int memberId);
 
 
-
+    void deleteQuestionByOrder(Integer jobPostId, int order);
 }

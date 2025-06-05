@@ -340,13 +340,23 @@
                      #{benefitText}
                  )
     </insert>
-
+<!--   전체삭제  -->
     <delete id="deleteQuestionsByJobPostId" parameterType="int">
         DELETE FROM JOB_POST_QUESTION
         WHERE JOB_POST_ID = #{jobPostId}
     </delete>
-
-
+    <update id="updateQuestionTextByOrder" parameterType="com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo">
+        UPDATE JOB_POST_QUESTION
+        SET QUESTION_TEXT = #{questionText}
+        WHERE JOB_POST_ID = #{jobPostId}
+          AND QUESTION_ORDER = #{questionOrder}
+    </update>
+<!--    부분삭제-->
+    <delete id="deleteQuestionByOrder">
+        DELETE FROM JOB_POST_QUESTION
+        WHERE JOB_POST_ID = #{jobPostId}
+          AND QUESTION_ORDER = #{questionOrder}
+    </delete>
 
 <!--    필터 카운팅 -->
     <select id="countFilteredPosts"
@@ -495,6 +505,9 @@
 		WHERE MEMBER_ID = #{memberId}
 	</select>
 
- 
+    <delete id="deleteAnswersByJobPostId" parameterType="int">
+        DELETE FROM JOB_POST_ANSWER
+        WHERE JOB_POST_ID = #{jobPostId}
+    </delete>
 
 </mapper>
