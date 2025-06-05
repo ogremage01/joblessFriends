@@ -215,7 +215,7 @@ public class RecruitmentController {
 
         Object loginUser = session.getAttribute("userLogin");
         String userType = (String) session.getAttribute("userType");  // 이미 login 체크할 때 사용한 값
-
+        model.addAttribute("userType", userType);
         if ("member".equals(userType) && loginUser instanceof MemberVo) {
             MemberVo memberVo = (MemberVo) loginUser;
             int memberId = memberVo.getMemberId();

@@ -157,7 +157,8 @@
             jp.salary AS salary,
             jp.work_hours AS workHours,
             jp.template_type AS templateType,
-            jp.job_img as jobImg
+            jp.job_img as jobImg,
+            jp.IS_CONTINUOUS AS isContinuous
         FROM JOB_POST jp
                  JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
                  JOIN JOB j ON jp.job_id = j.job_id

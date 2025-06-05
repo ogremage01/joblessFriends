@@ -28,6 +28,7 @@ $(document).ready(function () {
 
 
 $(document).on('click', '.btn-apply', function () {
+
     if (!resumeList || resumeList.length === 0) {
         Swal.fire('📭 등록된 이력서가 없습니다.');
         return;

@@ -62,24 +62,58 @@
             <%--               JS데이터수집용 // NONE처리 --%>
                 <div class="dday">접수 마감일까지 남은 시간<br><span id="deadlineCountdown">.</span></div>
                 <div class="btn-group">
-	                <c:choose>
-						<c:when test="${bookMarked_JobPostId == null}">
-							<div id="bookmark-Container">
-		                    	<button class="btn-NonBookmark" data-jobpostid="${recruitmentDetailVo.recruitment.jobPostId}"
-		                    									data-usertype="${sessionScope.userType}">★ 공고 찜하기</button>
-		                    </div>
-						</c:when>
-						<c:otherwise>
-							<div id="bookmark-Container">
-		                    	<button class="btn-bookmark" data-jobpostid="${recruitmentDetailVo.recruitment.jobPostId}"
-		                    								data-usertype="${sessionScope.userType}">★ 공고 찜하기</button>
-		                    </div>
-						</c:otherwise>
-					</c:choose>
-
                     <div class="job" data-jobpostid="${recruitmentDetailVo.recruitment.jobPostId}">
-                        <button class="btn-apply">지원하기</button>
+                        <c:choose>
+                            <c:when test="${recruitmentDetailVo.recruitment.isContinuous == 0}">
+                                <c:choose>
+                                    <c:when test="${userType eq 'member'}">
+                                        <c:choose>
+                                            <c:when test="${bookMarked_JobPostId == null}">
+                                                <div id="bookmark-Container">
+                                                    <button class="btn-NonBookmark"
+                                                            data-jobpostid="${recruitmentDetailVo.recruitment.jobPostId}" data-usertype="${sessionScope.userType}">
+                                                        ★ 공고 찜하기
+                                                    </button>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div id="bookmark-Container">
+                                                    <button class="btn-bookmark"
+                                                            data-jobpostid="${recruitmentDetailVo.recruitment.jobPostId}" data-usertype="${sessionScope.userType}">
+                                                        ★ 공고 찜하기
+                                                    </button>
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <button class="btn-apply">지원하기</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div id="bookmark-Container">
+                                            <button type="button" disabled style="cursor: not-allowed; background: #eee;">
+                                                개인회원만 가능합니다
+                                            </button>
+                                        </div>
+                                        <button type="button" disabled style="cursor: not-allowed; background: #eee;">
+                                            개인회원만 가능합니다
+                                        </button>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:when>
+                            <c:otherwise>
+                                <div id="bookmark-Container">
+                                    <button type="button" disabled style="cursor: not-allowed; background: #ccc;">
+                                        마감됨
+                                    </button>
+                                </div>
+                                <button class="apply-btn" type="button" disabled style="background: #ccc; cursor: not-allowed;">
+                                    마감됨
+                                </button>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
+
+
+
                 </div>
             </div>
 
