@@ -421,4 +421,41 @@ button[disabled] {
 	outline: 0px;
 }
 
+#divSelectedCon {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+    list-style: none;
+    padding-left: 0;
+}
+
+#divSelectedCon li {
+    display: flex;
+    align-items: center;
+    background-color: #f0f4f8;
+    border: 1px solid #d0d7de;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+#divSelectedCon li em {
+    margin-right: 6px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.shb-btn-del {
+    background: none;
+    border: none;
+    font-size: 13px;
+    color: #666;
+    cursor: pointer;
+}
+
+.shb-btn-del:hover {
+    color: #e74c3c;
+}
 
