@@ -95,7 +95,7 @@
 				</div>
 
 			</div>
-			<div id="pageWrap" style="width: 1210px;">
+			<div id="pageWrap">
 				<div id="pagination">
 										<!-- 이전 페이지 -->
 					<c:if test="${pagination.existPrevPage}">
