@@ -893,7 +893,9 @@ function validateResume() {
 			title: '입력 정보를 확인해주세요',
 			html: errorMessages.map(msg => `• ${msg}`).join('<br>'),
 			confirmButtonText: '확인',
-			confirmButtonColor: '#F69800'
+			customClass: {
+				confirmButton: "swalConfirmBtn",
+			},
 		});
 	}
 

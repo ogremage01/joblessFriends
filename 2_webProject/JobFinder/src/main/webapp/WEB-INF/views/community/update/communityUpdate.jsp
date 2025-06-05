@@ -188,7 +188,11 @@
                 Swal.fire({
                     icon: "error",
                     title: "수정이 취소되었습니다.",
-                    text: "다시 시도하거나 변경사항을 확인하세요."
+                    text: "다시 시도하거나 변경사항을 확인하세요.",
+                    confirmButtonText: "확인",
+                    customClass: {
+            			confirmButton: "swalConfirmBtn",
+            		},
                 });
             }
         }
