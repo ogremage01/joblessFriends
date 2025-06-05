@@ -3,11 +3,15 @@ package com.joblessfriend.jobfinder.resume.service;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.joblessfriend.jobfinder.resume.dao.ResumeDao;
+import com.joblessfriend.jobfinder.resume.dao.ResumeMatchDao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +28,10 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 
 
     @Autowired
-    ResumeDao resumeDao;
+    private ResumeDao resumeDao;
+    
+    @Autowired
+    private ResumeMatchDao resumeMatchDao;
 
     @Autowired
     private SkillService skillService;
@@ -56,7 +63,7 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
         }
         System.out.println("스킬직전");
         int skillScore = recruitmentSkillList.isEmpty() ? 0 :
-                matchCnt * (skillTotalScore / recruitmentSkillList.size());
+                (int) Math.ceil(matchCnt * (skillTotalScore / recruitmentSkillList.size()));
 
         skillScore = Math.min(skillScore, skillTotalScore);
         skillScore = Math.max(skillScore, 0);
@@ -84,18 +91,39 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
                 schoolScore = 0;
                 break;
         }
-
-        for (SchoolVo resumeSchoolVo : resumeSchoolList) {
-            String status = resumeSchoolVo.getStatus();
-            if (!"졸업".equals(status)) {
-                if ("졸업 예정".equals(status)) {
-                    schoolScore -= (int) Math.floor(schoolTotalScore * 0.05);
-                } else if ("재학 중".equals(status)) {
-                    schoolScore -= (int) Math.floor(schoolTotalScore * 0.15);
+        System.out.println("resumeSchoolList.size(): " + resumeSchoolList.size());
+        
+        if(resumeSchoolList.size() == 0 || resumeSchoolList == null) {
+        	schoolScore = 0;
+        } else if(resumeSchoolList != null) {
+        	for (SchoolVo resumeSchoolVo : resumeSchoolList) {
+                String sortation = resumeSchoolVo.getSortation();
+            	String status = resumeSchoolVo.getStatus();
+            	
+            	
+                if ("고등학교".equals(status)) {
+                    schoolScore += 0;
+                } else if ("대학교(2,3년)".equals(status)) {
+                    schoolScore += (int) Math.ceil(schoolTotalScore * 0.25);
+                } else if ("대학교(4년)".equals(status)) {
+                    schoolScore += (int) Math.ceil(schoolTotalScore * 0.5);
+                } else if ("석사".equals(status)) {
+                    schoolScore += (int) Math.ceil(schoolTotalScore * 0.75);
+                } else if ("박사".equals(status)) {
+                    schoolScore += schoolTotalScore;
+                }            
+                
+                if (!"졸업".equals(status)) {
+                    if ("졸업 예정".equals(status)) {
+                        schoolScore -= (int) Math.floor(schoolTotalScore * 0.05);
+                    } else if ("재학 중".equals(status)) {
+                        schoolScore -= (int) Math.floor(schoolTotalScore * 0.15);
+                    }
                 }
-            }
 
-        }
+            }
+        } 
+        
 
         schoolScore = Math.min(schoolScore, schoolTotalScore);
         schoolScore = Math.max(schoolScore, 0);
@@ -126,46 +154,65 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
         int careerJobGroup = 0;
         int careerJob = 0;
 
-//        int recJobGroupId = recruitmentVo.getJobGroupId();
+        int recJobGroupId = recruitmentVo.getJobGroupId();
         int recJobId = recruitmentVo.getJobId();
 
-//        System.out.println("recJobGroupId = " + recJobGroupId);
+        System.out.println("recJobGroupId = " + recJobGroupId);
         System.out.println("recJobId = " + recJobId);
-//        for (CareerVo resumeCareerVo : resumeCareerList) {
-//            LocalDate hireYm = resumeCareerVo.getHireYm().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//            LocalDate resignYm = resumeCareerVo.getResignYm().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//            if (resignYm.isAfter(LocalDate.now())) {
-//                resignYm = LocalDate.now();
-//            }
-//            int careerMonth = (int) ChronoUnit.MONTHS.between(hireYm, resignYm);
-//
-//            if (resumeCareerVo.getJobId() == recJobId) {
-//                careerJob += careerMonth; }
-////            else if (resumeCareerVo.getJobGroupId() == recJobGroupId) {
-////                careerJobGroup += careerMonth;
-////            }
-//                else {careerAll += careerMonth;
-//            }
-//        }
+        try {
+		
+        	if(resumeCareerList != null) {
+            	for (CareerVo resumeCareerVo : resumeCareerList) {
+                    Date hireYm = resumeCareerVo.getHireYm();
+                    Date resignYm = resumeCareerVo.getResignYm();
 
-//        int careerJobYear = (int) Math.floor(careerJob / 12);
-//
-//        careerScore += (int) Math.floor(careerAll / 12) * 1;
-//        careerScore += (int) Math.floor(careerJobGroup / 12) * 3;
-//        careerScore += selectCareerGradeScore(careerJobYear);
-//
-//        careerScore = Math.min(careerScore, careerTotalScore);
-//        careerScore = Math.max(careerScore, 0);
+                    System.out.println("YM: " + hireYm + " , " + resignYm);
+                    
+                    // Calendar를 사용한 월 수 계산
+                    Calendar startCal = Calendar.getInstance();
+                    startCal.setTime(hireYm);
+                    Calendar endCal = Calendar.getInstance();
+                    endCal.setTime(resignYm);
+
+                    int yearDiff = endCal.get(Calendar.YEAR) - startCal.get(Calendar.YEAR);
+                    int monthDiff = endCal.get(Calendar.MONTH) - startCal.get(Calendar.MONTH);
+                    int careerMonth = yearDiff * 12 + monthDiff;
+                  
+                    if (resumeCareerVo.getJobId() == recJobId) {
+                        careerJob += careerMonth;
+                    } else if (resumeCareerVo.getJobGroupId() == recJobGroupId) {
+                        careerJobGroup += careerMonth;
+                    } else {
+                        careerAll += careerMonth;
+                    }
+                }	
+            }
+        	
+	
+        int careerJobYear = (int) Math.floor(careerJob / 12);
+        careerScore += (int) Math.floor(careerAll / 12) * 1;
+        careerScore += (int) Math.floor(careerJobGroup / 12) * 3;
+        careerScore += selectCareerGradeScore(careerJobYear);
+        
+
+        careerScore = Math.min(careerScore, careerTotalScore);
+        careerScore = Math.max(careerScore, 0);
+
         System.out.println("▶ 스킬 점수 = " + skillScore);
         System.out.println("▶ 학력 점수 = " + schoolScore);
         System.out.println("▶ 경력 점수 = " + careerScore);
         System.out.println("▶ 총점 = " + (skillScore + schoolScore + careerScore));
+        } catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+        
         Integer total = (skillScore + schoolScore + careerScore);
         return total;
     }
 
     @Override
     public int selectCareerGradeScore(int careerJobYear) {
-        return resumeDao.selectCareerGradeScore(careerJobYear);
+        return resumeMatchDao.selectCareerGradeScore(careerJobYear);
     }
 }

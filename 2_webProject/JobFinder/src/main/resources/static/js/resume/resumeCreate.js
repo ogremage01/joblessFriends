@@ -20,6 +20,12 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 		});
 	}
+	
+	// 사이드바 top버튼
+	document.getElementById("btnTop").addEventListener("click", () => {
+	  window.scrollTo({ top: 0, behavior: "smooth" });
+	});
+
 
 	// +추가 버튼들 이벤트 위임 방식으로 등록
 	document.addEventListener("click", function(e) {
@@ -28,24 +34,44 @@ document.addEventListener("DOMContentLoaded", function() {
 			const schoolContainer = document.getElementById("school-container");
 			const newSchool = createSchoolEntry();
 			schoolContainer.appendChild(newSchool);
+			
+			// 달력 재적용
+			const select = newSchool.querySelector('select[name="sortation"]');
+				if (select) {
+					select.addEventListener('change', () => {
+						setTimeout(() => {
+							applyMonthPickerByName("yearOfGraduation");
+							applyMonthPickerByName("startDate");
+							applyMonthPickerByName("endDate");
+						}, 10); // 10ms 뒤에 적용 → DOM 생성 완료 후 실행됨
+					});
+				}
 		}
 		// 경력 추가
 		if (e.target.closest('.add-career-btn button')) {
 			const careerContainer = document.getElementById("career-container");
 			const newCareer = createCareerEntry();
 			careerContainer.appendChild(newCareer);
+			
+			applyMonthPickerByName("hireYm");
+			applyMonthPickerByName("resignYm");
 		}
 		// 교육/훈련 추가
 		if (e.target.closest('.add-training-btn button')) {
 			const trainingContainer = document.getElementById("training-container");
 			const newTraining = createTrainingEntry();
 			trainingContainer.appendChild(newTraining);
+			
+			applyMonthPickerByName("startDate");
+			applyMonthPickerByName("endDate");
 		}
 		// 자격증 추가
 		if (e.target.closest('.add-license-btn button')) {
 			const certificateContainer = document.getElementById("certificate-container");
 			const newCertificate = createCertificateEntry();
 			certificateContainer.appendChild(newCertificate);
+			
+			applyMonthPickerByName("acquisitionDate");
 		}
 		// 포트폴리오 추가
 		if (e.target.closest('.add-portfolio-btn button')) {
@@ -59,4 +85,33 @@ document.addEventListener("DOMContentLoaded", function() {
 	if (typeof window.initProfileImage === 'function') {
 		window.initProfileImage();
 	}
+	
+	// 달력
+	  flatpickr("#birthdate", {
+	    dateFormat: "Y-m-d",
+	    locale: "ko",
+	    maxDate: "today"
+	});
+	
+	// 달력 년/월만
+	function applyMonthPickerByName(name) {
+	    flatpickr(`input[name="${name}"]`, {
+	      plugins: [
+	        new monthSelectPlugin({
+	          shorthand: false,
+	          dateFormat: "Y.m",
+	          altFormat: "Y년 m월"
+	        })
+	      ],
+	      locale: "ko",
+	      maxDate: "today"
+	    });
+	  }
+
+	  // 이름 기반으로 적용
+	  applyMonthPickerByName("startDate");   // 교육, 경력, 학력 등
+	  applyMonthPickerByName("endDate");
+	  applyMonthPickerByName("hireYm");
+	  applyMonthPickerByName("resignYm");
+	  applyMonthPickerByName("acquisitionDate");
 }); 
