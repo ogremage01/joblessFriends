@@ -12,6 +12,9 @@
 <link rel="stylesheet" href="/css/common/common.css">
 <link rel="stylesheet" href="/css/resume/resumeManagementStyle.css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+	rel="stylesheet">
 </head>
 <body>
 
@@ -96,7 +99,9 @@
 
                   <div class="button-wrapper">
                   	<%-- 삭제 버튼 --%>
-                    <button class="delete-btn" data-resume-id="${resume.resumeId}" onclick="event.stopPropagation()">x</button>
+                    <button class="delete-btn" data-resume-id="${resume.resumeId}" onclick="event.stopPropagation()">
+						<i class="bi bi-x"></i>
+					</button>
                     <%-- 수정 버튼 --%>
                     <button class="edit-btn" data-resume-id="${resume.resumeId}" onclick="event.stopPropagation()">수정하기</button>
                   </div>

@@ -23,7 +23,7 @@
     background-color: #ffffff;
     border: 1px solid lightgray;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 5px;
 /*     box-shadow: 0 0 8px rgba(0, 0, 0, 0.05); */
     gap: 20px;
 }
@@ -42,7 +42,7 @@
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     padding: 8px 12px;
-    border-radius: 6px;
+    border-radius: 5px;
     font-size: 14px;
     cursor: pointer;
     min-width: 120px;
@@ -58,7 +58,7 @@
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     box-shadow: 0px 4px 10px rgba(0,0,0,0.05);
-    border-radius: 8px;
+    border-radius: 5px;
     padding: 10px;
     z-index: 100;
     min-width: 200px;
@@ -77,7 +77,7 @@
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     padding: 8px 15px;
-    border-radius: 6px;
+    border-radius: 5px;
     font-size: 14px;
     cursor: pointer;
 }
@@ -97,7 +97,7 @@
     background-color: #fff;
     padding: 20px;
     border: 1px solid lightgray;
-    border-radius: 10px;
+    border-radius: 5px;
 /*     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); */
     cursor: pointer;
 }
@@ -157,7 +157,7 @@
 	/* 	스타일 1 */
 	border: 1px solid #F69800;
 	background-color: rgb(255, 249, 238);
-	color:  #F69800;
+	color:  #f68300;
 
 	/* 	스타일 2 */
 /* 	background-color: #F69800; */
@@ -179,7 +179,7 @@
     color: #fff;
     border: none;
     padding: 8px 14px;
-    border-radius: 6px;
+    border-radius: 5px;
     font-weight: bold;
     cursor: pointer;
     margin-bottom: 6px;
@@ -249,7 +249,7 @@ h2 {
     gap: 8px;
     background: #ffffff;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 5px;
 }
 
 .education-dropdown-content label {
@@ -266,9 +266,13 @@ h2 {
 }
 .apply-btn:hover {
     background-color: white;
-    color: #FF6600;
+    color: #f68300;
 	outline: 1px solid #F69800;
 /*    찬정님이 보시면 수정좀ㅋㅋ*/
+}
+.apply-btn[disabled]:hover{
+	outline: none;
+	color: #999;
 }
 
 
@@ -315,7 +319,7 @@ h2 {
     color: #333;
     padding: 6px 12px;
     margin: 0 2px;
-    border-radius: 6px;
+    border-radius: 5px;
     font-size: 14px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -351,7 +355,7 @@ h2 {
     max-height: 300px;
     overflow-y: auto;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 5px;
     padding: 10px 15px;
     margin-top: 10px;
 }
@@ -363,7 +367,7 @@ h2 {
     padding: 12px 10px;
     margin-bottom: 8px;
     border: 1px solid #e0e0e0;
-    border-radius: 6px;
+    border-radius: 5px;
     cursor: pointer;
     background-color: #fafafa;
     transition: all 0.2s ease;
