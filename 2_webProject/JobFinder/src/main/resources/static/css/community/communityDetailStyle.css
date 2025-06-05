@@ -47,8 +47,12 @@
 }
 
 
-img{	
-	max-width: 100%;
+#contentText img{	
+/* 	transform: scale(0.6);
+	transform-origin: top left; */
+	width: 40%;
+	max-width: 80%;
+	height: auto;
 }
 
 .detailBtnStyle{

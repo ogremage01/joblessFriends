@@ -76,7 +76,7 @@
                                     </td>
                                     <td>${commentVo.nickname}</td>
                                     <td>
-                                        <fmt:formatDate value="${commentVo.createAt}" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${commentVo.createAt}" pattern="yyyy-MM-dd HH:mm:ss" />
                                     </td>
                                     <td>
                                         <a href="http://localhost:9090/community/detail?no=${commentVo.communityId}" 
@@ -122,7 +122,7 @@
                     <!-- 검색 영역 -->
                     <div class="search-container">
                         <input id="commentKeyword" type="text" class="search-input" 
-                               placeholder="댓글 내용으로 검색" value="${searchVo.keyword}">
+                               placeholder="댓글 내용 및 작성자로 검색" value="${searchVo.keyword}">
                         <button id="commentSearchBtn" class="search-btn">
                             <i class="bi bi-search"></i> 검색
                         </button>

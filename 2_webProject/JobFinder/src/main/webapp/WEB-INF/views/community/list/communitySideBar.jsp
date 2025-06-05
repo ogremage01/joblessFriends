@@ -114,7 +114,7 @@
 	action="/community">
 	<div id='searchBoxPadding' class="boxStyle searchBox">
 		<input id='searchStr' class="searchBox" type="text" name='keyword'
-			placeholder="게시글을 검색해보세요" />
+			placeholder="게시글을 검색해보세요" value="${searchVo.keyword}"/>
 		<button type="submit">
 			<!-- 여기서 함수로 검색버튼전송 할건지 form으로 서버 보낼지 고민 -->
 			<svg xmlns="http://www.w3.org/2000/svg" width="30" height="40"
@@ -149,6 +149,7 @@
 	function sendInfo()
 	{
 		const keyword = $('#searchStr').val();
+
 		if(keyword==null || keyword==""){
 			location.href="/community";
 			return;

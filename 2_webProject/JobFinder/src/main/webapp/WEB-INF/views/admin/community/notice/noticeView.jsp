@@ -84,7 +84,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <fmt:formatDate value="${noticeVo.createAt}" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${noticeVo.createAt}" pattern="yyyy-MM-dd HH:mm:ss" />
                                     </td>
                                     <td class="views-count">${noticeVo.views}</td>
                                     <td>
@@ -132,7 +132,7 @@
                     <!-- 검색 영역 -->
                     <div class="search-container">
                         <input id="noticeKeyword" type="text" class="search-input" 
-                               placeholder="제목으로 검색" value="${searchVo.keyword}">
+                               placeholder="제목 및 카테고리로 검색" value="${searchVo.keyword}">
                         <button id="noticeSearchBtn" class="search-btn">
                             <i class="bi bi-search"></i> 검색
                         </button>

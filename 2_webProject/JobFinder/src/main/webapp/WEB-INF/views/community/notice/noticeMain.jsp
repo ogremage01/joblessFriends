@@ -45,18 +45,6 @@
 				<!-- 	게시글 리스트 부분 -->
 				<div id="SwapContainer">
 
-
-					<!-- 공지사항 항목 뜨는 부분 -->
-					<!-- 			<div id='notice' class='boxStyle ' onclick="moveCommunityPage(this)">
-				<div id='noticeType'>
-					인기글
-				</div>
-			</div> -->
-
-					<!-- 공지사항 항목 뜨는 부분 끝 -->
-
-
-
 					<c:if test="${empty noticeList}">
 						<div id='noCommunityBox'>
 							<span id='noCommunity'> 공지글이 존재하지 않습니다. </span>
