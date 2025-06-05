@@ -261,6 +261,7 @@ CREATE TABLE JOB_POST (
         Max_Applicants NUMBER(5),                  -- 최대 지원자 수
         Current_Applicants NUMBER(5) DEFAULT 0,    -- 현재 지원자 수
         MODIFIED_DATE DATE,                     -- 최종 수정일
+        CREATE_DATE DATE default Sysdate,
         CONSTRAINT PK_JOB_POST PRIMARY KEY (Job_Post_ID),
        CONSTRAINT FK_COMPANY_TO_JOB_POST FOREIGN KEY (COMPANY_ID) REFERENCES COMPANY(COMPANY_ID) ON DELETE CASCADE,
        CONSTRAINT FK_JOB_GROUP_TO_JOB_POST FOREIGN KEY (Job_Group_ID) REFERENCES JOB_GROUP(Job_Group_ID) ON DELETE CASCADE,

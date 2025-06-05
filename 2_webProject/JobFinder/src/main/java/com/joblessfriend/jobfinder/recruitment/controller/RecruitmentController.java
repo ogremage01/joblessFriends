@@ -215,7 +215,7 @@ public class RecruitmentController {
 
         Object loginUser = session.getAttribute("userLogin");
         String userType = (String) session.getAttribute("userType");  // 이미 login 체크할 때 사용한 값
-
+        model.addAttribute("userType", userType);
         if ("member".equals(userType) && loginUser instanceof MemberVo) {
             MemberVo memberVo = (MemberVo) loginUser;
             int memberId = memberVo.getMemberId();
@@ -323,7 +323,7 @@ public class RecruitmentController {
             file.transferTo(dest);
 
             // DB에는 상대 경로 or URL 형태로 저장
-            return "/upload/job_post/thumbs/" + storedName;
+            return "/upload/job_post/thumbs/" + originalName;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -434,7 +434,9 @@ public class RecruitmentController {
                                     @RequestParam("skills") String skills,
                                     @RequestParam("welfareList") String welfareList,
                                     @RequestParam("tempKey") String tempKey,
-                                    @RequestParam("jobImgFile") MultipartFile jobImgFile,@RequestParam(value = "question1", required = false) String q1,
+                                    @RequestParam("jobImgFile") MultipartFile jobImgFile,
+                                    @RequestParam(value = "existingJobImg", required = false) String existingJobImg,
+                                    @RequestParam(value = "question1", required = false) String q1,
                                     @RequestParam(value = "question2", required = false) String q2,
                                     @RequestParam(value = "question3", required = false) String q3,
                                     HttpSession session) {
@@ -455,8 +457,9 @@ public class RecruitmentController {
         if (jobImgFile != null && !jobImgFile.isEmpty()) {
             String savedName = saveImage(jobImgFile);
             recruitmentVo.setJobImg(savedName);
+        } else {
+            recruitmentVo.setJobImg(existingJobImg); // ← ✅ 기존 이미지 유지
         }
-
         // 4. skills 처리
         List<Integer> tagIdList = Arrays.stream(skills.split(","))
                 .filter(s -> !s.isBlank())
@@ -489,6 +492,7 @@ public class RecruitmentController {
         if (q3 != null && !q3.isBlank()) questionList.add(new JobPostQuestionVo(null, null, 3, q3));
         recruitmentVo.setQuestionList(questionList);
         System.out.println("❓사전질문 몇 개? => " + questionList.size());
+
         try {
             // 6. 서비스 호출
 

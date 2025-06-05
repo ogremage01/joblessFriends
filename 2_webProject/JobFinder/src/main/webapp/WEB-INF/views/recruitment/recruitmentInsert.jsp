@@ -109,11 +109,11 @@
                             <select name="jobId" class="jobName select-box">
                                 <option value="">직무 선택</option>
                             </select>
-                            <button type="button" class="remove-job">x</button>
+<%--                            <button type="button" class="remove-job">x</button>--%>
                         </div>
                     </div>
 
-                    <button type="button" class="add-job">+ 추가</button>
+<%--                    <button type="button" class="add-job">+ 추가</button>--%>
                 </div>
 
                 <!-- 스킬 태그 -->

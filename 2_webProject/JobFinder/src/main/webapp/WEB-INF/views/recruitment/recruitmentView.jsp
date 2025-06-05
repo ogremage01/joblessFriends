@@ -109,6 +109,10 @@
             </div>
 
 
+
+            <label>경력 : <span id="2">1~3년</span></label>
+            <label>학력 : <span id="ㅇ">대학교 졸업(4년)</span></label>
+            <label>전문 : <span id="ㄹ">설문조사</span></label>
             <label>스킬 선택 (<span id="skill-count">0</span>/3)</label>
         </div>
 
