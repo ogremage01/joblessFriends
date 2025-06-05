@@ -66,7 +66,7 @@
 				</div>
 				<div class="field-block">
 					<label>전화번호</label>
-					<input type="text" id="phoneNumber" placeholder="예시) 01012349999" />
+					<input type="text" id="phoneNumber" placeholder="예시) 010-1234-9999" />
 				</div>
 
 				<!-- 2행 -->
@@ -77,7 +77,7 @@
 				</div>
 				<div class="field-block">
 					<label>주소</label>
-					<input type="text" id="roadAddress" placeholder="주소를 입력해주세요" readonly />
+					<input type="text" id="roadAddress" placeholder="주소를 입력해주세요"  />
 				</div>
 				<div class="field-block">
 					<label>메일</label>
@@ -90,7 +90,6 @@
 							<span class="plus-icon">+</span>
 						</div>
 						<img id="previewImage" src="#" alt="미리보기" style="display: none;" />
-						<button type="button" class="delete-image-btn" onclick="deleteProfileImage(event)" style="display: none;">×</button>
 					</label>
 					<input type="file" id="profileImageInput" style="display: none;" />
 				</div>

@@ -71,7 +71,7 @@
 									</td>
 									<td class="member-id"><strong>${memberVo.memberId}</strong></td>
 									<td class="email">
-										<a href="./individual/${memberVo.memberId}" class="member-email-link ">
+										<a href="./individual/${memberVo.memberId}?page=${searchVo.page}&keyword=${searchVo.keyword}" class="member-email-link ">
 											${memberVo.email}
 										</a>
 									</td>

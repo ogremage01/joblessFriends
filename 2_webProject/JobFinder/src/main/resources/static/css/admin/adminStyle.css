@@ -161,8 +161,8 @@ body {
 	background-color: #c82333;
 }
 
-/* 대량 삭제 버튼 */
-.mass-delete-btn {
+/* 대량 선택, 삭제 버튼 */
+.mass-delete-btn, #selectAll {
 	background-color: white;
 	border: 1px solid #afb2bd;
 	color: #4e5366;
@@ -453,7 +453,6 @@ body {
 	font-size: 14px;
 	text-decoration: none;
 	display: inline-block;
-	margin-bottom: 20px;
 }
 
 .back-btn:hover {

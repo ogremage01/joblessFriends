@@ -198,7 +198,7 @@ textarea::placeholder {
 .field-block label {
   font-size: 14px;
   font-weight: 700;
-  margin-bottom: 5px;
+  margin-top: 25px;
   color: #6D707B;
 }
 
@@ -218,7 +218,7 @@ textarea::placeholder {
 .address-search-btn {
   position: absolute;
   right: 10px;
-  top: 35px; /* label 높이 고려하여 고정 위치 */
+  top: 50px; /* label 높이 고려하여 고정 위치 */
   background: none;
   border: none;
   cursor: pointer;

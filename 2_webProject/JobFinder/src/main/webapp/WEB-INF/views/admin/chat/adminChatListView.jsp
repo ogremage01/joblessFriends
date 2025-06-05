@@ -27,56 +27,56 @@
 
 <div id="container">
     <div id="containerWrap">
-        <div class="admin-main-container">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1 class="mainTitle">채팅 관리</h1>
+            </div>
+            
             <!-- 사이드바 영역 -->
-            <div class="admin-main-sidebar">
+            <div class="admin-sidebar">
                 <jsp:include page="/WEB-INF/views/admin/sideBar.jsp"></jsp:include>
             </div>
             
             <!-- 메인 컨텐츠 영역 -->
-            <div class="admin-main-content">
-                <div class="content">
-                    <h1 class="mainTitle">채팅 관리</h1>
-                    
-                    <div class="admin-content" style="display: flex; height: 600px;">
-                        <!-- 좌측: 채팅방 리스트 -->
-                        <div class="chat-room-list" style="width: 300px; border-right: 1px solid #dee2e6; padding: 20px;">
-                            <h5 class="mb-3"><i class="bi bi-chat-dots"></i> 채팅방 목록</h5>
-                            <ul id="allRoomList" class="list-group list-group-flush">
-                                <li class="list-group-item text-center text-muted py-4">
-                                    <i class="bi bi-chat-square-text fs-1 mb-3 d-block"></i>
-                                    채팅방이 없습니다.
-                                </li>
-                            </ul>
-                        </div>
+            <div class="admin-main">
+                <div class="admin-content" style="display: flex; height: 600px;">
+                    <!-- 좌측: 채팅방 리스트 -->
+                    <div class="chat-room-list" style="width: 300px; border-right: 1px solid #dee2e6; padding: 20px;">
+                        <h5 class="mb-3"><i class="bi bi-chat-dots"></i> 채팅방 목록</h5>
+                        <ul id="allRoomList" class="list-group list-group-flush">
+                            <li class="list-group-item text-center text-muted py-4">
+                                <i class="bi bi-chat-square-text fs-1 mb-3 d-block"></i>
+                                채팅방이 없습니다.
+                            </li>
+                        </ul>
+                    </div>
 
-                        <!-- 우측: 채팅 메시지 영역 -->
-                        <div class="chat-message-area" style="flex: 1; display: flex; flex-direction: column;">
-                            <!-- 채팅방 헤더 -->
-                            <div class="chat-header" style="padding: 15px 20px; border-bottom: 1px solid #dee2e6; background-color: #f8f9fa;">
-                                <h5 id="chatRoomTitle" class="mb-0">
-                                    <i class="bi bi-chat-left-text"></i> 채팅방을 선택하세요
-                                </h5>
+                    <!-- 우측: 채팅 메시지 영역 -->
+                    <div class="chat-message-area" style="flex: 1; display: flex; flex-direction: column;">
+                        <!-- 채팅방 헤더 -->
+                        <div class="chat-header" style="padding: 15px 20px; border-bottom: 1px solid #dee2e6; background-color: #f8f9fa;">
+                            <h5 id="chatRoomTitle" class="mb-0">
+                                <i class="bi bi-chat-left-text"></i> 채팅방을 선택하세요
+                            </h5>
+                        </div>
+                        
+                        <!-- 채팅 메시지들 -->
+                        <div id="chatMessages" class="chat-messages" style="flex: 1; overflow-y: auto; padding: 20px;">
+                            <div class="text-center text-muted py-5">
+                                <i class="bi bi-arrow-left-circle fs-1 mb-3 d-block"></i>
+                                좌측 목록에서 채팅방을 선택해주세요.
                             </div>
-                            
-                            <!-- 채팅 메시지들 -->
-                            <div id="chatMessages" class="chat-messages" style="flex: 1; overflow-y: auto; padding: 20px;">
-                                <div class="text-center text-muted py-5">
-                                    <i class="bi bi-arrow-left-circle fs-1 mb-3 d-block"></i>
-                                    좌측 목록에서 채팅방을 선택해주세요.
-                                </div>
-                            </div>
-                            
-                            <!-- 메시지 입력 폼 -->
-                            <div class="chat-input-form" style="padding: 15px 20px; border-top: 1px solid #dee2e6; background-color: #f8f9fa;">
-                                <form id="chatForm" class="d-flex gap-2" onsubmit="return false;">
-                                    <input type="text" id="chatInput" class="form-control" 
-                                        placeholder="메시지를 입력하세요" autocomplete="off" />
-                                    <button type="submit" class="add-btn">
-                                        전송
-                                    </button>
-                                </form>
-                            </div>
+                        </div>
+                        
+                        <!-- 메시지 입력 폼 -->
+                        <div class="chat-input-form" style="padding: 15px 20px; border-top: 1px solid #dee2e6; background-color: #f8f9fa;">
+                            <form id="chatForm" class="d-flex gap-2" onsubmit="return false;">
+                                <input type="text" id="chatInput" class="form-control" 
+                                    placeholder="메시지를 입력하세요" autocomplete="off" />
+                                <button type="submit" class="add-btn">
+                                    전송
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
