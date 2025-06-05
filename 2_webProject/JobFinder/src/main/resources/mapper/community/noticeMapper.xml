@@ -46,10 +46,11 @@
 	
 	<select id="getNoticeTotalCount" resultType="int" parameterType="com.joblessfriend.jobfinder.util.SearchVo">
 		SELECT COUNT(*)
-        FROM NOTICE
+        FROM NOTICE NOTI INNER JOIN NOTICE_CATEGORY CATE
+		ON NOTI.NOTICE_CATEGORY_ID = CATE.NOTICE_CATEGORY_ID
         <if test="keyword != null or keyword != ''">
-	     	where (TITLE LIKE '%' || #{keyword} || '%'
-	        OR CONTENT LIKE '%' || #{keyword} || '%')
+				where (NOTI.TITLE LIKE '%' || #{keyword} || '%'
+		         OR CATE.NOTICE_CATEGORY_CONTENT LIKE '%' || #{keyword} || '%')
          </if>
 	</select>
 	

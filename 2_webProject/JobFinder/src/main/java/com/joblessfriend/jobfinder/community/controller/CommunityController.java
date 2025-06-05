@@ -27,6 +27,7 @@ import com.joblessfriend.jobfinder.community.domain.CommunityVo;
 import com.joblessfriend.jobfinder.community.domain.PostCommentVo;
 import com.joblessfriend.jobfinder.community.service.CommunityService;
 import com.joblessfriend.jobfinder.community.service.PostCommentService;
+import com.joblessfriend.jobfinder.community.service.ReplyService;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import com.joblessfriend.jobfinder.util.Pagination;
 import com.joblessfriend.jobfinder.util.SearchVo;
@@ -45,6 +46,8 @@ public class CommunityController {
 	private PostCommentService postCommentService;
 	@Autowired
 	private CommunityService communityService;
+	@Autowired
+	private ReplyService replyService;
 	
 	@Autowired
 	HttpServletRequest request;//이미지 저장 서버를 위해 생성
@@ -80,6 +83,7 @@ public class CommunityController {
 
 	    List<PostCommentVo> commentList = null;
 	    int commentCount = 0;
+	    int replycount = 0;
 	    
 	    // communityList를 순회하면서 각 커뮤니티의 content를 마크다운 -> HTML로 변환 후, 태그 제거
 	    for (CommunityVo communityVo : communityList) {
@@ -94,7 +98,12 @@ public class CommunityController {
 	        
 	        //댓글 수 저장
 	        commentList=postCommentService.postCommentSelectList(communityVo.getCommunityId());
-	        communityVo.setCommentCount(commentList.size());
+	        for (PostCommentVo postCommentVo : commentList) {
+	        	replycount += replyService.replySelectList(postCommentVo.getPostCommentId()).size();
+	        }
+	        
+	        commentCount = commentList.size()+replycount;
+	        communityVo.setCommentCount(commentCount);
 	    }
 
 	    // 변환된 커뮤니티 리스트를 모델에 추가(화면에 출력하기 위함)
@@ -268,12 +277,19 @@ public class CommunityController {
 	//커뮤니티 삭제
 	@DeleteMapping("/delete/{communityId}")
 	public ResponseEntity<String> communityDelete(@PathVariable("communityId") int communityId, HttpSession session){		
-		
-		MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
-		//게시글 불러옴
-		CommunityVo communityVo = communityService.communityDetail(communityId);	
+		if(session.getAttribute("userType") == "member") {
+			MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
+			//게시글 불러옴
+			CommunityVo communityVo = communityService.communityDetail(communityId);	
+			
+			if(memberVo.getMemberId() != communityVo.getMemberId()) {
 				
-		if(memberVo.getMemberId() != communityVo.getMemberId()) {
+				return ResponseEntity.notFound().build();
+			}
+		}
+
+				
+		if(session.getAttribute("userType") != "admin") {
 			
 			return ResponseEntity.notFound().build();
 		}

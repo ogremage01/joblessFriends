@@ -40,10 +40,10 @@ $(document).ready(function () {
 		                	var year = date.getFullYear();
 		                	var month = date.getMonth()+1;
 		                	var day = date.getDate();
-							var hour = date.getHours();
-							var min = date.getMinutes();
-							var sec = date.getSeconds();
-																					
+							
+							var hour = String(date.getHours()).padStart(2, "0");
+							var min = String(date.getMinutes()).padStart(2, "0");
+							var sec = String(date.getSeconds()).padStart(2, "0");						
 		                	
 							//.replyBox : 닫을 리댓 박스 리스트를 찾기 위함
 							html += `
@@ -56,7 +56,7 @@ $(document).ready(function () {
 			                	        	<div id="commentlistNo_${comment.postCommentId}">
 				                	            <p class="commentBoxStyle">${comment.content}</p>  
 				                	            <p class='commentBottom'>
-												<span>${year}-${month}-${day}-${hour}: ${min}: ${sec} 작성 </span>`;
+												<span>${year}-${month}-${day} ${hour}:${min}:${sec} 작성 </span>`;
 
 							if(comment.modifiedAt!=null){
 								
@@ -64,12 +64,13 @@ $(document).ready(function () {
 								const modifiedyear = modifiedDate.getFullYear();
 								const modifiedmonth = modifiedDate.getMonth() + 1; // 월은 0부터 시작하므로 +1
 								const modifiedday = modifiedDate.getDate();
-								const modifiedHour = modifiedDate.getHours();
-								const modifiedMin = modifiedDate.getMinutes();
-								const modifiedSec = modifiedDate.getSeconds();
 								
+								var modifiedHour = String(modifiedDate.getHours()).padStart(2, "0");
+								var modifiedMin = String(modifiedDate.getMinutes()).padStart(2, "0");
+								var modifiedSec = String(modifiedDate.getSeconds()).padStart(2, "0");	
+
 								html += `<span>  | </span>
-										<span>${modifiedyear}-${modifiedmonth}-${modifiedday}-${modifiedHour}:${modifiedMin}:${modifiedSec} 수정</span>`;
+										<span>${modifiedyear}-${modifiedmonth}-${modifiedday} ${modifiedHour}:${modifiedMin}:${modifiedSec} 수정</span>`;
 							}	
 					
 							if(userType=='member' && memberId ==comment.memberId){
@@ -87,7 +88,6 @@ $(document).ready(function () {
 		                   	 	</div>
 							`;
 						});
-		              
 		                
 		            }
 		            $("#commentContainer").html(html);
@@ -101,7 +101,7 @@ $(document).ready(function () {
 		window.loadCommentList = loadCommentList;//전역 참조용으로 생성(댓글 리스트 로드)
 		
 		//댓글 등록 버튼 클릭 시 댓글 작성 요청
-		function uploadComment(communityId, memberId, ){
+		function uploadComment(communityId, memberId){
 			const urlStr = "/community/detail/commentUpload/" + communityId;
 	
 		    const content = $("#inputCommentBox").val();//작성한 글의 내용
@@ -132,6 +132,7 @@ $(document).ready(function () {
 							memberId: memberId
 				}),
 				success: function (){
+					alermPopup("댓글이 등록되었습니다.");
 					loadCommentList();//목록 다시불러오기
 					$("#inputCommentBox").val(''); //입력창 비우기
 				},

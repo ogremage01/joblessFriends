@@ -76,7 +76,7 @@
                                     </td>
                                     <td>${commentVo.nickname}</td>
                                     <td>
-                                        <fmt:formatDate value="${commentVo.createAt}" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${commentVo.createAt}" pattern="yyyy-MM-dd HH:mm:ss" />
                                     </td>
                                     <td>
                                         <a href="http://localhost:9090/community/detail?no=${commentVo.communityId}" 

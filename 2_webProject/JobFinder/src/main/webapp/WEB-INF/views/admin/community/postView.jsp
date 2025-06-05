@@ -78,7 +78,7 @@
                                     </td>
                                     <td>${communityVo.nickname}</td>
                                     <td>
-                                        <fmt:formatDate value="${communityVo.createAt}" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${communityVo.createAt}" pattern="yyyy-MM-dd HH:mm:ss" />
                                     </td>
                                     <td class="views-count">${communityVo.views}</td>
                                     <td>

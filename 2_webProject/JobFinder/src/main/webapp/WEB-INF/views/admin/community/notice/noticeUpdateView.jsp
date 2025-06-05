@@ -28,6 +28,10 @@
 <link rel="stylesheet" href="/css/admin/common.css">
 <link rel="stylesheet" href="/css/admin/tableStyle.css">
 <link rel="stylesheet" href="/css/admin/notice/noticeStyle.css">
+<link rel="stylesheet" href="/css/community/communityCommonStyle.css"> 
+<link rel="stylesheet" href="/css/community/communityUploadStyle.css"> 
+<link rel="stylesheet" href="/css/community/notice/noticeUpStyle.css"> 
+
 <link rel="stylesheet"
 	href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <link rel="stylesheet"

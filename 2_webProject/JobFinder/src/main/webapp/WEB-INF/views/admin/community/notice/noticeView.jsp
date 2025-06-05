@@ -84,7 +84,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <fmt:formatDate value="${noticeVo.createAt}" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${noticeVo.createAt}" pattern="yyyy-MM-dd HH:mm:ss" />
                                     </td>
                                     <td class="views-count">${noticeVo.views}</td>
                                     <td>

@@ -28,6 +28,10 @@
 <link rel="stylesheet" href="/css/admin/tableStyle.css">
 <link rel="stylesheet" href="/css/admin/notice/noticeStyle.css">
 <link rel="stylesheet" href="/css/community/toastPopup.css"> 
+<link rel="stylesheet" href="/css/community/communityCommonStyle.css"> 
+<link rel="stylesheet" href="/css/community/communityUploadStyle.css"> 
+<link rel="stylesheet" href="/css/community/notice/noticeUpStyle.css"> 
+
 <link rel="stylesheet"
 	href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <link rel="stylesheet"
@@ -84,13 +88,12 @@ margin: auto;
 			<!-- 제목 입력 -->
 			<div id='titleWrap'>
 				<p>공지 제목</p>
-				<input id='title' name='title' type="text" class='boxStyle'
-					placeholder="제목을 입력해주세요." />
+				<input id='title' name='title' type="text" class='boxStyle' placeholder="제목을 입력해주세요." />
 			</div>
 				
 			<div id="noticeCategory">
 				<label for="lang">유형</label>
-				<select name="noticeCategoryId" id="lang">
+				<select name="noticeCategoryId" id="lang" >
 				<c:forEach var="category" items="${noticeCategoryList}">
 					  <option value="${category.noticeCategoryId}">${category.noticeCategoryContent}</option>
 				</c:forEach>
