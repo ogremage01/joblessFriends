@@ -88,7 +88,7 @@
 		
         <!-- 등록/취소 버튼 -->
         <div id="btnWrap">
-            <button id='cancleBtn' class='inputBtn' type="button" onclick="history.back()">취소</button>
+            <button id='cancleBtn' class='inputBtn' type="button" onclick="goBackToList()">취소</button>
             <button type="button" id='uploadBtn' class='inputBtn' onclick="submitEditor()">등록</button>
         </div>
     </form>
@@ -225,4 +225,16 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script src="/js/community/toastPopup.js"></script>
 </body>
+<script type="text/javascript">
+//목록 페이지로 돌아가기
+function goBackToList() {
+	const prevUrl = sessionStorage.getItem("prevCommunityListUrl");
+
+	if (prevUrl || prevUrl!= prevUrl) {
+		location.href = prevUrl;
+	} else {
+		location.href = "/community";
+	}
+}
+</script>
 </html>

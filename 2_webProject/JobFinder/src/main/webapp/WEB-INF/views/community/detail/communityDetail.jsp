@@ -112,7 +112,7 @@ blockquote p {
 				</div>
 			</div>
 			<div class='detailBtn_BottomStyle'>
-				<button class='detailBtnStyle' onclick="history.back()">목록 보기</button>
+				<button class='detailBtnStyle' onclick="goBackToList()">목록 보기</button>
 				<button class='detailBtnStyle' onclick='location.href="#"'>▲TOP</button>
 			</div>
 		</div>
@@ -127,6 +127,9 @@ blockquote p {
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script src="/js/community/communityDetail.js"></script>
+
 </body>
+
+
 </html>
 

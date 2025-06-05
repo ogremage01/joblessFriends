@@ -25,6 +25,7 @@
 	rel="stylesheet">
 	<link rel="stylesheet" href="/css/community/toastPopup.css"> 
 
+<link rel="stylesheet" href="/css/common/common.css">
 <link rel="stylesheet" href="/css/admin/common.css">
 <link rel="stylesheet" href="/css/admin/tableStyle.css">
 <link rel="stylesheet" href="/css/admin/notice/noticeStyle.css">
@@ -32,16 +33,15 @@
 <link rel="stylesheet" href="/css/community/communityUploadStyle.css"> 
 <link rel="stylesheet" href="/css/community/notice/noticeUpStyle.css"> 
 
-<link rel="stylesheet"
-	href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
 
 <!-- 에디터 및 jQuery -->
-<script
-	src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
 /*기본값(default)이 이미 "text/css"로 되어 있어서 자동인식한다하여 뺐음 */
@@ -70,7 +70,7 @@ margin: auto;
 
 		<!-- 본문영역  -->
 		<div id="noticeUpdateContainer">
-			<form action="./update" method="post" enctype="multipart/form-data" onsubmit="return submitEditor()">
+			<form action="./update" method="post" enctype="multipart/form-data"  id="updateForm">
 				<input type="hidden" name="noticeId" value="${notice.noticeId}">
 
 				<!-- 제목 입력 -->
@@ -106,9 +106,9 @@ margin: auto;
 				<!-- 등록/취소 버튼 -->
 				<div id="btnWrap">
 					<button id='cancleBtn' class='inputBtn' type="button"
-						onclick="history.back()">취소</button>
-					<button type="submit" id='updateBtn' class='inputBtn'
-						onsubmit="submitEditor()">등록</button>
+						onclick="goBackToList()">취소</button>
+					<button type="button" id='updateBtn' class='inputBtn'
+						onclick="submitEditor()">등록</button>
 				</div>
 			</form>
 
@@ -163,7 +163,7 @@ margin: auto;
 		            }
 		        });
 		
-		        function submitEditor() {
+        		async function submitEditor() {
 		
 		        	
 		            const markdown = editor.getMarkdown();
@@ -178,11 +178,37 @@ margin: auto;
 		        		return false;
 		        	}
 		        	
-		    		if(!confirm("공지 사항을 수정하시겠습니까?")){
-		    			return;
-		    		}
-		        	
-		            return true;
+		            const result = await Swal.fire({
+		                title: "확인",
+		                text: "공지 사항을 수정하시겠습니까?",
+		                icon: "warning",
+		                showCancelButton: true,
+		                confirmButtonText: "수정",
+		                cancelButtonText: '취소',
+		                customClass: {
+		        			confirmButton: "swalConfirmBtn",
+		        			cancelButton: "swalCancelBtn",
+		        		},
+		        		reverseButtons: true, // 버튼 순서 거꾸로
+		            });
+
+		            if (result.isConfirmed) {
+		                await Swal.fire({
+		                    title: "수정 완료",
+		                    text: "공지 사항이 정상적으로 저장되었습니다.",
+		                    icon: "success",
+		                    timer: 1500,
+		                    showConfirmButton: false
+		                });
+		                $("#updateForm").submit(); // 수동 제출
+		            } else {
+		                Swal.fire({
+		                    icon: "error",
+		                    title: "수정이 취소되었습니다.",
+		                    text: "다시 시도하거나 변경사항을 확인하세요."
+		                });
+		            }
+
 		        }
 		
 		        function deleteFile(fileName,fileStoredName, btn) {
@@ -219,5 +245,16 @@ margin: auto;
 	</main>
 
 </body>
+<script type="text/javascript">
+//목록 페이지로 돌아가기
+function goBackToList() {
+	const prevUrl = sessionStorage.getItem("prevAdminNoticeListUrl");
 
+	if (prevUrl || prevUrl!= prevUrl) {
+		location.href = prevUrl;
+	} else {
+		location.href = "/admin/community/notice";
+	}
+}
+</script>
 </html>

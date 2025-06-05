@@ -24,6 +24,7 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
 	rel="stylesheet">
 
+<link rel="stylesheet" href="/css/common/common.css">
 <link rel="stylesheet" href="/css/admin/common.css">
 <link rel="stylesheet" href="/css/admin/tableStyle.css">
 <link rel="stylesheet" href="/css/admin/notice/noticeStyle.css">
@@ -31,9 +32,10 @@
 <link rel="stylesheet" href="/css/community/communityCommonStyle.css"> 
 <link rel="stylesheet" href="/css/community/communityUploadStyle.css"> 
 <link rel="stylesheet" href="/css/community/notice/noticeUpStyle.css"> 
+<!-- SweetAlert2 애니메이션을 위한 CSS 추가 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-<link rel="stylesheet"
-	href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
 
@@ -41,7 +43,8 @@
 <script
 	src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
 /*기본값(default)이 이미 "text/css"로 되어 있어서 자동인식한다하여 뺐음 */
@@ -53,6 +56,7 @@
 
 </script>
 </head>
+
 <body>
 	<main class="d-flex flex-nowrap">
 		<!-- 사이드바 영역 -->
@@ -63,8 +67,7 @@
 
 		<!-- 본문영역  -->
 		<div id="noticeUploadContainer">
-			<form action="./upload" method="post"
-				enctype="multipart/form-data" onsubmit="return submitEditor()">
+			<form action="./upload" method="post" enctype="multipart/form-data"  id="uploadForm">
 			<input type="hidden" name="writer"
 				value="${sessionScope.userLogin.adminId}" />
 
@@ -99,9 +102,9 @@
 			<!-- 등록/취소 버튼 -->
 			<div id="btnWrap">
 				<button id='cancleBtn' class='inputBtn' type="button"
-					onclick="history.back()">취소</button>
-				<button type="submit" id='uploadBtn' class='inputBtn'
-					onsubmit="submitEditor()">등록</button>
+					onclick="goBackToList()">취소</button>
+				<button type="button" id='uploadBtn' class='inputBtn'
+					onclick="submitEditor()">등록</button>
 			</div>
 		</form>
 
@@ -153,7 +156,7 @@
             }
         });
 
-        function submitEditor() {
+        async function submitEditor() {
 
         	
             const markdown = editor.getMarkdown();
@@ -168,11 +171,37 @@
         		return false;
         	}
         	
-        	if(!confirm("공지 사항을 저장하시겠습니까?")){
-    			return;
-    		}
-        	
-            return true;
+            const result = await Swal.fire({
+                title: "확인",
+                text: "공지 사항을 올리시겠습니까?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "저장",
+                cancelButtonText: '취소',
+                customClass: {
+        			confirmButton: "swalConfirmBtn",
+        			cancelButton: "swalCancelBtn",
+        		},
+        		reverseButtons: true, // 버튼 순서 거꾸로
+            });
+
+            if (result.isConfirmed) {
+                await Swal.fire({
+                    title: "업로드 완료",
+                    text: "공지 사항이 정상적으로 업로드 되었습니다.",
+                    icon: "success",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+                $("#uploadForm").submit(); // 수동 제출
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "등록이 취소되었습니다.",
+                    text: "다시 시도하거나 변경사항을 확인하세요."
+                });
+            }
+
         }
 
         function deleteFile(fileName,fileStoredName, btn) {
@@ -211,5 +240,17 @@
 
 
 </body>
+<script type="text/javascript">
+//목록 페이지로 돌아가기
+function goBackToList() {
+	const prevUrl = sessionStorage.getItem("prevAdminNoticeListUrl");
+
+	if (prevUrl || prevUrl!= prevUrl) {
+		location.href = prevUrl;
+	} else {
+		location.href = "/admin/community/notice";
+	}
+}
+</script>
 
 </html>

@@ -136,6 +136,10 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
+window.addEventListener('DOMContentLoaded', function () {
+	// 현재 URL을 sessionStorage에 저장
+	sessionStorage.setItem("prevNoticeListUrl", location.href);
+});
 
 	function goToPage(page, keyWord){
 		$('#pageInput').val(page);
