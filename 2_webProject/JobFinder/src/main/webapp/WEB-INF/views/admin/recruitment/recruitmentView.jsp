@@ -55,6 +55,7 @@
                             <tr>
                                 <th scope="col">선택</th>
                                 <th scope="col">공고 ID</th>
+                                <th scope="col">회사 ID</th>
                                 <th scope="col">회사명</th>
                                 <th scope="col">접수 시작일</th>
                                 <th scope="col">접수 마감일</th>
@@ -70,17 +71,18 @@
                                         <input type="checkbox" class="delPost admin-checkbox" 
                                                name="delete" value="${recruitmentVo.jobPostId}">
                                     </td>
-                                    <td><strong>${recruitmentVo.jobPostId}</strong></td>
+                                    <td>${recruitmentVo.jobPostId}</td>
+                                    <td>${recruitmentVo.companyId}</td>
                                     <td>
                                         <a href="/admin/member/company/${recruitmentVo.companyId}" class="company-link">
                                             ${recruitmentVo.companyName}
                                         </a>
                                     </td>
                                     <td>
-                                        <fmt:formatDate value="${recruitmentVo.startDate}" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${recruitmentVo.startDate}" pattern="yyyy-MM-dd HH:MM:SS" />
                                     </td>
                                     <td>
-                                        <fmt:formatDate value="${recruitmentVo.endDate}" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${recruitmentVo.endDate}" pattern="yyyy-MM-dd HH:MM:SS" />
                                     </td>
                                     <td>
                                         <a href="/Recruitment/detail?companyId=${recruitmentVo.companyId}&jobPostId=${recruitmentVo.jobPostId}" 
@@ -106,7 +108,7 @@
                                 <ul class="pagination">
                                     <li class="page-item ${searchVo.page==1?'disabled':''}">
                                         <a class="page-link" href="./recruitment?page=${searchVo.page-1}&keyword=${searchVo.keyword}">
-                                            <i class="bi bi-chevron-left"></i> 이전
+                                            «
                                         </a>
                                     </li>
                                     <c:forEach begin="${pagination.startPage}" var="i" end="${pagination.endPage}">
@@ -116,7 +118,7 @@
                                     </c:forEach>
                                     <li class="page-item ${searchVo.page==pagination.totalPageCount? 'disabled':''}">
                                         <a class="page-link" href="./recruitment?page=${searchVo.page+1}&keyword=${searchVo.keyword}">
-                                            다음 <i class="bi bi-chevron-right"></i>
+                                            »
                                         </a>
                                     </li>
                                 </ul>

@@ -90,6 +90,7 @@
 							<span class="plus-icon">+</span>
 						</div>
 						<img id="previewImage" src="#" alt="미리보기" style="display: none;" />
+						<button type="button" class="delete-image-btn" onclick="deleteProfileImage(event)" style="display: none;">×</button>
 					</label>
 					<input type="file" id="profileImageInput" style="display: none;" />
 				</div>

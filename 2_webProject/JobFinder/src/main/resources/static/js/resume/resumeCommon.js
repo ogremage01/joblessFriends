@@ -58,7 +58,20 @@ window.initProfileImage = function() {
 	const profileImageInput = document.getElementById("profileImageInput");
 
 	if (photoBox && profileImageInput) {
-		photoBox.addEventListener("click", function() {
+		photoBox.addEventListener("click", function(e) {
+			// 삭제 버튼 클릭인 경우 파일 선택창을 열지 않음
+			if (e.target.classList.contains('delete-image-btn')) {
+				return;
+			}
+			
+			// 이미지가 이미 있는 경우 교체 확인
+			const preview = document.getElementById("previewImage");
+			if (preview && preview.style.display === "block") {
+				if (!confirm("새로운 이미지로 교체하시겠습니까?")) {
+					return;
+				}
+			}
+			
 			profileImageInput.click();
 		});
 
@@ -72,13 +85,16 @@ window.initProfileImage = function() {
 				preview.src = e.target.result;
 				preview.style.display = "block";
 
-				window.uploadedImageUrl = e.target.result;
-
 				const photoText = document.querySelector(".photo-text");
 				if (photoText) photoText.style.display = "none";
+				
+				// 삭제 버튼 표시
+				const deleteBtn = document.querySelector(".delete-image-btn");
+				if (deleteBtn) deleteBtn.style.display = "block";
 			};
 			reader.readAsDataURL(file);
 
+			// 서버로 이미지 업로드
 			const formData = new FormData();
 			formData.append('profileImage', file);
 
@@ -86,16 +102,76 @@ window.initProfileImage = function() {
 				method: 'POST',
 				body: formData
 			})
-				.then(res => res.text())
+				.then(res => res.json())
 				.then(data => {
-					window.uploadedImageUrl = data;
-					console.log("업로드 결과:", data);
+					if (data.success) {
+						window.uploadedImageUrl = data.imageUrl;
+						console.log("업로드 성공:", data.imageUrl);
+					} else {
+						console.error("업로드 실패:", data.error);
+						alert("이미지 업로드에 실패했습니다.");
+					}
 				})
 				.catch(err => {
 					console.error("업로드 실패", err);
+					alert("이미지 업로드 중 오류가 발생했습니다.");
 				});
 		});
 	}
+};
+
+// 프로필 이미지 삭제 기능
+window.deleteProfileImage = function(event) {
+	// 이벤트 전파 중단 (부모 요소의 클릭 이벤트 방지)
+	if (event) {
+		event.stopPropagation();
+		event.preventDefault();
+	}
+	
+	if (!window.uploadedImageUrl) {
+		alert("삭제할 이미지가 없습니다.");
+		return;
+	}
+
+	if (!confirm("프로필 이미지를 삭제하시겠습니까?")) {
+		return;
+	}
+
+	// 저장된 파일명 추출 (URL에서 파일명만 가져오기)
+	const storedFileName = window.uploadedImageUrl.split('/').pop();
+
+	fetch(`/profile-temp/deleteImage/${storedFileName}`, {
+		method: 'DELETE'
+	})
+		.then(res => res.json())
+		.then(data => {
+			if (data.success) {
+				// UI 초기화
+				const preview = document.getElementById("previewImage");
+				const photoText = document.querySelector(".photo-text");
+				const deleteBtn = document.querySelector(".delete-image-btn");
+				
+				preview.style.display = "none";
+				preview.src = "#";
+				
+				if (photoText) photoText.style.display = "block";
+				if (deleteBtn) deleteBtn.style.display = "none";
+				
+				// 파일 입력 초기화
+				const profileImageInput = document.getElementById("profileImageInput");
+				if (profileImageInput) profileImageInput.value = "";
+				
+				window.uploadedImageUrl = "";
+				console.log("이미지 삭제 성공");
+			} else {
+				console.error("삭제 실패:", data.error);
+				alert("이미지 삭제에 실패했습니다.");
+			}
+		})
+		.catch(err => {
+			console.error("삭제 실패", err);
+			alert("이미지 삭제 중 오류가 발생했습니다.");
+		});
 };
 
 // ==================== 스킬 관련 ====================

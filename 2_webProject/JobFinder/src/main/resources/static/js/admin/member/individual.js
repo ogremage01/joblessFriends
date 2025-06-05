@@ -11,6 +11,10 @@ $("#memberSearchBtn").click(function(e) {
 
  $("#massDelMem").click( function(e) {
     const delMemberArr = document.querySelectorAll(".delMember:checked");
+	if(delMemberArr.length===0){
+		alert("선택된 회원이 없습니다.");
+		return;
+		}
     const confirmed = confirm("삭제하시겠습니까?");
     
     if(confirmed&&delMemberArr.length>0){
@@ -57,4 +61,16 @@ $("#memberSearchBtn").click(function(e) {
 
         alert("선택된 회원이 없습니다.");
     }
+});
+
+
+
+const selectAllCom = document.getElementById("selectAll");
+
+selectAllCom.addEventListener("click", function(e) {
+	    const checkboxes = document.querySelectorAll(".delMember");
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = !checkbox.checked; // 현재 체크 상태를 반전시킴
+    });
 });

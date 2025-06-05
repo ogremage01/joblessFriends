@@ -22,14 +22,27 @@ searchComBtn.addEventListener("click", function(e){
     
     
 });
+//전체 선택 체크박스
 
+const selectAllCom = document.getElementById("selectAll");
 
+selectAllCom.addEventListener("click", function(e) {
+	    const checkboxes = document.querySelectorAll(".delCompany");
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = !checkbox.checked; // 현재 체크 상태를 반전시킴
+    });
+});
 
 //기업 대량 탈퇴
 const massDelComBtn = document.getElementById("massDelCom");
 
 massDelComBtn.addEventListener("click", function(e) {
     const delCompanyArr = document.querySelectorAll(".delCompany:checked");
+	    if(delCompanyArr.length===0){
+			        alert("선택된 기업이 없습니다.");
+        return;
+		    }
     const confirmed = confirm("삭제하시겠습니까?");
     
     if(confirmed&&delCompanyArr.length>0){
@@ -74,7 +87,7 @@ massDelComBtn.addEventListener("click", function(e) {
     
     }else{
 
-        alert("선택된 기업이 없습니다.");
+        alert("오류가 발생했습니다.");
     }
 });
 

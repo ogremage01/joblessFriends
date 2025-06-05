@@ -88,6 +88,14 @@
 					         <c:when test="${not empty resumeData.profile}">style="display: block;"</c:when>
 					         <c:otherwise>style="display: none;"</c:otherwise>
 					     </c:choose> />
+					<c:choose>
+						<c:when test="${not empty resumeData.profile}">
+							<button type="button" class="delete-image-btn" onclick="deleteProfileImage(event)" style="display: block;">×</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="delete-image-btn" onclick="deleteProfileImage(event)" style="display: none;">×</button>
+						</c:otherwise>
+					</c:choose>
 				</label>
 				<input type="file" id="profileImageInput" style="display: none;" />
 			</div>
@@ -380,6 +388,11 @@ window.uploadedImageUrl = "${jsProfile}";
 
 // 기존 스킬 데이터 초기화
 window.existingSkills = [];
+
+// 기존 프로필 이미지가 있는 경우 uploadedImageUrl 설정
+<c:if test="${not empty resumeData.profile}">
+window.uploadedImageUrl = "${resumeData.profile}";
+</c:if>
 </script>
 
 <!-- 기존 스킬 데이터를 JavaScript로 안전하게 추가 -->

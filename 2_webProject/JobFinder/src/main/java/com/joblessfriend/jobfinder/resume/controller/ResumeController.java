@@ -274,9 +274,8 @@ public class ResumeController {
 	// 화면에 이미지 저장
 	@PostMapping("/profile-temp/uploadImage")
 	@ResponseBody
-	public String uploadProfileImage(@RequestParam("profileImage") MultipartFile file, HttpSession session,
-			HttpServletRequest request) {
-		String result = "";
+	public Map<String, Object> uploadProfileImage(@RequestParam("profileImage") MultipartFile file, HttpSession session) {
+		Map<String, Object> result = new HashMap<>();
 
 		// 세션에서 임시 이미지 목록 가져오기
 		List<Map<String, Object>> uploadedFiles = (List<Map<String, Object>>) session.getAttribute("uploadedFiles");
@@ -285,8 +284,8 @@ public class ResumeController {
 		}
 
 		try {
-			// 업로드 경로 설정
-			String uploadDir = request.getServletContext().getRealPath("/upload/profile/");
+			// 업로드 경로 설정 (C://upload/profile/)
+			String uploadDir = "C:/upload/profile/";
 			File dir = new File(uploadDir);
 			if (!dir.exists()) {
 				dir.mkdirs();
@@ -298,8 +297,7 @@ public class ResumeController {
 			file.transferTo(dest);
 
 			// 웹에서 접근 가능한 URL 생성
-			String fileUrl = "/upload/profile/" + filename;
-			result = fileUrl;
+			String fileUrl = "/profile/" + filename;
 
 			// 세션에 업로드한 파일 정보 저장
 			Map<String, Object> fileInfo = new HashMap<>();
@@ -310,9 +308,14 @@ public class ResumeController {
 
 			session.setAttribute("uploadedFiles", uploadedFiles);
 
+			result.put("success", true);
+			result.put("imageUrl", fileUrl);
+			result.put("fileName", file.getOriginalFilename());
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			result = "업로드 실패: " + e.getMessage();
+			result.put("success", false);
+			result.put("error", "업로드 실패: " + e.getMessage());
 		}
 
 		return result;

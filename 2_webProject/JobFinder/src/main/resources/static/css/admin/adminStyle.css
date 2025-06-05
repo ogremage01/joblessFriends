@@ -118,7 +118,6 @@ body {
 .admin-table tbody td {
 	padding: 12px;
 	border-bottom: 1px solid #dee2e6;
-	text-align: center;
 	font-size: 14px;
 	color: #1B202F;
 }
@@ -210,10 +209,12 @@ body {
 
 /* ========== 검색 및 추가 영역 ========== */
 .search-container {
-	display: flex;
+	 display: flex; 
 	gap: 10px;
 	align-items: center;
 	margin-bottom: 20px;
+	
+	
 }
 
 .search-input, .add-input {
@@ -226,6 +227,9 @@ body {
 
 .search-input {
 	flex: 1;
+	margin:auto;
+	min-width: 200px;
+	max-width: 400px;
 }
 
 .add-input {
@@ -315,7 +319,7 @@ body {
 }
 
 .company-link {
-	color: #F69800;
+	
 	text-decoration: none;
 }
 
@@ -347,36 +351,52 @@ body {
 }
 
 /* ========== 통계 카드 ========== */
-.admin-stats {
+.admin-stats,
+.admin-main-stats {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 	gap: 20px;
 	margin-bottom: 30px;
 }
 
-.stat-card {
+.stat-card,
+.admin-main-stat-card {
 	background: white;
 	border: 1px solid #D8D9E3;
 	border-radius: 5px;
 	padding: 25px;
 	text-align: center;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.stat-card h3 {
+.stat-card:hover,
+.admin-main-stat-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h3,
+.admin-main-stat-card h3 {
 	color: #6D707B;
 	margin: 0 0 10px 0;
 	font-size: 14px;
 	font-weight: normal;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
 }
 
-.stat-number {
+.stat-number,
+.admin-main-stat-number {
 	color: #F69800;
 	font-size: 32px;
 	font-weight: bold;
 	margin: 10px 0;
 }
 
-.stat-description {
+.stat-description,
+.admin-main-stat-description {
 	color: #AFB2BD;
 	font-size: 12px;
 	margin: 0;
@@ -560,7 +580,8 @@ body {
 		padding: 0 10px;
 	}
 
-	.admin-stats {
+	.admin-stats,
+	.admin-main-stats {
 		grid-template-columns: 1fr;
 	}
 
@@ -693,4 +714,24 @@ body {
 	text-decoration: none;
 	transform: translateY(-2px);
 	box-shadow: 0 6px 20px rgba(246, 152, 0, 0.4);
+	
+	
 } 
+
+/* ========== 정렬 ========== */
+
+.name, .email{
+    text-align: left;
+}
+
+
+
+
+
+
+
+
+
+
+
+
