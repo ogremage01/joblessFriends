@@ -331,7 +331,7 @@ h2 {
     outline: 1px solid #F69800;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-button[disabled] {
+.apply-btn[disabled] {
      background-color: #e0e0e0;
      color: #999;
      border: 1px solid #ccc;
