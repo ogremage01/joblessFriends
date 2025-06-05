@@ -30,21 +30,18 @@
                               jp.title AS title,
                               jp.career_type AS careerType,
                               jp.education AS education,
-                              jg.job_group_name AS jobGroupName,
                               j.job_name AS jobName,
                               jp.end_date AS endDate,
-                              jp.job_img AS jobImg,
-                              JP.IS_CONTINUOUS AS isContinuous
+                              jp.job_img AS jobImg
                           FROM job_post jp
                                    JOIN company c ON jp.company_id = c.company_id
-                                   JOIN job_group jg ON jp.job_group_id = jg.job_group_id
                                    JOIN job j ON jp.job_id = j.job_id
                          <if test="keyword != null or keyword != ''">
 	                          WHERE (UPPER(jp.TITLE) LIKE '%' || #{keyword} || '%') OR (LOWER(jp.TITLE) LIKE '%' || #{keyword} || '%')
 	        				  OR (UPPER(jp.CONTENT) LIKE '%' || #{keyword} || '%') OR (LOWER(jp.CONTENT) LIKE '%' || #{keyword} || '%')
 	        				  OR (UPPER(c.COMPANY_NAME) LIKE '%' || #{keyword} || '%') OR (LOWER(c.COMPANY_NAME) LIKE '%' || #{keyword} || '%')
         				  </if>  
-                          ORDER BY jp.end_date ASC
+                          ORDER BY jp.end_date, job_post_id ASC
                       ) inner_query
                  WHERE ROWNUM &lt;= #{endRow}
              )
