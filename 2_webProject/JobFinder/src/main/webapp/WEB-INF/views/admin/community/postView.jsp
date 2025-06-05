@@ -119,7 +119,7 @@
                     <!-- 검색 영역 -->
                     <div class="search-container">
                         <input id="communityKeyword" type="text" class="search-input" 
-                               placeholder="제목으로 검색" value="${searchVo.keyword}">
+                               placeholder="제목 및 내용으로 검색" value="${searchVo.keyword}">
                         <button id="communitySearchBtn" class="search-btn">
                             <i class="bi bi-search"></i> 검색
                         </button>
@@ -187,9 +187,9 @@ const searchCommunityBtn = document.getElementById("communitySearchBtn");
 
 searchCommunityBtn.addEventListener("click", function(e){
     const communityKeywordVal = document.getElementById("communityKeyword").value.trim();
-    
+    console.log("검색 키워드: "+communityKeywordVal);
     if (communityKeywordVal !== "") {
-        location.href = `/admin/community/post?keyword=${communityKeywordVal}`;
+        location.href = `/admin/community/post?keyword=\${encodeURIComponent(communityKeywordVal)}`;
     } else {
         location.href = `/admin/community/post`;
     }

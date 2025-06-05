@@ -122,7 +122,7 @@
                     <!-- 검색 영역 -->
                     <div class="search-container">
                         <input id="commentKeyword" type="text" class="search-input" 
-                               placeholder="댓글 내용으로 검색" value="${searchVo.keyword}">
+                               placeholder="댓글 내용 및 작성자로 검색" value="${searchVo.keyword}">
                         <button id="commentSearchBtn" class="search-btn">
                             <i class="bi bi-search"></i> 검색
                         </button>
