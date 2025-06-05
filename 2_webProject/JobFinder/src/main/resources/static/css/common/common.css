@@ -17,6 +17,7 @@
  		width: 1210px;
 		margin: auto;
 		margin-top: 30px;
+		min-height: 500px;
 	}
 	
 	/* 유효성검사 토스트 팝업 */
