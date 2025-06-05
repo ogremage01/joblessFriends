@@ -66,7 +66,7 @@
                     <c:if test="${not empty resume.careerList}">
                       <div class="resume-career">
                         <c:set var="career" value="${resume.careerList[0]}" />
-                        <span>회사: ${career.companyName} / ${career.departmentName} / ${career.position}</span>
+                        <span>경력: ${career.companyName} / ${career.departmentName} / ${career.position}</span>
                       </div>
                     </c:if>
 

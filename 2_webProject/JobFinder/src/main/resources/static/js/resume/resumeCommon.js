@@ -811,6 +811,16 @@ function validateResume() {
 		field.after(error);
 		errorMessages.push(message);
 	}
+	
+	function showSuccess(field, message) {
+			field.style.borderColor = "green";
+			const success = document.createElement("span");
+			success.className = "success-msg";
+			success.style.color = "green";
+			success.style.fontSize = "12px";
+			success.textContent = " " + message;
+			field.after(success);
+		}
 
 	const title = document.getElementById("title").value.trim();
 	const name = document.getElementById("name").value.trim();
@@ -824,30 +834,44 @@ function validateResume() {
 	if (!title) {
 		showError(document.getElementById("title"), "제목은 필수 입력 항목입니다.");
 		result = false;
+	}	else {
+		showSuccess(document.getElementById("title"), "올바은 형식입니다.");
 	}
 	if (!name) {
 		showError(document.getElementById("name"), "이력서 작성 시 이름은 필수 입력 항목입니다.");
 		result = false;
+	}	else {
+		showSuccess(document.getElementById("name"), "올바은 형식입니다.");
 	}
 	if (!birthdate || !/^\d{4}-\d{2}-\d{2}$/.test(birthdate)) {
 		showError(document.getElementById("birthdate"), "생년월일은 YYYY-MM-DD 형식으로 입력해주세요.");
 		result = false;
+	}	else {
+		showSuccess(document.getElementById("birthdate"), "올바은 형식입니다.");
 	}
 	if (!phoneNumber || !/^\d{3}-\d{3,4}-\d{4}$/.test(phoneNumber)) {
 		showError(document.getElementById("phoneNumber"), "전화번호는 XXX-XXXX-XXXX 형식으로 입력해주세요.");
 		result = false;
+	}	else {
+		showSuccess(document.getElementById("phoneNumber"), "올바은 형식입니다.");
 	}
 	if (!email || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
 		showError(document.getElementById("email"), "이메일 형식이 올바르지 않습니다.");
 		result = false;
+	}	else {
+		showSuccess(document.getElementById("email"), "올바은 형식입니다.");
 	}
 	if (!roadAddress || roadAddress.length < 5) {
 		showError(document.getElementById("roadAddress"), "도로명 주소는 5자 이상 입력해주세요.");
 		result = false;
+	}	else {
+		showSuccess(document.getElementById("roadAddress"), "올바은 형식입니다.");
 	}
 	if (!postalCodeId || isNaN(postalCodeId) || postalCodeId <= 0) {
 		showError(document.getElementById("postalCodeId"), "우편번호는 올바른 숫자여야 합니다.");
 		result = false;
+	}	else {
+		showSuccess(document.getElementById("postalCodeId"), "올바은 형식입니다.");
 	}
 	
 	// 프로필 이미지 검증 - 신규 작성 시에만 필수
@@ -858,7 +882,7 @@ function validateResume() {
 		error.style.color = "red";
 		error.style.fontSize = "12px";
 		error.textContent = " 프로필 이미지는 필수 입력 항목입니다.";
-		photoBox.after(error);
+		photoBox.insertAdjacentElement("afterend", error);
 		errorMessages.push("프로필 이미지는 필수 입력 항목입니다.");
 		result = false;
 	}
