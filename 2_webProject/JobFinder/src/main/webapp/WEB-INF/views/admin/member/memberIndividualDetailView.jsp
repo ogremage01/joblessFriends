@@ -58,7 +58,15 @@
                             <div class="row mb-3">
                                 <label for="password" class="col-sm-3 col-form-label text-end fw-bold">비밀번호</label>
                                 <div class="col-sm-9">
-                                    <input type="password" id="password" name="password" class="form-control" placeholder="변경할 비밀번호를 입력하세요">
+                                    <input type="password" id="password" name="password" class="form-control" placeholder="변경할 비밀번호를 입력하세요" onblur="sameCheckPwd()">
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <label for="passwordCheck" class="col-sm-3 col-form-label text-end fw-bold">비밀번호 확인</label>
+                                <div class="col-sm-9">
+                                    <input type="password" id="passwordCheck" name="passwordCheck" class="form-control" placeholder="비밀번호를 다시 입력하세요" onblur="sameCheckPwd();">
+                                    <div id="pwdCheckStatus" class="valiCheckText form-text text-danger"></div>
                                 </div>
                             </div>
                         
@@ -105,7 +113,7 @@
                                     <button type="submit" id="submitBtn" class="add-btn">
                                         <i class="bi bi-check-circle"></i> 수정
                                     </button>
-                                    <button type="reset" class="btnStyle">
+                                    <button type="reset" class="btnStyle" onclick="resetFun()">
                                         <i class="bi bi-arrow-clockwise"></i> 초기화
                                     </button>
                                     <button type="button" class="delete-btn" id="delete">
