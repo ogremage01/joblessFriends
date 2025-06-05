@@ -63,7 +63,7 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
         }
         System.out.println("스킬직전");
         int skillScore = recruitmentSkillList.isEmpty() ? 0 :
-                matchCnt * (skillTotalScore / recruitmentSkillList.size());
+                (int) Math.ceil(matchCnt * (skillTotalScore / recruitmentSkillList.size()));
 
         skillScore = Math.min(skillScore, skillTotalScore);
         skillScore = Math.max(skillScore, 0);
@@ -91,18 +91,39 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
                 schoolScore = 0;
                 break;
         }
-
-        for (SchoolVo resumeSchoolVo : resumeSchoolList) {
-            String status = resumeSchoolVo.getStatus();
-            if (!"졸업".equals(status)) {
-                if ("졸업 예정".equals(status)) {
-                    schoolScore -= (int) Math.floor(schoolTotalScore * 0.05);
-                } else if ("재학 중".equals(status)) {
-                    schoolScore -= (int) Math.floor(schoolTotalScore * 0.15);
+        System.out.println("resumeSchoolList.size(): " + resumeSchoolList.size());
+        
+        if(resumeSchoolList.size() == 0 || resumeSchoolList == null) {
+        	schoolScore = 0;
+        } else if(resumeSchoolList != null) {
+        	for (SchoolVo resumeSchoolVo : resumeSchoolList) {
+                String sortation = resumeSchoolVo.getSortation();
+            	String status = resumeSchoolVo.getStatus();
+            	
+            	
+                if ("고등학교".equals(status)) {
+                    schoolScore += 0;
+                } else if ("대학교(2,3년)".equals(status)) {
+                    schoolScore += (int) Math.ceil(schoolTotalScore * 0.25);
+                } else if ("대학교(4년)".equals(status)) {
+                    schoolScore += (int) Math.ceil(schoolTotalScore * 0.5);
+                } else if ("석사".equals(status)) {
+                    schoolScore += (int) Math.ceil(schoolTotalScore * 0.75);
+                } else if ("박사".equals(status)) {
+                    schoolScore += schoolTotalScore;
+                }            
+                
+                if (!"졸업".equals(status)) {
+                    if ("졸업 예정".equals(status)) {
+                        schoolScore -= (int) Math.floor(schoolTotalScore * 0.05);
+                    } else if ("재학 중".equals(status)) {
+                        schoolScore -= (int) Math.floor(schoolTotalScore * 0.15);
+                    }
                 }
-            }
 
-        }
+            }
+        } 
+        
 
         schoolScore = Math.min(schoolScore, schoolTotalScore);
         schoolScore = Math.max(schoolScore, 0);
