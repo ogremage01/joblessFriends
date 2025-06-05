@@ -212,6 +212,8 @@
 
 <%-- 이후 js에서 처리  --%>
 <script>
+    const userType = '${userType}';
+
     const resumeList =
             <c:choose>
             <c:when test="${not empty resumeList}">
