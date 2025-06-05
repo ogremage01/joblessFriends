@@ -24,6 +24,7 @@ import com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo;
 import com.joblessfriend.jobfinder.recruitment.service.RecruitmentService;
 import com.joblessfriend.jobfinder.search.service.SearchService;
 import com.joblessfriend.jobfinder.skill.domain.SkillVo;
+import com.joblessfriend.jobfinder.skill.service.SkillService;
 import com.joblessfriend.jobfinder.util.Pagination;
 import com.joblessfriend.jobfinder.util.SearchVo;
 
@@ -39,6 +40,8 @@ public class SearchController {
    
    @Autowired
    private SearchService searchService;
+   @Autowired
+   private SkillService skillService;
    @Autowired
    private RecruitmentService recruitmentService;
 
@@ -90,6 +93,7 @@ public class SearchController {
 		    System.out.println(searchVo.getKeyword());
 		    searchVo.setPage(page); // ★ page 파라미터 사용
 		    searchVo.setRecordSize(4);
+		    System.out.println("첫 번째 getRecordSize: " + searchVo.getRecordSize());
 
 		    int totalCount = 0;
 		    Pagination pagination = null;
@@ -105,17 +109,29 @@ public class SearchController {
 				// TODO: handle exception
 				e.printStackTrace();
 			}
-		    
+		    System.out.println("getRecordSize: " + searchVo.getRecordSize());
 
 		    // Oracle 11g에 맞게 startRow, endRow 계산
 		    searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
 		    searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
-
+		    
 		    List<RecruitmentVo> recruitmentList = searchService.getRecruitmentSearchList(searchVo);
+		    
+		    System.out.println("시작 setStartRow: " + searchVo.getStartRow());
+		    System.out.println("끝 setEndRow: " + searchVo.getEndRow());
+		    
 		    //스킬 목록 불러오기 해야 됨
+		    Map<Integer, List<SkillVo>> skillMap = new HashMap<>();
+	        for (RecruitmentVo r : recruitmentList) {
+	            int jobPostId2 = r.getJobPostId();
+	            List<SkillVo> skillList = skillService.postTagList(jobPostId2);
+	            skillMap.put(jobPostId2, skillList);
+	            
+	        }
 
 		    logger.info("메인서치 recruitmentList: " + recruitmentList);
 		    model.addAttribute("recruitmentList", recruitmentList);
+		    model.addAttribute("skillMap", skillMap);
 		    model.addAttribute("pagination", pagination);
 		    model.addAttribute("totalCount", totalCount); // 검색결과 개수
 		    model.addAttribute("keyword", keyword); // 검색어

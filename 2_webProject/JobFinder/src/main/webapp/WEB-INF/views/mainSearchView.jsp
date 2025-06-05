@@ -82,29 +82,31 @@ body {
 				</div>
 
 
+				<!-- 기존 코드의 페이지네이션 부분을 아래와 같이 교체하세요 -->
 				<div id="pagination">
-					<div id="pagination">
-					   
-					    
-					    <!-- 이전 페이지 -->
-					    <c:if test="${pagination.existPrevPage}">
-					        <button class="page-btn" type="button" onclick="goToPage(${pagination.page - 1}, '${searchVo.keyword}')">«</button>
-					    </c:if>
-
-						<!-- 페이지 번호 -->
-						<c:forEach begin="${pagination.startPage}"
-							end="${pagination.endPage}" var="i">
-							<button class="page-btn ${pagination.page == i ? 'active' : ''}"
-								${pagination.page == i ? 'disabled' : ''}
-								onclick="goToPage(${i}, '${searchVo.keyword}')">${i}</button>
-						</c:forEach>
-					
-						<c:if test="${pagination.existNextPage}">
-							<!-- 다음 페이지 -->
-							<button class="page-btn" type="button" 
-								onclick="goToPage(${pagination.page + 1}, '${searchVo.keyword}')">»</button>
-						</c:if>
-					</div>
+				    <!-- 이전 페이지 -->
+				    <c:if test="${pagination.existPrevPage}">
+				        <button class="page-btn" type="button"
+				            data-page="${pagination.page - 1}"
+				            data-keyword="${keyword}">«</button>
+				    </c:if>
+				
+				    <!-- 페이지 번호 버튼 -->
+				    <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="i">
+				        <button class="page-btn ${pagination.page == i ? 'active' : ''}"
+				            type="button"
+				            data-page="${i}"
+				            data-keyword="${keyword}"
+				            ${pagination.page == i ? 'disabled' : ''}>${i}</button>
+				    </c:forEach>
+				
+				    <!-- 다음 페이지 -->
+				    <c:if test="${pagination.existNextPage}">
+				        <button class="page-btn" type="button"
+				            data-page="${pagination.page + 1}"
+				            data-keyword="${keyword}">»</button>
+				    </c:if>
+				</div>
 					
 				</c:if>
 			
