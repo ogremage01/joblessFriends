@@ -290,12 +290,12 @@
 <script>
 // 현재 페이지 하이라이트
 document.addEventListener('DOMContentLoaded', function() {
-    const currentPath = window.location.pathname;
+    const currentPath = window.location.pathname;// 현재 URL 경로
     const navLinks = document.querySelectorAll('.sidebar a');
     
     navLinks.forEach(link => {
-        if (link.getAttribute('href') === currentPath) {
-            link.classList.add('current-page');
+        if (currentPath.startsWith(link.getAttribute('href'))) {
+            link.classList.add('current-page');// 현재 페이지 링크에 클래스 추가
             
             // 서브메뉴 항목이면 부모 메뉴도 열기
             const parentCollapse = link.closest('.collapse');

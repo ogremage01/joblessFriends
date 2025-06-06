@@ -161,7 +161,11 @@ body {
 	background-color: #c82333;
 }
 
+
 /* 대량 선택, 삭제 버튼 */
+
+
+
 .mass-delete-btn, #selectAll {
 	background-color: white;
 	border: 1px solid #afb2bd;
