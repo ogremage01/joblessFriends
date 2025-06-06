@@ -47,7 +47,7 @@ public class ProfileTempController {
         try {
             // 1. 원본 이름 + 저장 파일명 생성
             String originalFilename = file.getOriginalFilename();
-            String savedFilename = UUID.randomUUID() + "_" + originalFilename;
+            String savedFilename = UUID.randomUUID().toString();
 
             // 2. 저장 경로 설정
             String uploadDir = "C:/upload/profile/";
@@ -88,6 +88,7 @@ public class ProfileTempController {
                                                    HttpSession session) {
         Map<String, Object> result = new HashMap<>();
         
+        // 1. 세션 검증 (컨트롤러의 책임)
         MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
         if (memberVo == null) {
             result.put("success", false);
@@ -96,23 +97,21 @@ public class ProfileTempController {
         }
 
         try {
-            // 1. 파일 시스템에서 파일 삭제
-            String uploadDir = "C:/upload/profile/";
-            File fileToDelete = new File(uploadDir + storedFileName);
-            if (fileToDelete.exists()) {
-                fileToDelete.delete();
-            }
-
-            // 2. DB에서 임시 프로필 데이터 삭제
-            profileTempService.deleteByMemberId(memberVo.getMemberId());
-
+            // 2. 비즈니스 로직을 서비스에 위임
+            profileTempService.deleteProfileImageAndData(storedFileName, memberVo.getMemberId());
+            
             result.put("success", true);
             result.put("message", "프로필 이미지가 삭제되었습니다");
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            
+        } catch (IllegalArgumentException e) {
             result.put("success", false);
-            result.put("error", "삭제 실패: " + e.getMessage());
+            result.put("error", "입력값이 올바르지 않습니다");
+        } catch (SecurityException e) {
+            result.put("success", false);
+            result.put("error", "접근 권한이 없습니다");
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("error", "삭제 중 오류가 발생했습니다");
         }
 
         return result;

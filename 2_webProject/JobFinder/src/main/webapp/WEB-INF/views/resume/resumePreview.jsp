@@ -18,10 +18,12 @@
 <body>
 	
 	<!-- 	이력서 헤더	 -->
-	<div id="resumeHeader">
-		<div class="headerTitle">이력서 미리보기</div>
-		<div class="headerInfo">채용기업이 보는 이력서 열람화면입니다.</div>
-	</div>
+	<c:if test="${sessionScope.userType == 'member'}">
+		<div id="resumeHeader">
+			<div class="headerTitle">이력서 미리보기</div>
+			<div class="headerInfo">채용기업이 보는 이력서 열람화면입니다.</div>
+		</div>
+	</c:if>
 	
 	<!-- 	이력서 메인 		-->
 	<div id="container">
