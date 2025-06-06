@@ -1,10 +1,7 @@
 package com.joblessfriend.jobfinder.profiletemp.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
-import com.joblessfriend.jobfinder.profiletemp.domain.ProfileTempVo;
 import com.joblessfriend.jobfinder.profiletemp.service.ProfileTempService;
 
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +31,7 @@ public class ProfileTempController {
                                      HttpSession session) {
         Map<String, Object> result = new HashMap<>();
         
+        // 1. 세션 검증 (컨트롤러의 책임)
         MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
         if (memberVo == null) {
             result.put("success", false);
@@ -42,41 +39,22 @@ public class ProfileTempController {
             return result;
         }
 
-        int memberId = memberVo.getMemberId();
-
         try {
-            // 1. 원본 이름 + 저장 파일명 생성
-            String originalFilename = file.getOriginalFilename();
-            String savedFilename = UUID.randomUUID().toString();
-
-            // 2. 저장 경로 설정
-            String uploadDir = "C:/upload/profile/";
-            
-            File dir = new File(uploadDir);
-            if (!dir.exists()) {
-                dir.mkdirs(); // 폴더가 없으면 생성
-            }
-            
-            File dest = new File(uploadDir + savedFilename);
-            file.transferTo(dest);
-
-            // 3. DB에 저장
-            ProfileTempVo vo = new ProfileTempVo(memberId, savedFilename);
-            profileTempService.deleteByMemberId(memberId); // 기존 데이터 제거
-            profileTempService.insertProfileTemp(vo);
-
-            // 웹에서 접근 가능한 URL 생성
-            String fileUrl = "/profile/" + savedFilename;
+            // 2. 비즈니스 로직을 서비스에 위임
+            ProfileTempService.ProfileImageUploadResult uploadResult = 
+                profileTempService.uploadProfileImage(file, memberVo.getMemberId());
             
             result.put("success", true);
-            result.put("imageUrl", fileUrl);
-            result.put("fileName", originalFilename);
-            result.put("storedFileName", savedFilename);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            result.put("imageUrl", uploadResult.getFileUrl());
+            result.put("fileName", uploadResult.getOriginalFileName());
+            result.put("storedFileName", uploadResult.getStoredFileName());
+            
+        } catch (IllegalArgumentException e) {
             result.put("success", false);
-            result.put("error", "업로드 실패: " + e.getMessage());
+            result.put("error", e.getMessage()); // 파일 검증 오류는 사용자에게 표시
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("error", "업로드 중 오류가 발생했습니다");
         }
         
         return result;
