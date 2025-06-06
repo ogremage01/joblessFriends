@@ -2,7 +2,7 @@
 <%-- <meta name="_csrf" content="${_csrf.token}" />
 <meta name="_csrf_header" content="${_csrf.headerName}" /> --%>
 
-<!-- 관리자 로그인 여부를 묻는 자바구문이 들어가야 할 부분 -->
+
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page language="java" contentType="text/html;charset=UTF-8"
 	pageEncoding="UTF-8"%>
