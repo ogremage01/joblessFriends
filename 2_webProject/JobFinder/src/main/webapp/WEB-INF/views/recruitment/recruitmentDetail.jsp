@@ -53,7 +53,15 @@
                     <div><span class="detail-info-label">급여</span>연봉 ${recruitmentDetailVo.recruitment.salary}만원</div>
                 </div>
             </div>
-
+<%--           중간영역 --%>
+            <div class="detail-middle">
+                <div class="detail-middle-body">
+                    <div class="detail-middle-title">
+                        <span class="applyCount">지원자수</span>
+                        <div>${recruitmentDetailVo.recruitment.isContinuous}명</div>
+                    </div>
+                </div>
+            </div>
             <!-- 오른쪽 사이드 영역 -->
             <div class="detail-sidebar">
                 <fmt:formatDate value="${recruitmentDetailVo.recruitment.endDate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="formattedEndDate"/>
@@ -202,6 +210,8 @@
 <jsp:include page="../common/footer.jsp"/>
 <%-- 이후 js에서 처리  --%>
 <script>
+    const userType = '${userType}';
+
     const resumeList =
             <c:choose>
             <c:when test="${not empty resumeList}">
@@ -217,7 +227,7 @@
             ]
                 </c:when>
                 <c:otherwise>
-
+                []
         </c:otherwise>
         </c:choose>;
 </script>
