@@ -1,24 +1,15 @@
 
-/*function deleteCommunity(communityId){
-	let url = "/community/delete/"+communityId;
 
-	if(confirm('게시물을 삭제하시겠습니까?')){
-	
-		fetch(url, {
-			method: 'DELETE'
-		}).then(
-			function(response){
-				if(response.ok){
+// 목록 페이지로 돌아가기
+function goBackToList() {
+	const prevUrl = sessionStorage.getItem("prevCommunityListUrl");
 
-					location.href = '/community';
-				}
-			}
-		)
+	if (prevUrl || prevUrl!= prevUrl) {
+		location.href = prevUrl;
+	} else {
+		location.href = "/community";
 	}
 }
-*/
-
-
 
 
 function deleteCommunity(communityId) {

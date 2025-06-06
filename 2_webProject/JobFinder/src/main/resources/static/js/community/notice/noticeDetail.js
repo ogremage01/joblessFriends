@@ -1,3 +1,14 @@
+// 목록 페이지로 돌아가기
+function goBackToList() {
+	const prevUrl = sessionStorage.getItem("prevNoticeListUrl");
+
+	if (prevUrl || prevUrl!= prevUrl) {
+		location.href = prevUrl;
+	} else {
+		location.href = "/community/notice";
+	}
+}
+
 
 function deleteNotice(noticeIdList){
 	let url = "/admin/community/notice/delete";
