@@ -1,4 +1,4 @@
-<!-- 관리자 로그인 여부를 묻는 자바구문이 들어가야 할 부분 -->
+
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page language="java" contentType="text/html;charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -70,7 +70,7 @@
 									</td>
 									<td><strong>${companyVo.companyId}</strong></td>
 									<td class="name">
-										<a href="./company/${companyVo.companyId}" class="company-name-link">
+										<a href="./company/${companyVo.companyId}?page=${searchVo.page}&keyword=${searchVo.keyword}" class="company-name-link">
 											${companyVo.companyName}
 										</a>
 									</td>
@@ -119,7 +119,7 @@
 		</div>
 	</div>
 </div>
-
+<jsp:include page="../../common/footer.jsp"/>
 <script src="/js/admin/member/company.js"></script>
 </body>
 </html>
