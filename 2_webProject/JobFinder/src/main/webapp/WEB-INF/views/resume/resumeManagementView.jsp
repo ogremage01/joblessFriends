@@ -31,7 +31,7 @@
 			<div class="main">
 				<div class="content">
 					<h1 class="mainTitle">
-						<i class="bi bi-file-text" style="color: #F69800;"></i>
+						<i class="bi bi-file-text icon-orange"></i>
 						이력서 관리
 					</h1>
 					
@@ -61,7 +61,7 @@
 			<%-- 이력서가 있을때 --%>
             <c:otherwise>
               <c:forEach var="resume" items="${resumes}">
-                <div class="resume-card" onclick="location.href='/resume/view/${resume.resumeId}'">
+                <div class="resume-card" onclick="openResumePreview(${resume.resumeId})">
                   <div class="resume-content">
                     <div class="resume-title">${resume.title}</div>
 

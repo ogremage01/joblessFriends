@@ -248,7 +248,7 @@ function createSchoolEntry() {
 					</div>
 					<div class="field-block">
 						<label>졸업년도</label>
-						<input type="text" name="yearOfGraduation" placeholder="예시) 2025"  />
+						<input type="text" name="yearOfGraduation" placeholder="예시) 2025.02"  />
 					</div>
 					<div class="field-block">
 						<label>졸업상태</label>
@@ -656,14 +656,14 @@ function collectResumeData() {
 function collectSchools() {
 	const result = [];
 	document.querySelectorAll('.school-entry').forEach(entry => {
-		const sortation = entry.querySelectorAll('select[name="sortation"]')?.value;
-		const schoolName = entry.querySelectorAll('input[name="schoolName"]')?.value;
-		const status = entry.querySelectorAll('select[name="status"]')?.value;
+		const sortation = entry.querySelector('select[name="sortation"]')?.value;
+		const schoolName = entry.querySelector('input[name="schoolName"]')?.value;
+		const status = entry.querySelector('select[name="status"]')?.value;
 
 		if (!sortation || !schoolName) return;
 
 		if (sortation === "high") {
-			const yearOfGraduation = entry.querySelectorAll('input[name="yearOfGraduation"]')?.value;
+			const yearOfGraduation = entry.querySelector('input[name="yearOfGraduation"]')?.value;
 			result.push({
 				sortation,
 				schoolName,
@@ -674,9 +674,9 @@ function collectSchools() {
 				endDate: null
 			});
 		} else {
-			const majorName = entry.querySelectorAll('input[name="majorName"]')?.value;
-			const startDate = entry.querySelectorAll('input[name="startDate"]')?.value;
-			const endDate = entry.querySelectorAll('input[name="endDate"]')?.value;
+			const majorName = entry.querySelector('input[name="majorName"]')?.value;
+			const startDate = entry.querySelector('input[name="startDate"]')?.value;
+			const endDate = entry.querySelector('input[name="endDate"]')?.value;
 			result.push({
 				sortation,
 				schoolName,
@@ -696,15 +696,15 @@ function collectCareers() {
 	const result = [];
 	document.querySelectorAll('.career-entry').forEach(entry => {
 		result.push({
-			companyName: entry.querySelectorAll('input[name="companyName"]')?.value || '',
-			departmentName: entry.querySelectorAll('input[name="departmentName"]')?.value || '',
-			hireYm: entry.querySelectorAll('input[name="hireYm"]')?.value || '',
-			resignYm: entry.querySelectorAll('input[name="resignYm"]')?.value || '',
-			position: entry.querySelectorAll('input[name="position"]')?.value || '',
-			jobGroupId: parseInt(entry.querySelectorAll('select[name="careerJobGroupSelect"]')?.value) || 0,
-			jobId: parseInt(entry.querySelectorAll('select[name="careerJobSelect"]')?.value) || 0,
-			workDescription: entry.querySelectorAll('textarea[name="workDescription"]')?.value || '',
-			salary: entry.querySelectorAll('input[name="salary"]')?.value || ''
+			companyName: entry.querySelector('input[name="companyName"]')?.value || '',
+			departmentName: entry.querySelector('input[name="departmentName"]')?.value || '',
+			hireYm: entry.querySelector('input[name="hireYm"]')?.value || '',
+			resignYm: entry.querySelector('input[name="resignYm"]')?.value || '',
+			position: entry.querySelector('input[name="position"]')?.value || '',
+			jobGroupId: parseInt(entry.querySelector('select[name="careerJobGroupSelect"]')?.value) || 0,
+			jobId: parseInt(entry.querySelector('select[name="careerJobSelect"]')?.value) || 0,
+			workDescription: entry.querySelector('textarea[name="workDescription"]')?.value || '',
+			salary: entry.querySelector('input[name="salary"]')?.value || ''
 		});
 	});
 	return result;
@@ -714,14 +714,14 @@ function collectCareers() {
 function collectEducations() {
 	const result = [];
 	document.querySelectorAll('.training-entry').forEach(entry => {
-		const eduName = entry.querySelectorAll('input[name="eduName"]')?.value;
+		const eduName = entry.querySelector('input[name="eduName"]')?.value;
 		if (eduName && eduName.trim() !== '') {
 			result.push({
 				eduName: eduName || '',
-				eduInstitution: entry.querySelectorAll('input[name="eduInstitution"]')?.value || '',
-				startDate: entry.querySelectorAll('input[name="startDate"]')?.value || '',
-				endDate: entry.querySelectorAll('input[name="endDate"]')?.value || '',
-				content: entry.querySelectorAll('textarea[name="content"]')?.value || ''
+				eduInstitution: entry.querySelector('input[name="eduInstitution"]')?.value || '',
+				startDate: entry.querySelector('input[name="startDate"]')?.value || '',
+				endDate: entry.querySelector('input[name="endDate"]')?.value || '',
+				content: entry.querySelector('textarea[name="content"]')?.value || ''
 			});
 		}
 	});
@@ -733,9 +733,9 @@ function collectCertificates() {
 	const result = [];
 	document.querySelectorAll('.certificate-entry').forEach(entry => {
 		result.push({
-			certificateName: entry.querySelectorAll('input[name="certificateName"]')?.value || '',
-			issuingAuthority: entry.querySelectorAll('input[name="issuingAuthority"]')?.value || '',
-			acquisitionDate: entry.querySelectorAll('input[name="acquisitionDate"]')?.value || ''
+			certificateName: entry.querySelector('input[name="certificateName"]')?.value || '',
+			issuingAuthority: entry.querySelector('input[name="issuingAuthority"]')?.value || '',
+			acquisitionDate: entry.querySelector('input[name="acquisitionDate"]')?.value || ''
 		});
 	});
 	return result;
@@ -745,12 +745,12 @@ function collectCertificates() {
 function collectPortfolios() {
 	const result = [];
 	document.querySelectorAll('.portfolio-entry').forEach(entry => {
-		const fileName = entry.querySelectorAll('input[name="fileName"]')?.value;
+		const fileName = entry.querySelector('input[name="fileName"]')?.value;
 		if (fileName && fileName.trim() !== '') {
 			result.push({
 				fileName: fileName || '',
-				storedFileName: entry.querySelectorAll('input[name="storedFileName"]')?.value || '',
-				fileExtension: entry.querySelectorAll('input[name="fileExtension"]')?.value || ''
+				storedFileName: entry.querySelector('input[name="storedFileName"]')?.value || '',
+				fileExtension: entry.querySelector('input[name="fileExtension"]')?.value || ''
 			});
 		}
 	});
@@ -787,46 +787,43 @@ function showSuccess(field, message) {
 
 // 입력 필드 검증 헬퍼 함수
 function validateInputFields(entry, fieldName, errorMessage, validationFn = null) {
-	const inputs = entry.querySelectorAll(`input[name="${fieldName}"]`);
-	for (let i = 0; i < inputs.length; i++) {
-		let input = inputs[i];
+	const input = entry.querySelector(`input[name="${fieldName}"]`);
+	if (input) {
 		let value = input.value.trim();
 		let isValid = validationFn ? validationFn(value) : value !== "";
 		
 		if (!isValid) {
-			showError(inputs[i], errorMessage);
+			showError(input, errorMessage);
 		} else {
-			showSuccess(inputs[i], "올바른 형식입니다.");
+			showSuccess(input, "올바른 형식입니다.");
 		}
 	}
 }
 
 // 셀렉트 필드 검증 헬퍼 함수
 function validateSelectFields(entry, fieldName, errorMessage) {
-	const selects = entry.querySelectorAll(`select[name="${fieldName}"]`);
-	for (let i = 0; i < selects.length; i++) {
-		let select = selects[i];
+	const select = entry.querySelector(`select[name="${fieldName}"]`);
+	if (select) {
 		let value = select.value;
 		
 		if (!value || value === "") {
-			showError(selects[i], errorMessage);
+			showError(select, errorMessage);
 		} else {
-			showSuccess(selects[i], "올바른 형식입니다.");
+			showSuccess(select, "올바른 형식입니다.");
 		}
 	}
 }
 
 // 텍스트에어리어 검증 헬퍼 함수
 function validateTextareaFields(entry, fieldName, errorMessage) {
-	const textareas = entry.querySelectorAll(`textarea[name="${fieldName}"]`);
-	for (let i = 0; i < textareas.length; i++) {
-		let textarea = textareas[i];
+	const textarea = entry.querySelector(`textarea[name="${fieldName}"]`);
+	if (textarea) {
 		let value = textarea.value.trim();
 		
 		if (value === "") {
-			showError(textareas[i], errorMessage);
+			showError(textarea, errorMessage);
 		} else {
-			showSuccess(textareas[i], "올바른 형식입니다.");
+			showSuccess(textarea, "올바른 형식입니다.");
 		}
 	}
 }
@@ -912,11 +909,11 @@ function validateSchoolEntries() {
 		validateSelectFields(entry, "sortation", "구분은 필수 선택 항목입니다.");
 		validateInputFields(entry, "schoolName", "학교명은 필수 입력 항목입니다.");
 
-		const sortationSelects = entry.querySelectorAll('select[name="sortation"]');
-		const sortationValue = sortationSelects.length > 0 ? sortationSelects[0].value : "";
+		const sortationSelect = entry.querySelector('select[name="sortation"]');
+		const sortationValue = sortationSelect ? sortationSelect.value : "";
 		
 		if (sortationValue === "high") {
-			validateInputFields(entry, "yearOfGraduation", "졸업년도는 YYYY 형식으로 입력해주세요.", (val) => /^\d{4}$/.test(val));
+			validateInputFields(entry, "yearOfGraduation", "졸업년도는 YYYY.MM 형식으로 입력해주세요.", (val) => /^\d{4}\.\d{2}$/.test(val));
 		} else if (sortationValue && sortationValue !== "") {
 			validateInputFields(entry, "majorName", "전공명은 필수 입력 항목입니다.");
 			validateInputFields(entry, "startDate", "입학년월은 YYYY.MM 형식으로 입력해주세요.", (val) => /^\d{4}\.\d{2}$/.test(val));

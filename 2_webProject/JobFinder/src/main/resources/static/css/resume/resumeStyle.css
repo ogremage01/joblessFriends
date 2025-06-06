@@ -845,3 +845,30 @@ textarea::placeholder {
   font-size: 14px;
   font-style: italic;
 }
+
+/* 인라인 스타일 대체 클래스들 */
+.resume-title-margin {
+  margin: 1px;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible-block {
+  display: block;
+}
+
+.visible-inline {
+  display: inline;
+}
+
+/* SweetAlert 커스텀 스타일 */
+.swalConfirmBtn {
+  background: #F69800;
+  color: white;
+}
+
+.swalConfirmBtn:hover {
+  background-color: rgb(227, 142, 0);
+}

@@ -383,17 +383,24 @@
 		</c:if>
 		
 		
+
+		
 		<c:if test="${not empty resume.portfolioList}">
 		<!-- 포트폴리오 섹션 -->
 		<div class="borderBox">
 			<p class="contentTitle">포트폴리오</p>
 			<div class="contentBox">
-				<ul style="padding-left: 20px;">
+				<ul class="portfolio-list">
 					<c:forEach var="file" items="${resume.portfolioList}">
-						<li style="margin-bottom: 6px;">
-							<a href="/uploads/portfolio/${file.storedFileName}" target="_blank" class="fileName">
-								${file.fileName}
-							</a>
+						<li>
+							<div class="portfolio-item">
+								<span class="fileName">${file.fileName}</span>
+								<div class="file-actions">
+									<a href="/resume/download/${file.storedFileName}" class="download-btn" title="다운로드">
+										📥 다운로드
+									</a>
+								</div>
+							</div>
 						</li>
 					</c:forEach>
 				</ul>
@@ -401,6 +408,8 @@
 		</div>
 		<!-- 포트폴리오 섹션 end-->
 		</c:if>
+		
+
 		
 	</div>
 </div>
