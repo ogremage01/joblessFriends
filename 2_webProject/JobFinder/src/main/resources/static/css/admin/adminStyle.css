@@ -162,7 +162,7 @@ body {
 }
 
 /* 대량 삭제 버튼 */
-.mass-delete-btn {
+.mass-delete-btn, #selectAll {
 	background-color: white;
 	border: 1px solid #afb2bd;
 	color: #4e5366;

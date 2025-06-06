@@ -215,7 +215,8 @@ function appendMessage(data) {
 
 	const chatMessages = document.getElementById('chatMessages');
 	const div = document.createElement('div');
-	const sender = data.sender || "익명";
+	let sender = data.sender || "익명";
+	sender = (sender === '관리자' ? '관리자' : '사용자');
 
 	div.className = 'message ' + (sender === '관리자' ? 'message-admin' : 'message-user');
 	div.innerHTML =
