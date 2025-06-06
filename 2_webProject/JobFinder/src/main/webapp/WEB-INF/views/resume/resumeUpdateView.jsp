@@ -60,7 +60,7 @@
 			</div>
 			<div class="field-block">
 				<label>전화번호</label>
-				<input type="text" id="phoneNumber" placeholder="예시) 01012349999" value="${resumeData.phoneNumber}" />
+				<input type="text" id="phoneNumber" placeholder="예시) 010-1234-9999" value="${resumeData.phoneNumber}" />
 			</div>
 			
 			<!-- 2행 -->
@@ -88,14 +88,6 @@
 					         <c:when test="${not empty resumeData.profile}">style="display: block;"</c:when>
 					         <c:otherwise>style="display: none;"</c:otherwise>
 					     </c:choose> />
-					<c:choose>
-						<c:when test="${not empty resumeData.profile}">
-							<button type="button" class="delete-image-btn" onclick="deleteProfileImage(event)" style="display: block;">×</button>
-						</c:when>
-						<c:otherwise>
-							<button type="button" class="delete-image-btn" onclick="deleteProfileImage(event)" style="display: none;">×</button>
-						</c:otherwise>
-					</c:choose>
 				</label>
 				<input type="file" id="profileImageInput" style="display: none;" />
 			</div>
@@ -383,16 +375,11 @@
 <script>
 // 이력서 수정 모드 설정
 window.isEditMode = true;
-window.currentResumeId = ${jsResumeId};
-window.uploadedImageUrl = "${jsProfile}";
+window.currentResumeId = <c:out value="${jsResumeId}"/>;
+window.uploadedImageUrl = "<c:out value="${jsProfile}"/>";
 
 // 기존 스킬 데이터 초기화
 window.existingSkills = [];
-
-// 기존 프로필 이미지가 있는 경우 uploadedImageUrl 설정
-<c:if test="${not empty resumeData.profile}">
-window.uploadedImageUrl = "${resumeData.profile}";
-</c:if>
 </script>
 
 <!-- 기존 스킬 데이터를 JavaScript로 안전하게 추가 -->
@@ -401,8 +388,8 @@ window.uploadedImageUrl = "${resumeData.profile}";
 <script>
 if (window.existingSkills) {
   window.existingSkills.push({
-    tagId: ${skill.tagId},
-    tagName: '${fn:replace(skill.tagName, "'", "\\'")}'
+    tagId: <c:out value="${skill.tagId}"/>,
+    tagName: '<c:out value="${fn:replace(skill.tagName, \"'\", \"\\\\'\")}"/>'
   });
 }
 </script>

@@ -1,5 +1,6 @@
 package com.joblessfriend.jobfinder.resume.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -67,8 +68,53 @@ public class ResumeServiceImpl implements ResumeService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteResume(int memberId, int resumeId) {
+		// 1. 삭제할 이력서 정보 조회 (파일 정보 포함)
+		ResumeVo resumeToDelete = resumeDao.getResumeWithAllDetails(resumeId);
+		
+		if (resumeToDelete != null) {
+			// 2. 프로필 이미지 파일 삭제
+			if (resumeToDelete.getProfile() != null && !resumeToDelete.getProfile().isEmpty()) {
+				deleteFileFromSystem(resumeToDelete.getProfile(), "C:/upload/profile/");
+			}
+			
+			// 3. 포트폴리오 파일들 삭제
+			if (resumeToDelete.getPortfolioList() != null) {
+				for (PortfolioVo portfolio : resumeToDelete.getPortfolioList()) {
+					if (portfolio.getStoredFileName() != null && !portfolio.getStoredFileName().isEmpty()) {
+						deleteFileFromSystem(portfolio.getStoredFileName(), "C:/upload/portfolio/");
+					}
+				}
+			}
+		}
+		
+		// 4. DB에서 이력서 삭제
 		resumeDao.deleteResumeById(memberId, resumeId);
+	}
+	
+	// 파일 시스템에서 파일 삭제하는 유틸리티 메서드
+	private void deleteFileFromSystem(String fileName, String uploadDir) {
+		try {
+			// URL 형태인 경우 파일명만 추출
+			if (fileName.startsWith("/")) {
+				fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
+			}
+			
+			File fileToDelete = new File(uploadDir + fileName);
+			if (fileToDelete.exists()) {
+				boolean deleted = fileToDelete.delete();
+				if (deleted) {
+					System.out.println("파일 삭제 성공: " + fileName);
+				} else {
+					System.out.println("파일 삭제 실패: " + fileName);
+				}
+			} else {
+				System.out.println("삭제할 파일이 존재하지 않음: " + fileName);
+			}
+		} catch (Exception e) {
+			System.err.println("파일 삭제 중 오류 발생: " + fileName + ", " + e.getMessage());
+		}
 	}
 
 	@Override
@@ -240,7 +286,15 @@ public class ResumeServiceImpl implements ResumeService {
 
 	// 이력서 하위 데이터 삭제 공통 메서드
 	private void deleteResumeDetails(int resumeId) {
-		
+		// 기존 포트폴리오 파일들 삭제
+		List<PortfolioVo> existingPortfolios = resumeDao.getPortfoliosByResumeId(resumeId);
+		if (existingPortfolios != null) {
+			for (PortfolioVo portfolio : existingPortfolios) {
+				if (portfolio.getStoredFileName() != null && !portfolio.getStoredFileName().isEmpty()) {
+					deleteFileFromSystem(portfolio.getStoredFileName(), "C:/upload/portfolio/");
+				}
+			}
+		}
 
 		resumeDao.deleteSchoolsByResumeId(resumeId);
 		resumeDao.deleteCareersByResumeId(resumeId);
