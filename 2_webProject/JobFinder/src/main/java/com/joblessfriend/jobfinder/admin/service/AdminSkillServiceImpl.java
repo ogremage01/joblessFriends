@@ -32,11 +32,6 @@ public class AdminSkillServiceImpl implements AdminSkillService {
     }
     
     @Override
-    public int deleteSkill(int tagId) {
-        return adminSkillDao.deleteSkill(tagId);
-    }
-    
-    @Override
     public int deleteSkills(List<Integer> tagIdList) {
         return adminSkillDao.deleteSkills(tagIdList);
     }

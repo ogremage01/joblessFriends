@@ -34,8 +34,14 @@ public class AdminJobGroupDaoImpl implements AdminJobGroupDao {
 		return sqlSession.selectOne(namespace + "jobGroupCount",searchVo);
 	} 
 	
+	@Override
+	public int insertJobGroup(String jobGroupName) {
+		return sqlSession.insert(namespace + "insertJobGroup", jobGroupName);
+	}
 	
-	
-
+	@Override
+	public int deleteJobGroups(List<Integer> jobGroupIdList) {
+		return sqlSession.delete(namespace + "deleteJobGroups", jobGroupIdList);
+	}
 
 }
