@@ -26,6 +26,7 @@
     border-radius: 5px;
 /*     box-shadow: 0 0 8px rgba(0, 0, 0, 0.05); */
     gap: 20px;
+    height: 370px;
 }
 
 #filters {
@@ -425,16 +426,28 @@ h2 {
 	outline: 0px;
 }
 
-#divSelectedCon {
+/* 선택된 필터들 표시 영역 */
+#selectedFilters {
+    margin-top: 15px;
+}
+
+.filter-section-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+#divSelectedCon, #divSelectedCareer, #divSelectedEducation, #divSelectedSkills {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
     list-style: none;
     padding-left: 0;
 }
 
-#divSelectedCon li {
+#divSelectedCon li, #divSelectedCareer li, #divSelectedEducation li, #divSelectedSkills li {
     display: flex;
     align-items: center;
     background-color: #f0f4f8;
@@ -445,7 +458,7 @@ h2 {
     color: #333;
 }
 
-#divSelectedCon li em {
+#divSelectedCon li em, #divSelectedCareer li em, #divSelectedEducation li em, #divSelectedSkills li em {
     margin-right: 6px;
     font-style: normal;
     font-weight: 500;
@@ -463,3 +476,19 @@ h2 {
     color: #e74c3c;
 }
 
+#selectedCareer, #selectedEducation, #selectedSkills, #searchJobGroup  {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* 간격 조절 */
+  margin-top: 5px;
+  vertical-align: middle;
+  height: 50px; /* 높이 조절 */
+}
+
+.filter-section-title {
+  height: 100%; /* 필요 시 지정 */
+  display: flex;
+  align-items: center; /* 텍스트 수직 정렬 */
+  white-space: nowrap;
+  font-weight: bold;
+}

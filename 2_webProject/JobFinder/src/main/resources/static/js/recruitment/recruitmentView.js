@@ -92,7 +92,7 @@ $(document).on('change', '.chk', function () {
     const jobId = $(this).data('id');
     const jobGroupName = $(this).data('group');
 
-    // 스킬은 따로 제한 처리만, 아래는 job 전용 처리
+    // 스킬은 click 이벤트에서만 처리
     if ($(this).attr('name') === 'skill') {
         return; // 아래 로직은 스킬 태그에는 적용하지 않음
     }
@@ -114,18 +114,91 @@ $(document).on('change', '.chk', function () {
     }
 });
 
-$(document).on('change', 'input[name="skill"]', function () {
-    const maxSkillCount = 3;
+// 경력 필터 체크박스 변경 시 선택된 항목 표시
+$(document).on('change', 'input[name="career"]', function () {
+    updateCareerFilterDisplay();
+});
+
+// 학력 필터 체크박스 변경 시 선택된 항목 표시
+$(document).on('change', 'input[name="education"]', function () {
+    updateEducationFilterDisplay();
+});
+
+// 전문분야(스킬) 필터 표시 업데이트
+function updateSkillFilterDisplay() {
+    const selectedSkills = $('input[name="skill"]:checked');
+    $('#divSelectedSkills').empty();
+    
+    selectedSkills.each(function() {
+        const skillName = $(this).val();
+        const skillId = $(this).data('id');
+        
+        $('#divSelectedSkills').append(`
+            <li id="skill_item_${skillId}" data-skill-id="${skillId}">
+                <em>${skillName}</em>
+                <button type="button" class="shb-btn-del" onclick="removeSkillFilter(this)">X</button>
+            </li>
+        `);
+    });
+}
+
+// 경력 필터 표시 업데이트
+function updateCareerFilterDisplay() {
+    const selectedCareers = $('input[name="career"]:checked');
+    $('#divSelectedCareer').empty();
+    
+    selectedCareers.each(function() {
+        const careerName = $(this).data('display');
+        const careerValue = $(this).val();
+        
+        $('#divSelectedCareer').append(`
+            <li id="career_item_${careerValue}" data-career-value="${careerValue}">
+                <em>${careerName}</em>
+                <button type="button" class="shb-btn-del" onclick="removeCareerFilter(this)">X</button>
+            </li>
+        `);
+    });
+}
+
+// 학력 필터 표시 업데이트
+function updateEducationFilterDisplay() {
+    const selectedEducations = $('input[name="education"]:checked');
+    $('#divSelectedEducation').empty();
+    
+    selectedEducations.each(function() {
+        const educationName = $(this).data('display');
+        const educationValue = $(this).val();
+        
+        $('#divSelectedEducation').append(`
+            <li id="education_item_${educationValue}" data-education-value="${educationValue}">
+                <em>${educationName}</em>
+                <button type="button" class="shb-btn-del" onclick="removeEducationFilter(this)">X</button>
+            </li>
+        `);
+    });
+}
+
+$(document).on('click', 'input[name="skill"]', function (e) {
+    const maxSkillCount = 3; // 최대 3개까지 허용 (4개가 되면 막기)
+    
+    // 클릭 전의 원래 상태를 확인 (클릭 후 상태와 반대)
+    const wasChecked = !$(this).is(':checked');
     const currentChecked = $('input[name="skill"]:checked').length;
-
-    if (currentChecked > maxSkillCount) {
-        loginFailPop(`스킬은 최대 ${maxSkillCount}개까지만 선택할 수 있습니다.`);
-
-        $(this).prop('checked', false);
-        return;
+    
+    // 1. 사용자가 클릭을 한다.
+    if (wasChecked) {
+        // 1-1. 이미 있는 전문분야라면 선택을 취소한다 (아이템삭제) - 허용
+        return; // 체크 해제는 항상 허용
+    } else {
+        // 1-2. 새로운 전문분야라면, 이 전문분야를 추가했을 때 전문분야가 4개가 되는지 평가한다.
+        if (currentChecked >= maxSkillCount+1) {
+            // 1-3-2. 4개가 된다면 추가하지 않고 경고 토스트 팝업을 띄우고 종료
+            loginFailPop(`스킬은 최대 ${maxSkillCount}개까지만 선택할 수 있습니다.`);
+            e.preventDefault();
+            return false;
+        }
+        // 1-3-1. 4개가 되지 않는다면 추가하고 종료 - 허용
     }
-
-    $('#skill-count').text(currentChecked);
 });
 // 리스트 X버튼 누르면 삭제 및 체크 해제
 function removeDetail(button) {
@@ -135,6 +208,43 @@ function removeDetail(button) {
     delete checkedJobs[jobId];
     $li.remove();
     $(`.chk[data-id='${jobId}']`).prop('checked', false);
+}
+
+// 스킬 필터 항목 제거
+function removeSkillFilter(button) {
+    const $li = $(button).closest('li');
+    const skillId = $li.data('skill-id');
+    
+    $li.remove();
+    $(`input[name="skill"][data-id="${skillId}"]`).prop('checked', false);
+    
+    // 스킬 카운트 업데이트
+    const currentChecked = $('input[name="skill"]:checked').length;
+    $('#skill-count').text(currentChecked);
+    
+    updateFilteredCount();
+}
+
+// 경력 필터 항목 제거
+function removeCareerFilter(button) {
+    const $li = $(button).closest('li');
+    const careerValue = $li.data('career-value');
+    
+    $li.remove();
+    $(`input[name="career"][value="${careerValue}"]`).prop('checked', false);
+    
+    updateFilteredCount();
+}
+
+// 학력 필터 항목 제거
+function removeEducationFilter(button) {
+    const $li = $(button).closest('li');
+    const educationValue = $li.data('education-value');
+    
+    $li.remove();
+    $(`input[name="education"][value="${educationValue}"]`).prop('checked', false);
+    
+    updateFilteredCount();
 }
 
 
@@ -256,22 +366,32 @@ function validateFilterCase() {
     return -1;
 }
 
-$(document).on('change', '.chk, input[name="career"], input[name="education"], input[name="skill"]', function () {
+$(document).on('change', '.chk, input[name="career"], input[name="education"]', function () {
     updateFilteredCount();
 });
 
-// 경력 체크 시 → 직군·직무 없으면 체크 막기 , 1개이상 체크불가
+// 스킬 체크박스 변경 시 UI 업데이트 (별도 처리)
+$(document).on('change', 'input[name="skill"]', function () {
+    const newCount = $('input[name="skill"]:checked').length;
+    $('#skill-count').text(newCount);
+    updateSkillFilterDisplay();
+    updateFilteredCount();
+});
+
+// 경력 체크 시 → 직군·직무 없으면 체크 막기 (중복선택 허용)
 $(document).on('click', 'input[name="career"]', function (e) {
     const jobChecked = $('input[name="job"]:checked').length > 0;
     if (!jobChecked) {
         loginFailPop("경력 조건은 직군·직무 선택 후 사용 가능합니다.");
         e.preventDefault(); // ✅ 체크 자체를 막음
+        return;
     }
-    $('input[name="career"]').not(this).prop('checked', false);
+    // 중복선택 허용을 위해 다른 체크박스 해제 코드 제거
 });
-//학력도 1개만
+
+// 학력 중복선택 허용 (기존 단일선택 제한 제거)
 $(document).on('click', 'input[name="education"]', function () {
-    $('input[name="education"]').not(this).prop('checked', false);
+    // 중복선택 허용을 위해 다른 체크박스 해제 코드 제거
 });
 //버튼초기화 //
 
@@ -282,18 +402,30 @@ $(document).on('click', '#btnResetFilter', function (e) {
     // 1. 모든 체크박스 해제
     $('input.chk, input[name="career"], input[name="education"], input[name="skill"]').prop('checked', false);
 
-    // 2. 선택된 직무 리스트 초기화
+    // 2. 선택된 직군·직무 리스트 초기화
     $('#divSelectedCon').empty();
 
-    // 3. 전역 변수 초기화
+    // 3. 선택된 경력 리스트 초기화
+    $('#divSelectedCareer').empty();
+
+    // 4. 선택된 학력 리스트 초기화
+    $('#divSelectedEducation').empty();
+
+    // 5. 선택된 전문분야 리스트 초기화
+    $('#divSelectedSkills').empty();
+
+    // 6. 선택된 직군 해제
+    $('.job-group').removeClass('selected');
+
+    // 7. 전역 변수 초기화
     checkedJobs = {};
 
-    // 4. 카운터 초기화 (직접 UI 초기화)
+    // 8. 카운터 초기화 (직접 UI 초기화)
     $('#skill-count').text('0');
     $('#filteredCount').text('0');
     $('#btnSearchFiltered').html('선택된 <span id="filteredCount">0</span>건 검색하기');
 
-    // 5. AJAX 호출 대신 UI만 초기화 (굳이 updateFilteredCount 호출 안 해도 됨)
+    // 9. AJAX 호출 대신 UI만 초기화 (굳이 updateFilteredCount 호출 안 해도 됨)
 });
 
 
