@@ -110,3 +110,21 @@
 
 }
 
+.moveBtn{
+	background-color:  #F69800;
+	border-radius: 5px;
+	font-size: 20px;
+	color: #ffff;
+
+	
+	border: 0;
+	outline: 0;
+	
+}
+
+.moveBtn:hover {
+	border: 1px solid #F69800;
+	background-color: #ffff;
+	color: #F69800;
+}
+

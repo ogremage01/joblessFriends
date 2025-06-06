@@ -71,19 +71,10 @@
 						<div>
 							<p>관리자님 환영합니다.</p>
 							<button class='moveBtn' onclick="moveAdminPost()">
-								<svg xmlns="http://www.w3.org/2000/svg" width="200" height="30"
-									fill="currentColor" class="bi bi-pencil-square"
-									viewBox="0 0 100 16">
-								  <text x="2" y="13" font-size="12">게시판 관리 페이지</text>
-								</svg>
+								게시판 관리 페이지
 							</button>
 							<button class='moveBtn' onclick="moveAdminNotice()">
-
-								<svg xmlns="http://www.w3.org/2000/svg" width="200" height="30"
-									fill="currentColor" class="bi bi-pencil-square"
-									viewBox="0 0 100 16">
-								  <text x="2" y="13" font-size="12">공지 관리 페이지</text>
-								</svg>
+								공지 관리 페이지
 							</button>
 						</div>
 					</div>

@@ -17,6 +17,8 @@
         integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     
+    <link rel="stylesheet" href="/css/admin/tableStyle.css">
+       
     <!-- 공통 스타일 적용 -->
     <link rel="stylesheet" href="/css/common/common.css">
     <link href="/css/admin/common.css" rel="stylesheet">
@@ -64,21 +66,21 @@
                         <tbody>
                             <c:forEach var="commentVo" items="${commentList}">
                                 <tr>
-                                    <td class="checkbox-container">
+                                    <td class="checkbox-container adminTable_checkBox">
                                         <input type="checkbox" class="delPost admin-checkbox" 
                                                name="delete" value="${commentVo.postCommentId}">
                                     </td>
-                                    <td><strong>${commentVo.postCommentId}</strong></td>
+                                    <td class="adminTable_id"><strong>${commentVo.postCommentId}</strong></td>
                                     <td>
                                         <div class="comment-content" title="${commentVo.content}">
                                             ${commentVo.content}
                                         </div>
                                     </td>
-                                    <td>${commentVo.nickname}</td>
-                                    <td>
+                                    <td class="adminTable_name">${commentVo.nickname}</td>
+                                    <td class="adminTable_day">
                                         <fmt:formatDate value="${commentVo.createAt}" pattern="yyyy-MM-dd HH:mm:ss" />
                                     </td>
-                                    <td>
+                                    <td class="adminTable_postBtn">
                                         <a href="http://localhost:9090/community/detail?no=${commentVo.communityId}" 
                                            target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary">
                                             게시글 보기

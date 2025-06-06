@@ -17,6 +17,8 @@
         integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     
+    <link rel="stylesheet" href="/css/admin/tableStyle.css">
+    
     <!-- 공통 스타일 적용 -->
     <link rel="stylesheet" href="/css/common/common.css">
     <link href="/css/admin/common.css" rel="stylesheet">
@@ -65,22 +67,22 @@
                         <tbody>
                             <c:forEach var="communityVo" items="${communityList}">
                                 <tr>
-                                    <td class="checkbox-container">
+                                    <td class="checkbox-container adminTable_checkBox">
                                         <input type="checkbox" class="delPost admin-checkbox" 
                                                name="delete" value="${communityVo.communityId}">
                                     </td>
-                                    <td><strong>${communityVo.communityId}</strong></td>
-                                    <td>
+                                    <td class="adminTable_id"><strong>${communityVo.communityId}</strong></td>
+                                    <td class="adminTable_title">
                                         <a href="http://localhost:9090/community/detail?no=${communityVo.communityId}" 
                                            target="_blank" rel="noopener noreferrer" class="post-title-link">
                                             ${communityVo.title}
                                         </a>
                                     </td>
-                                    <td>${communityVo.nickname}</td>
-                                    <td>
+                                    <td class="adminTable_name">${communityVo.nickname}</td>
+                                    <td class="adminTable_day">
                                         <fmt:formatDate value="${communityVo.createAt}" pattern="yyyy-MM-dd HH:mm:ss" />
                                     </td>
-                                    <td class="views-count">${communityVo.views}</td>
+                                    <td class="view">${communityVo.views}</td>
                                     <td>
                                         <button class="delBtn delete-btn" value="${communityVo.communityId}">
                                             삭제
