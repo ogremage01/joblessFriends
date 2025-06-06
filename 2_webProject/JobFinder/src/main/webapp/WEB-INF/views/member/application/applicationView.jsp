@@ -39,7 +39,7 @@
         color: white;
     }
     .page-btn:disabled {
-        background-color: #ccc;
+        background-color: #eee;
         cursor: not-allowed;
     }
     #pageWrap {

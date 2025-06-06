@@ -7,7 +7,7 @@
     margin: 20px auto;
     font-family: 'Noto Sans KR', sans-serif;
     border: 1px solid lightgray;
-    border-radius: 20px;
+    border-radius: 5px;
     padding: 20px;
 }
 
@@ -88,6 +88,10 @@
     cursor: pointer;
 }
 
+.btn-group button[disabled] {
+	border: none;
+}
+
 .btn-bookmark {
     background-color: white;
     color: #F69800;
@@ -112,7 +116,7 @@
     line-height: 1.8;
     font-size: 15px;
     border: 1px solid lightgrey;
-    border-radius: 20px;
+    border-radius: 5px;
 }
 
 .detail-body h3 {
@@ -156,9 +160,9 @@
 
 .tag-list .tag {
     border: 1px solid #f69800;
-    background-color: #fff3e0;
-    color: #f69800;
-    padding: 6px 12px;
+    background-color: rgb(255, 249, 238);
+    color: #f68300;
+    padding: 1px 10px;
     border-radius: 20px;
     font-size: 14px;
     display: flex;

@@ -109,11 +109,11 @@
                             </c:when>
                             <c:otherwise>
                                 <div id="bookmark-Container">
-                                    <button type="button" disabled style="cursor: not-allowed; background: #ccc;">
+                                    <button type="button" disabled style="cursor: not-allowed; background: #eee;">
                                         마감됨
                                     </button>
                                 </div>
-                                <button class="apply-btn" type="button" disabled style="background: #ccc; cursor: not-allowed;">
+                                <button class="apply-btn" type="button" disabled style="background: #eee; cursor: not-allowed;">
                                     마감됨
                                 </button>
                             </c:otherwise>
