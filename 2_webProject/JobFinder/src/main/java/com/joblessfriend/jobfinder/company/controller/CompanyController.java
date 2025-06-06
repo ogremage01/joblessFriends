@@ -135,5 +135,8 @@ public class CompanyController {
 		return"common/deleteResult";
 	}
 	
+	@GetMapping("/unreadCount")
+	@ResponseBody
+	public ResponseEntity<?> getUnreadMessageCount(HttpSession session)
 
 }
