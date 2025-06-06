@@ -65,22 +65,22 @@
                 <div class="dropdown">
                     <button type="button" class="dropdown-toggle">경력 ▼</button>
                     <div class="dropdown-content education-dropdown-content">
-                        <label><input type="checkbox" name="career" value="신입"> 신입</label>
-                        <label><input type="checkbox" name="career" value="1~3년"> 1~3년</label>
-                        <label><input type="checkbox" name="career" value="3~5년"> 3~5년</label>
-                        <label><input type="checkbox" name="career" value="5년이상"> 5년이상</label>
+                        <label><input type="checkbox" name="career" value="신입" data-display="신입"> 신입</label>
+                        <label><input type="checkbox" name="career" value="1~3년" data-display="1~3년"> 1~3년</label>
+                        <label><input type="checkbox" name="career" value="3~5년" data-display="3~5년"> 3~5년</label>
+                        <label><input type="checkbox" name="career" value="5년이상" data-display="5년이상"> 5년이상</label>
                     </div>
                 </div>
 
                 <div class="dropdown education-dropdown">
                     <button type="button" class="dropdown-toggle">학력 ▼</button>
                     <div class="dropdown-content education-dropdown-content">
-                        <label><input type="checkbox" name="education" value="학력무관"> 학력무관</label>
-                        <label><input type="checkbox" name="education" value="대학교 졸업(4년)"> 대학교 졸업(4년)</label>
-                        <label><input type="checkbox" name="education" value="대학 졸업(2,3년)"> 대학 졸업(2,3년)</label>
-                        <label><input type="checkbox" name="education" value="대학원 석사졸업"> 대학원 석사졸업</label>
-                        <label><input type="checkbox" name="education" value="대학원 박사졸업"> 대학원 박사졸업</label>
-                        <label><input type="checkbox" name="education" value="고등학교 졸업"> 고등학교 졸업</label>
+                        <label><input type="checkbox" name="education" value="학력무관" data-display="학력무관"> 학력무관</label>
+                        <label><input type="checkbox" name="education" value="대학교 졸업(4년)" data-display="대학교 졸업(4년)"> 대학교 졸업(4년)</label>
+                        <label><input type="checkbox" name="education" value="대학 졸업(2,3년)" data-display="대학 졸업(2,3년)"> 대학 졸업(2,3년)</label>
+                        <label><input type="checkbox" name="education" value="대학원 석사졸업" data-display="대학원 석사졸업"> 대학원 석사졸업</label>
+                        <label><input type="checkbox" name="education" value="대학원 박사졸업" data-display="대학원 박사졸업"> 대학원 박사졸업</label>
+                        <label><input type="checkbox" name="education" value="고등학교 졸업" data-display="고등학교 졸업"> 고등학교 졸업</label>
                     </div>
                 </div>
 
@@ -102,18 +102,41 @@
                 </div>
             </div>
 
-            <div id="searchJobGroup">
-                <ul id="divSelectedCon">
-
-                </ul>
+            <!-- 선택된 필터들 표시 영역 -->
+            <div id="selectedFilters">
+                <!-- 직군·직무 -->
+                <div id="searchJobGroup">
+                    <div class="filter-section-title">직군·직무:</div>
+                    <ul id="divSelectedCon">
+                        <!-- 선택된 직군·직무가 여기에 표시됩니다 -->
+                    </ul>
+                </div>
+                
+                <!-- 경력 -->
+                <div id="selectedCareer">
+                    <div class="filter-section-title">경력:</div>
+                    <ul id="divSelectedCareer">
+                        <!-- 선택된 경력이 여기에 표시됩니다 -->
+                    </ul>
+                </div>
+                
+                <!-- 학력 -->
+                <div id="selectedEducation">
+                    <div class="filter-section-title">학력:</div>
+                    <ul id="divSelectedEducation">
+                        <!-- 선택된 학력이 여기에 표시됩니다 -->
+                    </ul>
+                </div>
+                
+                <!-- 전문분야 -->
+                <div id="selectedSkills">
+                    <div class="filter-section-title">전문분야:</div>
+                    <ul id="divSelectedSkills">
+                        <!-- 선택된 전문분야가 여기에 표시됩니다 -->
+                    </ul>
+                </div>
             </div>
 
-
-
-            <label>경력 : <span id="2">1~3년</span></label>
-            <label>학력 : <span id="ㅇ">대학교 졸업(4년)</span></label>
-            <label>전문 : <span id="ㄹ">설문조사</span></label>
-            <label>스킬 선택 (<span id="skill-count">0</span>/3)</label>
         </div>
 
         <!-- 채용공고 리스트 -->
@@ -212,6 +235,7 @@
 
 <%-- 이후 js에서 처리  --%>
 <script>
+
     const userType = '${userType}';
 
     const resumeList =

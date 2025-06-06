@@ -21,7 +21,7 @@ import com.joblessfriend.jobfinder.jobGroup.domain.JobGroupVo;
 import com.joblessfriend.jobfinder.util.Pagination;
 import com.joblessfriend.jobfinder.util.SearchVo;
 
-@RequestMapping("/admin/job/job")
+@RequestMapping("/admin/job/singleJob")
 @Controller
 public class AdminJobController {
     
