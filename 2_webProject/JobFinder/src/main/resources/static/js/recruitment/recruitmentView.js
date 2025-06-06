@@ -472,6 +472,9 @@ $(document).on('click', '.apply-btn', function () {
                         title: '사전질문 포함',
                         html: `<b>${questionList.length}개의 사전질문</b>이 등록된 공고입니다.<br>이력서 선택 후 답변을 입력해주세요.`,
                         confirmButtonText: '이력서 선택으로 이동',
+						customClass: {
+							confirmButton: "swalConfirmBtn",
+						},
                     }).then(() => {
                         showResumeSelectModal(jobPostId);
                     });
@@ -636,7 +639,11 @@ function applyResumeAjax(resumeId, jobPostId) {
             html: `답변을 작성하지 않아도 지원이 가능하지만,<br><strong>정말 그대로 지원하시겠습니까?</strong>`,
             showDenyButton: true,
             confirmButtonText: '지원하기',
-            denyButtonText: '답변하러 가기'
+            denyButtonText: '답변하러 가기',
+			customClass: {
+				confirmButton: "swalConfirmBtn",
+				denyButton: "swalDenyBtn",
+			},
         }).then(result => {
             if (result.isConfirmed) {
                 sendApplyAjax(resumeId, jobPostId, answerList);
@@ -661,7 +668,12 @@ function applyResumeAjax(resumeId, jobPostId) {
             html: `총 ${totalQuestions}개 중 ${answeredCount}개만 답변했습니다.<br>계속 진행하시겠습니까?`,
             showDenyButton: true,
             confirmButtonText: '지원하기',
-            denyButtonText: '답변하러 가기'
+            denyButtonText: '답변하러 가기',
+			customClass: {
+				confirmButton: "swalConfirmBtn",
+				denyButton: "swalDenyBtn",
+			},
+			
         }).then(result => {
             if (result.isConfirmed) {
                 sendApplyAjax(resumeId, jobPostId, answerList);

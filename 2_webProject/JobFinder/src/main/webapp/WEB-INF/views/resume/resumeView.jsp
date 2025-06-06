@@ -15,6 +15,17 @@
   	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   	<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ko.js"></script>
   	<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
+  	
+  	<style type="text/css">
+  	.swalConfirmBtn {
+		background: #F69800;
+		color: white;
+	}
+	.swalConfirmBtn:hover {
+		background-color: rgb(227, 142, 0);
+	}
+  	</style>
+  	
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
