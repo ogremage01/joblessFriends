@@ -235,19 +235,27 @@
 
 <%-- 이후 js에서 처리  --%>
 <script>
-    var resumeList = [];
-    <c:if test="${not empty resumeList}">
-        resumeList = [
-            <c:forEach var="r" items="${resumeList}" varStatus="i">
-            {
-                resumeId: '${r.resumeId}',
-                title: '${r.title}',
-                modifiedAt: '<fmt:formatDate value="${r.modifyDate}" pattern="MM/dd(E)" />',
-                matchScore: ${r.matchScore}
-            }<c:if test="${!i.last}">,</c:if>
-            </c:forEach>
-        ];
-    </c:if>
+
+    const userType = '${userType}';
+
+    const resumeList =
+            <c:choose>
+            <c:when test="${not empty resumeList}">
+            [
+                <c:forEach var="r" items="${resumeList}" varStatus="i">
+                {
+                    resumeId: '${r.resumeId}',
+                    title: '${r.title}',
+                    modifiedAt: '<fmt:formatDate value="${r.modifyDate}" pattern="MM/dd(E)" />',
+                    matchScore: ${r.matchScore}
+                }<c:if test="${!i.last}">,</c:if>
+                </c:forEach>
+            ]
+                </c:when>
+                <c:otherwise>
+                []
+        </c:otherwise>
+        </c:choose>;
 </script>
 
 

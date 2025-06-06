@@ -57,17 +57,30 @@
                             </div>
                         </div>
                     
-                        <div class="row mb-3">
-                            <label for="password" class="col-sm-3 col-form-label text-end fw-bold">비밀번호</label>
-                            <div class="col-sm-9">
-                                <input type="password" id="password" name="password" class="form-control" placeholder="변경할 비밀번호를 입력하세요">
+
+
+                        
+                            <div class="row mb-3">
+                                <label for="password" class="col-sm-3 col-form-label text-end fw-bold">비밀번호</label>
+                                <div class="col-sm-9">
+                                    <input type="password" id="password" name="password" class="form-control" placeholder="변경할 비밀번호를 입력하세요" onblur="sameCheckPwd()">
+                                </div>
                             </div>
+                            
+                            <div class="row mb-3">
+                                <label for="passwordCheck" class="col-sm-3 col-form-label text-end fw-bold">비밀번호 확인</label>
+                                <div class="col-sm-9">
+                                    <input type="password" id="passwordCheck" name="passwordCheck" class="form-control" placeholder="비밀번호를 다시 입력하세요" onblur="sameCheckPwd();">
+                                    <div id="pwdCheckStatus" class="valiCheckText form-text text-danger"></div>
+                                </div>
+
                         </div>
                     
                         <div class="row mb-3">
                             <label for="nickname" class="col-sm-3 col-form-label text-end fw-bold">닉네임</label>
                             <div class="col-sm-9">
                                 <input id="nickname" name="nickname" class="form-control" value="${memberVo.nickname}">
+
                             </div>
                         </div>
                     
@@ -99,7 +112,7 @@
                             <label for="provider" class="col-sm-3 col-form-label text-end fw-bold">가입 유형</label>
                             <div class="col-sm-9">
                                 <input id="provider" name="provider" class="form-control-plaintext" value="${memberVo.provider}" readonly>
-                            </div>
+
                         </div>
                     
                         <div class="row mt-4">
@@ -116,6 +129,7 @@
                                 <a href="/admin/member/individual?page=${param.page}&keyword=${param.keyword}" class="back-btn">
                                     <i class="bi bi-list"></i> 목록보기
                                 </a>
+
                             </div>
                         </div>
                     </form>

@@ -158,11 +158,16 @@
             jp.work_hours AS workHours,
             jp.template_type AS templateType,
             jp.job_img as jobImg,
-            jp.IS_CONTINUOUS AS isContinuous
+            jp.MAX_APPLICANTS as maxApplicants,
+            rm.resume_count as isContinuous
         FROM JOB_POST jp
                  JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
-                 JOIN JOB j ON jp.job_id = j.job_id
-        WHERE jp.job_post_id = #{jobPostId}
+                 JOIN JOB j ON jp.job_id = j.job_id LEFT JOIN (
+            SELECT job_post_id, COUNT(*) AS resume_count
+            FROM resume_manage
+            GROUP BY job_post_id
+        ) rm ON jp.job_post_id = rm.job_post_id
+        WHERE jp.job_post_id = #{jobpostId}
 
     </select>
 <!--    복지리스트-->

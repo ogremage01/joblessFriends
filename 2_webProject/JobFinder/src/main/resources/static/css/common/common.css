@@ -17,6 +17,7 @@
  		width: 1210px;
 		margin: auto;
 		margin-top: 30px;
+		min-height: 500px;
 	}
 	
 	/* 유효성검사 토스트 팝업 */
@@ -59,3 +60,68 @@
 	.swalCancelBtn:hover {
 		background-color: rgb(233, 233, 233);
 	}
+	
+	.swalDenyBtn {
+		border: 1px solid #F69800;
+		background-color: white;
+		color: #F69800;
+	}
+	.swalDenyBtn:hover {
+		background-color: #f7f7f7;
+	}
+	
+	/* 	지원상태변경 */
+	
+	.applyStatus-apply {
+	    background: #ffc00e;
+	}
+	.applyStatus-apply:hover {
+	    background: #fcb001;
+	}
+	
+	
+	/* 	스타일 1 */
+	.applyStatus-documentPass {
+	    background: #ff9900;
+	}
+
+	.applyStatus-documentPass:hover {
+	    background: #ee8e00;
+	}
+	
+	.applyStatus-finalPass {
+	    background: #ed6e00;
+	}
+	
+	.applyStatus-finalPass:hover {
+	    background: #d06300;
+	}
+	
+	.applyStatus-fail {
+	    background: #6E7881;
+	}
+	
+	/* 	스타일 2 */
+/* 	.applyStatus-documentPass { */
+/* 	    background: #58b1db; */
+/* 	} */
+
+/* 	.applyStatus-documentPass:hover { */
+/* 	    background: #44a7d7; */
+/* 	} */
+	
+/* 	.applyStatus-finalPass { */
+/* 	    background: #00b358; */
+/* 	} */
+	
+/* 	.applyStatus-finalPass:hover { */
+/* 	    background: #009f50; */
+/* 	} */
+	
+/* 	.applyStatus-fail { */
+/* 	    background: orangered; */
+/* 	} */
+/* 	.applyStatus-fail:hover { */
+/* 	    background: #df3e00; */
+/* 	} */
+	

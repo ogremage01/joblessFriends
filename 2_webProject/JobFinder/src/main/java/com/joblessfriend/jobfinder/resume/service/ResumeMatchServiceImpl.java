@@ -153,6 +153,10 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
         int careerAll = 0;
         int careerJobGroup = 0;
         int careerJob = 0;
+        
+        int careerJobYear =0;
+        
+        int careerSize = 0;
 
         int recJobGroupId = recruitmentVo.getJobGroupId();
         int recJobId = recruitmentVo.getJobId();
@@ -185,22 +189,32 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
                     } else {
                         careerAll += careerMonth;
                     }
+                    
+                    careerSize++;
                 }	
-            }
+            
+            	careerJobYear = (int) Math.floor(careerJob / 12);
+                careerScore += (int) Math.floor(careerAll / 12) * 1;
+                careerScore += (int) Math.floor(careerJobGroup / 12) * 3;
+                careerScore += selectCareerGradeScore(careerJobYear);
         	
+        	}
 	
-        int careerJobYear = (int) Math.floor(careerJob / 12);
-        careerScore += (int) Math.floor(careerAll / 12) * 1;
-        careerScore += (int) Math.floor(careerJobGroup / 12) * 3;
-        careerScore += selectCareerGradeScore(careerJobYear);
-        
-
         careerScore = Math.min(careerScore, careerTotalScore);
         careerScore = Math.max(careerScore, 0);
+        
+        
+        double careerEvgYear = 0.0;
 
+        if(careerEvgYear < 1 && careerSize != 0) {
+        	careerEvgYear = (Math.floor((((careerJob + careerJobGroup + careerAll) / 12.0) / resumeCareerList.size()) * 10.0)) / 10.0;
+        	careerScore = (int) Math.floor(careerScore * 0.85);
+        }
+        
         System.out.println("▶ 스킬 점수 = " + skillScore);
         System.out.println("▶ 학력 점수 = " + schoolScore);
         System.out.println("▶ 경력 점수 = " + careerScore);
+        System.out.println("▶ 평균 근속 = " + careerEvgYear + "년");
         System.out.println("▶ 총점 = " + (skillScore + schoolScore + careerScore));
         } catch (Exception e) {
 			// TODO: handle exception

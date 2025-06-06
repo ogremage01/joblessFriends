@@ -87,29 +87,30 @@
                                 <input id="email" name="email" type="email" class="form-control" value="${companyVo.email}">
                             </div>
                         </div>
-                    
-                        <div class="row mb-3">
-                            <label for="password" class="col-sm-3 col-form-label text-end fw-bold">비밀번호</label>
-                            <div class="col-sm-9">
-                                <input type="password" id="password" name="password" class="form-control" placeholder="변경할 비밀번호를 입력하세요" onblur="valiCheckPwd();" onkeyup="sameCheckPwd();">
-                                <div id="pwdStatus" class="valiCheckText form-text text-danger"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="row mb-3">
-                            <label for="passwordCheck" class="col-sm-3 col-form-label text-end fw-bold">비밀번호 확인</label>
-                            <div class="col-sm-9">
-                                <input type="password" id="passwordCheck" name="passwordCheck" class="form-control" placeholder="비밀번호를 다시 입력하세요" onblur="sameCheckPwd();">
-                                <div id="pwdStatus2" class="valiCheckText form-text text-danger"></div>
-                            </div>
-                        </div>
-                    
+
                         <div class="row mb-3">
                             <label for="brn" class="col-sm-3 col-form-label text-end fw-bold">사업자번호</label>
                             <div class="col-sm-9">
                                 <input id="brn" name="brn" class="form-control" value="${companyVo.brn}">
                             </div>
-                        </div>
+
+                        
+                            <div class="row mb-3">
+                                <label for="password" class="col-sm-3 col-form-label text-end fw-bold">비밀번호</label>
+                                <div class="col-sm-9">
+                                    <input type="password" id="password" name="password" class="form-control" placeholder="변경할 비밀번호를 입력하세요" onblur="sameCheckPwd();">
+                                    <div id="pwdStatus" class="valiCheckText form-text text-danger"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <label for="passwordCheck" class="col-sm-3 col-form-label text-end fw-bold">비밀번호 확인</label>
+                                <div class="col-sm-9">
+                                    <input type="password" id="passwordCheck" name="passwordCheck" class="form-control" placeholder="비밀번호를 다시 입력하세요" onblur="sameCheckPwd();">
+                                    <div id="pwdCheckStatus" class="valiCheckText form-text text-danger"></div>
+                                </div>
+
+                             </div>
                     
                         <div class="row mb-3">
                             <label for="representative" class="col-sm-3 col-form-label text-end fw-bold">담당자</label>
@@ -122,6 +123,7 @@
                             <label for="tel" class="col-sm-3 col-form-label text-end fw-bold">전화번호</label>
                             <div class="col-sm-9">
                                 <input id="tel" name="tel" class="form-control" value="${companyVo.tel}">
+
                             </div>
                         </div>
                     
@@ -133,6 +135,17 @@
                                     <button type="button" class="btn btn-outline-secondary" onclick="sample6_execDaumPostcode()">
                                         <i class="bi bi-search"></i> 우편번호 찾기
                                     </button>
+
+                                    <button type="reset" class="btnStyle" onclick="resetFun()">
+                                        <i class="bi bi-arrow-clockwise"></i> 초기화
+                                    </button>
+                                    <button type="button" class="delete-btn" id="delete">
+                                        <i class="bi bi-building-x"></i> 탈퇴
+                                    </button>
+                                    <a href="/admin/member/company" class="back-btn">
+                                        <i class="bi bi-list"></i> 목록보기
+                                    </a>
+
                                 </div>
                             </div>
                         </div>

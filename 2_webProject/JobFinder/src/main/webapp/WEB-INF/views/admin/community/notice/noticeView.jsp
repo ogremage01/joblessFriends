@@ -148,5 +148,12 @@
 </form>
 
 <script src="/js/admin/notice/noticeManagement.js"></script>
+
 </body>
+<script type="text/javascript">
+window.addEventListener('DOMContentLoaded', function () {
+	// 현재 URL을 sessionStorage에 저장
+	sessionStorage.setItem("prevAdminNoticeListUrl", location.href);
+});
+</script>
 </html>

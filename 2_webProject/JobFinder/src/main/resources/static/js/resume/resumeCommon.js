@@ -963,7 +963,9 @@ function validateResume() {
 			title: '입력 정보를 확인해주세요',
 			html: '입력정보에 오류가 있습니다. 확인 후 다시 시도해주세요.',
 			confirmButtonText: '확인',
-			confirmButtonColor: '#F69800'
+			customClass: {
+				confirmButton: "swalConfirmBtn",
+			},
 		});
 	}
 

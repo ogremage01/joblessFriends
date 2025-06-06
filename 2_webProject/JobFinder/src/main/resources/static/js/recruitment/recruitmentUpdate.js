@@ -26,7 +26,11 @@ $(document).ready(function () {
                 title: '이미지 미리보기',
                 imageUrl: e.target.result,
                 imageAlt: '대표 이미지',
-                confirmButtonText: '닫기'
+                confirmButtonText: '닫기',
+				customClass: {
+					confirmButton: "swalConfirmBtn",
+				},
+				
             });
         };
         reader.readAsDataURL(file);
@@ -266,8 +270,8 @@ $('#btnAddQuestion').on('click', function () {
         confirmButtonText: '질문 수정',
         cancelButtonText: '취소',
         customClass: {
-            confirmButton: 'swal2-confirm swal2-styled swal2-blue-button',
-            cancelButton: 'swal2-cancel swal2-styled swal2-gray-button'
+            confirmButton: 'swalConfirmBtn',
+            cancelButton: 'swalCancelBtn'
         },
         preConfirm: () => {
             return {
@@ -528,7 +532,11 @@ $('#updateForm').on('submit', function (e) {
         icon: 'question',
         showCancelButton: true,
         confirmButtonText: '확인',
-        cancelButtonText: '취소'
+        cancelButtonText: '취소',
+		customClass: {
+			confirmButton: "swalConfirmBtn",
+			cancelButton: "swalCancelBtn",
+		},
     }).then((result) => {
         if (result.isConfirmed) {
             e.target.submit();
@@ -563,7 +571,12 @@ $(document).ready(function () {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: '확인',
-            cancelButtonText: '닫기'
+            cancelButtonText: '닫기',
+			customClass: {
+				confirmButton: "swalConfirmBtn",
+				cancelButton: "swalCancelBtn",
+			},
+			
         }).then((result) => {
             if (result.isConfirmed) {
                 window.location.href = "/company/recruitment";

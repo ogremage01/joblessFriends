@@ -481,12 +481,16 @@ $(document).on('click', '.page-btn', function () {
 
 
 
-
 function renderJobList(recruitmentList, skillMap) {
-    $('#jobListings').empty(); // 기존 리스트 지우기
+    $('#jobListings').empty();
 
-    // 필터링된 공고를 렌더링
     recruitmentList.forEach(function (item) {
+        const isClosed = item.isContinuous !== 0;
+
+        const applyBtnHtml = isClosed
+            ? `<button class="apply-btn closed" type="button" data-status="closed" disabled style="background: #ccc; cursor: not-allowed; ">마감됨</button>`
+            : `<button class="apply-btn" type="button" data-status="open">지원하기</button>`;
+
         const html = `
             <div class="job" data-jobpostid="${item.jobPostId}" data-companyid="${item.companyId}">
               <div class="company-name">${item.companyName}</div>
@@ -506,14 +510,15 @@ function renderJobList(recruitmentList, skillMap) {
                 </div>
               </div>
               <div class="job-action">
-                <button class="apply-btn" type="button">지원하기</button>
+                ${applyBtnHtml}
                 <div class="deadline">~${formatDateWithDay(item.endDate)}</div>
               </div>
             </div>
         `;
-        $('#jobListings').append(html); // 필터링된 공고 리스트에 추가
+        $('#jobListings').append(html);
     });
 }
+
 
 
 $('#btnSearchFiltered').on('click', function () {
@@ -576,6 +581,11 @@ function renderPagination(pagination) {
 
 $(document).on('click', '.apply-btn', function () {
     console.log(resumeList);
+    if (userType === 'company') {
+        Swal.fire({ title: '기업회원은 지원 불가' });
+        return;
+    }
+
     if (!resumeList || resumeList.length === 0) {
         Swal.fire({
             title:'📭 등록된 이력서가 없습니다.',
@@ -604,6 +614,9 @@ $(document).on('click', '.apply-btn', function () {
                         title: '사전질문 포함',
                         html: `<b>${questionList.length}개의 사전질문</b>이 등록된 공고입니다.<br>이력서 선택 후 답변을 입력해주세요.`,
                         confirmButtonText: '이력서 선택으로 이동',
+						customClass: {
+							confirmButton: "swalConfirmBtn",
+						},
                     }).then(() => {
                         showResumeSelectModal(jobPostId);
                     });
@@ -768,7 +781,11 @@ function applyResumeAjax(resumeId, jobPostId) {
             html: `답변을 작성하지 않아도 지원이 가능하지만,<br><strong>정말 그대로 지원하시겠습니까?</strong>`,
             showDenyButton: true,
             confirmButtonText: '지원하기',
-            denyButtonText: '답변하러 가기'
+            denyButtonText: '답변하러 가기',
+			customClass: {
+				confirmButton: "swalConfirmBtn",
+				denyButton: "swalDenyBtn",
+			},
         }).then(result => {
             if (result.isConfirmed) {
                 sendApplyAjax(resumeId, jobPostId, answerList);
@@ -793,7 +810,12 @@ function applyResumeAjax(resumeId, jobPostId) {
             html: `총 ${totalQuestions}개 중 ${answeredCount}개만 답변했습니다.<br>계속 진행하시겠습니까?`,
             showDenyButton: true,
             confirmButtonText: '지원하기',
-            denyButtonText: '답변하러 가기'
+            denyButtonText: '답변하러 가기',
+			customClass: {
+				confirmButton: "swalConfirmBtn",
+				denyButton: "swalDenyBtn",
+			},
+			
         }).then(result => {
             if (result.isConfirmed) {
                 sendApplyAjax(resumeId, jobPostId, answerList);
