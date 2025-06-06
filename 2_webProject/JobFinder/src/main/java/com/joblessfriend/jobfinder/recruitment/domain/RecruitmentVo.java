@@ -33,7 +33,8 @@ public class RecruitmentVo {
     private String jobName;         // 직업이름
     private String jobGroupName;    // 직군이름
     private int isContinuous;   //마감
-    private Integer maxApplicants;  //지원자 수
+    private Integer maxApplicants;  //최대 지원자 수
+    private int applicantCount; // 지원자 수
     //상시채용건 추가필요//
 
     // 🔽 추가: 사전질문 리스트

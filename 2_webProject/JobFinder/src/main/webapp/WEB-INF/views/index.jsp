@@ -97,6 +97,7 @@
 							<div class="jobInfoItem" onclick="location.href='Recruitment/detail?companyId=${rec.companyId}&jobPostId=${rec.jobPostId}'">
 								<div class="jobImg">
 									<img alt="공고 이미지" src="${rec.jobImg}"/>
+
 									<div class="jobOverImage">
 										<div class="jobDeadline">
 											<span>
