@@ -257,7 +257,7 @@
           </a>
         </li>
         <li>
-          <a href="/admin/job/job">
+          <a href="/admin/job/singleJob">
             <i class="bi bi-gear"></i> 직무
           </a>
         </li>
