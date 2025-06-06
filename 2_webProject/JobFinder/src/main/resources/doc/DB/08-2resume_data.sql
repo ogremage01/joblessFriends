@@ -260,170 +260,170 @@ INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 1, '멀티캠퍼스', '백엔드 개발자 양성과정', TO_DATE('2022-05-01', 'YYYY-MM-DD'), TO_DATE('2022-10-31', 'YYYY-MM-DD'),
-    'Java, Spring, 데이터베이스 등 백엔드 개발 실무 교육'
-);
+           EDU_ID_SEQ.NEXTVAL, 1, '멀티캠퍼스', '백엔드 개발자 양성과정', TO_DATE('2022-05-01', 'YYYY-MM-DD'), TO_DATE('2022-10-31', 'YYYY-MM-DD'),
+           'Java, Spring, 데이터베이스 등 백엔드 개발 실무 교육'
+       );
 
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 1, '패스트캠퍼스', '클라우드 인프라 실습', TO_DATE('2023-01-10', 'YYYY-MM-DD'), TO_DATE('2023-03-31', 'YYYY-MM-DD'),
-    'AWS, Docker, Kubernetes 등 클라우드 환경 구축 실습'
-);
+           EDU_ID_SEQ.NEXTVAL, 1, '패스트캠퍼스', '클라우드 인프라 실습', TO_DATE('2023-01-10', 'YYYY-MM-DD'), TO_DATE('2023-03-31', 'YYYY-MM-DD'),
+           'AWS, Docker, Kubernetes 등 클라우드 환경 구축 실습'
+       );
 
 -- RESUME_ID: 2 (웹개발자, JOB_GROUP_ID: 6)
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 2, '패스트캠퍼스', '프론트엔드 개발자 과정', TO_DATE('2021-07-01', 'YYYY-MM-DD'), TO_DATE('2021-12-31', 'YYYY-MM-DD'),
-    'HTML, CSS, JavaScript, React 등 프론트엔드 개발 실무 교육'
-);
+           EDU_ID_SEQ.NEXTVAL, 2, '패스트캠퍼스', '프론트엔드 개발자 과정', TO_DATE('2021-07-01', 'YYYY-MM-DD'), TO_DATE('2021-12-31', 'YYYY-MM-DD'),
+           'HTML, CSS, JavaScript, React 등 프론트엔드 개발 실무 교육'
+       );
 
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 2, '코드스테이츠', '웹 풀스택 부트캠프', TO_DATE('2022-04-01', 'YYYY-MM-DD'), TO_DATE('2022-09-30', 'YYYY-MM-DD'),
-    '프론트엔드/백엔드 통합 개발 실무 교육'
-);
+           EDU_ID_SEQ.NEXTVAL, 2, '코드스테이츠', '웹 풀스택 부트캠프', TO_DATE('2022-04-01', 'YYYY-MM-DD'), TO_DATE('2022-09-30', 'YYYY-MM-DD'),
+           '프론트엔드/백엔드 통합 개발 실무 교육'
+       );
 
 -- RESUME_ID: 3 (가구 디자이너, JOB_GROUP_ID: 7)
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 3, '한국디자인진흥원', '가구디자인 전문가 과정', TO_DATE('2020-06-01', 'YYYY-MM-DD'), TO_DATE('2020-11-30', 'YYYY-MM-DD'),
-    '가구 설계, 목공, 디자인 소프트웨어 활용 교육'
-);
+           EDU_ID_SEQ.NEXTVAL, 3, '한국디자인진흥원', '가구디자인 전문가 과정', TO_DATE('2020-06-01', 'YYYY-MM-DD'), TO_DATE('2020-11-30', 'YYYY-MM-DD'),
+           '가구 설계, 목공, 디자인 소프트웨어 활용 교육'
+       );
 
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 3, '디자인스쿨', '3D 모델링 워크샵', TO_DATE('2021-03-01', 'YYYY-MM-DD'), TO_DATE('2021-05-31', 'YYYY-MM-DD'),
-    '3D 모델링, 렌더링, 시뮬레이션 실습'
-);
+           EDU_ID_SEQ.NEXTVAL, 3, '디자인스쿨', '3D 모델링 워크샵', TO_DATE('2021-03-01', 'YYYY-MM-DD'), TO_DATE('2021-05-31', 'YYYY-MM-DD'),
+           '3D 모델링, 렌더링, 시뮬레이션 실습'
+       );
 
 -- RESUME_ID: 4 (광고기획자, JOB_GROUP_ID: 1)
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 4, '광고기획 아카데미', '광고기획 전문가 과정', TO_DATE('2022-04-01', 'YYYY-MM-DD'), TO_DATE('2022-09-30', 'YYYY-MM-DD'),
-    '광고기획, 크리에이티브 전략, 미디어 플래닝 실무 교육'
-);
+           EDU_ID_SEQ.NEXTVAL, 4, '광고기획 아카데미', '광고기획 전문가 과정', TO_DATE('2022-04-01', 'YYYY-MM-DD'), TO_DATE('2022-09-30', 'YYYY-MM-DD'),
+           '광고기획, 크리에이티브 전략, 미디어 플래닝 실무 교육'
+       );
 
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 4, '마케팅스쿨', '디지털 마케팅 워크숍', TO_DATE('2023-02-01', 'YYYY-MM-DD'), TO_DATE('2023-04-30', 'YYYY-MM-DD'),
-    'SNS, 검색광고, 데이터 분석 실습'
-);
+           EDU_ID_SEQ.NEXTVAL, 4, '마케팅스쿨', '디지털 마케팅 워크숍', TO_DATE('2023-02-01', 'YYYY-MM-DD'), TO_DATE('2023-04-30', 'YYYY-MM-DD'),
+           'SNS, 검색광고, 데이터 분석 실습'
+       );
 
 -- RESUME_ID: 5 (글로벌 마케터, JOB_GROUP_ID: 2)
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 5, '글로벌마케팅연구소', '글로벌 마케팅 전문가 과정', TO_DATE('2021-06-01', 'YYYY-MM-DD'), TO_DATE('2021-12-31', 'YYYY-MM-DD'),
-    '글로벌 시장 분석, 브랜드 전략, SNS 마케팅 실무 교육'
-);
+           EDU_ID_SEQ.NEXTVAL, 5, '글로벌마케팅연구소', '글로벌 마케팅 전문가 과정', TO_DATE('2021-06-01', 'YYYY-MM-DD'), TO_DATE('2021-12-31', 'YYYY-MM-DD'),
+           '글로벌 시장 분석, 브랜드 전략, SNS 마케팅 실무 교육'
+       );
 
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 5, '마케팅스쿨', '퍼포먼스 마케팅 워크숍', TO_DATE('2022-07-01', 'YYYY-MM-DD'), TO_DATE('2022-09-30', 'YYYY-MM-DD'),
-    '구글/페이스북 광고, 데이터 분석 실습'
-);
+           EDU_ID_SEQ.NEXTVAL, 5, '마케팅스쿨', '퍼포먼스 마케팅 워크숍', TO_DATE('2022-07-01', 'YYYY-MM-DD'), TO_DATE('2022-09-30', 'YYYY-MM-DD'),
+           '구글/페이스북 광고, 데이터 분석 실습'
+       );
 
 -- RESUME_ID: 6 (마케팅 기획자, JOB_GROUP_ID: 1)
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 6, '마케팅기획 아카데미', '마케팅기획 전문가 과정', TO_DATE('2022-05-01', 'YYYY-MM-DD'), TO_DATE('2022-10-31', 'YYYY-MM-DD'),
-    '마케팅 전략, 데이터 분석, 캠페인 기획 실무 교육'
-);
+           EDU_ID_SEQ.NEXTVAL, 6, '마케팅기획 아카데미', '마케팅기획 전문가 과정', TO_DATE('2022-05-01', 'YYYY-MM-DD'), TO_DATE('2022-10-31', 'YYYY-MM-DD'),
+           '마케팅 전략, 데이터 분석, 캠페인 기획 실무 교육'
+       );
 
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 6, '마케팅스쿨', '브랜드 전략 워크숍', TO_DATE('2023-01-05', 'YYYY-MM-DD'), TO_DATE('2023-03-31', 'YYYY-MM-DD'),
-    '브랜드 포지셔닝, 콘셉트 개발 실습'
-);
+           EDU_ID_SEQ.NEXTVAL, 6, '마케팅스쿨', '브랜드 전략 워크숍', TO_DATE('2023-01-05', 'YYYY-MM-DD'), TO_DATE('2023-03-31', 'YYYY-MM-DD'),
+           '브랜드 포지셔닝, 콘셉트 개발 실습'
+       );
 
 -- RESUME_ID: 7 (웹 개발자, JOB_GROUP_ID: 6)
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 7, '코드스테이츠', '웹 개발자 부트캠프', TO_DATE('2021-07-01', 'YYYY-MM-DD'), TO_DATE('2021-12-31', 'YYYY-MM-DD'),
-    'JavaScript, React, Node.js 등 실무 중심 교육'
-);
+           EDU_ID_SEQ.NEXTVAL, 7, '코드스테이츠', '웹 개발자 부트캠프', TO_DATE('2021-07-01', 'YYYY-MM-DD'), TO_DATE('2021-12-31', 'YYYY-MM-DD'),
+           'JavaScript, React, Node.js 등 실무 중심 교육'
+       );
 
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 7, '멀티캠퍼스', '데이터베이스 실습', TO_DATE('2022-04-01', 'YYYY-MM-DD'), TO_DATE('2022-06-30', 'YYYY-MM-DD'),
-    'SQL, NoSQL, 데이터 모델링 실습'
-);
+           EDU_ID_SEQ.NEXTVAL, 7, '멀티캠퍼스', '데이터베이스 실습', TO_DATE('2022-04-01', 'YYYY-MM-DD'), TO_DATE('2022-06-30', 'YYYY-MM-DD'),
+           'SQL, NoSQL, 데이터 모델링 실습'
+       );
 
 -- RESUME_ID: 8 (모바일 디자이너, JOB_GROUP_ID: 7)
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 8, '앱디자인 아카데미', '모바일 디자이너 과정', TO_DATE('2022-04-01', 'YYYY-MM-DD'), TO_DATE('2022-09-30', 'YYYY-MM-DD'),
-    'Figma, Adobe XD, 모바일 앱 프로토타이핑 실무 교육'
-);
+           EDU_ID_SEQ.NEXTVAL, 8, '앱디자인 아카데미', '모바일 디자이너 과정', TO_DATE('2022-04-01', 'YYYY-MM-DD'), TO_DATE('2022-09-30', 'YYYY-MM-DD'),
+           'Figma, Adobe XD, 모바일 앱 프로토타이핑 실무 교육'
+       );
 
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 8, '디자인스쿨', 'UI/UX 워크숍', TO_DATE('2023-01-10', 'YYYY-MM-DD'), TO_DATE('2023-03-31', 'YYYY-MM-DD'),
-    '사용자 경험 설계, 인터랙션 디자인 실습'
-);
+           EDU_ID_SEQ.NEXTVAL, 8, '디자인스쿨', 'UI/UX 워크숍', TO_DATE('2023-01-10', 'YYYY-MM-DD'), TO_DATE('2023-03-31', 'YYYY-MM-DD'),
+           '사용자 경험 설계, 인터랙션 디자인 실습'
+       );
 
 -- RESUME_ID: 9 (모바일 마케터, JOB_GROUP_ID: 2)
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 9, '모바일마케팅 아카데미', '모바일 마케팅 전문가 과정', TO_DATE('2021-06-01', 'YYYY-MM-DD'), TO_DATE('2021-12-31', 'YYYY-MM-DD'),
-    '모바일 광고, 퍼포먼스 마케팅, 데이터 분석 실무 교육'
-);
+           EDU_ID_SEQ.NEXTVAL, 9, '모바일마케팅 아카데미', '모바일 마케팅 전문가 과정', TO_DATE('2021-06-01', 'YYYY-MM-DD'), TO_DATE('2021-12-31', 'YYYY-MM-DD'),
+           '모바일 광고, 퍼포먼스 마케팅, 데이터 분석 실무 교육'
+       );
 
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 9, '마케팅스쿨', '모바일 앱 마케팅 워크숍', TO_DATE('2022-07-01', 'YYYY-MM-DD'), TO_DATE('2022-09-30', 'YYYY-MM-DD'),
-    '앱 광고, ASO, 유저 유입 전략 실습'
-);
+           EDU_ID_SEQ.NEXTVAL, 9, '마케팅스쿨', '모바일 앱 마케팅 워크숍', TO_DATE('2022-07-01', 'YYYY-MM-DD'), TO_DATE('2022-09-30', 'YYYY-MM-DD'),
+           '앱 광고, ASO, 유저 유입 전략 실습'
+       );
 
 -- RESUME_ID: 10 (브랜드 기획자, JOB_GROUP_ID: 1)
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 10, '브랜드기획 아카데미', '브랜드기획 전문가 과정', TO_DATE('2022-05-01', 'YYYY-MM-DD'), TO_DATE('2022-10-31', 'YYYY-MM-DD'),
-    '브랜드 전략, 콘셉트 개발, 마케팅 플래닝 실무 교육'
-);
+           EDU_ID_SEQ.NEXTVAL, 10, '브랜드기획 아카데미', '브랜드기획 전문가 과정', TO_DATE('2022-05-01', 'YYYY-MM-DD'), TO_DATE('2022-10-31', 'YYYY-MM-DD'),
+           '브랜드 전략, 콘셉트 개발, 마케팅 플래닝 실무 교육'
+       );
 
 INSERT INTO EDUCATION (
     EDU_ID, RESUME_ID, EDU_INSTITUTION, EDU_NAME, START_DATE, END_DATE, CONTENT
 )
 VALUES (
-    EDU_ID_SEQ.NEXTVAL, 10, '마케팅스쿨', '브랜드 커뮤니케이션 워크숍', TO_DATE('2023-01-05', 'YYYY-MM-DD'), TO_DATE('2023-03-31', 'YYYY-MM-DD'),
-    '브랜드 메시지, 콘텐츠 기획, 커뮤니케이션 전략 실습'
-);
+           EDU_ID_SEQ.NEXTVAL, 10, '마케팅스쿨', '브랜드 커뮤니케이션 워크숍', TO_DATE('2023-01-05', 'YYYY-MM-DD'), TO_DATE('2023-03-31', 'YYYY-MM-DD'),
+           '브랜드 메시지, 콘텐츠 기획, 커뮤니케이션 전략 실습'
+       );
 
 --학력
 -- RESUME_ID: 1 (백엔드/서버 개발자, JOB_GROUP_ID: 6)
@@ -431,150 +431,150 @@ INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 1, '고등학교', '서울과학고등학교', TO_DATE('2018-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 1, '고등학교', '서울과학고등학교', TO_DATE('2018-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 1, 'univ4', '서울대학교', TO_DATE('2022-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 1, 'univ4', '서울대학교', TO_DATE('2022-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 -- RESUME_ID: 2 (웹개발자, JOB_GROUP_ID: 6)
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 2, '고등학교', '경기과학고등학교', TO_DATE('2017-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 2, '고등학교', '경기과학고등학교', TO_DATE('2017-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 2, 'univ4', '연세대학교', TO_DATE('2021-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 2, 'univ4', '연세대학교', TO_DATE('2021-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 -- RESUME_ID: 3 (가구 디자이너, JOB_GROUP_ID: 7)
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 3, '고등학교', '예술고등학교', TO_DATE('2016-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 3, '고등학교', '예술고등학교', TO_DATE('2016-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 3, 'univ4', '홍익대학교', TO_DATE('2020-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 3, 'univ4', '홍익대학교', TO_DATE('2020-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 -- RESUME_ID: 4 (광고기획자, JOB_GROUP_ID: 1)
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 4, '고등학교', '서울고등학교', TO_DATE('2018-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 4, '고등학교', '서울고등학교', TO_DATE('2018-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 4, 'univ4', '고려대학교', TO_DATE('2022-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 4, 'univ4', '고려대학교', TO_DATE('2022-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 -- RESUME_ID: 5 (글로벌 마케터, JOB_GROUP_ID: 2)
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 5, '고등학교', '한국외국어고등학교', TO_DATE('2017-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 5, '고등학교', '한국외국어고등학교', TO_DATE('2017-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 5, 'univ4', '이화여자대학교', TO_DATE('2021-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 5, 'univ4', '이화여자대학교', TO_DATE('2021-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 -- RESUME_ID: 6 (마케팅 기획자, JOB_GROUP_ID: 1)
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 6, '고등학교', '서울국제고등학교', TO_DATE('2018-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 6, '고등학교', '서울국제고등학교', TO_DATE('2018-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 6, 'univ4', '서강대학교', TO_DATE('2022-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 6, 'univ4', '서강대학교', TO_DATE('2022-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 -- RESUME_ID: 7 (웹 개발자, JOB_GROUP_ID: 6)
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 7, '고등학교', '경기외국어고등학교', TO_DATE('2017-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 7, '고등학교', '경기외국어고등학교', TO_DATE('2017-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 7, 'univ4', '한양대학교', TO_DATE('2021-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 7, 'univ4', '한양대학교', TO_DATE('2021-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 -- RESUME_ID: 8 (모바일 디자이너, JOB_GROUP_ID: 7)
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 8, '고등학교', '예술고등학교', TO_DATE('2018-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 8, '고등학교', '예술고등학교', TO_DATE('2018-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 8, 'univ4', '성균관대학교', TO_DATE('2022-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 8, 'univ4', '성균관대학교', TO_DATE('2022-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 -- RESUME_ID: 9 (모바일 마케터, JOB_GROUP_ID: 2)
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 9, '고등학교', '한국외국어고등학교', TO_DATE('2017-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 9, '고등학교', '한국외국어고등학교', TO_DATE('2017-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 9, 'univ4', '중앙대학교', TO_DATE('2021-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 9, 'univ4', '중앙대학교', TO_DATE('2021-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 -- RESUME_ID: 10 (브랜드 기획자, JOB_GROUP_ID: 1)
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 10, '고등학교', '서울고등학교', TO_DATE('2018-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 10, '고등학교', '서울고등학교', TO_DATE('2018-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
-    SCHOOL_ID_SEQ.NEXTVAL, 10, 'univ4', '경희대학교', TO_DATE('2022-02-28', 'YYYY-MM-DD'), '졸업'
-);
+           SCHOOL_ID_SEQ.NEXTVAL, 10, 'univ4', '경희대학교', TO_DATE('2022-02-28', 'YYYY-MM-DD'), '졸업'
+       );
 
 --경력
 -- RESUME_ID: 1 (백엔드/서버 개발자, JOB_GROUP_ID: 6)
@@ -582,80 +582,80 @@ INSERT INTO CAREER (
     CAREER_ID, RESUME_ID, COMPANY_NAME, DEPARTMENT_NAME, HIRE_YM, RESIGN_YM, POSITION, JOB_ID, JOB_GROUP_ID, SALARY, DETAIL
 )
 VALUES (
-    CAREER_ID_SEQ.NEXTVAL, 1, '네이버', '클라우드플랫폼개발실', TO_DATE('2022-03-01', 'YYYY-MM-DD'), TO_DATE('2023-05-31', 'YYYY-MM-DD'), '백엔드 개발자', 81, 6, 4800, '서버 개발 및 API 설계, 클라우드 환경 구축'
-);
+           CAREER_ID_SEQ.NEXTVAL, 1, '네이버', '클라우드플랫폼개발실', TO_DATE('2022-03-01', 'YYYY-MM-DD'), TO_DATE('2023-05-31', 'YYYY-MM-DD'), '백엔드 개발자', 81, 6, 4800, '서버 개발 및 API 설계, 클라우드 환경 구축'
+       );
 
 -- RESUME_ID: 2 (웹개발자, JOB_GROUP_ID: 6)
 INSERT INTO CAREER (
     CAREER_ID, RESUME_ID, COMPANY_NAME, DEPARTMENT_NAME, HIRE_YM, RESIGN_YM, POSITION, JOB_ID, JOB_GROUP_ID, SALARY, DETAIL
 )
 VALUES (
-    CAREER_ID_SEQ.NEXTVAL, 2, '카카오', '웹서비스개발팀', TO_DATE('2021-06-01', 'YYYY-MM-DD'), TO_DATE('2023-04-30', 'YYYY-MM-DD'), '웹 개발자', 85, 6, 4600, 'React 기반 프론트엔드 개발, API 연동'
-);
+           CAREER_ID_SEQ.NEXTVAL, 2, '카카오', '웹서비스개발팀', TO_DATE('2021-06-01', 'YYYY-MM-DD'), TO_DATE('2023-04-30', 'YYYY-MM-DD'), '웹 개발자', 85, 6, 4600, 'React 기반 프론트엔드 개발, API 연동'
+       );
 
 -- RESUME_ID: 3 (가구 디자이너, JOB_GROUP_ID: 7)
 INSERT INTO CAREER (
     CAREER_ID, RESUME_ID, COMPANY_NAME, DEPARTMENT_NAME, HIRE_YM, RESIGN_YM, POSITION, JOB_ID, JOB_GROUP_ID, SALARY, DETAIL
 )
 VALUES (
-    CAREER_ID_SEQ.NEXTVAL, 3, '한국가구디자인연구소', '디자인팀', TO_DATE('2020-07-01', 'YYYY-MM-DD'), TO_DATE('2023-06-30', 'YYYY-MM-DD'), '가구 디자이너', 88, 7, 3500, '가구 설계, 3D 모델링, 프로토타입 제작'
-);
+           CAREER_ID_SEQ.NEXTVAL, 3, '한국가구디자인연구소', '디자인팀', TO_DATE('2020-07-01', 'YYYY-MM-DD'), TO_DATE('2023-06-30', 'YYYY-MM-DD'), '가구 디자이너', 88, 7, 3500, '가구 설계, 3D 모델링, 프로토타입 제작'
+       );
 
 -- RESUME_ID: 4 (광고기획자, JOB_GROUP_ID: 1)
 INSERT INTO CAREER (
     CAREER_ID, RESUME_ID, COMPANY_NAME, DEPARTMENT_NAME, HIRE_YM, RESIGN_YM, POSITION, JOB_ID, JOB_GROUP_ID, SALARY, DETAIL
 )
 VALUES (
-    CAREER_ID_SEQ.NEXTVAL, 4, '제일기획', '광고기획팀', TO_DATE('2022-04-01', 'YYYY-MM-DD'), TO_DATE('2023-05-31', 'YYYY-MM-DD'), '광고기획자', 3, 1, 4200, '광고 캠페인 기획, 크리에이티브 전략 수립'
-);
+           CAREER_ID_SEQ.NEXTVAL, 4, '제일기획', '광고기획팀', TO_DATE('2022-04-01', 'YYYY-MM-DD'), TO_DATE('2023-05-31', 'YYYY-MM-DD'), '광고기획자', 3, 1, 4200, '광고 캠페인 기획, 크리에이티브 전략 수립'
+       );
 
 -- RESUME_ID: 5 (글로벌 마케터, JOB_GROUP_ID: 2)
 INSERT INTO CAREER (
     CAREER_ID, RESUME_ID, COMPANY_NAME, DEPARTMENT_NAME, HIRE_YM, RESIGN_YM, POSITION, JOB_ID, JOB_GROUP_ID, SALARY, DETAIL
 )
 VALUES (
-    CAREER_ID_SEQ.NEXTVAL, 5, '삼성전자', '글로벌마케팅팀', TO_DATE('2021-08-01', 'YYYY-MM-DD'), TO_DATE('2023-06-30', 'YYYY-MM-DD'), '글로벌 마케터', 19, 2, 5000, '글로벌 시장 분석, 브랜드 전략 수립, 해외 마케팅 실행'
-);
+           CAREER_ID_SEQ.NEXTVAL, 5, '삼성전자', '글로벌마케팅팀', TO_DATE('2021-08-01', 'YYYY-MM-DD'), TO_DATE('2023-06-30', 'YYYY-MM-DD'), '글로벌 마케터', 19, 2, 5000, '글로벌 시장 분석, 브랜드 전략 수립, 해외 마케팅 실행'
+       );
 
 -- RESUME_ID: 6 (마케팅 기획자, JOB_GROUP_ID: 1)
 INSERT INTO CAREER (
     CAREER_ID, RESUME_ID, COMPANY_NAME, DEPARTMENT_NAME, HIRE_YM, RESIGN_YM, POSITION, JOB_ID, JOB_GROUP_ID, SALARY, DETAIL
 )
 VALUES (
-    CAREER_ID_SEQ.NEXTVAL, 6, '롯데그룹', '마케팅기획팀', TO_DATE('2022-05-01', 'YYYY-MM-DD'), TO_DATE('2023-05-31', 'YYYY-MM-DD'), '마케팅 기획자', 7, 1, 4000, '마케팅 전략 수립, 캠페인 기획, 데이터 분석'
-);
+           CAREER_ID_SEQ.NEXTVAL, 6, '롯데그룹', '마케팅기획팀', TO_DATE('2022-05-01', 'YYYY-MM-DD'), TO_DATE('2023-05-31', 'YYYY-MM-DD'), '마케팅 기획자', 7, 1, 4000, '마케팅 전략 수립, 캠페인 기획, 데이터 분석'
+       );
 
 -- RESUME_ID: 7 (웹 개발자, JOB_GROUP_ID: 6)
 INSERT INTO CAREER (
     CAREER_ID, RESUME_ID, COMPANY_NAME, DEPARTMENT_NAME, HIRE_YM, RESIGN_YM, POSITION, JOB_ID, JOB_GROUP_ID, SALARY, DETAIL
 )
 VALUES (
-    CAREER_ID_SEQ.NEXTVAL, 7, '쿠팡', '웹개발팀', TO_DATE('2021-09-01', 'YYYY-MM-DD'), TO_DATE('2023-06-30', 'YYYY-MM-DD'), '웹 개발자', 85, 6, 4700, '웹 서비스 개발, 프론트엔드/백엔드 통합 개발'
-);
+           CAREER_ID_SEQ.NEXTVAL, 7, '쿠팡', '웹개발팀', TO_DATE('2021-09-01', 'YYYY-MM-DD'), TO_DATE('2023-06-30', 'YYYY-MM-DD'), '웹 개발자', 85, 6, 4700, '웹 서비스 개발, 프론트엔드/백엔드 통합 개발'
+       );
 
 -- RESUME_ID: 8 (모바일 디자이너, JOB_GROUP_ID: 7)
 INSERT INTO CAREER (
     CAREER_ID, RESUME_ID, COMPANY_NAME, DEPARTMENT_NAME, HIRE_YM, RESIGN_YM, POSITION, JOB_ID, JOB_GROUP_ID, SALARY, DETAIL
 )
 VALUES (
-    CAREER_ID_SEQ.NEXTVAL, 8, '카카오엔터프라이즈', '디자인팀', TO_DATE('2022-07-01', 'YYYY-MM-DD'), TO_DATE('2023-05-31', 'YYYY-MM-DD'), '모바일 디자이너', 100, 7, 3800, '모바일 앱 UI/UX 디자인, 프로토타입 제작'
-);
+           CAREER_ID_SEQ.NEXTVAL, 8, '카카오엔터프라이즈', '디자인팀', TO_DATE('2022-07-01', 'YYYY-MM-DD'), TO_DATE('2023-05-31', 'YYYY-MM-DD'), '모바일 디자이너', 100, 7, 3800, '모바일 앱 UI/UX 디자인, 프로토타입 제작'
+       );
 
 -- RESUME_ID: 9 (모바일 마케터, JOB_GROUP_ID: 2)
 INSERT INTO CAREER (
     CAREER_ID, RESUME_ID, COMPANY_NAME, DEPARTMENT_NAME, HIRE_YM, RESIGN_YM, POSITION, JOB_ID, JOB_GROUP_ID, SALARY, DETAIL
 )
 VALUES (
-    CAREER_ID_SEQ.NEXTVAL, 9, '네이버', '모바일마케팅팀', TO_DATE('2021-10-01', 'YYYY-MM-DD'), TO_DATE('2023-06-30', 'YYYY-MM-DD'), '모바일 마케터', 25, 2, 4500, '모바일 광고 캠페인 기획, 퍼포먼스 마케팅'
-);
+           CAREER_ID_SEQ.NEXTVAL, 9, '네이버', '모바일마케팅팀', TO_DATE('2021-10-01', 'YYYY-MM-DD'), TO_DATE('2023-06-30', 'YYYY-MM-DD'), '모바일 마케터', 25, 2, 4500, '모바일 광고 캠페인 기획, 퍼포먼스 마케팅'
+       );
 
 -- RESUME_ID: 10 (브랜드 기획자, JOB_GROUP_ID: 1)
 INSERT INTO CAREER (
     CAREER_ID, RESUME_ID, COMPANY_NAME, DEPARTMENT_NAME, HIRE_YM, RESIGN_YM, POSITION, JOB_ID, JOB_GROUP_ID, SALARY, DETAIL
 )
 VALUES (
-    CAREER_ID_SEQ.NEXTVAL, 10, '현대백화점', '브랜드기획팀', TO_DATE('2022-06-01', 'YYYY-MM-DD'), TO_DATE('2023-05-31', 'YYYY-MM-DD'), '브랜드 기획자', 10, 1, 4300, '브랜드 전략 수립, 콘셉트 개발, 마케팅 플래닝'
-);
+           CAREER_ID_SEQ.NEXTVAL, 10, '현대백화점', '브랜드기획팀', TO_DATE('2022-06-01', 'YYYY-MM-DD'), TO_DATE('2023-05-31', 'YYYY-MM-DD'), '브랜드 기획자', 10, 1, 4300, '브랜드 전략 수립, 콘셉트 개발, 마케팅 플래닝'
+       );
 
 
 COMMIT;
