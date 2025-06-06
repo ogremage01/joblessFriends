@@ -1,0 +1,73 @@
+	.applicationTable {
+	    width: 100%;
+	    border-collapse: collapse;
+	}
+	.applicationTable th, .applicationTable td {
+	    text-align: center;
+	}
+	.applicationTable th {
+	    background-color: #f5f6fa;
+        color: #2d2d41;
+        border-top: 1px solid #737789;
+        padding: 10px;
+	}
+	.application {
+		border-bottom: 1px solid #D3D5D9;
+	}
+	.application:last-child {
+		border-bottom: none;
+	}
+	.application td {
+		padding: 15px 10px;
+	}
+	.application td:first-child {
+		text-align: left;
+		padding-left: 30px;
+		width: 400px;
+	}
+	.application td:last-child {
+		width: 100px;
+	}
+	.application a {
+	    color: black;
+	    text-decoration: none;
+	}
+	.application a:hover {
+	    text-decoration: underline;
+	}
+	.page-btn {
+	    background-color: #f2f2f2;
+	    border: none;
+	    padding: 10px 15px;
+	    margin: 0 5px;
+	    cursor: pointer;
+	}
+	.page-btn.active {
+	    background-color: #007bff;
+	    color: white;
+	}
+	.page-btn:disabled {
+	    background-color: #eee;
+	    cursor: not-allowed;
+	}
+	#pageWrap {
+	    text-align: center;
+	    margin-top: 20px;
+	}
+	#pagination {
+	    display: inline-block;
+	}
+	#pagination button {
+	    margin: 0 5px;
+	}
+	#pagingForm {
+	    display: none;
+	}
+	
+	.emptyTd {
+		height: 200px;
+	}
+	.emptyTd span {
+		color: #999;
+		font-size: 16px;
+	}

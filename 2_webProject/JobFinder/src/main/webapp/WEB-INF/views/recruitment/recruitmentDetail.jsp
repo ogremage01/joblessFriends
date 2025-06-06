@@ -54,21 +54,25 @@
                 </div>
             </div>
 <%--           중간영역 --%>
-            <div class="detail-middle">
-                <div class="detail-middle-body">
-                    <div class="detail-middle-title">
-                        <span class="applyCount">지원자수</span>
-                        <div>${recruitmentDetailVo.recruitment.isContinuous}명</div>
-                    </div>
-                </div>
-            </div>
+<!--             <div class="detail-middle"> -->
+<!--                 <div class="detail-middle-body"> -->
+<!--                     <div class="detail-middle-title"> -->
+<!--                         <span class="applyCount">지원자수</span> -->
+<%--                         <div>${recruitmentDetailVo.recruitment.isContinuous}명</div> --%>
+<!--                     </div> -->
+<!--                 </div> -->
+<!--             </div> -->
             <!-- 오른쪽 사이드 영역 -->
             <div class="detail-sidebar">
                 <fmt:formatDate value="${recruitmentDetailVo.recruitment.endDate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="formattedEndDate"/>
                 <span id="endDateRaw" data-deadline="${formattedEndDate}" style="display:none;"></span>
 
             <%--               JS데이터수집용 // NONE처리 --%>
-                <div class="dday">접수 마감일까지 남은 시간<br><span id="deadlineCountdown">.</span></div>
+                <div class="dday">
+	                <span>접수 마감까지 남은 시간</span>
+	                <span> <span id="deadlineCountdown"></span></span>
+	                <span> 지원자수 ${recruitmentDetailVo.recruitment.isContinuous}명</span>
+                </div>
                 <div class="btn-group">
                     <div class="job" data-jobpostid="${recruitmentDetailVo.recruitment.jobPostId}">
                         <c:choose>
