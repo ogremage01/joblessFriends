@@ -44,6 +44,7 @@
     	<div class="resumeTitle resume-title-margin">
 		    <h1>제목</h1>
 			<input type="text" id="title" placeholder="이력서 제목을 입력하세요" value="${resumeData.title}" />
+			<div id="title-error-container" class="title-error-container"></div>
 		</div>		
       <!-- 인적사항 -->
 	<div class="section-block" id="section-personal">

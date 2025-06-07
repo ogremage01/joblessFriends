@@ -775,6 +775,29 @@ function showError(field, message) {
 	validationResult = false;
 }
 
+// 제목 전용 에러 표시 함수
+function showTitleError(field, message) {
+	field.style.borderColor = "red";
+	const errorContainer = document.getElementById("title-error-container");
+	if (errorContainer) {
+		errorContainer.innerHTML = `<span class="error-msg">${message}</span>`;
+	}
+	errorMessages.push(message);
+	validationResult = false;
+}
+
+// 제목 에러 클리어 함수
+function clearTitleError() {
+	const titleField = document.getElementById("title");
+	const errorContainer = document.getElementById("title-error-container");
+	if (titleField) {
+		titleField.style.borderColor = "";
+	}
+	if (errorContainer) {
+		errorContainer.innerHTML = "";
+	}
+}
+
 function showSuccess(field, message) {
 	field.style.borderColor = "green";
 	const success = document.createElement("span");
@@ -845,9 +868,19 @@ function validateBasicFields() {
 		const value = field.value.trim();
 		
 		if (!validation.validator(value)) {
-			showError(field, validation.message);
+			if (validation.id === "title") {
+				// 제목 필드는 전용 컨테이너에 에러 메시지 표시
+				showTitleError(field, validation.message);
+			} else {
+				showError(field, validation.message);
+			}
 		} else {
-			showSuccess(field, "올바른 형식입니다.");
+			if (validation.id === "title") {
+				// 제목 필드는 전용 컨테이너 클리어
+				clearTitleError();
+			} else {
+				showSuccess(field, "올바른 형식입니다.");
+			}
 		}
 	});
 
@@ -927,6 +960,9 @@ function initializeValidation() {
 	// 기존 메시지 제거
 	document.querySelectorAll(".error-msg").forEach(e => e.remove());
 	document.querySelectorAll(".success-msg").forEach(e => e.remove());
+	
+	// 제목 에러 컨테이너 클리어
+	clearTitleError();
 	
 	// 필드 초기화
 	const fields = ["title", "name", "birthdate", "phoneNumber", "email", "roadAddress", "postalCodeId"];
