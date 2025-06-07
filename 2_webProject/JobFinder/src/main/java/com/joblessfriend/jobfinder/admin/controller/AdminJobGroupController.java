@@ -6,9 +6,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -62,10 +66,60 @@ public class AdminJobGroupController {
 
 		// 해당 뷰로 이동 (admin/job/jobGroupView.jsp 또는 .html 등)
 		return "admin/job/jobGroupView";
-		
-		
-	
 	}
 	
+	/**
+	 * 직군 추가
+	 */
+	@PostMapping("/add")
+	public ResponseEntity<String> addJobGroup(@RequestBody JobGroupAddRequest request) {
+		logger.info("직군 추가: {}", request.getJobGroupName());
+		
+		try {
+			int result = jobGroupService.insertJobGroup(request.getJobGroupName());
+			
+			if (result > 0) {
+				return ResponseEntity.ok("추가완료");
+			} else {
+				return ResponseEntity.badRequest().body("추가실패");
+			}
+		} catch (Exception e) {
+			logger.error("직군 추가 실패: {}", e.getMessage());
+			return ResponseEntity.badRequest().body("추가실패");
+		}
+	}
 	
+	/**
+	 * 직군 삭제 (단일/다중 삭제 지원)
+	 */
+	@DeleteMapping("/delete")
+	public ResponseEntity<String> deleteJobGroups(@RequestBody List<Integer> jobGroupIdList) {
+		logger.info("직군 삭제: {}", jobGroupIdList);
+		
+		try {
+			int result = jobGroupService.deleteJobGroups(jobGroupIdList);
+			
+			if (result > 0) {
+				return ResponseEntity.ok("삭제완료");
+			} else {
+				return ResponseEntity.badRequest().body("삭제실패");
+			}
+		} catch (Exception e) {
+			logger.error("직군 삭제 실패: {}", e.getMessage());
+			return ResponseEntity.badRequest().body("삭제실패");
+		}
+	}
+	
+	// 직군 추가 요청 DTO
+	public static class JobGroupAddRequest {
+		private String jobGroupName;
+		
+		public String getJobGroupName() {
+			return jobGroupName;
+		}
+		
+		public void setJobGroupName(String jobGroupName) {
+			this.jobGroupName = jobGroupName;
+		}
+	}
 }

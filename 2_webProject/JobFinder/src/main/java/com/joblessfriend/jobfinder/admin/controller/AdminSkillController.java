@@ -82,19 +82,14 @@ public class AdminSkillController {
     }
     
     /**
-     * 스킬 삭제 (다중 삭제 지원)
+     * 스킬 삭제 (단일/다중 삭제 지원)
      */
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteSkills(@RequestBody List<Integer> tagIdList) {
         logger.info("스킬 삭제: {}", tagIdList);
         
         try {
-            int result;
-            if (tagIdList.size() == 1) {
-                result = adminSkillService.deleteSkill(tagIdList.get(0));
-            } else {
-                result = adminSkillService.deleteSkills(tagIdList);
-            }
+            int result = adminSkillService.deleteSkills(tagIdList);
             
             if (result > 0) {
                 return ResponseEntity.ok("삭제완료");

@@ -34,10 +34,18 @@
 			</if>
 		</select>
 		
-		<insert id="jobGroupInsert">
+		<insert id="insertJobGroup" parameterType="string">
 			INSERT INTO JOB_GROUP
 			(JOB_GROUP_ID,JOB_GROUP_NAME)
 			VALUES(JOB_GROUP_ID_SEQ.NEXTVAL,#{jobGroupName})
 		</insert>
+		
+		<delete id="deleteJobGroups" parameterType="list">
+			DELETE FROM JOB_GROUP 
+			WHERE JOB_GROUP_ID IN 
+			<foreach collection="list" item="jobGroupId" open="(" separator="," close=")">
+				#{jobGroupId}
+			</foreach>
+		</delete>
 
 	</mapper> 

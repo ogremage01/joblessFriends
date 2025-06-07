@@ -14,8 +14,6 @@ public interface AdminSkillDao {
     
     int insertSkill(String tagName, int jobGroupId);
     
-    int deleteSkill(int tagId);
-    
     int deleteSkills(List<Integer> tagIdList);
     
     List<JobGroupVo> getAllJobGroups();

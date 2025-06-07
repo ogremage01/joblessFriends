@@ -12,5 +12,11 @@ public interface AdminJobGroupService {
 	List<JobGroupVo> jobGroupSelectList(SearchVo searchVo);
 
 	int jobGroupCount(SearchVo searchVo);
+	
+	// 직군 추가
+	int insertJobGroup(String jobGroupName);
+	
+	// 직군 삭제 (단일/다중)
+	int deleteJobGroups(List<Integer> jobGroupIdList);
 
 }

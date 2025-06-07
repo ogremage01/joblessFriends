@@ -125,3 +125,20 @@
 /* 	    background: #df3e00; */
 /* 	} */
 	
+	/* 유틸리티 클래스 */
+	.icon-orange {
+		color: #F69800;
+	}
+	
+	.hidden {
+		display: none !important;
+	}
+	
+	.visible-block {
+		display: block !important;
+	}
+	
+	.visible-inline {
+		display: inline !important;
+	}
+	

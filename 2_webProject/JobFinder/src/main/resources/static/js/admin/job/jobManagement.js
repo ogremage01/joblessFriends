@@ -62,7 +62,7 @@ function insertJob() {
         jobGroupId: jobGroupId
     };
     
-    fetch("/admin/job/job/add", {
+    fetch("/admin/job/singleJob/add", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -90,7 +90,7 @@ function deleteJob(jobIdList) {
         return;
     }
     
-    fetch("/admin/job/job/delete", {
+    fetch("/admin/job/singleJob/delete", {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json"
