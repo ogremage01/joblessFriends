@@ -27,6 +27,7 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
 
         ResumeVo applyCopy = new ResumeVo();
         applyCopy.setMemberId(memberId);
+        applyCopy.setTitle(origin.getTitle());
         applyCopy.setMemberName(origin.getMemberName());
         applyCopy.setBirthDate(origin.getBirthDate());
         applyCopy.setPhoneNumber(origin.getPhoneNumber());
@@ -38,6 +39,7 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
         applyCopy.setEducationList(origin.getEducationList());
         applyCopy.setCertificateList(origin.getCertificateList());
         applyCopy.setPortfolioList(origin.getPortfolioList());
+        applyCopy.setAddress(origin.getAddress());
 
         // 1. 이력서 복사
         resumeApplyDao.insertResumeCopy(applyCopy);
