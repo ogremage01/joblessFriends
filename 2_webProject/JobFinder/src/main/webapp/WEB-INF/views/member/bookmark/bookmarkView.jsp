@@ -43,8 +43,9 @@
 					<div id="jobListings">
 					<c:if test="${empty recruitmentList}">
                         <div class="no-bookmark">
-                            <p>찜한 공고가 없습니다.</p>
-                            <p>관심 있는 공고를 찜해보세요!</p>
+                            <span>찜한 공고가 없습니다.</span>
+                            <span>관심 있는 공고를 찜해보세요!</span>
+                            <a href='/Recruitment/list'>찜 하러 가기 →</a>
                         </div>
                     </c:if>
 						<c:forEach var="item" items="${recruitmentList}">
@@ -77,7 +78,7 @@
 								<!-- 오른쪽: 버튼 및 마감일 -->
 
 								<div class="job-action">
-									<button class="deleteBookmark" type="button" data-jobpostid="${item.jobPostId}"><i class="bi bi-trash"></i>취소하기</button>
+									<button class="deleteBookmark" type="button" data-jobpostid="${item.jobPostId}"><i class="bi bi-trash"></i> 취소하기</button>
 									<div class="deadline">
 										~
 										<fmt:formatDate value="${item.endDate}" pattern="MM/dd(E)" />

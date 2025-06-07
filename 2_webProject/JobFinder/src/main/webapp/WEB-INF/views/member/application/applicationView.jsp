@@ -9,53 +9,8 @@
 <title>마이페이지</title>
 <link rel="stylesheet" href="/css/common/common.css">
 <link rel="stylesheet" href="/css/member/memberMyPage.css" />
+<link rel="stylesheet" href="/css/member/applicationView.css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-<style>
-    .applicationTable {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    .applicationTable th, .applicationTable td {
-        padding: 10px;
-        text-align: center;
-        border-bottom: 1px solid #ddd;
-    }
-    .applicationTable th {
-        background-color: #f2f2f2;
-    }
-    .applicationTable a {
-        color: black;
-        text-decoration: none;
-    }
-    .page-btn {
-        background-color: #f2f2f2;
-        border: none;
-        padding: 10px 15px;
-        margin: 0 5px;
-        cursor: pointer;
-    }
-    .page-btn.active {
-        background-color: #007bff;
-        color: white;
-    }
-    .page-btn:disabled {
-        background-color: #ccc;
-        cursor: not-allowed;
-    }
-    #pageWrap {
-        text-align: center;
-        margin-top: 20px;
-    }
-    #pagination {
-        display: inline-block;
-    }
-    #pagination button {
-        margin: 0 5px;
-    }
-    #pagingForm {
-        display: none;
-    }
-    </style>
 </head>
 <body>
 
@@ -82,17 +37,30 @@
                     			</tr>
                     		</thead>
                     		<tbody>
-                    			<c:forEach var="application" items="${applicationList}">
-                    				<tr>
-                    					<td>
-                    						<a href="/Recruitment/detail?companyId=${application.companyId}&jobPostId=${application.jobPostId}">
-                    					${application.title}</a></td>
-                    					<td>${application.companyName}</td>
-                    					<td>
-                    						<fmt:formatDate value="${application.applyDate}" pattern="yyyy-MM-dd"/>
-                    					<td>${application.state}</td>
-                    				</tr>
-                    			</c:forEach>
+                    			<c:choose>
+                    				<c:when test="${not empty applicationList}">
+		                    			<c:forEach var="application" items="${applicationList}">
+		                    				<tr class="application">
+		                    					<td>
+		                    						<a href="/Recruitment/detail?companyId=${application.companyId}&jobPostId=${application.jobPostId}">
+		                    							${application.title}
+		                    						</a>
+		                    					</td>
+		                    					<td>${application.companyName}</td>
+		                    					<td>
+		                    						<fmt:formatDate value="${application.applyDate}" pattern="yyyy-MM-dd"/>
+		                    					<td>${application.state}</td>
+		                    				</tr>
+		                    			</c:forEach>
+                    				</c:when>
+                    				<c:otherwise>
+                    					<tr>
+                    						<td class="emptyTd"colspan="4">
+                    							<span>아직 지원한 내역이 없습니다.</span>
+                    						</td>
+                    					</tr>
+                    				</c:otherwise>
+                    			</c:choose>
                     		</tbody>
                     	</table>
 			    	</div>
