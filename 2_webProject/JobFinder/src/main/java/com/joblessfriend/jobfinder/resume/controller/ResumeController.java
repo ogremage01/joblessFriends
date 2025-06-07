@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import com.joblessfriend.jobfinder.resume.domain.PortfolioVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
+import com.joblessfriend.jobfinder.resume.domain.SchoolVo;
 import com.joblessfriend.jobfinder.resume.service.ResumeService;
 import com.joblessfriend.jobfinder.util.service.FileUploadService;
 
