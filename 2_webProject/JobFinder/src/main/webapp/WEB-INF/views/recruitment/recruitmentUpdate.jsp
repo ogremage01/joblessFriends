@@ -262,6 +262,7 @@
 <jsp:include page="../common/footer.jsp"/>
 
 <script>
+    window.tempKey = crypto.randomUUID().trim().replaceAll(",", "");
     // 전역 변수로 선언하여 외부 JS에서도 접근 가능하게 수정
     let editor;
 

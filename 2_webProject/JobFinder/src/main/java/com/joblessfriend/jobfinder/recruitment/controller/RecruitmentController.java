@@ -208,7 +208,7 @@ public class RecruitmentController {
         recruitmentDetailVo.setSkill(skillList);
         recruitmentDetailVo.setWelfare(welfare);
         System.out.println(recruitmentDetailVo.getRecruitment());
-        System.out.println("전체컬럼은:?? " + recruitmentDetailVo.getRecruitment().getIsContinuous());
+
         model.addAttribute("recruitmentDetailVo", recruitmentDetailVo);
         
         /* 추가사항(찜했는지 구분하는 model)(찜 구분) */
@@ -497,6 +497,11 @@ public class RecruitmentController {
             // 6. 서비스 호출
 
             recruitmentService.updateRecruitment(recruitmentVo, tagIdList, welfareVoList, tempKey);
+            if (tempKey != null && !tempKey.isBlank()) {
+                System.out.println("🧪 [컨트롤러] tempKey = [" + tempKey + "]");
+                System.out.println("🧪 [DB 저장된] tempKey = (DB에서 SELECT 해보기)");
+                recruitmentService.updateJobPostIdByTempKey(recruitmentVo.getJobPostId(), tempKey); // ✅ 정확
+            }
             System.out.println("✅ 채용공고 업데이트 성공 - jobPostId: " + recruitmentVo.getJobPostId());
         } catch (Exception e) {
             e.printStackTrace(); // 예외 로깅
