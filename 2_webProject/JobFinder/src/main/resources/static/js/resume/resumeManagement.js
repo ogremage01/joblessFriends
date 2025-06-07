@@ -48,3 +48,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+// 이력서 미리보기 팝업창 열기
+function openResumePreview(resumeId) {
+    const url = '/resume/view/' + resumeId;
+    const windowName = 'resumePreview';
+    const windowFeatures = 'width=900,height=700,scrollbars=yes,resizable=yes,status=no,toolbar=no,menubar=no,location=no';
+    
+    window.open(url, windowName, windowFeatures);
+}

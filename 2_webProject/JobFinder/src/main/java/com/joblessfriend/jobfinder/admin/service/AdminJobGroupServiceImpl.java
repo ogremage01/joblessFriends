@@ -29,6 +29,14 @@ public class AdminJobGroupServiceImpl implements AdminJobGroupService{
 		return jobGroupDao.jobGroupCount(searchVo);
 	}
 
+	@Override
+	public int insertJobGroup(String jobGroupName) {
+		return jobGroupDao.insertJobGroup(jobGroupName);
+	}
 
+	@Override
+	public int deleteJobGroups(List<Integer> jobGroupIdList) {
+		return jobGroupDao.deleteJobGroups(jobGroupIdList);
+	}
 
 }

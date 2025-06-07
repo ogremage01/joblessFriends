@@ -9,6 +9,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import jakarta.servlet.http.HttpSession;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joblessfriend.jobfinder.resume.domain.CareerVo;
 import com.joblessfriend.jobfinder.resume.domain.CertificateResumeVo;
@@ -77,6 +79,9 @@ public class ResumeParser {
         resumeVo.setModifyDate(now);
 
         // 리스트 객체들 파싱
+        System.out.println(">>> [parseMapToResumeVo] requestMap 키 목록: " + requestMap.keySet());
+        System.out.println(">>> [parseMapToResumeVo] portfolios 데이터: " + requestMap.get("portfolios"));
+        
         resumeVo.setSchoolList(parseSchoolList((List<Map<String, Object>>) requestMap.get("schools")));
         resumeVo.setCareerList(parseCareerList((List<Map<String, Object>>) requestMap.get("careers")));
         resumeVo.setEducationList(parseEducationList((List<Map<String, Object>>) requestMap.get("educations")));
@@ -84,6 +89,37 @@ public class ResumeParser {
         resumeVo.setPortfolioList(parsePortfolioList((List<Map<String, Object>>) requestMap.get("portfolios")));
         resumeVo.setSkillList(parseSkillList((List<Object>) requestMap.get("tagIds")));
 
+        return resumeVo;
+    }
+
+    /**
+     * Map 객체를 ResumeVo 객체로 변환 (세션 데이터 포함)
+     */
+    @SuppressWarnings("unchecked")
+    public ResumeVo parseMapToResumeVo(Map<String, Object> requestMap, int memberId, HttpSession session) {
+        System.out.println(">>> [parseMapToResumeVo with session] 세션 포함 파싱 시작");
+        
+        // 기본 파싱
+        ResumeVo resumeVo = parseMapToResumeVo(requestMap, memberId);
+        
+        // 세션에서 포트폴리오 데이터 가져오기
+        if (session != null) {
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> sessionPortfolios = (List<Map<String, Object>>) session.getAttribute("portfolioFiles");
+            
+            System.out.println(">>> [parseMapToResumeVo with session] 세션 포트폴리오 데이터: " + sessionPortfolios);
+            
+            if (sessionPortfolios != null && !sessionPortfolios.isEmpty()) {
+                List<PortfolioVo> portfolioList = parsePortfolioList(sessionPortfolios);
+                resumeVo.setPortfolioList(portfolioList);
+                System.out.println(">>> [parseMapToResumeVo with session] 세션에서 포트폴리오 " + portfolioList.size() + "개 추가됨");
+            } else {
+                System.out.println(">>> [parseMapToResumeVo with session] 세션에 포트폴리오 데이터가 없음");
+            }
+        } else {
+            System.out.println(">>> [parseMapToResumeVo with session] HttpSession이 null임");
+        }
+        
         return resumeVo;
     }
 
@@ -189,14 +225,26 @@ public class ResumeParser {
      * 포트폴리오 리스트 파싱
      */
     private List<PortfolioVo> parsePortfolioList(List<Map<String, Object>> portfolioDataList) {
+        System.out.println(">>> [parsePortfolioList] 포트폴리오 파싱 시작");
+        System.out.println(">>> [parsePortfolioList] portfolioDataList: " + portfolioDataList);
+        
         List<PortfolioVo> portfolioList = new ArrayList<>();
         
         if (portfolioDataList != null) {
-            for (Map<String, Object> portfolioData : portfolioDataList) {
+            System.out.println(">>> [parsePortfolioList] portfolioDataList 크기: " + portfolioDataList.size());
+            
+            for (int i = 0; i < portfolioDataList.size(); i++) {
+                Map<String, Object> portfolioData = portfolioDataList.get(i);
+                System.out.println(">>> [parsePortfolioList] Portfolio[" + i + "] 원본 데이터: " + portfolioData);
+                
                 PortfolioVo portfolioVo = new PortfolioVo();
                 portfolioVo.setFileName(getStringValue(portfolioData, "fileName"));
                 portfolioVo.setStoredFileName(getStringValue(portfolioData, "storedFileName"));
                 portfolioVo.setFileExtension(getStringValue(portfolioData, "fileExtension"));
+                
+                System.out.println(">>> [parsePortfolioList] Portfolio[" + i + "] 파싱된 데이터: fileName=" + 
+                    portfolioVo.getFileName() + ", storedFileName=" + portfolioVo.getStoredFileName() + 
+                    ", fileExtension=" + portfolioVo.getFileExtension());
                 
                 // 현재 시간으로 생성/수정 시간 설정
                 Date now = new Date();
@@ -205,8 +253,11 @@ public class ResumeParser {
                 
                 portfolioList.add(portfolioVo);
             }
+        } else {
+            System.out.println(">>> [parsePortfolioList] portfolioDataList가 null입니다");
         }
         
+        System.out.println(">>> [parsePortfolioList] 최종 portfolioList 크기: " + portfolioList.size());
         return portfolioList;
     }
 

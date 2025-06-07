@@ -93,7 +93,7 @@
                             <div class="col-sm-9">
                                 <input id="brn" name="brn" class="form-control" value="${companyVo.brn}">
                             </div>
-
+						</div>
                         
                             <div class="row mb-3">
                                 <label for="password" class="col-sm-3 col-form-label text-end fw-bold">비밀번호</label>
@@ -135,17 +135,6 @@
                                     <button type="button" class="btn btn-outline-secondary" onclick="sample6_execDaumPostcode()">
                                         <i class="bi bi-search"></i> 우편번호 찾기
                                     </button>
-
-                                    <button type="reset" class="btnStyle" onclick="resetFun()">
-                                        <i class="bi bi-arrow-clockwise"></i> 초기화
-                                    </button>
-                                    <button type="button" class="delete-btn" id="delete">
-                                        <i class="bi bi-building-x"></i> 탈퇴
-                                    </button>
-                                    <a href="/admin/member/company" class="back-btn">
-                                        <i class="bi bi-list"></i> 목록보기
-                                    </a>
-
                                 </div>
                             </div>
                         </div>
@@ -169,7 +158,7 @@
                                 <button type="submit" id="submitBtn" class="add-btn">
                                     <i class="bi bi-check-circle"></i> 수정
                                 </button>
-                                <button type="reset" class="btnStyle">
+                                <button type="reset" class="btnStyle" onclick="resetFun()">
                                     <i class="bi bi-arrow-clockwise"></i> 초기화
                                 </button>
                                 <button type="button" class="delete-btn" id="delete">

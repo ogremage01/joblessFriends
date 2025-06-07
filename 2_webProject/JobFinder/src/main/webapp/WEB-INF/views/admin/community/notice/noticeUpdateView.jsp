@@ -212,7 +212,6 @@ margin: auto;
 		        }
 		
 		        function deleteFile(fileName,fileStoredName, btn) {
-		            if (!confirm("정말 삭제하시겠습니까?")) return;
 		
 		            const fileItem = btn.parentElement;
 		            const imageUrl = fileItem.getAttribute('data-url');

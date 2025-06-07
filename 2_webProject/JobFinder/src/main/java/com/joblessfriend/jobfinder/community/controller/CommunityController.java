@@ -147,7 +147,7 @@ public class CommunityController {
 	    List<Map<String, Object>> uploadedFiles = (List<Map<String, Object>>) session.getAttribute("uploadedFiles");
 	    if (uploadedFiles != null) {
 	        for (Map<String, Object> fileMap : uploadedFiles) {
-	            fileMap.put("COMMUNITYID", communityVo.getCommunityId()); // 커뮤니티 ID 연결
+	            fileMap.put("COMMUNITYID", communityId); // 커뮤니티 ID 연결
 	            communityService.communityFileInsertOne(fileMap);
 	        }
 	        session.removeAttribute("uploadedFiles"); // 사용 후 제거

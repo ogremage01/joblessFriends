@@ -17,6 +17,17 @@
 body {
 	overflow-y: scroll;
 }
+
+#infoSection {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid lightgray;
+    padding: 20px;
+    border-radius: 5px;
+/*     box-shadow: 0 0 8px rgba(0, 0, 0, 0.05); */
+    gap: 20px;
+}
 </style>
 </head>
 
@@ -32,7 +43,7 @@ body {
 	<div id="container">
 		<div id="containerWrap">
 
-			<div id="searchSection" class="resultInfo">
+			<div id="infoSection" class="resultInfo">
 				<h2>검색결과</h2>
 				<%-- 				<span>(총 ${totalCount}건)</span> --%>
 				<%-- 				<span>'${keyword}'에 대한 검색결과입니다.</span> --%>
@@ -79,7 +90,7 @@ body {
 									</c:when>
 									<c:otherwise>
 										<button class="apply-btn" type="button" disabled
-											style="background: #ccc; cursor: not-allowed;">마감됨</button>
+											style="background: #eee; cursor: not-allowed;">마감됨</button>
 									</c:otherwise>
 								</c:choose>
 

@@ -155,3 +155,8 @@ body {
   font-weight: bold;
   text-decoration: none;
 }
+
+/* 아이콘 색상 */
+.icon-orange {
+  color: #F69800;
+}

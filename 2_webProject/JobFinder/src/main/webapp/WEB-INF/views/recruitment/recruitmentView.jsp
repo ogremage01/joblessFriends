@@ -106,7 +106,7 @@
             <div id="selectedFilters">
                 <!-- 직군·직무 -->
                 <div id="searchJobGroup">
-                    <div class="filter-section-title">직군·직무:</div>
+                    <div class="filter-section-title">직군·직무</div>
                     <ul id="divSelectedCon">
                         <!-- 선택된 직군·직무가 여기에 표시됩니다 -->
                     </ul>
@@ -114,7 +114,7 @@
                 
                 <!-- 경력 -->
                 <div id="selectedCareer">
-                    <div class="filter-section-title">경력:</div>
+                    <div class="filter-section-title">경력</div>
                     <ul id="divSelectedCareer">
                         <!-- 선택된 경력이 여기에 표시됩니다 -->
                     </ul>
@@ -122,7 +122,7 @@
                 
                 <!-- 학력 -->
                 <div id="selectedEducation">
-                    <div class="filter-section-title">학력:</div>
+                    <div class="filter-section-title">학력</div>
                     <ul id="divSelectedEducation">
                         <!-- 선택된 학력이 여기에 표시됩니다 -->
                     </ul>
@@ -130,7 +130,7 @@
                 
                 <!-- 전문분야 -->
                 <div id="selectedSkills">
-                    <div class="filter-section-title">전문분야:</div>
+                    <div class="filter-section-title">전문분야</div>
                     <ul id="divSelectedSkills">
                         <!-- 선택된 전문분야가 여기에 표시됩니다 -->
                     </ul>
@@ -176,7 +176,7 @@
                                 <button class="apply-btn" type="button" onclick="">지원하기</button>
                             </c:when>
                             <c:otherwise>
-                                <button class="apply-btn" type="button" disabled style="background: #ccc; cursor: not-allowed;">마감됨</button>
+                                <button class="apply-btn" type="button" disabled style="background: #eee; cursor: not-allowed;">마감됨</button>
                             </c:otherwise>
                         </c:choose>
 
