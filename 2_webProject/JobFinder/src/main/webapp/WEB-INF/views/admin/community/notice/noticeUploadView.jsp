@@ -25,9 +25,9 @@
 	rel="stylesheet">
 
 <link rel="stylesheet" href="/css/common/common.css">
-<link rel="stylesheet" href="/css/admin/common.css">
+
 <link rel="stylesheet" href="/css/admin/tableStyle.css">
-<link rel="stylesheet" href="/css/admin/notice/noticeStyle.css">
+
 <link rel="stylesheet" href="/css/community/toastPopup.css"> 
 <link rel="stylesheet" href="/css/community/communityCommonStyle.css"> 
 <link rel="stylesheet" href="/css/community/communityUploadStyle.css"> 
@@ -45,16 +45,9 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <!-- SweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<style>
-/*기본값(default)이 이미 "text/css"로 되어 있어서 자동인식한다하여 뺐음 */
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 
-</style>
-
-<script type="text/javascript">
-
-</script>
 </head>
 
 <body>
@@ -190,7 +183,7 @@
                     title: "업로드 완료",
                     text: "공지 사항이 정상적으로 업로드 되었습니다.",
                     icon: "success",
-                    timer: 1500,
+                    timer: 2000,
                     showConfirmButton: false
                 });
                 $("#uploadForm").submit(); // 수동 제출
@@ -205,7 +198,6 @@
         }
 
         function deleteFile(fileName,fileStoredName, btn) {
-            if (!confirm("정말 삭제하시겠습니까?")) return;
 
             const fileItem = btn.parentElement;
             const imageUrl = fileItem.getAttribute('data-url');
@@ -241,6 +233,13 @@
 
 </body>
 <script type="text/javascript">
+console.log(getComputedStyle(document.body).animation);
+const popup = document.querySelector('.swal2-popup');
+if (popup) {
+  console.log(getComputedStyle(popup).animation);
+} else {
+  console.warn('swal2-popup 요소가 아직 DOM에 존재하지 않음');
+}
 //목록 페이지로 돌아가기
 function goBackToList() {
 	const prevUrl = sessionStorage.getItem("prevAdminNoticeListUrl");

@@ -17,6 +17,8 @@
         integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     
+       <link rel="stylesheet" href="/css/admin/tableStyle.css">
+       
     <!-- 공통 스타일 적용 -->
     <link rel="stylesheet" href="/css/common/common.css">
     <link href="/css/admin/common.css" rel="stylesheet">
@@ -71,22 +73,22 @@
                         <tbody>
                             <c:forEach var="noticeVo" items="${noticeList}">
                                 <tr>
-                                    <td class="checkbox-container">
+                                    <td class="checkbox-container adminTable_checkBox">
                                         <input type="checkbox" class="delPost admin-checkbox" 
                                                name="delete" value="${noticeVo.noticeId}">
                                     </td>
-                                    <td><strong>${noticeVo.noticeId}</strong></td>
-                                    <td>${noticeVo.noticeCategory.noticeCategoryContent}</td>
-                                    <td>
+                                    <td class="adminTable_id"><strong>${noticeVo.noticeId}</strong></td>
+                                    <td class="adminTable_category">${noticeVo.noticeCategory.noticeCategoryContent}</td>
+                                    <td class="adminTable_title">
                                         <a href="/community/notice/detail?no=${noticeVo.noticeId}" 
                                            target="_blank" rel="noopener noreferrer" class="post-title-link">
                                             ${noticeVo.title}
                                         </a>
                                     </td>
-                                    <td>
+                                    <td class="adminTable_day">
                                         <fmt:formatDate value="${noticeVo.createAt}" pattern="yyyy-MM-dd HH:mm:ss" />
                                     </td>
-                                    <td class="views-count">${noticeVo.views}</td>
+                                    <td class="view">${noticeVo.views}</td>
                                     <td>
                                         <button id="modi_${noticeVo.noticeId}" value="${noticeVo.noticeId}" 
                                                 onclick="moveUpdateNotice('${noticeVo.noticeId}')" class="delete-btn" 
