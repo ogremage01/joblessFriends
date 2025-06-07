@@ -208,7 +208,7 @@ public class RecruitmentController {
         recruitmentDetailVo.setSkill(skillList);
         recruitmentDetailVo.setWelfare(welfare);
         System.out.println(recruitmentDetailVo.getRecruitment());
-
+        System.out.println("전체컬럼은:?? " + recruitmentDetailVo.getRecruitment().getIsContinuous());
         model.addAttribute("recruitmentDetailVo", recruitmentDetailVo);
         
         /* 추가사항(찜했는지 구분하는 model)(찜 구분) */
@@ -323,7 +323,7 @@ public class RecruitmentController {
             file.transferTo(dest);
 
             // DB에는 상대 경로 or URL 형태로 저장
-            return "/upload/job_post/thumbs/" + originalName;
+            return "/upload/job_post/thumbs/" + storedName;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -360,7 +360,7 @@ public class RecruitmentController {
             fileVo.setFileExtension(originalName.substring(originalName.lastIndexOf('.') + 1));
             fileVo.setFileSize(file.getSize());
             fileVo.setTempKey(tempKey); // 임시 식별 키
-
+            System.out.println("✅ 저장될 tempKey: " + fileVo.getTempKey());
             recruitmentService.insertJobPostFile(fileVo);
             result.put("success", 1);
             Map<String, String> fileMap = new HashMap<>();

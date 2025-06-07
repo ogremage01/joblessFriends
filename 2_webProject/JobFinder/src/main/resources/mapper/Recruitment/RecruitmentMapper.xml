@@ -159,7 +159,8 @@
             jp.template_type AS templateType,
             jp.job_img as jobImg,
             jp.MAX_APPLICANTS as maxApplicants,
-            rm.resume_count as isContinuous
+            rm.resume_count as applicantCount,
+            jp.is_continuous AS isContinuous
         FROM JOB_POST jp
                  JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
                  JOIN JOB j ON jp.job_id = j.job_id LEFT JOIN (

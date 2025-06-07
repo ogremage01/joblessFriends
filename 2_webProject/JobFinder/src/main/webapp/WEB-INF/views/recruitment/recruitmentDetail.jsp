@@ -58,7 +58,7 @@
                 <div class="detail-middle-body">
                     <div class="detail-middle-title">
                         <span class="applyCount">지원자수</span>
-                        <div>${recruitmentDetailVo.recruitment.isContinuous}명</div>
+                        <div>${recruitmentDetailVo.recruitment.applicantCount}명</div>
                     </div>
                 </div>
             </div>
@@ -69,6 +69,7 @@
 
             <%--               JS데이터수집용 // NONE처리 --%>
                 <div class="dday">접수 마감일까지 남은 시간<br><span id="deadlineCountdown">.</span></div>
+
                 <div class="btn-group">
                     <div class="job" data-jobpostid="${recruitmentDetailVo.recruitment.jobPostId}">
                         <c:choose>
