@@ -4,10 +4,53 @@ let memberInforSubmitFormObj = document.getElementById("memberInforSubmitForm");
 // data-member-id 속성에서 memberId 가져오기
 const memberId = document.getElementById("memberData").dataset.memberId;
 
+// 초기화 시 유효성도 초기화
+function resetFun() {
+	$("#pwdCheckStatus").html("");
+	$("#passwordCheck").removeAttr("style");
+	pwdCheckPass = true;
+}
+
+// 비밀번호 변경 시 체크
+var pwdCheckPass = true;
+function sameCheckPwd(){
+	
+	pwdCheckPass = false;
+	
+	var pwdCheck = $("#passwordCheck").val();
+	var pwd = $("#password").val();
+		
+	// 공백 체크
+	if(pwdCheck == ""){
+		noBlank = "비밀번호 확인을 입력해주세요.";
+		$("#pwdCheckStatus").html(noBlank);
+		$("#passwordCheck").css("border", "1px solid red");
+		return;
+	}
+	
+	// 동일한지 확인
+	var pwdStatusStr = '비밀번호가 다릅니다. 동일한 비밀번호를 입력해 주세요.';
+	if(pwdCheck != pwd){
+		$("#pwdCheckStatus").html(pwdStatusStr);
+		$("#passwordCheck").css("border", "1px solid red");
+		return;
+	}else{
+		$("#pwdCheckStatus").html("");
+		$("#passwordCheck").removeAttr("style");
+		pwdCheckPass = true;
+	}
+	
+}
 // 개인회원 정보 수정 폼이 제출될 때 실행
 memberInforSubmitFormObj.addEventListener("submit", function(e) {
     e.preventDefault(); // 기본 폼 제출 동작 막기 (페이지 새로고침 방지)
 
+	if(!pwdCheckPass && $("#password").val()!=""){
+		$("#passwordCheck").focus();
+		return;
+	}
+		
+	
     // 폼 데이터 FormData 객체로 수집
     const formData = new FormData(memberInforSubmitFormObj);
     const jsonData = {};

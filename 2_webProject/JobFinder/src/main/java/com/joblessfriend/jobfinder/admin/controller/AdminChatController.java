@@ -3,6 +3,8 @@ package com.joblessfriend.jobfinder.admin.controller;
 import java.util.List;
 import java.util.Collections;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -105,6 +107,54 @@ public class AdminChatController {
         } catch (Exception e) {
             log.error("채팅방 정보 조회 실패", e);
             return ResponseEntity.internalServerError().body("Internal server error");
+        }
+    }
+
+    /**
+     * 관리자의 전체 안읽은 채팅 메시지 수를 조회합니다.
+     * 사이드바에서 안읽은 메시지 배지 표시에 사용됩니다.
+     *
+     * @param session 현재 HTTP 세션 객체. 관리자 로그인 정보를 가져오는 데 사용됩니다.
+     * @return 전체 안읽은 메시지 수를 담은 ResponseEntity를 반환합니다.
+     */
+    @GetMapping("/unreadCount")
+    @ResponseBody
+    public ResponseEntity<?> getUnreadMessageCount(HttpSession session) {
+        log.debug("[AdminChatController] 관리자 안읽은 메시지 수 확인 요청");
+
+        AdminVo admin = (AdminVo) session.getAttribute("userLogin");
+        if (admin == null) {
+            log.warn("[AdminChatController] 비로그인 사용자의 안읽은 메시지 수 확인 시도");
+            return ResponseEntity.status(401).body("로그인이 필요합니다.");
+        }
+
+        String adminId = admin.getAdminId();
+        if (adminId == null || adminId.isEmpty()) {
+            log.warn("[AdminChatController] 관리자 ID가 세션에서 찾을 수 없음");
+            return ResponseEntity.status(401).body("관리자 ID를 찾을 수 없습니다.");
+        }
+
+        try {
+            // 모든 채팅방의 안읽은 메시지 수를 합산
+            List<ChatRoomVo> allRooms = chatService.findAllRoom(adminId);
+            int totalUnreadCount = 0;
+            
+            if (allRooms != null) {
+                totalUnreadCount = allRooms.stream()
+                    .mapToInt(ChatRoomVo::getUnreadCount)
+                    .sum();
+            }
+
+            log.debug("[AdminChatController] 관리자 '{}'의 전체 안읽은 메시지 수: {}", adminId, totalUnreadCount);
+            
+            Map<String, Integer> response = new HashMap<>();
+            response.put("unreadCount", totalUnreadCount);
+            
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            log.error("[AdminChatController] 안읽은 메시지 수 확인 중 오류 발생. 관리자: {}", adminId, e);
+            return ResponseEntity.internalServerError().body("안읽은 메시지 수 확인 중 오류가 발생했습니다.");
         }
     }
 

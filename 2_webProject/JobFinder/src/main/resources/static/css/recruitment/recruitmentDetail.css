@@ -12,7 +12,7 @@
 }
 
 .detail-main {
-    width: 75%;
+    width: 50%;
 }
 
 .detail-header h2 {
@@ -42,6 +42,28 @@
     font-weight: bold;
     color: #444;
 }
+.detail-middle {
+    width: 35%; /* 너비 확장 */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+
+}
+.detail-middle .detail-middle-title div {
+    margin-top: 50px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+.applyCount {
+    margin-top: 5px;
+    margin-bottom: 10px;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    color: #4A4A4A;
+}
+
+
 
 .detail-sidebar {
     width: 23%;

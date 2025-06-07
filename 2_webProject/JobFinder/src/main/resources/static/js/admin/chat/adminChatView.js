@@ -176,6 +176,10 @@ function sendMessage() {
 	const input = document.getElementById('chatInput');
 	const msg = input.value.trim();
 	if (!msg) return false;
+	if (msg.length > 500) {
+		alert('메시지는 500자 이하로 입력해주세요.');
+        return false;
+    }
 
 	updateLastActivityTime();
 
@@ -215,7 +219,10 @@ function appendMessage(data) {
 
 	const chatMessages = document.getElementById('chatMessages');
 	const div = document.createElement('div');
-	const sender = data.sender || "익명";
+	let sender = data.sender || "익명";
+
+	sender = (sender === '관리자' ? '관리자' : '사용자');
+
 
 	div.className = 'message ' + (sender === '관리자' ? 'message-admin' : 'message-user');
 	div.innerHTML =

@@ -124,7 +124,7 @@ public class RecruitmentController {
 
 
 
-
+        model.addAttribute("userType", userType);
         model.addAttribute("jobGroupList", jobGroupList);
         model.addAttribute("recruitmentList", recruitmentList);
         model.addAttribute("skillMap", skillMap);

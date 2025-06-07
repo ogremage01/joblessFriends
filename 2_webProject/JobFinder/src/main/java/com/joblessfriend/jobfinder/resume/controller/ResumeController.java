@@ -336,7 +336,7 @@ public class ResumeController {
 
 		try {
 			// 업로드 경로 설정
-			String uploadDir = request.getServletContext().getRealPath("/upload/portfolio/");
+			String uploadDir = "C:/upload/portfolio/";
 			File dir = new File(uploadDir);
 			if (!dir.exists()) {
 				dir.mkdirs();

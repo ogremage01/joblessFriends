@@ -73,7 +73,15 @@ $(".btn-question").on("click", function () {
             showApplicantQnA(data, memberName);
         },
         error: function () {
-            Swal.fire("에러", "질문/답변을 불러오는 데 실패했습니다.", "error");
+            Swal.fire({
+				title:"에러", 
+				html: "질문/답변을 불러오는 데 실패했습니다.", 
+				icon: "error",
+				confirmButtonText: '확인',
+				customClass: {
+	                confirmButton: 'swalConfirmBtn'
+	            }
+			});
         }
     });
 });
@@ -85,10 +93,10 @@ function openStateChangeModal(jobPostId, memberId) {
         title: '지원 상태 변경',
         html: `
           <div style="display: flex; flex-direction: column; gap: 10px;">
-            <button class="swal2-confirm swal2-styled" onclick="changeState(1, ${jobPostId}, ${memberId})">지원</button>
-            <button class="swal2-confirm swal2-styled" onclick="changeState(2, ${jobPostId}, ${memberId})">서류합격</button>
-            <button class="swal2-confirm swal2-styled" onclick="changeState(3, ${jobPostId}, ${memberId})">최종합격</button>
-            <button class="swal2-cancel swal2-styled" onclick="changeState(0, ${jobPostId}, ${memberId})">불합격</button>
+            <button class="applyStatus-apply swal2-confirm swal2-styled" onclick="changeState(1, ${jobPostId}, ${memberId})">지원</button>
+            <button class="applyStatus-documentPass swal2-confirm swal2-styled" onclick="changeState(2, ${jobPostId}, ${memberId})">서류합격</button>
+            <button class="applyStatus-finalPass swal2-confirm swal2-styled" onclick="changeState(3, ${jobPostId}, ${memberId})">최종합격</button>
+            <button class="applyStatus-fail swal2-cancel swal2-styled" onclick="changeState(0, ${jobPostId}, ${memberId})">불합격</button>
           </div>
         `,
         showConfirmButton: false
@@ -107,11 +115,27 @@ function changeState(stateId, jobPostId, memberId) {
             stateId: stateId
         },
         success: function () {
-            Swal.fire("변경 완료", "이력서의 지원 상태가 변경되었습니다.", "success")
+            Swal.fire({
+				title: "변경 완료", 
+				html: "이력서의 지원 상태가 변경되었습니다.", 
+				icon: "success",
+				confirmButtonText: '확인',
+		        customClass: {
+		            confirmButton: 'swalConfirmBtn'
+		        }
+			})
                 .then(() => location.reload());
         },
         error: function () {
-            Swal.fire("오류", "상태 변경에 실패했습니다.", "error");
+            Swal.fire({
+				title: "오류", 
+				html: "상태 변경에 실패했습니다.", 
+				icon: "error",
+				confirmButtonText: '확인',
+		        customClass: {
+		            confirmButton: 'swalConfirmBtn'
+		        }
+			});
         }
     });
 }
@@ -132,10 +156,26 @@ $(".btn-change-state").on("click", function () {
             stateId: newState
         },
         success: function () {
-            Swal.fire("성공", "지원 상태가 변경되었습니다.", "success").then(() => location.reload());
+            Swal.fire({
+				title: "성공",
+				html: "지원 상태가 변경되었습니다.",
+				icon: "success",
+				confirmButtonText: '확인',
+		        customClass: {
+		            confirmButton: 'swalConfirmBtn'
+		        }
+			}).then(() => location.reload());
         },
         error: function () {
-            Swal.fire("실패", "변경 중 오류가 발생했습니다.", "error");
+            Swal.fire({
+				title: "실패", 
+				html: "변경 중 오류가 발생했습니다.",
+				icon: "error",
+				confirmButtonText: '확인',
+		        customClass: {
+		            confirmButton: 'swalConfirmBtn'
+		        }
+			});
         }
     });
 });

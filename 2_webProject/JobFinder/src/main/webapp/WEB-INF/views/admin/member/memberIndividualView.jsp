@@ -1,4 +1,4 @@
-<!-- 관리자 로그인 여부를 묻는 자바구문이 들어가야 할 부분 -->
+
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page language="java" contentType="text/html;charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -71,7 +71,7 @@
 									</td>
 									<td class="member-id"><strong>${memberVo.memberId}</strong></td>
 									<td class="email">
-										<a href="./individual/${memberVo.memberId}" class="member-email-link ">
+										<a href="./individual/${memberVo.memberId}?page=${searchVo.page}&keyword=${searchVo.keyword}" class="member-email-link ">
 											${memberVo.email}
 										</a>
 									</td>

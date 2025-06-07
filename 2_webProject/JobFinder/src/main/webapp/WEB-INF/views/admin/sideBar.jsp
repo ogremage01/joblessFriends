@@ -95,6 +95,50 @@
 	font-weight: bold;
 }
 
+/* 안읽은 메시지 배지 */
+.unread-badge {
+	display: inline-block;
+	background-color: #dc3545;
+	color: white;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 2px 6px;
+	border-radius: 10px;
+	margin-left: 8px;
+	min-width: 18px;
+	text-align: center;
+	animation: pulse 2s infinite;
+	box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+}
+
+.unread-badge:empty {
+	display: none;
+}
+
+/* 배지 애니메이션 */
+@keyframes pulse {
+	0% {
+		box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+	}
+	50% {
+		box-shadow: 0 2px 8px rgba(220, 53, 69, 0.6);
+		transform: scale(1.05);
+	}
+	100% {
+		box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+	}
+}
+
+/* 채팅 링크에 안읽은 메시지가 있을 때 강조 */
+.sidebar li a:has(.unread-badge),
+.sidebar li a.has-unread {
+	background-color: rgba(220, 53, 69, 0.05);
+	border-radius: 4px;
+	padding: 4px 8px;
+	margin: -4px -8px;
+	transition: background-color 0.3s ease;
+}
+
 /* 로그아웃 */
 .logout-section {
 	border-top: 1px solid #D8D9E3;
@@ -213,7 +257,7 @@
           </a>
         </li>
         <li>
-          <a href="/admin/job/job">
+          <a href="/admin/job/singleJob">
             <i class="bi bi-gear"></i> 직무
           </a>
         </li>
@@ -229,6 +273,9 @@
     <li>
       <a href="/admin/chat/view">
         <i class="bi bi-chat"></i> 채팅
+        <c:if test="${unreadChatCount != null && unreadChatCount > 0}">
+          <span class="unread-badge" id="unreadChatBadge">${unreadChatCount}</span>
+        </c:if>
       </a>
     </li>
   </ul>
@@ -243,12 +290,12 @@
 <script>
 // 현재 페이지 하이라이트
 document.addEventListener('DOMContentLoaded', function() {
-    const currentPath = window.location.pathname;
+    const currentPath = window.location.pathname;// 현재 URL 경로
     const navLinks = document.querySelectorAll('.sidebar a');
     
     navLinks.forEach(link => {
-        if (link.getAttribute('href') === currentPath) {
-            link.classList.add('current-page');
+        if (currentPath.startsWith(link.getAttribute('href'))) {
+            link.classList.add('current-page');// 현재 페이지 링크에 클래스 추가
             
             // 서브메뉴 항목이면 부모 메뉴도 열기
             const parentCollapse = link.closest('.collapse');
@@ -261,5 +308,57 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+    
+    // 페이지 로드 시 안읽은 메시지 수 한 번만 업데이트
+    updateUnreadChatCount();
 });
+
+// 안읽은 채팅 메시지 수 업데이트 함수
+function updateUnreadChatCount() {
+    fetch('/admin/chat/unreadCount', {
+        method: 'GET',
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(data => {
+        updateChatBadge(data.unreadCount || 0);
+    })
+    .catch(error => {
+        console.log('안읽은 메시지 수 조회 실패:', error);
+    });
+}
+
+// 채팅 배지 업데이트 함수
+function updateChatBadge(count) {
+    const chatLink = document.querySelector('a[href="/admin/chat/view"]');
+    let badge = document.getElementById('unreadChatBadge');
+    
+    if (count > 0) {
+        if (!badge) {
+            // 배지가 없으면 생성
+            badge = document.createElement('span');
+            badge.id = 'unreadChatBadge';
+            badge.className = 'unread-badge';
+            chatLink.appendChild(badge);
+        }
+        badge.textContent = count > 99 ? '99+' : count;
+        badge.style.display = 'inline-block';
+        
+        // 채팅 링크 강조
+        chatLink.classList.add('has-unread');
+    } else {
+        if (badge) {
+            badge.style.display = 'none';
+        }
+        // 채팅 링크 강조 제거
+        chatLink.classList.remove('has-unread');
+    }
+}
+
+// 채팅 페이지 방문 시 안읽은 메시지 초기화
+function markChatAsRead() {
+    if (window.location.pathname === '/admin/chat/view') {
+        updateChatBadge(0);
+    }
+}
 </script>
