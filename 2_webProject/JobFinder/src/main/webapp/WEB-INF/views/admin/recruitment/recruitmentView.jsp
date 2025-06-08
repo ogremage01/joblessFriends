@@ -142,10 +142,10 @@
 <jsp:include page="../../common/footer.jsp"/>
 
 
-<%--확인필요 / --%>
+
 <script src="/js/admin/recruitment/recruitment.js"></script>
 
-<script src="/js/admin/recruitment.js"></script>
+
 
 
 
