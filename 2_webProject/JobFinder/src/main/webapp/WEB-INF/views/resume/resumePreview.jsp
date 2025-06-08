@@ -97,7 +97,7 @@
 			<div id="profileBottom" class="borderBox">
 				<c:set var="visibleLimit" value="1" />
 				<div class="resumeSum education">
-				<span class="sumTitle">학력</span>
+			<span class="sumTitle">학력</span>
 				<div class="sumContent">
 					<c:choose>
 						<c:when test="${empty resume.schoolList}">
@@ -105,55 +105,61 @@
 						</c:when>
 						<c:otherwise>
 						
-							<!-- 학력 우선순위 지정 -->
-							<c:set var="finalEducation" value="" />
+							<!-- 최종 학력 변수 초기화 -->
+							<c:set var="finalSchoolName" value="" />
+							<c:set var="finalSortation" value="" />
+							<c:set var="finalStatus" value="" />
 							<c:set var="maxPriority" value="0" />
+							<c:set var="finalMajorName" value="" />
 							
+							
+							<!-- 최종 학력 찾기 -->
 							<c:forEach var="school" items="${resume.schoolList}">
-							    <c:set var="priority" value="0" />
-							    <c:choose>
-							        <c:when test="${school.sortation == 'doctor'}">
-							            <c:set var="priority" value="5" />
-							        </c:when>
-							        <c:when test="${school.sortation == 'master'}">
-							            <c:set var="priority" value="4" />
-							        </c:when>
-							        <c:when test="${school.sortation == 'univ4'}">
-							            <c:set var="priority" value="3" />
-							        </c:when>
-							        <c:when test="${school.sortation == 'univ2'}">
-							            <c:set var="priority" value="2" />
-							        </c:when>
-							        <c:when test="${school.sortation == 'high'}">
-							            <c:set var="priority" value="1" />
-							        </c:when>
-							    </c:choose>
-							
-							    <c:if test="${priority > maxPriority}">
-							        <c:set var="finalEducation" value="${school}" />
-							        <c:set var="maxPriority" value="${priority}" />
-							    </c:if>
+								<c:set var="priority" value="0" />
+									<c:choose>
+										<c:when test="${school.sortation == '대학교(4년)'}">
+											<c:set var="priority" value="3" />
+										</c:when>
+										<c:when test="${school.sortation == '대학교(2,3년)'}">
+											<c:set var="priority" value="2" />
+										</c:when>
+										<c:when test="${school.sortation == '고등학교'}">
+											<c:set var="priority" value="1" />
+										</c:when>
+									</c:choose>
+								
+								<!-- 더 높은 우선순위면 변수 갱신 -->
+									<c:if test="${priority > maxPriority}">
+										<c:set var="finalSchoolName" value="${school.schoolName}" />
+										<c:set var="finalSortation" value="${school.sortation}" />
+										<c:set var="finalStatus" value="${school.status}" />
+										<c:set var="finalMajorName" value="${school.majorName}" />
+										<c:set var="maxPriority" value="${priority}" />
+									</c:if>
 							</c:forEach>
 							
 							<!-- 출력 -->
-							<c:if test="${not empty finalEducation}">
-							    <span class="sumItem">${finalEducation.schoolName}</span>
-							    <span class="sumAddEx">
-							        <c:choose>
-							            <c:when test="${finalEducation.sortation == 'high'}">고등학교</c:when>
-							            <c:when test="${finalEducation.sortation == 'univ2'}">대학교(2,3년)</c:when>
-							            <c:when test="${finalEducation.sortation == 'univ4'}">대학교(4년)</c:when>
-							            <c:when test="${finalEducation.sortation == 'master'}">석사</c:when>
-							            <c:when test="${finalEducation.sortation == 'doctor'}">박사</c:when>
-							        </c:choose>
-							    </span>
-							    <span class="sumAddEx">${finalEducation.status}</span>
+							<c:if test="${not empty finalSchoolName}">
+								<span class="sumItem">${finalSchoolName}</span>
+								<span class="sumAddEx">
+									<c:choose>
+										<c:when test="${finalSortation == '고등학교'}">고등학교</c:when>
+										<c:when test="${finalSortation == '대학교(2,3년)'}">대학교(2,3년)</c:when>
+										<c:when test="${finalSortation == '대학교(4년)'}">대학교(4년)</c:when>
+									</c:choose>
+								</span>
+								
+								<c:if test="${not empty finalMajorName}">
+							        <span class="sumAddEx">전공: ${finalMajorName}</span>
+							    </c:if>
+							    
+								<span class="sumAddEx">${finalStatus}</span>
 							</c:if>
-						
 						</c:otherwise>
 					</c:choose>
 				</div>
-				</div>
+			</div>
+
 		<div class="resumeSum career">
 			<span class="sumTitle">경력</span>
 			<div class="sumContent">
@@ -273,24 +279,25 @@
 						<c:when test="${school.sortation == 'high'}">고등학교</c:when>
 						<c:when test="${school.sortation == 'univ4'}">대학교(4년)</c:when>
 						<c:when test="${school.sortation == 'univ2'}">대학교(2,3년)</c:when>
-						<c:when test="${school.sortation == 'master'}">석사</c:when>
-						<c:when test="${school.sortation == 'doctor'}">박사</c:when>
 					</c:choose>
 					</span>
 					
 					<span class="contentText textStrong">${school.schoolName}</span>
 					
 					<c:choose>
-						<c:when test="${school.sortation == 'high'}">
-							<span class="contentText ">${school.yearOfGraduation}년도</span>
-						</c:when>
-						
-						<c:when test="${school.sortation == 'univ4' || school.sortation == 'univ2' || school.sortation == 'master' || school.sortation == 'doctor' }">
-							<span class="contentText">${school.majorName}</span>
+						<c:when test="${school.sortation == '고등학교'}">
 							<span class="contentText textWeak ">
 								<fmt:formatDate value="${school.startDate}" pattern="yyyy.MM" /> ~
 								<fmt:formatDate value="${school.endDate}" pattern="yyyy.MM" />
 							</span>
+						</c:when>
+						
+						<c:when test="${school.sortation eq '대학교(4년)' or school.sortation eq '대학교(2,3년)'}">
+							<span class="contentText textWeak">전공: ${school.majorName}</span>
+								<span class="contentText textWeak">
+									<fmt:formatDate value="${school.startDate}" pattern="yyyy.MM" /> ~
+									<fmt:formatDate value="${school.endDate}" pattern="yyyy.MM" />
+								</span>
 						</c:when>
 					</c:choose>
 					<span class="contentText textWeak ">${school.status}</span>

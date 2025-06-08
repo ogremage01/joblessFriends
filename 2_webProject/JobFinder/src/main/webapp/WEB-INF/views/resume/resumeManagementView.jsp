@@ -74,24 +74,29 @@
                     </c:if>
 
                     <%-- 학력 요약 --%>
-                    <c:if test="${not empty resume.schoolList}">
-                      <div class="resume-education">
-                        <c:forEach var="school" items="${resume.schoolList}">
-                          <span>
-                            학력: ${school.schoolName}
-                            <c:if test="${not empty school.majorName}"> / ${school.majorName}</c:if>
-                            / ${school.status}
-                          </span><br/>
-                        </c:forEach>
-                      </div>
-                    </c:if>
+					<c:if test="${not empty resume.schoolList}">
+						<c:set var="lastIndex" value="${fn:length(resume.schoolList) - 1}" />
+						<c:set var="school" value="${resume.schoolList[lastIndex]}" />
+						
+						<c:if test="${school.status eq '졸업'}">
+							<div class="resume-education">
+								<span>
+									학력: ${school.schoolName}
+								<c:if test="${not empty school.majorName}"> / ${school.majorName}</c:if>
+									/ ${school.status}
+							</span>
+							</div>
+						</c:if>
+					</c:if>
 
                     <%-- 스킬 요약 --%>
                     <div class="resume-skills">
-                      <c:forEach var="tag" items="${resume.skillList}">
-                        <span class="tag"> ${tag.tagName} </span>
-                      </c:forEach>
-                    </div>
+						<c:forEach var="tag" items="${resume.skillList}" varStatus="status">
+							<c:if test="${status.index < 5}">
+								<span class="tag">${tag.tagName}</span>
+							</c:if>
+						</c:forEach>
+					</div>
 
                     <%-- 최종수정일 --%>
                     <div class="resume-date">최종수정일 <fmf:formatDate value="${resume.modifyDate}" /></div>
