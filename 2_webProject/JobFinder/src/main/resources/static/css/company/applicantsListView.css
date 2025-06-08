@@ -1,69 +1,170 @@
-/* 테이블 셀 기본 가운데 정렬 */
-table td, table th {
-	vertical-align: middle;
+/* 사이드바 카테고리 선택 색상 */
+.sidebar .recruitMgr {
+	color: #F69800;
+	font-weight: bold;	
+}
+
+
+/* 테이블 */
+.tableWrap {
+	margin-bottom: 50px;
+}
+
+.applicantsTable {
+	width: 900px;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+
+/* 테이블 헤더 */
+
+.applicantsTable thead th {
+    background-color: #f5f6fa;
+    text-align: center;
+    height: 40px;
+    border-top: 1px solid #737789;
+}
+
+.applicantsTable thead th:nth-child(1){
+	width: 12%;
+}
+.applicantsTable thead th:nth-child(2){
+	width: 20%;
+}
+.applicantsTable thead th:nth-child(3){
+	width: 15%;
+}
+.applicantsTable thead th:nth-child(n+4):nth-child(-n+5),.applicantsTable thead th:nth-child(8){
+	width: 11%;
+}
+.applicantsTable thead th:nth-child(6){
+	width: 10%;
+}
+.applicantsTable thead th:nth-child(7){
+	width: 10%;
+}
+
+
+/* 테이블 바디 */
+
+.applicantsTable tbody {
 	text-align: center;
 }
 
-/* 왼쪽 정렬이 필요한 경우만 별도로 처리 (예: 지원자 이름, 이력서 제목) */
-td:first-child,
-td:nth-child(2) {
-	text-align: left;
+.applyTr {
+	border-bottom: 1px solid #D3D5D9;
+}
+.applyTr:last-child {
+	border-bottom: none;
+}
+.applyTr>td {
+	padding: 20px 0px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
-/* 질문 버튼 */
-.btn-question {
-	width: 100px;
+
+/* 적합도 스타일 */
+.scoreRow {
+	color: #b7b7b7;
+}
+.scoreMiddle {
+	color: orange;	
+}
+
+.scoreHigh {
+	color: green;	
+}
+
+
+/* 상태 스타일 */
+.status-finalPass {
+	font-weight: bold;
+}
+.status-fail {
+	color: #b7b7b7;
+}
+
+
+/* 버튼 */
+.mgrBtnWrap {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	align-content: center;
+	flex-wrap: wrap;
+}
+
+.btn-styles {
+	width: 90px;
+	height: 33px;
 	background-color: #F69800;
 	color: #fff;
 	border: none;
-	padding: 6px 12px;
-	border-radius: 6px;
+	padding: 5px;
+	border-radius: 5px;
 	font-weight: bold;
+	font-size: 14px;
 	cursor: pointer;
 	transition: all 0.2s;
 }
 
-.btn-question:hover {
+.btn-styles:hover {
 	background-color: white;
 	color: #FF6600;
 	outline: 1px solid #F69800;
 }
 
-
-/* 질문 버튼 */
-.btn-state {
-	width: 100px;
-	background-color: #F69800;
-	color: #fff;
-	border: none;
-	padding: 6px 12px;
-	border-radius: 6px;
-	font-weight: bold;
-	cursor: pointer;
-	transition: all 0.2s;
+/* 지원자가 없을 때 */
+.emptyTd {
+	height: 200px;
+}
+.emptyTd span {
+	color: #999;
+	font-size: 16px;
 }
 
-.btn-state:hover {
-	background-color: white;
-	color: #FF6600;
-	outline: 1px solid #F69800;
+/* 페이지버튼 */
+
+#pageWrap{
+	display: flex;
+	gap: 2px;
+	width: inherit;
+}
+#pagination{
+	display: flex;
+    flex-direction: row;
+    margin: auto;
+}
+.page-btn {
+	text-decoration: none;
+	font-family: "Arial";
+	
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #ccc;
+    color: #333;
+    padding: 6px 12px;
+    margin: 0 2px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.page-btn:hover {
+    background-color: #f5f5f5;
 }
 
-/* 질문 버튼 */
-.btn-resume {
-	width: 100px;
-	background-color: #F69800;
-	color: #fff;
-	border: none;
-	padding: 6px 5px;
-	border-radius: 6px;
-	font-weight: bold;
-	cursor: pointer;
-	transition: all 0.2s;
-}
-
-.btn-resume:hover {
-	background-color: white;
-	color: #FF6600;
-	outline: 1px solid #F69800;
+.page-btn.active {
+    background-color: #ffff;
+    color: white;
+    color: #F69800;
+    font-weight: bold;
+    border: none;
+    outline: 1px solid #F69800;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
