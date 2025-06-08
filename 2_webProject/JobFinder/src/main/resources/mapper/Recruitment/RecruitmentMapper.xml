@@ -518,5 +518,25 @@
         DELETE FROM JOB_POST_ANSWER
         WHERE JOB_POST_ID = #{jobPostId}
     </delete>
+    <select id="findFilesByJobPostIds" resultType="com.joblessfriend.jobfinder.recruitment.domain.JobPostFileVo">
+        SELECT
+        JOB_POST_FILE_ID   AS jobPostFileId,
+        JOB_POST_ID        AS jobPostId,
+        FILE_NAME          AS fileName,
+        STORED_FILE_NAME   AS storedFileName,
+        FILE_EXTENSION     AS fileExtension,
+        TEMP_KEY           AS tempKey,
+        FILE_SIZE          AS fileSize,
+        CREATE_AT          AS createAt,
+        MODIFIED_AT        AS modifiedAt
+        FROM JOB_POST_FILE
+        WHERE JOB_POST_ID IN
+        <foreach collection="jobPostIdList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+
+
 
 </mapper>

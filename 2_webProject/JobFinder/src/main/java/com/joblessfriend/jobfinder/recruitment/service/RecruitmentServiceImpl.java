@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -56,16 +57,50 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
 
 
-	@Override
-	@Transactional
-	public void jobPostDelete(List<Integer> jobPostIdList) {
-		// TODO Auto-generated method stub
-		
-		recruitmentDao.jobPostFileDelete(jobPostIdList);
-		recruitmentDao.jobPostTagDelete(jobPostIdList);
-		recruitmentDao.jobPostDelete(jobPostIdList);
-		
-	}
+    @Override
+    @Transactional
+    public void jobPostDelete(List<Integer> jobPostIdList) {
+
+        // ✅ 1. 삭제 대상 파일 리스트 먼저 조회
+        List<JobPostFileVo> files = recruitmentDao.findFilesByJobPostIds(jobPostIdList);
+
+        // ✅ 2. DB 삭제 (ON DELETE CASCADE와 함께 연관된 자식 테이블 정리)
+        recruitmentDao.jobPostFileDelete(jobPostIdList);  // 필요 시 명시적 삭제
+        recruitmentDao.jobPostTagDelete(jobPostIdList);
+        recruitmentDao.jobPostDelete(jobPostIdList);      // JOB_POST 삭제
+
+        // ✅ 3. 실제 파일 삭제
+        for (JobPostFileVo file : files) {
+            System.out.println("삭제할 파일이름:   "+file.getStoredFileName());
+            deleteFileFromSystem(file.getStoredFileName(), "C:/upload/job_post/thumbs/");
+            deleteFileFromSystem(file.getStoredFileName(), "C:/upload/job_post/");
+        }
+    }
+
+    // 파일 시스템에서 파일 삭제하는 유틸리티 메서드
+    private void deleteFileFromSystem(String fileName, String uploadDir) {
+        try {
+            // URL 형태인 경우 파일명만 추출
+            if (fileName.startsWith("/")) {
+                fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
+            }
+
+            File fileToDelete = new File(uploadDir + fileName);
+            if (fileToDelete.exists()) {
+                boolean deleted = fileToDelete.delete();
+                if (deleted) {
+                    System.out.println("파일 삭제 성공: " + fileName);
+                } else {
+                    System.out.println("파일 삭제 실패: " + fileName);
+                }
+            } else {
+                System.out.println("삭제할 파일이 존재하지 않음: " + fileName);
+            }
+        } catch (Exception e) {
+            System.err.println("파일 삭제 중 오류 발생: " + fileName + ", " + e.getMessage());
+        }
+    }
+
 
 
 

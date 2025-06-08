@@ -233,5 +233,10 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
         sqlSession.delete(namespace+".deleteQuestionByOrder", order);
     }
 
+    @Override
+    public List<JobPostFileVo> findFilesByJobPostIds(List<Integer> jobPostIds) {
+        return sqlSession.selectList(namespace+".findFilesByJobPostIds", jobPostIds);
+    }
+
 
 }
