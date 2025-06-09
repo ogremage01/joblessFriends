@@ -117,6 +117,12 @@
 							<c:forEach var="school" items="${resume.schoolList}">
 								<c:set var="priority" value="0" />
 									<c:choose>
+									    <c:when test="${school.sortation == '박사'}">
+                                            <c:set var="priority" value="5" />
+                                        </c:when>
+										<c:when test="${school.sortation == '석사'}">
+                                            <c:set var="priority" value="4" />
+                                        </c:when>
 										<c:when test="${school.sortation == '대학교(4년)'}">
 											<c:set var="priority" value="3" />
 										</c:when>
