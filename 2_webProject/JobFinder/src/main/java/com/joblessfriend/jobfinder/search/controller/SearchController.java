@@ -94,7 +94,10 @@ public class SearchController {
 			@RequestParam(value = "jobPostId", required = false) Integer jobPostId, HttpSession session) {
 
 		SearchVo searchVo = new SearchVo();
-		searchVo.setKeyword(keyword);
+		
+		if(keyword != null && !keyword.isEmpty()) {
+			searchVo.setKeyword(keyword);	
+		}
 		System.out.println(searchVo.getKeyword());
 		searchVo.setPage(page); // ★ page 파라미터 사용
 		searchVo.setRecordSize(4);
