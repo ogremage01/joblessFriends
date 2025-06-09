@@ -29,7 +29,7 @@ function deleteRecruitments(jobPostIds) {
     })
     .then(data => {
         if (data == "삭제완료") {
-            alert("삭제 성공");
+            alert("공고가 성공적으로 삭제되었습니다.");
             location.reload();
         } else {
             alert("삭제 실패: 서버 응답 오류");

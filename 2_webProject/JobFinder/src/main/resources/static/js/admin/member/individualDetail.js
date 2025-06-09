@@ -127,7 +127,7 @@ deleteBtn.addEventListener("click", function(e) {
         })
         .then(data => {
             if (data === "1") {
-                alert("삭제 성공");
+                alert("회사 정보가 성공적으로 삭제되었습니다.");
                 location.href = "/admin/member/individual";
             } else {
                 alert("삭제 실패");

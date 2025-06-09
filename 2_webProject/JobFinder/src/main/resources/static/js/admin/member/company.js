@@ -91,5 +91,3 @@ massDelComBtn.addEventListener("click", function(e) {
     }
 });
 
-
-

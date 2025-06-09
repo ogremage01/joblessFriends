@@ -68,7 +68,7 @@
 					<table class="table admin-table">
 						<thead>
 							<tr>
-								<th scope="col">선택</th>
+								<th scope="col"><button id="selectAll">전체 선택</button></th>
 								<th scope="col">스킬 ID</th>
 								<th scope="col">스킬명</th>
 								<th scope="col">직군</th>

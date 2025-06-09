@@ -42,6 +42,7 @@
                         <i class="bi bi-chat-left-text-fill" style="color: #F69800;"></i>
                         커뮤니티 게시글 관리
                     </h1>
+
                 </div>
                 
                 <div class="admin-content">
@@ -55,7 +56,8 @@
                     <table class="table admin-table">
                         <thead>
                             <tr>
-                                <th scope="col">선택</th>
+                                <th scope="col"><button id="selectAll">전체 선택</button>
+                                </th>
                                 <th scope="col">게시글 ID</th>
                                 <th scope="col">제목</th>
                                 <th scope="col">작성자</th>
@@ -133,77 +135,7 @@
 </div>
 
 <jsp:include page="../../common/footer.jsp"/>
-
-<script type="text/javascript">
-function deleteCommunities(communityIdList) {
-    if (!confirm("삭제를 진행합니까?")) return;
-
-    fetch("/admin/community/post/delete", {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(communityIdList) // 배열 전달
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("서버 오류: " + response.status);
-        }
-        return response.text();
-    })
-    .then(data => {
-        if (data == "삭제완료") {
-            location.reload();
-        } else {
-            alert("삭제 실패: 서버 응답 오류");
-        }
-    })
-    .catch(error => {
-        alert("삭제 실패");
-        console.error("에러 발생:", error);
-    });
-}
-
-const delBtnArr = $(".delBtn");
-
-for (let i = 0; i < delBtnArr.length; i++) {//선택된 삭제 목록
-    delBtnArr[i].addEventListener("click", function (e) {
-        const communityId = e.target.value;
-        deleteCommunities([communityId]); // 단일도 배열로
-    });
-}
-
-document.getElementById("massDelCom").addEventListener("click", function () {
-    const checked = document.querySelectorAll(".delPost:checked");
-    const communityIdList = Array.from(checked).map(el => el.value);
-
-    if (communityIdList.length === 0) {
-        alert("삭제할 항목을 선택하세요.");
-        return;
-    }
-
-    deleteCommunities(communityIdList);
-});
-
-const searchCommunityBtn = document.getElementById("communitySearchBtn");
-
-searchCommunityBtn.addEventListener("click", function(e){
-    const communityKeywordVal = document.getElementById("communityKeyword").value.trim();
-    console.log("검색 키워드: "+communityKeywordVal);
-    if (communityKeywordVal !== "") {
-        location.href = `/admin/community/post?keyword=\${encodeURIComponent(communityKeywordVal)}`;
-    } else {
-        location.href = `/admin/community/post`;
-    }
-});
-
-// Enter 키 이벤트 추가
-document.getElementById("communityKeyword").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-        searchCommunityBtn.click();
-    }
-});
-</script>
+<script src="/js/admin/community/postManagement.js"></script>
 
 </body>
 </html>
