@@ -1,30 +1,55 @@
 $(document).on('click', '.job', function(e) {
-	const jobPostId = $(this).data('jobpostid');
-	const companyId = $(this).data('companyid');
-	window.location.href = `/Recruitment/detail?companyId=${companyId}&jobPostId=${jobPostId}`;
+   const jobPostId = $(this).data('jobpostid');
+   const companyId = $(this).data('companyid');
+   window.location.href = `/Recruitment/detail?companyId=${companyId}&jobPostId=${jobPostId}`;
 });
 
 
-$(document).on('click', '.page-btn', function() {
+let currentKeyword = '';
+
+// 초기 URL 파라미터로부터 페이지/검색어 추출
+$(document).ready(function () {
+    const params = new URLSearchParams(window.location.search);
+    const page = parseInt(params.get('page')) || 1;
+    currentKeyword = params.get('keyword') || '';
+    $('#searchKeywordInput').val(currentKeyword); // input에 값 반영
+    loadPage(page, currentKeyword);
+});
+
+// 검색 버튼 클릭 시
+$(document).on('click', '#searchBtn', function () {
+    currentKeyword = $('#searchKeywordInput').val().trim();
+    updateUrl(1, currentKeyword); // 검색 시 1페이지로
+    loadPage(1, currentKeyword);
+});
+
+// 페이지네이션 버튼 클릭 시
+$(document).on('click', '.page-btn', function () {
     if ($(this).is(':disabled')) return;
 
     const page = $(this).data('page');
-    const keyword = $(this).data('keyword') || '';
-
-    loadPage(page, keyword);
+    updateUrl(page, currentKeyword); // 페이지 이동 시 URL 갱신
+    loadPage(page, currentKeyword);
 });
+
+// URL을 갱신하는 함수 (주소만 바꿈, 새로고침 X)
+function updateUrl(page, keyword) {
+    const query = new URLSearchParams({ page, keyword }).toString();
+    window.history.pushState({}, '', `/search?${query}`);
+}
+
 
 function loadPage(page, keyword) {
     $.ajax({
         url: '/search/json',
         type: 'GET',
         data: { page, keyword },
-		success: function(response) {
-		    renderJobList(response.recruitmentList, response.skillMap);
-		    renderPagination(response.pagination);
-		    $('#searchSection span').html(
-		        `<b>'${keyword}'</b>에 대한 검색결과가 <b>총 ${response.totalCount}건</b> 있습니다.`
-		    );
+      success: function(response) {
+          renderJobList(response.recruitmentList, response.skillMap);
+          renderPagination(response.pagination);
+          $('#searchSection span').html(
+              `<b>'${keyword}'</b>에 대한 검색결과가 <b>총 ${response.totalCount}건</b> 있습니다.`
+          );
 
         },
         error: function() {
@@ -43,7 +68,7 @@ function loginFailPop(msg) {
 }
 
 $(document).on('click', '.apply-btn', function (e) {
-	e.stopPropagation();
+   e.stopPropagation();
     console.log(resumeList);
     if (!resumeList || resumeList.length === 0) {
         Swal.fire({
@@ -126,11 +151,11 @@ function showResumeSelectModal(jobPostId) {
         showCancelButton: true,
         confirmButtonText: '지원하기',
         cancelButtonText: '취소',
-		customClass: {
-			confirmButton: "swalConfirmBtn",
-			cancelButton: "swalCancelBtn",
-		},
-		reverseButtons: true, // 버튼 순서 거꾸로
+      customClass: {
+         confirmButton: "swalConfirmBtn",
+         cancelButton: "swalCancelBtn",
+      },
+      reverseButtons: true, // 버튼 순서 거꾸로
         preConfirm: () => {
             const selected = $('input[name="resumeRadio"]:checked').val();
             if (!selected) {
@@ -160,12 +185,12 @@ function showResumeSelectModal(jobPostId) {
                 },
                 error: function () {
                     Swal.fire({
-						title: "❌ 질문 조회 실패",
-						confirmButtonText: '확인',
-						customClass: {
-							confirmButton: "swalConfirmBtn",
-						},
-					});
+                  title: "❌ 질문 조회 실패",
+                  confirmButtonText: '확인',
+                  customClass: {
+                     confirmButton: "swalConfirmBtn",
+                  },
+               });
                 }
             });
         }
@@ -203,11 +228,11 @@ function openQuestionsModal(jobPostId) {
             showCancelButton: true,
             allowOutsideClick: false,
             allowEscapeKey: false,
-			customClass: {
-				confirmButton: "swalConfirmBtn",
-				cancelButton: "swalCancelBtn",
-			},
-			reverseButtons: true, // 버튼 순서 거꾸로
+         customClass: {
+            confirmButton: "swalConfirmBtn",
+            cancelButton: "swalCancelBtn",
+         },
+         reverseButtons: true, // 버튼 순서 거꾸로
             width: 600
         });
     });
@@ -297,20 +322,20 @@ function sendApplyAjax(resumeId, jobPostId, answerList) {
                 title: '지원 완료 🎉',
                 html: `입사지원 완료<br><span style="font-size: 13px; color: #555;">(지원내역은 마이페이지에서 확인 가능합니다)</span>`,
                 icon: 'success',
-				confirmButtonText: '확인',
-				customClass: {
-								confirmButton: "swalConfirmBtn",
-				},
+            confirmButtonText: '확인',
+            customClass: {
+                        confirmButton: "swalConfirmBtn",
+            },
             });
         },
         error: function () {
             Swal.fire({
                 title: '이미 지원 하신 공고입니다.',
                 icon: 'warning',
-				confirmButtonText: '확인',
-				customClass: {
-								confirmButton: "swalConfirmBtn",
-				},
+            confirmButtonText: '확인',
+            customClass: {
+                        confirmButton: "swalConfirmBtn",
+            },
             });
         }
     });
