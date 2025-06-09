@@ -43,9 +43,8 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 		int careerTotalScore = 40;
 
 		int resumeId = resumeVo.getResumeId();
-		System.out.println("RESUME_ID: " + resumeId);
 		int jobPostId = recruitmentVo.getJobPostId();
-		System.out.println("스킬직전");
+		
 		// 1. 스킬 점수
 		List<SkillVo> resumeSkillList = skillService.resumeTagList(resumeId);
 		List<SkillVo> recruitmentSkillList = skillService.postTagList(jobPostId);
@@ -59,13 +58,11 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 		
 		if (resumeSkillList.size() != 0 && resumeSkillList != null) {
 			for (SkillVo resumeSkillVo : resumeSkillList) {
-				System.out.println("여기서부터 여기까지 2");
 				int resumeSkillId = resumeSkillVo.getTagId();
-				System.out.println("resumeSkillId: " + resumeSkillId);
+				
 				for (SkillVo recruitmentSkillVo : recruitmentSkillList) {
-					System.out.println("여기서부터 여기까지 3");
 					int recruitmentSKillId = recruitmentSkillVo.getTagId();
-					System.out.println("recruitmentSKillId: " + recruitmentSKillId);
+					
 					if (resumeSkillId == recruitmentSKillId) {
 						matchCnt++;
 					}
@@ -73,14 +70,11 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 				}
 			}
 
-			skillScore = (int) Math.ceil(matchCnt * (skillTotalScore / recruitmentSkillList.size()));
+			skillScore = (int)(Math.ceil(matchCnt * (skillTotalScore / recruitmentSkillList.size())));
 		}
-
-		System.out.println("matchCnt: " + matchCnt);
 
 		skillScore = Math.min(skillScore, skillTotalScore);
 		skillScore = Math.max(skillScore, 0);
-		System.out.println("skillScore = " + skillScore);
 		
 		// 2. 학력 점수
 		System.out.println("skillTotalScore = " + resumeVo.getSchoolList());
@@ -105,7 +99,6 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 			schoolScore = 0;
 			break;
 		}
-		System.out.println("resumeSchoolList.size(): " + resumeSchoolList.size());
 
 		if (resumeSchoolList.size() == 0 || resumeSchoolList == null) {
 			schoolScore = 0;
@@ -114,15 +107,15 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 				String sortation = resumeSchoolVo.getSortation();
 				String status = resumeSchoolVo.getStatus();
 
-				if ("high".equals(status)) {
+				if ("high".equals(sortation)) {
 					schoolScore += 0;
-				} else if ("univ2".equals(status)) {
+				} else if ("univ2".equals(sortation)) {
 					schoolScore += (int) Math.ceil(schoolTotalScore * 0.3);
-				} else if ("univ4".equals(status)) {
+				} else if ("univ4".equals(sortation)) {
 					schoolScore += (int) Math.ceil(schoolTotalScore * 0.5);
-				} else if ("master".equals(status)) {
+				} else if ("master".equals(sortation)) {
 					schoolScore += (int) Math.ceil(schoolTotalScore * 0.75);
-				} else if ("doctor".equals(status)) {
+				} else if ("doctor".equals(sortation)) {
 					schoolScore += schoolTotalScore;
 				}
 
@@ -136,10 +129,10 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 
 			}
 		}
-
+		
 		schoolScore = Math.min(schoolScore, schoolTotalScore);
 		schoolScore = Math.max(schoolScore, 0);
-		System.out.println("schoolScore = " + schoolScore);
+		
 		// 3. 경력 점수
 		List<CareerVo> resumeCareerList = resumeVo.getCareerList();
 
@@ -162,7 +155,7 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 			careerScore = (int) Math.floor(careerTotalScore * 0.375);
 			break;
 		}
-		System.out.println("careerScore = " + careerScore);
+		
 		int careerAll = 0;
 		int careerJobGroup = 0;
 		int careerJob = 0;
@@ -173,9 +166,6 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 
 		int recJobGroupId = recruitmentVo.getJobGroupId();
 		int recJobId = recruitmentVo.getJobId();
-
-		System.out.println("recJobGroupId = " + recJobGroupId);
-		System.out.println("recJobId = " + recJobId);
 
 		if (resumeCareerList != null) {
 			for (CareerVo resumeCareerVo : resumeCareerList) {
@@ -215,13 +205,16 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 		careerScore = Math.min(careerScore, careerTotalScore);
 		careerScore = Math.max(careerScore, 0);
 
-		double careerEvgYear = (Math
-				.floor((((careerJob + careerJobGroup + careerAll) / 12.0) / resumeCareerList.size()) * 10.0)) / 10.0;
-
-		if (careerEvgYear < 1 && careerSize != 0) {
-
-			careerScore = (int) Math.floor(careerScore * 0.9);
+		double careerEvgYear = 0.0; 
+				
+		if(resumeCareerList.size() != 0) {
+			careerEvgYear = (Math.floor((((careerJob + careerJobGroup + careerAll) / 12.0) / resumeCareerList.size()) * 10.0)) / 10.0;
+			
+			if (careerEvgYear < 1 && careerSize != 0) {
+				careerScore = (int) Math.floor(careerScore * 0.9);
+			}
 		}
+
 
 		System.out.println("▶ 스킬 점수 = " + skillScore);
 		System.out.println("▶ 학력 점수 = " + schoolScore);
@@ -230,6 +223,7 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 		System.out.println("▶ 총점 = " + (skillScore + schoolScore + careerScore));
 
 		Integer total = (skillScore + schoolScore + careerScore);
+		
 		return total;
 	}
 
