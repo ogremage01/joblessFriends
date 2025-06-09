@@ -130,8 +130,8 @@ function performJobSearch() {
     const jobKeywordVal = document.getElementById("jobKeyword").value.trim();
     
     if (jobKeywordVal !== "") {
-        location.href = `/admin/job/job?page=1&keyword=${jobKeywordVal}`;
+        location.href = `/admin/job/singleJob?page=1&keyword=${jobKeywordVal}`;
     } else {
-        location.href = `/admin/job/job?page=1`;
+        location.href = `/admin/job/singleJob?page=1`;
     }
 } 
