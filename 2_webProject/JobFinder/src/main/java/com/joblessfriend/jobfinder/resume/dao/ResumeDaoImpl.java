@@ -48,6 +48,11 @@ class ResumeDaoImpl implements ResumeDao{
 	}
 
     @Override
+    public ResumeVo getResumeByResumeCopyId(int resumeId) {
+        return sqlSession.selectOne(namespace + ".getResumeByResumeCopyId", resumeId);
+    }
+
+    @Override
     public ResumeVo getResumeWithAllDetails(int resumeId) {
         System.out.println(">>> [ResumeDaoImpl] getResumeWithAllDetails 시작, resumeId: " + resumeId);
         
@@ -91,6 +96,52 @@ class ResumeDaoImpl implements ResumeDao{
             throw e;
         }
     }
+
+    @Override
+    public ResumeVo getResumeCopyWithAllDetails(int resumeId) {
+        System.out.println(">>> [ResumeDaoImpl] getResumeCopyWithAllDetails 시작, resumeId: " + resumeId);
+
+        try {
+            // 메인 이력서 정보 조회
+
+            ResumeVo resume = sqlSession.selectOne(namespace + ".getResumeByResumeCopyId", resumeId);
+
+            if (resume != null) {
+
+
+                // 하위 데이터들 조회하여 설정
+
+                List<SchoolVo> schools = getSchoolsByResumeId(resumeId);
+                resume.setSchoolList(schools);
+
+                List<CareerVo> careers = getCareersByResumeId(resumeId);
+                resume.setCareerList(careers);
+
+                List<EducationVo> educations = getEducationsByResumeId(resumeId);
+                resume.setEducationList(educations);
+
+                List<PortfolioVo> portfolios = getPortfoliosByResumeId(resumeId);
+                resume.setPortfolioList(portfolios);
+
+                List<CertificateResumeVo> certificateList = getCertificateByResumeId(resumeId);
+                resume.setCertificateList(certificateList);
+
+                List<SkillVo> skillList = getTagIdsByResumeId(resumeId);
+                resume.setSkillList(skillList);
+
+
+            } else {
+
+            }
+
+            return resume;
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
 
     @Override
     public List<SchoolVo> getSchoolsByResumeId(int resumeId) {
