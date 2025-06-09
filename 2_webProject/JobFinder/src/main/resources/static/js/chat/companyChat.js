@@ -10,8 +10,8 @@ let ws = null;
 let reconnectAttempts = 0;
 const MAX_RECONNECT_ATTEMPTS = 5;
 
-// 현재 호스트 주소 가져오기
-const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+// 현재 호스트 주소 가져오기 (SockJS는 HTTP 프로토콜 사용)
+const protocol = window.location.protocol; // http: 또는 https:
 const host = window.location.host;
 const baseUrl = `${protocol}//${host}`;
 
@@ -143,6 +143,19 @@ function appendMessage(data) {
 window.addEventListener('load', () => {
     loadPreviousMessages(roomId);
     connectWebSocket();
+});
+
+// Enter 키 이벤트 추가
+document.addEventListener('DOMContentLoaded', function() {
+    const chatInput = document.getElementById('chatInput');
+    if (chatInput) {
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+    }
 });
 
 // 페이지 언로드 시 WebSocket 정리

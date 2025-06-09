@@ -28,8 +28,8 @@ let messageQueue = [];
 // 채팅방별 안 읽은 메시지 수 저장
 const unreadCounts = {};
 
-// WebSocket 연결 URL 구성
-const protocol = window.location.protocol;
+// WebSocket 연결 URL 구성 (SockJS는 HTTP 프로토콜 사용)
+const protocol = window.location.protocol; // http: 또는 https:
 const host = window.location.hostname;
 const port = window.location.port ? `:${window.location.port}` : '';
 const baseUrl = `${protocol}//${host}${port}`;
@@ -503,8 +503,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	// 채팅방 목록 초기 로드
 	loadChatRooms();
 
-	// 사용자 입력 감지 -> 활동 시간 갱신
-	document.getElementById('chatInput').addEventListener('keypress', updateLastActivityTime);
+	// 사용자 입력 감지 -> 활동 시간 갱신 및 Enter 키 처리
+	document.getElementById('chatInput').addEventListener('keypress', function(e) {
+		updateLastActivityTime();
+		if (e.key === 'Enter') {
+			e.preventDefault();
+			sendMessage();
+		}
+	});
 	document.getElementById('chatInput').addEventListener('input', updateLastActivityTime);
 
 	// 채팅 메시지 전송 폼 이벤트
