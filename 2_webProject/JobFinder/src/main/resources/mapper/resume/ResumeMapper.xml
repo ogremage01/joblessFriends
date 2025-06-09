@@ -38,7 +38,15 @@
         WHERE RESUME_ID = #{resumeId}
     </select>
 
-	<!-- 삭제 -->
+    <select id="getResumeByResumeCopyId" resultMap="ResumeResultMap">
+        SELECT RESUME_ID, RESUME_TITLE, NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS,
+               SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT
+        FROM RESUME_Copy
+        WHERE RESUME_ID = #{resumeId}
+    </select>
+
+
+    <!-- 삭제 -->
     <delete id="deleteResumeById">
         DELETE FROM RESUME 
         WHERE RESUME_ID = #{resumeId}

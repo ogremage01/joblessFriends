@@ -16,7 +16,7 @@ public interface ResumeService {
 	ResumeVo getResumeByResumeId(int resumeId);
 	
 	ResumeVo getResumeWithAllDetails(int resumeId);
-	
+    ResumeVo getResumeCopyWithAllDetails(int resumeId);
     void deleteResume(int memberId, int resumeId);
     
     void updateProfileImage(int resumeId, int memberId, String imageUrl);
@@ -28,7 +28,7 @@ public interface ResumeService {
     void updateResume(ResumeVo resumeVo);
     
     List<ResumeVo> getResumeListWithSummaryByMemberId(int memberId);
-    
+
     // 비즈니스 로직 메서드들
     Map<String, Object> prepareResumeWritePageData(Integer resumeId, MemberVo loginUser);
     String saveOrUpdateResume(Map<String, Object> requestMap, MemberVo loginUser);

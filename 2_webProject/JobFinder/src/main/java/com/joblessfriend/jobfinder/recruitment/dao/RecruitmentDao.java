@@ -72,4 +72,9 @@ public interface RecruitmentDao {
 
 
     void deleteQuestionByOrder(Integer jobPostId, int order);
+
+
+    List<JobPostFileVo> findFilesByJobPostIds(List<Integer> jobPostIds);
+
+
 }

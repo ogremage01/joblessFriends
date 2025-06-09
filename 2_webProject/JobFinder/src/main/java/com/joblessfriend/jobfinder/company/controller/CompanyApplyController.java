@@ -72,8 +72,9 @@ public class CompanyApplyController {
         // ✅ 적합도 점수 계산 및 주입
         for (ApplySummaryVo apply : applyList) {
             int resumeId = apply.getResumeId(); // getter 확인 필요
-            ResumeVo resumeVo = resumeService.getResumeWithAllDetails(resumeId);
+            ResumeVo resumeVo = resumeService.getResumeCopyWithAllDetails(resumeId);
             int score = resumeMatchService.calculateMatchScore(resumeVo, recruitmentVo);
+            System.out.println("n번째 : "+ score);
             apply.setMatchScore(score); // 필드 없으면 추가해야 함
         }
         // 뷰에 데이터 전달

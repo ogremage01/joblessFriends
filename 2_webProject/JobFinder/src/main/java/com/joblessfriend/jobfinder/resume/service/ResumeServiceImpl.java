@@ -156,6 +156,19 @@ public class ResumeServiceImpl implements ResumeService {
 	}
 
 	@Override
+	public ResumeVo getResumeCopyWithAllDetails(int resumeId) {
+		try {
+			ResumeVo resume = resumeDao.getResumeCopyWithAllDetails(resumeId);
+
+			return resume;
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
 	@Transactional
 	public void saveResume(ResumeVo resumeVo) {
 		try {
