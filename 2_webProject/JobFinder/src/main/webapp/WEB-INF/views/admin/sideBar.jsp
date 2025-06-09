@@ -179,7 +179,7 @@
 }
 
 /* 모든 애니메이션 제거 */
-*, *::before, *::after {
+.sidebar *, .sidebar *::before, .sidebar *::after {
 	transition: none !important;
 	animation: none !important;
 	transform: none !important;
