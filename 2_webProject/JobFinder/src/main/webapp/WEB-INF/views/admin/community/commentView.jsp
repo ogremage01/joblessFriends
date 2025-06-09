@@ -54,7 +54,7 @@
                     <table class="table admin-table">
                         <thead>
                             <tr>
-                                <th scope="col">선택</th>
+                                <th scope="col"><button id="selectAll">전체 선택</button></th>
                                 <th scope="col">댓글 ID</th>
                                 <th scope="col">내용</th>
                                 <th scope="col">작성자</th>

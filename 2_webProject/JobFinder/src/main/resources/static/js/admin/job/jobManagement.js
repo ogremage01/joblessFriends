@@ -135,3 +135,15 @@ function performJobSearch() {
         location.href = `/admin/job/job?page=1`;
     }
 } 
+
+//전체 선택 체크박스
+
+const selectAllCom = document.getElementById("selectAll");
+
+selectAllCom.addEventListener("click", function(e) {
+	    const checkboxes = document.querySelectorAll(".admin-checkbox");
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = !checkbox.checked; // 현재 체크 상태를 반전시킴
+    });
+});

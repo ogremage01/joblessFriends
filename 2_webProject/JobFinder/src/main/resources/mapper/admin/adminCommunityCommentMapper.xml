@@ -56,7 +56,7 @@
 	</delete>
 	
 	<delete id="replyByCommentDeleteList" parameterType="list">
-		DELETE FROM POST_COMMENT_ID
+		DELETE FROM POST_COMMENT
 		WHERE POST_COMMENT_ID IN
 		<foreach item="postCommentId" collection="list" open="(" separator="," close=")">
 			#{postCommentId}
