@@ -41,6 +41,7 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
         applyCopy.setPortfolioList(origin.getPortfolioList());
         applyCopy.setAddress(origin.getAddress());
 
+        int originId = origin.getResumeId();
         // 1. 이력서 복사
         resumeApplyDao.insertResumeCopy(applyCopy);
         int applyId = applyCopy.getResumeId();
@@ -87,7 +88,7 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
         manageVo.setRmId(applyId);
         manageVo.setJobPostId(jobPostId);
         manageVo.setMemberId(memberId);
-        manageVo.setResumeFile(String.valueOf(applyId));
+        manageVo.setResumeFile(String.valueOf(originId));
         manageVo.setStateId(1);
 
         resumeApplyDao.insertResumeManage(manageVo);
