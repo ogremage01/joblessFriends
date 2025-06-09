@@ -101,17 +101,17 @@
 							<nav aria-label="페이지 네비게이션">
 								<ul class="pagination">
 									<li class="page-item ${searchVo.page==1?'disabled':''}">
-										<a class="page-link" href="/admin/job/job?page=${searchVo.page-1}&keyword=${searchVo.keyword}">
+										<a class="page-link" href="/admin/job/singleJob?page=${searchVo.page-1}&keyword=${searchVo.keyword}">
 											«
 										</a>
 									</li>
 									<c:forEach begin="${pagination.startPage}" var="i" end="${pagination.endPage}">
 										<li class="page-item ${searchVo.page==i?'active':''}">
-											<a class="page-link" href="/admin/job/job?page=${i}&keyword=${searchVo.keyword}">${i}</a>
+											<a class="page-link" href="/admin/job/singleJob?page=${i}&keyword=${searchVo.keyword}">${i}</a>
 										</li>
 									</c:forEach>
 									<li class="page-item ${searchVo.page==pagination.totalPageCount? 'disabled':''}">
-										<a class="page-link" href="/admin/job/job?page=${searchVo.page+1}&keyword=${searchVo.keyword}">
+										<a class="page-link" href="/admin/job/singleJob?page=${searchVo.page+1}&keyword=${searchVo.keyword}">
 											»
 										</a>
 									</li>

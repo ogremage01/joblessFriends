@@ -200,9 +200,11 @@ body {
 .search-btn {
 	background-color: #F69800;
 	color: white;
-	border: none;
+	border: 1px solid #F69800;
 	padding: 8px 15px;
 	border-radius: 5px;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
 	cursor: pointer;
 	font-size: 14px;
 }
@@ -213,12 +215,11 @@ body {
 
 /* ========== 검색 및 추가 영역 ========== */
 .search-container {
-	 display: flex; 
-	gap: 10px;
+	display: flex; 
+	gap: 0;
 	align-items: center;
 	margin-bottom: 20px;
-	
-	
+	justify-content: center;
 }
 
 .search-input, .add-input {
@@ -230,10 +231,11 @@ body {
 }
 
 .search-input {
-	flex: 1;
-	margin:auto;
 	min-width: 200px;
 	max-width: 400px;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	border-right: none;
 }
 
 .add-input {
@@ -246,6 +248,10 @@ body {
 
 .search-input:hover, .add-input:hover {
 	border-color: #F69800;
+}
+
+.search-input:hover + .search-btn {
+	border-left-color: #F69800;
 }
 
 .search-input:focus, .add-input:focus {
@@ -599,6 +605,12 @@ body {
 
 	.search-input {
 		margin-bottom: 10px;
+		border-radius: 5px;
+		border-right: 1px solid #afb2bd;
+	}
+	
+	.search-btn {
+		border-radius: 5px;
 	}
 
 	.add-section {
