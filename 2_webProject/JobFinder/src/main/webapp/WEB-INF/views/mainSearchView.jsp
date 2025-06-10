@@ -147,7 +147,6 @@ body {
 
 	<!-- <script src="/js/recruitment/recruitmentView.js"></script> -->
 	<script src="/js/search/searchRecruitment.js"></script>
-	<script src="/js/common/header.js"></script>
 
 	<script>
 	    const resumeList =
