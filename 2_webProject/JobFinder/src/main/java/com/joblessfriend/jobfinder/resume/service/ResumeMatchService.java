@@ -6,5 +6,5 @@ import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 public interface ResumeMatchService {
 
 	public int calculateMatchScore(ResumeVo resumeVo, RecruitmentVo recruitmentVo);
-	public int selectCareerGradeScore(int careerJobYear);
+	public int selectCareerGrade(int careerJobYear);
 }

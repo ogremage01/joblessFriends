@@ -5,6 +5,6 @@ import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 
 public interface ResumeMatchDao {
 
-	int selectCareerGradeScore(int careerJobYear);
+	int selectCareerGrade(int careerJobYear);
 
 }

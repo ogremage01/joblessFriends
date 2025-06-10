@@ -175,21 +175,6 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 			break;
 		}
 		
-		switch (careerType) {
-		case "신입":
-			careerScore = careerTotalScore;
-			break;
-		case "1~3년":
-			careerScore = (int) Math.floor(careerTotalScore * 0.625);
-			break;
-		case "3~5년":
-			careerScore = (int) Math.floor(careerTotalScore * 0.375);
-			break;
-		case "5년이상":
-			careerScore = (int) Math.floor(careerTotalScore * 0.375);
-			break;
-		}
-		
 		int careerAll = 0;
 		int careerJobGroup = 0;
 		int careerJob = 0;
@@ -230,9 +215,21 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 			}
 
 			careerJobYear = (int) Math.floor(careerJob / 12);
-			careerScore += (int) Math.floor(careerAll / 12) * 1;
-			careerScore += (int) Math.floor(careerJobGroup / 12) * 3;
-			careerScore += selectCareerGradeScore(careerJobYear);
+			
+			//careerScore += selectCareerGradeScore(careerJobYear);
+			
+			int resumeCareerGrade = selectCareerGrade(careerJobYear);
+			
+			if(careerGrade > resumeCareerGrade) {
+				careerScore = 0;
+			} else if (careerGrade == resumeCareerGrade) {
+				careerScore = careerTotalScore;
+			} else if (careerGrade < resumeCareerGrade) {
+				careerScore = careerTotalScore * (1 - ((resumeCareerGrade - careerGrade) / 10));
+			}
+			
+			careerScore += (int) Math.floor(careerAll / 12) * 0.5;
+			careerScore += (int) Math.floor(careerJobGroup / 12) * 2;
 
 		}
 
@@ -262,7 +259,7 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 	}
 
 	@Override
-	public int selectCareerGradeScore(int careerJobYear) {
-		return resumeMatchDao.selectCareerGradeScore(careerJobYear);
+	public int selectCareerGrade(int careerJobYear) {
+		return resumeMatchDao.selectCareerGrade(careerJobYear);
 	}
 }
