@@ -126,7 +126,8 @@ function showResumeSelectModal(jobPostId) {
     }).then(result => {
         if (result.isConfirmed) {
             const selectedResumeId = result.value;
-
+			const selectedRadio = $('input[name="resumeRadio"]:checked');
+			   const selectedMatchScore = selectedRadio.closest('.resume-item').data('matchscore');
             $.ajax({
                 url: '/resume/apply/questions',
                 method: 'GET',
@@ -135,11 +136,11 @@ function showResumeSelectModal(jobPostId) {
                     if (questionList.length > 0) {
                         openQuestionsModal(jobPostId).then(questionResult => {
                             if (questionResult.isConfirmed) {
-                                applyResumeAjax(selectedResumeId, jobPostId);
+                                applyResumeAjax(selectedResumeId, jobPostId,selectedMatchScore);
                             }
                         });
                     } else {
-                        applyResumeAjax(selectedResumeId, jobPostId);
+                        applyResumeAjax(selectedResumeId, jobPostId,selectedMatchScore);
                     }
                 },
                 error: function () {
@@ -197,7 +198,7 @@ function openQuestionsModal(jobPostId) {
     });
 }
 
-function applyResumeAjax(resumeId, jobPostId) {
+function applyResumeAjax(resumeId, jobPostId,matchScore) {
     const seen = new Set();
     const answerList = [];
 
@@ -228,12 +229,12 @@ function applyResumeAjax(resumeId, jobPostId) {
 	        },
         }).then(result => {
             if (result.isConfirmed) {
-                sendApplyAjax(resumeId, jobPostId, answerList);
+                sendApplyAjax(resumeId, jobPostId, answerList,matchScore);
             } else if (result.isDenied) {
                 // 👉 다시 질문 모달로
                 openQuestionsModal(jobPostId).then(questionResult => {
                     if (questionResult.isConfirmed) {
-                        applyResumeAjax(resumeId, jobPostId);  // 다시 확인하고 진행
+                        applyResumeAjax(resumeId, jobPostId,matchScore);  // 다시 확인하고 진행
                     }
                 });
             }
@@ -257,12 +258,12 @@ function applyResumeAjax(resumeId, jobPostId) {
 	        },
         }).then(result => {
             if (result.isConfirmed) {
-                sendApplyAjax(resumeId, jobPostId, answerList);
+                sendApplyAjax(resumeId, jobPostId, answerList,matchScore);
             } else if (result.isDenied) {
                 // 👉 다시 질문 모달로
                 openQuestionsModal(jobPostId).then(questionResult => {
                     if (questionResult.isConfirmed) {
-                        applyResumeAjax(resumeId, jobPostId);  // 답변 재확인 후 재진입
+                        applyResumeAjax(resumeId, jobPostId,matchScore);  // 답변 재확인 후 재진입
                     }
                 });
             }
@@ -271,10 +272,10 @@ function applyResumeAjax(resumeId, jobPostId) {
     }
 
 // 모두 답변했을 경우엔 바로 진행
-    sendApplyAjax(resumeId, jobPostId, answerList);
+    sendApplyAjax(resumeId, jobPostId, answerList,matchScore);
 }
 //분기처리 ,미응답 답변 함수 //
-function sendApplyAjax(resumeId, jobPostId, answerList) {
+function sendApplyAjax(resumeId, jobPostId, answerList,matchScore) {
     $.ajax({
         url: "/resume/apply",
         method: "POST",
@@ -282,7 +283,8 @@ function sendApplyAjax(resumeId, jobPostId, answerList) {
         data: JSON.stringify({
             resumeId,
             jobPostId,
-            answerList
+            answerList,
+			matchScore
         }),
         success: function () {
             Swal.fire({
