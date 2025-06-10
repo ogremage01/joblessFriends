@@ -104,7 +104,6 @@
 							<span class="sumItem">-</span>
 						</c:when>
 						<c:otherwise>
-						
 							<!-- 최종 학력 변수 초기화 -->
 							<c:set var="finalSchoolName" value="" />
 							<c:set var="finalSortation" value="" />
@@ -112,24 +111,23 @@
 							<c:set var="maxPriority" value="0" />
 							<c:set var="finalMajorName" value="" />
 							
-							
 							<!-- 최종 학력 찾기 -->
 							<c:forEach var="school" items="${resume.schoolList}">
 								<c:set var="priority" value="0" />
 									<c:choose>
-									    <c:when test="${school.sortation == '박사'}">
+									    <c:when test="${school.sortation == 'doctor'}">
                                             <c:set var="priority" value="5" />
                                         </c:when>
-										<c:when test="${school.sortation == '석사'}">
+										<c:when test="${school.sortation == 'master'}">
                                             <c:set var="priority" value="4" />
                                         </c:when>
-										<c:when test="${school.sortation == '대학교(4년)'}">
+										<c:when test="${school.sortation == 'univ4'}">
 											<c:set var="priority" value="3" />
 										</c:when>
-										<c:when test="${school.sortation == '대학교(2,3년)'}">
+										<c:when test="${school.sortation == 'univ2'}">
 											<c:set var="priority" value="2" />
 										</c:when>
-										<c:when test="${school.sortation == '고등학교'}">
+										<c:when test="${school.sortation == 'high'}">
 											<c:set var="priority" value="1" />
 										</c:when>
 									</c:choose>
@@ -145,22 +143,22 @@
 							</c:forEach>
 							
 							<!-- 출력 -->
-							<c:if test="${not empty finalSchoolName}">
 								<span class="sumItem">${finalSchoolName}</span>
 								<span class="sumAddEx">
 									<c:choose>
-										<c:when test="${finalSortation == '고등학교'}">고등학교</c:when>
-										<c:when test="${finalSortation == '대학교(2,3년)'}">대학교(2,3년)</c:when>
-										<c:when test="${finalSortation == '대학교(4년)'}">대학교(4년)</c:when>
+										<c:when test="${finalSortation == 'high'}">고등학교</c:when>
+										<c:when test="${finalSortation == 'univ2'}">대학교(2,3년)</c:when>
+										<c:when test="${finalSortation == 'univ4'}">대학교(4년)</c:when>
+										<c:when test="${finalSortation == 'master'}">석사</c:when>
+										<c:when test="${finalSortation == 'doctor'}">박사</c:when>
 									</c:choose>
 								</span>
 								
 								<c:if test="${not empty finalMajorName}">
-							        <span class="sumAddEx">전공: ${finalMajorName}</span>
+							        <span class="sumAddEx">${finalMajorName}</span>
 							    </c:if>
 							    
-								<span class="sumAddEx">${finalStatus}</span>
-							</c:if>
+<%-- 								<span class="sumAddEx">${finalStatus}</span> --%>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -285,21 +283,20 @@
 						<c:when test="${school.sortation == 'high'}">고등학교</c:when>
 						<c:when test="${school.sortation == 'univ4'}">대학교(4년)</c:when>
 						<c:when test="${school.sortation == 'univ2'}">대학교(2,3년)</c:when>
+						<c:when test="${school.sortation == 'master'}">석사</c:when>
+						<c:when test="${school.sortation == 'doctor'}">박사</c:when>
 					</c:choose>
 					</span>
 					
 					<span class="contentText textStrong">${school.schoolName}</span>
 					
 					<c:choose>
-						<c:when test="${school.sortation == '고등학교'}">
-							<span class="contentText textWeak ">
-								<fmt:formatDate value="${school.startDate}" pattern="yyyy.MM" /> ~
-								<fmt:formatDate value="${school.endDate}" pattern="yyyy.MM" />
-							</span>
+						<c:when test="${school.sortation == 'high'}">
+                            <span class="contentText textWeak">${school.yearOfGraduation}</span>
 						</c:when>
 						
-						<c:when test="${school.sortation eq '대학교(4년)' or school.sortation eq '대학교(2,3년)'}">
-							<span class="contentText textWeak">전공: ${school.majorName}</span>
+                        <c:when test="${school.sortation == 'univ4' || school.sortation == 'univ2' || school.sortation == 'master' || school.sortation == 'doctor' }">
+							<span class="contentText textWeak"> ${school.majorName}</span>
 								<span class="contentText textWeak">
 									<fmt:formatDate value="${school.startDate}" pattern="yyyy.MM" /> ~
 									<fmt:formatDate value="${school.endDate}" pattern="yyyy.MM" />
