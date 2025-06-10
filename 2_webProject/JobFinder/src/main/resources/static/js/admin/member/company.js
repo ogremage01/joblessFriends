@@ -38,7 +38,7 @@ selectAllCom.addEventListener("click", function(e) {
 const massDelComBtn = document.getElementById("massDelCom");
 
 massDelComBtn.addEventListener("click", function(e) {
-    const delCompanyArr = document.querySelectorAll(".delCompany:checked");
+    const delCompanyArr = document.querySelectorAll(".ds:checked");
 	    if(delCompanyArr.length===0){
 			        alert("선택된 기업이 없습니다.");
         return;
