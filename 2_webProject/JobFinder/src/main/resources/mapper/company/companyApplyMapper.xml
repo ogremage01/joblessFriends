@@ -10,6 +10,7 @@
 		<result property="applyDate" column="APPLY_DATE"/>
 		<result property="stateName" column="STATE_NAME"/>
 		<result property="memberId" column="MEMBER_ID"/>
+		<result property="matchScore" column="MATCH_SCORE" />
 	</resultMap>
 
 	<select id="getApplyListByCompany" parameterType="map" resultMap="applySummaryResultMap">
@@ -19,7 +20,8 @@
 			rc.RESUME_TITLE,
 			rm.APPLY_DATE,
 			s.STATE_NAME,
-			rm.MEMBER_ID
+			rm.MEMBER_ID,
+			rc.MATCH_SCORE
 		FROM RESUME_MANAGE rm
 				 JOIN RESUME_COPY rc ON rm.RM_ID = rc.RESUME_ID
 				 JOIN JOB_POST jp ON rm.JOB_POST_ID = jp.JOB_POST_ID
@@ -39,6 +41,7 @@
 									   rc.RESUME_ID,
 									   rc.NAME AS MEMBER_NAME,
 									   rc.RESUME_TITLE,
+									   rc.MATCH_SCORE,
 									   rm.APPLY_DATE,
 									   s.STATE_NAME,
 									   rm.MEMBER_ID
@@ -49,7 +52,7 @@
 											JOIN STATE s ON rm.STATE_ID = s.STATE_ID
 								   WHERE c.COMPANY_ID = #{companyId}
 									 AND jp.JOB_POST_ID = #{jobPostId}
-								   ORDER BY rm.APPLY_DATE DESC
+								   ORDER BY  rc.MATCH_SCORE DESC,rm.APPLY_DATE DESC
 							   ) inner_query
 						  WHERE ROWNUM &lt;= #{endRow}
 					  )
