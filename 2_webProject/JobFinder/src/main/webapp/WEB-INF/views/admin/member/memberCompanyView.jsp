@@ -119,7 +119,6 @@
 		</div>
 	</div>
 </div>
-<jsp:include page="../../common/footer.jsp"/>
 <script src="/js/admin/member/company.js"></script>
 </body>
 </html>

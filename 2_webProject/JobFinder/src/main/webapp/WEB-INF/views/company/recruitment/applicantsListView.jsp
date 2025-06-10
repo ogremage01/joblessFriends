@@ -61,13 +61,13 @@
  						                        	<!-- 적합도에 따른 스타일 넣기 -->
 						                        <td
 						                        	<c:choose>
-							                        	<c:when test="${apply.matchScore < 20}">
+							                        	<c:when test="${apply.matchScore < 30}">
 							                        		class="scoreRow"
 							                        	</c:when>
-							                        	<c:when test="${apply.matchScore >= 20 && apply.matchScore <= 29}">
+							                        	<c:when test="${apply.matchScore >= 30 && apply.matchScore <= 59}">
 							                        		class="scoreMiddle"
 							                        	</c:when>
-							                        	<c:when test="${apply.matchScore >= 30}">
+							                        	<c:when test="${apply.matchScore >= 60}">
 							                        		class="scoreHigh"
 							                        	</c:when>
 							                        </c:choose>
