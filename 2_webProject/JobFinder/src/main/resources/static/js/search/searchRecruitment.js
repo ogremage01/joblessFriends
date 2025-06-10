@@ -5,58 +5,7 @@ $(document).on('click', '.job', function(e) {
 });
 
 
-let currentKeyword = '';
 
-// 초기 URL 파라미터로부터 페이지/검색어 추출
-$(document).ready(function () {
-    const params = new URLSearchParams(window.location.search);
-    const page = parseInt(params.get('page')) || 1;
-    currentKeyword = params.get('keyword') || '';
-    $('#searchKeywordInput').val(currentKeyword); // input에 값 반영
-    loadPage(page, currentKeyword);
-});
-
-// 검색 버튼 클릭 시
-$(document).on('click', '#searchBtn', function () {
-    currentKeyword = $('#searchKeywordInput').val().trim();
-    updateUrl(1, currentKeyword); // 검색 시 1페이지로
-    loadPage(1, currentKeyword);
-});
-
-// 페이지네이션 버튼 클릭 시
-$(document).on('click', '.page-btn', function () {
-    if ($(this).is(':disabled')) return;
-
-    const page = $(this).data('page');
-    updateUrl(page, currentKeyword); // 페이지 이동 시 URL 갱신
-    loadPage(page, currentKeyword);
-});
-
-// URL을 갱신하는 함수 (주소만 바꿈, 새로고침 X)
-function updateUrl(page, keyword) {
-    const query = new URLSearchParams({ page, keyword }).toString();
-    window.history.pushState({}, '', `/search?${query}`);
-}
-
-
-function loadPage(page, keyword) {
-    $.ajax({
-        url: '/search/json',
-        type: 'GET',
-        data: { page, keyword },
-      success: function(response) {
-          renderJobList(response.recruitmentList, response.skillMap);
-          renderPagination(response.pagination);
-          $('#searchSection span').html(
-              `<b>'${keyword}'</b>에 대한 검색결과가 <b>총 ${response.totalCount}건</b> 있습니다.`
-          );
-
-        },
-        error: function() {
-            Swal.fire('데이터를 불러오지 못했습니다.');
-        }
-    });
-}
 
 
 function loginFailPop(msg) {

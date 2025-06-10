@@ -31,7 +31,6 @@ body {
 </style>
 </head>
 
-
 <script
 	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script
@@ -148,6 +147,7 @@ body {
 
 	<!-- <script src="/js/recruitment/recruitmentView.js"></script> -->
 	<script src="/js/search/searchRecruitment.js"></script>
+	<script src="/js/common/header.js"></script>
 
 	<script>
 	    const resumeList =
