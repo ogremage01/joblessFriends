@@ -81,7 +81,7 @@
 		    		<div class="accountInfo accountDelete">
 				    	<h2>탈퇴하기</h2>
 		    			<div>
-		    				<form id="deleteCheckForm" class="formStyle" method="post" action="" onsubmit="return submitCheck();">
+		    				<form id="deleteCheckForm" class="formStyle" onsubmit="return false">
 					    			<c:if test="${sessionScope.userLogin.provider eq 'normal'}">
 						    			<div class="inputGroup">
 						    				<label for="passwordDel">현재 비밀번호</label>
