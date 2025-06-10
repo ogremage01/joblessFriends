@@ -83,7 +83,7 @@ function showResumeSelectModal(jobPostId) {
 
 
     const html = resumeList.map(r => `
-    <label class="resume-item">
+    <label class="resume-item"  data-matchscore="${r.matchScore}">
         <div class="resume-radio-row">
             <div class="resume-left">
                 <input type="radio" name="resumeRadio" value="${r.resumeId}">

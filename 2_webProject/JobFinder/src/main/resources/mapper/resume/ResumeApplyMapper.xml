@@ -60,7 +60,7 @@
         INSERT INTO RESUME_COPY (
         RESUME_ID,RESUME_TITLE, MEMBER_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL,
         POSTAL_CODE_ID, ADDRESS, SELF_INTRODUCTION, PROFILE,
-         CREATE_AT, MODIFIED_AT
+         CREATE_AT, MODIFIED_AT,MATCH_SCORE
         )
         VALUES (
         #{resumeId},
@@ -74,7 +74,7 @@
         #{address, jdbcType=VARCHAR},
         #{selfIntroduction, jdbcType=VARCHAR},
         #{profile, jdbcType=VARCHAR},
-        SYSDATE, SYSDATE
+        SYSDATE, SYSDATE,#{matchScore}
         )
     </insert>
 

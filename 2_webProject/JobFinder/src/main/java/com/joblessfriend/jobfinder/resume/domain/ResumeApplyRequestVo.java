@@ -12,5 +12,6 @@ public class ResumeApplyRequestVo {
     private int resumeId;
     private int jobPostId;
     private int memberId; // 서버에서 세션으로 세팅해도 무방
+    private int matchScore;
     private List<JobPostAnswerVo> answerList;
 }

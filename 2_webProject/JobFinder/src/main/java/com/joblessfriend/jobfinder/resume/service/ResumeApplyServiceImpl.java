@@ -22,7 +22,7 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
 
     @Override
     @Transactional
-    public int applyResumeWithCopy(int resumeId, int jobPostId, int memberId, List<JobPostAnswerVo> answerList) {
+    public int applyResumeWithCopy(int resumeId, int jobPostId, int memberId, List<JobPostAnswerVo> answerList, int matchScore) {
         ResumeVo origin = resumeService.getResumeWithAllDetails(resumeId);
 
         ResumeVo applyCopy = new ResumeVo();
@@ -40,6 +40,8 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
         applyCopy.setCertificateList(origin.getCertificateList());
         applyCopy.setPortfolioList(origin.getPortfolioList());
         applyCopy.setAddress(origin.getAddress());
+        applyCopy.setMatchScore(matchScore);
+
 
         int originId = origin.getResumeId();
         // 1. 이력서 복사

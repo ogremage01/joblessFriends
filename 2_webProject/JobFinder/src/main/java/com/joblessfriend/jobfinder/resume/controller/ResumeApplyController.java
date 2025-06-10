@@ -43,7 +43,7 @@ public class ResumeApplyController {
 
         try {
             vo.setMemberId(loginUser.getMemberId()); // 세션으로 memberId 덮어쓰기
-            resumeApplyService.applyResumeWithCopy(vo.getResumeId(), vo.getJobPostId(), vo.getMemberId(), vo.getAnswerList());
+            resumeApplyService.applyResumeWithCopy(vo.getResumeId(), vo.getJobPostId(), vo.getMemberId(), vo.getAnswerList(),vo.getMatchScore());
             return ResponseEntity.ok("입사지원 완료");
         } catch (Exception e) {
             e.printStackTrace();
