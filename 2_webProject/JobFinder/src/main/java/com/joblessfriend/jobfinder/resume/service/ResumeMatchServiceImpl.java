@@ -42,11 +42,10 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 		int schoolTotalScore = 30;
 		int careerTotalScore = 40;
 
-		int resumeId = resumeVo.getResumeId();
 		int jobPostId = recruitmentVo.getJobPostId();
 		
 		// 1. 스킬 점수
-		List<SkillVo> resumeSkillList = skillService.resumeTagList(resumeId);
+		List<SkillVo> resumeSkillList = resumeVo.getSkillList();
 		List<SkillVo> recruitmentSkillList = skillService.postTagList(jobPostId);
 
 		int skillScore = 0;

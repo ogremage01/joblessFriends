@@ -1,37 +1,11 @@
 $(document).on('click', '.job', function(e) {
-	const jobPostId = $(this).data('jobpostid');
-	const companyId = $(this).data('companyid');
-	window.location.href = `/Recruitment/detail?companyId=${companyId}&jobPostId=${jobPostId}`;
+   const jobPostId = $(this).data('jobpostid');
+   const companyId = $(this).data('companyid');
+   window.location.href = `/Recruitment/detail?companyId=${companyId}&jobPostId=${jobPostId}`;
 });
 
 
-$(document).on('click', '.page-btn', function() {
-    if ($(this).is(':disabled')) return;
 
-    const page = $(this).data('page');
-    const keyword = $(this).data('keyword') || '';
-
-    loadPage(page, keyword);
-});
-
-function loadPage(page, keyword) {
-    $.ajax({
-        url: '/search/json',
-        type: 'GET',
-        data: { page, keyword },
-		success: function(response) {
-		    renderJobList(response.recruitmentList, response.skillMap);
-		    renderPagination(response.pagination);
-		    $('#searchSection span').html(
-		        `<b>'${keyword}'</b>에 대한 검색결과가 <b>총 ${response.totalCount}건</b> 있습니다.`
-		    );
-
-        },
-        error: function() {
-            Swal.fire('데이터를 불러오지 못했습니다.');
-        }
-    });
-}
 
 
 function loginFailPop(msg) {
@@ -43,7 +17,7 @@ function loginFailPop(msg) {
 }
 
 $(document).on('click', '.apply-btn', function (e) {
-	e.stopPropagation();
+   e.stopPropagation();
     console.log(resumeList);
     if (!resumeList || resumeList.length === 0) {
         Swal.fire({
@@ -126,11 +100,11 @@ function showResumeSelectModal(jobPostId) {
         showCancelButton: true,
         confirmButtonText: '지원하기',
         cancelButtonText: '취소',
-		customClass: {
-			confirmButton: "swalConfirmBtn",
-			cancelButton: "swalCancelBtn",
-		},
-		reverseButtons: true, // 버튼 순서 거꾸로
+      customClass: {
+         confirmButton: "swalConfirmBtn",
+         cancelButton: "swalCancelBtn",
+      },
+      reverseButtons: true, // 버튼 순서 거꾸로
         preConfirm: () => {
             const selected = $('input[name="resumeRadio"]:checked').val();
             if (!selected) {
@@ -160,12 +134,12 @@ function showResumeSelectModal(jobPostId) {
                 },
                 error: function () {
                     Swal.fire({
-						title: "❌ 질문 조회 실패",
-						confirmButtonText: '확인',
-						customClass: {
-							confirmButton: "swalConfirmBtn",
-						},
-					});
+                  title: "❌ 질문 조회 실패",
+                  confirmButtonText: '확인',
+                  customClass: {
+                     confirmButton: "swalConfirmBtn",
+                  },
+               });
                 }
             });
         }
@@ -203,11 +177,11 @@ function openQuestionsModal(jobPostId) {
             showCancelButton: true,
             allowOutsideClick: false,
             allowEscapeKey: false,
-			customClass: {
-				confirmButton: "swalConfirmBtn",
-				cancelButton: "swalCancelBtn",
-			},
-			reverseButtons: true, // 버튼 순서 거꾸로
+         customClass: {
+            confirmButton: "swalConfirmBtn",
+            cancelButton: "swalCancelBtn",
+         },
+         reverseButtons: true, // 버튼 순서 거꾸로
             width: 600
         });
     });
@@ -297,20 +271,20 @@ function sendApplyAjax(resumeId, jobPostId, answerList) {
                 title: '지원 완료 🎉',
                 html: `입사지원 완료<br><span style="font-size: 13px; color: #555;">(지원내역은 마이페이지에서 확인 가능합니다)</span>`,
                 icon: 'success',
-				confirmButtonText: '확인',
-				customClass: {
-								confirmButton: "swalConfirmBtn",
-				},
+            confirmButtonText: '확인',
+            customClass: {
+                        confirmButton: "swalConfirmBtn",
+            },
             });
         },
         error: function () {
             Swal.fire({
                 title: '이미 지원 하신 공고입니다.',
                 icon: 'warning',
-				confirmButtonText: '확인',
-				customClass: {
-								confirmButton: "swalConfirmBtn",
-				},
+            confirmButtonText: '확인',
+            customClass: {
+                        confirmButton: "swalConfirmBtn",
+            },
             });
         }
     });
