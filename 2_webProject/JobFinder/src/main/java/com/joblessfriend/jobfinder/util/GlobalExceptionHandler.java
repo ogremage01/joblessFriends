@@ -23,5 +23,9 @@ public class GlobalExceptionHandler {
         return "error/error";
 
     }
-
+    @ExceptionHandler(Exception.class)
+    public String handleAllExceptions(Exception e, Model model) {
+        model.addAttribute("message", e.getMessage());
+        return "error/error"; // JSP 경로
+    }
 }
