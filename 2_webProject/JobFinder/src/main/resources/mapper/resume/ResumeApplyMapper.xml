@@ -271,7 +271,7 @@
     </select>
 
     <select id="getTagListByResumeId" resultType="com.joblessfriend.jobfinder.skill.domain.SkillVo">
-        SELECT RT.TAG_ID, T.TAG_NAME
+        SELECT RT.TAG_ID as tagId, T.TAG_NAME as tagName
         FROM RESUME_TAG_COPY RT JOIN TAG T ON RT.TAG_ID = T.TAG_ID
         WHERE RT.RESUME_ID = #{resumeId}
         ORDER BY RT.RESUME_TAG_ID
