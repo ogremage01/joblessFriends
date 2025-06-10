@@ -38,9 +38,9 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 	@Override
 	public int calculateMatchScore(ResumeVo resumeVo, RecruitmentVo recruitmentVo) {
 		System.out.println("계산기 입장");
-		int skillTotalScore = 30;
+		int skillTotalScore = 40;
 		int schoolTotalScore = 30;
-		int careerTotalScore = 40;
+		int careerTotalScore = 30;
 
 		int jobPostId = recruitmentVo.getJobPostId();
 		
@@ -80,7 +80,26 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 		List<SchoolVo> resumeSchoolList = resumeVo.getSchoolList();
 		String schoolType = recruitmentVo.getEducation();
 		int schoolScore = 0;
+		int sortationGrade = 0;
 
+		switch (schoolType) {
+		case "고등학교 졸업":
+			sortationGrade = 1;
+			break;
+		case "대학 졸업(2,3년)":
+			sortationGrade = 2;
+			break;
+		case "대학교 졸업(4년)":
+			sortationGrade = 3;
+			break;
+		case "대학원 석사졸업":
+			sortationGrade = 4;
+			break;
+		case "대학원 박사졸업":
+			sortationGrade = 5;
+			break;
+		}
+		
 		switch (schoolType) {
 		case "고등학교 졸업":
 			schoolScore = schoolTotalScore;
@@ -139,7 +158,23 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 		System.out.println("careerType = " + recruitmentVo.getCareerType());
 
 		int careerScore = 0;
-
+		int careerGrade = 0;
+		
+		switch (careerType) {
+		case "신입":
+			careerGrade = 1;
+			break;
+		case "1~3년":
+			careerGrade = 2;
+			break;
+		case "3~5년":
+			careerGrade = 3;
+			break;
+		case "5년이상":
+			careerGrade = 4;
+			break;
+		}
+		
 		switch (careerType) {
 		case "신입":
 			careerScore = careerTotalScore;
