@@ -11,22 +11,23 @@
 <link rel="stylesheet" href="/css/common/mainSearchView.css">
 <link rel="stylesheet" href="/css/recruitment/recruitmentView.css">
 <link rel="stylesheet" href="/css/recruitment/recruitmentNav.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style type="text/css">
 body {
 	overflow-y: scroll;
 }
 
 #infoSection {
-    display: flex;
-    flex-direction: column;
-    background-color: #ffffff;
-    border: 1px solid lightgray;
-    padding: 20px;
-    border-radius: 5px;
-/*     box-shadow: 0 0 8px rgba(0, 0, 0, 0.05); */
-    gap: 20px;
+	display: flex;
+	flex-direction: column;
+	background-color: #ffffff;
+	border: 1px solid lightgray;
+	padding: 20px;
+	border-radius: 5px;
+	/*     box-shadow: 0 0 8px rgba(0, 0, 0, 0.05); */
+	gap: 20px;
 }
 </style>
 </head>
@@ -114,8 +115,8 @@ body {
 					<c:forEach begin="${pagination.startPage}"
 						end="${pagination.endPage}" var="i">
 						<button class="page-btn ${pagination.page == i ? 'active' : ''}"
-							type="button" data-page="${i}" 
-							data-keyword="${keyword}" ${pagination.page == i ? 'disabled' : ''}>${i}</button>
+							type="button" data-page="${i}" data-keyword="${keyword}"
+							${pagination.page == i ? 'disabled' : ''}>${i}</button>
 					</c:forEach>
 
 					<!-- 다음 페이지 -->
@@ -141,32 +142,34 @@ body {
 
 
 	<jsp:include page="./common/footer.jsp" />
-	<div id="askConfirm">
-	</div>
+	<div id="askConfirm"></div>
 
 
 	<!-- <script src="/js/recruitment/recruitmentView.js"></script> -->
 	<script src="/js/search/searchRecruitment.js"></script>
 
 	<script>
-	    const resumeList =
-	            <c:choose>
-	            <c:when test="${not empty resumeList}">
-	            [
-	                <c:forEach var="r" items="${resumeList}" varStatus="i">
-	                {
-	                    resumeId: '${r.resumeId}',
-	                    title: '${r.title}',
-	                    modifiedAt: '<fmt:formatDate value="${r.modifyDate}" pattern="MM/dd(E)" />',
-	                    matchScore: ${r.matchScore}
-	                }<c:if test="${!i.last}">,</c:if>
-	                </c:forEach>
-	            ]
-	                </c:when>
-	                <c:otherwise>
-	                []
-	        </c:otherwise>
-	        </c:choose>;
+	
+	const userType = '${userType}';
+	
+    const resumeList =
+            <c:choose>
+            <c:when test="${not empty resumeList}">
+            [
+                <c:forEach var="r" items="${resumeList}" varStatus="i">
+                {
+                    resumeId: '${r.resumeId}',
+                    title: '${r.title}',
+                    modifiedAt: '<fmt:formatDate value="${r.modifyDate}" pattern="MM/dd(E)" />',
+                    matchScore: ${r.matchScore}
+                }<c:if test="${!i.last}">,</c:if>
+                </c:forEach>
+            ]
+                </c:when>
+                <c:otherwise>
+                []
+        </c:otherwise>
+        </c:choose>;
 	</script>
 
 	<div id="askConfirm" class="toast-popup"></div>
