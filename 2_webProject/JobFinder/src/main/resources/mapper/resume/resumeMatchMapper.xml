@@ -4,7 +4,7 @@
 
 <mapper namespace="com.joblessfriend.jobfinder.resume.dao.ResumeMatchDao">
 
-    <select id="selectCareerGradeScore" resultType="int" parameterType="int">
+    <select id="selectCareerGrade" resultType="int" parameterType="int">
     	SELECT CAREER_GRADE
 		FROM CAREER_GRADE
 		WHERE LOW_YEAR &lt;= #{value}
