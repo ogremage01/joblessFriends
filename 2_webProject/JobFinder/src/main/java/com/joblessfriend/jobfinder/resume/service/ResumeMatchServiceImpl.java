@@ -100,23 +100,6 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 			break;
 		}
 		
-		switch (schoolType) {
-		case "고등학교 졸업":
-			schoolScore = schoolTotalScore;
-			break;
-		case "대학 졸업(2,3년)":
-			schoolScore = (int) Math.floor(schoolTotalScore * 0.7);
-			break;
-		case "대학교 졸업(4년)":
-			schoolScore = (int) Math.floor(schoolTotalScore * 0.5);
-			break;
-		case "대학원 석사졸업":
-			schoolScore = (int) Math.floor(schoolTotalScore * 0.25);
-			break;
-		case "대학원 박사졸업":
-			schoolScore = 0;
-			break;
-		}
 
 		if (resumeSchoolList.size() == 0 || resumeSchoolList == null) {
 			schoolScore = 0;
@@ -124,17 +107,18 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 			for (SchoolVo resumeSchoolVo : resumeSchoolList) {
 				String sortation = resumeSchoolVo.getSortation();
 				String status = resumeSchoolVo.getStatus();
+				int resumeSchoolSoration = 0;
 
 				if ("high".equals(sortation)) {
-					schoolScore += 0;
+					resumeSchoolSoration = 1;
 				} else if ("univ2".equals(sortation)) {
-					schoolScore += (int) Math.ceil(schoolTotalScore * 0.3);
+					resumeSchoolSoration = 2;
 				} else if ("univ4".equals(sortation)) {
-					schoolScore += (int) Math.ceil(schoolTotalScore * 0.5);
+					resumeSchoolSoration = 3;
 				} else if ("master".equals(sortation)) {
-					schoolScore += (int) Math.ceil(schoolTotalScore * 0.75);
+					resumeSchoolSoration = 4;
 				} else if ("doctor".equals(sortation)) {
-					schoolScore += schoolTotalScore;
+					resumeSchoolSoration = 5;
 				}
 
 				if (!"졸업".equals(status)) {
@@ -144,7 +128,16 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 						schoolScore -= (int) Math.floor(schoolTotalScore * 0.15);
 					}
 				}
-
+				
+				if(sortationGrade > resumeSchoolSoration) {
+					schoolScore = 0;
+				} else if (sortationGrade == resumeSchoolSoration) {
+					schoolScore = schoolTotalScore;
+				} else if (sortationGrade < resumeSchoolSoration) {
+					schoolScore = schoolTotalScore * (1 - ((resumeSchoolSoration - sortationGrade) / 10));
+				}
+				
+				
 			}
 		}
 		
@@ -241,7 +234,7 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 		if(resumeCareerList.size() != 0) {
 			careerEvgYear = (Math.floor((((careerJob + careerJobGroup + careerAll) / 12.0) / resumeCareerList.size()) * 10.0)) / 10.0;
 			
-			if (careerEvgYear < 1 && careerSize != 0) {
+			if (careerEvgYear < 1 && careerSize != 0) {	
 				careerScore = (int) Math.floor(careerScore * 0.9);
 			}
 		}
@@ -253,7 +246,7 @@ public class ResumeMatchServiceImpl implements ResumeMatchService {
 		System.out.println("▶ 평균 근속 = " + careerEvgYear + "년");
 		System.out.println("▶ 총점 = " + (skillScore + schoolScore + careerScore));
 
-		Integer total = (skillScore + schoolScore + careerScore);
+		Integer total = (skillScore + schoolScore + careerScore);		
 		
 		return total;
 	}

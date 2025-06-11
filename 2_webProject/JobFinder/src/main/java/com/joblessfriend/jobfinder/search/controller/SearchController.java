@@ -175,6 +175,7 @@ public class SearchController {
 		}
 
 		logger.info("메인서치 recruitmentList: " + recruitmentList);
+		model.addAttribute("userType", userType);
 		model.addAttribute("recruitmentList", recruitmentList);
 		model.addAttribute("skillMap", skillMap);
 		model.addAttribute("pagination", pagination);
