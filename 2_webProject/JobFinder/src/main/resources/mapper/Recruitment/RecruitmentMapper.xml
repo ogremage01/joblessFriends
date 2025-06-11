@@ -50,92 +50,71 @@
     <select id="RecruitmentList" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo"
             parameterType="com.joblessfriend.jobfinder.util.SearchVo">
 
-        SELECT *
-        FROM (
-                 SELECT inner_query.*, ROWNUM AS rnum
-                 FROM (
-                          SELECT
-                              jp.job_post_id AS jobPostId,
-                              c.company_id AS companyId,
-                              c.company_name AS companyName,
-                              jp.title AS title,
-                              jp.career_type AS careerType,
-                              jp.education AS education,
-                              jg.job_group_name AS jobGroupName,
-                              j.job_name AS jobName,
-                              jp.end_date AS endDate,
-                              jp.job_img AS jobImg,
-                              JP.IS_CONTINUOUS AS isContinuous
-                          FROM job_post jp
-                                   JOIN company c ON jp.company_id = c.company_id
-                                   JOIN job_group jg ON jp.job_group_id = jg.job_group_id
-                                   JOIN job j ON jp.job_id = j.job_id
-                          ORDER BY jp.end_date ASC, jp.job_post_id ASC
-                      ) inner_query
-                 WHERE ROWNUM &lt;= #{endRow}
-             )
-        WHERE rnum &gt;= #{startRow}
+        SELECT
+            jp.job_post_id AS jobPostId,
+            c.company_id AS companyId,
+            c.company_name AS companyName,
+            jp.title AS title,
+            jp.career_type AS careerType,
+            jp.education AS education,
+            jg.job_group_name AS jobGroupName,
+            j.job_name AS jobName,
+            jp.end_date AS endDate,
+            jp.job_img AS jobImg,
+            JP.IS_CONTINUOUS AS isContinuous
+        FROM job_post jp
+                 JOIN company c ON jp.company_id = c.company_id
+                 JOIN job_group jg ON jp.job_group_id = jg.job_group_id
+                 JOIN job j ON jp.job_id = j.job_id
+        ORDER BY jp.end_date ASC, jp.job_post_id ASC
+        LIMIT #{startRow}, #{pageSize}
     </select>
     
 	<!--     메인 용 : 공고 등록순(최신순) -->
     <select id="RecruitmentListLatest" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo"
             parameterType="com.joblessfriend.jobfinder.util.SearchVo">
 
-        SELECT *
-        FROM (
-                 SELECT inner_query.*, ROWNUM AS rnum
-                 FROM (
-                          SELECT
-                              jp.job_post_id AS jobPostId,
-                              c.company_id AS companyId,
-                              c.company_name AS companyName,
-                              jp.title AS title,
-                              jp.career_type AS careerType,
-                              jp.education AS education,
-                              jg.job_group_name AS jobGroupName,
-                              j.job_name AS jobName,
-                              jp.end_date AS endDate,
-                              jp.job_img AS jobImg
-                          FROM job_post jp
-                                   JOIN company c ON jp.company_id = c.company_id
-                                   JOIN job_group jg ON jp.job_group_id = jg.job_group_id
-                                   JOIN job j ON jp.job_id = j.job_id
-                          ORDER BY jp.job_post_id DESC
-                      ) inner_query
-                 WHERE ROWNUM &lt;= #{endRow}
-             )
-        WHERE rnum &gt;= #{startRow}
+        SELECT
+            jp.job_post_id AS jobPostId,
+            c.company_id AS companyId,
+            c.company_name AS companyName,
+            jp.title AS title,
+            jp.career_type AS careerType,
+            jp.education AS education,
+            jg.job_group_name AS jobGroupName,
+            j.job_name AS jobName,
+            jp.end_date AS endDate,
+            jp.job_img AS jobImg
+        FROM job_post jp
+                 JOIN company c ON jp.company_id = c.company_id
+                 JOIN job_group jg ON jp.job_group_id = jg.job_group_id
+                 JOIN job j ON jp.job_id = j.job_id
+        ORDER BY jp.job_post_id DESC
+        LIMIT #{startRow}, #{pageSize}
     </select>
     
 	<!--     메인 용 : 조회수 많은 순 -->
     <select id="RecruitmentListViews" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo"
             parameterType="com.joblessfriend.jobfinder.util.SearchVo">
 
-        SELECT *
-        FROM (
-                 SELECT inner_query.*, ROWNUM AS rnum
-                 FROM (
-                          SELECT
-                              jp.job_post_id AS jobPostId,
-                              c.company_id AS companyId,
-                              c.company_name AS companyName,
-                              jp.title AS title,
-                              jp.career_type AS careerType,
-                              jp.education AS education,
-                              jg.job_group_name AS jobGroupName,
-                              j.job_name AS jobName,
-                              jp.end_date AS endDate,
-                              jp.job_img AS jobImg,
-                              jp.views as views
-                          FROM job_post jp
-                                   JOIN company c ON jp.company_id = c.company_id
-                                   JOIN job_group jg ON jp.job_group_id = jg.job_group_id
-                                   JOIN job j ON jp.job_id = j.job_id
-                          ORDER BY jp.views DESC
-                      ) inner_query
-                 WHERE ROWNUM &lt;= #{endRow}
-             )
-        WHERE rnum &gt;= #{startRow}
+        SELECT
+            jp.job_post_id AS jobPostId,
+            c.company_id AS companyId,
+            c.company_name AS companyName,
+            jp.title AS title,
+            jp.career_type AS careerType,
+            jp.education AS education,
+            jg.job_group_name AS jobGroupName,
+            j.job_name AS jobName,
+            jp.end_date AS endDate,
+            jp.job_img AS jobImg,
+            jp.views as views
+        FROM job_post jp
+                 JOIN company c ON jp.company_id = c.company_id
+                 JOIN job_group jg ON jp.job_group_id = jg.job_group_id
+                 JOIN job j ON jp.job_id = j.job_id
+        ORDER BY jp.views DESC
+        LIMIT #{startRow}, #{pageSize}
     </select>
     
     
@@ -189,14 +168,8 @@
         WHERE JOB_POST_ID = #{jobPostId}
     </update>
 <!--채용공고 인서트 -->
-    <insert id="insertRecruitment" parameterType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo">
-        <selectKey keyProperty="jobPostId"
-                   resultType="java.lang.Integer"
-                   order="BEFORE">
-            SELECT JOB_POST_ID_SEQ.NEXTVAL FROM DUAL
-        </selectKey>
+    <insert id="insertRecruitment" parameterType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo" useGeneratedKeys="true" keyProperty="jobPostId">
         INSERT INTO JOB_POST (
-        JOB_POST_ID,
         COMPANY_ID,
         TITLE,
         CONTENT,
@@ -216,7 +189,6 @@
         CURRENT_APPLICANTS,
         CREATE_DATE
         ) VALUES (
-        #{jobPostId},
         #{companyId},
         #{title},
         #{content},
@@ -234,7 +206,7 @@
         0,
         0,
         0,
-        SYSDATE
+        NOW()
         )
 
     </insert>

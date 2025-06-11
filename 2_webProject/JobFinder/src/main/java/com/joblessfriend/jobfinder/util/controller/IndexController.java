@@ -48,12 +48,12 @@ public class IndexController {
 		int totalCountSlide = recruitmentService.getRecruitmentTotalCount(searchVoSlide);
 		Pagination paginationSlide = new Pagination(totalCountSlide, searchVoSlide);
 
-		// 3. Oracle 11g용 row 계산
-		searchVo.setStartRow(pagination.getLimitStart() + 1); // ROWNUM은 1부터 시작
-		searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
+		// 3. MySQL용 LIMIT 계산
+		searchVo.setStartRow(pagination.getLimitStart()); // MySQL LIMIT는 0부터 시작
+		searchVo.setPageSize(searchVo.getRecordSize());
 
-		searchVoSlide.setStartRow(paginationSlide.getLimitStart() + 1); // ROWNUM은 1부터 시작
-		searchVoSlide.setEndRow(searchVoSlide.getStartRow() + searchVoSlide.getRecordSize() - 1);
+		searchVoSlide.setStartRow(paginationSlide.getLimitStart()); // MySQL LIMIT는 0부터 시작
+		searchVoSlide.setPageSize(searchVoSlide.getRecordSize());
 
 		// 4. 페이징된 리스트만 조회
 		List<RecruitmentVo> recruitmentListLatest = recruitmentService.recruitmentListLatest(searchVo); // 최신 순

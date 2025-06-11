@@ -57,24 +57,20 @@
     <!-- 이력서 사진 업데이트 -->
     <update id="updateProfileImage">
         UPDATE RESUME
-        SET PROFILE = #{imageUrl}, MODIFIED_AT = SYSDATE
+        SET PROFILE = #{imageUrl}, MODIFIED_AT = NOW()
         WHERE RESUME_ID = #{resumeId}
           AND MEMBER_ID = #{memberId}
     </update>
     
     <!-- 이력서 저장 -->
-    <insert id="insertResume" parameterType="com.joblessfriend.jobfinder.resume.domain.ResumeVo">
-        <selectKey keyProperty="resumeId" resultType="int" order="BEFORE">
-            SELECT RESUME_ID_SEQ.NEXTVAL FROM DUAL
-        </selectKey>
+    <insert id="insertResume" parameterType="com.joblessfriend.jobfinder.resume.domain.ResumeVo" useGeneratedKeys="true" keyProperty="resumeId">
         INSERT INTO RESUME (
-            RESUME_TITLE,RESUME_ID, MEMBER_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL,
+            RESUME_TITLE, MEMBER_ID, NAME, BIRTHDATE, PHONENUMBER, EMAIL,
             POSTAL_CODE_ID, ADDRESS, SELF_INTRODUCTION, PROFILE,
              CREATE_AT, MODIFIED_AT
         )
         VALUES (
         	#{title},
-            #{resumeId},
             #{memberId, jdbcType=INTEGER},
             #{memberName, jdbcType=VARCHAR},
             #{birthDate, jdbcType=DATE},
@@ -84,7 +80,7 @@
             #{address, jdbcType=VARCHAR},
             #{selfIntroduction, jdbcType=VARCHAR},
             #{profile, jdbcType=VARCHAR},
-            SYSDATE, SYSDATE
+            NOW(), NOW()
         )
     </insert>
     
@@ -94,8 +90,7 @@
         SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, 
         YEAR_OF_GRADUATION, STATUS, MAJOR_NAME, START_DATE, END_DATE
     )
-    VALUES (
-        SCHOOL_ID_SEQ.NEXTVAL,
+            VALUES (
         #{resumeId},
         #{sortation},
         #{schoolName},

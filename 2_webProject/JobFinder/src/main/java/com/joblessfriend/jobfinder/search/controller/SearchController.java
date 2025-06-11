@@ -119,9 +119,9 @@ public class SearchController {
 		}
 		System.out.println("getRecordSize: " + searchVo.getRecordSize());
 
-		// Oracle 11g에 맞게 startRow, endRow 계산
-		searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
-		searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
+		// MySQL에 맞게 LIMIT 계산
+		searchVo.setStartRow(pagination.getLimitStart()); // MySQL LIMIT는 0부터 시작
+		searchVo.setPageSize(searchVo.getRecordSize()); // 페이지당 레코드 수
 
 		List<RecruitmentVo> recruitmentList = searchService.getRecruitmentSearchList(searchVo);
 
@@ -195,9 +195,9 @@ public class SearchController {
 	    int totalCount = searchService.getRecruitmentSearchTotalCount(searchVo.getKeyword());
 	    Pagination pagination = new Pagination(totalCount, searchVo);
 
-	    // Oracle 11g 기준 rownum
-	    searchVo.setStartRow(pagination.getLimitStart() + 1);
-	    searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
+	    // MySQL LIMIT 기준
+	    searchVo.setStartRow(pagination.getLimitStart());
+	    searchVo.setPageSize(searchVo.getRecordSize());
 
 	    // 공고 리스트 조회
 	    List<RecruitmentVo> recruitmentList = searchService.getRecruitmentSearchList(searchVo);

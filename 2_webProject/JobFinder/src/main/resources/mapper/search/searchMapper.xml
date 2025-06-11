@@ -10,42 +10,35 @@
                  JOIN company c ON jp.company_id = c.company_id
                  JOIN job_group jg ON jp.job_group_id = jg.job_group_id
                  JOIN job j ON jp.job_id = j.job_id
-      <if test="keyword != null or keyword != ''">
-       WHERE (UPPER(jp.TITLE) LIKE '%' || #{keyword} || '%') OR (LOWER(jp.TITLE) LIKE '%' || #{keyword} || '%')
-        				  OR (UPPER(jp.CONTENT) LIKE '%' || #{keyword} || '%') OR (LOWER(jp.CONTENT) LIKE '%' || #{keyword} || '%')
-        				  OR (UPPER(c.COMPANY_NAME) LIKE '%' || #{keyword} || '%') OR (LOWER(c.COMPANY_NAME) LIKE '%' || #{keyword} || '%')
+      <if test="keyword != null and keyword != ''">
+       WHERE (UPPER(jp.TITLE) LIKE CONCAT('%', UPPER(#{keyword}), '%')) OR (LOWER(jp.TITLE) LIKE CONCAT('%', LOWER(#{keyword}), '%'))
+        				  OR (UPPER(jp.CONTENT) LIKE CONCAT('%', UPPER(#{keyword}), '%')) OR (LOWER(jp.CONTENT) LIKE CONCAT('%', LOWER(#{keyword}), '%'))
+        				  OR (UPPER(c.COMPANY_NAME) LIKE CONCAT('%', UPPER(#{keyword}), '%')) OR (LOWER(c.COMPANY_NAME) LIKE CONCAT('%', LOWER(#{keyword}), '%'))
       </if>   
     </select>
 
 	<select id="getRecruitmentSearchList" resultType="com.joblessfriend.jobfinder.recruitment.domain.RecruitmentVo"
         parameterType="com.joblessfriend.jobfinder.util.SearchVo">
-        SELECT *
-        FROM (
-                 SELECT inner_query.*, ROWNUM AS rnum
-                 FROM (
-                          SELECT
-                              jp.job_post_id AS jobPostId,
-                              c.company_id AS companyId,
-                              c.company_name AS companyName,
-                              jp.title AS title,
-                              jp.career_type AS careerType,
-                              jp.education AS education,
-                              j.job_name AS jobName,
-                              jp.end_date AS endDate,
-                              jp.job_img AS jobImg
-                          FROM job_post jp
-                                   JOIN company c ON jp.company_id = c.company_id
-                                   JOIN job j ON jp.job_id = j.job_id
-                         <if test="keyword != null or keyword != ''">
-	                          WHERE (UPPER(jp.TITLE) LIKE '%' || #{keyword} || '%') OR (LOWER(jp.TITLE) LIKE '%' || #{keyword} || '%')
-	        				  OR (UPPER(jp.CONTENT) LIKE '%' || #{keyword} || '%') OR (LOWER(jp.CONTENT) LIKE '%' || #{keyword} || '%')
-	        				  OR (UPPER(c.COMPANY_NAME) LIKE '%' || #{keyword} || '%') OR (LOWER(c.COMPANY_NAME) LIKE '%' || #{keyword} || '%')
-        				  </if>  
-                          ORDER BY jp.end_date, job_post_id ASC
-                      ) inner_query
-                 WHERE ROWNUM &lt;= #{endRow}
-             )
-        WHERE rnum &gt;= #{startRow}
+        SELECT
+            jp.job_post_id AS jobPostId,
+            c.company_id AS companyId,
+            c.company_name AS companyName,
+            jp.title AS title,
+            jp.career_type AS careerType,
+            jp.education AS education,
+            j.job_name AS jobName,
+            jp.end_date AS endDate,
+            jp.job_img AS jobImg
+        FROM job_post jp
+                 JOIN company c ON jp.company_id = c.company_id
+                 JOIN job j ON jp.job_id = j.job_id
+        <if test="keyword != null and keyword != ''">
+            WHERE (UPPER(jp.TITLE) LIKE CONCAT('%', UPPER(#{keyword}), '%')) OR (LOWER(jp.TITLE) LIKE CONCAT('%', LOWER(#{keyword}), '%'))
+            OR (UPPER(jp.CONTENT) LIKE CONCAT('%', UPPER(#{keyword}), '%')) OR (LOWER(jp.CONTENT) LIKE CONCAT('%', LOWER(#{keyword}), '%'))
+            OR (UPPER(c.COMPANY_NAME) LIKE CONCAT('%', UPPER(#{keyword}), '%')) OR (LOWER(c.COMPANY_NAME) LIKE CONCAT('%', LOWER(#{keyword}), '%'))
+        </if>  
+        ORDER BY jp.end_date, job_post_id ASC
+        LIMIT #{startRow}, #{pageSize}
     </select>
 
 </mapper>

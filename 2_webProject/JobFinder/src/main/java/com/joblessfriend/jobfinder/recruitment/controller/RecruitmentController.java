@@ -61,9 +61,9 @@ public class RecruitmentController {
         int totalCount = recruitmentService.getRecruitmentTotalCount(searchVo); // 총 레코드 수 조회
         Pagination pagination = new Pagination(totalCount, searchVo);
 
-        // Oracle 11g에 맞게 startRow, endRow 계산
-        searchVo.setStartRow(pagination.getLimitStart() + 1); // 1부터 시작
-        searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
+        // MySQL에 맞게 LIMIT 계산
+        searchVo.setStartRow(pagination.getLimitStart()); // MySQL LIMIT는 0부터 시작
+        searchVo.setPageSize(searchVo.getRecordSize()); // 페이지당 레코드 수
 
         List<JobGroupVo> jobGroupList = recruitmentService.jobGroupList();
         List<RecruitmentVo> recruitmentList = recruitmentService.recruitmentList(searchVo);
@@ -142,8 +142,8 @@ public class RecruitmentController {
         int totalCount = recruitmentService.getRecruitmentTotalCount(searchVo);
         Pagination pagination = new Pagination(totalCount, searchVo);
 
-        searchVo.setStartRow(pagination.getLimitStart() + 1);
-        searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
+        searchVo.setStartRow(pagination.getLimitStart());
+        searchVo.setPageSize(searchVo.getRecordSize());
 
         List<RecruitmentVo> recruitmentList = recruitmentService.recruitmentList(searchVo);
         Map<Integer, List<SkillVo>> skillMap = new HashMap<>();

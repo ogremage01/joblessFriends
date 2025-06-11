@@ -24,8 +24,8 @@
 		
 		<insert id="memberInsertOne" parameterType="memberVo">
 			INSERT INTO MEMBER
-			(MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER)
-			VALUES(MEMBER_ID_SEQ.NEXTVAL, #{email}, #{password},#{nickname},5, SYSDATE, SYSDATE,
+			(EMAIL, PASSWORD, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER)
+			VALUES(#{email}, #{password},#{nickname},5, NOW(), NOW(),
 		    <if test="provider != null">
 		      #{provider}
 		    </if>
