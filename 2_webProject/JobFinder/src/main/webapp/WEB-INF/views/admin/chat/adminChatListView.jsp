@@ -85,7 +85,6 @@
     </div>
 </div>
 
-<jsp:include page="../../common/footer.jsp"/>
 
 <!-- 채팅 관련 JavaScript -->
 <script src="/js/admin/chat/adminChatView.js"></script>

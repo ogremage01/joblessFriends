@@ -122,7 +122,6 @@ public class ResumeApplyController {
         if (resume == null) {
             throw new IllegalArgumentException("존재하지 않는 이력서입니다.");
         }
-        
 
         model.addAttribute("resume", resume);
 

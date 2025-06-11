@@ -135,7 +135,6 @@
     </div>
 </div>
 
-<jsp:include page="../../common/footer.jsp"/>
 
 <script src="/js/admin/community/commentManagement.js"></script>
 

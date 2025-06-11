@@ -134,7 +134,6 @@
     </div>
 </div>
 
-<jsp:include page="../../common/footer.jsp"/>
 <script src="/js/admin/community/postManagement.js"></script>
 
 </body>

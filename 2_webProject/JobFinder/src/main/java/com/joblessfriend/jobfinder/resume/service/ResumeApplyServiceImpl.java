@@ -4,6 +4,7 @@ import com.joblessfriend.jobfinder.recruitment.domain.JobPostAnswerVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo;
 import com.joblessfriend.jobfinder.resume.dao.ResumeApplyDao;
 import com.joblessfriend.jobfinder.resume.domain.*;
+import com.joblessfriend.jobfinder.skill.domain.SkillVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,10 +81,11 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
         }
 
 
-        // 3. 스킬 태그 복사
-        List<Integer> tagIds = resumeApplyDao.getTagIdsByResumeId(resumeId);
-        if (tagIds != null)
-            tagIds.forEach(tagId -> resumeApplyDao.insertResumeTagCopy(applyId, tagId));
+        // 3. 스킬 태그 복사 - 원본 이력서의 스킬 사용
+        List<SkillVo> originSkills = origin.getSkillList();
+        if (originSkills != null && !originSkills.isEmpty()) {
+            originSkills.forEach(skill -> resumeApplyDao.insertResumeTagCopy(applyId, skill.getTagId()));
+        }
 
         // 4. 지원 이력 등록
         ResumeManageVo manageVo = new ResumeManageVo();

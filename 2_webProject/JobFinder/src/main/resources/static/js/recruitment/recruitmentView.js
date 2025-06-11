@@ -796,7 +796,7 @@ function applyResumeAjax(resumeId, jobPostId,matchScore) {
                 // 👉 다시 질문 모달로
                 openQuestionsModal(jobPostId).then(questionResult => {
                     if (questionResult.isConfirmed) {
-                        applyResumeAjax(resumeId, jobPostId);  // 다시 확인하고 진행
+                        applyResumeAjax(resumeId, jobPostId, matchScore);  // 다시 확인하고 진행
                     }
                 });
             }
@@ -826,7 +826,7 @@ function applyResumeAjax(resumeId, jobPostId,matchScore) {
                 // 👉 다시 질문 모달로
                 openQuestionsModal(jobPostId).then(questionResult => {
                     if (questionResult.isConfirmed) {
-                        applyResumeAjax(resumeId, jobPostId);  // 답변 재확인 후 재진입
+                        applyResumeAjax(resumeId, jobPostId, matchScore);  // 답변 재확인 후 재진입
                     }
                 });
             }
