@@ -28,7 +28,7 @@
 					<c:when test="${sessionScope.userType eq 'member'}"><!-- 유저타입이 '멤버' -->
 <!-- 일반 회원용 -->
 						<div id="inputCommentWrap">
-							<p>댓글</p>
+							<p style="font-weight: bold; font-size:18px">댓글</p>
 							<textarea id="inputCommentBox" class="boxStyle" placeholder="댓글을 입력해주세요."></textarea>
 							<div id="commentBtnWrap"  class="maxStyle">
 								<p class='countComment'>0/300 자</p>
@@ -46,14 +46,9 @@
 					
 					<c:when test="${sessionScope.userType eq 'company'}"> <!-- 유저타입이 회사 -->
 <!-- 기업 회원용 -->				
-						<div id="inputCommentWrap">
-							<p>댓글</p>
-							<textarea id="inputCommentBox" class="boxStyle commentInput" placeholder="댓글을 입력해주세요."></textarea>
-							<div id="commentBtnWrap">
-								<p class='countComment'>0/300 자</p>
-								<button type="button" class="inputBtn" data-usertype='${sessionScope.userType}'>등록</button>
-							</div>
-						</div>
+						
+						<p style="font-weight: bold; font-size:18px">댓글</p>
+						
 						<!-- 댓글 입력시 정보부분: 오류 안나게 일단은 지정 -->
 						<input type="hidden" id="communityNo" value="${community.communityId}" />
 						<script type="text/javascript">
@@ -64,13 +59,6 @@
 					<c:otherwise>
 						<div id="inputCommentWrap"><!-- 관리자용 댓글 -->	
 							<p>댓글</p>
-							<textarea id="inputCommentBox" class="boxStyle"
-								placeholder="댓글을 입력해주세요."></textarea>
-							<div id="commentBtnWrap">
-								<p class='countComment'>0/300 자</p>
-								<button type="button" id="inputCommentBtn" class="inputBtn"
-									onclick="askConfirmLogin()">등록</button>
-							</div>
 						</div>
 						
 						<!-- 댓글 입력시 정보부분 -->

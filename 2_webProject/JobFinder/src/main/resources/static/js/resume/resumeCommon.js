@@ -58,7 +58,12 @@ window.initProfileImage = function() {
 	const profileImageInput = document.getElementById("profileImageInput");
 
 	if (photoBox && profileImageInput) {
-		photoBox.addEventListener("click", function() {
+		photoBox.addEventListener("click", function(e) {
+			// 새 이미지 등록 확인 (이미지가 있든 없든 한 번만 확인)
+			if (!confirm("새로운 이미지를 등록하시겠습니까?")) {
+				return;
+			}
+
 			profileImageInput.click();
 		});
 
@@ -72,31 +77,47 @@ window.initProfileImage = function() {
 				preview.src = e.target.result;
 				preview.style.display = "block";
 
-				window.uploadedImageUrl = e.target.result;
-
 				const photoText = document.querySelector(".photo-text");
 				if (photoText) photoText.style.display = "none";
 			};
 			reader.readAsDataURL(file);
 
-			const formData = new FormData();
-			formData.append('profileImage', file);
+			// 기존 이미지가 있으면 먼저 삭제
+			const deleteOldImage = window.uploadedImageUrl ?
+				fetch(`/profile-temp/deleteImage/${window.uploadedImageUrl.split('/').pop()}`, {
+					method: 'DELETE'
+				}).catch(err => console.log("기존 이미지 삭제 실패:", err)) :
+				Promise.resolve();
 
-			fetch('/resume/profile-temp/uploadImage', {
-				method: 'POST',
-				body: formData
+			// 기존 이미지 삭제 후 새 이미지 업로드
+			deleteOldImage.then(() => {
+				const formData = new FormData();
+				formData.append('profileImage', file);
+
+				return fetch('/resume/profile-temp/uploadImage', {
+					method: 'POST',
+					body: formData
+				});
 			})
-				.then(res => res.text())
+				.then(res => res.json())
 				.then(data => {
-					window.uploadedImageUrl = data;
-					console.log("업로드 결과:", data);
+					if (data.success) {
+						window.uploadedImageUrl = data.imageUrl;
+						console.log("업로드 성공:", data.imageUrl);
+					} else {
+						console.error("업로드 실패:", data.error);
+						alert("이미지 업로드에 실패했습니다.");
+					}
 				})
 				.catch(err => {
 					console.error("업로드 실패", err);
+					alert("이미지 업로드 중 오류가 발생했습니다.");
 				});
 		});
 	}
 };
+
+// 프로필 이미지 삭제 기능 제거됨
 
 // ==================== 스킬 관련 ====================
 
@@ -222,12 +243,12 @@ function createSchoolEntry() {
 				<div class="grid-3">
 					<div class="field-block school-autocomplete-block">
 						<label>학교명</label>
-						<input type="text" name="schoolName" placeholder="학교명을 입력해주세요" autocomplete="off" />
+						<input type="text" name="schoolName" placeholder="학교명을 입력해주세요" autocomplete="off"  />
 						<ul class="autocomplete-list" style="display: none;"></ul>
 					</div>
 					<div class="field-block">
 						<label>졸업년도</label>
-						<input type="text" name="yearOfGraduation" placeholder="예시) 2025" />
+						<input type="text" name="yearOfGraduation" placeholder="예시) 2025.02"  />
 					</div>
 					<div class="field-block">
 						<label>졸업상태</label>
@@ -244,23 +265,23 @@ function createSchoolEntry() {
 				<div class="grid-2">
 					<div class="field-block school-autocomplete-block">
 						<label>학교명</label>
-						<input type="text" name="schoolName" placeholder="대학교명을 입력해주세요" autocomplete="off" />
+						<input type="text" name="schoolName" placeholder="대학교명을 입력해주세요" autocomplete="off"  />
 						<ul class="autocomplete-list" style="display: none;"></ul>
 					</div>
 					<div class="field-block">
 						<label>전공명</label>
-						<input type="text" name="majorName" placeholder="전공명을 입력해주세요" autocomplete="off" />
+						<input type="text" name="majorName" placeholder="전공명을 입력해주세요" autocomplete="off"  />
 						<ul class="autocomplete-list" style="display: none;"></ul>
 					</div>
 				</div>
 				<div class="grid-3">
 					<div class="field-block">
 						<label>입학년월</label>
-						<input type="text" name="startDate" placeholder="예시) 2020.03" />
+						<input type="text" name="startDate" placeholder="예시) 2020.03"  />
 					</div>
 					<div class="field-block">
 						<label>졸업년월</label>
-						<input type="text" name="endDate" placeholder="예시) 2024.02" />
+						<input type="text" name="endDate" placeholder="예시) 2024.02"  />
 					</div>
 					<div class="field-block">
 						<label>졸업상태</label>
@@ -291,32 +312,32 @@ function createCareerEntry() {
 		<div class="grid-3">
 			<div class="field-block">
 				<label>회사명</label>
-				<input type="text" name="companyName" placeholder="회사명을 입력해주세요" />
+				<input type="text" name="companyName" placeholder="회사명을 입력해주세요"  />
 			</div>
 			<div class="field-block">
 				<label>부서명</label>
-				<input type="text" name="departmentName" placeholder="부서명을 입력해주세요" />
+				<input type="text" name="departmentName" placeholder="부서명을 입력해주세요"  />
 			</div>
 			<div class="field-block">
 				<label>입사년월</label>
-				<input type="text" name="hireYm" placeholder="예시) 2025.04" />
+				<input type="text" name="hireYm" placeholder="예시) 2025.04"  />
 			</div>
 		</div>
 		
 		<div class="grid-3">
 			<div class="field-block">
 				<label>퇴사년월</label>
-				<input type="text" name="resignYm" placeholder="예시) 2025.04" />
+				<input type="text" name="resignYm" placeholder="예시) 2025.04"  />
 			</div>
 			<div class="field-block">
 				<label>담당직군</label>
-				<select name="careerJobGroupSelect">
+				<select name="careerJobGroupSelect"   >
 					<option value="">직군 선택</option>
 				</select>
 			</div>
 			<div class="field-block">
 				<label>담당직무</label>
-				<select name="careerJobSelect">
+				<select name="careerJobSelect" >
 					<option value="">직무 선택</option>
 				</select>
 			</div>
@@ -325,11 +346,11 @@ function createCareerEntry() {
 		<div class="grid-2">
 			<div class="field-block">
 				<label>직급/직책</label>
-				<input type="text" name="position" placeholder="직급/직책을 입력해주세요" />
+				<input type="text" name="position" placeholder="직급/직책을 입력해주세요"  />
 			</div>
 			<div class="field-block">
 				<label>연봉 (만원)</label>
-				<input type="text" name="salary" placeholder="예시) 2400" />
+				<input type="text" name="salary" placeholder="예시) 2400"  />
 			</div>
 		</div>
 		
@@ -384,15 +405,15 @@ function createTrainingEntry() {
 		<div class="grid-4">
 			<div class="field-block">
 				<label>교육명</label>
-				<input type="text" name="eduName" placeholder="교육명을 입력해주세요" />
+				<input type="text" name="eduName" placeholder="교육명을 입력해주세요"   />
 			</div>
 			<div class="field-block">
 				<label>교육기관</label>
-				<input type="text" name="eduInstitution" placeholder="교육기관을 입력해주세요" />
+				<input type="text" name="eduInstitution" placeholder="교육기관을 입력해주세요"  />
 			</div>
 			<div class="field-block">
 				<label>시작년월</label>
-				<input type="text" name="startDate" placeholder="예시) 2025.04" />
+				<input type="text" name="startDate" placeholder="예시) 2025.04"  />
 			</div>
 			<div class="field-block">
 				<label>종료년월</label>
@@ -415,20 +436,21 @@ function createCertificateEntry() {
 	const wrapper = document.createElement("div");
 	wrapper.className = "certificate-entry";
 	wrapper.innerHTML = `
+	
 		<button type="button" class="delete-btn">×</button>
 	
 		<div class="grid-3">
 			<div class="field-block">
 				<label>자격증명</label>
-				<input type="text" name="certificateName" placeholder="자격증명을 입력해주세요" />
+				<input type="text" name="certificateName" placeholder="자격증명을 입력해주세요"  />
 			</div>
 			<div class="field-block">
 				<label>발행처</label>
-				<input type="text" name="issuingAuthority" placeholder="발행처를 입력해주세요" />
+				<input type="text" name="issuingAuthority" placeholder="발행처를 입력해주세요"  />
 			</div>
 			<div class="field-block">
 				<label>취득날짜</label>
-				<input type="text" name="acquisitionDate" placeholder="예시) 2025.04" />
+				<input type="text" name="acquisitionDate" placeholder="예시) 2025.04"  />
 			</div>
 		</div>
 	`;
@@ -464,14 +486,43 @@ function createPortfolioEntry() {
 	fileInput.addEventListener('change', function(e) {
 		const file = e.target.files[0];
 		if (file) {
-			fileNameInput.value = file.name;
-			storedFileNameInput.value = 'stored_' + Date.now() + '_' + file.name;
-			fileExtensionInput.value = file.name.split('.').pop().toLowerCase();
+			// 파일 크기 체크 (20MB)
+			if (file.size > 20 * 1024 * 1024) {
+				alert('파일 크기는 20MB를 초과할 수 없습니다.');
+				this.value = '';
+				return;
+			}
 
-			label.innerHTML = `
-				<span class="plus-icon">✓</span>
-				파일: ${file.name}
-			`;
+			// 서버로 파일 업로드
+			const formData = new FormData();
+			formData.append('file', file);
+
+			fetch('/resume/uploadFile', {
+				method: 'POST',
+				body: formData
+			})
+				.then(res => res.json())
+				.then(data => {
+					if (data.success) {
+						fileNameInput.value = data.fileName;
+						storedFileNameInput.value = data.storedFileName;
+						fileExtensionInput.value = data.fileExtension;
+
+						label.innerHTML = `
+						<span class="plus-icon">✓</span>
+						파일: ${data.fileName}
+					`;
+						console.log("포트폴리오 파일 업로드 성공:", data.fileName);
+					} else {
+						alert('파일 업로드에 실패했습니다.');
+						this.value = '';
+					}
+				})
+				.catch(err => {
+					console.error('파일 업로드 실패:', err);
+					alert('파일 업로드 중 오류가 발생했습니다.');
+					this.value = '';
+				});
 		}
 	});
 
@@ -537,7 +588,7 @@ function attachAutocomplete(wrapper, type) {
 		// 전공명 input이 있는 field-block 내에서 ul.autocomplete-list 찾기
 		const majorFieldBlock = majorInput?.closest('.field-block');
 		const majorList = majorFieldBlock?.querySelector('ul.autocomplete-list');
-		
+
 		if (majorInput && majorList) {
 			let timer;
 			majorInput.addEventListener("input", function() {
@@ -708,73 +759,134 @@ function collectPortfolios() {
 
 // ==================== 검증 함수 ====================
 
-// 이력서 밸리데이션 함수
-function validateResume() {
-	const fields = ["title", "name", "birthdate", "phoneNumber", "email", "roadAddress", "postalCodeId"];
-	
-	document.querySelectorAll(".error-msg").forEach(e => e.remove());
-	
-	fields.forEach(id => {
-		const field = document.getElementById(id);
-		field.style.borderColor = "";
+// 검증 유틸리티 함수들
+let validationResult = true;
+let errorMessages = [];
+
+function showError(field, message) {
+	field.style.borderColor = "red";
+	const error = document.createElement("span");
+	error.className = "error-msg";
+	error.style.color = "red";
+	error.style.fontSize = "12px";
+	error.textContent = " " + message;
+	field.after(error);
+	errorMessages.push(message);
+	validationResult = false;
+}
+
+// 제목 전용 에러 표시 함수
+function showTitleError(field, message) {
+	field.style.borderColor = "red";
+	const errorContainer = document.getElementById("title-error-container");
+	if (errorContainer) {
+		errorContainer.innerHTML = `<span class="error-msg">${message}</span>`;
+	}
+	errorMessages.push(message);
+	validationResult = false;
+}
+
+// 제목 에러 클리어 함수
+function clearTitleError() {
+	const titleField = document.getElementById("title");
+	const errorContainer = document.getElementById("title-error-container");
+	if (titleField) {
+		titleField.style.borderColor = "";
+	}
+	if (errorContainer) {
+		errorContainer.innerHTML = "";
+	}
+}
+
+function showSuccess(field, message) {
+	field.style.borderColor = "green";
+	const success = document.createElement("span");
+	success.className = "success-msg";
+	success.style.color = "green";
+	success.style.fontSize = "12px";
+	success.textContent = " " + message;
+	field.after(success);
+}
+
+// 입력 필드 검증 헬퍼 함수
+function validateInputFields(entry, fieldName, errorMessage, validationFn = null) {
+	const input = entry.querySelector(`input[name="${fieldName}"]`);
+	if (input) {
+		let value = input.value.trim();
+		let isValid = validationFn ? validationFn(value) : value !== "";
+		
+		if (!isValid) {
+			showError(input, errorMessage);
+		} else {
+			showSuccess(input, "올바른 형식입니다.");
+		}
+	}
+}
+
+// 셀렉트 필드 검증 헬퍼 함수
+function validateSelectFields(entry, fieldName, errorMessage) {
+	const select = entry.querySelector(`select[name="${fieldName}"]`);
+	if (select) {
+		let value = select.value;
+		
+		if (!value || value === "") {
+			showError(select, errorMessage);
+		} else {
+			showSuccess(select, "올바른 형식입니다.");
+		}
+	}
+}
+
+// 텍스트에어리어 검증 헬퍼 함수
+function validateTextareaFields(entry, fieldName, errorMessage) {
+	const textarea = entry.querySelector(`textarea[name="${fieldName}"]`);
+	if (textarea) {
+		let value = textarea.value.trim();
+		
+		if (value === "") {
+			showError(textarea, errorMessage);
+		} else {
+			showSuccess(textarea, "올바른 형식입니다.");
+		}
+	}
+}
+
+// 기본 필드 검증 함수
+function validateBasicFields() {
+	const basicFieldValidations = [
+		{ id: "title", message: "제목은 필수 입력 항목입니다.", validator: (val) => val !== "" },
+		{ id: "name", message: "이력서 작성 시 이름은 필수 입력 항목입니다.", validator: (val) => val !== "" },
+		{ id: "birthdate", message: "생년월일은 YYYY-MM-DD 형식으로 입력해주세요.", validator: (val) => /^\d{4}-\d{2}-\d{2}$/.test(val) },
+		{ id: "phoneNumber", message: "전화번호는 XXX-XXXX-XXXX 형식으로 입력해주세요.", validator: (val) => /^\d{2,3}-\d{3,4}-\d{4}$/.test(val) },
+		{ id: "email", message: "이메일 형식이 올바르지 않습니다.", validator: (val) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val) },
+		{ id: "roadAddress", message: "도로명 주소는 4자 이상 입력해주세요.", validator: (val) => val.length >= 4 },
+		{ id: "postalCodeId", message: "우편번호는 올바른 숫자여야 합니다.", validator: (val) => !isNaN(val) && val > 0 }
+	];
+
+	basicFieldValidations.forEach(validation => {
+		const field = document.getElementById(validation.id);
+		const value = field.value.trim();
+		
+		if (!validation.validator(value)) {
+			if (validation.id === "title") {
+				// 제목 필드는 전용 컨테이너에 에러 메시지 표시
+				showTitleError(field, validation.message);
+			} else {
+				showError(field, validation.message);
+			}
+		} else {
+			if (validation.id === "title") {
+				// 제목 필드는 전용 컨테이너 클리어
+				clearTitleError();
+			} else {
+				showSuccess(field, "올바른 형식입니다.");
+			}
+		}
 	});
 
-	const photoBox = document.getElementById("photoBox");
-	photoBox.style.borderColor = "";
-
-	let result = true;
-	let errorMessages = [];
-
-	function showError(field, message) {
-		field.style.borderColor = "red";
-		const error = document.createElement("span");
-		error.className = "error-msg";
-		error.style.color = "red";
-		error.style.fontSize = "12px";
-		error.textContent = " " + message;
-		field.after(error);
-		errorMessages.push(message);
-	}
-
-	const title = document.getElementById("title").value.trim();
-	const name = document.getElementById("name").value.trim();
-	const birthdate = document.getElementById("birthdate").value.trim();
-	const phoneNumber = document.getElementById("phoneNumber").value.trim();
-	const email = document.getElementById("email").value.trim();
-	const roadAddress = document.getElementById("roadAddress").value.trim();
-	const postalCodeId = document.getElementById("postalCodeId").value.trim();
-	const profileImageInput = document.getElementById("profileImageInput");
-
-	if (!title) {
-		showError(document.getElementById("title"), "제목은 필수 입력 항목입니다.");
-		result = false;
-	}
-	if (!name) {
-		showError(document.getElementById("name"), "이력서 작성 시 이름은 필수 입력 항목입니다.");
-		result = false;
-	}
-	if (!birthdate || !/^\d{4}-\d{2}-\d{2}$/.test(birthdate)) {
-		showError(document.getElementById("birthdate"), "생년월일은 YYYY-MM-DD 형식으로 입력해주세요.");
-		result = false;
-	}
-	if (!phoneNumber || !/^\d{3}-\d{3,4}-\d{4}$/.test(phoneNumber)) {
-		showError(document.getElementById("phoneNumber"), "전화번호는 XXX-XXXX-XXXX 형식으로 입력해주세요.");
-		result = false;
-	}
-	if (!email || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
-		showError(document.getElementById("email"), "이메일 형식이 올바르지 않습니다.");
-		result = false;
-	}
-	if (!roadAddress || roadAddress.length < 5) {
-		showError(document.getElementById("roadAddress"), "도로명 주소는 5자 이상 입력해주세요.");
-		result = false;
-	}
-	if (!postalCodeId || isNaN(postalCodeId) || postalCodeId <= 0) {
-		showError(document.getElementById("postalCodeId"), "우편번호는 올바른 숫자여야 합니다.");
-		result = false;
-	}
-	
 	// 프로필 이미지 검증 - 신규 작성 시에만 필수
+	const profileImageInput = document.getElementById("profileImageInput");
+	const photoBox = document.getElementById("photoBox");
 	if (!window.isEditMode && !profileImageInput.files.length && !window.uploadedImageUrl) {
 		photoBox.style.borderColor = "red";
 		const error = document.createElement("span");
@@ -782,101 +894,194 @@ function validateResume() {
 		error.style.color = "red";
 		error.style.fontSize = "12px";
 		error.textContent = " 프로필 이미지는 필수 입력 항목입니다.";
-		photoBox.after(error);
+		photoBox.insertAdjacentElement("afterend", error);
 		errorMessages.push("프로필 이미지는 필수 입력 항목입니다.");
-		result = false;
+		validationResult = false;
 	}
+}
 
-	if (!result) {
+// 교육/훈련 검증 함수
+function validateTrainingEntries() {
+	document.querySelectorAll('.training-entry').forEach(entry => {
+		validateInputFields(entry, "eduName", "교육명은 필수 입력 항목입니다.");
+		validateInputFields(entry, "eduInstitution", "교육기관은 필수 입력 항목입니다.");
+		validateInputFields(entry, "startDate", "시작년월은 YYYY.MM 형식으로 입력해주세요.", (val) => /^\d{4}\.\d{2}$/.test(val));
+		validateInputFields(entry, "endDate", "종료년월은 YYYY.MM 형식으로 입력해주세요.", (val) => /^\d{4}\.\d{2}$/.test(val));
+	});
+}
+
+// 자격증 검증 함수
+function validateCertificateEntries() {
+	document.querySelectorAll('.certificate-entry').forEach(entry => {
+		validateInputFields(entry, "certificateName", "자격증명은 필수 입력 항목입니다.");
+		validateInputFields(entry, "issuingAuthority", "발행처는 필수 입력 항목입니다.");
+		validateInputFields(entry, "acquisitionDate", "취득년월은 YYYY.MM 형식으로 입력해주세요.", (val) => /^\d{4}\.\d{2}$/.test(val));
+	});
+}
+
+// 경력 검증 함수
+function validateCareerEntries() {
+	document.querySelectorAll('.career-entry').forEach(entry => {
+		validateInputFields(entry, "companyName", "회사명은 필수 입력 항목입니다.");
+		validateInputFields(entry, "departmentName", "부서명은 필수 입력 항목입니다.");
+		validateInputFields(entry, "hireYm", "입사년월은 YYYY.MM 형식으로 입력해주세요.", (val) => /^\d{4}\.\d{2}$/.test(val));
+		validateInputFields(entry, "resignYm", "퇴사년월은 YYYY.MM 형식으로 입력해주세요.", (val) => /^\d{4}\.\d{2}$/.test(val));
+		validateInputFields(entry, "position", "직급/직책은 필수 입력 항목입니다.");
+		validateInputFields(entry, "salary", "연봉은 숫자로 입력해주세요.", (val) => /^\d+$/.test(val));
+		
+		validateSelectFields(entry, "careerJobGroupSelect", "담당직군은 필수 선택 항목입니다.");
+		validateSelectFields(entry, "careerJobSelect", "담당직무는 필수 선택 항목입니다.");
+		
+		validateTextareaFields(entry, "workDescription", "업무내용은 필수 입력 항목입니다.");
+	});
+}
+
+// 학력 검증 함수
+function validateSchoolEntries() {
+	document.querySelectorAll('.school-entry').forEach(entry => {
+		validateSelectFields(entry, "sortation", "구분은 필수 선택 항목입니다.");
+		validateInputFields(entry, "schoolName", "학교명은 필수 입력 항목입니다.");
+
+		const sortationSelect = entry.querySelector('select[name="sortation"]');
+		const sortationValue = sortationSelect ? sortationSelect.value : "";
+		
+		if (sortationValue === "high") {
+			validateInputFields(entry, "yearOfGraduation", "졸업년도는 YYYY.MM 형식으로 입력해주세요.", (val) => /^\d{4}\.\d{2}$/.test(val));
+		} else if (sortationValue && sortationValue !== "") {
+			validateInputFields(entry, "majorName", "전공명은 필수 입력 항목입니다.");
+			validateInputFields(entry, "startDate", "입학년월은 YYYY.MM 형식으로 입력해주세요.", (val) => /^\d{4}\.\d{2}$/.test(val));
+			validateInputFields(entry, "endDate", "졸업년월은 YYYY.MM 형식으로 입력해주세요.", (val) => /^\d{4}\.\d{2}$/.test(val));
+		}
+	});
+}
+
+// 검증 초기화 함수
+function initializeValidation() {
+	// 기존 메시지 제거
+	document.querySelectorAll(".error-msg").forEach(e => e.remove());
+	document.querySelectorAll(".success-msg").forEach(e => e.remove());
+	
+	// 제목 에러 컨테이너 클리어
+	clearTitleError();
+	
+	// 필드 초기화
+	const fields = ["title", "name", "birthdate", "phoneNumber", "email", "roadAddress", "postalCodeId"];
+	fields.forEach(id => {
+		const field = document.getElementById(id);
+		if (field) field.style.borderColor = "";
+	});
+	
+	const photoBox = document.getElementById("photoBox");
+	if (photoBox) photoBox.style.borderColor = "";
+	
+	// 전역 변수 초기화
+	validationResult = true;
+	errorMessages = [];
+}
+
+// 메인 이력서 밸리데이션 함수
+function validateResume() {
+	initializeValidation();//초기화
+	
+	validateBasicFields();// 기본 필드 검증
+	validateTrainingEntries();// 교육/훈련 검증
+	validateCertificateEntries();// 자격증 검증
+	validateCareerEntries();// 경력 검증
+	validateSchoolEntries();// 학력 검증
+
+	if (!validationResult) {
+		// 오류 메시지 출력
 		Swal.fire({
 			icon: 'error',
 			title: '입력 정보를 확인해주세요',
-			html: errorMessages.map(msg => `• ${msg}`).join('<br>'),
+			html: '입력정보에 오류가 있습니다. 확인 후 다시 시도해주세요.',
 			confirmButtonText: '확인',
-			confirmButtonColor: '#F69800'
+			customClass: {
+				confirmButton: "swalConfirmBtn",
+			},
 		});
 	}
 
-	return result;
+	return validationResult;
 }
 
 // ==================== 이력서 저장 함수 ====================
 
 // 이력서 저장 함수
 async function saveResume() {
-	console.log("이력서 저장 함수 실행");
-	if (validateResume() === false) {
-		return;
-	}
-	try {
-		const resumeData = collectResumeData();
+			console.log("이력서 저장 함수 실행");
+			if (validateResume() === false) {
+				return;
+			}
+			try {
+				const resumeData = collectResumeData();
 
-		if (window.isEditMode && window.currentResumeId) {
-			resumeData.resumeId = parseInt(window.currentResumeId);
+				if (window.isEditMode && window.currentResumeId) {
+					resumeData.resumeId = parseInt(window.currentResumeId);
+				}
+
+				console.log("수집된 이력서 데이터:", resumeData);
+
+				const response = await fetch('/resume/save', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(resumeData),
+					credentials: 'include'
+				});
+
+				const responseText = await response.text();
+
+				if (response.ok) {
+					console.log("이력서 저장 성공:", responseText);
+					const message = window.isEditMode ? "이력서가 성공적으로 수정되었습니다!" : "이력서가 성공적으로 저장되었습니다!";
+					alert(message);
+					window.location.href = '/resume/management';
+				} else {
+					console.error("이력서 저장 실패:", responseText);
+					alert("이력서 저장에 실패했습니다: " + responseText);
+				}
+			} catch (error) {
+				console.error("이력서 저장 중 오류:", error);
+				alert("이력서 저장 중 오류가 발생했습니다: " + error.message);
+			}
 		}
-
-		console.log("수집된 이력서 데이터:", resumeData);
-
-		const response = await fetch('/resume/save', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(resumeData),
-			credentials: 'include'
-		});
-
-		const responseText = await response.text();
-
-		if (response.ok) {
-			console.log("이력서 저장 성공:", responseText);
-			const message = window.isEditMode ? "이력서가 성공적으로 수정되었습니다!" : "이력서가 성공적으로 저장되었습니다!";
-			alert(message);
-			window.location.href = '/resume/management';
-		} else {
-			console.error("이력서 저장 실패:", responseText);
-			alert("이력서 저장에 실패했습니다: " + responseText);
-		}
-	} catch (error) {
-		console.error("이력서 저장 중 오류:", error);
-		alert("이력서 저장 중 오류가 발생했습니다: " + error.message);
-	}
-}
 
 // ==================== 미리보기 함수 ====================
 
 // 이력서 미리보기 팝업창 열기
 $(".btn-preview").click(async function() {
-	const resumeData = collectResumeData();
+			const resumeData = collectResumeData();
 
-	try {
-		const response = await fetch("/resume/preview", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(resumeData)
+			try {
+				const response = await fetch("/resume/preview", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(resumeData)
+				});
+
+				var url = "/resume/viewPreview";
+				var windowName = "resumePreview"
+
+				const result = await response.text();
+				if (result === "success") {
+					const popupWidth = 980;
+					const screenHeight = window.screen.availHeight;
+					const screenLeft = window.screenLeft !== undefined ? window.screenLeft : screen.left;
+					const screenWidth = window.innerWidth || document.documentElement.clientWidth || screen.width;
+					const left = screenLeft + (screenWidth - popupWidth) / 2;
+					var popupOption = `width=${popupWidth}, height=${screenHeight},left=${left}`;
+					window.open(url, windowName, popupOption);
+				} else {
+					alert("미리보기 실패: 서버 오류");
+				}
+			} catch (err) {
+				console.error("미리보기 오류:", err);
+				alert("미리보기 중 오류 발생: " + err.message);
+			}
 		});
-
-		var url = "/resume/viewPreview";
-		var windowName = "resumePreview"
-
-		const result = await response.text();
-		if (result === "success") {
-			const popupWidth = 980;
-			const screenHeight = window.screen.availHeight;
-			const screenLeft = window.screenLeft !== undefined ? window.screenLeft : screen.left;
-			const screenWidth = window.innerWidth || document.documentElement.clientWidth || screen.width;
-			const left = screenLeft + (screenWidth - popupWidth) / 2;
-			var popupOption = `width=${popupWidth}, height=${screenHeight},left=${left}`;
-			window.open(url, windowName, popupOption);
-		} else {
-			alert("미리보기 실패: 서버 오류");
-		}
-	} catch (err) {
-		console.error("미리보기 오류:", err);
-		alert("미리보기 중 오류 발생: " + err.message);
-	}
-});
 
 

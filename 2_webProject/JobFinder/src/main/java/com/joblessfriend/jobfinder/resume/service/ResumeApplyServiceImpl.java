@@ -4,6 +4,7 @@ import com.joblessfriend.jobfinder.recruitment.domain.JobPostAnswerVo;
 import com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo;
 import com.joblessfriend.jobfinder.resume.dao.ResumeApplyDao;
 import com.joblessfriend.jobfinder.resume.domain.*;
+import com.joblessfriend.jobfinder.skill.domain.SkillVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +23,12 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
 
     @Override
     @Transactional
-    public int applyResumeWithCopy(int resumeId, int jobPostId, int memberId, List<JobPostAnswerVo> answerList) {
+    public int applyResumeWithCopy(int resumeId, int jobPostId, int memberId, List<JobPostAnswerVo> answerList, int matchScore) {
         ResumeVo origin = resumeService.getResumeWithAllDetails(resumeId);
 
         ResumeVo applyCopy = new ResumeVo();
         applyCopy.setMemberId(memberId);
+        applyCopy.setTitle(origin.getTitle());
         applyCopy.setMemberName(origin.getMemberName());
         applyCopy.setBirthDate(origin.getBirthDate());
         applyCopy.setPhoneNumber(origin.getPhoneNumber());
@@ -38,7 +40,11 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
         applyCopy.setEducationList(origin.getEducationList());
         applyCopy.setCertificateList(origin.getCertificateList());
         applyCopy.setPortfolioList(origin.getPortfolioList());
+        applyCopy.setAddress(origin.getAddress());
+        applyCopy.setMatchScore(matchScore);
 
+
+        int originId = origin.getResumeId();
         // 1. 이력서 복사
         resumeApplyDao.insertResumeCopy(applyCopy);
         int applyId = applyCopy.getResumeId();
@@ -75,17 +81,18 @@ public class ResumeApplyServiceImpl implements ResumeApplyService {
         }
 
 
-        // 3. 스킬 태그 복사
-        List<Integer> tagIds = resumeApplyDao.getTagIdsByResumeId(resumeId);
-        if (tagIds != null)
-            tagIds.forEach(tagId -> resumeApplyDao.insertResumeTagCopy(applyId, tagId));
+        // 3. 스킬 태그 복사 - 원본 이력서의 스킬 사용
+        List<SkillVo> originSkills = origin.getSkillList();
+        if (originSkills != null && !originSkills.isEmpty()) {
+            originSkills.forEach(skill -> resumeApplyDao.insertResumeTagCopy(applyId, skill.getTagId()));
+        }
 
         // 4. 지원 이력 등록
         ResumeManageVo manageVo = new ResumeManageVo();
         manageVo.setRmId(applyId);
         manageVo.setJobPostId(jobPostId);
         manageVo.setMemberId(memberId);
-        manageVo.setResumeFile(String.valueOf(applyId));
+        manageVo.setResumeFile(String.valueOf(originId));
         manageVo.setStateId(1);
 
         resumeApplyDao.insertResumeManage(manageVo);

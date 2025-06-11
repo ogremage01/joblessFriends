@@ -403,7 +403,11 @@ $('#insertForm').on('submit', function (e) {
         icon: 'question',
         showCancelButton: true,
         confirmButtonText: '확인',
-        cancelButtonText: '취소'
+        cancelButtonText: '취소',
+		customClass: {
+			confirmButton: "swalConfirmBtn",
+			cancelButton: "swalCancelBtn",
+		},
     }).then((result) => {
         if (result.isConfirmed) {
             e.target.submit(); // ✅ 실제 form 전송
@@ -444,7 +448,11 @@ $(document).ready(function () {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: '확인',
-            cancelButtonText: '닫기'
+            cancelButtonText: '닫기',
+			customClass: {
+				confirmButton: "swalConfirmBtn",
+				cancelButton: "swalCancelBtn",
+			},
         }).then((result) => {
             if (result.isConfirmed) {
                 window.location.href = "/company/recruitment";
@@ -460,6 +468,14 @@ $('#btnAddQuestion').on('click', function () {
     Swal.fire({
         title: '사전질문 등록',
         html: `
+                <div style="text-align:left; margin-bottom:10px; font-size:13px; color:#555;">
+            ※ 질문은 최대 3개까지 등록할 수 있으며,<br/>
+            <span style="color:#d32f2f;">
+                ※ <b>기존 질문 삭제는 제한됩니다.</b>
+            </span><br/>
+            ※ 질문 순서 건너뛰기(예: 2번만 입력)는 권장하지 않습니다.<br/>
+            ※ 기존 질문이 있을 경우 <b>수정만 가능</b>합니다.
+        </div>
             <div class="question-modal-form">
                 <div class="swal2-form-group">
                     <label for="question1" class="swal2-form-label">질문 1</label>
@@ -478,10 +494,10 @@ $('#btnAddQuestion').on('click', function () {
         showCancelButton: true,
         confirmButtonText: '질문 저장',
         cancelButtonText: '취소',
-        customClass: {
-            confirmButton: 'swal2-confirm swal2-styled swal2-blue-button',
-            cancelButton: 'swal2-cancel swal2-styled swal2-gray-button'
-        },
+		customClass: {
+			confirmButton: "swalConfirmBtn",
+			cancelButton: "swalCancelBtn",
+		},
         preConfirm: () => {
             return {
                 q1: $('#question1').val()?.trim(),
@@ -531,7 +547,10 @@ $('#generateTitle').on('click', function () {
             title: '이미지 미리보기',
             imageUrl: e.target.result,
             imageAlt: '대표 이미지',
-            confirmButtonText: '닫기'
+            confirmButtonText: '닫기',
+			customClass: {
+				confirmButton: "swalConfirmBtn",
+			},
         });
     };
     reader.readAsDataURL(file);

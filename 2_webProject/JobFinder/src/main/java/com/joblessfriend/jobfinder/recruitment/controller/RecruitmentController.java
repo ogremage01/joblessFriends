@@ -124,7 +124,7 @@ public class RecruitmentController {
 
 
 
-
+        model.addAttribute("userType", userType);
         model.addAttribute("jobGroupList", jobGroupList);
         model.addAttribute("recruitmentList", recruitmentList);
         model.addAttribute("skillMap", skillMap);
@@ -215,7 +215,7 @@ public class RecruitmentController {
 
         Object loginUser = session.getAttribute("userLogin");
         String userType = (String) session.getAttribute("userType");  // 이미 login 체크할 때 사용한 값
-
+        model.addAttribute("userType", userType);
         if ("member".equals(userType) && loginUser instanceof MemberVo) {
             MemberVo memberVo = (MemberVo) loginUser;
             int memberId = memberVo.getMemberId();
@@ -360,7 +360,7 @@ public class RecruitmentController {
             fileVo.setFileExtension(originalName.substring(originalName.lastIndexOf('.') + 1));
             fileVo.setFileSize(file.getSize());
             fileVo.setTempKey(tempKey); // 임시 식별 키
-
+            System.out.println("✅ 저장될 tempKey: " + fileVo.getTempKey());
             recruitmentService.insertJobPostFile(fileVo);
             result.put("success", 1);
             Map<String, String> fileMap = new HashMap<>();
@@ -434,7 +434,9 @@ public class RecruitmentController {
                                     @RequestParam("skills") String skills,
                                     @RequestParam("welfareList") String welfareList,
                                     @RequestParam("tempKey") String tempKey,
-                                    @RequestParam("jobImgFile") MultipartFile jobImgFile,@RequestParam(value = "question1", required = false) String q1,
+                                    @RequestParam("jobImgFile") MultipartFile jobImgFile,
+                                    @RequestParam(value = "existingJobImg", required = false) String existingJobImg,
+                                    @RequestParam(value = "question1", required = false) String q1,
                                     @RequestParam(value = "question2", required = false) String q2,
                                     @RequestParam(value = "question3", required = false) String q3,
                                     HttpSession session) {
@@ -455,8 +457,9 @@ public class RecruitmentController {
         if (jobImgFile != null && !jobImgFile.isEmpty()) {
             String savedName = saveImage(jobImgFile);
             recruitmentVo.setJobImg(savedName);
+        } else {
+            recruitmentVo.setJobImg(existingJobImg); // ← ✅ 기존 이미지 유지
         }
-
         // 4. skills 처리
         List<Integer> tagIdList = Arrays.stream(skills.split(","))
                 .filter(s -> !s.isBlank())
@@ -489,10 +492,16 @@ public class RecruitmentController {
         if (q3 != null && !q3.isBlank()) questionList.add(new JobPostQuestionVo(null, null, 3, q3));
         recruitmentVo.setQuestionList(questionList);
         System.out.println("❓사전질문 몇 개? => " + questionList.size());
+
         try {
             // 6. 서비스 호출
 
             recruitmentService.updateRecruitment(recruitmentVo, tagIdList, welfareVoList, tempKey);
+            if (tempKey != null && !tempKey.isBlank()) {
+                System.out.println("🧪 [컨트롤러] tempKey = [" + tempKey + "]");
+                System.out.println("🧪 [DB 저장된] tempKey = (DB에서 SELECT 해보기)");
+                recruitmentService.updateJobPostIdByTempKey(recruitmentVo.getJobPostId(), tempKey); // ✅ 정확
+            }
             System.out.println("✅ 채용공고 업데이트 성공 - jobPostId: " + recruitmentVo.getJobPostId());
         } catch (Exception e) {
             e.printStackTrace(); // 예외 로깅

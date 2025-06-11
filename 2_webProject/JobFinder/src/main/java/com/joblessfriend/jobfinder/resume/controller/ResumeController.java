@@ -1,11 +1,13 @@
 package com.joblessfriend.jobfinder.resume.controller;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,18 +27,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
-import com.joblessfriend.jobfinder.resume.domain.CareerVo;
+import com.joblessfriend.jobfinder.resume.domain.PortfolioVo;
 import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
-import com.joblessfriend.jobfinder.resume.parser.ResumeParser;
+import com.joblessfriend.jobfinder.resume.domain.SchoolVo;
 import com.joblessfriend.jobfinder.resume.service.ResumeService;
-import com.joblessfriend.jobfinder.jobGroup.service.JobGroupService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.joblessfriend.jobfinder.job.service.JobService;
-import com.joblessfriend.jobfinder.util.file.FileUtils;
-import com.joblessfriend.jobfinder.skill.domain.SkillVo;
-import com.joblessfriend.jobfinder.skill.service.SkillService;
+import com.joblessfriend.jobfinder.util.service.FileUploadService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -47,19 +45,7 @@ public class ResumeController {
 	private ResumeService resumeService;
 
 	@Autowired
-	private FileUtils fileUtils;
-
-	@Autowired
-	private ResumeParser resumeParser;
-
-	@Autowired
-	private JobGroupService jobGroupService;
-
-	@Autowired
-	private JobService jobService;
-
-	@Autowired
-	private SkillService skillService;
+	private FileUploadService fileUploadService;
 
 	@Value("${file.upload.resume.maxSize:10485760}") // 10MB 기본값
 	private long maxFileSize;
@@ -77,65 +63,21 @@ public class ResumeController {
 			return "redirect:/auth/login";
 		}
 
-		// 직군/직무 목록을 모델에 추가 (신규, 수정 모두)
-		model.addAttribute("jobGroupList", jobGroupService.selectAllJobGroupsForAjax());
-		// 모든 직무 목록 추가 (업데이트 시 기존 선택된 직무 표시용)
-		List<com.joblessfriend.jobfinder.job.domain.JobVo> allJobs = new ArrayList<>();
-		jobGroupService.selectAllJobGroupsForAjax().forEach(group -> {
-			allJobs.addAll(jobService.selectJobsByGroupId(group.getJobGroupId()));
-		});
-		model.addAttribute("jobList", allJobs);
-
-		// 수정 모드인 경우 이력서 데이터 조회
-		if (resumeId != null && resumeId > 0) {
-			try {
-
-				// 이력서 전체 정보 조회
-				ResumeVo resumeVo = resumeService.getResumeWithAllDetails(resumeId);
-
-				if (resumeVo == null) {
-
-					model.addAttribute("errorMessage", "이력서를 찾을 수 없습니다.");
-					return "resume/resumeView";
-				}
-
-				// 본인 이력서인지 확인
-				if (resumeVo.getMemberId() != loginUser.getMemberId()) {
-
-					model.addAttribute("errorMessage", "본인의 이력서만 수정할 수 있습니다.");
-					return "resume/resumeView";
-				}
-
-				// 모델에 이력서 데이터 추가
-				model.addAttribute("resumeData", resumeVo);
-				model.addAttribute("isEditMode", true);
-				model.addAttribute("currentResumeId", resumeId);
-
-				// 스킬 데이터 추가
-				try {
-					List<SkillVo> skillList = skillService.resumeTagList(resumeId);
-
-					resumeVo.setSkillList(skillList != null ? skillList : new ArrayList<>());
-
-					model.addAttribute("skillList", skillList != null ? skillList : new ArrayList<>());
-				} catch (Exception e) {
-					System.err.println(">>> [ResumeController] 스킬 데이터 조회 실패: " + e.getMessage());
-					model.addAttribute("skillList", new ArrayList<>());
-				}
-
-				// 수정용 JSP 반환
-				return "resume/resumeUpdateView";
-
-			} catch (Exception e) {
-				System.err.println(">>> [ResumeController] 이력서 조회 실패: " + e.getMessage());
-				e.printStackTrace();
-				model.addAttribute("errorMessage", "이력서 조회 중 오류가 발생했습니다: " + e.getMessage());
-				return "resume/resumeView";
-			}
-		} else {
-			// 신규 작성 모드
-			model.addAttribute("isEditMode", false);
-
+		// 비즈니스 서비스를 통해 페이지 데이터 준비
+		Map<String, Object> pageData = resumeService.prepareResumeWritePageData(resumeId, loginUser);
+		
+		// 에러가 있는 경우
+		if (pageData.containsKey("error")) {
+			model.addAttribute("errorMessage", pageData.get("error"));
+			return "resume/resumeView";
+		}
+		
+		// 모델에 데이터 추가
+		model.addAllAttributes(pageData);
+		
+		// 수정 용 JSP 반환 여부 결정
+		if (Boolean.TRUE.equals(pageData.get("isEditMode"))) {
+			return "resume/resumeUpdateView";
 		}
 
 		return "resume/resumeView";
@@ -181,52 +123,25 @@ public class ResumeController {
 	@PostMapping("/save")
 	@ResponseBody
 	public ResponseEntity<String> saveResume(@RequestBody Map<String, Object> requestMap, HttpSession session) {
-		try {
-			// 로그인 체크
-			MemberVo loginUser = (MemberVo) session.getAttribute("userLogin");
-			if (loginUser == null) {
-				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
-			}
+		// 로그인 체크
+		MemberVo loginUser = (MemberVo) session.getAttribute("userLogin");
+		if (loginUser == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+		}
 
-			// 이력서 데이터 파싱
-			ResumeVo resumeVo = resumeParser.parseMapToResumeVo(requestMap, loginUser.getMemberId());
-
-			// 파싱 결과 확인
-			if (resumeVo == null) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이력서 데이터 파싱에 실패했습니다.");
-			}
-
-			// 수정 모드인지 확인 (resumeId가 있고 0보다 큰 경우)
-			if (resumeVo.getResumeId() != 0 && resumeVo.getResumeId() > 0) {
-				// 수정 모드
-
-				// 기존 이력서 조회하여 권한 확인
-				ResumeVo existingResume = resumeService.getResumeByResumeId(resumeVo.getResumeId());
-				if (existingResume == null) {
-					return ResponseEntity.status(HttpStatus.NOT_FOUND).body("이력서를 찾을 수 없습니다.");
-				}
-
-				if (existingResume.getMemberId() != loginUser.getMemberId()) {
-					return ResponseEntity.status(HttpStatus.FORBIDDEN).body("본인의 이력서만 수정할 수 있습니다.");
-				}
-
-				// 이력서 수정
-				resumeService.updateResume(resumeVo);
-
-			} else {
-				// 신규 작성 모드
-
-				resumeService.saveResumeWithDetails(resumeVo);
-
-			}
-
+		// 비즈니스 서비스를 통한 저장/수정 처리 (세션 포함)
+		String result = resumeService.saveOrUpdateResume(requestMap, loginUser, session);
+		
+		if ("success".equals(result)) {
 			return ResponseEntity.ok("이력서가 성공적으로 저장되었습니다.");
-
-		} catch (Exception e) {
-			System.err.println(">>> [ResumeController] 이력서 저장 실패: " + e.getMessage());
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("이력서 저장 중 오류가 발생했습니다: " + e.getMessage());
+		} else if (result.contains("본인의 이력서만")) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(result);
+		} else if (result.contains("찾을 수 없습니다")) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+		} else if (result.contains("파싱에 실패")) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
 		}
 	}
 
@@ -235,87 +150,26 @@ public class ResumeController {
 	@ResponseBody
 	public Map<String, Object> uploadProfilePhoto(@RequestParam("photo") MultipartFile file,
 			@RequestParam("resumeId") int resumeId, HttpSession session, HttpServletRequest request) {
-		Map<String, Object> result = new HashMap<>();
-
+		
 		// 로그인 유저 확인
 		MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
 		if (memberVo == null) {
+			Map<String, Object> result = new HashMap<>();
 			result.put("success", false);
 			result.put("error", "로그인 필요");
 			return result;
 		}
 
-		try {
-			// 업로드 경로 설정
-			String uploadDir = request.getServletContext().getRealPath("/upload/resume/");
-			File dir = new File(uploadDir);
-			if (!dir.exists())
-				dir.mkdirs();
-
-			// 저장 파일명 생성
-			String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
-			File dest = new File(uploadDir + filename);
-			file.transferTo(dest);
-
-			// DB에 경로 저장
-			String fileUrl = "/upload/resume/" + filename;
-			resumeService.updateProfileImage(resumeId, memberVo.getMemberId(), fileUrl);
-
-			result.put("success", true);
-			result.put("url", fileUrl);
-		} catch (Exception e) {
-			result.put("success", false);
-			result.put("error", "업로드 실패: " + e.getMessage());
-		}
-
-		return result;
+		// 파일 업로드 서비스를 통한 처리
+		return fileUploadService.uploadProfilePhoto(file, resumeId, memberVo.getMemberId(), request);
 	}
 
 	// 화면에 이미지 저장
 	@PostMapping("/profile-temp/uploadImage")
 	@ResponseBody
-	public String uploadProfileImage(@RequestParam("profileImage") MultipartFile file, HttpSession session,
-			HttpServletRequest request) {
-		String result = "";
-
-		// 세션에서 임시 이미지 목록 가져오기
-		List<Map<String, Object>> uploadedFiles = (List<Map<String, Object>>) session.getAttribute("uploadedFiles");
-		if (uploadedFiles == null) {
-			uploadedFiles = new ArrayList<>();
-		}
-
-		try {
-			// 업로드 경로 설정
-			String uploadDir = request.getServletContext().getRealPath("/upload/profile/");
-			File dir = new File(uploadDir);
-			if (!dir.exists()) {
-				dir.mkdirs();
-			}
-
-			// 저장 파일명 생성
-			String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
-			File dest = new File(uploadDir + filename);
-			file.transferTo(dest);
-
-			// 웹에서 접근 가능한 URL 생성
-			String fileUrl = "/upload/profile/" + filename;
-			result = fileUrl;
-
-			// 세션에 업로드한 파일 정보 저장
-			Map<String, Object> fileInfo = new HashMap<>();
-			fileInfo.put("fileName", file.getOriginalFilename());
-			fileInfo.put("storedFileName", filename);
-			fileInfo.put("fileUrl", fileUrl);
-			uploadedFiles.add(fileInfo);
-
-			session.setAttribute("uploadedFiles", uploadedFiles);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			result = "업로드 실패: " + e.getMessage();
-		}
-
-		return result;
+	public Map<String, Object> uploadProfileImage(@RequestParam("profileImage") MultipartFile file, HttpSession session) {
+		// 파일 업로드 서비스를 통한 처리
+		return fileUploadService.uploadProfileImageToSession(file, session);
 	}
 
 	// 포트폴리오 첨부파일을 세션에 저장
@@ -323,68 +177,16 @@ public class ResumeController {
 	@ResponseBody
 	public Map<String, Object> uploadFile(@RequestParam("file") MultipartFile file, HttpSession session,
 			HttpServletRequest request) {
-		Map<String, Object> result = new HashMap<>();
-
-		// 세션에서 업로드된 파일 목록 가져오기
-		List<Map<String, Object>> uploadedFiles = (List<Map<String, Object>>) session.getAttribute("uploadedFiles");
-		if (uploadedFiles == null) {
-			uploadedFiles = new ArrayList<>();
-		}
-
-		try {
-			// 업로드 경로 설정
-			String uploadDir = request.getServletContext().getRealPath("/upload/portfolio/");
-			File dir = new File(uploadDir);
-			if (!dir.exists()) {
-				dir.mkdirs();
-			}
-
-			// 저장 파일명 생성
-			String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
-			File dest = new File(uploadDir + filename);
-			file.transferTo(dest);
-
-			// 파일 확장자 추출
-			String fileExtension = "";
-			String originalFilename = file.getOriginalFilename();
-			if (originalFilename != null && originalFilename.lastIndexOf(".") > 0) {
-				fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
-			}
-
-			// 세션에 업로드한 파일 정보 저장
-			Map<String, Object> fileInfo = new HashMap<>();
-			fileInfo.put("fileName", file.getOriginalFilename());
-			fileInfo.put("storedFileName", filename);
-			fileInfo.put("fileExtension", fileExtension);
-			uploadedFiles.add(fileInfo);
-
-			session.setAttribute("uploadedFiles", uploadedFiles);
-
-			result.put("success", true);
-			result.put("fileName", file.getOriginalFilename());
-			result.put("storedFileName", filename);
-			result.put("fileExtension", fileExtension);
-
-		} catch (Exception e) {
-			result.put("success", false);
-			result.put("error", "업로드 실패: " + e.getMessage());
-		}
-
-		return result;
+		// 파일 업로드 서비스를 통한 처리
+		return fileUploadService.uploadPortfolioFile(file, session);
 	}
 
 	// 파일 삭제
 	@DeleteMapping("/deleteFile/{portfolioId}")
 	@ResponseBody
 	public ResponseEntity<String> deleteImage(@PathVariable("portfolioId") String fileId, HttpSession session) {
-		List<Map<String, Object>> uploadedFiles = (List<Map<String, Object>>) session.getAttribute("uploadedFiles");
-
-		if (uploadedFiles != null) {
-			uploadedFiles.removeIf(file -> fileId.equals(file.get("storedFileName"))); // storedFileName가 같은 경우 리스트에서 제외
-			session.setAttribute("uploadedFiles", uploadedFiles); // 리스트 갱신
-		}
-
-		return ResponseEntity.ok("삭제 성공");
+		boolean deleted = fileUploadService.deleteFileFromSession(fileId, session);
+		return ResponseEntity.ok(deleted ? "삭제 성공" : "삭제 실패");
 	}
 
 	// 미리보기
@@ -397,42 +199,37 @@ public class ResumeController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
 		}
 
-		ResumeVo resumeVo = resumeParser.parseMapToResumeVo(requestMap, loginUser.getMemberId());
-		session.setAttribute("resumePreviewData", resumeVo);
-
+		resumeService.prepareResumePreviewData(requestMap, loginUser, session);
 		return ResponseEntity.ok("success");
 	}
 
 	@GetMapping("/viewPreview")
 	public String showPreview(HttpSession session, Model model) {
 		ResumeVo resume = (ResumeVo) session.getAttribute("resumePreviewData");
-
-		model.addAttribute("resume", resume);
-
-		// 직무직군 id값을 네이밍으로 변환
-		List<Map<String, String>> jobTitles = new ArrayList<>();
-		for (CareerVo career : resume.getCareerList()) {
-			Map<String, String> map = new HashMap<>();
-			map.put("jobGroupName", jobGroupService.getJobGroupNameById(career.getJobGroupId()));
-			map.put("jobName", jobService.getJobNameById(career.getJobId()));
-			jobTitles.add(map);
-		}
-		// skillList에서 태그명 정보 보완
-		List<SkillVo> skillList = resume.getSkillList();
-		System.out.println(">>> skillList in preview: ");
-		if (skillList != null) {
-			for (SkillVo skill : skillList) {
-				// 태그명이 없는 경우 서비스에서 조회하여 보완
-				if (skill.getTagName() == null || skill.getTagName().isEmpty()) {
-					SkillVo fullSkill = skillService.getSkillById(skill.getTagId());
-					if (fullSkill != null) {
-						skill.setTagName(fullSkill.getTagName());
-					}
+		
+		// 포트폴리오 데이터 디버깅
+		System.out.println(">>> [viewPreview] 이력서 ID: " + (resume != null ? resume.getResumeId() : "null"));
+		if (resume != null) {
+			List<PortfolioVo> portfolioList = resume.getPortfolioList();
+			System.out.println(">>> [viewPreview] 포트폴리오 목록 크기: " + (portfolioList != null ? portfolioList.size() : "null"));
+			if (portfolioList != null && !portfolioList.isEmpty()) {
+				for (int i = 0; i < portfolioList.size(); i++) {
+					PortfolioVo portfolio = portfolioList.get(i);
+					System.out.println(">>> [viewPreview] 포트폴리오[" + i + "]: ID=" + portfolio.getPortfolioId() + 
+						", 원본파일명=" + portfolio.getFileName() + ", 저장파일명=" + portfolio.getStoredFileName());
 				}
-				System.out.println(" - tagId: " + skill.getTagId() + ", tagName: " + skill.getTagName());
+			} else {
+				System.out.println(">>> [viewPreview] 포트폴리오 목록이 비어있습니다.");
 			}
 		}
 
+		// 스킬 데이터 보완
+		resumeService.enrichSkillData(resume);
+		
+		// 직무직군 id값을 네이밍으로 변환
+		List<Map<String, String>> jobTitles = resumeService.prepareJobTitleData(resume);
+
+		model.addAttribute("resume", resume);
 		model.addAttribute("jobTitles", jobTitles);
 
 		return "resume/resumePreview"; // /WEB-INF/views/resume/resumePreview.jsp
@@ -450,27 +247,105 @@ public class ResumeController {
 
 		// 이력서 전체 정보 조회 (career, school, skill 포함)
 		ResumeVo resume = resumeService.getResumeWithAllDetails(resumeId);
-		if (resume == null || resume.getMemberId() != loginUser.getMemberId()) {
+		
+		// 권한 체크
+		if (resume == null || !resumeService.checkResumeOwnership(resumeId, loginUser.getMemberId())) {
 			model.addAttribute("errorMessage", "이력서를 조회할 수 없습니다.");
 			return "resume/resumeView";
 		}
-
-		// 직무직군명 변환
-		List<Map<String, String>> jobTitles = new ArrayList<>();
-		for (CareerVo career : resume.getCareerList()) {
-			Map<String, String> map = new HashMap<>();
-			map.put("jobGroupName", jobGroupService.getJobGroupNameById(career.getJobGroupId()));
-			map.put("jobName", jobService.getJobNameById(career.getJobId()));
-			jobTitles.add(map);
+		
+		// 포트폴리오 데이터 디버깅
+		System.out.println(">>> [view/{resumeId}] 이력서 ID: " + resumeId);
+		List<PortfolioVo> portfolioList = resume.getPortfolioList();
+		System.out.println(">>> [view/{resumeId}] 포트폴리오 목록 크기: " + (portfolioList != null ? portfolioList.size() : "null"));
+		if (portfolioList != null && !portfolioList.isEmpty()) {
+			for (int i = 0; i < portfolioList.size(); i++) {
+				PortfolioVo portfolio = portfolioList.get(i);
+				System.out.println(">>> [view/{resumeId}] 포트폴리오[" + i + "]: ID=" + portfolio.getPortfolioId() + 
+					", 원본파일명=" + portfolio.getFileName() + ", 저장파일명=" + portfolio.getStoredFileName());
+			}
+		} else {
+			System.out.println(">>> [view/{resumeId}] 포트폴리오 목록이 비어있습니다.");
 		}
-		model.addAttribute("jobTitles", jobTitles);
 
-
+		// 스킬 데이터 보완
+		resumeService.enrichSkillData(resume);
+		
+		// 직무직군명 변환
+		List<Map<String, String>> jobTitles = resumeService.prepareJobTitleData(resume);
 
 		// 모델에 이력서 객체 바인딩
 		model.addAttribute("resume", resume);
+		model.addAttribute("jobTitles", jobTitles);
 
 		return "resume/resumePreview";
+	}
+
+	// 포트폴리오 파일 다운로드
+	@GetMapping("/download/{portfolioId}")
+	public void downloadPortfolioFile(@PathVariable("portfolioId") String storedFileName, 
+			HttpServletResponse response, HttpSession session) {
+		
+		// 로그인 체크
+		MemberVo loginUser = (MemberVo) session.getAttribute("userLogin");
+		if (loginUser == null) {
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			return;
+		}
+		
+		// 파일 다운로드 권한 검증
+		if (!fileUploadService.validateFileDownloadPermission(storedFileName, loginUser.getMemberId())) {
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			return;
+		}
+		
+		try {
+			// 파일 경로 설정
+			String uploadDir = "C:/upload/portfolio/";
+			File file = new File(uploadDir + storedFileName);
+			
+			// 파일 존재 여부 재확인
+			if (!file.exists()) {
+				System.err.println(">>> [다운로드] 파일이 존재하지 않음: " + file.getAbsolutePath());
+				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
+			// 원본 파일명 추출 (UUID 제거)
+			String originalFileName = storedFileName;
+			if (storedFileName.contains("_")) {
+				originalFileName = storedFileName.substring(storedFileName.indexOf("_") + 1);
+			}
+			
+			System.out.println(">>> [다운로드] 파일 다운로드 시작: " + originalFileName);
+			
+			// 한글 파일명 인코딩
+			String encodedFileName = URLEncoder.encode(originalFileName, "UTF-8").replaceAll("\\+", "%20");
+			
+			// 응답 헤더 설정
+			response.setContentType("application/octet-stream");
+			response.setContentLength((int) file.length());
+			response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + encodedFileName);
+			
+			// 파일 스트림으로 전송
+			try (FileInputStream fis = new FileInputStream(file);
+				 OutputStream os = response.getOutputStream()) {
+				
+				byte[] buffer = new byte[1024];
+				int bytesRead;
+				int totalBytes = 0;
+				while ((bytesRead = fis.read(buffer)) != -1) {
+					os.write(buffer, 0, bytesRead);
+					totalBytes += bytesRead;
+				}
+				os.flush();
+				System.out.println(">>> [다운로드] 파일 전송 완료: " + originalFileName + " (" + totalBytes + " bytes)");
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
 	}
 
 }

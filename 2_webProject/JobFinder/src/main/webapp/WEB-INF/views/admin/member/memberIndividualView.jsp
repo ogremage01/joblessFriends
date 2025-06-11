@@ -1,4 +1,4 @@
-<!-- 관리자 로그인 여부를 묻는 자바구문이 들어가야 할 부분 -->
+
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page language="java" contentType="text/html;charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -54,7 +54,7 @@
 					<table class="table admin-table">
 						<thead>
 							<tr>
-								<th scope="col">선택</th>
+								<th scope="col"><button id="selectAll">전체 선택</button></th>
 								<th scope="col">회원 ID</th>
 								<th scope="col">이메일</th>
 								<th scope="col">닉네임</th>
@@ -69,18 +69,18 @@
 										<input type="checkbox" class="delMember admin-checkbox" 
 											   name="delete" value="${memberVo.memberId}">
 									</td>
-									<td><strong>${memberVo.memberId}</strong></td>
-									<td>
-										<a href="./individual/${memberVo.memberId}" class="member-email-link">
+									<td class="member-id"><strong>${memberVo.memberId}</strong></td>
+									<td class="email">
+										<a href="./individual/${memberVo.memberId}?page=${searchVo.page}&keyword=${searchVo.keyword}" class="member-email-link ">
 											${memberVo.email}
 										</a>
 									</td>
-									<td>${memberVo.nickname}</td>
+									<td class="name">${memberVo.nickname}</td>
 									<td>
-										<fmt:formatDate value="${memberVo.createAt}" pattern="yyyy-MM-dd" />
+										<fmt:formatDate value="${memberVo.createAt}" pattern="yyyy-MM-dd HH:MM:SS" />
 									</td>
 									<td>
-										<fmt:formatDate value="${memberVo.modifiedAt}" pattern="yyyy-MM-dd" />
+										<fmt:formatDate value="${memberVo.modifiedAt}" pattern="yyyy-MM-dd HH:MM:SS" />
 									</td>
 								</tr>
 							</c:forEach>
@@ -94,7 +94,7 @@
 								<ul class="pagination">
 									<li class="page-item ${searchVo.page==1?'disabled':''}">
 										<a class="page-link" href="./individual?page=${searchVo.page-1}&keyword=${searchVo.keyword}">
-											<i class="bi bi-chevron-left"></i> 이전
+											«
 										</a>
 									</li>
 									<c:forEach begin="${pagination.startPage}" var="i" end="${pagination.endPage}">
@@ -104,7 +104,7 @@
 									</c:forEach>
 									<li class="page-item ${searchVo.page==pagination.totalPageCount? 'disabled':''}">
 										<a class="page-link" href="./individual?page=${searchVo.page+1}&keyword=${searchVo.keyword}">
-											다음 <i class="bi bi-chevron-right"></i>
+											»
 										</a>
 									</li>
 								</ul>

@@ -30,10 +30,13 @@ public interface RecruitmentService {
     void updateJobPostIdByTempKey(int jobPostId, String tempKey);
     void updateRecruitment(RecruitmentVo vo, List<Integer> tagList, List<WelfareVo> welfareList, String tempKey);
     //update라인 //
+    void updateQuestionTextByOrder(JobPostQuestionVo questionVo);
 
     // 기존 태그 삭제
 
     void deleteTagsByJobPostId(int jobPostId);
+
+    void deleteAnswersByJobPostId(int jobPostId);
 
     // 태그 재삽입  insertJobPostTag 사용
 

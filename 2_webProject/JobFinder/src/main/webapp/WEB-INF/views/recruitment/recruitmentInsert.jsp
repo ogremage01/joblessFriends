@@ -109,11 +109,11 @@
                             <select name="jobId" class="jobName select-box">
                                 <option value="">직무 선택</option>
                             </select>
-                            <button type="button" class="remove-job">x</button>
+<%--                            <button type="button" class="remove-job">x</button>--%>
                         </div>
                     </div>
 
-                    <button type="button" class="add-job">+ 추가</button>
+<%--                    <button type="button" class="add-job">+ 추가</button>--%>
                 </div>
 
                 <!-- 스킬 태그 -->
@@ -228,8 +228,7 @@
 <div id="askConfirm">
 </div>
 <script>
-    // uuid 미리 생성
-
+    window.tempKey = crypto.randomUUID().trim().replaceAll(",", "");
     const editor = new toastui.Editor({
         el: document.querySelector('#content'),
         height: '500px',
@@ -240,6 +239,8 @@
         hooks: {
             addImageBlobHook: function (blob, callback) {
                 const formData = new FormData();
+                console.log("🔥 이미지 업로드 시작됨");
+                console.log("📦 tempKey = ", tempKey);
                 formData.append('image', blob);
                 formData.append('tempKey', tempKey);
 
@@ -267,9 +268,7 @@
         }
     });
 
-    $(function () {
-        $('#insertForm').append(`<input type="hidden" name="tempKey" value="${tempKey}">`);
-    });
+
 
     $('#insertForm').on('submit', function () {
         const htmlContent = editor.getHTML();

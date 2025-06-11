@@ -92,7 +92,7 @@ $(document).on('change', '.chk', function () {
     const jobId = $(this).data('id');
     const jobGroupName = $(this).data('group');
 
-    // 스킬은 따로 제한 처리만, 아래는 job 전용 처리
+    // 스킬은 click 이벤트에서만 처리
     if ($(this).attr('name') === 'skill') {
         return; // 아래 로직은 스킬 태그에는 적용하지 않음
     }
@@ -114,18 +114,91 @@ $(document).on('change', '.chk', function () {
     }
 });
 
-$(document).on('change', 'input[name="skill"]', function () {
-    const maxSkillCount = 3;
+// 경력 필터 체크박스 변경 시 선택된 항목 표시
+$(document).on('change', 'input[name="career"]', function () {
+    updateCareerFilterDisplay();
+});
+
+// 학력 필터 체크박스 변경 시 선택된 항목 표시
+$(document).on('change', 'input[name="education"]', function () {
+    updateEducationFilterDisplay();
+});
+
+// 전문분야(스킬) 필터 표시 업데이트
+function updateSkillFilterDisplay() {
+    const selectedSkills = $('input[name="skill"]:checked');
+    $('#divSelectedSkills').empty();
+    
+    selectedSkills.each(function() {
+        const skillName = $(this).val();
+        const skillId = $(this).data('id');
+        
+        $('#divSelectedSkills').append(`
+            <li id="skill_item_${skillId}" data-skill-id="${skillId}">
+                <em>${skillName}</em>
+                <button type="button" class="shb-btn-del" onclick="removeSkillFilter(this)">X</button>
+            </li>
+        `);
+    });
+}
+
+// 경력 필터 표시 업데이트
+function updateCareerFilterDisplay() {
+    const selectedCareers = $('input[name="career"]:checked');
+    $('#divSelectedCareer').empty();
+    
+    selectedCareers.each(function() {
+        const careerName = $(this).data('display');
+        const careerValue = $(this).val();
+        
+        $('#divSelectedCareer').append(`
+            <li id="career_item_${careerValue}" data-career-value="${careerValue}">
+                <em>${careerName}</em>
+                <button type="button" class="shb-btn-del" onclick="removeCareerFilter(this)">X</button>
+            </li>
+        `);
+    });
+}
+
+// 학력 필터 표시 업데이트
+function updateEducationFilterDisplay() {
+    const selectedEducations = $('input[name="education"]:checked');
+    $('#divSelectedEducation').empty();
+    
+    selectedEducations.each(function() {
+        const educationName = $(this).data('display');
+        const educationValue = $(this).val();
+        
+        $('#divSelectedEducation').append(`
+            <li id="education_item_${educationValue}" data-education-value="${educationValue}">
+                <em>${educationName}</em>
+                <button type="button" class="shb-btn-del" onclick="removeEducationFilter(this)">X</button>
+            </li>
+        `);
+    });
+}
+
+$(document).on('click', 'input[name="skill"]', function (e) {
+    const maxSkillCount = 3; // 최대 3개까지 허용 (4개가 되면 막기)
+    
+    // 클릭 전의 원래 상태를 확인 (클릭 후 상태와 반대)
+    const wasChecked = !$(this).is(':checked');
     const currentChecked = $('input[name="skill"]:checked').length;
-
-    if (currentChecked > maxSkillCount) {
-        loginFailPop(`스킬은 최대 ${maxSkillCount}개까지만 선택할 수 있습니다.`);
-
-        $(this).prop('checked', false);
-        return;
+    
+    // 1. 사용자가 클릭을 한다.
+    if (wasChecked) {
+        // 1-1. 이미 있는 전문분야라면 선택을 취소한다 (아이템삭제) - 허용
+        return; // 체크 해제는 항상 허용
+    } else {
+        // 1-2. 새로운 전문분야라면, 이 전문분야를 추가했을 때 전문분야가 4개가 되는지 평가한다.
+        if (currentChecked >= maxSkillCount+1) {
+            // 1-3-2. 4개가 된다면 추가하지 않고 경고 토스트 팝업을 띄우고 종료
+            loginFailPop(`스킬은 최대 ${maxSkillCount}개까지만 선택할 수 있습니다.`);
+            e.preventDefault();
+            return false;
+        }
+        // 1-3-1. 4개가 되지 않는다면 추가하고 종료 - 허용
     }
-
-    $('#skill-count').text(currentChecked);
 });
 // 리스트 X버튼 누르면 삭제 및 체크 해제
 function removeDetail(button) {
@@ -135,6 +208,43 @@ function removeDetail(button) {
     delete checkedJobs[jobId];
     $li.remove();
     $(`.chk[data-id='${jobId}']`).prop('checked', false);
+}
+
+// 스킬 필터 항목 제거
+function removeSkillFilter(button) {
+    const $li = $(button).closest('li');
+    const skillId = $li.data('skill-id');
+    
+    $li.remove();
+    $(`input[name="skill"][data-id="${skillId}"]`).prop('checked', false);
+    
+    // 스킬 카운트 업데이트
+    const currentChecked = $('input[name="skill"]:checked').length;
+    $('#skill-count').text(currentChecked);
+    
+    updateFilteredCount();
+}
+
+// 경력 필터 항목 제거
+function removeCareerFilter(button) {
+    const $li = $(button).closest('li');
+    const careerValue = $li.data('career-value');
+    
+    $li.remove();
+    $(`input[name="career"][value="${careerValue}"]`).prop('checked', false);
+    
+    updateFilteredCount();
+}
+
+// 학력 필터 항목 제거
+function removeEducationFilter(button) {
+    const $li = $(button).closest('li');
+    const educationValue = $li.data('education-value');
+    
+    $li.remove();
+    $(`input[name="education"][value="${educationValue}"]`).prop('checked', false);
+    
+    updateFilteredCount();
 }
 
 
@@ -256,22 +366,32 @@ function validateFilterCase() {
     return -1;
 }
 
-$(document).on('change', '.chk, input[name="career"], input[name="education"], input[name="skill"]', function () {
+$(document).on('change', '.chk, input[name="career"], input[name="education"]', function () {
     updateFilteredCount();
 });
 
-// 경력 체크 시 → 직군·직무 없으면 체크 막기 , 1개이상 체크불가
+// 스킬 체크박스 변경 시 UI 업데이트 (별도 처리)
+$(document).on('change', 'input[name="skill"]', function () {
+    const newCount = $('input[name="skill"]:checked').length;
+    $('#skill-count').text(newCount);
+    updateSkillFilterDisplay();
+    updateFilteredCount();
+});
+
+// 경력 체크 시 → 직군·직무 없으면 체크 막기 (중복선택 허용)
 $(document).on('click', 'input[name="career"]', function (e) {
     const jobChecked = $('input[name="job"]:checked').length > 0;
     if (!jobChecked) {
         loginFailPop("경력 조건은 직군·직무 선택 후 사용 가능합니다.");
         e.preventDefault(); // ✅ 체크 자체를 막음
+        return;
     }
-    $('input[name="career"]').not(this).prop('checked', false);
+    // 중복선택 허용을 위해 다른 체크박스 해제 코드 제거
 });
-//학력도 1개만
+
+// 학력 중복선택 허용 (기존 단일선택 제한 제거)
 $(document).on('click', 'input[name="education"]', function () {
-    $('input[name="education"]').not(this).prop('checked', false);
+    // 중복선택 허용을 위해 다른 체크박스 해제 코드 제거
 });
 //버튼초기화 //
 
@@ -282,18 +402,30 @@ $(document).on('click', '#btnResetFilter', function (e) {
     // 1. 모든 체크박스 해제
     $('input.chk, input[name="career"], input[name="education"], input[name="skill"]').prop('checked', false);
 
-    // 2. 선택된 직무 리스트 초기화
+    // 2. 선택된 직군·직무 리스트 초기화
     $('#divSelectedCon').empty();
 
-    // 3. 전역 변수 초기화
+    // 3. 선택된 경력 리스트 초기화
+    $('#divSelectedCareer').empty();
+
+    // 4. 선택된 학력 리스트 초기화
+    $('#divSelectedEducation').empty();
+
+    // 5. 선택된 전문분야 리스트 초기화
+    $('#divSelectedSkills').empty();
+
+    // 6. 선택된 직군 해제
+    $('.job-group').removeClass('selected');
+
+    // 7. 전역 변수 초기화
     checkedJobs = {};
 
-    // 4. 카운터 초기화 (직접 UI 초기화)
+    // 8. 카운터 초기화 (직접 UI 초기화)
     $('#skill-count').text('0');
     $('#filteredCount').text('0');
     $('#btnSearchFiltered').html('선택된 <span id="filteredCount">0</span>건 검색하기');
 
-    // 5. AJAX 호출 대신 UI만 초기화 (굳이 updateFilteredCount 호출 안 해도 됨)
+    // 9. AJAX 호출 대신 UI만 초기화 (굳이 updateFilteredCount 호출 안 해도 됨)
 });
 
 
@@ -349,12 +481,16 @@ $(document).on('click', '.page-btn', function () {
 
 
 
-
 function renderJobList(recruitmentList, skillMap) {
-    $('#jobListings').empty(); // 기존 리스트 지우기
+    $('#jobListings').empty();
 
-    // 필터링된 공고를 렌더링
     recruitmentList.forEach(function (item) {
+        const isClosed = item.isContinuous !== 0;
+
+        const applyBtnHtml = isClosed
+            ? `<button class="apply-btn closed" type="button" data-status="closed" disabled style="background: #ccc; cursor: not-allowed; ">마감됨</button>`
+            : `<button class="apply-btn" type="button" data-status="open">지원하기</button>`;
+
         const html = `
             <div class="job" data-jobpostid="${item.jobPostId}" data-companyid="${item.companyId}">
               <div class="company-name">${item.companyName}</div>
@@ -374,14 +510,15 @@ function renderJobList(recruitmentList, skillMap) {
                 </div>
               </div>
               <div class="job-action">
-                <button class="apply-btn" type="button">지원하기</button>
+                ${applyBtnHtml}
                 <div class="deadline">~${formatDateWithDay(item.endDate)}</div>
               </div>
             </div>
         `;
-        $('#jobListings').append(html); // 필터링된 공고 리스트에 추가
+        $('#jobListings').append(html);
     });
 }
+
 
 
 $('#btnSearchFiltered').on('click', function () {
@@ -444,6 +581,11 @@ function renderPagination(pagination) {
 
 $(document).on('click', '.apply-btn', function () {
     console.log(resumeList);
+    if (userType === 'company') {
+        Swal.fire({ title: '기업회원은 지원 불가' });
+        return;
+    }
+
     if (!resumeList || resumeList.length === 0) {
         Swal.fire({
             title:'📭 등록된 이력서가 없습니다.',
@@ -472,6 +614,9 @@ $(document).on('click', '.apply-btn', function () {
                         title: '사전질문 포함',
                         html: `<b>${questionList.length}개의 사전질문</b>이 등록된 공고입니다.<br>이력서 선택 후 답변을 입력해주세요.`,
                         confirmButtonText: '이력서 선택으로 이동',
+						customClass: {
+							confirmButton: "swalConfirmBtn",
+						},
                     }).then(() => {
                         showResumeSelectModal(jobPostId);
                     });
@@ -498,7 +643,7 @@ function showResumeSelectModal(jobPostId) {
 
 
     const html = resumeList.map(r => `
-    <label class="resume-item">
+    <label class="resume-item"  data-matchscore="${r.matchScore}">
         <div class="resume-radio-row">
             <div class="resume-left">
                 <input type="radio" name="resumeRadio" value="${r.resumeId}">
@@ -542,6 +687,9 @@ function showResumeSelectModal(jobPostId) {
         if (result.isConfirmed) {
             const selectedResumeId = result.value;
 
+            // ✅ 여기서 matchScore 추출
+            const selectedRadio = $('input[name="resumeRadio"]:checked');
+            const selectedMatchScore = selectedRadio.closest('.resume-item').data('matchscore');
             $.ajax({
                 url: '/resume/apply/questions',
                 method: 'GET',
@@ -550,11 +698,11 @@ function showResumeSelectModal(jobPostId) {
                     if (questionList.length > 0) {
                         openQuestionsModal(jobPostId).then(questionResult => {
                             if (questionResult.isConfirmed) {
-                                applyResumeAjax(selectedResumeId, jobPostId);
+                                applyResumeAjax(selectedResumeId, jobPostId,selectedMatchScore );
                             }
                         });
                     } else {
-                        applyResumeAjax(selectedResumeId, jobPostId);
+                        applyResumeAjax(selectedResumeId, jobPostId,selectedMatchScore );
                     }
                 },
                 error: function () {
@@ -612,7 +760,7 @@ function openQuestionsModal(jobPostId) {
     });
 }
 
-function applyResumeAjax(resumeId, jobPostId) {
+function applyResumeAjax(resumeId, jobPostId,matchScore) {
     const seen = new Set();
     const answerList = [];
 
@@ -636,15 +784,19 @@ function applyResumeAjax(resumeId, jobPostId) {
             html: `답변을 작성하지 않아도 지원이 가능하지만,<br><strong>정말 그대로 지원하시겠습니까?</strong>`,
             showDenyButton: true,
             confirmButtonText: '지원하기',
-            denyButtonText: '답변하러 가기'
+            denyButtonText: '답변하러 가기',
+			customClass: {
+				confirmButton: "swalConfirmBtn",
+				denyButton: "swalDenyBtn",
+			},
         }).then(result => {
             if (result.isConfirmed) {
-                sendApplyAjax(resumeId, jobPostId, answerList);
+                sendApplyAjax(resumeId, jobPostId, answerList,matchScore);
             } else if (result.isDenied) {
                 // 👉 다시 질문 모달로
                 openQuestionsModal(jobPostId).then(questionResult => {
                     if (questionResult.isConfirmed) {
-                        applyResumeAjax(resumeId, jobPostId);  // 다시 확인하고 진행
+                        applyResumeAjax(resumeId, jobPostId, matchScore);  // 다시 확인하고 진행
                     }
                 });
             }
@@ -661,15 +813,20 @@ function applyResumeAjax(resumeId, jobPostId) {
             html: `총 ${totalQuestions}개 중 ${answeredCount}개만 답변했습니다.<br>계속 진행하시겠습니까?`,
             showDenyButton: true,
             confirmButtonText: '지원하기',
-            denyButtonText: '답변하러 가기'
+            denyButtonText: '답변하러 가기',
+			customClass: {
+				confirmButton: "swalConfirmBtn",
+				denyButton: "swalDenyBtn",
+			},
+			
         }).then(result => {
             if (result.isConfirmed) {
-                sendApplyAjax(resumeId, jobPostId, answerList);
+                sendApplyAjax(resumeId, jobPostId, answerList,matchScore);
             } else if (result.isDenied) {
                 // 👉 다시 질문 모달로
                 openQuestionsModal(jobPostId).then(questionResult => {
                     if (questionResult.isConfirmed) {
-                        applyResumeAjax(resumeId, jobPostId);  // 답변 재확인 후 재진입
+                        applyResumeAjax(resumeId, jobPostId, matchScore);  // 답변 재확인 후 재진입
                     }
                 });
             }
@@ -678,10 +835,10 @@ function applyResumeAjax(resumeId, jobPostId) {
     }
 
 // 모두 답변했을 경우엔 바로 진행
-    sendApplyAjax(resumeId, jobPostId, answerList);
+    sendApplyAjax(resumeId, jobPostId, answerList,matchScore);
 }
 //분기처리 ,미응답 답변 함수 //
-function sendApplyAjax(resumeId, jobPostId, answerList) {
+function sendApplyAjax(resumeId, jobPostId, answerList,matchScore) {
     $.ajax({
         url: "/resume/apply",
         method: "POST",
@@ -689,7 +846,8 @@ function sendApplyAjax(resumeId, jobPostId, answerList) {
         data: JSON.stringify({
             resumeId,
             jobPostId,
-            answerList
+            answerList,
+            matchScore
         }),
         success: function () {
             Swal.fire({

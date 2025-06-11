@@ -128,6 +128,12 @@
     margin-bottom: 6px;
 }
 
+.deleteBookmark:hover {
+	background-color: white;
+    color: #f68300;
+	outline: 1px solid #F69800;
+}
+
 .job-action .deadline {
     font-size: 13px;
     color: #666;
@@ -249,10 +255,17 @@ h2 {
 
 .no-bookmark{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    font-size: 18px;
+    height: 120px;
+    font-size: 16px;
     color: #888;
-    font-weight: bold;	
-    }
+/*     font-weight: bold;	 */
+}
+.no-bookmark a {
+    margin-top: 10px;
+    color: #f79000;
+    font-weight: bold;
+    text-decoration: none;
+}

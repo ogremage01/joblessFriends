@@ -41,9 +41,10 @@
 </div>
 
     <section class="resume-wrapper">
-    	<div class="resumeTitle" style="margin: 1px;">
+    	<div class="resumeTitle resume-title-margin">
 		    <h1>제목</h1>
 			<input type="text" id="title" placeholder="이력서 제목을 입력하세요" value="${resumeData.title}" />
+			<div id="title-error-container" class="title-error-container"></div>
 		</div>		
       <!-- 인적사항 -->
 	<div class="section-block" id="section-personal">
@@ -60,7 +61,7 @@
 			</div>
 			<div class="field-block">
 				<label>전화번호</label>
-				<input type="text" id="phoneNumber" placeholder="예시) 01012349999" value="${resumeData.phoneNumber}" />
+				<input type="text" id="phoneNumber" placeholder="예시) 010-1234-9999" value="${resumeData.phoneNumber}" />
 			</div>
 			
 			<!-- 2행 -->
@@ -79,17 +80,17 @@
 			</div>
 			<div class="photo-wrapper">
 				<label class="photo-box" id="photoBox">
-					<div class="photo-text" <c:if test="${not empty resumeData.profile}">style="display: none;"</c:if>>
+					<div class="photo-text" <c:if test="${not empty resumeData.profile}">class="hidden"</c:if>>
 						사진추가
 						<span class="plus-icon">+</span>
 					</div>
-					<img id="previewImage" src="${resumeData.profile}" alt="미리보기" 
-					     <c:choose>
-					         <c:when test="${not empty resumeData.profile}">style="display: block;"</c:when>
-					         <c:otherwise>style="display: none;"</c:otherwise>
-					     </c:choose> />
-				</label>
-				<input type="file" id="profileImageInput" style="display: none;" />
+									<img id="previewImage" src="${resumeData.profile}" alt="미리보기" 
+				     <c:choose>
+				         <c:when test="${not empty resumeData.profile}">class="visible-block"</c:when>
+				         <c:otherwise>class="hidden"</c:otherwise>
+				     </c:choose> />
+			</label>
+			<input type="file" id="profileImageInput" class="hidden" />
 			</div>
 
 		</div>
@@ -101,7 +102,7 @@
      <!-- 스킬 -->
 	<section class="section-block" id="section-skill">
 		<h2 class="section-title">스킬</h2>
-		<p id="selectedJobGroupLabel" class="selected-job-group-label" style="display: none;"></p>
+		<p id="selectedJobGroupLabel" class="selected-job-group-label hidden"></p>
 		<div id="skillContainer" class="tag-select"></div>
 	</section>
 
@@ -130,7 +131,7 @@
 							<div class="field-block school-autocomplete-block">
 								<label>학교명</label>
 								<input type="text" name="schoolName" placeholder="학교명을 입력해주세요" value="${school.schoolName}" autocomplete="off" />
-								<ul class="autocomplete-list" style="display: none;"></ul>
+								<ul class="autocomplete-list hidden"></ul>
 							</div>
 							<div class="field-block">
 								<label>졸업년도</label>
@@ -151,12 +152,12 @@
 							<div class="field-block school-autocomplete-block">
 								<label>학교명</label>
 								<input type="text" name="schoolName" placeholder="대학교명을 입력해주세요" value="${school.schoolName}" autocomplete="off" />
-								<ul class="autocomplete-list" style="display: none;"></ul>
+								<ul class="autocomplete-list hidden"></ul>
 							</div>
 							<div class="field-block">
 								<label>전공명</label>
 								<input type="text" name="majorName" placeholder="전공명을 입력해주세요" value="${school.majorName}" autocomplete="off" />
-								<ul class="autocomplete-list" style="display: none;"></ul>
+								<ul class="autocomplete-list hidden"></ul>
 							</div>
 						</div>
 						<div class="grid-3">
@@ -349,7 +350,7 @@
 						<label>
 							<span class="plus-icon">✓</span>
 							파일: ${portfolio.fileName}
-							<input type="file" name="portfolioFile" style="display: none;" />
+							<input type="file" name="portfolioFile" class="hidden" />
 						</label>
 						<input type="hidden" name="fileName" value="${portfolio.fileName}" />
 						<input type="hidden" name="storedFileName" value="${portfolio.storedFileName}" />
@@ -375,8 +376,8 @@
 <script>
 // 이력서 수정 모드 설정
 window.isEditMode = true;
-window.currentResumeId = ${jsResumeId};
-window.uploadedImageUrl = "${jsProfile}";
+window.currentResumeId = <c:out value="${jsResumeId}"/>;
+window.uploadedImageUrl = "<c:out value="${jsProfile}"/>";
 
 // 기존 스킬 데이터 초기화
 window.existingSkills = [];
@@ -388,8 +389,8 @@ window.existingSkills = [];
 <script>
 if (window.existingSkills) {
   window.existingSkills.push({
-    tagId: ${skill.tagId},
-    tagName: '${fn:replace(skill.tagName, "'", "\\'")}'
+    tagId: <c:out value="${skill.tagId}"/>,
+    tagName: '<c:out value="${fn:replace(skill.tagName, \"'\", \"\\\\'\")}"/>'
   });
 }
 </script>

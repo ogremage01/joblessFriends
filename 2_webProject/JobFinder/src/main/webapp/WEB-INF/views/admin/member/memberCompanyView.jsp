@@ -1,4 +1,4 @@
-<!-- 관리자 로그인 여부를 묻는 자바구문이 들어가야 할 부분 -->
+
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page language="java" contentType="text/html;charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -54,7 +54,7 @@
 					<table class="table admin-table">
 						<thead>
 							<tr>
-								<th scope="col">선택</th>
+								<th scope="col"><button id="selectAll">전체 선택</button></th>
 								<th scope="col">기업 ID</th>
 								<th scope="col">회사명</th>
 								<th scope="col">이메일</th>
@@ -65,16 +65,16 @@
 							<c:forEach var="companyVo" items="${companyList}">
 								<tr>
 									<td class="checkbox-container">
-										<input type="checkbox" class="delCompany admin-checkbox" 
+										<input type="checkbox" class="ds admin-checkbox" 
 											   name="delete" value="${companyVo.companyId}">
 									</td>
 									<td><strong>${companyVo.companyId}</strong></td>
-									<td>
-										<a href="./company/${companyVo.companyId}" class="company-name-link">
+									<td class="name">
+										<a href="./company/${companyVo.companyId}?page=${searchVo.page}&keyword=${searchVo.keyword}" class="company-name-link">
 											${companyVo.companyName}
 										</a>
 									</td>
-									<td>${companyVo.email}</td>
+									<td class="email">${companyVo.email}</td>
 									<td>${companyVo.tel}</td>
 								</tr>
 							</c:forEach>
@@ -88,7 +88,7 @@
 								<ul class="pagination">
 									<li class="page-item ${searchVo.page==1?'disabled':''}">
 										<a class="page-link" href="./company?page=${searchVo.page-1}&keyword=${searchVo.keyword}">
-											<i class="bi bi-chevron-left"></i> 이전
+											«
 										</a>
 									</li>
 									<c:forEach begin="${pagination.startPage}" var="i" end="${pagination.endPage}">
@@ -98,7 +98,7 @@
 									</c:forEach>
 									<li class="page-item ${searchVo.page==pagination.totalPageCount? 'disabled':''}">
 										<a class="page-link" href="./company?page=${searchVo.page+1}&keyword=${searchVo.keyword}">
-											다음 <i class="bi bi-chevron-right"></i>
+											»
 										</a>
 									</li>
 								</ul>
@@ -119,7 +119,6 @@
 		</div>
 	</div>
 </div>
-
 <script src="/js/admin/member/company.js"></script>
 </body>
 </html>

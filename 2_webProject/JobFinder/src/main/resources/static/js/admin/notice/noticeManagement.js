@@ -26,7 +26,7 @@ function deleteNotices(noticeIdList) {
     })
     .then(data => {
         if (data == "삭제완료") {
-            alert("삭제 성공");
+			alert("공지 사항이 성공적으로 삭제되었습니다.");
             location.reload();
         } else {
             alert("삭제 실패: 서버 응답 오류");
@@ -85,3 +85,16 @@ $(document).ready(function() {
         }
     });
 }); 
+
+
+//전체 선택 체크박스
+
+const selectAllCom = document.getElementById("selectAll");
+
+selectAllCom.addEventListener("click", function(e) {
+	    const checkboxes = document.querySelectorAll(".admin-checkbox");
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = !checkbox.checked; // 현재 체크 상태를 반전시킴
+    });
+});

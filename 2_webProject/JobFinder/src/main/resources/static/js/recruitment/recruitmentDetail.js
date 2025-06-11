@@ -28,6 +28,7 @@ $(document).ready(function () {
 
 
 $(document).on('click', '.btn-apply', function () {
+
     if (!resumeList || resumeList.length === 0) {
         Swal.fire('📭 등록된 이력서가 없습니다.');
         return;
@@ -53,6 +54,9 @@ $(document).on('click', '.btn-apply', function () {
                         title: '사전질문 포함',
                         html: `<b>${questionList.length}개의 사전질문</b>이 등록된 공고입니다.<br>이력서 선택 후 답변을 입력해주세요.`,
                         confirmButtonText: '이력서 선택으로 이동',
+				        customClass: {
+				            confirmButton: 'swalConfirmBtn'
+				        }
                     }).then(() => {
                         showResumeSelectModal(jobPostId);
                     });
@@ -79,7 +83,7 @@ function showResumeSelectModal(jobPostId) {
 
 
     const html = resumeList.map(r => `
-    <label class="resume-item">
+    <label class="resume-item"  data-matchscore="${r.matchScore}">
         <div class="resume-radio-row">
             <div class="resume-left">
                 <input type="radio" name="resumeRadio" value="${r.resumeId}">
@@ -122,7 +126,8 @@ function showResumeSelectModal(jobPostId) {
     }).then(result => {
         if (result.isConfirmed) {
             const selectedResumeId = result.value;
-
+			const selectedRadio = $('input[name="resumeRadio"]:checked');
+			   const selectedMatchScore = selectedRadio.closest('.resume-item').data('matchscore');
             $.ajax({
                 url: '/resume/apply/questions',
                 method: 'GET',
@@ -131,11 +136,11 @@ function showResumeSelectModal(jobPostId) {
                     if (questionList.length > 0) {
                         openQuestionsModal(jobPostId).then(questionResult => {
                             if (questionResult.isConfirmed) {
-                                applyResumeAjax(selectedResumeId, jobPostId);
+                                applyResumeAjax(selectedResumeId, jobPostId,selectedMatchScore);
                             }
                         });
                     } else {
-                        applyResumeAjax(selectedResumeId, jobPostId);
+                        applyResumeAjax(selectedResumeId, jobPostId,selectedMatchScore);
                     }
                 },
                 error: function () {
@@ -180,6 +185,11 @@ function openQuestionsModal(jobPostId) {
             `,
             confirmButtonText: '확인',
             cancelButtonText: '지원 취소',
+			customClass: {
+	            confirmButton: "swalConfirmBtn",
+	            cancelButton: "swalCancelBtn",
+	        },
+			reverseButtons: true,
             showCancelButton: true,
             allowOutsideClick: false,
             allowEscapeKey: false,
@@ -188,7 +198,7 @@ function openQuestionsModal(jobPostId) {
     });
 }
 
-function applyResumeAjax(resumeId, jobPostId) {
+function applyResumeAjax(resumeId, jobPostId,matchScore) {
     const seen = new Set();
     const answerList = [];
 
@@ -212,15 +222,19 @@ function applyResumeAjax(resumeId, jobPostId) {
             html: `답변을 작성하지 않아도 지원이 가능하지만,<br><strong>정말 그대로 지원하시겠습니까?</strong>`,
             showDenyButton: true,
             confirmButtonText: '지원하기',
-            denyButtonText: '답변하러 가기'
+            denyButtonText: '답변하러 가기',
+			customClass: {
+	            confirmButton: "swalConfirmBtn",
+	            denyButton: "swalDenyBtn",
+	        },
         }).then(result => {
             if (result.isConfirmed) {
-                sendApplyAjax(resumeId, jobPostId, answerList);
+                sendApplyAjax(resumeId, jobPostId, answerList,matchScore);
             } else if (result.isDenied) {
                 // 👉 다시 질문 모달로
                 openQuestionsModal(jobPostId).then(questionResult => {
                     if (questionResult.isConfirmed) {
-                        applyResumeAjax(resumeId, jobPostId);  // 다시 확인하고 진행
+                        applyResumeAjax(resumeId, jobPostId,matchScore);  // 다시 확인하고 진행
                     }
                 });
             }
@@ -237,15 +251,19 @@ function applyResumeAjax(resumeId, jobPostId) {
             html: `총 ${totalQuestions}개 중 ${answeredCount}개만 답변했습니다.<br>계속 진행하시겠습니까?`,
             showDenyButton: true,
             confirmButtonText: '지원하기',
-            denyButtonText: '답변하러 가기'
+            denyButtonText: '답변하러 가기',
+			customClass: {
+	            confirmButton: "swalConfirmBtn",
+	            denyButton: "swalDenyBtn",
+	        },
         }).then(result => {
             if (result.isConfirmed) {
-                sendApplyAjax(resumeId, jobPostId, answerList);
+                sendApplyAjax(resumeId, jobPostId, answerList,matchScore);
             } else if (result.isDenied) {
                 // 👉 다시 질문 모달로
                 openQuestionsModal(jobPostId).then(questionResult => {
                     if (questionResult.isConfirmed) {
-                        applyResumeAjax(resumeId, jobPostId);  // 답변 재확인 후 재진입
+                        applyResumeAjax(resumeId, jobPostId,matchScore);  // 답변 재확인 후 재진입
                     }
                 });
             }
@@ -254,10 +272,10 @@ function applyResumeAjax(resumeId, jobPostId) {
     }
 
 // 모두 답변했을 경우엔 바로 진행
-    sendApplyAjax(resumeId, jobPostId, answerList);
+    sendApplyAjax(resumeId, jobPostId, answerList,matchScore);
 }
 //분기처리 ,미응답 답변 함수 //
-function sendApplyAjax(resumeId, jobPostId, answerList) {
+function sendApplyAjax(resumeId, jobPostId, answerList,matchScore) {
     $.ajax({
         url: "/resume/apply",
         method: "POST",
@@ -265,19 +283,27 @@ function sendApplyAjax(resumeId, jobPostId, answerList) {
         data: JSON.stringify({
             resumeId,
             jobPostId,
-            answerList
+            answerList,
+			matchScore
         }),
         success: function () {
             Swal.fire({
                 title: '지원 완료 🎉',
                 html: `입사지원 완료<br><span style="font-size: 13px; color: #555;">(지원내역은 마이페이지에서 확인 가능합니다)</span>`,
-                icon: 'success'
+                icon: 'success',
+				customClass: {
+		            confirmButton: "swalConfirmBtn",
+		        },
             });
         },
         error: function () {
             Swal.fire({
                 title: '이미 지원 하신 공고입니다.',
-                icon: 'warning'
+                icon: 'warning',
+				confirmButtonText: "확인",
+				customClass: {
+		            confirmButton: "swalConfirmBtn",
+		        },
             });
         }
     });

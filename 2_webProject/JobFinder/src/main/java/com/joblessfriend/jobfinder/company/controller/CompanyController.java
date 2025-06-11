@@ -132,7 +132,7 @@ public class CompanyController {
 	public String deleteAccountResult() {
 		
 		
-		return"common/deleteResult";
+		return "common/deleteResult";
 	}
 	
 

@@ -1,24 +1,15 @@
 
-/*function deleteCommunity(communityId){
-	let url = "/community/delete/"+communityId;
 
-	if(confirm('게시물을 삭제하시겠습니까?')){
-	
-		fetch(url, {
-			method: 'DELETE'
-		}).then(
-			function(response){
-				if(response.ok){
+// 목록 페이지로 돌아가기
+function goBackToList() {
+	const prevUrl = sessionStorage.getItem("prevCommunityListUrl");
 
-					location.href = '/community';
-				}
-			}
-		)
+	if (prevUrl || prevUrl!= prevUrl) {
+		location.href = prevUrl;
+	} else {
+		location.href = "/community";
 	}
 }
-*/
-
-
 
 
 function deleteCommunity(communityId) {
@@ -32,10 +23,10 @@ function deleteCommunity(communityId) {
 		confirmButtonText: "삭제",
 		cancelButtonText: '취소',
 		customClass: {
-					confirmButton: "swalConfirmBtn",
-					cancelButton: "swalCancelBtn",
-				},
-				reverseButtons: true, // 버튼 순서 거꾸로
+			confirmButton: "swalConfirmBtn",
+			cancelButton: "swalCancelBtn",
+		},
+		reverseButtons: true, // 버튼 순서 거꾸로
 	}).then((result) => {
 		if (result.isConfirmed) {
 			// 찜 취소 요청
@@ -68,6 +59,10 @@ function deleteCommunity(communityId) {
 						  icon: "error",
 						  title: "삭제가 실패했습니다",
 						  text: "잠시 후 다시 시도해 주세요.",
+						  confirmButtonText: "확인",
+				  		  customClass: {
+		  					  confirmButton: "swalConfirmBtn",
+		  				  },
 						});
 					}
 				})
@@ -76,6 +71,10 @@ function deleteCommunity(communityId) {
 					  icon: "error",
 					  title: "Oops...",
 					  text: "서버와의 통신에 실패했습니다.",
+					  confirmButtonText: "확인",
+			  		  customClass: {
+	  					  confirmButton: "swalConfirmBtn",
+	  				  },
 					});
 				});
 

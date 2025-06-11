@@ -68,7 +68,7 @@
 					<table class="table admin-table">
 						<thead>
 							<tr>
-								<th scope="col">선택</th>
+								<th scope="col"><button id="selectAll">전체 선택</button></th>
 								<th scope="col">스킬 ID</th>
 								<th scope="col">스킬명</th>
 								<th scope="col">직군</th>
@@ -102,7 +102,7 @@
 								<ul class="pagination">
 									<li class="page-item ${searchVo.page==1?'disabled':''}">
 										<a class="page-link" href="/admin/skill?page=${searchVo.page-1}&keyword=${searchVo.keyword}">
-											<i class="bi bi-chevron-left"></i> 이전
+											«
 										</a>
 									</li>
 									<c:forEach begin="${pagination.startPage}" var="i" end="${pagination.endPage}">
@@ -112,7 +112,7 @@
 									</c:forEach>
 									<li class="page-item ${searchVo.page==pagination.totalPageCount? 'disabled':''}">
 										<a class="page-link" href="/admin/skill?page=${searchVo.page+1}&keyword=${searchVo.keyword}">
-											다음 <i class="bi bi-chevron-right"></i>
+											»
 										</a>
 									</li>
 								</ul>

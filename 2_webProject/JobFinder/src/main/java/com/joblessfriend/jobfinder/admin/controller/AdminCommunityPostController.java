@@ -43,6 +43,8 @@ public class AdminCommunityPostController {
 		searchVo.setPage(page);
 		searchVo.setRecordSize(8);	
 		
+		System.out.println("커뮤니티 검색어: "+keyword);
+		
 	    int totalCount = communityService.getCommunityTotalCount(searchVo);//전체 데이터 수
 	    Pagination pagination = new Pagination(totalCount, searchVo);
 	    

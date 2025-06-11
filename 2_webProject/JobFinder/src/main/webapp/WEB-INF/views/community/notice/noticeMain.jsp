@@ -45,18 +45,6 @@
 				<!-- 	게시글 리스트 부분 -->
 				<div id="SwapContainer">
 
-
-					<!-- 공지사항 항목 뜨는 부분 -->
-					<!-- 			<div id='notice' class='boxStyle ' onclick="moveCommunityPage(this)">
-				<div id='noticeType'>
-					인기글
-				</div>
-			</div> -->
-
-					<!-- 공지사항 항목 뜨는 부분 끝 -->
-
-
-
 					<c:if test="${empty noticeList}">
 						<div id='noCommunityBox'>
 							<span id='noCommunity'> 공지글이 존재하지 않습니다. </span>
@@ -107,11 +95,13 @@
 				</div>
 
 			</div>
-			<div id="pageWrap" style="width: 1210px;">
+			<div id="pageWrap">
 				<div id="pagination">
-					<!-- 이전 페이지 -->
-					<button class="page-btn" ${searchVo.page == 1 ? 'disabled' : ''}
-						onclick="goToPage(${searchVo.page - 1}, '${searchVo.keyword}')">«</button>
+										<!-- 이전 페이지 -->
+					<c:if test="${pagination.existPrevPage}">
+		                <button class="page-btn" ${searchVo.page == 1 ? 'disabled' : ''}
+								onclick="goToPage(${searchVo.page - 1}, '${searchVo.keyword}')">«</button>
+            		</c:if>
 
 					<!-- 페이지 번호 -->
 					<c:forEach begin="${pagination.startPage}"
@@ -122,9 +112,11 @@
 					</c:forEach>
 
 					<!-- 다음 페이지 -->
-					<button class="page-btn"
-						${searchVo.page == pagination.totalPageCount ? 'disabled' : ''}
-						onclick="goToPage(${searchVo.page + 1}, '${searchVo.keyword}')">»</button>
+					<c:if test="${pagination.existNextPage}">
+						<button class="page-btn"
+							${searchVo.page == pagination.totalPageCount ? 'disabled' : ''}
+							onclick="goToPage(${searchVo.page + 1}, '${searchVo.keyword}')">»</button>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -144,6 +136,10 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
+window.addEventListener('DOMContentLoaded', function () {
+	// 현재 URL을 sessionStorage에 저장
+	sessionStorage.setItem("prevNoticeListUrl", location.href);
+});
 
 	function goToPage(page, keyWord){
 		$('#pageInput').val(page);

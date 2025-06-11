@@ -62,7 +62,7 @@ function insertJob() {
         jobGroupId: jobGroupId
     };
     
-    fetch("/admin/job/job/add", {
+    fetch("/admin/job/singleJob/add", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -90,7 +90,7 @@ function deleteJob(jobIdList) {
         return;
     }
     
-    fetch("/admin/job/job/delete", {
+    fetch("/admin/job/singleJob/delete", {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json"
@@ -130,8 +130,20 @@ function performJobSearch() {
     const jobKeywordVal = document.getElementById("jobKeyword").value.trim();
     
     if (jobKeywordVal !== "") {
-        location.href = `/admin/job/job?page=1&keyword=${jobKeywordVal}`;
+        location.href = `/admin/job/singleJob?page=1&keyword=${jobKeywordVal}`;
     } else {
-        location.href = `/admin/job/job?page=1`;
+        location.href = `/admin/job/singleJob?page=1`;
     }
 } 
+
+//전체 선택 체크박스
+
+const selectAllCom = document.getElementById("selectAll");
+
+selectAllCom.addEventListener("click", function(e) {
+	    const checkboxes = document.querySelectorAll(".admin-checkbox");
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = !checkbox.checked; // 현재 체크 상태를 반전시킴
+    });
+});

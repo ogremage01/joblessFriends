@@ -19,9 +19,9 @@ public class ResumeMatchDaoImpl implements ResumeMatchDao{
 	String namespace = "com.joblessfriend.jobfinder.resume.dao.ResumeMatchDao.";
 	
 	@Override	
-	public int selectCareerGradeScore(int careerJobYear) {
+	public int selectCareerGrade(int careerJobYear) {
 		// TODO Auto-generated method stub
 		
-		return sqlSession.selectOne(namespace + "selectCareerGradeScore", careerJobYear);
+		return sqlSession.selectOne(namespace + "selectCareerGrade", careerJobYear);
 	}
 }

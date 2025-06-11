@@ -124,6 +124,16 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
         sqlSession.delete(namespace+".deleteQuestionsByJobPostId", jobPostId);
     }
 
+    @Override
+    public void deleteAnswersByJobPostId(int jobPostId) {
+        sqlSession.delete(namespace+".deleteAnswersByJobPostId", jobPostId);
+    }
+
+    @Override
+    public void updateQuestionTextByOrder(JobPostQuestionVo questionVo) {
+        sqlSession.update(namespace+".updateQuestionTextByOrder", questionVo);
+    }
+
 
     //필터카운팅
     @Override
@@ -217,6 +227,16 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
 		
 		return sqlSession.selectList(namespace+".bookMarkedJobPostIdList", queryMap);
 	}
-	
+
+    @Override
+    public void deleteQuestionByOrder(Integer jobPostId, int order) {
+        sqlSession.delete(namespace+".deleteQuestionByOrder", order);
+    }
+
+    @Override
+    public List<JobPostFileVo> findFilesByJobPostIds(List<Integer> jobPostIds) {
+        return sqlSession.selectList(namespace+".findFilesByJobPostIds", jobPostIds);
+    }
+
 
 }

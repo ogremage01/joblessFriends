@@ -15,6 +15,9 @@
   	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   	<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ko.js"></script>
   	<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
+  	
+
+  	
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
@@ -46,9 +49,10 @@
 	</div>
 
 	<section class="resume-wrapper">
-		<div class="resumeTitle" style="margin: 1px;">
+		<div class="resumeTitle resume-title-margin">
 			<h1>제목</h1>
 			<input type="text" id="title" placeholder="이력서 제목을 입력하세요" />
+			<div id="title-error-container" class="title-error-container"></div>
 		</div>
 		<!-- 인적사항 -->
 		<div class="section-block" id="section-personal">
@@ -66,7 +70,7 @@
 				</div>
 				<div class="field-block">
 					<label>전화번호</label>
-					<input type="text" id="phoneNumber" placeholder="예시) 01012349999" />
+					<input type="text" id="phoneNumber" placeholder="예시) 010-1234-9999" />
 				</div>
 
 				<!-- 2행 -->
@@ -77,7 +81,7 @@
 				</div>
 				<div class="field-block">
 					<label>주소</label>
-					<input type="text" id="roadAddress" placeholder="주소를 입력해주세요" readonly />
+					<input type="text" id="roadAddress" placeholder="주소를 입력해주세요"  />
 				</div>
 				<div class="field-block">
 					<label>메일</label>
@@ -89,9 +93,9 @@
 							사진추가
 							<span class="plus-icon">+</span>
 						</div>
-						<img id="previewImage" src="#" alt="미리보기" style="display: none;" />
-					</label>
-					<input type="file" id="profileImageInput" style="display: none;" />
+											<img id="previewImage" src="#" alt="미리보기" class="hidden" />
+				</label>
+				<input type="file" id="profileImageInput" class="hidden" />
 				</div>
 
 			</div>
@@ -100,7 +104,7 @@
 		<!-- 스킬 -->
 		<section class="section-block" id="section-skill">
 			<h2 class="section-title">스킬</h2>
-			<p id="selectedJobGroupLabel" class="selected-job-group-label" style="display: none;"></p>
+			<p id="selectedJobGroupLabel" class="selected-job-group-label hidden"></p>
 
 			<div id="skillContainer" class="tag-select">
 

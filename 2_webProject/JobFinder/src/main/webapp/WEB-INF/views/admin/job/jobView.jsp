@@ -68,7 +68,7 @@
 					<table class="table admin-table">
 						<thead>
 							<tr>
-								<th scope="col">선택</th>
+								<th scope="col"><button id="selectAll">전체 선택</button></th>
 								<th scope="col">직무 ID</th>
 								<th scope="col">직무명</th>
 								<th scope="col">직군</th>
@@ -101,18 +101,18 @@
 							<nav aria-label="페이지 네비게이션">
 								<ul class="pagination">
 									<li class="page-item ${searchVo.page==1?'disabled':''}">
-										<a class="page-link" href="/admin/job/job?page=${searchVo.page-1}&keyword=${searchVo.keyword}">
-											<i class="bi bi-chevron-left"></i> 이전
+										<a class="page-link" href="/admin/job/singleJob?page=${searchVo.page-1}&keyword=${searchVo.keyword}">
+											«
 										</a>
 									</li>
 									<c:forEach begin="${pagination.startPage}" var="i" end="${pagination.endPage}">
 										<li class="page-item ${searchVo.page==i?'active':''}">
-											<a class="page-link" href="/admin/job/job?page=${i}&keyword=${searchVo.keyword}">${i}</a>
+											<a class="page-link" href="/admin/job/singleJob?page=${i}&keyword=${searchVo.keyword}">${i}</a>
 										</li>
 									</c:forEach>
 									<li class="page-item ${searchVo.page==pagination.totalPageCount? 'disabled':''}">
-										<a class="page-link" href="/admin/job/job?page=${searchVo.page+1}&keyword=${searchVo.keyword}">
-											다음 <i class="bi bi-chevron-right"></i>
+										<a class="page-link" href="/admin/job/singleJob?page=${searchVo.page+1}&keyword=${searchVo.keyword}">
+											»
 										</a>
 									</li>
 								</ul>

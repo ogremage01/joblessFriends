@@ -1,4 +1,4 @@
-<!-- 관리자 로그인 여부를 묻는 자바구문이 들어가야 할 부분 -->
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -53,8 +53,9 @@
                     <table class="table admin-table">
                         <thead>
                             <tr>
-                                <th scope="col">선택</th>
+                                <th scope="col"><button id="selectAll">전체 선택</button></th>
                                 <th scope="col">공고 ID</th>
+                                <th scope="col">회사 ID</th>
                                 <th scope="col">회사명</th>
                                 <th scope="col">접수 시작일</th>
                                 <th scope="col">접수 마감일</th>
@@ -70,17 +71,18 @@
                                         <input type="checkbox" class="delPost admin-checkbox" 
                                                name="delete" value="${recruitmentVo.jobPostId}">
                                     </td>
-                                    <td><strong>${recruitmentVo.jobPostId}</strong></td>
+                                    <td>${recruitmentVo.jobPostId}</td>
+                                    <td>${recruitmentVo.companyId}</td>
                                     <td>
                                         <a href="/admin/member/company/${recruitmentVo.companyId}" class="company-link">
                                             ${recruitmentVo.companyName}
                                         </a>
                                     </td>
                                     <td>
-                                        <fmt:formatDate value="${recruitmentVo.startDate}" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${recruitmentVo.startDate}" pattern="yyyy-MM-dd HH:MM:SS" />
                                     </td>
                                     <td>
-                                        <fmt:formatDate value="${recruitmentVo.endDate}" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${recruitmentVo.endDate}" pattern="yyyy-MM-dd HH:MM:SS" />
                                     </td>
                                     <td>
                                         <a href="/Recruitment/detail?companyId=${recruitmentVo.companyId}&jobPostId=${recruitmentVo.jobPostId}" 
@@ -106,7 +108,7 @@
                                 <ul class="pagination">
                                     <li class="page-item ${searchVo.page==1?'disabled':''}">
                                         <a class="page-link" href="./recruitment?page=${searchVo.page-1}&keyword=${searchVo.keyword}">
-                                            <i class="bi bi-chevron-left"></i> 이전
+                                            «
                                         </a>
                                     </li>
                                     <c:forEach begin="${pagination.startPage}" var="i" end="${pagination.endPage}">
@@ -116,7 +118,7 @@
                                     </c:forEach>
                                     <li class="page-item ${searchVo.page==pagination.totalPageCount? 'disabled':''}">
                                         <a class="page-link" href="./recruitment?page=${searchVo.page+1}&keyword=${searchVo.keyword}">
-                                            다음 <i class="bi bi-chevron-right"></i>
+                                            »
                                         </a>
                                     </li>
                                 </ul>
@@ -138,80 +140,14 @@
     </div>
 </div>
 
-<script type="text/javascript">
-function deleteRecruitments(jobPostIds) {
-    if (!confirm("삭제를 진행합니까?")) return;
 
-    fetch("/admin/recruitment", {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(jobPostIds) // 배열 전달
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("서버 오류: " + response.status);
-        }
-        return response.text();
-    })
-    .then(data => {
-        if (data == "삭제완료") {
-            alert("삭제 성공");
-            location.reload();
-        } else {
-            alert("삭제 실패: 서버 응답 오류");
-        }
-    })
-    .catch(error => {
-        alert("삭제 실패");
-        console.error("에러 발생:", error);
-    });
-}
 
-const delBtnArr = document.getElementsByClassName("delBtn");
+<script src="/js/admin/recruitment/recruitment.js"></script>
 
-for (let i = 0; i < delBtnArr.length; i++) {
-    delBtnArr[i].addEventListener("click", function (e) {
-        const jobPostId = e.target.value;
-        deleteRecruitments([jobPostId]); // 단일도 배열로
-    });
-}
 
-document.getElementById("massDelRecruitment").addEventListener("click", function () {
-    const checked = document.querySelectorAll(".delPost:checked");
-    const jobPostIds = Array.from(checked).map(el => el.value);
 
-    if (jobPostIds.length === 0) {
-        alert("삭제할 항목을 선택하세요.");
-        return;
-    }
 
-    deleteRecruitments(jobPostIds);
-});
-
-const searchRecruitmentBtn = document.getElementById("recruitmentSearchBtn");
-
-searchRecruitmentBtn.addEventListener("click", function(e){
-    const recruitmentKeywordVal = document.getElementById("recruitmentKeyword").value.trim();
-    
-    // 검색어가 있을 때와 없을 때 모두 처리
-    if (recruitmentKeywordVal !== "") {
-        let url = '/admin/recruitment?page=1&keyword=' + recruitmentKeywordVal
-        location.href = url;
-    } else {
-        // 검색어가 없으면 전체 목록으로
-        location.href = `/admin/recruitment?page=1`;
-    }
-});
-
-// Enter 키 이벤트 추가
-document.getElementById("recruitmentKeyword").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-        searchRecruitmentBtn.click();
-    }
-});
-</script>
 
 </body>
+
 </html>

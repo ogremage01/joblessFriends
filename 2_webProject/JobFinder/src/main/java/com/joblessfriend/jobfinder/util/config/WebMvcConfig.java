@@ -18,6 +18,9 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 		.addResourceLocations("file:///C:/upload/files/");
 		 registry.addResourceHandler("/upload/job_post/**")
 				 .addResourceLocations("file:/C:/upload/job_post/");
+		 // 포트폴리오 파일 정적 리소스 매핑 추가
+		 registry.addResourceHandler("/upload/portfolio/**")
+				 .addResourceLocations("file:///C:/upload/portfolio/");
 	 }
 	 
  }

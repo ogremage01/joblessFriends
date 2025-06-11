@@ -198,7 +198,7 @@ textarea::placeholder {
 .field-block label {
   font-size: 14px;
   font-weight: 700;
-  margin-bottom: 5px;
+  margin-top: 25px;
   color: #6D707B;
 }
 
@@ -218,7 +218,7 @@ textarea::placeholder {
 .address-search-btn {
   position: absolute;
   right: 10px;
-  top: 35px; /* label 높이 고려하여 고정 위치 */
+  top: 50px; /* label 높이 고려하여 고정 위치 */
   background: none;
   border: none;
   cursor: pointer;
@@ -239,6 +239,15 @@ textarea::placeholder {
 /* 에러 메시지 스타일 */
 .error-msg {
   color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+  position: absolute;
+  top: 100%;
+}
+/* 성공 메시지 스타일 */
+.success-msg {
+  color: green;
   font-size: 12px;
   margin-top: 4px;
   display: block;
@@ -269,6 +278,12 @@ textarea::placeholder {
   cursor: pointer;
   overflow: hidden;
   border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.photo-box:hover {
+  border-color: #F69800;
+  background-color: rgba(246, 152, 0, 0.05);
 }
 
 .photo-box img {
@@ -284,17 +299,44 @@ textarea::placeholder {
   z-index: 1;
   font-size: 14px;
   text-align: center;
+  color: #666;
+  font-weight: 500;
 }
 
 .plus-icon {
   font-size: 24px;
   display: block;
   margin-top: 4px;
+  color: #F69800;
 }
 
 .photo-box span {
   font-size: 24px;
   color: #AFB2BD;
+}
+
+.delete-image-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 0, 0, 0.8);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background-color 0.2s ease;
+}
+
+.delete-image-btn:hover {
+  background: rgba(255, 0, 0, 1);
 }
 
 .email-field {
@@ -582,6 +624,8 @@ textarea::placeholder {
 
 .resumeTitle{
 	margin: 1px;
+	display: block;
+	width: 100%;
 }
 
 .resumeTitle>#title{
@@ -802,4 +846,50 @@ textarea::placeholder {
   color: #999;
   font-size: 14px;
   font-style: italic;
+}
+
+/* 인라인 스타일 대체 클래스들 */
+.resume-title-margin {
+  margin: 1px;
+}
+
+/* 제목 에러 컨테이너 스타일 */
+.title-error-container {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+  min-height: 20px;
+  position: relative;
+  clear: both;
+}
+
+.title-error-container .error-msg {
+  color: #e74c3c;
+  font-size: 12px;
+  display: block;
+  margin: 0;
+  padding: 0;
+  line-height: 1.4;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible-block {
+  display: block;
+}
+
+.visible-inline {
+  display: inline;
+}
+
+/* SweetAlert 커스텀 스타일 */
+.swalConfirmBtn {
+  background: #F69800;
+  color: white;
+}
+
+.swalConfirmBtn:hover {
+  background-color: rgb(227, 142, 0);
 }

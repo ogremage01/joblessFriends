@@ -15,7 +15,7 @@ CREATE TABLE RESUME_COPY (
                              CREATE_AT DATE,
                              MODIFIED_AT DATE,
                              IS_PUBLIC NUMBER(1),
-
+                             MATCH_SCORE NUMBER(5),
                              CONSTRAINT PK_RESUME_COPY PRIMARY KEY (RESUME_ID),
                              CONSTRAINT FK_MEMBER_TO_RESUME_COPY FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER(MEMBER_ID) ON DELETE CASCADE
 

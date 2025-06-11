@@ -1,4 +1,4 @@
-<!-- 관리자 로그인 여부를 묻는 자바구문이 들어가야 할 부분 -->
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -26,49 +26,55 @@
 
 <div id="container">
     <div id="containerWrap">
-        <div class="admin-main-container">
+        <div class="admin-container">
             <!-- 사이드바 영역 -->
-            <div class="admin-main-sidebar">
+            <div class="admin-sidebar">
                 <jsp:include page="/WEB-INF/views/admin/sideBar.jsp"></jsp:include>
             </div>
             
             <!-- 메인 컨텐츠 영역 -->
-            <div class="admin-main-content">
-                <div class="admin-welcome">
-                    <h1>관리자 대시보드</h1>
-                    <p>어디보잡 사이트 관리 시스템에 오신 것을 환영합니다.</p>
+            <div class="admin-main">
+                <div class="admin-header">
+                    <h1>
+                        <i class="bi bi-speedometer2" style="color: #F69800;"></i>
+                        관리자 대시보드
+                    </h1>
                 </div>
                 
-                <!-- 통계 카드들 -->
-                <div class="admin-main-stats">
-                    <div class="admin-main-stat-card">
-                        <h3><i class="bi bi-people"></i> 전체 회원</h3>
-                        <div class="admin-main-stat-number">${memberCount != null ? memberCount : 0}</div>
-                        <div class="admin-main-stat-description">이번 달 +${memberMonthlyIncrease != null ? memberMonthlyIncrease : 0}명 증가</div>
+                <div class="admin-content">
+                    <div class="admin-welcome">
+                        <p>어디보잡 사이트 관리 시스템에 오신 것을 환영합니다.</p>
                     </div>
-                    <div class="admin-main-stat-card">
-                        <h3><i class="bi bi-building"></i> 기업 회원</h3>
-                        <div class="admin-main-stat-number">${companyCount != null ? companyCount : 0}</div>
-                        <div class="admin-main-stat-description">이번 달 +${companyMonthlyIncrease != null ? companyMonthlyIncrease : 0}개 기업 등록</div>
-                    </div>
-                    <div class="admin-main-stat-card">
-                        <h3><i class="bi bi-briefcase"></i> 채용 공고</h3>
-                        <div class="admin-main-stat-number">${recruitmentCount != null ? recruitmentCount : 0}</div>
-                        <div class="admin-main-stat-description">활성 공고 기준</div>
-                    </div>
-                    <div class="admin-main-stat-card">
-                        <h3><i class="bi bi-chat-dots"></i> 커뮤니티 글</h3>
-                        <div class="admin-main-stat-number">${communityCount != null ? communityCount : 0}</div>
-                        <div class="admin-main-stat-description">이번 주 +${communityWeeklyIncrease != null ? communityWeeklyIncrease : 0}개 게시물</div>
+                    
+                    <!-- 통계 카드들 -->
+                    <div class="admin-main-stats">
+                        <div class="admin-main-stat-card">
+                            <h3><i class="bi bi-people"></i> 전체 회원</h3>
+                            <div class="admin-main-stat-number">${memberCount != null ? memberCount : 0}</div>
+                            <div class="admin-main-stat-description">이번 달 +${memberMonthlyIncrease != null ? memberMonthlyIncrease : 0}명 증가</div>
+                        </div>
+                        <div class="admin-main-stat-card">
+                            <h3><i class="bi bi-building"></i> 기업 회원</h3>
+                            <div class="admin-main-stat-number">${companyCount != null ? companyCount : 0}</div>
+                            <div class="admin-main-stat-description">이번 달 +${companyMonthlyIncrease != null ? companyMonthlyIncrease : 0}개 기업 등록</div>
+                        </div>
+                        <div class="admin-main-stat-card">
+                            <h3><i class="bi bi-briefcase"></i> 채용 공고</h3>
+                            <div class="admin-main-stat-number">${recruitmentCount != null ? recruitmentCount : 0}</div>
+                            <div class="admin-main-stat-description">활성 공고 기준</div>
+                        </div>
+                        <div class="admin-main-stat-card">
+                            <h3><i class="bi bi-chat-dots"></i> 커뮤니티 글</h3>
+                            <div class="admin-main-stat-number">${communityCount != null ? communityCount : 0}</div>
+                            <div class="admin-main-stat-description">이번 주 +${communityWeeklyIncrease != null ? communityWeeklyIncrease : 0}개 게시물</div>
+                        </div>
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
 </div>
 
-<jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>

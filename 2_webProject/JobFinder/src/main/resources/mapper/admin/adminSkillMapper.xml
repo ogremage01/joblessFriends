@@ -47,12 +47,7 @@
         VALUES (TAG_ID_SEQ.NEXTVAL, #{tagName}, #{jobGroupId}, SYSDATE, SYSDATE)
     </insert>
     
-    <!-- 스킬 삭제 -->
-    <delete id="deleteSkill" parameterType="int">
-        DELETE FROM TAG WHERE TAG_ID = #{tagId}
-    </delete>
-    
-    <!-- 다중 스킬 삭제 -->
+    <!-- 스킬 삭제 (단일/다중) -->
     <delete id="deleteSkills" parameterType="list">
         DELETE FROM TAG WHERE TAG_ID IN
         <foreach collection="list" item="tagId" open="(" separator="," close=")">

@@ -43,7 +43,7 @@ public class ResumeApplyController {
 
         try {
             vo.setMemberId(loginUser.getMemberId()); // 세션으로 memberId 덮어쓰기
-            resumeApplyService.applyResumeWithCopy(vo.getResumeId(), vo.getJobPostId(), vo.getMemberId(), vo.getAnswerList());
+            resumeApplyService.applyResumeWithCopy(vo.getResumeId(), vo.getJobPostId(), vo.getMemberId(), vo.getAnswerList(),vo.getMatchScore());
             return ResponseEntity.ok("입사지원 완료");
         } catch (Exception e) {
             e.printStackTrace();
@@ -122,7 +122,6 @@ public class ResumeApplyController {
         if (resume == null) {
             throw new IllegalArgumentException("존재하지 않는 이력서입니다.");
         }
-        
 
         model.addAttribute("resume", resume);
 

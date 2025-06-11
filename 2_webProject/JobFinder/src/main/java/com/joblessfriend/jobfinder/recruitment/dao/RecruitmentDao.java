@@ -46,7 +46,9 @@ public interface RecruitmentDao {
     void increaseViews(int jobPostId);
     void deleteQuestionsByJobPostId(int jobPostId);
 
-
+    //질문지//
+    void deleteAnswersByJobPostId(int jobPostId);
+    void updateQuestionTextByOrder(JobPostQuestionVo questionVo);
     List<JobPostQuestionVo> getRecruitmentQuestion(int jobPostId);
     List<RecruitmentVo> adminRecruitmentList();
 	List<CompanyRecruitmentVo> companyRecruitmentSelectList(int companyId);
@@ -68,6 +70,11 @@ public interface RecruitmentDao {
 	//memberId 중 jobPostId에 사용중인 북마크 찾기(찜 구분)-리스트에서 사용
 	List<Integer> bookMarkedJobPostIdList(int memberId);
 
+
+    void deleteQuestionByOrder(Integer jobPostId, int order);
+
+
+    List<JobPostFileVo> findFilesByJobPostIds(List<Integer> jobPostIds);
 
 
 }

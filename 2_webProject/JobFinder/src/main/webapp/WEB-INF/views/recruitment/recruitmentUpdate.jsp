@@ -44,7 +44,9 @@
                 </div>
                 <div class="InsertTitle box-section">
                     <label class="section-title">채용공고 대표 이미지 업로드</label>
-
+                    <c:if test="${not empty recruitmentVo.jobImg}">
+                        <input type="hidden" name="existingJobImg" value="${recruitmentVo.jobImg}" />
+                    </c:if>
                     <!-- 파일 선택 input -->
                     <input type="file" name="jobImgFile" accept="image/*" id="jobImgFile" />
                     <button type="button" id="generateTitle" class="template-btn">이미지 미리보기</button>
@@ -133,11 +135,11 @@
                                 <!-- JavaScript로 동적으로 옵션 생성 후 selected 처리 -->
                                 <option value="${recruitmentVo.jobId}" selected>${recruitmentVo.jobName}</option>
                             </select>
-                            <button type="button" class="remove-job">x</button>
+<%--                            <button type="button" class="remove-job">x</button>--%>
                         </div>
                     </div>
 
-                    <button type="button" class="add-job">+ 추가</button>
+<%--                    <button type="button" class="add-job">+ 추가</button>--%>
                 </div>
 
                 <!-- 스킬 태그 -->
@@ -145,15 +147,13 @@
                     <label class="section-title">스킬 (5개까지 선택가능)</label>
 
                     <div id="tag-list">
-
-                        <label class="skill-tag">
-
-                            <c:forEach var="tag" items="${selectedSkills}">
-                                  <input type="checkbox" name="tagId" value="${tag.tagId}" checked> ${tag.tagName}
-
-                            </c:forEach>
-                        </label>
+                        <c:forEach var="tag" items="${selectedSkills}">
+                            <label class="skill-tag">
+                                <input type="checkbox" name="tagId" value="${tag.tagId}" checked> ${tag.tagName}
+                            </label>
+                        </c:forEach>
                     </div>
+
                     <input type="hidden" name="skills" />
                 </div>
 
@@ -262,6 +262,7 @@
 <jsp:include page="../common/footer.jsp"/>
 
 <script>
+    window.tempKey = crypto.randomUUID().trim().replaceAll(",", "");
     // 전역 변수로 선언하여 외부 JS에서도 접근 가능하게 수정
     let editor;
 

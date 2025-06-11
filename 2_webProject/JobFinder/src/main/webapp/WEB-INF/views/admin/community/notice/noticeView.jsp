@@ -1,4 +1,4 @@
-<!-- 관리자 로그인 여부를 묻는 자바구문이 들어가야 할 부분 -->
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -17,6 +17,8 @@
         integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     
+       <link rel="stylesheet" href="/css/admin/tableStyle.css">
+       
     <!-- 공통 스타일 적용 -->
     <link rel="stylesheet" href="/css/common/common.css">
     <link href="/css/admin/common.css" rel="stylesheet">
@@ -58,7 +60,7 @@
                     <table class="table admin-table">
                         <thead>
                             <tr>
-                                <th scope="col">선택</th>
+                                <th scope="col"><button id="selectAll">전체 선택</button></th>
                                 <th scope="col">공지 ID</th>
                                 <th scope="col">카테고리</th>
                                 <th scope="col">제목</th>
@@ -71,22 +73,22 @@
                         <tbody>
                             <c:forEach var="noticeVo" items="${noticeList}">
                                 <tr>
-                                    <td class="checkbox-container">
+                                    <td class="checkbox-container adminTable_checkBox">
                                         <input type="checkbox" class="delPost admin-checkbox" 
                                                name="delete" value="${noticeVo.noticeId}">
                                     </td>
-                                    <td><strong>${noticeVo.noticeId}</strong></td>
-                                    <td>${noticeVo.noticeCategory.noticeCategoryContent}</td>
-                                    <td>
+                                    <td class="adminTable_id"><strong>${noticeVo.noticeId}</strong></td>
+                                    <td class="adminTable_category">${noticeVo.noticeCategory.noticeCategoryContent}</td>
+                                    <td class="adminTable_title">
                                         <a href="/community/notice/detail?no=${noticeVo.noticeId}" 
                                            target="_blank" rel="noopener noreferrer" class="post-title-link">
                                             ${noticeVo.title}
                                         </a>
                                     </td>
-                                    <td>
-                                        <fmt:formatDate value="${noticeVo.createAt}" pattern="yyyy-MM-dd" />
+                                    <td class="adminTable_day">
+                                        <fmt:formatDate value="${noticeVo.createAt}" pattern="yyyy-MM-dd HH:mm:ss" />
                                     </td>
-                                    <td class="views-count">${noticeVo.views}</td>
+                                    <td class="view">${noticeVo.views}</td>
                                     <td>
                                         <button id="modi_${noticeVo.noticeId}" value="${noticeVo.noticeId}" 
                                                 onclick="moveUpdateNotice('${noticeVo.noticeId}')" class="delete-btn" 
@@ -111,7 +113,7 @@
                                 <ul class="pagination">
                                     <li class="page-item ${searchVo.page==1?'disabled':''}">
                                         <a class="page-link" href="/admin/community/notice?page=${searchVo.page-1}&keyword=${searchVo.keyword}">
-                                            <i class="bi bi-chevron-left"></i> 이전
+                                            «
                                         </a>
                                     </li>
                                     <c:forEach begin="${pagination.startPage}" var="i" end="${pagination.endPage}">
@@ -121,7 +123,7 @@
                                     </c:forEach>
                                     <li class="page-item ${searchVo.page==pagination.totalPageCount? 'disabled':''}">
                                         <a class="page-link" href="/admin/community/notice?page=${searchVo.page+1}&keyword=${searchVo.keyword}">
-                                            다음 <i class="bi bi-chevron-right"></i>
+                                            »
                                         </a>
                                     </li>
                                 </ul>
@@ -132,7 +134,7 @@
                     <!-- 검색 영역 -->
                     <div class="search-container">
                         <input id="noticeKeyword" type="text" class="search-input" 
-                               placeholder="제목으로 검색" value="${searchVo.keyword}">
+                               placeholder="제목 및 카테고리로 검색" value="${searchVo.keyword}">
                         <button id="noticeSearchBtn" class="search-btn">
                             <i class="bi bi-search"></i> 검색
                         </button>
@@ -148,5 +150,12 @@
 </form>
 
 <script src="/js/admin/notice/noticeManagement.js"></script>
+
 </body>
+<script type="text/javascript">
+window.addEventListener('DOMContentLoaded', function () {
+	// 현재 URL을 sessionStorage에 저장
+	sessionStorage.setItem("prevAdminNoticeListUrl", location.href);
+});
+</script>
 </html>

@@ -38,4 +38,5 @@ public class ResumeVo {
 
 	// getter, setter
 
+	
 }

@@ -45,7 +45,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
                .setAllowedOriginPatterns("*")  // 모든 도메인에서의 웹소켓 연결 요청을 허용합니다. (보안상 주의, 실제 운영 환경에서는 특정 도메인 지정 권장)
                .withSockJS() // SockJS를 활성화하여 웹소켓을 지원하지 않는 브라우저에서도 유사한 기능을 제공합니다.
                // SockJS 클라이언트 라이브러리 URL을 지정합니다. 클라이언트 측에서 이 라이브러리를 사용하여 연결합니다.
-               .setClientLibraryUrl("https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js")
+               .setClientLibraryUrl("https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js")
                .setWebSocketEnabled(true); // 순수 웹소켓 프로토콜 사용을 활성화합니다.
         log.info("[WebSocketConfig] 웹소켓 핸들러 등록 완료. 경로: /ws/chat, SockJS 활성화됨.");
     }

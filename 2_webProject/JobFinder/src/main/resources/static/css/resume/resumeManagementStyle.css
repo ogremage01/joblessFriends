@@ -44,10 +44,10 @@ body {
   justify-content: space-between;
   background-color: #f5f6fa;
   padding: 10px;
-  padding-left: 250px;
-  padding-right: 80px;
+  padding-left: 300px;
+  padding-right: 85px;
   border-top: 1px solid #737789;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   color: #2d2d41;
   clear: both;
@@ -56,13 +56,18 @@ body {
 /* 이력서 카드 */
 .resume-card {
   position: relative;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
+  display: flex;
+  padding: 25px 0px;
   cursor: pointer;
+  border-bottom: 1px solid #D3D5D9;
+  align-items: center;
+}
+.resume-card:last-child {
+	border-bottom: none;
 }
 
 .resume-content {
+	width: 700px;
   margin-left: 20px; /* ← 여백 원하는 만큼 조정 */
 }
 
@@ -81,9 +86,24 @@ body {
   margin-bottom: 6px;
 }
 
-.resume-skill {
-  margin-bottom: 10px;
+.resume-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
 }
+
+.resume-skills .tag {
+  display: inline-block;
+  padding: 5px 10px;
+  border: 1px solid #999;
+  border-radius: 999px;
+  background-color: #fff;
+  font-size: 13px;
+  color: #333;
+  white-space: nowrap;
+}
+
 
 .resume-date {
   font-size: 14px;
@@ -93,21 +113,10 @@ body {
 
 
 /* 수정/삭제 버튼 영역 */
-.resume-actions {
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-}
 
 .button-wrapper {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 30px; /* 위아래 간격 */
+	width: 200px;
+	text-align: center;
 }
 
 .edit-btn {
@@ -130,6 +139,9 @@ body {
 
 /* 삭제 버튼 스타일 */
 .delete-btn {
+	position: absolute;
+	top: 10px;
+	left: 870px;
   background: none;
   border: none;
   color: #4e5366;
@@ -157,4 +169,9 @@ body {
   color: #f79000;
   font-weight: bold;
   text-decoration: none;
+}
+
+/* 아이콘 색상 */
+.icon-orange {
+  color: #F69800;
 }

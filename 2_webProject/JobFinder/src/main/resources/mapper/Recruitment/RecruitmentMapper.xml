@@ -157,11 +157,18 @@
             jp.salary AS salary,
             jp.work_hours AS workHours,
             jp.template_type AS templateType,
-            jp.job_img as jobImg
+            jp.job_img as jobImg,
+            jp.MAX_APPLICANTS as maxApplicants,
+            rm.resume_count as applicantCount,
+            jp.is_continuous AS isContinuous
         FROM JOB_POST jp
                  JOIN JOB_GROUP jg ON jp.job_group_id = jg.job_group_id
-                 JOIN JOB j ON jp.job_id = j.job_id
-        WHERE jp.job_post_id = #{jobPostId}
+                 JOIN JOB j ON jp.job_id = j.job_id LEFT JOIN (
+            SELECT job_post_id, COUNT(*) AS resume_count
+            FROM resume_manage
+            GROUP BY job_post_id
+        ) rm ON jp.job_post_id = rm.job_post_id
+        WHERE jp.job_post_id = #{jobpostId}
 
     </select>
 <!--    복지리스트-->
@@ -206,7 +213,8 @@
         END_DATE,
         IS_CONTINUOUS,
         MAX_APPLICANTS,
-        CURRENT_APPLICANTS
+        CURRENT_APPLICANTS,
+        CREATE_DATE
         ) VALUES (
         #{jobPostId},
         #{companyId},
@@ -225,7 +233,8 @@
         #{endDate},
         0,
         0,
-        0
+        0,
+        SYSDATE
         )
 
     </insert>
@@ -340,13 +349,23 @@
                      #{benefitText}
                  )
     </insert>
-
+<!--   전체삭제  -->
     <delete id="deleteQuestionsByJobPostId" parameterType="int">
         DELETE FROM JOB_POST_QUESTION
         WHERE JOB_POST_ID = #{jobPostId}
     </delete>
-
-
+    <update id="updateQuestionTextByOrder" parameterType="com.joblessfriend.jobfinder.recruitment.domain.JobPostQuestionVo">
+        UPDATE JOB_POST_QUESTION
+        SET QUESTION_TEXT = #{questionText}
+        WHERE JOB_POST_ID = #{jobPostId}
+          AND QUESTION_ORDER = #{questionOrder}
+    </update>
+<!--    부분삭제-->
+    <delete id="deleteQuestionByOrder">
+        DELETE FROM JOB_POST_QUESTION
+        WHERE JOB_POST_ID = #{jobPostId}
+          AND QUESTION_ORDER = #{questionOrder}
+    </delete>
 
 <!--    필터 카운팅 -->
     <select id="countFilteredPosts"
@@ -495,6 +514,29 @@
 		WHERE MEMBER_ID = #{memberId}
 	</select>
 
- 
+    <delete id="deleteAnswersByJobPostId" parameterType="int">
+        DELETE FROM JOB_POST_ANSWER
+        WHERE JOB_POST_ID = #{jobPostId}
+    </delete>
+    <select id="findFilesByJobPostIds" resultType="com.joblessfriend.jobfinder.recruitment.domain.JobPostFileVo">
+        SELECT
+        JOB_POST_FILE_ID   AS jobPostFileId,
+        JOB_POST_ID        AS jobPostId,
+        FILE_NAME          AS fileName,
+        STORED_FILE_NAME   AS storedFileName,
+        FILE_EXTENSION     AS fileExtension,
+        TEMP_KEY           AS tempKey,
+        FILE_SIZE          AS fileSize,
+        CREATE_AT          AS createAt,
+        MODIFIED_AT        AS modifiedAt
+        FROM JOB_POST_FILE
+        WHERE JOB_POST_ID IN
+        <foreach collection="jobPostIdList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+
+
 
 </mapper>

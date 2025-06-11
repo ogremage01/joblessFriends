@@ -1,17 +1,55 @@
 @charset "UTF-8";
 
 .view{
-	max-width: 100px;
+	width: 100px;
 	overflow: hidden;
-	white-space: normal;
+	white-space: nowarp;
 	text-overflow: ellipsis;	
 	
 	text-align: center;
 	
 }
 
-a{
-	
+a{	
     text-decoration: none;
     color: #000;
 }
+
+.adminTable_checkBox{
+	width: 120px;
+}
+
+.adminTable_id{
+	width: 100px;
+}
+
+.adminTable_title{
+	min-width: 400px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.adminTable_name{
+	max-width: 100px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis; 
+}
+
+.adminTable_day{
+	width: 155px;
+	
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.adminTable_category{
+	width: 120px;
+}
+
+.adminTable_postBtn{
+	max-width: 140px;
+}
+

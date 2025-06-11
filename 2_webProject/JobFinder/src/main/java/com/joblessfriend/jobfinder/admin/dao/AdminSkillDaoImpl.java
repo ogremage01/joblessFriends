@@ -52,11 +52,6 @@ public class AdminSkillDaoImpl implements AdminSkillDao {
     }
     
     @Override
-    public int deleteSkill(int tagId) {
-        return sqlSession.delete(namespace + "deleteSkill", tagId);
-    }
-    
-    @Override
     public int deleteSkills(List<Integer> tagIdList) {
         return sqlSession.delete(namespace + "deleteSkills", tagIdList);
     }

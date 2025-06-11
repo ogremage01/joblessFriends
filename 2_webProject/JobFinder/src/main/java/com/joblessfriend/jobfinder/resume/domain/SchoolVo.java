@@ -14,11 +14,18 @@ public class SchoolVo {
 	private java.util.Date startDate; // 입학일자
 	private java.util.Date endDate; // 졸업일자
 	private int resumeId;
-
 	@Override
 	public String toString() {
-		return "SchoolVo{" + "sortation='" + sortation + '\'' + ", schoolName='" + schoolName + '\''
-				+ ", yearOfGraduation='" + yearOfGraduation + '\'' + ", status='" + status + '\'' + ", resumeId="
-				+ resumeId + '}';
+		return "SchoolVo{" +
+	            "sortation='" + sortation + '\'' +
+	            ", schoolName='" + schoolName + '\'' +
+	            ", majorName='" + majorName + '\'' +
+	            ", startDate=" + startDate +
+	            ", endDate=" + endDate +
+	            ", status='" + status + '\'' +
+	            ", resumeId=" + resumeId +
+	            '}';
 	}
+	
+	
 }

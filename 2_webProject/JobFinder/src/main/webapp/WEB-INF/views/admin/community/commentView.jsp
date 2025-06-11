@@ -1,4 +1,4 @@
-<!-- 관리자 로그인 여부를 묻는 자바구문이 들어가야 할 부분 -->
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -17,6 +17,8 @@
         integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     
+    <link rel="stylesheet" href="/css/admin/tableStyle.css">
+       
     <!-- 공통 스타일 적용 -->
     <link rel="stylesheet" href="/css/common/common.css">
     <link href="/css/admin/common.css" rel="stylesheet">
@@ -52,7 +54,7 @@
                     <table class="table admin-table">
                         <thead>
                             <tr>
-                                <th scope="col">선택</th>
+                                <th scope="col"><button id="selectAll">전체 선택</button></th>
                                 <th scope="col">댓글 ID</th>
                                 <th scope="col">내용</th>
                                 <th scope="col">작성자</th>
@@ -64,21 +66,21 @@
                         <tbody>
                             <c:forEach var="commentVo" items="${commentList}">
                                 <tr>
-                                    <td class="checkbox-container">
+                                    <td class="checkbox-container adminTable_checkBox">
                                         <input type="checkbox" class="delPost admin-checkbox" 
                                                name="delete" value="${commentVo.postCommentId}">
                                     </td>
-                                    <td><strong>${commentVo.postCommentId}</strong></td>
+                                    <td class="adminTable_id"><strong>${commentVo.postCommentId}</strong></td>
                                     <td>
                                         <div class="comment-content" title="${commentVo.content}">
                                             ${commentVo.content}
                                         </div>
                                     </td>
-                                    <td>${commentVo.nickname}</td>
-                                    <td>
-                                        <fmt:formatDate value="${commentVo.createAt}" pattern="yyyy-MM-dd" />
+                                    <td class="adminTable_name">${commentVo.nickname}</td>
+                                    <td class="adminTable_day">
+                                        <fmt:formatDate value="${commentVo.createAt}" pattern="yyyy-MM-dd HH:mm:ss" />
                                     </td>
-                                    <td>
+                                    <td class="adminTable_postBtn">
                                         <a href="http://localhost:9090/community/detail?no=${commentVo.communityId}" 
                                            target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary">
                                             게시글 보기
@@ -101,7 +103,7 @@
                                 <ul class="pagination">
                                     <li class="page-item ${searchVo.page==1?'disabled':''}">
                                         <a class="page-link" href="/admin/community/comment?page=${searchVo.page-1}&keyword=${searchVo.keyword}">
-                                            <i class="bi bi-chevron-left"></i> 이전
+                                            «
                                         </a>
                                     </li>
                                     <c:forEach begin="${pagination.startPage}" var="i" end="${pagination.endPage}">
@@ -111,7 +113,7 @@
                                     </c:forEach>
                                     <li class="page-item ${searchVo.page==pagination.totalPageCount? 'disabled':''}">
                                         <a class="page-link" href="/admin/community/comment?page=${searchVo.page+1}&keyword=${searchVo.keyword}">
-                                            다음 <i class="bi bi-chevron-right"></i>
+                                            »
                                         </a>
                                     </li>
                                 </ul>
@@ -122,7 +124,7 @@
                     <!-- 검색 영역 -->
                     <div class="search-container">
                         <input id="commentKeyword" type="text" class="search-input" 
-                               placeholder="댓글 내용으로 검색" value="${searchVo.keyword}">
+                               placeholder="댓글 내용 및 작성자로 검색" value="${searchVo.keyword}">
                         <button id="commentSearchBtn" class="search-btn">
                             <i class="bi bi-search"></i> 검색
                         </button>
@@ -133,7 +135,6 @@
     </div>
 </div>
 
-<jsp:include page="../../common/footer.jsp"/>
 
 <script src="/js/admin/community/commentManagement.js"></script>
 

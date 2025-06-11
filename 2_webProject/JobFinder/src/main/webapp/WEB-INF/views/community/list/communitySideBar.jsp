@@ -71,19 +71,10 @@
 						<div>
 							<p>관리자님 환영합니다.</p>
 							<button class='moveBtn' onclick="moveAdminPost()">
-								<svg xmlns="http://www.w3.org/2000/svg" width="200" height="30"
-									fill="currentColor" class="bi bi-pencil-square"
-									viewBox="0 0 100 16">
-								  <text x="2" y="13" font-size="12">게시판 관리 페이지</text>
-								</svg>
+								게시판 관리 페이지
 							</button>
 							<button class='moveBtn' onclick="moveAdminNotice()">
-
-								<svg xmlns="http://www.w3.org/2000/svg" width="200" height="30"
-									fill="currentColor" class="bi bi-pencil-square"
-									viewBox="0 0 100 16">
-								  <text x="2" y="13" font-size="12">공지 관리 페이지</text>
-								</svg>
+								공지 관리 페이지
 							</button>
 						</div>
 					</div>
@@ -114,7 +105,7 @@
 	action="/community">
 	<div id='searchBoxPadding' class="boxStyle searchBox">
 		<input id='searchStr' class="searchBox" type="text" name='keyword'
-			placeholder="게시글을 검색해보세요" />
+			placeholder="게시글을 검색해보세요" value="${searchVo.keyword}"/>
 		<button type="submit">
 			<!-- 여기서 함수로 검색버튼전송 할건지 form으로 서버 보낼지 고민 -->
 			<svg xmlns="http://www.w3.org/2000/svg" width="30" height="40"
@@ -149,6 +140,7 @@
 	function sendInfo()
 	{
 		const keyword = $('#searchStr').val();
+
 		if(keyword==null || keyword==""){
 			location.href="/community";
 			return;

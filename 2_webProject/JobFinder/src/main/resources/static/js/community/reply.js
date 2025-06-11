@@ -41,14 +41,16 @@ $(document).ready(function () {
 						<div class='replyBox'>
 							<div class="nonReplyBoundary">
 								<span>아직 답글이 없습니다. 첫 답글을 남겨보세요!</span>
-							</div>
-							<div id="inputReplyWrap" class="maxStyle">
-								<textarea id="inputReplyBox_${commentId}" class="boxStyle" placeholder="답글을 입력해주세요."></textarea>
-								<div id="replyBtnWrap">
-									<p class="countReply">0/300자</p>
-									<button type="button" class="inputReplyBtn inputBtn" data-comment-id="${commentId}">등록</button>
-								</div>
-							</div>
+							</div>`;
+					if(userType=='member'){	
+						html +=  `<div id="inputReplyWrap" class="maxStyle">
+									<textarea id="inputReplyBox_${commentId}" class="boxStyle" placeholder="답글을 입력해주세요."></textarea>
+									<div id="replyBtnWrap">
+										<p class="countReply">0/300자</p>
+										<button type="button" class="inputReplyBtn inputBtn" data-comment-id="${commentId}">등록</button>
+									</div>`;
+						}
+					html +=  `</div>
 						</div>`;
 				} else {
 					replies.forEach(function (reply) {
@@ -57,9 +59,10 @@ $(document).ready(function () {
 						const year = createDate.getFullYear();
 						const month = createDate.getMonth() + 1; // 월은 0부터 시작하므로 +1
 						const day = createDate.getDate();
-						var hour = createDate.getHours();
-						var min = createDate.getMinutes();
-						var sec = createDate.getSeconds();
+						
+						var hour = String(createDate.getHours()).padStart(2, "0");
+						var min = String(createDate.getMinutes()).padStart(2, "0");
+						var sec = String(createDate.getSeconds()).padStart(2, "0");
 
 						html += `
 							<div class='replyBox'>
@@ -70,7 +73,7 @@ $(document).ready(function () {
 										<div id="replylistNo_${reply.replyId}">
 											<p>${reply.commentContent}</p>
 											<p class='replyBottom'>
-												<span>${year}-${month}-${day}-${hour}: ${min}: ${sec} 작성</span>`;
+												<span>${year}-${month}-${day} ${hour}:${min}:${sec} 작성</span>`;
 						if(reply.modifiedAt!=null){
 							
 							const modifiedDate = new Date(reply.modifiedAt);
@@ -78,7 +81,11 @@ $(document).ready(function () {
 							const modifiedmonth = modifiedDate.getMonth() + 1; // 월은 0부터 시작하므로 +1
 							const modifiedday = modifiedDate.getDate();
 							
-							html += `<span> | ${modifiedyear}-${modifiedmonth}-${modifiedday} 수정</span>`;
+							var hour = String(modifiedDate.getHours()).padStart(2, "0");
+							var min = String(modifiedDate.getMinutes()).padStart(2, "0");
+							var sec = String(modifiedDate.getSeconds()).padStart(2, "0");
+							
+							html += `<span> | ${modifiedyear}-${modifiedmonth}-${modifiedday} ${hour}:${min}:${sec} 수정</span>`;
 						}						
 						
 						if(userType=='member' && memberId ==reply.memberId){
@@ -98,15 +105,18 @@ $(document).ready(function () {
 							`;
 					});
 /*답글 작성란*/
-					html += `
-							<div id="inputReplyWrap">
-								<textarea id="inputReplyBox_${commentId}" class="boxStyle  class="maxStyle"" placeholder="답글을 입력해주세요."></textarea>
-								<div id="replyBtnWrap">
-									<p class="countReply">0/300자</p>
-									<button type="button" class="inputReplyBtn inputBtn" data-comment-id="${commentId}">등록</button>
-								</div>
-							</div>
-						</div>`;
+					if(userType=='member'){
+						html += `
+								<div id="inputReplyWrap">
+									<textarea id="inputReplyBox_${commentId}" class="boxStyle  class="maxStyle"" placeholder="답글을 입력해주세요."></textarea>
+									<div id="replyBtnWrap">
+										<p class="countReply">0/300자</p>
+										<button type="button" class="inputReplyBtn inputBtn" data-comment-id="${commentId}">등록</button>
+									</div>
+								</div>`;
+					}
+								
+						html += `</div>`;
 				}
 
 				// 삽입
@@ -144,6 +154,10 @@ $(document).ready(function () {
 			success: function () {
 				alermPopup("답글이 저장되었습니다.");
 				// 리댓 목록 새로 불러오기
+				window.loadCommentList();
+				setTimeout(function () {
+					loadReplyList(commentId);
+				}, 70); 
 
 				$('#inputReplyBox_' + commentId).val(''); // 입력창 초기화
 			},
@@ -151,10 +165,7 @@ $(document).ready(function () {
 				alermPopup("답글 등록에 실패했습니다.");
 			}
 		});
-		window.loadCommentList();
-		setTimeout(function () {
-			loadReplyList(commentId);
-		}, 50); 
+		
 
 	}
 	
@@ -215,7 +226,7 @@ function replyUpdate(replyId, commentId){
 			window.loadCommentList();
 			setTimeout(function () {
 				loadReplyList(commentId);
-			}, 50); 
+			}, 70); 
 			
 		},
 		error: function(){
@@ -242,7 +253,7 @@ function replyDelete(replyId, commentId){
 					window.loadCommentList();
 					setTimeout(function () {
 						loadReplyList(commentId);
-					}, 50); 
+					}, 70); 
 					
 				}
 			}

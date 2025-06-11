@@ -18,10 +18,10 @@ public interface ResumeDao {
 	void updateProfileImage(int resumeId, int memberId, String imageUrl);
 
 	ResumeVo getResumeByResumeId(int resumeId);
-	
+	ResumeVo getResumeByResumeCopyId(int resumeId);
     // 이력서 전체 정보 조회 (모든 하위 데이터 포함)
     ResumeVo getResumeWithAllDetails(int resumeId);
-    
+    ResumeVo getResumeCopyWithAllDetails(int resumeId);
     // 하위 데이터 개별 조회
     List<SchoolVo> getSchoolsByResumeId(int resumeId);
     List<CareerVo> getCareersByResumeId(int resumeId);

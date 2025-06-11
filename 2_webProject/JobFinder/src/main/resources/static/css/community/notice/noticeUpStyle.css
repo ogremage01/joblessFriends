@@ -1,0 +1,45 @@
+@charset "UTF-8";
+#container {
+	margin: auto;
+}
+
+#noticeUploadContainer{
+width: 1000px;
+
+margin: auto;
+}
+
+.toastui-editor-contents:empty::before {
+    background-color: white !important;
+}
+
+#title{
+	width: 1000px;
+	margin-bottom: 20px;
+}
+
+#noticeContent{
+	width: 1000px;
+}
+
+.placeholder{
+	
+	background-color: #ffff;
+}
+
+select{
+	height: 30px;
+	border: 1px solid #D1D5E3;
+	border-radius: 5px;	
+	
+	margin-left: 15px;
+}
+
+.inputBtn{
+    width: 100px;
+    height: 45px;
+    font-size: 14pt;
+    
+    margin-bottom: 40px;
+}
+ 

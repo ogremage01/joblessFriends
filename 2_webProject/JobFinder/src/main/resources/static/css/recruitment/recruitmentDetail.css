@@ -7,12 +7,12 @@
     margin: 20px auto;
     font-family: 'Noto Sans KR', sans-serif;
     border: 1px solid lightgray;
-    border-radius: 20px;
-    padding: 20px;
+    border-radius: 5px;
+    padding: 30px;
 }
 
 .detail-main {
-    width: 75%;
+    width: 50%;
 }
 
 .detail-header h2 {
@@ -42,28 +42,76 @@
     font-weight: bold;
     color: #444;
 }
+.detail-middle {
+    width: 35%; /* 너비 확장 */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+
+}
+.detail-middle .detail-middle-title div {
+    margin-top: 50px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+.applyCount {
+    margin-top: 5px;
+    margin-bottom: 10px;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    color: #4A4A4A;
+}
+
+
 
 .detail-sidebar {
-    width: 23%;
+    width: 20%;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 40px;
+    border-left: 1px solid #e1e1e1;
 }
 
 .dday {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 20px;
+	display: flex;
+	flex-direction: column;
+    font-size: 18px;
+    margin-bottom: 10px;
     color: #2B2B2B;
+	font-weight: bold;
 }
 
+.dday>span:first-child {
+	margin-bottom: 5px;
+}
+
+.dday>span:nth-child(2) {
+	font-size: 24px;
+	color: #f68300;
+}
+
+.dday>span:nth-child(3) {
+}
+
+.btn-group {
+	width: 225px;
+}
 .btn-group button {
     display: block;
     width: 100%;
     padding: 10px 0;
-    margin: 10px 0;
+    margin-top: 10px;
     font-size: 14px;
     border: 1px solid #F69800;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.btn-group button[disabled] {
+	border: none;
 }
 
 .btn-bookmark {
@@ -81,16 +129,19 @@
     color: white;
     border: none;
 }
+.btn-NonBookmark:hover, .btn-apply:hover{
+	background-color: #ed8b07;
+}
 .detail-body {
     max-width: 1220px;
     margin: 40px auto;
-    padding: 0 20px;
+    padding: 0 30px;
     font-family: 'Noto Sans KR', sans-serif;
     color: #2b2b2b;
     line-height: 1.8;
     font-size: 15px;
     border: 1px solid lightgrey;
-    border-radius: 20px;
+    border-radius: 5px;
 }
 
 .detail-body h3 {
@@ -134,9 +185,9 @@
 
 .tag-list .tag {
     border: 1px solid #f69800;
-    background-color: #fff3e0;
-    color: #f69800;
-    padding: 6px 12px;
+    background-color: rgb(255, 249, 238);
+    color: #f68300;
+    padding: 1px 10px;
     border-radius: 20px;
     font-size: 14px;
     display: flex;
