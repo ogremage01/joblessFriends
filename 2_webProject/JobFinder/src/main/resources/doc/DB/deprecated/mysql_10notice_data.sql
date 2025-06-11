@@ -1,0 +1,102 @@
+-- MySQL Notice 데이터 삽입 파일
+-- Oracle 시퀀스들을 MySQL AUTO_INCREMENT로 변환
+-- Oracle TO_DATE -> MySQL STR_TO_DATE 또는 직접 날짜 형식
+-- Oracle SYSDATE -> MySQL NOW()
+
+-- Notice Category 삽입
+INSERT INTO NOTICE_CATEGORY (NOTICE_CATEGORY_ID, CATEGORY_NAME)
+VALUES(NULL, '이벤트');
+
+INSERT INTO NOTICE_CATEGORY (NOTICE_CATEGORY_ID, CATEGORY_NAME)
+VALUES(NULL, '일반 공지');
+
+INSERT INTO NOTICE_CATEGORY (NOTICE_CATEGORY_ID, CATEGORY_NAME)
+VALUES(NULL, '시스템');
+
+INSERT INTO NOTICE_CATEGORY (NOTICE_CATEGORY_ID, CATEGORY_NAME)
+VALUES(NULL, '질의응답');
+
+COMMIT;
+
+-- Notice 데이터 삽입 (NOTICE_ID_SEQ.NEXTVAL -> NULL, TO_DATE -> 직접 날짜 형식)
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, IS_ACTIVE) VALUES
+(NULL, 2, '설 연휴 고객센터 휴무 안내',
+'안녕하세요. 취업전문사이트입니다. 2025년 설 연휴 기간 동안 고객센터 업무가 일시 중단됩니다. 휴무 기간: 2025년 2월 8일(토) ~ 2025년 2월 11일(화) 해당 기간에는 전화 상담 및 실시간 채팅이 운영되지 않으니 양해 부탁드립니다. 이용에 불편을 드려 죄송하며, 새해 복 많이 받으시기 바랍니다.',
+'2025-01-10', NULL, 1);
+
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, IS_ACTIVE) VALUES
+(NULL, 1, '신년맞이 이력서 무료 컨설팅 이벤트',
+'2025년 새해를 맞이하여, 회원 여러분의 성공적인 취업을 지원하기 위한 이력서 무료 컨설팅 이벤트를 준비했습니다. 전문가가 직접 피드백을 제공하며, 문장 구성부터 레이아웃까지 꼼꼼히 검토해드립니다. 참여 방법은 마이페이지의 이력서 관리에서 이력서를 작성해 주시면 됩니다. 신청자가 많을 경우, 선착순으로 선정되오니 빠른 참여 부탁드립니다. 함께 더 나은 커리어를 만들어가요.',
+'2025-01-15', NULL, 1);
+
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, IS_ACTIVE) VALUES
+(NULL, 3, '서버 점검 안내 (2025년 1월 20일)',
+'안정적인 서비스 제공을 위해 2025년 1월 20일(월)에 시스템 정기 점검을 진행합니다. 점검 시간: 00:00 ~ 04:00까지 예정되어 있으며, 이 시간 동안 일부 서비스가 일시적으로 중단될 수 있습니다. 특히 이력서 작성 및 지원 서비스 이용이 제한될 수 있으므로, 사전 저장을 권장드립니다. 불편을 최소화하기 위해 최대한 신속하게 점검을 완료하겠습니다. 양해 부탁드립니다.',
+'2025-01-16', NULL, 1);
+
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, IS_ACTIVE) VALUES
+(NULL, 4, '이력서 등록은 어떻게 하나요?',
+'회원가입 후 마이페이지에 접속하시면 "이력서 관리" 메뉴가 보입니다. 해당 메뉴에서 "이력서 작성하기" 버튼을 클릭하여 항목별로 내용을 입력하시면 됩니다. 인적사항, 학력, 경력, 자격증 등 입력 항목이 있으며, 미리 준비된 내용을 복사해 붙여넣는 것도 가능합니다. 작성 후에는 전문가 첨삭 서비스도 활용해보시기 바랍니다.',
+'2025-01-25', NULL, 1);
+
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, IS_ACTIVE) VALUES
+(NULL, 2, '정기점검 완료 및 서비스 정상화 안내',
+'2025년 1월 20일에 예정되었던 시스템 정기점검이 성공적으로 완료되었습니다. 현재 모든 서비스는 정상적으로 운영되고 있으며, 점검 중단 시간 동안 이용에 불편을 드린 점 양해 부탁드립니다. 이번 점검을 통해 검색 속도가 향상되고, 페이지 접속 오류가 수정되었습니다. 앞으로도 안정적인 서비스를 위해 지속적으로 시스템을 최적화하겠습니다. 많은 이용 바랍니다.',
+'2025-01-26', NULL, 1);
+
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, IS_ACTIVE) VALUES
+(NULL, 1, '회원가입 감사 이벤트 당첨자 발표',
+'1월 한 달 동안 진행된 회원가입 감사 이벤트에 많은 관심을 보내주셔서 감사합니다. 추첨을 통해 선정된 당첨자 명단은 이벤트 페이지에서 확인하실 수 있습니다. 경품은 2월 5일부터 순차적으로 발송될 예정이며, 마이페이지에 등록된 주소로 배송됩니다. 배송 정보가 정확하지 않을 경우 발송이 지연될 수 있으니, 주소를 꼭 확인해주세요. 앞으로도 더 많은 혜택을 제공하기 위해 노력하겠습니다.',
+'2025-01-30', NULL, 1);
+
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, IS_ACTIVE) VALUES
+(NULL, 4, '지원 후 기업에 연락이 오지 않아요',
+'지원 후 일정 시간이 지났음에도 기업으로부터 연락을 받지 못한 경우, 먼저 기업의 채용 마감일을 확인해주세요. 대부분의 기업은 모집 마감 후 일괄적으로 서류를 검토하며, 연락까지 평균 3~7일 정도 소요됩니다. 또한, 이력서가 비공개 상태이거나 필수 항목이 누락되었는지 확인해보세요. 꾸준한 자기소개서 보완도 좋은 방법입니다. 기다리는 동안 다른 공고도 함께 지원해보세요.',
+'2025-02-05', NULL, 1);
+
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, IS_ACTIVE) VALUES
+(NULL, 2, '2월 시스템 업그레이드 완료 안내',
+'2025년 2월 진행된 시스템 업그레이드가 성공적으로 마무리되었습니다. 이번 업그레이드를 통해 공고 검색 속도가 평균 25% 빨라졌으며, 맞춤 채용 추천 기능도 AI 기반으로 개선되었습니다. 또한, 기존 오류로 알려졌던 지원하기 버튼 클릭 시 비정상 페이지 이동 문제도 해결되었습니다. 보다 쾌적한 취업 환경 제공을 위해 앞으로도 지속적으로 개선하겠습니다.',
+'2025-02-12', NULL, 1);
+
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, IS_ACTIVE) VALUES
+(NULL, 1, '졸업 시즌 기념 추천인 이벤트',
+'졸업을 앞둔 여러분을 위한 추천인 이벤트가 시작되었습니다! 친구를 추천하면 두 사람 모두에게 취업 성공 지원 포인트가 지급됩니다. 포인트는 이력서 첨삭, 자기소개서 교정, 기업 분석 리포트 구매 등에 사용 가능합니다. 추천 방법은 마이페이지에서 추천 코드 발급 후 공유하면 끝! 많은 참여 부탁드리며, 취업 성공까지 저희가 함께하겠습니다.',
+'2025-02-20', NULL, 1);
+
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, IS_ACTIVE) VALUES
+(NULL, 4, '비밀번호를 잊어버렸어요. 어떻게 해야 하나요?',
+'비밀번호를 잊으셨다면 로그인 화면 하단의 "비밀번호 찾기" 기능을 이용해주세요. 가입 시 등록한 이메일이나 휴대폰 번호를 통해 본인 인증 후, 새로운 비밀번호를 설정하실 수 있습니다. 만약 인증 수단이 모두 유실되었다면, 고객센터에 신분증 사본과 함께 본인확인 요청을 해주시면 됩니다. 보안 강화를 위해 주기적인 비밀번호 변경도 권장드립니다.',
+'2025-02-25', NULL, 1);
+
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, IS_ACTIVE) VALUES
+(NULL, 2, '3월 대규모 채용 박람회 사전 안내',
+'오는 3월 10일부터 2주간 온라인 채용 박람회가 개최됩니다. 대기업, 중견기업, 스타트업 등 200여 개 이상의 기업이 참여하며, 직무 설명회, 실시간 상담, 화상 면접 등 다양한 프로그램이 준비되어 있습니다. 박람회 참가를 원하는 회원은 3월 5일까지 사전 등록을 완료해 주세요. 취업의 문을 넓힐 수 있는 절호의 기회이니 많은 관심과 참여 바랍니다.',
+'2025-03-01', NULL, 1);
+
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, IS_ACTIVE) VALUES
+(NULL, 4, '이력서가 등록되지 않아요',
+'이력서를 등록했음에도 목록에 보이지 않는 경우 다음 사항을 확인해주세요. 첫째, 필수 입력 항목을 모두 작성하셨는지 확인 바랍니다. 둘째, 저장 후 "공개 여부"가 비공개로 설정되어 있을 수 있습니다. 셋째, 임시 저장 상태에서는 외부 공개가 되지 않으므로 반드시 최종 제출을 눌러주세요. 이 외 문제 발생 시 고객센터로 문의주시면 빠르게 도와드리겠습니다.',
+'2025-03-06', NULL, 1);
+
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, IS_ACTIVE) VALUES
+(NULL, 2, '채용 공고 등록 시스템 일시 점검 안내',
+'기업 회원 전용 채용공고 등록 시스템 점검이 예정되어 있습니다. 점검 일정: 2025년 3월 15일(토) 01:00 ~ 05:00 해당 시간 동안 채용 공고 등록 및 수정 기능이 일시적으로 제한됩니다. 기존 등록된 공고는 정상 노출되며, 지원자에게 영향은 없습니다. 서비스 안정화를 위한 필수 조치이오니 양해 부탁드립니다.',
+'2025-03-13', NULL, 1);
+
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, IS_ACTIVE) VALUES
+(NULL, 3, '사이트 전체 HTTPS 보안 전환 안내',
+'회원님의 개인정보 보호를 위한 일환으로, 2025년 3월 20일부터 사이트 접속 방식이 HTTPS로 전환됩니다. 기존 HTTP 접속은 자동으로 리디렉션되며, 일부 구형 브라우저에서는 인증서 오류가 발생할 수 있으니 최신 브라우저 사용을 권장드립니다. 이번 조치로 모든 데이터가 암호화되어 안전하게 전송됩니다. 보다 안전한 취업 환경을 위한 개선에 많은 협조 부탁드립니다.',
+'2025-03-18', NULL, 1);
+
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, IS_ACTIVE) VALUES
+(NULL, 4, '채용 결과는 어디서 확인하나요?',
+'지원한 공고의 결과는 마이페이지 > 구직 활동 내역에서 확인하실 수 있습니다. 기업의 검토 상태에 따라 "지원", "서류합격", "불합격", "최종합격" 등으로 구분됩니다. 기업에 따라 처리 속도는 다를 수 있으며, 일부는 연락 없이 자동 종료될 수 있습니다. 모든 지원 기록은 6개월간 저장되니 참고 바랍니다. 더 나은 취업 기회를 위해 꾸준히 지원해보세요!',
+'2025-03-25', NULL, 1);
+
+INSERT INTO NOTICE(NOTICE_ID, NOTICE_CATEGORY_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, IS_ACTIVE) VALUES
+(NULL, 2, '4월 공휴일 고객센터 운영 안내',
+'2025년 4월 공휴일(4월 5일 식목일, 4월 15일 총선일)에는 고객센터가 운영되지 않습니다. 전화 및 실시간 상담은 불가능하며, 모든 문의는 4월 16일부터 순차적으로 답변드릴 예정입니다. 이용에 불편을 드려 죄송합니다. 여러분의 양해에 감사드립니다. 보다 나은 서비스 제공을 위해 항상 노력하겠습니다.',
+'2025-04-01', NULL, 1);
+
+COMMIT; 

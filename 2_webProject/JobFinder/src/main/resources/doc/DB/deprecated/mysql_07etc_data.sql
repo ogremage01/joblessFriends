@@ -1,0 +1,52 @@
+-- MySQL 기타 데이터 삽입 파일
+-- Oracle 시퀀스들을 MySQL AUTO_INCREMENT로 변환
+-- Oracle SYSDATE -> MySQL NOW()
+
+-- 관리자
+INSERT INTO ADMIN (ADMIN_ID, PASSWORD) VALUES ('admin', 'eodibojob');
+
+-- 이력서 지원 관리 상태 (Oracle 시퀀스 제거, AUTO_INCREMENT 사용)
+INSERT INTO STATE (STATE_ID, STATE_NAME) VALUES (0, '불합격');
+INSERT INTO STATE (STATE_ID, STATE_NAME) VALUES (1, '지원');
+INSERT INTO STATE (STATE_ID, STATE_NAME) VALUES (2, '서류합격');
+INSERT INTO STATE (STATE_ID, STATE_NAME) VALUES (3, '최종합격');
+
+-- 게시판 (COMMUNITY_ID_SEQ.nextval -> NULL, SYSDATE -> NOW())
+INSERT INTO COMMUNITY (COMMUNITY_ID, MEMBER_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, VIEWS)
+VALUES (NULL, 1, '면접 제의 받으셨나요?', '안녕하세요.
+
+오늘은 면접 가시기전에 체크해 보셨으면 하는 점을 알려드리겠습니다.
+
+혹시 업체이서 사무실, 매장이 아닌 곳에서 면접을 보길 원한다면 의심을 해보세요?
+
+일반적인 업체라면 사업을 운영하는 실체가 있기 마련입니다.
+
+뜬금없이 **지하철역에서 전화를 달라거나, 정확한 근무지 안내없이 면접을 요청을 한다면 다시한번 체크해보세요.
+
+한번더 생각하는 습관이 안전한 일자리를 찾을수 있습니다.', NOW(), NOW(), 0);
+
+-- 댓글 (POST_COMMENT_ID_SEQ.nextval -> NULL, SYSDATE -> NOW())
+INSERT INTO POST_COMMENT (POST_COMMENT_ID, COMMUNITY_ID, MEMBER_ID, CONTENT, CREATE_AT, MODIFIED_AT)
+VALUES (NULL, 1, 1, '정말 필요한 정보네요!', NOW(), NOW());
+
+-- 대댓글 (REPLY_ID_SEQ.nextval -> NULL, SYSDATE -> NOW())
+INSERT INTO REPLY (REPLY_ID, POST_COMMENT_ID, MEMBER_ID, CONTENT, CREATE_AT, MODIFIED_AT)
+VALUES (NULL, 1, 2, '그러게요!', NOW(), NOW());
+
+COMMIT;
+
+-- 경력 등급 (Oracle 문법 오류 수정)
+-- VALUE -> VALUES, CAREER_GRADE 중복 제거
+INSERT INTO CAREER_GRADE (GRADE_ID, MIN_EXPERIENCE, MAX_EXPERIENCE, DESCRIPTION)
+VALUES(1, 0, 1, '신입');
+
+INSERT INTO CAREER_GRADE (GRADE_ID, MIN_EXPERIENCE, MAX_EXPERIENCE, DESCRIPTION)
+VALUES(2, 1, 3, '주니어');
+
+INSERT INTO CAREER_GRADE (GRADE_ID, MIN_EXPERIENCE, MAX_EXPERIENCE, DESCRIPTION)
+VALUES(3, 3, 5, '시니어');
+
+INSERT INTO CAREER_GRADE (GRADE_ID, MIN_EXPERIENCE, MAX_EXPERIENCE, DESCRIPTION)
+VALUES(4, 5, 99, '전문가');
+
+COMMIT; 
