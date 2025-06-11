@@ -588,7 +588,9 @@ $(document).on('click', '.apply-btn', function () {
 
     if (!resumeList || resumeList.length === 0) {
         Swal.fire({
-            title:'📭 등록된 이력서가 없습니다.',
+            title: (userType === 'member')
+                ? '📭 등록된 이력서가 없습니다.'
+                : '로그인 후 이용 가능합니다.',
             confirmButtonText: '확인',
             customClass: {
                 confirmButton: "swalConfirmBtn",
