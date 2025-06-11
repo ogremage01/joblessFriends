@@ -29,10 +29,12 @@
 - `mysql_03member_data.sql` - 멤버 데이터 (MySQL)
 - `mysql_04company_data.sql` - 회사 데이터 (MySQL)
 - `mysql_05job_group_data.sql` - 직업 그룹 데이터 (MySQL)
-- `mysql_06job_data.sql` - 직업 데이터 (MySQL) - 부분 변환
+- `mysql_06job_data.sql` - 직업 데이터 (MySQL) - 322건 완료
 - `mysql_07etc_data.sql` - 기타 데이터 (MySQL)
 - `mysql_09admin_data.sql` - 관리자 데이터 (MySQL)
 - `mysql_10notice_data.sql` - 공지사항 데이터 (MySQL)
+- `mysql_11_community_Comment_data.sql` - 커뮤니티 데이터 (MySQL)
+- `mysql_08-2resume_data2.sql` - 이력서 데이터2 (MySQL)
 - `mysql_all_data_migration.sql` - 통합 실행 스크립트
 
 ### Sample Files
@@ -80,6 +82,8 @@ SOURCE mysql_04company_data.sql;
 SOURCE mysql_07etc_data.sql;
 SOURCE mysql_09admin_data.sql;
 SOURCE mysql_10notice_data.sql;
+SOURCE mysql_11_community_Comment_data.sql;
+SOURCE mysql_08-2resume_data2.sql;
 ```
 
 ### 3. 통합 실행 (권장)
@@ -91,13 +95,10 @@ SOURCE mysql_all_data_migration.sql;
 
 다음 대용량 파일들은 크기가 크므로 개별적으로 변환 작업이 필요합니다:
 
-1. **mysql_06job_data.sql** - 부분 완성 (322개 직업 중 일부만 변환)
-2. **mysql_08-1skill_data.sql** - 미변환 (111KB, 910 라인)
-3. **mysql_08-2resume_data.sql** - 미변환 (74KB, 1424 라인)
-4. **mysql_08-2resume_data2.sql** - 미변환 (28KB, 419 라인)
-5. **mysql_09-1recruitment.sql** - 미변환 (169KB, 2783 라인)
-6. **mysql_07etc_data2.sql** - 미변환 (178KB, 996 라인)
-7. **mysql_11_community_Comment_data.sql** - 미변환 (48KB, 604 라인)
+1. **mysql_08-1skill_data.sql** - 미변환 (111KB, 910 라인)
+2. **mysql_08-2resume_data.sql** - 미변환 (74KB, 1424 라인)
+3. **mysql_09-1recruitment.sql** - 미변환 (169KB, 2783 라인)
+4. **mysql_07etc_data2.sql** - 미변환 (178KB, 996 라인)
 
 ## 변환 규칙 적용 예시
 
@@ -148,4 +149,4 @@ SHOW TABLE STATUS LIKE 'MEMBER';
 - ✅ 통합 실행 스크립트 완료
 - ✅ 문서화 완료
 
-총 변환 완료: **8개 파일** / 전체: **15개 파일** (53% 완료) 
+총 변환 완료: **11개 파일** / 전체: **15개 파일** (73% 완료) 

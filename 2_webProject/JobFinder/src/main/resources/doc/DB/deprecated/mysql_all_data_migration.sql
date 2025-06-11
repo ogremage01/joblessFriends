@@ -76,6 +76,8 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- SOURCE mysql_04company_data.sql;
 -- SOURCE mysql_06job_data.sql;
 -- SOURCE mysql_10notice_data.sql;
+-- SOURCE mysql_11_community_Comment_data.sql;
+-- SOURCE mysql_08-2resume_data2.sql;
 -- 기타 대용량 데이터 파일들...
 
 COMMIT;
@@ -86,4 +88,8 @@ COMMIT;
 -- 3. mysql_07etc_data2.sql (178KB)
 -- 4. mysql_08-2resume_data.sql (74KB)
 -- 5. mysql_08-2resume_data2.sql (28KB)
--- 6. mysql_11_community_Comment_data.sql (48KB) 
+
+-- 완료된 파일들:
+-- ✅ mysql_06job_data.sql (322건) - 완료
+-- ✅ mysql_11_community_Comment_data.sql (커뮤니티 데이터) - 완료
+-- ✅ mysql_08-2resume_data2.sql (이력서 데이터2) - 완료 
