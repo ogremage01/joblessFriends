@@ -4,14 +4,14 @@
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 2, 'SK하이닉스 채용공고',
              'SK하이닉스에서 함께 성장할 인재를 채용합니다. 다양한 프로젝트와 협업을 통해 역량을 키울 수 있는 최고의 기회입니다.',
              '3325', '면접 후 결정', 81, 6,
              31, '/img/SK.jpg', '5년이상', '대학원 박사졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-21', 'YYYY-MM-DD'),
-             0, 20, 0, SYSDATE
+             0, 20, 0, SYSDATE, TO_DATE('2025-05-21', 'YYYY-MM-DD')
          );
 
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
@@ -29,14 +29,14 @@ COMMIT;
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 2, '미래 반도체 설계 전문가 모집',
              'SK하이닉스에서는 미래 반도체 산업을 선도할 열정적이고 창의적인 인재를 모집합니다. 최첨단 기술력과 협업 중심의 업무 환경에서 경력을 쌓을 수 있습니다. 글로벌 경쟁력을 갖춘 프로젝트에 참여할 기회를 제공합니다.',
              '4100', '주5일(월~금)', 257, 17,
              87, '/img/SK.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-21', 'YYYY-MM-DD'),
-             0, 20, 0, SYSDATE
+             0, 20, 0, SYSDATE,  TO_DATE('2025-05-01', 'YYYY-MM-DD')
          );
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '주4일근무');

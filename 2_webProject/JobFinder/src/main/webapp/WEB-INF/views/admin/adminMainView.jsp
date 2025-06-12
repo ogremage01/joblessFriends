@@ -68,12 +68,224 @@
                             <div class="admin-main-stat-number">${communityCount != null ? communityCount : 0}</div>
                             <div class="admin-main-stat-description">이번 주 +${communityWeeklyIncrease != null ? communityWeeklyIncrease : 0}개 게시물</div>
                         </div>
+
+						<div>
+							<canvas id="memberChart" width="400" height="400"></canvas>
+						</div>
+                        
+                        <div>
+							<canvas id="companyChart" width="400" height="400"></canvas>
+						</div>
+						
+						<div>
+							<canvas id="recruitmentChart" width="400" height="400"></canvas>
+						</div>
+						
+						<div>
+							<canvas id="communityChart" width="400" height="400"></canvas>
+						</div>
+						
+						<div>
+							<canvas id="applyChart" width="400" height="400"></canvas>
+						</div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script>
+
+const memberIncrease = [
+    ${memberIncrease.previousResult},
+    ${memberIncrease.currentResult}
+];
+const companyIncrease = [
+    ${companyIncrease.previousResult},
+    ${companyIncrease.currentResult}
+];
+const recruitmentRegistCount = [
+    ${recruitmentRegistCount.previousResult},
+    ${recruitmentRegistCount.currentResult}
+];
+const communityIncrease = [
+    ${communityIncrease.previousResult},
+    ${communityIncrease.currentResult}
+];
+const applyCount = [
+    ${applyCount.previousResult},
+    ${applyCount.currentResult}
+];
+
+
+const memberChartObj = document.getElementById('memberChart').getContext('2d');
+const memberChart = new Chart(memberChartObj, {
+    type: 'bar',
+    data: {
+        labels: ['전월', '당월'],
+        datasets: [{
+            label: '전월, 당월 회원 증가 수',
+            data: memberIncrease,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)'
+            ],
+            borderColor: [
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    min: 0, // ← y축 시작점 0으로 확정
+                    max: 100,
+                    stepSize: 10
+                }
+            }]
+        }
+    }
+});
+
+const companyChartObj = document.getElementById('companyChart').getContext('2d');
+const companyChart = new Chart(companyChartObj, {
+    type: 'bar',
+    data: {
+        labels: ['전월', '당월'],
+        datasets: [{
+            label: '전월, 당월 기업 회원 증가 수',
+            data: companyIncrease,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)'
+            ],
+            borderColor: [
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    min: 0, // ← y축 시작점 0으로 확정
+                    max: 100,
+                    stepSize: 10
+                }
+            }]
+        }
+    }
+});
+
+const recruitmentChartObj = document.getElementById('recruitmentChart').getContext('2d');
+const recruitmentChart = new Chart(recruitmentChartObj, {
+    type: 'bar',
+    data: {
+        labels: ['전월', '당월'],
+        datasets: [{
+            label: '전월, 당월 채용공고 증가 수',
+            data: recruitmentRegistCount,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)'
+            ],
+            borderColor: [
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    min: 0, // ← y축 시작점 0으로 확정
+                    max: 100,
+                    stepSize: 10
+                }
+            }]
+        }
+    }
+});
+
+const communityChartObj = document.getElementById('communityChart').getContext('2d');
+const communityChart = new Chart(communityChartObj, {
+    type: 'bar',
+    data: {
+        labels: ['전월', '당월'],
+        datasets: [{
+            label: '전월, 당월 커뮤니티 게시글 증가 수',
+            data: communityIncrease,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)'
+            ],
+            borderColor: [
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    min: 0, // ← y축 시작점 0으로 확정
+                    max: 100,
+                    stepSize: 10
+                }
+            }]
+        }
+    }
+});
+
+const applyChartObj = document.getElementById('applyChart').getContext('2d');
+const applyChart = new Chart(applyChartObj, {
+    type: 'bar',
+    data: {
+        labels: ['전월', '당월'],
+        datasets: [{
+            label: '전월, 당월 이력서 지원 수',
+            data: applyCount,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)'
+            ],
+            borderColor: [
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    min: 0, // ← y축 시작점 0으로 확정
+                    max: 100,
+                    stepSize: 10
+                }
+            }]
+        }
+    }
+});
+</script>
 
 
 </body>

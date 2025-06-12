@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.joblessfriend.jobfinder.admin.domain.AdminVo;
 import com.joblessfriend.jobfinder.admin.service.AdminAuthService;
 import com.joblessfriend.jobfinder.admin.service.AdminDashboardService;
+import com.joblessfriend.jobfinder.util.ChartVo;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -96,7 +97,8 @@ public class AdminAuthController {
 		logger.info("go to admin main");
 		
 		// 대시보드 통계 데이터 조회 및 모델에 추가
-		Map<String, Object> dashboardStats = adminDashboardService.getDashboardStatistics();
+		Map<String, ChartVo> dashboardStats = adminDashboardService.getDashboardStatistics();
+		
 		model.addAllAttributes(dashboardStats);
 		
 		return "admin/adminMainView"; // 어드민 메인 뷰 반환

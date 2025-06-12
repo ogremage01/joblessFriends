@@ -5,47 +5,50 @@
   
 <mapper namespace="com.joblessfriend.jobfinder.admin.mapper.adminDashboardMapper">
 
-    <!-- 전체 회원 수 조회 -->
-    <select id="getTotalMemberCount" resultType="int">
-        SELECT COUNT(*) FROM member
-    </select>
-    
-    <!-- 이번 달 회원 증가 수 조회 -->
-    <select id="getMonthlyMemberIncrease" resultType="int">
-        SELECT COUNT(*) 
-        FROM member 
-        WHERE TO_CHAR(create_at, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
-    </select>
-    
-    <!-- 전체 기업 회원 수 조회 -->
-    <select id="getTotalCompanyCount" resultType="int">
-        SELECT COUNT(*) FROM company
-    </select>
-    
-    <!-- 이번 달 기업 회원 증가 수 조회 -->
-    <select id="getMonthlyCompanyIncrease" resultType="int">
-        SELECT COUNT(*) 
-        FROM company 
-        WHERE TO_CHAR(create_at, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
-    </select>
-    
-    <!-- 활성 채용 공고 수 조회 (현재 날짜가 마감일 전인 공고) -->
-    <select id="getActiveRecruitmentCount" resultType="int">
-        SELECT COUNT(*) 
-        FROM JOB_POST 
-        WHERE end_date >= TRUNC(SYSDATE)
-    </select>
-    
-    <!-- 전체 커뮤니티 게시글 수 조회 -->
-    <select id="getTotalCommunityCount" resultType="int">
-        SELECT COUNT(*) FROM community
-    </select>
-    
-    <!-- 이번 주 커뮤니티 게시글 증가 수 조회 -->
-    <select id="getWeeklyCommunityIncrease" resultType="int">
-        SELECT COUNT(*) 
-        FROM community 
-        WHERE TO_CHAR(create_at, 'IYYY-IW') = TO_CHAR(SYSDATE, 'IYYY-IW')
-    </select>
+    <!-- 전월, 당월 회원 증가 수 조회 -->
+<select id="getMonthlyMemberIncrease" resultType="com.joblessfriend.jobfinder.util.ChartVo">
+   SELECT
+	SUM(CASE WHEN CREATE_AT &gt;= TRUNC(ADD_MONTHS(SYSDATE, -1), 'MM')
+	AND CREATE_AT &lt; TRUNC(SYSDATE, 'MM') THEN 1 ELSE 0 END) AS previousResult,
+	SUM(CASE WHEN TO_CHAR(CREATE_AT, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM') THEN 1 ELSE 0 END) AS currentResult
+	FROM MEMBER
+</select>
+
+<!-- 전월, 당월 기업 회원 증가 수 조회 -->
+<select id="getMonthlyCompanyIncrease" resultType="com.joblessfriend.jobfinder.util.ChartVo">
+    SELECT
+	SUM(CASE WHEN CREATE_AT &gt;= TRUNC(ADD_MONTHS(SYSDATE, -1), 'MM')
+	AND CREATE_AT &lt; TRUNC(SYSDATE, 'MM') THEN 1 ELSE 0 END) AS previousResult,
+	SUM(CASE WHEN TO_CHAR(CREATE_AT, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM') THEN 1 ELSE 0 END) AS currentResult
+	FROM COMPANY
+</select>
+
+<!-- 전월, 당월 등록된 채용공고 수 조회 -->
+<select id="getMonthlyRecruitmentRegistCount" resultType="com.joblessfriend.jobfinder.util.ChartVo">
+    SELECT
+	SUM(CASE WHEN CREATE_DATE &gt;= TRUNC(ADD_MONTHS(SYSDATE, -1), 'MM')
+	AND CREATE_DATE &lt; TRUNC(SYSDATE, 'MM') THEN 1 ELSE 0 END) AS previousResult,
+	SUM(CASE WHEN TO_CHAR(CREATE_DATE, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM') THEN 1 ELSE 0 END) AS currentResult
+	FROM JOB_POST
+</select>
+
+<!-- 전월, 당월 커뮤니티 게시글 증가 수 조회 -->
+<select id="getMonthlyCommunityIncrease" resultType="com.joblessfriend.jobfinder.util.ChartVo">
+    SELECT
+	SUM(CASE WHEN CREATE_AT &gt;= TRUNC(ADD_MONTHS(SYSDATE, -1), 'MM')
+	AND CREATE_AT &lt; TRUNC(SYSDATE, 'MM') THEN 1 ELSE 0 END) AS previousResult,
+	SUM(CASE WHEN TO_CHAR(CREATE_AT, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM') THEN 1 ELSE 0 END) AS currentResult
+	FROM COMMUNITY
+</select>
+
+<!-- 전월, 당월 지원 이력서 수 조회 -->
+<select id="getMonthlyApplyCount" resultType="com.joblessfriend.jobfinder.util.ChartVo">
+    SELECT
+	SUM(CASE WHEN APPLY_DATE &gt;= TRUNC(ADD_MONTHS(SYSDATE, -1), 'MM')
+	AND APPLY_DATE &lt; TRUNC(SYSDATE, 'MM') THEN 1 ELSE 0 END) AS previousResult,
+	SUM(CASE WHEN TO_CHAR(APPLY_DATE, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM') THEN 1 ELSE 0 END) AS currentResult
+	FROM RESUME_MANAGE
+</select>
+
     
 </mapper> 
