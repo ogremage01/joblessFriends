@@ -8,19 +8,14 @@ import com.joblessfriend.jobfinder.util.SearchVo;
 
 public interface AdminMemberService {
 
+	List<MemberVo> memberSelectAll(SearchVo searchVo);
 	
-	int memberCount(SearchVo searchVo);
+	int memberSelectCount(SearchVo searchVo);
 
 	MemberVo memberSelectOne(int memberId);
 
-	int memberUpdateOne(MemberVo existMemberVo);
-
 	int memberDeleteOne(int memberId);
 
-	int memberDeleteList(List<Integer> memberIdList);
-
-	List<MemberVo> memberSelectList(SearchVo searchVo);
-
-
+	int memberDeleteMulti(List<Integer> memberIds);
 
 }

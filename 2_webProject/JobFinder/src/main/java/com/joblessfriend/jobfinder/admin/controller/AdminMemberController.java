@@ -45,7 +45,7 @@ public class AdminMemberController {
 		searchVo.setKeyword(keyword);
 		searchVo.setPage(page);
 		
-		int totalPage = memberService.memberCount(searchVo);
+		int totalPage = memberService.memberSelectCount(searchVo);
 		Pagination pagination = new Pagination(totalPage, searchVo);
 
 		// Oracle 11g에 맞게 startRow, endRow 계산
@@ -53,7 +53,7 @@ public class AdminMemberController {
 		searchVo.setEndRow(searchVo.getStartRow() + searchVo.getRecordSize() - 1);
 		List<MemberVo> memberList = new ArrayList<>();
 		
-		memberList = memberService.memberSelectList(searchVo);
+		memberList = memberService.memberSelectAll(searchVo);
 
 		model.addAttribute("searchVo", searchVo);
 		model.addAttribute("memberList", memberList);
@@ -75,54 +75,7 @@ public class AdminMemberController {
 		return "admin/member/memberIndividualDetailView"; // 상세 뷰 반환
 	}
 	
-	//수정
-	@PatchMapping("/{memberId}")
-	public ResponseEntity<Integer> memberIndividualDetailUpdate(@PathVariable int memberId,
-			@RequestBody MemberVo memberVo) {
-
-		logger.info("개인회원 정보 수정-어드민");
-		System.out.println("입력정보확인: " + memberVo.toString());
-
-		// 기존 데이터 조회
-		MemberVo existMemberVo = memberService.memberSelectOne(memberVo.getMemberId());
-
-		// 필드별로 null 여부 확인 후 값 갱신
-		if (memberVo.getEmail() != null) {
-			existMemberVo.setEmail(memberVo.getEmail());
-		}
-		if (memberVo.getPassword() != null) {
-			// TODO: 비밀번호 해싱 처리 필요
-			String password = memberVo.getPassword();
-			//비밀번호 암호화
-			String pwdEncoder = passwordEncoder.encode(password);
-			System.out.println("비번 확인: " + password + " / " + pwdEncoder);
-			
-			existMemberVo.setPassword(pwdEncoder);
-		}
-		if (memberVo.getNickname() != null) {
-			existMemberVo.setNickname(memberVo.getNickname());
-		}
-//		if (memberVo.getResumeMax() != 0) {
-//			existMemberVo.setResumeMax(memberVo.getResumeMax());
-//		}
-		if (memberVo.getCreateAt() != null) {
-			existMemberVo.setCreateAt(memberVo.getCreateAt());
-		}
-		if (memberVo.getModifiedAt() != null) {
-			existMemberVo.setModifiedAt(memberVo.getModifiedAt());
-		}
-		if (memberVo.getProvider() != null) {
-			existMemberVo.setProvider(memberVo.getProvider());
-		}
-
-		System.out.println("바꾼 후 정보: " + existMemberVo.toString());
-
-		// 수정 처리
-		int result = memberService.memberUpdateOne(existMemberVo);
-
-		// 성공 여부를 HTTP 응답으로 반환
-		return ResponseEntity.ok(result);
-	}
+	// 수정 기능은 현재 사용하지 않음 (필요시 나중에 추가)
 
 	//단일 삭제
 	@DeleteMapping("/{memberId}")
@@ -130,9 +83,20 @@ public class AdminMemberController {
 		logger.info("개인회원 탈퇴프로세스 진행-어드민");
 		System.out.println(memberId); // 디버깅 출력
 
-		int result = memberService.memberDeleteOne(memberId);
-
-		return ResponseEntity.ok(result); // 삭제 결과 반환
+		try {
+			int result = memberService.memberDeleteOne(memberId);
+			
+			if (result > 0) {
+				logger.info("개인회원 탈퇴 성공 - memberId: {}", memberId);
+				return ResponseEntity.ok(result);
+			} else {
+				logger.warn("개인회원 탈퇴 실패 - 해당 회원이 존재하지 않거나 이미 삭제됨 - memberId: {}", memberId);
+				return ResponseEntity.badRequest().body(0);
+			}
+		} catch (Exception e) {
+			logger.error("개인회원 탈퇴 처리 중 예외 발생 - memberId: {}", memberId, e);
+			return ResponseEntity.status(500).body(0);
+		}
 	}
 
 	//복수 삭제
@@ -141,11 +105,17 @@ public class AdminMemberController {
 		logger.info("개인회원 복수 탈퇴프로세스 진행-어드민");
 
 		for (Integer i : memberIdList) {
-			System.out.println("삭제할 기업 아이디: " + i); // 디버깅 출력
+			System.out.println("삭제할 회원 아이디: " + i); // 디버깅 출력
 		}
 
-		int result = memberService.memberDeleteList(memberIdList);
-
-		return ResponseEntity.ok(result); // 결과 반환
+		try {
+			int result = memberService.memberDeleteMulti(memberIdList);
+			
+			logger.info("개인회원 복수 탈퇴 완료 - 요청: {}명, 처리: {}명", memberIdList.size(), result);
+			return ResponseEntity.ok(result); // 실제로 처리된 수를 반환
+		} catch (Exception e) {
+			logger.error("개인회원 복수 탈퇴 처리 중 예외 발생", e);
+			return ResponseEntity.status(500).body(0);
+		}
 	}
 }

@@ -133,10 +133,20 @@ public class AdminCompanyController {
 	public ResponseEntity<Integer> memberCompanyDeleteOne(@PathVariable int companyId) {
 		logger.info("기업회원 탈퇴프로세스 진행-어드민");
 		
-
-		int result = companyService.companyDeleteOne(companyId);
-
-		return ResponseEntity.ok(result); // 삭제 결과 반환
+		try {
+			int result = companyService.companyDeleteOne(companyId);
+			
+			if (result > 0) {
+				logger.info("기업회원 탈퇴 성공 - companyId: {}", companyId);
+				return ResponseEntity.ok(result);
+			} else {
+				logger.warn("기업회원 탈퇴 실패 - 해당 기업이 존재하지 않거나 이미 삭제됨 - companyId: {}", companyId);
+				return ResponseEntity.badRequest().body(0);
+			}
+		} catch (Exception e) {
+			logger.error("기업회원 탈퇴 처리 중 예외 발생 - companyId: {}", companyId, e);
+			return ResponseEntity.status(500).body(0);
+		}
 	}
 
 	/**
@@ -146,10 +156,18 @@ public class AdminCompanyController {
 	public ResponseEntity<Integer> memberCompanyDeleteList(@RequestBody List<Integer> companyIdList) {
 		logger.info("기업회원 대량 탈퇴프로세스 진행-어드민");
 
-		
+		for (Integer i : companyIdList) {
+			System.out.println("삭제할 기업 아이디: " + i); // 디버깅 출력
+		}
 
-		int result = companyService.companyDeleteList(companyIdList);
-
-		return ResponseEntity.ok(result); // 결과 반환
+		try {
+			int result = companyService.companyDeleteList(companyIdList);
+			
+			logger.info("기업회원 복수 탈퇴 완료 - 요청: {}개, 처리: {}개", companyIdList.size(), result);
+			return ResponseEntity.ok(result); // 실제로 처리된 수를 반환
+		} catch (Exception e) {
+			logger.error("기업회원 복수 탈퇴 처리 중 예외 발생", e);
+			return ResponseEntity.status(500).body(0);
+		}
 	}
 }
