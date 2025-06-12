@@ -14,7 +14,7 @@
         <result column="PROVIDER" property="provider" />
     </resultMap>
 
-    <select id="memberSelectList" parameterType="com.joblessfriend.jobfinder.util.SearchVo" resultMap="memberResultMap">
+    <select id="memberSelectAll" parameterType="com.joblessfriend.jobfinder.util.SearchVo" resultMap="memberResultMap">
         SELECT * 
         FROM (
             SELECT ROWNUM AS RN, INNERTABLE.*
@@ -32,7 +32,7 @@
         WHERE RN &gt;= #{startRow}
     </select>
 
-    <select id="memberCount" resultType="int">
+    <select id="memberSelectCount" resultType="int">
         SELECT COUNT(MEMBER_ID)
         FROM MEMBER
         <if test="keyword != null and keyword != ''">
@@ -47,30 +47,9 @@
         WHERE MEMBER_ID = #{memberId}
     </select>
 
-    <update id="memberUpdateOne" parameterType="com.joblessfriend.jobfinder.member.domain.MemberVo">
-        UPDATE MEMBER
-        <set>
-            <if test="email != null">EMAIL = #{email},</if>
-            <if test="password != null">PASSWORD = #{password},</if>
-            <if test="nickname != null">NICKNAME = #{nickname},</if>
-            <if test="resumeMax != null">RESUME_MAX = #{resumeMax},</if>
-            <if test="provider != null">PROVIDER = #{provider},</if>
-            MODIFIED_AT = SYSDATE
-        </set>
-        WHERE MEMBER_ID = #{memberId}
-    </update>
-
     <delete id="memberDeleteOne" parameterType="int">
         DELETE FROM MEMBER
         WHERE MEMBER_ID = #{memberId}
-    </delete>
-
-    <delete id="memberDeleteList" parameterType="java.util.List">
-        DELETE FROM MEMBER
-        WHERE MEMBER_ID IN
-        <foreach item="memberId" collection="list" open="(" separator="," close=")">
-            #{memberId}
-        </foreach>
     </delete>
 
 </mapper>

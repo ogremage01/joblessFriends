@@ -177,7 +177,46 @@ public class ResumeApplyDaoImpl implements ResumeApplyDao {
         return sqlSession.selectList(namespace + ".getCertificateByResumeId", resumeId);
     }
 
+    // 복사된 이력서 삭제 관련 메서드들 구현
+    @Override
+    public List<ResumeVo> findResumeCopyByMemberId(int memberId) {
+        return sqlSession.selectList(namespace + ".findResumesByMemberId", memberId);
+    }
 
+    @Override
+    public void deleteResumeCopyById(int resumeId) {
+        sqlSession.delete(namespace + ".deleteResumeCopyById", resumeId);
+    }
+
+    @Override
+    public void deleteSchoolCopyByResumeId(int resumeId) {
+        sqlSession.delete(namespace + ".deleteSchoolCopyByResumeId", resumeId);
+    }
+
+    @Override
+    public void deleteCareerCopyByResumeId(int resumeId) {
+        sqlSession.delete(namespace + ".deleteCareerCopyByResumeId", resumeId);
+    }
+
+    @Override
+    public void deleteEducationCopyByResumeId(int resumeId) {
+        sqlSession.delete(namespace + ".deleteEducationCopyByResumeId", resumeId);
+    }
+
+    @Override
+    public void deleteCertificateCopyByResumeId(int resumeId) {
+        sqlSession.delete(namespace + ".deleteCertificateCopyByResumeId", resumeId);
+    }
+
+    @Override
+    public void deletePortfolioCopyByResumeId(int resumeId) {
+        sqlSession.delete(namespace + ".deletePortfolioCopyByResumeId", resumeId);
+    }
+
+    @Override
+    public void deleteTagCopyByResumeId(int resumeId) {
+        sqlSession.delete(namespace + ".deleteTagCopyByResumeId", resumeId);
+    }
 
     // getResumeWithAllDetails, getSchoolsByResumeId 등 조회 메서드는 필요 시 유지
 }

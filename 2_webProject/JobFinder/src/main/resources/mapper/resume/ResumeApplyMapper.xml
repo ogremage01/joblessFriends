@@ -310,18 +310,11 @@
 
 <!--사전 질문지 답변 -->
     <!-- ResumeApplyMapper.xml -->
-    <insert id="insertAnswers" parameterType="map">
+    <insert id="insertAnswers" parameterType="java.util.List">
         INSERT ALL
-        <foreach collection="answerList" item="answer">
-            INTO JOB_POST_ANSWER (
-            ANSWER_ID, QUESTION_ID, JOB_POST_ID, MEMBER_ID, ANSWER_TEXT
-            ) VALUES (
-            #{answer.answerId},
-            #{answer.questionId},
-            #{answer.jobPostId},
-            #{answer.memberId},
-            #{answer.answerText}
-            )
+        <foreach collection="answerList" item="answer" separator=" ">
+            INTO JOB_POST_ANSWER (ANSWER_ID, RM_ID, QUESTION_ID, ANSWER)
+            VALUES (#{answer.answerId}, #{answer.rmId}, #{answer.questionId}, #{answer.answer})
         </foreach>
         SELECT * FROM DUAL
     </insert>
@@ -329,14 +322,13 @@
 
 
     <select id="selectNextAnswerId" resultType="int">
-        SELECT JOB_POST_ANSWER_ID_SEQ.NEXTVAL FROM DUAL
+        SELECT SEQ_ANSWER_ID.NEXTVAL FROM DUAL
     </select>
 
 
-    <select id="selectNextAnswerIds" resultType="int" parameterType="int">
-        SELECT JOB_POST_ANSWER_ID_SEQ.NEXTVAL
-        FROM DUAL
-            CONNECT BY LEVEL &lt;= #{count}
+    <select id="selectNextAnswerIds" parameterType="int" resultType="int">
+        SELECT SEQ_ANSWER_ID.NEXTVAL FROM DUAL
+        CONNECT BY LEVEL &lt;= #{count}
     </select>
 
 
@@ -379,6 +371,35 @@
     
     <delete id="deletePortfoliosByResumeId">
         DELETE FROM PORTFOLIO WHERE RESUME_ID = #{resumeId}
+    </delete>
+    
+    <!-- 복사된 이력서 삭제 관련 쿼리들 -->
+    <delete id="deleteResumeCopyById">
+        DELETE FROM RESUME_COPY WHERE RESUME_ID = #{resumeId}
+    </delete>
+    
+    <delete id="deleteSchoolCopyByResumeId">
+        DELETE FROM SCHOOL_COPY WHERE RESUME_ID = #{resumeId}
+    </delete>
+    
+    <delete id="deleteCareerCopyByResumeId">
+        DELETE FROM CAREER_COPY WHERE RESUME_ID = #{resumeId}
+    </delete>
+    
+    <delete id="deleteEducationCopyByResumeId">
+        DELETE FROM EDUCATION_COPY WHERE RESUME_ID = #{resumeId}
+    </delete>
+    
+    <delete id="deleteCertificateCopyByResumeId">
+        DELETE FROM CERTIFICATE_RESUME_COPY WHERE RESUME_ID = #{resumeId}
+    </delete>
+    
+    <delete id="deletePortfolioCopyByResumeId">
+        DELETE FROM PORTFOLIO_COPY WHERE RESUME_ID = #{resumeId}
+    </delete>
+    
+    <delete id="deleteTagCopyByResumeId">
+        DELETE FROM RESUME_TAG_COPY WHERE RESUME_ID = #{resumeId}
     </delete>
     
 </mapper>

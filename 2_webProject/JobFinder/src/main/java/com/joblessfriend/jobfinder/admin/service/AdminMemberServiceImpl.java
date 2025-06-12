@@ -12,13 +12,15 @@ import com.joblessfriend.jobfinder.admin.dao.AdminMemberDao;
 import com.joblessfriend.jobfinder.auth.controller.AuthController;
 import com.joblessfriend.jobfinder.member.domain.MemberVo;
 import com.joblessfriend.jobfinder.resume.dao.ResumeDao;
+import com.joblessfriend.jobfinder.resume.dao.ResumeApplyDao;
+import com.joblessfriend.jobfinder.resume.domain.ResumeVo;
 import com.joblessfriend.jobfinder.member.dao.MemberRecruitmentDao;
 import com.joblessfriend.jobfinder.util.SearchVo;
 
 @Service
 public class AdminMemberServiceImpl implements AdminMemberService{
 	
-	private Logger logger = LoggerFactory.getLogger(AuthController.class);
+	private Logger logger = LoggerFactory.getLogger(AdminMemberServiceImpl.class);
 	
 	@Autowired
 	private AdminMemberDao memberDao;
@@ -27,100 +29,119 @@ public class AdminMemberServiceImpl implements AdminMemberService{
 	private ResumeDao resumeDao;
 	
 	@Autowired
+	private ResumeApplyDao resumeApplyDao;
+	
+	@Autowired
 	private MemberRecruitmentDao memberRecruitmentDao;
 
-	
-	@Override//관리자용
-	public List<MemberVo> memberSelectList(SearchVo searchVo) {
-		// TODO Auto-generated method stub
-		return memberDao.memberSelectList(searchVo);
-	}
-	
-	@Override//관리자용
-	public int memberCount(SearchVo searchVo) {
-		// TODO Auto-generated method stub
-		return memberDao.memberCount(searchVo);
+	@Override
+	public List<MemberVo> memberSelectAll(SearchVo searchVo) {
+		return memberDao.memberSelectAll(searchVo);
 	}
 
-	@Override//관리자용
+	@Override
 	public MemberVo memberSelectOne(int memberId) {
-		// TODO Auto-generated method stub
 		return memberDao.memberSelectOne(memberId);
 	}
 
-	@Override//관리자용
-	public int memberUpdateOne(MemberVo existMemberVo) {
-		// TODO Auto-generated method stub
-		return memberDao.memberUpdateOne(existMemberVo);
-	}
-
-	@Override//관리자.이용자 겸용(분할해야함)
+	@Override
 	@Transactional
 	public int memberDeleteOne(int memberId) {
-		logger.info("어드민 회원 탈퇴 처리 시작 - memberId: {}", memberId);
-		
 		try {
-			// 1. 이력서 관련 데이터 삭제
-			List<com.joblessfriend.jobfinder.resume.domain.ResumeVo> resumeList = resumeDao.findResumesByMemberId(memberId);
-			for (com.joblessfriend.jobfinder.resume.domain.ResumeVo resume : resumeList) {
-				int resumeId = resume.getResumeId();
-				logger.info("이력서 삭제 처리 - resumeId: {}", resumeId);
-				
-				// 이력서 하위 데이터 삭제
-				resumeDao.deleteSchoolsByResumeId(resumeId);
-				resumeDao.deleteCareersByResumeId(resumeId);
-				resumeDao.deleteEducationsByResumeId(resumeId);
-				resumeDao.deleteCertificatesByResumeId(resumeId);
-				resumeDao.deleteTagsByResumeId(resumeId);
-				resumeDao.deletePortfoliosByResumeId(resumeId);
-				
-				// 이력서 메인 삭제
-				resumeDao.deleteResumeById(memberId, resumeId);
+			logger.info("회원 탈퇴 프로세스 시작 - memberId: {}", memberId);
+			
+			// 1. 회원의 복사된 이력서 조회 및 삭제
+			List<ResumeVo> resumeCopies = resumeApplyDao.findResumeCopyByMemberId(memberId);
+			if (resumeCopies != null && !resumeCopies.isEmpty()) {
+				logger.info("복사된 이력서 {}개 삭제 중...", resumeCopies.size());
+				for (ResumeVo resumeCopy : resumeCopies) {
+					int resumeCopyId = resumeCopy.getResumeId();
+					// 복사된 이력서 하위 데이터 삭제
+					resumeApplyDao.deleteTagCopyByResumeId(resumeCopyId);
+					resumeApplyDao.deletePortfolioCopyByResumeId(resumeCopyId);
+					resumeApplyDao.deleteCertificateCopyByResumeId(resumeCopyId);
+					resumeApplyDao.deleteEducationCopyByResumeId(resumeCopyId);
+					resumeApplyDao.deleteCareerCopyByResumeId(resumeCopyId);
+					resumeApplyDao.deleteSchoolCopyByResumeId(resumeCopyId);
+					// 복사된 이력서 메인 삭제
+					resumeApplyDao.deleteResumeCopyById(resumeCopyId);
+				}
+				logger.info("복사된 이력서 삭제 완료");
 			}
 			
-			// 2. 지원 이력 삭제 (RESUME_MANAGE 테이블의 데이터)
-			// - 이 부분은 CASCADE로 처리되지만 명시적으로 로그 출력
-			logger.info("회원의 지원 이력은 CASCADE로 삭제됨 - memberId: {}", memberId);
+			// 2. 회원의 원본 이력서 조회 및 삭제
+			List<ResumeVo> resumes = resumeDao.findResumesByMemberId(memberId);
+			if (resumes != null && !resumes.isEmpty()) {
+				logger.info("원본 이력서 {}개 삭제 중...", resumes.size());
+				for (ResumeVo resume : resumes) {
+					int resumeId = resume.getResumeId();
+					// 이력서 하위 데이터 삭제 (CASCADE 관계로 자동 처리되지만 명시적으로 삭제)
+					resumeDao.deleteTagsByResumeId(resumeId);
+					resumeDao.deletePortfoliosByResumeId(resumeId);
+					resumeDao.deleteCertificatesByResumeId(resumeId);
+					resumeDao.deleteEducationsByResumeId(resumeId);
+					resumeDao.deleteCareersByResumeId(resumeId);
+					resumeDao.deleteSchoolsByResumeId(resumeId);
+					// 이력서 메인 삭제
+					resumeDao.deleteResumeById(memberId, resumeId);
+				}
+				logger.info("원본 이력서 삭제 완료");
+			}
 			
-			// 3. 북마크 삭제
-			// - 이 부분도 CASCADE로 처리되지만 명시적으로 로그 출력
-			logger.info("회원의 북마크는 CASCADE로 삭제됨 - memberId: {}", memberId);
+			// 3. 지원 이력(RESUME_MANAGE) 삭제 - CASCADE로 처리
+			logger.info("지원 이력 삭제는 CASCADE로 처리됨");
 			
-			// 4. 기타 연관 데이터 삭제 (필요시 추가)
-			// - 커뮤니티 글, 댓글 등은 CASCADE나 별도 처리 필요
+			// 4. 북마크(BOOKMARK) 삭제 - CASCADE로 처리
+			logger.info("북마크 삭제는 CASCADE로 처리됨");
 			
-			// 5. 최종적으로 회원 정보 삭제
+			// 5. 회원 정보 삭제
 			int result = memberDao.memberDeleteOne(memberId);
 			
-			logger.info("어드민 회원 탈퇴 처리 완료 - memberId: {}, result: {}", memberId, result);
+			if (result > 0) {
+				logger.info("회원 탈퇴 프로세스 완료 - memberId: {}", memberId);
+			} else {
+				logger.warn("회원 탈퇴 실패 - 해당 회원이 존재하지 않음 - memberId: {}", memberId);
+			}
+			
 			return result;
 			
 		} catch (Exception e) {
-			logger.error("어드민 회원 탈퇴 처리 중 오류 발생 - memberId: {}", memberId, e);
-			throw new RuntimeException("회원 탈퇴 처리 중 오류가 발생했습니다.", e);
+			logger.error("회원 탈퇴 처리 중 예외 발생 - memberId: {}", memberId, e);
+			throw e; // 트랜잭션 롤백을 위해 예외를 다시 던짐
 		}
 	}
 
-	@Override//관리자용
+	@Override
 	@Transactional
-	public int memberDeleteList(List<Integer> memberIdList) {
-		logger.info("어드민 회원 대량 탈퇴 처리 시작 - 대상 수: {}", memberIdList.size());
-		
-		int totalDeleted = 0;
-		for (Integer memberId : memberIdList) {
-			try {
-				int result = memberDeleteOne(memberId);
-				totalDeleted += result;
-			} catch (Exception e) {
-				logger.error("회원 ID {} 탈퇴 처리 실패", memberId, e);
-				// 개별 실패는 로그만 남기고 계속 진행
+	public int memberDeleteMulti(List<Integer> memberIds) {
+		try {
+			logger.info("회원 대량 탈퇴 프로세스 시작 - 총 {}명", memberIds.size());
+			
+			int totalDeleted = 0;
+			
+			for (Integer memberId : memberIds) {
+				try {
+					int result = memberDeleteOne(memberId);
+					totalDeleted += result;
+					logger.info("회원 탈퇴 완료 - memberId: {}, 누적 삭제: {}/{}", memberId, totalDeleted, memberIds.size());
+				} catch (Exception e) {
+					logger.error("회원 탈퇴 실패 - memberId: {}", memberId, e);
+					// 개별 실패 시에도 계속 진행
+				}
 			}
+			
+			logger.info("회원 대량 탈퇴 프로세스 완료 - 총 {}명 중 {}명 삭제", memberIds.size(), totalDeleted);
+			return totalDeleted;
+			
+		} catch (Exception e) {
+			logger.error("회원 대량 탈퇴 처리 중 예외 발생", e);
+			throw e;
 		}
-		
-		logger.info("어드민 회원 대량 탈퇴 처리 완료 - 처리된 수: {}/{}", totalDeleted, memberIdList.size());
-		return totalDeleted;
 	}
 
-	
+	@Override
+	public int memberSelectCount(SearchVo searchVo) {
+		return memberDao.memberSelectCount(searchVo);
+	}
 
 }
