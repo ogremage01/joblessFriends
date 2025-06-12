@@ -130,9 +130,20 @@ public class AdminMemberController {
 		logger.info("개인회원 탈퇴프로세스 진행-어드민");
 		System.out.println(memberId); // 디버깅 출력
 
-		int result = memberService.memberDeleteOne(memberId);
-
-		return ResponseEntity.ok(result); // 삭제 결과 반환
+		try {
+			int result = memberService.memberDeleteOne(memberId);
+			
+			if (result > 0) {
+				logger.info("개인회원 탈퇴 성공 - memberId: {}", memberId);
+				return ResponseEntity.ok(result);
+			} else {
+				logger.warn("개인회원 탈퇴 실패 - 해당 회원이 존재하지 않거나 이미 삭제됨 - memberId: {}", memberId);
+				return ResponseEntity.badRequest().body(0);
+			}
+		} catch (Exception e) {
+			logger.error("개인회원 탈퇴 처리 중 예외 발생 - memberId: {}", memberId, e);
+			return ResponseEntity.status(500).body(0);
+		}
 	}
 
 	//복수 삭제
@@ -141,11 +152,17 @@ public class AdminMemberController {
 		logger.info("개인회원 복수 탈퇴프로세스 진행-어드민");
 
 		for (Integer i : memberIdList) {
-			System.out.println("삭제할 기업 아이디: " + i); // 디버깅 출력
+			System.out.println("삭제할 회원 아이디: " + i); // 디버깅 출력
 		}
 
-		int result = memberService.memberDeleteList(memberIdList);
-
-		return ResponseEntity.ok(result); // 결과 반환
+		try {
+			int result = memberService.memberDeleteList(memberIdList);
+			
+			logger.info("개인회원 복수 탈퇴 완료 - 요청: {}명, 처리: {}명", memberIdList.size(), result);
+			return ResponseEntity.ok(result); // 실제로 처리된 수를 반환
+		} catch (Exception e) {
+			logger.error("개인회원 복수 탈퇴 처리 중 예외 발생", e);
+			return ResponseEntity.status(500).body(0);
+		}
 	}
 }
