@@ -451,6 +451,7 @@ function formatDateWithDay(dateString) {
     return `${month}/${day}(${weekDay})`;
 }
 
+$('.page-btn[data-page="1"]').addClass('active');
 $(document).on('click', '.page-btn', function () {
     const page = $(this).data('page');
     const params = getFilterParams();
