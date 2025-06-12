@@ -25,24 +25,43 @@ public class AdminMemberDaoImpl implements AdminMemberDao {
 	private SqlSession sqlSession;
 	private String namespace = "com.joblessfriend.jobfinder.admin.dao.AdminMemberDao.";
 
+	
+	
+
 	@Override
-	public List<MemberVo> memberSelectAll(SearchVo searchVo) {
-		return sqlSession.selectList(namespace + "memberSelectAll", searchVo);
+	public List<MemberVo> memberSelectList(SearchVo searchVo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace + "memberSelectList", searchVo);
 	}
 
 	@Override
-	public int memberSelectCount(SearchVo searchVo) {
-		return sqlSession.selectOne(namespace + "memberSelectCount", searchVo);
+	public int memberCount(SearchVo searchVo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + "memberCount", searchVo);
 	}
 
 	@Override
 	public MemberVo memberSelectOne(int memberId) {
+		// TODO Auto-generated method stub
 		return sqlSession.selectOne(namespace + "memberSelectOne", memberId);
 	}
 
 	@Override
+	public int memberUpdateOne(MemberVo existMemberVo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(namespace + "memberUpdateOne", existMemberVo);
+	}
+
+	@Override
 	public int memberDeleteOne(int memberId) {
+		// TODO Auto-generated method stub
 		return sqlSession.delete(namespace + "memberDeleteOne", memberId);
+	}
+
+	@Override
+	public int memberDeleteList(List<Integer> memberIdList) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(namespace + "memberDeleteList", memberIdList);
 	}
 
 }

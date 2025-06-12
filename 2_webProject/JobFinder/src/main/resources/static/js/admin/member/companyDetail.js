@@ -114,14 +114,8 @@ deleteBtn.addEventListener("click", function(e) {
 	};
 
 	// 사용자에게 확인 요청
-	const confirmed = confirm("강제탈퇴를 진행합니까?\n\n※ 주의: 해당 기업의 모든 채용공고, 지원자 데이터, 관련 파일 등이 함께 삭제됩니다.");
+	const confirmed = confirm("강제탈퇴를 진행합니까?");
 	if (confirmed) {
-		// 로딩 표시
-		const deleteButton = document.getElementById("delete");
-		const originalText = deleteButton.textContent;
-		deleteButton.textContent = "처리중...";
-		deleteButton.disabled = true;
-		
 		// DELETE 요청 전송
 		fetch(`/admin/member/company/${companyId}`, {
 			method: 'DELETE',
@@ -133,42 +127,21 @@ deleteBtn.addEventListener("click", function(e) {
 		})
 			.then(response => {
 				if (!response.ok) {
-					return response.text().then(text => {
-						throw new Error(`서버 오류 (${response.status}): ${text}`);
-					});
+					throw new Error("서버 오류: " + response.status);
 				}
 				return response.text();
 			})
 			.then(data => {
 				if (data === "1") {
-					alert("기업 정보가 성공적으로 삭제되었습니다.\n관련된 모든 채용공고와 데이터가 함께 삭제되었습니다.");
+					alert("회원 정보가 성공적으로 삭제되었습니다.");
 					location.href = "/admin/member/company";
 				} else {
-					alert("삭제 실패: 예상치 못한 응답입니다.");
-					// 버튼 복원
-					deleteButton.textContent = originalText;
-					deleteButton.disabled = false;
+					alert("삭제 실패");
 				}
 			})
 			.catch(error => {
+				alert("삭제 실패");
 				console.error("에러 발생:", error);
-				let errorMessage = "삭제 실패";
-				
-				if (error.message.includes("서버 오류")) {
-					errorMessage = "서버에서 오류가 발생했습니다. 관리자에게 문의하세요.";
-				} else if (error.message.includes("채용공고")) {
-					errorMessage = "기업의 채용공고 데이터 삭제 중 오류가 발생했습니다.";
-				} else if (error.message.includes("지원자")) {
-					errorMessage = "지원자 관리 데이터 삭제 중 오류가 발생했습니다.";
-				} else {
-					errorMessage = "기업 탈퇴 처리 중 오류가 발생했습니다: " + error.message;
-				}
-				
-				alert(errorMessage);
-				
-				// 버튼 복원
-				deleteButton.textContent = originalText;
-				deleteButton.disabled = false;
 			});
 	}
 });

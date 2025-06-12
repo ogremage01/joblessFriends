@@ -49,14 +49,4 @@ public interface ResumeApplyDao {
 	List<PortfolioVo> getPortfoliosByResumeId(int resumeId);
 
 	List<CertificateResumeVo> getCertificateByResumeId(int resumeId);
-	
-	// 복사된 이력서 삭제 관련 메서드들
-	List<ResumeVo> findResumeCopyByMemberId(int memberId);
-	void deleteResumeCopyById(int resumeId);
-	void deleteSchoolCopyByResumeId(int resumeId);
-	void deleteCareerCopyByResumeId(int resumeId);
-	void deleteEducationCopyByResumeId(int resumeId);
-	void deleteCertificateCopyByResumeId(int resumeId);
-	void deletePortfolioCopyByResumeId(int resumeId);
-	void deleteTagCopyByResumeId(int resumeId);
 }
