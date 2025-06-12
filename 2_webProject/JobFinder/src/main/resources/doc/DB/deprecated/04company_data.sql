@@ -1,20 +1,20 @@
-INSERT INTO COMPANY (COMPANY_ID, Email, Password, Company_name, BRN, Representative, tel, address) 
-VALUES (COMPANY_ID_SEQ.nextval, 'samsung@email.com', 'Passw0rd!1', '삼성전자', '124-81-12345', '김지훈', '02-3456-7890', '서울 강남구 테헤란로 123');
+INSERT INTO COMPANY (COMPANY_ID, Email, Password, Company_name, BRN, Representative, tel, address, CREATE_AT) 
+VALUES (COMPANY_ID_SEQ.nextval, 'samsung@email.com', 'Passw0rd!1', '삼성전자', '124-81-12345', '김지훈', '02-3456-7890', '서울 강남구 테헤란로 123',  TO_DATE('2025-05-30', 'YYYY-MM-DD'));
 
-INSERT INTO COMPANY (COMPANY_ID, Email, Password, Company_name, BRN, Representative, tel, address) 
-VALUES (COMPANY_ID_SEQ.nextval, 'skhynix@email.com', 'Passw0rd!2', 'SK하이닉스', '301-87-65432', '박서연', '031-8765-4321', '경기 성남시 판교로 456');
+INSERT INTO COMPANY (COMPANY_ID, Email, Password, Company_name, BRN, Representative, tel, address, CREATE_AT)
+VALUES (COMPANY_ID_SEQ.nextval, 'skhynix@email.com', 'Passw0rd!2', 'SK하이닉스', '301-87-65432', '박서연', '031-8765-4321', '경기 성남시 판교로 456',  TO_DATE('2025-05-29', 'YYYY-MM-DD'));
 
-INSERT INTO COMPANY (COMPANY_ID, Email, Password, Company_name, BRN, Representative, tel, address) 
-VALUES (COMPANY_ID_SEQ.nextval, 'lgenergy@email.com', 'Passw0rd!3', 'LG에너지솔루션', '110-81-78901', '이수민', '02-9876-5432', '서울 영등포구 여의대로 10');
+INSERT INTO COMPANY (COMPANY_ID, Email, Password, Company_name, BRN, Representative, tel, addres, CREATE_AT) 
+VALUES (COMPANY_ID_SEQ.nextval, 'lgenergy@email.com', 'Passw0rd!3', 'LG에너지솔루션', '110-81-78901', '이수민', '02-9876-5432', '서울 영등포구 여의대로 10',  TO_DATE('2025-05-1', 'YYYY-MM-DD'));
 
-INSERT INTO COMPANY (COMPANY_ID, Email, Password, Company_name, BRN, Representative, tel, address) 
-VALUES (COMPANY_ID_SEQ.nextval, 'samsungbio@email.com', 'Passw0rd!4', '삼성바이오로직스', '123-45-67890', '최민준', '032-7654-3210', '인천 연수구 송도동 5-7');
+INSERT INTO COMPANY (COMPANY_ID, Email, Password, Company_name, BRN, Representative, tel, address, CREATE_AT) ) 
+VALUES (COMPANY_ID_SEQ.nextval, 'samsungbio@email.com', 'Passw0rd!4', '삼성바이오로직스', '123-45-67890', '최민준', '032-7654-3210', '인천 연수구 송도동 5-7',  TO_DATE('2025-05-11', 'YYYY-MM-DD'));
 
-INSERT INTO COMPANY (COMPANY_ID, Email, Password, Company_name, BRN, Representative, tel, address) 
-VALUES (COMPANY_ID_SEQ.nextval, 'samsungsdi@email.com', 'Passw0rd!5', '삼성SDI', '220-85-43210', '정예은', '031-6789-1234', '경기 수원시 영통구 삼성로 150');
+INSERT INTO COMPANY (COMPANY_ID, Email, Password, Company_name, BRN, Representative, tel, address, CREATE_AT)
+VALUES (COMPANY_ID_SEQ.nextval, 'samsungsdi@email.com', 'Passw0rd!5', '삼성SDI', '220-85-43210', '정예은', '031-6789-1234', '경기 수원시 영통구 삼성로 150',  TO_DATE('2025-05-05', 'YYYY-MM-DD'));
 
-INSERT INTO COMPANY (COMPANY_ID, Email, Password, Company_name, BRN, Representative, tel, address) 
-VALUES (COMPANY_ID_SEQ.nextval, 'hyundai@email.com', 'Passw0rd!6', '현대자동차', '102-81-56789', '한도윤', '02-7654-9870', '서울 서초구 헌릉로 12');
+INSERT INTO COMPANY (COMPANY_ID, Email, Password, Company_name, BRN, Representative, tel, address, CREATE_AT)
+VALUES (COMPANY_ID_SEQ.nextval, 'hyundai@email.com', 'Passw0rd!6', '현대자동차', '102-81-56789', '한도윤', '02-7654-9870', '서울 서초구 헌릉로 12',  TO_DATE('2025-05-08', 'YYYY-MM-DD'));
 
 INSERT INTO COMPANY (COMPANY_ID, Email, Password, Company_name, BRN, Representative, tel, address) 
 VALUES (COMPANY_ID_SEQ.nextval, 'kia@email.com', 'Passw0rd!7', '기아', '107-81-23456', '서지호', '02-3456-7891', '서울 강남구 테헤란로 25');

@@ -1,7 +1,7 @@
-INSERT INTO member (member_ID, Email, Password, NICKNAME, Resume_Max, CREATE_AT, MODIFIED_AT) VALUES (member_ID_SEQ.nextval, 'user1@example.com', '1111', '이력서마스터', 5, SYSDATE, SYSDATE);
-INSERT INTO member (member_ID, Email, Password, NICKNAME, Resume_Max, CREATE_AT, MODIFIED_AT) VALUES (member_ID_SEQ.nextval, 'random2@testmail.com', '1111', '잡고래', 5, SYSDATE, SYSDATE);
-INSERT INTO member (member_ID, Email, Password, NICKNAME, Resume_Max, CREATE_AT, MODIFIED_AT) VALUES (member_ID_SEQ.nextval, 'data3@demo.net', '1111', '연봉탐색기', 5, SYSDATE, SYSDATE);
-INSERT INTO member (member_ID, Email, Password, NICKNAME, Resume_Max, CREATE_AT, MODIFIED_AT) VALUES (member_ID_SEQ.nextval, 'fake4@sample.org', '1111', '커리어친구', 5, SYSDATE, SYSDATE);
+INSERT INTO member (member_ID, Email, Password, NICKNAME, Resume_Max, CREATE_AT, MODIFIED_AT) VALUES (member_ID_SEQ.nextval, 'user1@example.com', '1111', '이력서마스터', 5, TO_DATE('2025-05-01', 'YYYY-MM-DD', SYSDATE), SYSDATE);
+INSERT INTO member (member_ID, Email, Password, NICKNAME, Resume_Max, CREATE_AT, MODIFIED_AT) VALUES (member_ID_SEQ.nextval, 'random2@testmail.com', '1111', '잡고래', 5, TO_DATE('2025-05-04', 'YYYY-MM-DD', SYSDATE), SYSDATE);
+INSERT INTO member (member_ID, Email, Password, NICKNAME, Resume_Max, CREATE_AT, MODIFIED_AT) VALUES (member_ID_SEQ.nextval, 'data3@demo.net', '1111', '연봉탐색기', 5, TO_DATE('2025-05-11', 'YYYY-MM-DD', SYSDATE), SYSDATE);
+INSERT INTO member (member_ID, Email, Password, NICKNAME, Resume_Max, CREATE_AT, MODIFIED_AT) VALUES (member_ID_SEQ.nextval, 'fake4@sample.org', '1111', '커리어친구', 5, TO_DATE('2025-05-28', 'YYYY-MM-DD', SYSDATE), SYSDATE);
 INSERT INTO member (member_ID, Email, Password, NICKNAME, Resume_Max, CREATE_AT, MODIFIED_AT) VALUES (member_ID_SEQ.nextval, 'dummy5@email.com', '1111', '잡줍줍', 5, SYSDATE, SYSDATE);
 INSERT INTO member (member_ID, Email, Password, NICKNAME, Resume_Max, CREATE_AT, MODIFIED_AT) VALUES (member_ID_SEQ.nextval, 'info6@mockdata.net', '1111', '일단지원함', 5, SYSDATE, SYSDATE);
 INSERT INTO member (member_ID, Email, Password, NICKNAME, Resume_Max, CREATE_AT, MODIFIED_AT) VALUES (member_ID_SEQ.nextval, 'random7@trymail.com', '1111', '커리어상담소', 5, SYSDATE, SYSDATE);
