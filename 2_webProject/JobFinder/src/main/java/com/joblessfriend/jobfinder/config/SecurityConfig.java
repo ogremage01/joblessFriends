@@ -59,6 +59,16 @@ public class SecurityConfig {
 						response.sendRedirect("/");
 					})
 				) // oauth2Login end
+				.logout(logout -> logout
+						.logoutUrl("/auth/googleLogout")
+						.logoutSuccessHandler((request, response, authentication) -> {
+							request.getSession().invalidate();
+							SecurityContextHolder.clearContext();
+							
+							RequestDispatcher dispatcher = request.getRequestDispatcher("/auth/logoutView");
+							dispatcher.forward(request, response);
+						})
+					) // logout 종료
 				
 				.build();
 	} // securityFilterChain 종료

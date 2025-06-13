@@ -185,6 +185,14 @@ public class AuthController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/googleLogout")
+	public String googleLogout(HttpSession session, Model model) {
+		logger.info(logTitleMsg);
+		logger.info("==googleLogout==");
+		return "auth/logoutView";
+	}
+	
+	
 	// 계정찾기 뷰
 	@GetMapping("/find")
 	public String find(HttpSession session) {
