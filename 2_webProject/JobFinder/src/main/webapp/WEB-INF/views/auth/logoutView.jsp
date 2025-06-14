@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>로그아웃</title>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=error" />
 <link rel="stylesheet" href="/css/common/common.css">
@@ -16,7 +16,7 @@
 
 	function logoutAndRedirect() {
 		var logoutURL = "https://accounts.google.com/Logout";
-		var redirectURL = "/auth/login";
+		var redirectURL = "/";
 
 		// 구글 로그아웃 페이지를 새 창에서 열기
         logoutWin = window.open(logoutURL, "_blank", "width=500,height=500,left=500,top=300");
@@ -33,18 +33,12 @@
 			
 			document.getElementById("container").innerHTML = htmlStr;
             return;
-        }else{
-        	var htmlStr = '';
-        	
-        	htmlStr = '<button onclick="closePopup()">로그인 페이지 이동</button>';
-        	
-        	document.getElementById("container").innerHTML = htmlStr;
         }
 
         // 일정 시간 후 새 창을 닫고 리디렉션
         setTimeout(function() {
             logoutWin.close(); // 새 창을 닫음
-            window.location.href = redirectURL; // 로그인 페이지로 이동
+            window.location.href = redirectURL; // 메인 페이지로 이동
         }, 5000); // 5초 후 창 닫기
 		
 	}
@@ -53,7 +47,7 @@
 		if (logoutWin != null) {
 			logoutWin.close(); // 수동으로 팝업 닫기
 		}
-		window.location.href = "/auth/login"; // 로그인 페이지로 이동
+		window.location.href = redirectURL; // 메인 페이지로 이동
 	}
 
 	window.onload = function() {
@@ -72,7 +66,10 @@
 			</div>
 			
 			<span class="material-symbols-outlined material-symbols-rounded">error</span>
-			<p class="successinfo">로그아웃 중입니다. 잠시만 기다려주세요.</p>
+			<br>
+			<span class="successinfo">로그아웃 중입니다.</span>
+			<br>
+			<span class="successinfo">잠시만 기다려주세요.</span>
 			
 		</div>
 	</div>

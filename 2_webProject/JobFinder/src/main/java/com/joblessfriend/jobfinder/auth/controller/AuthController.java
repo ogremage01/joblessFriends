@@ -180,18 +180,19 @@ public class AuthController {
 		logger.info(logTitleMsg);
 		logger.info("==logout==");
 		
-		session.invalidate();
+		// 구글 로그인이라면 구글까지 로그아웃
+//		String userType = (String) session.getAttribute("userType");
+//		if(userType.equals("member")) {
+//			MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
+//			if(memberVo.getProvider().equals("google")) {
+//				session.invalidate();
+//				return "auth/logoutView";
+//			}
+//		}
 		
-		return "redirect:/";
+		session.invalidate();
+        return "redirect:/";
 	}
-	
-	@GetMapping("/googleLogout")
-	public String googleLogout(HttpSession session, Model model) {
-		logger.info(logTitleMsg);
-		logger.info("==googleLogout==");
-		return "auth/logoutView";
-	}
-	
 	
 	// 계정찾기 뷰
 	@GetMapping("/find")
