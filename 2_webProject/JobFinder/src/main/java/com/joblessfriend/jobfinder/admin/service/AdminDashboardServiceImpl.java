@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.joblessfriend.jobfinder.admin.dao.AdminDashboardDao;
+import com.joblessfriend.jobfinder.util.ChartVo;
 
 @Service
 public class AdminDashboardServiceImpl implements AdminDashboardService {
@@ -15,52 +16,44 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
     private AdminDashboardDao adminDashboardDao;
     
     @Override
-    public Map<String, Object> getDashboardStatistics() {
-        Map<String, Object> statistics = new HashMap<>();
+    public Map<String, ChartVo> getDashboardStatistics() {
+        Map<String, ChartVo> statistics = new HashMap<>();
         
-        statistics.put("memberCount", getTotalMemberCount());
-        statistics.put("memberMonthlyIncrease", getMonthlyMemberIncrease());
-        statistics.put("companyCount", getTotalCompanyCount());
-        statistics.put("companyMonthlyIncrease", getMonthlyCompanyIncrease());
-        statistics.put("recruitmentCount", getActiveRecruitmentCount());
-        statistics.put("communityCount", getTotalCommunityCount());
-        statistics.put("communityWeeklyIncrease", getWeeklyCommunityIncrease());
+        ChartVo memberIncrease = getMonthlyMemberIncrease(); 
+        System.out.println("확인 전월: " + memberIncrease.getPreviousResult());
+        System.out.println("확인 당월: " + memberIncrease.getCurrentResult());
+        
+        statistics.put("memberIncrease", getMonthlyMemberIncrease());
+        statistics.put("companyIncrease", getMonthlyCompanyIncrease());
+        statistics.put("recruitmentRegistCount", getMonthlyRecruitmentRegistCount());
+        statistics.put("communityIncrease", getMonthlyCommunityIncrease());
+        statistics.put("applyCount", getMonthlyApplyCount());
         
         return statistics;
     }
-    
+
     @Override
-    public int getTotalMemberCount() {
-        return adminDashboardDao.getTotalMemberCount();
-    }
-    
-    @Override
-    public int getMonthlyMemberIncrease() {
+    public ChartVo getMonthlyMemberIncrease() {
         return adminDashboardDao.getMonthlyMemberIncrease();
     }
     
     @Override
-    public int getTotalCompanyCount() {
-        return adminDashboardDao.getTotalCompanyCount();
-    }
-    
-    @Override
-    public int getMonthlyCompanyIncrease() {
+    public ChartVo getMonthlyCompanyIncrease() {
         return adminDashboardDao.getMonthlyCompanyIncrease();
     }
     
     @Override
-    public int getActiveRecruitmentCount() {
-        return adminDashboardDao.getActiveRecruitmentCount();
+    public ChartVo getMonthlyRecruitmentRegistCount() {
+        return adminDashboardDao.getMonthlyRecruitmentRegistCount();
     }
     
     @Override
-    public int getTotalCommunityCount() {
-        return adminDashboardDao.getTotalCommunityCount();
+    public ChartVo getMonthlyCommunityIncrease() {
+        return adminDashboardDao.getMonthlyCommunityIncrease();
     }
     
     @Override
-    public int getWeeklyCommunityIncrease() {
-        return adminDashboardDao.getWeeklyCommunityIncrease();
+    public ChartVo getMonthlyApplyCount() {
+        return adminDashboardDao.getMonthlyApplyCount();
     }
 } 

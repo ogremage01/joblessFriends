@@ -668,7 +668,7 @@ body {
 .admin-main-stat-card h3 {
 	color: #6D707B;
 	margin: 0 0 15px 0;
-	font-size: 16px;
+	font-size: 18px;
 	font-weight: 600;
 }
 
@@ -740,7 +740,10 @@ body {
 }
 
 
-
+/* ========== chart ========== */
+.canvasWrap {
+	height: 470px;
+}
 
 
 

@@ -4,14 +4,14 @@
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 2, 'SK하이닉스 채용공고',
              'SK하이닉스에서 함께 성장할 인재를 채용합니다. 다양한 프로젝트와 협업을 통해 역량을 키울 수 있는 최고의 기회입니다.',
              '3325', '면접 후 결정', 81, 6,
              31, '/img/SK.jpg', '5년이상', '대학원 박사졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-21', 'YYYY-MM-DD'),
-             0, 20, 0, SYSDATE
+             0, 20, 0, SYSDATE, TO_DATE('2025-05-21', 'YYYY-MM-DD')
          );
 
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
@@ -29,14 +29,14 @@ COMMIT;
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 2, '미래 반도체 설계 전문가 모집',
              'SK하이닉스에서는 미래 반도체 산업을 선도할 열정적이고 창의적인 인재를 모집합니다. 최첨단 기술력과 협업 중심의 업무 환경에서 경력을 쌓을 수 있습니다. 글로벌 경쟁력을 갖춘 프로젝트에 참여할 기회를 제공합니다.',
              '4100', '주5일(월~금)', 257, 17,
              87, '/img/SK.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-21', 'YYYY-MM-DD'),
-             0, 20, 0, SYSDATE
+             0, 20, 0, SYSDATE,  TO_DATE('2025-05-01', 'YYYY-MM-DD')
          );
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '주4일근무');
@@ -53,14 +53,14 @@ COMMIT;
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 2, 'AI 반도체 연구원 채용',
              'SK하이닉스의 차세대 연구소에서 AI 기반 반도체를 연구할 인재를 찾습니다. 딥러닝 알고리즘을 하드웨어에 효과적으로 연동하는 기술을 개발하며, 차세대 메모리와 시스템 반도체 융합 기술을 선도할 기회를 가집니다. 도전정신과 기술에 대한 깊은 이해를 가진 분들의 많은 지원 바랍니다.',
              '3900', '주5일(월~금)', 81, 6,
              56, '/img/SK.jpg', '3~5년', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-29', 'YYYY-MM-DD'),
-             0, 30, 0, SYSDATE
+             0, 30, 0, SYSDATE,  TO_DATE('2025-05-11', 'YYYY-MM-DD')
          );
 
 -- 복지 연계
@@ -87,14 +87,14 @@ COMMIT;
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 3, '전지 소재 개발 연구원 채용',
              'LG에너지솔루션에서 전고체 배터리 및 차세대 소재 연구를 위한 인재를 모집합니다. 소재 분석, 전해질 개발, 셀 단위의 실험 등 다양한 과제를 수행하게 됩니다. 글로벌 전기차 시장을 선도할 수 있는 기회입니다.',
              '3783', '면접 후 결정', 248, 17,
              48, '/img/LG_Solution.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-23', 'YYYY-MM-DD'),
-             0, 30, 0, SYSDATE
+             0, 30, 0, SYSDATE,  TO_DATE('2025-05-30', 'YYYY-MM-DD')
          );
 
 -- 복지
@@ -113,14 +113,14 @@ COMMIT;
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 3, '생산 기술 엔지니어 채용',
              'LG에너지솔루션의 오창/평택 사업장에서 생산 라인 개선, 공정 최적화 및 신규 장비 셋업을 위한 기술 엔지니어를 채용합니다. 배터리 셀 제조 경험이 있거나 자동화 설비 경험이 있는 분을 환영합니다.',
              '4021', '유연근무제', 191, 14,
              53, '/img/LG_Solution.jpg', '3~5년', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
-             0, 50, 0, SYSDATE
+             0, 50, 0, SYSDATE,  TO_DATE('2025-05-17', 'YYYY-MM-DD')
          );
 
 -- 복지
@@ -139,14 +139,14 @@ COMMIT;
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 3, '배터리 품질관리 전문가 채용',
              'LG에너지솔루션에서 고객사 대응 품질관리(QA) 전문가를 찾습니다. 주요 업무는 고객 클레임 대응, 품질 기준 수립, 공정 분석 및 개선 활동 등입니다. 품질/신뢰성 관련 경력이 있는 분을 우대합니다.',
              '3604', '주 5일(월~금)', 138, 10,
              67, '/img/LG_Solution.jpg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-28', 'YYYY-MM-DD'),
-             0, 20, 0, SYSDATE
+             0, 20, 0, SYSDATE,  TO_DATE('2025-05-18', 'YYYY-MM-DD')
          );
 
 -- 복지
@@ -166,14 +166,14 @@ COMMIT;
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 4, '품질관리(QC) 담당자 채용',
              '삼성바이오로직스 품질관리팀에서 바이오 의약품의 품질 검사 및 분석을 담당할 인재를 모집합니다. GMP 기준에 따라 정확하고 정밀한 품질 관리를 수행할 수 있는 분을 기다립니다.',
              '4500', '주 5일(월~금)', 138, 10,
              27, '/img/Samsung_Biologic.jpeg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
-             0, 15, 0, SYSDATE
+             0, 15, 0, SYSDATE,  TO_DATE('2025-05-09', 'YYYY-MM-DD')
          );
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
@@ -185,14 +185,14 @@ INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 377, 0); -- 품질 테
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 4, '바이오 공정개발 연구원 모집',
              '바이오의약품의 공정 개발을 담당할 연구원을 모집합니다. 기술적 기반을 바탕으로 최적의 생산 조건을 확립하고, 효율적인 제조 공정을 설계할 수 있는 분을 기다립니다.',
              '4700', '주 5일(월~금)', 250, 17,
              33, '/img/Samsung_Biologic.jpeg', '3~5년', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-07', 'YYYY-MM-DD'),
-             0, 20, 0, SYSDATE
+             0, 20, 0, SYSDATE,  TO_DATE('2025-05-06', 'YYYY-MM-DD')
          );
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자율복장');
@@ -204,14 +204,14 @@ INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 696, 0); -- 연구개�
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 4, 'GMP 문서관리 및 QA 담당자 채용',
              '품질보증(QA) 부서에서 GMP 기준에 따라 제조기록, 시험기록, 변경관리 등 품질 관련 문서들을 관리하고 검토하는 업무를 수행합니다. 꼼꼼하고 책임감 있는 인재를 찾습니다.',
              '4300', '주 5일(월~금)', 65, 5,
              25, '/img/Samsung_Biologic.jpeg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-03', 'YYYY-MM-DD'),
-             0, 10, 0, SYSDATE
+             0, 10, 0, SYSDATE,  TO_DATE('2025-05-20', 'YYYY-MM-DD')
          );
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '식사제공');
@@ -226,14 +226,14 @@ COMMIT;
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 5, '배터리 셀 개발 연구원 모집',
              '삼성SDI에서 배터리 셀의 성능 향상을 위한 신소재 및 구조 설계를 주도할 연구원을 모집합니다. 전기차, ESS 등 다양한 분야에 적용될 기술을 함께 개발할 수 있는 분을 기다립니다.',
              '4200', '주 5일(월~금)', 248, 17,
              41, '/img/Samsung_SDI.png', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-04', 'YYYY-MM-DD'),
-             0, 20, 0, SYSDATE
+             0, 20, 0, SYSDATE,  TO_DATE('2025-05-02', 'YYYY-MM-DD')
          );
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
@@ -247,14 +247,14 @@ INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 681, 0); -- 품질 테
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 5, '2차전지 생산 공정 엔지니어 채용',
              '삼성SDI의 제조 현장에서 2차전지 생산라인의 공정 개선 및 효율화 작업을 담당할 엔지니어를 모집합니다. 품질 안정성과 수율 향상에 기여할 수 있는 경력자를 우대합니다.',
              '4600', '주 5일(월~금)', 247, 17,
              29, '/img/Samsung_SDI.png', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-10', 'YYYY-MM-DD'),
-             0, 15, 0, SYSDATE
+             0, 15, 0, SYSDATE,  TO_DATE('2025-05-09', 'YYYY-MM-DD')
          );
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '식사제공');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자율복장');
@@ -268,14 +268,14 @@ INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 681, 0); -- 시제품 
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 5, '환경안전(EHS) 관리 담당자 채용',
              '삼성SDI의 EHS 부서에서 사업장의 환경·안전 규정 준수 및 교육을 담당할 인재를 찾습니다. 안전관리 자격증 보유자 및 환경 관련 법규 지식이 풍부한 분을 환영합니다.',
              '4000', '주 5일(월~금)', 205, 15,
              34, '/img/Samsung_SDI.png', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-07-02', 'YYYY-MM-DD'),
-             0, 25, 0, SYSDATE
+             0, 25, 0, SYSDATE,  TO_DATE('2025-05-12', 'YYYY-MM-DD')
          );
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '기숙사 지원');
@@ -292,14 +292,14 @@ COMMIT;
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 6, '스마트폰 SoC 설계 엔지니어 채용',
              '삼성전자 모바일 부문에서는 차세대 갤럭시 스마트폰의 두뇌가 될 SoC(System on Chip) 설계 전문가를 모집합니다. RTL 설계, 검증 및 저전력 설계에 대한 풍부한 이해도를 가진 분을 기다립니다.',
              '4800', '주 5일(월~금)', 84, 6,
              39, '/img/Samsung_Securities.jpg', '5년이상', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
-             0, 10, 0, SYSDATE
+             0, 10, 0, SYSDATE,  TO_DATE('2025-05-04', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내식당');
@@ -314,14 +314,14 @@ INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 198, 0); -- 데이터 
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 6, '스마트 팩토리 구축 프로젝트 매니저',
              '글로벌 제조 경쟁력 강화를 위한 스마트 팩토리 프로젝트를 리딩할 PM을 찾습니다. 설비 연동, MES/ERP 시스템 통합 및 자동화 설계 경험이 있으신 분의 지원을 환영합니다.',
              '5500', '주 5일(월~금)', 191, 14,
              58, '/img/Samsung_Securities.jpg', '5년이상', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-10', 'YYYY-MM-DD'),
-             0, 5, 0, SYSDATE
+             0, 5, 0, SYSDATE,  TO_DATE('2025-05-18', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
@@ -337,14 +337,14 @@ INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 574, 0); -- 자동화 
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 6, '글로벌 마케팅 전략 담당자 (영어 가능자 우대)',
              '삼성전자의 글로벌 브랜드 가치를 더욱 향상시키기 위한 마케팅 전략 수립 및 실행을 함께할 전문가를 모집합니다. 다국적 캠페인 경험 및 영어 커뮤니케이션 능력을 갖춘 인재를 환영합니다.',
              '4300', '주 5일(월~금)', 19, 2,
              48, '/img/Samsung_Securities.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-08', 'YYYY-MM-DD'),
-             0, 25, 0, SYSDATE
+             0, 25, 0, SYSDATE,  TO_DATE('2025-05-19', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자율출퇴근제');
@@ -363,14 +363,14 @@ COMMIT;
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 7, 'EV 플랫폼 개발 엔지니어 채용',
              '기아의 전동화 전략을 실현할 EV 플랫폼 개발 엔지니어를 채용합니다. 차세대 플랫폼 구조 설계, 배터리 모듈 연동, EV 제어 알고리즘 설계 경험 보유자를 우대합니다.',
              '4600', '주 5일(월~금)', 194, 14,
              52, '/img/Kia.jpg', '5년이상', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-10', 'YYYY-MM-DD'),
-             0, 15, 0, SYSDATE
+             0, 15, 0, SYSDATE,  TO_DATE('2025-05-17', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내식당');
@@ -386,14 +386,14 @@ INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 583, 0); -- CAD
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 7, '모빌리티 서비스 기획 및 운영 담당자',
              '기아는 단순 자동차 제조사를 넘어 모빌리티 플랫폼 기업으로 도약 중입니다. 차량 공유, 정기 구독, 자율주행 기반 서비스 기획 경험이 있는 분을 기다립니다.',
              '4200', '주 5일(월~금)', 11, 1,
              41, '/img/Kia.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-05', 'YYYY-MM-DD'),
-             0, 25, 0, SYSDATE
+             0, 25, 0, SYSDATE,  TO_DATE('2025-05-15', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '재택근무');
@@ -409,14 +409,14 @@ INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 20, 0); -- 사용자 �
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 7, '미래차 UX 디자이너',
              '미래형 차량의 내부 사용자 경험을 설계할 UX 디자이너를 채용합니다. HMI 설계 경험과 인터페이스 트렌드에 대한 높은 이해를 갖춘 디자이너 분들의 많은 지원 바랍니다.',
              '3900', '주 5일(월~금)', 93, 7,
              37, '/img/Kia.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-01', 'YYYY-MM-DD'),
-             0, 20, 0, SYSDATE
+             0, 20, 0, SYSDATE,  TO_DATE('2025-05-19', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
@@ -433,14 +433,14 @@ COMMIT;
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 8, '검색 알고리즘 엔지니어 채용',
              '네이버의 검색 품질을 높이기 위해 대규모 데이터 기반 알고리즘을 설계하고 개선할 수 있는 엔지니어를 찾습니다. 정보 검색(IR), 딥러닝, 강화학습 기반 추천시스템 경험자를 우대합니다.',
              '5500', '주 5일(월~금)', 81, 6,
              73, '/img/Naver.png', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-15', 'YYYY-MM-DD'),
-             0, 15, 0, SYSDATE
+             0, 15, 0, SYSDATE,  TO_DATE('2025-05-20', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '유연근무제');
@@ -455,14 +455,14 @@ INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 182, 1); -- 추천 시
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 8, '프론트엔드 개발자 (Vue.js) 채용',
              '네이버 웹서비스를 위한 프론트엔드 개발을 담당합니다. 사용자 중심의 UI/UX 구현과 퍼포먼스 최적화에 관심 있는 개발자를 모집합니다. Vue, TypeScript 경험자 환영합니다.',
              '4800', '주 5일(월~금)', 85, 6,
              58, '/img/Naver.png', '1~3년', '대학 졸업(2,3년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-10', 'YYYY-MM-DD'),
-             0, 20, 0, SYSDATE
+             0, 20, 0, SYSDATE,  TO_DATE('2025-05-10', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
@@ -478,14 +478,14 @@ INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 220, 0); -- 웹표준
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 8, '보안 인프라 엔지니어 채용',
              '전사 보안 시스템 인프라를 구축하고 운영할 엔지니어를 찾습니다. 방화벽, IDS/IPS, VPN, 클라우드 보안 아키텍처에 대한 실무 경험이 있는 전문가를 모집합니다.',
              '5300', '주 5일(월~금)', 82, 6,
              42, '/img/Naver.png', '5년이상', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-20', 'YYYY-MM-DD'),
-             0, 10, 0, SYSDATE
+             0, 10, 0, SYSDATE,  TO_DATE('2025-05-08', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '사내식당');
@@ -504,14 +504,14 @@ COMMIT;
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 9, '배터리 소재 연구원 채용',
              'LG화학 첨단소재연구소에서 차세대 배터리 소재를 개발할 연구원을 모집합니다. 고분자, 전해질, 양극재/음극재 연구 경험을 보유한 석박사급 인재를 우대합니다.',
              '6000', '주 5일(월~금)', 247, 17,
              34, '/img/LG_Chemical.jpg', '신입', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-12', 'YYYY-MM-DD'),
-             0, 10, 0, SYSDATE
+             0, 10, 0, SYSDATE,  TO_DATE('2025-05-01', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자기계발비');
@@ -527,14 +527,14 @@ INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 680, 0); -- 실험 설
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 9, '생산 품질 엔지니어 채용',
              'LG화학 오창공장에서 생산 공정 품질관리 및 공정 개선 업무를 수행할 품질 엔지니어를 모집합니다. 제조업 품질관리, ISO, 공정개선 경험을 보유한 인재를 찾습니다.',
              '4700', '주 5일(월~금)', 191, 15,
              41, '/img/LG_Chemical.jpg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-15', 'YYYY-MM-DD'),
-             0, 12, 0, SYSDATE
+             0, 12, 0, SYSDATE,  TO_DATE('2025-05-07', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
@@ -550,14 +550,14 @@ INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 608, 0); -- 시제품 
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 9, '환경안전(EHS) 담당자 채용',
              'LG화학의 환경안전팀에서 공장 내 EHS 제도 운영, 법규 대응, 유해물질 관리 및 안전교육 기획 업무를 수행할 직원을 채용합니다. 산업안전, 화학안전, ISO 인증 관련 경험자 우대.',
              '5300', '주 5일(월~금)', 197, 14,
              53, '/img/LG_Chemical.jpg', '3~5년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-25', 'YYYY-MM-DD'),
-             0, 8, 0, SYSDATE
+             0, 8, 0, SYSDATE,  TO_DATE('2025-05-07', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '유연근무제');
@@ -573,14 +573,14 @@ COMMIT;
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 10, '백엔드 서버 개발자 채용',
              '카카오의 다양한 플랫폼(톡, 페이 등)에서 고성능 서버 개발 및 MSA 아키텍처 구현을 담당할 백엔드 개발자를 찾습니다. 대용량 트래픽 처리 및 Spring Framework 경험자를 우대합니다.',
              '5500', '주 5일(월~금)', 81, 6,
              40, '/img/Kakao.jpg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-28', 'YYYY-MM-DD'),
-             0, 15, 0, SYSDATE
+             0, 15, 0, SYSDATE,  TO_DATE('2025-05-11', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '유연근무제');
@@ -595,14 +595,14 @@ INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 181, 0);
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 10, 'UX/UI 디자이너 채용',
              '카카오 서비스의 사용자 경험을 혁신할 UX/UI 디자이너를 모집합니다. Sketch, Figma, 사용자 플로우 설계 경험이 있는 인재를 우대합니다.',
              '4700', '주 5일(월~금)', 92, 7,
              28, '/img/Kakao.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-18', 'YYYY-MM-DD'),
-             0, 8, 0, SYSDATE
+             0, 8, 0, SYSDATE,  TO_DATE('2025-05-28', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
@@ -616,14 +616,14 @@ INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 251, 0);
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 10, '데이터 분석가 채용',
              '카카오의 사용자 데이터를 기반으로 한 인사이트 도출, A/B 테스트 설계 및 리포팅을 담당할 데이터 분석가를 채용합니다. SQL, Python, 통계 모델링 경험자 우대.',
              '5100', '주 5일(월~금)', 79, 6,
              51, '/img/Kakao.jpg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-30', 'YYYY-MM-DD'),
-             0, 10, 0, SYSDATE
+             0, 10, 0, SYSDATE,  TO_DATE('2025-05-14', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
@@ -640,14 +640,14 @@ COMMIT;
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 11, '생산설비 엔지니어 채용',
              'POSCO홀딩스 광양제철소에서 철강 생산설비 유지보수 및 최적화를 담당할 엔지니어를 찾습니다. 열정과 전문성을 겸비한 인재의 많은 지원 바랍니다.',
              '4200', '주 5일(월~금)', 152, 15,
              27, '/img/POSCO_Holdings.jpg', '신입', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-15', 'YYYY-MM-DD'),
-             0, 20, 0, SYSDATE
+             0, 20, 0, SYSDATE,  TO_DATE('2025-05-19', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '중식제공');
@@ -661,14 +661,14 @@ INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 607, 0);
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 11, '금속 소재 연구원 채용',
              '포스코 기술연구원에서 차세대 금속 소재의 강도 및 내식성 향상 연구를 수행할 연구원을 채용합니다. 재료공학 석사 이상, 실험설계 및 분석기기 사용 능력 필수입니다.',
              '5000', '주 5일(월~금)', 248, 17,
              35, '/img/POSCO_Holdings.jpg', '3~5년', '대학원 석사졸업', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-31', 'YYYY-MM-DD'),
-             0, 10, 0, SYSDATE
+             0, 10, 0, SYSDATE,  TO_DATE('2025-05-20', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '건강검진');
@@ -683,14 +683,14 @@ INSERT INTO JOB_POST_TAG VALUES (JOB_POST_ID_SEQ.CURRVAL, 711, 0);
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 11, 'ESG 전략기획 담당 채용',
              'POSCO홀딩스의 지속가능경영팀에서 ESG 전략 수립, 리포팅, 대외 커뮤니케이션 업무를 수행할 인재를 모집합니다. 글로벌 ESG 트렌드 및 공시 기준 이해도가 높으신 분을 우대합니다.',
              '4800', '주 5일(월~금)', 2, 1,
              49, '/img/POSCO_Holdings.jpg', '1~3년', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-28', 'YYYY-MM-DD'), TO_DATE('2025-07-30', 'YYYY-MM-DD'),
-             0, 12, 0, SYSDATE
+             0, 12, 0, SYSDATE,  TO_DATE('2025-05-30', 'YYYY-MM-DD')
          );
 -- 복지
 INSERT INTO JOB_POST_WELFARE VALUES (SEQ_JOB_WELFARE_ID.NEXTVAL, JOB_POST_ID_SEQ.CURRVAL, '자율복장');
@@ -707,7 +707,7 @@ COMMIT;
 INSERT INTO JOB_POST (
     JOB_POST_ID, COMPANY_ID, TITLE, CONTENT, SALARY, WORK_HOURS, JOB_ID, JOB_GROUP_ID,
     VIEWS, JOB_IMG, CAREER_TYPE, EDUCATION, TEMPLATE_TYPE, START_DATE, END_DATE,
-    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE
+    IS_CONTINUOUS, MAX_APPLICANTS, CURRENT_APPLICANTS, MODIFIED_DATE, CREATE_DATE
 ) VALUES (
              JOB_POST_ID_SEQ.NEXTVAL, 12, '건축사업부 경력직 채용',
              '삼성물산 건설부문에서 건축사업 분야의 핵심 경력직을 모집합니다. 국내외 다양한 대형 프로젝트를 수행하며, 고급 주거시설, 초고층 빌딩, 복합개발 등에서의 전문성과 기술력을 인정받고 있는 부서입니다.
@@ -717,7 +717,7 @@ INSERT INTO JOB_POST (
              '면접 후 협의', '주 5일(월~금)', 207, 15,
              62, '/img/Samsung_CT.jpeg', '5년이상', '대학교 졸업(4년)', 'default',
              TO_DATE('2025-05-27', 'YYYY-MM-DD'), TO_DATE('2025-06-30', 'YYYY-MM-DD'),
-             0, 15, 0, SYSDATE
+             0, 15, 0, SYSDATE,  TO_DATE('2025-05-14', 'YYYY-MM-DD')
          );
 
 -- 복지 연계 INSERT

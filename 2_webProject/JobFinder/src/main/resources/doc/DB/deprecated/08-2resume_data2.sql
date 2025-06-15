@@ -19,11 +19,11 @@ INSERT INTO RESUME (
 VALUES (RESUME_ID_SEQ.NEXTVAL, 'AI 반도체 연구원 김가람의 이력서 학력', '김가람', '20000101', '010-1234-5687', 'user1@example.com', 14750, '305호', 'AI와 반도체 기술이 융합되는 시대에, 차세대 연산 구조를 선도하는 연구원이 되기 위해 지원하게 되었습니다. 학부 시절부터 전자공학과 인공지능을 복수전공하며, 딥러닝 모델의 하드웨어 구현 효율성에 깊은 관심을 가졌습니다. 졸업 논문에서는 CNN 모델을 FPGA에 최적화하여 성능과 전력 소비를 개선한 프로젝트를 수행하였고, 이를 통해 AI 알고리즘이 실질적인 반도체 구조로 구현되는 과정에 대한 통찰을 얻었습니다. 삼성전자 주관 AI반도체 해커톤에 참가해 Top3에 입상하며 실무 감각을 키운 경험도 있습니다. 특히, 병렬 연산 최적화 및 메모리 인터페이스 설계에 큰 흥미를 느껴 지속적인 학습을 이어가고 있습니다. 빠르게 발전하는 AI 반도체 분야에서 실질적인 기술 혁신을 이끌어내는 연구원이 되고 싶습니다. 깊이 있는 분석력과 꾸준한 학습 태도를 바탕으로, 귀 연구소의 목표에 부합하는 인재가 되겠습니다. 항상 문제의 본질을 파악하고, 창의적인 해결책을 제시하는 연구자가 되기 위해 노력하겠습니다. ', 1, 'profile.jpg', SYSDATE, SYSDATE, '1');
 
 INSERT INTO SCHOOL (
-    SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, START_DATE, END_DATE, STATUS
+    SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
     SCHOOL_ID_SEQ.NEXTVAL, RESUME_ID_SEQ.CURRVAL, 'high', '마포고등학교',
-    TO_DATE('2014-03-02', 'YYYY-MM-DD'), TO_DATE('2017-02-28', 'YYYY-MM-DD'), '졸업'
+    TO_DATE('2017-02', 'YYYY-MM'), '졸업'
 );
 
 INSERT INTO SCHOOL (
@@ -49,11 +49,11 @@ INSERT INTO RESUME (
 VALUES (RESUME_ID_SEQ.NEXTVAL, 'AI 반도체 연구원 김가람의 이력서 학력 스킬', '김가람', '20000101', '010-1234-5687', 'user1@example.com', 14750, '305호', 'AI와 반도체 기술이 융합되는 시대에, 차세대 연산 구조를 선도하는 연구원이 되기 위해 지원하게 되었습니다. 학부 시절부터 전자공학과 인공지능을 복수전공하며, 딥러닝 모델의 하드웨어 구현 효율성에 깊은 관심을 가졌습니다. 졸업 논문에서는 CNN 모델을 FPGA에 최적화하여 성능과 전력 소비를 개선한 프로젝트를 수행하였고, 이를 통해 AI 알고리즘이 실질적인 반도체 구조로 구현되는 과정에 대한 통찰을 얻었습니다. 삼성전자 주관 AI반도체 해커톤에 참가해 Top3에 입상하며 실무 감각을 키운 경험도 있습니다. 특히, 병렬 연산 최적화 및 메모리 인터페이스 설계에 큰 흥미를 느껴 지속적인 학습을 이어가고 있습니다. 빠르게 발전하는 AI 반도체 분야에서 실질적인 기술 혁신을 이끌어내는 연구원이 되고 싶습니다. 깊이 있는 분석력과 꾸준한 학습 태도를 바탕으로, 귀 연구소의 목표에 부합하는 인재가 되겠습니다. 항상 문제의 본질을 파악하고, 창의적인 해결책을 제시하는 연구자가 되기 위해 노력하겠습니다. ', 1, 'profile.jpg', SYSDATE, SYSDATE, '1');
 
 INSERT INTO SCHOOL (
-    SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, START_DATE, END_DATE, STATUS
+    SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
     SCHOOL_ID_SEQ.NEXTVAL, RESUME_ID_SEQ.CURRVAL, 'high', '마포고등학교',
-    TO_DATE('2014-03-02', 'YYYY-MM-DD'), TO_DATE('2017-02-28', 'YYYY-MM-DD'), '졸업'
+    TO_DATE('2017-02', 'YYYY-MM'), '졸업'
 );
 
 INSERT INTO SCHOOL (
@@ -91,11 +91,11 @@ INSERT INTO RESUME (
 VALUES (RESUME_ID_SEQ.NEXTVAL, 'AI 반도체 연구원 김가람의 이력서 학력 스킬 경력', '김가람', '20000101', '010-1234-5687', 'user1@example.com', 14750, '305호', 'AI와 반도체 기술이 융합되는 시대에, 차세대 연산 구조를 선도하는 연구원이 되기 위해 지원하게 되었습니다. 학부 시절부터 전자공학과 인공지능을 복수전공하며, 딥러닝 모델의 하드웨어 구현 효율성에 깊은 관심을 가졌습니다. 졸업 논문에서는 CNN 모델을 FPGA에 최적화하여 성능과 전력 소비를 개선한 프로젝트를 수행하였고, 이를 통해 AI 알고리즘이 실질적인 반도체 구조로 구현되는 과정에 대한 통찰을 얻었습니다. 삼성전자 주관 AI반도체 해커톤에 참가해 Top3에 입상하며 실무 감각을 키운 경험도 있습니다. 특히, 병렬 연산 최적화 및 메모리 인터페이스 설계에 큰 흥미를 느껴 지속적인 학습을 이어가고 있습니다. 빠르게 발전하는 AI 반도체 분야에서 실질적인 기술 혁신을 이끌어내는 연구원이 되고 싶습니다. 깊이 있는 분석력과 꾸준한 학습 태도를 바탕으로, 귀 연구소의 목표에 부합하는 인재가 되겠습니다. 항상 문제의 본질을 파악하고, 창의적인 해결책을 제시하는 연구자가 되기 위해 노력하겠습니다. ', 1, 'profile.jpg', SYSDATE, SYSDATE, '1');
 
 INSERT INTO SCHOOL (
-    SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, START_DATE, END_DATE, STATUS
+    SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
     SCHOOL_ID_SEQ.NEXTVAL, RESUME_ID_SEQ.CURRVAL, 'high', '마포고등학교',
-    TO_DATE('2014-03-02', 'YYYY-MM-DD'), TO_DATE('2017-02-28', 'YYYY-MM-DD'), '졸업'
+    TO_DATE('2017-02', 'YYYY-MM'), '졸업'
 );
 
 INSERT INTO SCHOOL (
@@ -140,11 +140,11 @@ INSERT INTO RESUME (
 VALUES (RESUME_ID_SEQ.NEXTVAL, 'AI 반도체 연구원 김가람의 이력서 최종본', '김가람', '20000101', '010-1234-5687', 'user1@example.com', 14750, '305호', 'AI와 반도체 기술이 융합되는 시대에, 차세대 연산 구조를 선도하는 연구원이 되기 위해 지원하게 되었습니다. 학부 시절부터 전자공학과 인공지능을 복수전공하며, 딥러닝 모델의 하드웨어 구현 효율성에 깊은 관심을 가졌습니다. 졸업 논문에서는 CNN 모델을 FPGA에 최적화하여 성능과 전력 소비를 개선한 프로젝트를 수행하였고, 이를 통해 AI 알고리즘이 실질적인 반도체 구조로 구현되는 과정에 대한 통찰을 얻었습니다. 삼성전자 주관 AI반도체 해커톤에 참가해 Top3에 입상하며 실무 감각을 키운 경험도 있습니다. 특히, 병렬 연산 최적화 및 메모리 인터페이스 설계에 큰 흥미를 느껴 지속적인 학습을 이어가고 있습니다. 빠르게 발전하는 AI 반도체 분야에서 실질적인 기술 혁신을 이끌어내는 연구원이 되고 싶습니다. 깊이 있는 분석력과 꾸준한 학습 태도를 바탕으로, 귀 연구소의 목표에 부합하는 인재가 되겠습니다. 항상 문제의 본질을 파악하고, 창의적인 해결책을 제시하는 연구자가 되기 위해 노력하겠습니다. ', 1, 'profile.jpg', SYSDATE, SYSDATE, '1');
 
 INSERT INTO SCHOOL (
-    SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, START_DATE, END_DATE, STATUS
+    SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
     SCHOOL_ID_SEQ.NEXTVAL, RESUME_ID_SEQ.CURRVAL, 'high', '마포고등학교',
-    TO_DATE('2014-03-02', 'YYYY-MM-DD'), TO_DATE('2017-02-28', 'YYYY-MM-DD'), '졸업'
+    TO_DATE('2017-02', 'YYYY-MM'), '졸업'
 );
 
 INSERT INTO SCHOOL (
@@ -198,11 +198,11 @@ INSERT INTO RESUME_TAG (RESUME_TAG_ID, RESUME_ID, TAG_ID, CREATE_AT, MODIFIED_AT
 VALUES (RESUME_TAG_ID_SEQ.NEXTVAL, RESUME_ID_SEQ.CURRVAL, 209, SYSDATE, SYSDATE); -- Java
 
 INSERT INTO SCHOOL (
-    SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, START_DATE, END_DATE, STATUS
+    SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
     SCHOOL_ID_SEQ.NEXTVAL, RESUME_ID_SEQ.CURRVAL, 'high', '대전예술고등학교',
-    TO_DATE('2008-03-02', 'YYYY-MM-DD'), TO_DATE('2011-02-28', 'YYYY-MM-DD'), '졸업'
+    TO_DATE('2011-02', 'YYYY-MM'), '졸업'
 );
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, MAJOR_NAME, START_DATE, END_DATE, STATUS
@@ -245,7 +245,7 @@ VALUES (
 --두 번째 이력서
 INSERT INTO RESUME (
     RESUME_ID, RESUME_TITLE,   NAME, BIRTHDATE, PHONENUMBER, EMAIL, POSTAL_CODE_ID, ADDRESS, SELF_INTRODUCTION, MEMBER_ID, PROFILE, CREATE_AT, MODIFIED_AT, IS_PUBLIC)
-VALUES (RESUME_ID_SEQ.NEXTVAL, '웹개발자, 고졸, 경력 없음', '이준호', '19920102', '010-0000-0002', 'random2@testmail.com', 14751, '306호', '성실한 웹개발자입니다.', 2, 'profile.jpg', SYSDATE, SYSDATE, '1');
+VALUES (RESUME_ID_SEQ.NEXTVAL, '웹개발자, 학력 없음, 경력 없음', '이준호', '19920102', '010-0000-0002', 'random2@testmail.com', 14751, '306호', '성실한 웹개발자입니다.', 2, 'profile.jpg', SYSDATE, SYSDATE, '1');
 
 INSERT INTO RESUME_TAG (RESUME_TAG_ID, RESUME_ID, TAG_ID, CREATE_AT, MODIFIED_AT)
 VALUES (RESUME_TAG_ID_SEQ.NEXTVAL, RESUME_ID_SEQ.CURRVAL, 213, SYSDATE, SYSDATE); -- JavaScript
@@ -283,11 +283,11 @@ INSERT INTO RESUME_TAG (RESUME_TAG_ID, RESUME_ID, TAG_ID, CREATE_AT, MODIFIED_AT
 VALUES (RESUME_TAG_ID_SEQ.NEXTVAL, RESUME_ID_SEQ.CURRVAL, 266, SYSDATE, SYSDATE); -- Illustrator
 
 INSERT INTO SCHOOL (
-    SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, START_DATE, END_DATE, STATUS
+    SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
     SCHOOL_ID_SEQ.NEXTVAL, RESUME_ID_SEQ.CURRVAL, 'high', '부산국제고등학교',
-    TO_DATE('2012-03-02', 'YYYY-MM-DD'), TO_DATE('2015-02-28', 'YYYY-MM-DD'), '졸업'
+    TO_DATE('2015-02', 'YYYY-MM'), '졸업'
 );
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, MAJOR_NAME, START_DATE, END_DATE, STATUS
@@ -326,11 +326,11 @@ INSERT INTO RESUME_TAG (RESUME_TAG_ID, RESUME_ID, TAG_ID, CREATE_AT, MODIFIED_AT
 VALUES (RESUME_TAG_ID_SEQ.NEXTVAL, RESUME_ID_SEQ.CURRVAL, 1, SYSDATE, SYSDATE); -- 신사업계획
 
 INSERT INTO SCHOOL (
-    SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, START_DATE, END_DATE, STATUS
+    SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
     SCHOOL_ID_SEQ.NEXTVAL, RESUME_ID_SEQ.CURRVAL, 'high', '천안고등학교',
-    TO_DATE('2015-03-02', 'YYYY-MM-DD'), TO_DATE('2018-02-28', 'YYYY-MM-DD'), '졸업'
+    TO_DATE('2018-02', 'YYYY-MM'), '졸업'
 );
 
 INSERT INTO CAREER (
@@ -368,11 +368,11 @@ INSERT INTO RESUME_TAG (RESUME_TAG_ID, RESUME_ID, TAG_ID, CREATE_AT, MODIFIED_AT
 VALUES (RESUME_TAG_ID_SEQ.NEXTVAL, RESUME_ID_SEQ.CURRVAL, 60, SYSDATE, SYSDATE); -- 바이럴 마케팅
 
 INSERT INTO SCHOOL (
-    SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, START_DATE, END_DATE, STATUS
+    SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, YEAR_OF_GRADUATION, STATUS
 )
 VALUES (
     SCHOOL_ID_SEQ.NEXTVAL, RESUME_ID_SEQ.CURRVAL, 'high', '광주국제고등학교',
-    TO_DATE('2015-03-02', 'YYYY-MM-DD'), TO_DATE('2018-02-28', 'YYYY-MM-DD'), '졸업'
+    TO_DATE('2018-02', 'YYYY-MM'), '졸업'
 );
 INSERT INTO SCHOOL (
     SCHOOL_ID, RESUME_ID, SORTATION, SCHOOL_NAME, MAJOR_NAME, START_DATE, END_DATE, STATUS
@@ -416,3 +416,4 @@ VALUES (
 
 
 
+commit;

@@ -192,3 +192,17 @@ $(".btn-resume").on("click", function () {
 	});
 });
 
+$(document).ready(function() {
+  // 1. URL에서 page 값 가져오기
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentPage = urlParams.get('page') || '1'; // 기본값 1로 설정
+  // 기존 모든 버튼에서 active 클래스 제거
+   $('.page-btn').removeClass('active');
+  // 2. 해당 page 값을 가진 버튼에 active 클래스 추가
+  $(`.page-btn[data-page="${currentPage}"]`).addClass('active');
+});
+
+$('.page-btn[data-page="1"]').addClass('active');
+function goToPage(page, jobPostId){
+	location.href=`/company/apply/${jobPostId}/applicants?page=${page}`;
+}

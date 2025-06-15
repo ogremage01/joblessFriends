@@ -112,20 +112,20 @@
 			    <c:if test="${not empty applyList}">
 				<div id="pageWrap" >
 					<div id="pagination">
-
+					
 					<!-- 이전 페이지 -->
 					<c:if test="${pagination.existPrevPage}">
-						<a  class="page-btn" href="?page=${pagination.startPage - 1}">«</a>
+		                <button class="page-btn" onclick="goToPage(${pagination.startPage - 1},${jobPostId})">«</button>
             		</c:if>
 
 					<!-- 페이지 번호 -->
 					<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="i">
-						<a class="page-btn" href="?page=${i}">${i}</a>
+						<button class="page-btn" data-page="${i}" onclick="goToPage(${i},${jobPostId})">${i}</button>
 					</c:forEach>
 
 					<!-- 다음 페이지 -->
 					<c:if test="${pagination.existNextPage}">
-						 <a class="page-btn" href="?page=${pagination.endPage + 1}">»</a>
+						<button class="page-btn" onclick="goToPage(${searchVo.page + 1},${jobPostId})">»</button>
 					</c:if>
 
 					</div>
