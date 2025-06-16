@@ -8,6 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -126,30 +127,57 @@ public class CommunityController {
 	public String communityUpload(@ModelAttribute CommunityVo communityVo,
 			@SessionAttribute(name = "userLogin", required = false) MemberVo userLogin, HttpSession session,
 			MultipartHttpServletRequest mhr) throws Exception {
-		System.out.println("글쓰기 시작");
-
-		// 게시글 시퀀스 넘버 생성용 저장 변수
-		int communityId = communityService.communitySeqNum();
-
-		// 세션정보 저장(로그인 유저 ID 저장)
-		communityVo.setMemberId(userLogin.getMemberId());
-		// 커뮤니티 아이디 저장
-		communityVo.setCommunityId(communityId);
-
-		// 게시글 관련 전부 저장
-		communityService.communityInsertOne(communityVo);
-		// 2. 파일 정보 세션에서 가져오기(uploadImage에서 저장한 것)
-		List<Map<String, Object>> uploadedFiles = (List<Map<String, Object>>) session.getAttribute("uploadedFiles");
-		if (uploadedFiles != null) {
-			for (Map<String, Object> fileMap : uploadedFiles) {
-				fileMap.put("COMMUNITYID", communityId); // 커뮤니티 ID 연결
-				communityService.communityFileInsertOne(fileMap);
-			}
-			session.removeAttribute("uploadedFiles"); // 사용 후 제거
+		logger.info("게시글 작성 시작");
+		
+		if (userLogin == null) {
+			logger.error("로그인되지 않은 사용자의 게시글 작성 시도");
+			return "redirect:/login";
 		}
 
-		// 글 작성 완료 후 자신이 쓴 글 상세로 이동
-		return "redirect:/community/detail?no=" + communityId;
+		try {
+			// 게시글 시퀀스 넘버 생성용 저장 변수
+			int communityId = communityService.communitySeqNum();
+			logger.info("생성된 게시글 ID: {}", communityId);
+
+			// 세션정보 저장(로그인 유저 ID 저장)
+			communityVo.setMemberId(userLogin.getMemberId());
+			// 커뮤니티 아이디 저장
+			communityVo.setCommunityId(communityId);
+
+			// 게시글 저장 (트랜잭션 처리됨)
+			communityService.communityInsertOne(communityVo);
+			
+			// 이미지 처리 로직
+			Object uploadedFilesObj = session.getAttribute("uploadedFiles");
+			if (uploadedFilesObj instanceof List) {
+				@SuppressWarnings("unchecked")
+				List<Map<String, Object>> uploadedFiles = (List<Map<String, Object>>) uploadedFilesObj;
+				
+				if (uploadedFiles != null && !uploadedFiles.isEmpty()) {
+					logger.info("이미지 파일 {}개 처리 시작", uploadedFiles.size());
+					for (Map<String, Object> fileMap : uploadedFiles) {
+						if (fileMap != null) {
+							fileMap.put("COMMUNITYID", communityId);
+							// 각 이미지 파일 저장 (개별 트랜잭션)
+							communityService.communityFileInsertOne(fileMap);
+						}
+					}
+					logger.info("이미지 파일 처리 완료");
+				}
+			}
+
+			logger.info("게시글 작성 완료: communityId={}", communityId);
+			return "redirect:/community/detail?no=" + communityId;
+			
+		} catch (Exception e) {
+			logger.error("게시글 작성 중 오류 발생: ", e);
+			// 세션 정리
+			session.removeAttribute("uploadedFiles");
+			throw new RuntimeException("게시글 작성 중 오류가 발생했습니다.", e);
+		} finally {
+			// 세션에서 업로드된 파일 정보 제거 (성공/실패 상관없이)
+			session.removeAttribute("uploadedFiles");
+		}
 	}
 
 	// 커뮤니티 세부
@@ -294,37 +322,52 @@ public class CommunityController {
 	@PostMapping("/uploadImage")
 	public ResponseEntity<Map<String, Object>> uploadImage(@RequestParam("uploadFile") MultipartFile file,
 			HttpSession session) throws Exception {
-		// fileUtils의 uploadFile 메서드 호출
-		Map<String, String> uploadResult = fileUtils.uploadFile(file);
-
-		String storedFileName = uploadResult.get("storedFileName");
-		String originalFileName = uploadResult.get("originalFileName");
-		String fileExtension = storedFileName.substring(storedFileName.lastIndexOf('.') + 1); // 확장자 추출
-		String imageUrl = "/image/" + storedFileName;
-
-		Map<String, Object> fileMap = new HashMap<>();
-
-		System.out.println("originalFileName: " + originalFileName);
-		fileMap.put("FILENAME", originalFileName);
-		fileMap.put("STOREDFILENAME", storedFileName);
-		fileMap.put("FILESIZE", file.getSize());
-		fileMap.put("FILEEXTENSION", fileExtension);
-		fileMap.put("FILELINK", imageUrl);
-
-		// 세션에 파일 정보 추가
-		List<Map<String, Object>> uploadedFiles = (List<Map<String, Object>>) session.getAttribute("uploadedFiles");
-		if (uploadedFiles == null) {
-			uploadedFiles = new ArrayList<>();
-		}
-		uploadedFiles.add(fileMap);
-		session.setAttribute("uploadedFiles", uploadedFiles);
-
 		Map<String, Object> response = new HashMap<>();
-		response.put("imageUrl", imageUrl);
-		response.put("fileName", originalFileName);
-		response.put("fileId", storedFileName); // 고유 식별자 대체
+		
+		try {
+			// fileUtils의 uploadFile 메서드 호출
+			Map<String, String> uploadResult = fileUtils.uploadFile(file);
 
-		return ResponseEntity.ok(response);
+			String storedFileName = uploadResult.get("storedFileName");
+			String originalFileName = uploadResult.get("originalFileName");
+			String fileExtension = storedFileName.substring(storedFileName.lastIndexOf('.') + 1);
+			String imageUrl = "/image/" + storedFileName;
+
+			Map<String, Object> fileMap = new HashMap<>();
+			fileMap.put("FILENAME", originalFileName);
+			fileMap.put("STOREDFILENAME", storedFileName);
+			fileMap.put("FILESIZE", file.getSize());
+			fileMap.put("FILEEXTENSION", fileExtension);
+			fileMap.put("FILELINK", imageUrl);
+
+			// 세션에 파일 정보 추가 (안전한 타입 체크와 함께)
+			Object uploadedFilesObj = session.getAttribute("uploadedFiles");
+			List<Map<String, Object>> uploadedFiles;
+			
+			if (uploadedFilesObj instanceof List) {
+				@SuppressWarnings("unchecked")
+				List<Map<String, Object>> existingFiles = (List<Map<String, Object>>) uploadedFilesObj;
+				uploadedFiles = new ArrayList<>(existingFiles);
+			} else {
+				uploadedFiles = new ArrayList<>();
+			}
+			
+			uploadedFiles.add(fileMap);
+			session.setAttribute("uploadedFiles", uploadedFiles);
+
+			response.put("success", true);
+			response.put("imageUrl", imageUrl);
+			response.put("fileName", originalFileName);
+			response.put("fileId", storedFileName);
+			
+			return ResponseEntity.ok(response);
+			
+		} catch (Exception e) {
+			logger.error("이미지 업로드 중 오류 발생: ", e);
+			response.put("success", false);
+			response.put("error", "이미지 업로드 중 오류가 발생했습니다.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
 	}
 
 	// 파일 삭제
