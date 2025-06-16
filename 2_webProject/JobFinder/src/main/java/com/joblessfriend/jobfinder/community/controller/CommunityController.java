@@ -296,7 +296,7 @@ public class CommunityController {
 	// 커뮤니티 삭제
 	@DeleteMapping("/delete/{communityId}")
 	public ResponseEntity<String> communityDelete(@PathVariable("communityId") int communityId, HttpSession session) {
-		if (session.getAttribute("userType") == "member") {
+		if (session.getAttribute("userType").equals("member")) {
 			MemberVo memberVo = (MemberVo) session.getAttribute("userLogin");
 			// 게시글 불러옴
 			CommunityVo communityVo = communityService.communityDetail(communityId);
@@ -307,7 +307,7 @@ public class CommunityController {
 			}
 		}
 
-		if (session.getAttribute("userType") != "admin") {
+		if (session.getAttribute("userType").equals("admin")) {
 
 			return ResponseEntity.notFound().build();
 		}
